@@ -1,5 +1,5 @@
 {
-  "parent": "minecraft:block/cross",
+  "parent": "virtual_additions:block/cross_segmented",
   "textures": {
     "cross": "virtual_additions:block/luminous_crystal_tip"
   }
