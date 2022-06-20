@@ -1,0 +1,6 @@
+{
+  "parent": "minecraft:block/wall_inventory",
+  "textures": {
+    "wall": "virtual_additions:block/blueschist_bricks"
+  }
+}

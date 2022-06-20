@@ -1,0 +1,20 @@
+{
+  "parent": "minecraft:block/block",
+  "textures": {
+    "all": "virtual_additions:block/hornfels_tiles",
+    "particle": "virtual_additions:block/hornfels_tiles"
+  },
+  "elements": [
+    {   "from": [ 0, 8, 0 ],
+      "to": [ 16, 16, 16 ],
+      "faces": {
+        "down":  { "uv": [ 16, 0, 0, 16 ], "texture": "#all" },
+        "up":    { "uv": [ 0, 0, 16, 16 ], "texture": "#all", "cullface": "up" },
+        "north": { "uv": [ 16, 0, 0,  8 ], "texture": "#all", "cullface": "north" },
+        "south": { "uv": [ 16, 0, 0,  8 ], "texture": "#all", "cullface": "south" },
+        "west":  { "uv": [ 0, 0, 16,  8 ], "texture": "#all", "cullface": "west" },
+        "east":  { "uv": [ 0, 0, 16,  8 ], "texture": "#all", "cullface": "east" }
+      }
+    }
+  ]
+}

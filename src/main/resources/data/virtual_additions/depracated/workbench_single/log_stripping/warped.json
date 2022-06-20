@@ -1,0 +1,13 @@
+{
+    "type": "virtual_additions:workbench_single",
+    "tool": {
+        "tag": "fabric:axes"
+    },
+    "input": {
+        "item": "minecraft:warped_stem"
+    },
+    "damage": "1",
+    "sound": "minecraft:item.axe.strip",
+    "output": "minecraft:stripped_warped_stem",
+    "count": "1"
+}

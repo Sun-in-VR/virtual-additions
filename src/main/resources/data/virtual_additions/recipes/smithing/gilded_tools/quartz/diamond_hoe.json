@@ -1,0 +1,12 @@
+{
+  "type": "minecraft:smithing",
+  "base": {
+    "item": "minecraft:diamond_hoe"
+  },
+  "addition": {
+    "item": "minecraft:quartz_block"
+  },
+  "result": {
+    "item": "virtual_additions:quartz_diamond_hoe"
+  }
+}

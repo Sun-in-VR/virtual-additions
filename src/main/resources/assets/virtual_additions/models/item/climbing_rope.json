@@ -1,0 +1,6 @@
+{
+    "parent": "item/generated",
+    "textures": {
+        "layer0": "virtual_additions:item/climbing_rope"
+    }
+}

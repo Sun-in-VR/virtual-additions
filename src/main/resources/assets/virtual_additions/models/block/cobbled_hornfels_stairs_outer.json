@@ -1,0 +1,8 @@
+{
+  "parent": "minecraft:block/outer_stairs",
+  "textures": {
+    "bottom": "virtual_additions:block/cobbled_hornfels",
+    "top": "virtual_additions:block/cobbled_hornfels",
+    "side": "virtual_additions:block/cobbled_hornfels"
+  }
+}

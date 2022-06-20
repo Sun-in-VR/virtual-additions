@@ -1,0 +1,12 @@
+{
+    "type": "virtual_additions:workbench_single",
+    "tool": {
+        "tag": "fabric:axes"
+    },
+    "input": {
+        "item": "minecraft:oxidized_cut_copper_stairs"
+    },
+    "damage": "1",
+    "sound": "minecraft:item.axe.scrape",
+    "output": "minecraft:weathered_cut_copper_stairs"
+}

@@ -1,0 +1,27 @@
+{
+  "criteria": {
+    "inventory": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "virtual_additions:steel_ingot"
+            ]
+          }
+        ]
+      }
+    }
+  },
+  "rewards": {
+    "recipes": [
+      "virtual_additions:crafting_shaped/steel_block",
+      "virtual_additions:crafting_shaped/steel_sword",
+      "virtual_additions:crafting_shaped/steel_shovel",
+      "virtual_additions:crafting_shaped/steel_pickaxe",
+      "virtual_additions:crafting_shaped/steel_axe",
+      "virtual_additions:crafting_shaped/steel_hoe",
+      "virtual_additions:crafting_shaped/steel_bomb"
+    ]
+  }
+}

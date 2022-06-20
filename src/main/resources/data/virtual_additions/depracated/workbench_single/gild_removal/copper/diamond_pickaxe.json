@@ -1,0 +1,14 @@
+{
+  "type": "virtual_additions:workbench_single",
+  "tool": {
+    "item": "virtual_additions:amethyst_chisel"
+  },
+  "input": {
+    "item": "virtual_additions:copper_diamond_pickaxe"
+  },
+  "damage": "100",
+  "sound": "virtual_additions:block.workbench.used.iron_hammer",
+  "output": "minecraft:diamond_pickaxe",
+  "count": "1",
+  "persistent": true
+}

@@ -1,0 +1,8 @@
+{
+  "parent": "minecraft:block/cube_bottom_top",
+  "textures": {
+    "top": "virtual_additions:block/toxic_nylium",
+    "bottom": "minecraft:block/netherrack",
+    "side": "virtual_additions:block/toxic_nylium_side"
+  }
+}

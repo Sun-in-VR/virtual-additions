@@ -1,0 +1,48 @@
+{
+  "variants": {
+    "facing=down,powered=false": {
+      "model": "virtual_additions:block/spotlight_vertical_unlit",
+      "x": 180
+    },
+    "facing=east,powered=false": {
+      "model": "virtual_additions:block/spotlight_unlit",
+      "y": 90
+    },
+    "facing=north,powered=false": {
+      "model": "virtual_additions:block/spotlight_unlit"
+    },
+    "facing=south,powered=false": {
+      "model": "virtual_additions:block/spotlight_unlit",
+      "y": 180
+    },
+    "facing=up,powered=false": {
+      "model": "virtual_additions:block/spotlight_vertical_unlit"
+    },
+    "facing=west,powered=false": {
+      "model": "virtual_additions:block/spotlight_unlit",
+      "y": 270
+    },
+    "facing=down,powered=true": {
+      "model": "virtual_additions:block/spotlight_vertical",
+      "x": 180
+    },
+    "facing=east,powered=true": {
+      "model": "virtual_additions:block/spotlight",
+      "y": 90
+    },
+    "facing=north,powered=true": {
+      "model": "virtual_additions:block/spotlight"
+    },
+    "facing=south,powered=true": {
+      "model": "virtual_additions:block/spotlight",
+      "y": 180
+    },
+    "facing=up,powered=true": {
+      "model": "virtual_additions:block/spotlight_vertical"
+    },
+    "facing=west,powered=true": {
+      "model": "virtual_additions:block/spotlight",
+      "y": 270
+    }
+  }
+}

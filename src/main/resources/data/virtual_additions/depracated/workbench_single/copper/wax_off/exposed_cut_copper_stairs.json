@@ -1,0 +1,12 @@
+{
+    "type": "virtual_additions:workbench_single",
+    "tool": {
+        "tag": "fabric:axes"
+    },
+    "input": {
+        "item": "minecraft:waxed_exposed_cut_copper_stairs"
+    },
+    "damage": "1",
+    "sound": "minecraft:item.axe.wax_off",
+    "output": "minecraft:exposed_cut_copper_stairs"
+}

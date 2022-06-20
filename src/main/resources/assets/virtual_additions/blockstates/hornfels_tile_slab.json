@@ -1,0 +1,13 @@
+{
+  "variants": {
+    "type=bottom": {
+      "model": "virtual_additions:block/hornfels_tile_slab"
+    },
+    "type=double": {
+      "model": "virtual_additions:block/hornfels_tiles"
+    },
+    "type=top": {
+      "model": "virtual_additions:block/hornfels_tile_slab_top"
+    }
+  }
+}

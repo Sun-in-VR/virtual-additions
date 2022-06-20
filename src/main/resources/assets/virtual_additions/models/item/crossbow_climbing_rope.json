@@ -1,0 +1,7 @@
+ 
+{
+    "parent": "item/crossbow",
+    "textures": {
+        "layer0": "virtual_additions:item/crossbow_climbing_rope"
+    }
+}

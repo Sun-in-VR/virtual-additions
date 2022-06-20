@@ -1,0 +1,12 @@
+{
+  "type": "minecraft:smithing",
+  "base": {
+    "item": "minecraft:netherite_shovel"
+  },
+  "addition": {
+    "item": "minecraft:quartz_block"
+  },
+  "result": {
+    "item": "virtual_additions:quartz_netherite_shovel"
+  }
+}

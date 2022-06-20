@@ -1,0 +1,13 @@
+{
+  "variants": {
+    "type=bottom": {
+      "model": "virtual_additions:block/polished_syenite_slab"
+    },
+    "type=double": {
+      "model": "virtual_additions:block/polished_syenite"
+    },
+    "type=top": {
+      "model": "virtual_additions:block/polished_syenite_slab_top"
+    }
+  }
+}

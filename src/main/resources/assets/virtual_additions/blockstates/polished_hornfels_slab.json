@@ -1,0 +1,13 @@
+{
+  "variants": {
+    "type=bottom": {
+      "model": "virtual_additions:block/polished_hornfels_slab"
+    },
+    "type=double": {
+      "model": "virtual_additions:block/polished_hornfels"
+    },
+    "type=top": {
+      "model": "virtual_additions:block/polished_hornfels_slab_top"
+    }
+  }
+}

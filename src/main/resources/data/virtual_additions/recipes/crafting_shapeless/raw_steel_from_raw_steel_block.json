@@ -1,0 +1,13 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "group": "virtual_additions:steel",
+  "ingredients": [
+    {
+      "item": "virtual_additions:raw_steel_block"
+    }
+  ],
+  "result": {
+    "item": "virtual_additions:raw_steel",
+    "count": 9
+  }
+}

@@ -1,0 +1,12 @@
+{
+  "type": "minecraft:smithing",
+  "base": {
+    "item": "minecraft:golden_pickaxe"
+  },
+  "addition": {
+    "item": "minecraft:quartz_block"
+  },
+  "result": {
+    "item": "virtual_additions:quartz_golden_pickaxe"
+  }
+}

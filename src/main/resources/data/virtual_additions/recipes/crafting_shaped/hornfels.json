@@ -1,0 +1,19 @@
+{
+    "type": "minecraft:crafting_shaped",
+    "pattern": [
+        "dq",
+        "qd"
+    ],
+    "key": {
+        "d": {
+            "item": "minecraft:cobbled_deepslate"
+        },
+        "q": {
+            "item": "minecraft:quartz"
+        }
+    },
+    "result": {
+        "item": "virtual_additions:hornfels",
+        "count": 1
+    }
+}

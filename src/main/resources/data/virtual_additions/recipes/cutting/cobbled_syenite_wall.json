@@ -1,0 +1,8 @@
+{
+  "type": "minecraft:stonecutting",
+  "ingredient": {
+    "item": "virtual_additions:cobbled_syenite"
+  },
+  "result": "virtual_additions:cobbled_syenite_wall",
+  "count": 1
+}

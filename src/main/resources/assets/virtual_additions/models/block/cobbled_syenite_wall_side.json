@@ -1,0 +1,6 @@
+{
+  "parent": "minecraft:block/template_wall_side",
+  "textures": {
+    "wall": "virtual_additions:block/cobbled_syenite"
+  }
+}

@@ -1,0 +1,45 @@
+{
+  "criteria": {
+    "inventory": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "minecraft:emerald_block"
+            ]
+          }
+        ]
+      }
+    }
+  },
+  "rewards": {
+    "recipes": [
+      "virtual_additions:smithing/gilded_tools/emerald/diamond_sword",
+      "virtual_additions:smithing/gilded_tools/emerald/golden_sword",
+      "virtual_additions:smithing/gilded_tools/emerald/iron_sword",
+      "virtual_additions:smithing/gilded_tools/emerald/netherite_sword",
+      "virtual_additions:smithing/gilded_tools/emerald/steel_sword",
+      "virtual_additions:smithing/gilded_tools/emerald/diamond_shovel",
+      "virtual_additions:smithing/gilded_tools/emerald/golden_shovel",
+      "virtual_additions:smithing/gilded_tools/emerald/iron_shovel",
+      "virtual_additions:smithing/gilded_tools/emerald/netherite_shovel",
+      "virtual_additions:smithing/gilded_tools/emerald/steel_shovel",
+      "virtual_additions:smithing/gilded_tools/emerald/diamond_pickaxe",
+      "virtual_additions:smithing/gilded_tools/emerald/golden_pickaxe",
+      "virtual_additions:smithing/gilded_tools/emerald/iron_pickaxe",
+      "virtual_additions:smithing/gilded_tools/emerald/netherite_pickaxe",
+      "virtual_additions:smithing/gilded_tools/emerald/steel_pickaxe",
+      "virtual_additions:smithing/gilded_tools/emerald/diamond_axe",
+      "virtual_additions:smithing/gilded_tools/emerald/golden_axe",
+      "virtual_additions:smithing/gilded_tools/emerald/iron_axe",
+      "virtual_additions:smithing/gilded_tools/emerald/netherite_axe",
+      "virtual_additions:smithing/gilded_tools/emerald/steel_axe",
+      "virtual_additions:smithing/gilded_tools/emerald/diamond_hoe",
+      "virtual_additions:smithing/gilded_tools/emerald/golden_hoe",
+      "virtual_additions:smithing/gilded_tools/emerald/iron_hoe",
+      "virtual_additions:smithing/gilded_tools/emerald/netherite_hoe",
+      "virtual_additions:smithing/gilded_tools/emerald/steel_hoe"
+    ]
+  }
+}

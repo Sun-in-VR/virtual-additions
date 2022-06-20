@@ -1,0 +1,29 @@
+{
+  "display": {
+    "icon": {
+      "item": "virtual_additions:spotlight"
+    },
+    "title": "Take the Stage",
+    "description": "Stand directly in the light of a Spotlight"
+  },
+  "parent": "minecraft:adventure/root",
+  "criteria": {
+    "requirement": {
+      "trigger": "minecraft:location",
+      "conditions": {
+        "player": {
+          "location": {
+            "block": {
+              "blocks": [
+                "virtual_additions:spotlight_light"
+              ],
+              "state": {
+                "lit": true
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}

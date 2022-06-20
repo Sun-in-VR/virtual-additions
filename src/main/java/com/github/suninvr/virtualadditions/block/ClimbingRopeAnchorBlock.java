@@ -1,0 +1,166 @@
+package com.github.suninvr.virtualadditions.block;
+
+import com.github.suninvr.virtualadditions.registry.VAItems;
+import net.minecraft.block.*;
+import net.minecraft.block.piston.PistonBehavior;
+import net.minecraft.entity.LivingEntity;
+import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.fluid.FluidState;
+import net.minecraft.fluid.Fluids;
+import net.minecraft.item.AutomaticItemPlacementContext;
+import net.minecraft.item.ItemPlacementContext;
+import net.minecraft.item.ItemStack;
+import net.minecraft.loot.context.LootContext;
+import net.minecraft.loot.context.LootContextParameters;
+import net.minecraft.server.world.ServerWorld;
+import net.minecraft.sound.SoundCategory;
+import net.minecraft.state.StateManager;
+import net.minecraft.state.property.BooleanProperty;
+import net.minecraft.state.property.DirectionProperty;
+import net.minecraft.state.property.Properties;
+import net.minecraft.util.ActionResult;
+import net.minecraft.util.Hand;
+import net.minecraft.util.hit.BlockHitResult;
+import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.math.Direction;
+import net.minecraft.util.math.Vec3d;
+import net.minecraft.util.shape.VoxelShape;
+import net.minecraft.util.shape.VoxelShapes;
+import net.minecraft.world.BlockView;
+import net.minecraft.world.World;
+import net.minecraft.world.WorldAccess;
+import net.minecraft.world.WorldView;
+import net.minecraft.world.event.GameEvent;
+import com.github.suninvr.virtualadditions.registry.VABlockTags;
+import com.github.suninvr.virtualadditions.registry.VABlocks;
+import com.github.suninvr.virtualadditions.registry.VASoundEvents;
+import org.jetbrains.annotations.Nullable;
+
+import java.util.List;
+import java.util.Random;
+
+public class ClimbingRopeAnchorBlock extends Block implements Waterloggable {
+    public static final DirectionProperty FACING = Properties.HOPPER_FACING;
+    public static final BooleanProperty WATERLOGGED = Properties.WATERLOGGED;
+    public static final BooleanProperty END = BooleanProperty.of("end");
+    protected static final VoxelShape EAST_SHAPE;
+    protected static final VoxelShape WEST_SHAPE;
+    protected static final VoxelShape SOUTH_SHAPE;
+    protected static final VoxelShape NORTH_SHAPE;
+    protected static final VoxelShape DOWN_SHAPE;
+
+    public ClimbingRopeAnchorBlock(Settings settings) {
+        super(settings);
+        setDefaultState(getStateManager().getDefaultState()
+                .with(FACING, Direction.DOWN)
+                .with(WATERLOGGED, false)
+                .with(END, true)
+        );
+    }
+
+    public VoxelShape getOutlineShape(BlockState state, BlockView world, BlockPos pos, ShapeContext context) {
+        return switch (state.get(FACING)) {
+            case NORTH -> NORTH_SHAPE;
+            case SOUTH -> SOUTH_SHAPE;
+            case WEST -> WEST_SHAPE;
+            case EAST -> EAST_SHAPE;
+            default -> DOWN_SHAPE;
+        };
+    }
+
+    @Override
+    public void onPlaced(World world, BlockPos pos, BlockState state, @Nullable LivingEntity placer, ItemStack itemStack) {
+        super.onPlaced(world, pos, state, placer, itemStack);
+        world.createAndScheduleBlockTick( pos, state.getBlock(), 0 );
+
+    }
+
+    public PistonBehavior getPistonBehavior(BlockState state) {
+        return PistonBehavior.DESTROY;
+    }
+
+    @Override
+    public void scheduledTick(BlockState state, ServerWorld world, BlockPos pos, net.minecraft.util.math.random.Random random) {
+        if (state.canPlaceAt(world,pos)) {
+            BlockPos belowPos = pos.down();
+            BlockState belowState = world.getBlockState(belowPos);
+            if (world.getBottomY() <= belowPos.getY() && (belowState.canReplace(new AutomaticItemPlacementContext(world, belowPos, Direction.DOWN, ItemStack.EMPTY, Direction.UP))) && !belowState.isOf(Blocks.LAVA)) {
+                BlockState newState = VABlocks.CLIMBING_ROPE.getDefaultState().with(ClimbingRopeBlock.FACING, state.get(FACING)).with(ClimbingRopeBlock.WATERLOGGED, world.getFluidState(belowPos).getFluid() == Fluids.WATER);
+                world.setBlockState(belowPos, newState);
+                world.setBlockState(pos, state.with(END, false));
+                world.playSound(null, belowPos, VASoundEvents.BLOCK_ROPE_EXTEND, SoundCategory.BLOCKS, 1F, 0.8F);
+                world.createAndScheduleBlockTick(belowPos, newState.getBlock(), 1);
+                world.emitGameEvent(null, GameEvent.BLOCK_PLACE, belowPos);
+            }
+        } else {
+            world.breakBlock(pos, true);
+        }
+    }
+
+    @Override
+    public void neighborUpdate(BlockState state, World world, BlockPos pos, Block sourceBlock, BlockPos sourcePos, boolean notify) {
+        if (state.get(WATERLOGGED)) world.createAndScheduleFluidTick(pos, Fluids.WATER, Fluids.WATER.getTickRate(world));
+        if (!state.canPlaceAt(world, pos)) world.createAndScheduleBlockTick(pos, VABlocks.CLIMBING_ROPE_ANCHOR, 1);
+    }
+
+    @Override
+    public boolean canPlaceAt(BlockState state, WorldView world, BlockPos pos) {
+        Direction direction = state.get(FACING);
+        boolean bl = this.canPlaceOn(world, pos.offset(direction.getOpposite()), direction);
+        return state.get(END) ? bl : bl && world.getBlockState(pos.down()).isIn(VABlockTags.CLIMBING_ROPES);
+    }
+
+    private boolean canPlaceOn(WorldView world, BlockPos pos, Direction direction) {
+        return Block.sideCoversSmallSquare(world, pos, direction);
+    }
+
+    @Nullable
+    @Override
+    public BlockState getPlacementState(ItemPlacementContext ctx) {
+
+        BlockState blockState = this.getDefaultState();
+        Direction[] directions = ctx.getPlacementDirections();
+        for (Direction direction : directions) {
+            if (direction == Direction.DOWN) continue;
+            blockState = blockState.with(FACING, direction.getOpposite());
+            if(blockState.canPlaceAt(ctx.getWorld(), ctx.getBlockPos())) {
+                return blockState.with(WATERLOGGED, ctx.getWorld().getFluidState(ctx.getBlockPos()).getFluid() == Fluids.WATER);
+            }
+        }
+        return null;
+    }
+
+
+
+    public FluidState getFluidState(BlockState state) {
+        return state.get(WATERLOGGED) ? Fluids.WATER.getStill(false) : super.getFluidState(state);
+    }
+
+    @Override
+    protected void appendProperties(StateManager.Builder<Block, BlockState> builder) {
+        builder.add(FACING).add(WATERLOGGED).add(END);
+    }
+
+    static {
+        EAST_SHAPE = VoxelShapes.union(
+                Block.createCuboidShape(5.0D, 0.0D, 7.0D, 7.0D, 12.0D, 9.0D),
+                Block.createCuboidShape(4.0D, 12.0D, 7.0D, 8.0D, 16.0D, 9.0D)
+        );
+        WEST_SHAPE = VoxelShapes.union(
+                Block.createCuboidShape(9.0D, 0.0D, 7.0D, 11.0D, 12.0D, 9.0D),
+                Block.createCuboidShape(8.0D, 12.0D, 7.0D, 12.0D, 16.0D, 9.0D)
+        );
+        SOUTH_SHAPE = VoxelShapes.union(
+                Block.createCuboidShape(7.0D, 0.0D, 5.0D, 9.0D, 12.0D, 7.0D),
+                Block.createCuboidShape(7.0D, 12.0D, 4.0D, 9.0D, 16.0D, 8.0D)
+        );
+        NORTH_SHAPE = VoxelShapes.union(
+                Block.createCuboidShape(7.0D, 0.0D, 9.0D, 9.0D, 12.0D, 11.0D),
+                Block.createCuboidShape(7.0D, 12.0D, 8.0D, 9.0D, 16.0D, 12.0D)
+        );
+        DOWN_SHAPE = VoxelShapes.union(
+                Block.createCuboidShape(7.0D, 0.0D, 7.0D, 9.0D, 8.0D, 9.0D),
+                Block.createCuboidShape(7.0D, 8.0D, 6.0D, 9.0D, 12.0D, 10.0D)
+        );
+    }
+}

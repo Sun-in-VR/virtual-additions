@@ -1,0 +1,26 @@
+{
+    "type": "minecraft:crafting_shaped",
+    "pattern": [
+        "ccc",
+        "CSC",
+        "CRC"
+    ],
+    "key": {
+        "c": {
+            "item": "virtual_additions:luminous_crystal_block"
+        },
+        "C": {
+            "item": "minecraft:copper_ingot"
+        },
+        "S": {
+            "item": "virtual_additions:steel_ingot"
+        },
+        "R": {
+            "item": "minecraft:redstone"
+        }
+    },
+    "result": {
+        "item": "virtual_additions:spotlight",
+        "count": 1
+    }
+}

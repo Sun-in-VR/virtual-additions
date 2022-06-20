@@ -1,0 +1,8 @@
+{
+  "parent": "minecraft:block/slab",
+  "textures": {
+    "bottom": "virtual_additions:block/cobbled_syenite",
+    "top": "virtual_additions:block/cobbled_syenite",
+    "side": "virtual_additions:block/cobbled_syenite"
+  }
+}

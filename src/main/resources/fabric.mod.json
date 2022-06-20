@@ -1,0 +1,42 @@
+{
+  "schemaVersion": 1,
+  "id": "virtual_additions",
+  "version": "${version}",
+
+  "name": "Virtual Additions",
+  "description": "Adds extra content with a focus on preserving the vanilla feel.",
+  "authors": [
+    "VirtualSun"
+  ],
+  "contact": {
+    "homepage": "https://github.com/Sun-in-VR",
+    "sources": "https://github.com/Sun-in-VR/virtual-additions"
+  },
+
+  "license": "CC0-1.0",
+  "icon": "assets/virtual_additions/icon.png",
+
+  "environment": "*",
+  "entrypoints": {
+    "main": [
+      "com.github.suninvr.virtualadditions.VirtualAdditions"
+    ],
+    "client": [
+      "com.github.suninvr.virtualadditions.client.VirtualAdditionsClient"
+    ]
+  },
+  "mixins": [
+    "virtual-additions.mixins.json"
+  ],
+  "accessWidener" : "virtualadditions.accesswidener",
+
+  "depends": {
+    "fabricloader": ">=0.13.3",
+    "fabric": "*",
+    "minecraft": "1.19.x",
+    "java": ">=17"
+  },
+  "suggests": {
+    "another-mod": "*"
+  }
+}

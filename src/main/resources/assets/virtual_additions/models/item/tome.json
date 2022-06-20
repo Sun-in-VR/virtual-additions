@@ -1,0 +1,17 @@
+{
+  "parent": "item/generated",
+  "textures": {
+    "layer0": "virtual_additions:item/tome",
+    "layer1": "virtual_additions:item/tome_overlay"
+  },
+  "overrides": [
+        {
+            "predicate": {
+                "virtual_additions:tome_enhanced": 1
+            },
+            "model": "virtual_additions:item/tome_enhanced"
+        }
+
+  ]
+}
+

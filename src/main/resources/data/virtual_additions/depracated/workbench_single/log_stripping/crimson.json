@@ -1,0 +1,13 @@
+{
+    "type": "virtual_additions:workbench_single",
+    "tool": {
+        "tag": "fabric:axes"
+    },
+    "input": {
+        "item": "minecraft:crimson_stem"
+    },
+    "damage": "1",
+    "sound": "minecraft:item.axe.strip",
+    "output": "minecraft:stripped_crimson_stem",
+    "count": "1"
+}

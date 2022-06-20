@@ -1,0 +1,288 @@
+package com.github.suninvr.virtualadditions.registry;
+
+import com.github.suninvr.virtualadditions.entity.ClimbingRopeEntity;
+import com.github.suninvr.virtualadditions.entity.SteelBombEntity;
+import com.github.suninvr.virtualadditions.item.*;
+import com.github.suninvr.virtualadditions.item.enums.GildType;
+import com.github.suninvr.virtualadditions.mixin.BrewingRecipeRegistryAccessor;
+import com.github.suninvr.virtualadditions.registry.constructors.block.CustomBucketItem;
+import net.fabricmc.fabric.api.item.v1.FabricItemSettings;
+import net.minecraft.block.Block;
+import net.minecraft.block.BlockState;
+import net.minecraft.block.DispenserBlock;
+import net.minecraft.block.dispenser.DispenserBehavior;
+import net.minecraft.block.dispenser.ItemDispenserBehavior;
+import net.minecraft.block.dispenser.ProjectileDispenserBehavior;
+import net.minecraft.entity.projectile.PersistentProjectileEntity;
+import net.minecraft.entity.projectile.ProjectileEntity;
+import net.minecraft.item.*;
+import net.minecraft.sound.SoundCategory;
+import net.minecraft.sound.SoundEvents;
+import net.minecraft.util.Rarity;
+import net.minecraft.util.Util;
+import net.minecraft.util.math.BlockPointer;
+import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.math.Position;
+import net.minecraft.util.registry.Registry;
+import net.minecraft.world.World;
+
+import java.util.Locale;
+import java.util.Optional;
+
+import static com.github.suninvr.virtualadditions.VirtualAdditions.idOf;
+
+public class VAItems {
+    protected record ToolSet(Item SWORD, Item SHOVEL, Item PICKAXE, Item AXE, Item HOE, String NAME){}
+    public static final ToolSet DIAMOND_TOOL_SET = new ToolSet(Items.DIAMOND_SWORD, Items.DIAMOND_SHOVEL, Items.DIAMOND_PICKAXE, Items.DIAMOND_AXE, Items.DIAMOND_HOE, "diamond");
+    public static final ToolSet GOLDEN_TOOL_SET = new ToolSet(Items.GOLDEN_SWORD, Items.GOLDEN_SHOVEL, Items.GOLDEN_PICKAXE, Items.GOLDEN_AXE, Items.GOLDEN_HOE, "golden");
+    public static final ToolSet IRON_TOOL_SET = new ToolSet(Items.IRON_SWORD, Items.IRON_SHOVEL, Items.IRON_PICKAXE, Items.IRON_AXE, Items.IRON_HOE, "iron");
+    public static final ToolSet NETHERITE_TOOL_SET = new ToolSet(Items.NETHERITE_SWORD, Items.NETHERITE_SHOVEL, Items.NETHERITE_PICKAXE, Items.NETHERITE_AXE, Items.NETHERITE_HOE, "netherite");
+    public static final Item CLIMBING_ROPE;
+    public static final Item APPLICABLE_POTION_ITEM;
+    public static final Item HORNFELS;
+    public static final Item COBBLED_HORNFELS;
+    public static final Item COBBLED_HORNFELS_STAIRS;
+    public static final Item COBBLED_HORNFELS_SLAB;
+    public static final Item COBBLED_HORNFELS_WALL;
+    public static final Item POLISHED_HORNFELS;
+    public static final Item POLISHED_HORNFELS_STAIRS;
+    public static final Item POLISHED_HORNFELS_SLAB;
+    public static final Item HORNFELS_TILES;
+    public static final Item CRACKED_HORNFELS_TILES;
+    public static final Item HORNFELS_TILE_STAIRS;
+    public static final Item HORNFELS_TILE_SLAB;
+    public static final Item BLUESCHIST;
+    public static final Item COBBLED_BLUESCHIST;
+    public static final Item COBBLED_BLUESCHIST_STAIRS;
+    public static final Item COBBLED_BLUESCHIST_SLAB;
+    public static final Item COBBLED_BLUESCHIST_WALL;
+    public static final Item POLISHED_BLUESCHIST;
+    public static final Item POLISHED_BLUESCHIST_STAIRS;
+    public static final Item POLISHED_BLUESCHIST_SLAB;
+    public static final Item BLUESCHIST_BRICKS;
+    public static final Item CRACKED_BLUESCHIST_BRICKS;
+    public static final Item BLUESCHIST_BRICK_STAIRS;
+    public static final Item BLUESCHIST_BRICK_SLAB;
+    public static final Item BLUESCHIST_BRICK_WALL;
+    public static final Item SYENITE;
+    public static final Item COBBLED_SYENITE;
+    public static final Item COBBLED_SYENITE_STAIRS;
+    public static final Item COBBLED_SYENITE_SLAB;
+    public static final Item COBBLED_SYENITE_WALL;
+    public static final Item POLISHED_SYENITE;
+    public static final Item POLISHED_SYENITE_STAIRS;
+    public static final Item POLISHED_SYENITE_SLAB;
+    public static final Item SYENITE_BRICKS;
+    public static final Item CRACKED_SYENITE_BRICKS;
+    public static final Item SYENITE_BRICK_STAIRS;
+    public static final Item SYENITE_BRICK_SLAB;
+    public static final Item SYENITE_BRICK_WALL;
+    public static final Item ENTANGLEMENT_DRIVE;
+    public static final Item IOLITE;
+    public static final Item IOLITE_ORE;
+    public static final Item IOLITE_ANCHOR;
+    public static final Item IOLITE_TETHER;
+    public static final Item LUMINOUS_CRYSTAL;
+    public static final Item SHIMMERING_LUMINOUS_CRYSTAL_BLOCK;
+    public static final Item SPOTLIGHT;
+    public static final Item VENOMOUS_BOIL;
+    public static final Item TOXIC_NYLIUM;
+    public static final Item TOXIC_ROOTS;
+    public static final Item TOXIC_HEAP;
+    public static final Item ACID_BUCKET;
+    public static final Item ICE_SHEET;
+    public static final Item SLIME_TENDRILS;
+    public static final Item RAW_STEEL;
+    public static final Item RAW_STEEL_BLOCK;
+    public static final Item STEEL_INGOT;
+    public static final Item STEEL_BLOCK;
+    public static final Item STEEL_BOMB;
+    public static final Item KEY;
+    public static final Item BOTTLED_SOULS;
+    public static final Item STAFF;
+    //public static final Item PROJECTION_SPYGLASS;
+
+
+    public static final ToolSet AMETHYST_DIAMOND_TOOL_SET;
+    public static final ToolSet COPPER_DIAMOND_TOOL_SET;
+    public static final ToolSet EMERALD_DIAMOND_TOOL_SET;
+    public static final ToolSet QUARTZ_DIAMOND_TOOL_SET;
+    public static final ToolSet AMETHYST_IRON_TOOL_SET;
+    public static final ToolSet COPPER_IRON_TOOL_SET;
+    public static final ToolSet EMERALD_IRON_TOOL_SET ;
+    public static final ToolSet QUARTZ_IRON_TOOL_SET;
+    public static final ToolSet AMETHYST_GOLDEN_TOOL_SET;
+    public static final ToolSet COPPER_GOLDEN_TOOL_SET;
+    public static final ToolSet EMERALD_GOLDEN_TOOL_SET;
+    public static final ToolSet QUARTZ_GOLDEN_TOOL_SET;
+    public static final ToolSet AMETHYST_NETHERITE_TOOL_SET;
+    public static final ToolSet COPPER_NETHERITE_TOOL_SET;
+    public static final ToolSet EMERALD_NETHERITE_TOOL_SET;
+    public static final ToolSet QUARTZ_NETHERITE_TOOL_SET;
+
+    static {
+        CLIMBING_ROPE = register("climbing_rope", new AliasedBlockItem(VABlocks.CLIMBING_ROPE_ANCHOR, new FabricItemSettings().group(ItemGroup.TOOLS).maxCount(16)));
+        HORNFELS = registerBlockItem("hornfels", VABlocks.HORNFELS, ItemGroup.BUILDING_BLOCKS);
+        COBBLED_HORNFELS = registerBlockItem("cobbled_hornfels", VABlocks.COBBLED_HORNFELS, ItemGroup.BUILDING_BLOCKS);
+        COBBLED_HORNFELS_STAIRS = registerBlockItem("cobbled_hornfels_stairs", VABlocks.COBBLED_HORNFELS_STAIRS, ItemGroup.BUILDING_BLOCKS);
+        COBBLED_HORNFELS_SLAB = registerBlockItem("cobbled_hornfels_slab", VABlocks.COBBLED_HORNFELS_SLAB, ItemGroup.BUILDING_BLOCKS);
+        COBBLED_HORNFELS_WALL = registerBlockItem("cobbled_hornfels_wall", VABlocks.COBBLED_HORNFELS_WALL, ItemGroup.BUILDING_BLOCKS);
+        POLISHED_HORNFELS = registerBlockItem("polished_hornfels", VABlocks.POLISHED_HORNFELS, ItemGroup.BUILDING_BLOCKS);
+        POLISHED_HORNFELS_STAIRS = registerBlockItem("polished_hornfels_stairs", VABlocks.POLISHED_HORNFELS_STAIRS, ItemGroup.BUILDING_BLOCKS);
+        POLISHED_HORNFELS_SLAB = registerBlockItem("polished_hornfels_slab", VABlocks.POLISHED_HORNFELS_SLAB, ItemGroup.BUILDING_BLOCKS);
+        HORNFELS_TILES = registerBlockItem("hornfels_tiles", VABlocks.HORNFELS_TILES, ItemGroup.BUILDING_BLOCKS);
+        CRACKED_HORNFELS_TILES = registerBlockItem("cracked_hornfels_tiles", VABlocks.CRACKED_HORNFELS_TILES, ItemGroup.BUILDING_BLOCKS);
+        HORNFELS_TILE_STAIRS = registerBlockItem("hornfels_tile_stairs", VABlocks.HORNFELS_TILE_STAIRS, ItemGroup.BUILDING_BLOCKS);
+        HORNFELS_TILE_SLAB = registerBlockItem("hornfels_tile_slab", VABlocks.HORNFELS_TILE_SLAB, ItemGroup.BUILDING_BLOCKS);
+        BLUESCHIST = registerBlockItem("polished_blueschist", VABlocks.POLISHED_BLUESCHIST, ItemGroup.BUILDING_BLOCKS);
+        COBBLED_BLUESCHIST = registerBlockItem("cobbled_blueschist", VABlocks.COBBLED_BLUESCHIST, ItemGroup.BUILDING_BLOCKS);
+        COBBLED_BLUESCHIST_STAIRS = registerBlockItem("cobbled_blueschist_stairs", VABlocks.COBBLED_BLUESCHIST_STAIRS, ItemGroup.BUILDING_BLOCKS);
+        COBBLED_BLUESCHIST_SLAB = registerBlockItem("cobbled_blueschist_slab", VABlocks.COBBLED_BLUESCHIST_SLAB, ItemGroup.BUILDING_BLOCKS);
+        COBBLED_BLUESCHIST_WALL = registerBlockItem("cobbled_blueschist_wall", VABlocks.COBBLED_BLUESCHIST_WALL, ItemGroup.BUILDING_BLOCKS);
+        POLISHED_BLUESCHIST = registerBlockItem("blueschist", VABlocks.BLUESCHIST, ItemGroup.BUILDING_BLOCKS);
+        POLISHED_BLUESCHIST_STAIRS = registerBlockItem("polished_blueschist_stairs", VABlocks.POLISHED_BLUESCHIST_STAIRS, ItemGroup.BUILDING_BLOCKS);
+        POLISHED_BLUESCHIST_SLAB = registerBlockItem("polished_blueschist_slab", VABlocks.POLISHED_BLUESCHIST_SLAB, ItemGroup.BUILDING_BLOCKS);
+        BLUESCHIST_BRICKS = registerBlockItem("blueschist_bricks", VABlocks.BLUESCHIST_BRICKS, ItemGroup.BUILDING_BLOCKS);
+        CRACKED_BLUESCHIST_BRICKS = registerBlockItem("cracked_blueschist_bricks", VABlocks.CRACKED_BLUESCHIST_BRICKS, ItemGroup.BUILDING_BLOCKS);
+        BLUESCHIST_BRICK_STAIRS = registerBlockItem("blueschist_brick_stairs", VABlocks.BLUESCHIST_BRICK_STAIRS, ItemGroup.BUILDING_BLOCKS);
+        BLUESCHIST_BRICK_SLAB = registerBlockItem("blueschist_brick_slab", VABlocks.BLUESCHIST_BRICK_SLAB, ItemGroup.BUILDING_BLOCKS);
+        BLUESCHIST_BRICK_WALL = registerBlockItem("blueschist_brick_wall", VABlocks.BLUESCHIST_BRICK_WALL, ItemGroup.BUILDING_BLOCKS);
+        SYENITE = registerBlockItem("syenite", VABlocks.SYENITE, ItemGroup.BUILDING_BLOCKS);
+        COBBLED_SYENITE = registerBlockItem("cobbled_syenite", VABlocks.COBBLED_SYENITE, ItemGroup.BUILDING_BLOCKS);
+        COBBLED_SYENITE_STAIRS = registerBlockItem("cobbled_syenite_stairs", VABlocks.COBBLED_SYENITE_STAIRS, ItemGroup.BUILDING_BLOCKS);
+        COBBLED_SYENITE_SLAB = registerBlockItem("cobbled_syenite_slab", VABlocks.COBBLED_SYENITE_SLAB, ItemGroup.BUILDING_BLOCKS);
+        COBBLED_SYENITE_WALL = registerBlockItem("cobbled_syenite_wall", VABlocks.COBBLED_SYENITE_WALL, ItemGroup.BUILDING_BLOCKS);
+        POLISHED_SYENITE = registerBlockItem("polished_syenite", VABlocks.POLISHED_SYENITE, ItemGroup.BUILDING_BLOCKS);
+        POLISHED_SYENITE_STAIRS = registerBlockItem("polished_syenite_stairs", VABlocks.POLISHED_SYENITE_STAIRS, ItemGroup.BUILDING_BLOCKS);
+        POLISHED_SYENITE_SLAB = registerBlockItem("polished_syenite_slab", VABlocks.POLISHED_SYENITE_SLAB, ItemGroup.BUILDING_BLOCKS);
+        SYENITE_BRICKS = registerBlockItem("syenite_bricks", VABlocks.SYENITE_BRICKS, ItemGroup.BUILDING_BLOCKS);
+        CRACKED_SYENITE_BRICKS = registerBlockItem("cracked_syenite_bricks", VABlocks.CRACKED_SYENITE_BRICKS, ItemGroup.BUILDING_BLOCKS);
+        SYENITE_BRICK_STAIRS = registerBlockItem("syenite_brick_stairs", VABlocks.SYENITE_BRICK_STAIRS, ItemGroup.BUILDING_BLOCKS);
+        SYENITE_BRICK_SLAB = registerBlockItem("syenite_brick_slab", VABlocks.SYENITE_BRICK_SLAB, ItemGroup.BUILDING_BLOCKS);
+        SYENITE_BRICK_WALL = registerBlockItem("syenite_brick_wall", VABlocks.SYENITE_BRICK_WALL, ItemGroup.BUILDING_BLOCKS);
+        ENTANGLEMENT_DRIVE = register("entanglement_drive", new BlockItem(VABlocks.ENTANGLEMENT_DRIVE, new FabricItemSettings().rarity(Rarity.RARE).group(ItemGroup.REDSTONE)));
+        IOLITE = register("iolite", ItemGroup.MISC);
+        IOLITE_ORE = registerBlockItem("iolite_ore", VABlocks.IOLITE_ORE, ItemGroup.BUILDING_BLOCKS);
+        IOLITE_ANCHOR = register("iolite_anchor", new BlockItem(VABlocks.IOLITE_ANCHOR, new FabricItemSettings().rarity(Rarity.RARE).group(ItemGroup.TRANSPORTATION)));
+        IOLITE_TETHER = register("iolite_tether", new BlockItem(VABlocks.IOLITE_TETHER, new FabricItemSettings().rarity(Rarity.RARE).group(ItemGroup.TRANSPORTATION)));
+        LUMINOUS_CRYSTAL = registerBlockItem("luminous_crystal", VABlocks.LUMINOUS_CRYSTAL, ItemGroup.DECORATIONS);
+        SHIMMERING_LUMINOUS_CRYSTAL_BLOCK = registerBlockItem("luminous_crystal_block", VABlocks.LUMINOUS_CRYSTAL_BLOCK, ItemGroup.BUILDING_BLOCKS);
+        SPOTLIGHT = registerBlockItem("spotlight", VABlocks.SPOTLIGHT, ItemGroup.REDSTONE);
+        VENOMOUS_BOIL = registerBlockItem("venomous_boil", VABlocks.VENOMOUS_BOIL, ItemGroup.DECORATIONS);
+        ICE_SHEET = registerBlockItem("ice_sheet", VABlocks.ICE_SHEET, ItemGroup.DECORATIONS);
+        SLIME_TENDRILS = registerBlockItem("slime_tendrils", VABlocks.SLIME_TENDRILS);
+        TOXIC_NYLIUM = registerBlockItem("toxic_nylium", VABlocks.TOXIC_NYLIUM, ItemGroup.DECORATIONS);
+        TOXIC_ROOTS = registerBlockItem("toxic_roots", VABlocks.TOXIC_ROOTS, ItemGroup.DECORATIONS);
+        TOXIC_HEAP = registerBlockItem("toxic_heap", VABlocks.TOXIC_HEAP, ItemGroup.BUILDING_BLOCKS);
+        ACID_BUCKET = register("acid_bucket", new CustomBucketItem(VAFluids.STILL_ACID, VASoundEvents.ITEM_BUCKET_EMPTY_ACID, new FabricItemSettings().recipeRemainder(Items.BUCKET).maxCount(1).group(ItemGroup.MISC)));
+        APPLICABLE_POTION_ITEM = register("applicable_potion", new ApplicablePotionItem(new FabricItemSettings().group(ItemGroup.BREWING).maxCount(1)));
+        RAW_STEEL_BLOCK = registerBlockItem("raw_steel_block", VABlocks.RAW_STEEL_BLOCK, ItemGroup.BUILDING_BLOCKS);
+        STEEL_BLOCK = registerBlockItem("steel_block", VABlocks.STEEL_BLOCK, ItemGroup.BUILDING_BLOCKS);
+        RAW_STEEL = register("raw_steel", ItemGroup.MISC);
+        STEEL_INGOT = register("steel_ingot", ItemGroup.MISC);
+        STEEL_BOMB = register("steel_bomb", new SteelBombItem(new FabricItemSettings().group(ItemGroup.TOOLS).maxCount(16)));
+        KEY = register("key", new KeyItem(new FabricItemSettings().group(ItemGroup.MISC).maxCount(1)));
+        BOTTLED_SOULS = register("bottled_souls", new Item((new Item.Settings()).recipeRemainder(Items.GLASS_BOTTLE).group(ItemGroup.MISC).rarity(Rarity.UNCOMMON)));
+        STAFF = register("staff", new StaffItem(ToolMaterials.WOOD, new FabricItemSettings().group(ItemGroup.TOOLS)));
+        //PROJECTION_SPYGLASS = register("projection_spyglass", new ProjectionSpyglassItem(new FabricItemSettings().group(ItemGroup.MISC)));
+        //FRIED_EGG = register("fried_egg", new Item(new FabricItemSettings().group(ItemGroup.FOOD).food(FoodComponents.APPLE)));
+
+
+        AMETHYST_DIAMOND_TOOL_SET = registerGildedToolSet(DIAMOND_TOOL_SET, GildType.AMETHYST);
+        COPPER_DIAMOND_TOOL_SET = registerGildedToolSet(DIAMOND_TOOL_SET, GildType.COPPER);
+        EMERALD_DIAMOND_TOOL_SET = registerGildedToolSet(DIAMOND_TOOL_SET, GildType.EMERALD);
+        QUARTZ_DIAMOND_TOOL_SET = registerGildedToolSet(DIAMOND_TOOL_SET, GildType.QUARTZ);
+        AMETHYST_IRON_TOOL_SET = registerGildedToolSet(IRON_TOOL_SET, GildType.AMETHYST);
+        COPPER_IRON_TOOL_SET = registerGildedToolSet(IRON_TOOL_SET, GildType.COPPER);
+        EMERALD_IRON_TOOL_SET = registerGildedToolSet(IRON_TOOL_SET, GildType.EMERALD);
+        QUARTZ_IRON_TOOL_SET = registerGildedToolSet(IRON_TOOL_SET, GildType.QUARTZ);
+        AMETHYST_GOLDEN_TOOL_SET = registerGildedToolSet(GOLDEN_TOOL_SET, GildType.AMETHYST);
+        COPPER_GOLDEN_TOOL_SET = registerGildedToolSet(GOLDEN_TOOL_SET, GildType.COPPER);
+        EMERALD_GOLDEN_TOOL_SET = registerGildedToolSet(GOLDEN_TOOL_SET, GildType.EMERALD);
+        QUARTZ_GOLDEN_TOOL_SET = registerGildedToolSet(GOLDEN_TOOL_SET, GildType.QUARTZ);
+        AMETHYST_NETHERITE_TOOL_SET = registerGildedToolSet(NETHERITE_TOOL_SET, GildType.AMETHYST);
+        COPPER_NETHERITE_TOOL_SET = registerGildedToolSet(NETHERITE_TOOL_SET, GildType.COPPER);
+        EMERALD_NETHERITE_TOOL_SET = registerGildedToolSet(NETHERITE_TOOL_SET, GildType.EMERALD);
+        QUARTZ_NETHERITE_TOOL_SET = registerGildedToolSet(NETHERITE_TOOL_SET, GildType.QUARTZ);
+    }
+
+    public static void init(){
+        //Dispenser Behaviors
+        registerDispenserBehavior(STEEL_BOMB, new ProjectileDispenserBehavior() {
+            protected ProjectileEntity createProjectile(World world, Position position, ItemStack stack) {
+                return Util.make(new SteelBombEntity(world, position.getX(), position.getY(), position.getZ()), (steelBombEntity) -> steelBombEntity.setItem(stack));
+            }
+        });
+
+        registerDispenserBehavior(CLIMBING_ROPE, new ProjectileDispenserBehavior() {
+            protected ProjectileEntity createProjectile(World world, Position position, ItemStack stack) {
+                ClimbingRopeEntity climbingRopeEntity = new ClimbingRopeEntity( position.getX(), position.getY(), position.getZ(), world);
+                climbingRopeEntity.pickupType = PersistentProjectileEntity.PickupPermission.ALLOWED;
+                return climbingRopeEntity;
+            }
+        });
+
+        registerDispenserBehavior(ACID_BUCKET, new ItemDispenserBehavior(){
+                private final ItemDispenserBehavior fallbackBehavior = new ItemDispenserBehavior();
+
+                public ItemStack dispenseSilently(BlockPointer pointer, ItemStack stack) {
+                FluidModificationItem fluidModificationItem = (FluidModificationItem)stack.getItem();
+                BlockPos blockPos = pointer.getPos().offset(pointer.getBlockState().get(DispenserBlock.FACING));
+                World world = pointer.getWorld();
+                BlockState state = world.getBlockState(blockPos);
+                if (!state.isIn(VABlockTags.ACID_UNBREAKABLE)){
+                    world.breakBlock(blockPos, true);
+                    world.playSound(null, blockPos, SoundEvents.BLOCK_FIRE_EXTINGUISH, SoundCategory.BLOCKS, 0.5F, 1.0F);
+                }
+                if (fluidModificationItem.placeFluid(null, world, blockPos, null)) {
+                    fluidModificationItem.onEmptied(null, world, stack, blockPos);
+                    return new ItemStack(Items.BUCKET);
+                } else {
+                    return this.fallbackBehavior.dispense(pointer, stack);
+                }
+            }
+        });
+
+        //Brewing Recipes
+        BrewingRecipeRegistryAccessor.virtualAdditions$registerCustomPotionType(APPLICABLE_POTION_ITEM);
+        BrewingRecipeRegistryAccessor.virtualAdditions$registerCustomItemRecipe(Items.POTION, Items.SLIME_BALL, APPLICABLE_POTION_ITEM);
+    }
+
+    //Register an Item
+    protected static <T extends Item> Item register(String id, T item) {
+        return Registry.register(Registry.ITEM, idOf(id), item);
+    }
+
+    protected static Item register(String id, ItemGroup itemGroup) {
+        Optional<ItemGroup> optionalItemGroup = Optional.of(itemGroup);
+        FabricItemSettings settings = new FabricItemSettings();
+        optionalItemGroup.ifPresent(settings::group);
+        return register(id, new Item(settings));
+    }
+
+    protected static Item registerBlockItem(String id, Block block, ItemGroup itemGroup) {
+        return register(id, new BlockItem(block, new FabricItemSettings().group(itemGroup)));
+    }
+
+    protected static Item registerBlockItem(String id, Block block) {
+        return register(id, new BlockItem(block, new FabricItemSettings()));
+    }
+
+    protected static ToolSet registerGildedToolSet(ToolSet baseSet, GildType gildedToolMaterial) {
+        String newName = gildedToolMaterial.name().toLowerCase(Locale.ROOT) +"_"+ baseSet.NAME;
+        return new ToolSet(
+                register(newName +"_sword", new GildedSwordItem(gildedToolMaterial, (SwordItem) baseSet.SWORD, GildedToolUtil.settingsOf(baseSet.SWORD))),
+                register(newName +"_shovel", new GildedShovelItem(gildedToolMaterial, (ShovelItem) baseSet.SHOVEL, GildedToolUtil.settingsOf(baseSet.SHOVEL))),
+                register(newName +"_pickaxe", new GildedPickaxeItem(gildedToolMaterial, (PickaxeItem) baseSet.PICKAXE, GildedToolUtil.settingsOf(baseSet.PICKAXE))),
+                register(newName +"_axe", new GildedAxeItem(gildedToolMaterial, (AxeItem) baseSet.AXE, GildedToolUtil.settingsOf(baseSet.AXE))),
+                register(newName +"_hoe", new GildedHoeItem(gildedToolMaterial, (HoeItem) baseSet.HOE, GildedToolUtil.settingsOf(baseSet.HOE))),
+                newName
+        );
+    }
+
+    //Register a dispenser behavior
+    protected static void registerDispenserBehavior(ItemConvertible item, DispenserBehavior behavior) {
+        DispenserBlock.registerBehavior(item, behavior);
+    }
+
+}

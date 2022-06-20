@@ -1,0 +1,17 @@
+{
+    "type": "minecraft:crafting_shaped",
+    "pattern": [
+        "sss",
+        "sss",
+        "sss"
+    ],
+    "key": {
+        "s": {
+            "item": "virtual_additions:steel_ingot"
+        }
+    },
+    "result": {
+        "item": "virtual_additions:steel_block",
+        "count": 1
+    }
+}

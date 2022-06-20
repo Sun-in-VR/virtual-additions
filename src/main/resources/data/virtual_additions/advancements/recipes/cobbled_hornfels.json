@@ -1,0 +1,27 @@
+{
+  "criteria": {
+    "inventory": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "virtual_additions:cobbled_hornfels"
+            ]
+          }
+        ]
+      }
+    }
+  },
+  "rewards": {
+    "recipes": [
+      "virtual_additions:crafting_shaped/cobbled_hornfels_stairs",
+      "virtual_additions:crafting_shaped/cobbled_hornfels_slab",
+      "virtual_additions:crafting_shaped/cobbled_hornfels_wall",
+      "virtual_additions:cutting/cobbled_hornfels_stairs",
+      "virtual_additions:cutting/cobbled_hornfels_slab",
+      "virtual_additions:cutting/cobbled_hornfels_wall",
+      "virtual_additions:smelting/hornfels"
+    ]
+  }
+}

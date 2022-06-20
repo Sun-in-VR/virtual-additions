@@ -1,0 +1,13 @@
+{
+    "type": "virtual_additions:workbench_single",
+    "tool": {
+        "tag": "fabric:axes"
+    },
+    "input": {
+        "item": "minecraft:jungle_log"
+    },
+    "damage": "1",
+    "sound": "minecraft:item.axe.strip",
+    "output": "minecraft:stripped_jungle_log",
+    "count": "1"
+}

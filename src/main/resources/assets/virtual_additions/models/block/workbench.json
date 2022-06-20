@@ -1,0 +1,12 @@
+{
+    "parent": "minecraft:block/cube",
+    "textures": {
+      "particle": "virtual_additions:block/workbench_front",
+      "north": "virtual_additions:block/workbench_front",
+      "south": "virtual_additions:block/workbench_front",
+      "east": "virtual_additions:block/workbench_side",
+      "west": "virtual_additions:block/workbench_side",
+      "up": "virtual_additions:block/workbench_top",
+      "down": "virtual_additions:block/workbench_bottom"
+    }
+  }

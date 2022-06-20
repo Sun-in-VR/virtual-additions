@@ -1,0 +1,20 @@
+{
+  "variants": {
+    "": [
+      {
+        "model": "virtual_additions:block/blueschist"
+      },
+      {
+        "model": "virtual_additions:block/blueschist_mirrored"
+      },
+      {
+        "model": "virtual_additions:block/blueschist",
+        "y": 180
+      },
+      {
+        "model": "virtual_additions:block/blueschist_mirrored",
+        "y": 180
+      }
+    ]
+  }
+}

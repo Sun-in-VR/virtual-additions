@@ -1,0 +1,45 @@
+{
+  "criteria": {
+    "inventory": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "minecraft:amethyst_block"
+            ]
+          }
+        ]
+      }
+    }
+  },
+  "rewards": {
+    "recipes": [
+      "virtual_additions:smithing/gilded_tools/amethyst/diamond_sword",
+      "virtual_additions:smithing/gilded_tools/amethyst/golden_sword",
+      "virtual_additions:smithing/gilded_tools/amethyst/iron_sword",
+      "virtual_additions:smithing/gilded_tools/amethyst/netherite_sword",
+      "virtual_additions:smithing/gilded_tools/amethyst/steel_sword",
+      "virtual_additions:smithing/gilded_tools/amethyst/diamond_shovel",
+      "virtual_additions:smithing/gilded_tools/amethyst/golden_shovel",
+      "virtual_additions:smithing/gilded_tools/amethyst/iron_shovel",
+      "virtual_additions:smithing/gilded_tools/amethyst/netherite_shovel",
+      "virtual_additions:smithing/gilded_tools/amethyst/steel_shovel",
+      "virtual_additions:smithing/gilded_tools/amethyst/diamond_pickaxe",
+      "virtual_additions:smithing/gilded_tools/amethyst/golden_pickaxe",
+      "virtual_additions:smithing/gilded_tools/amethyst/iron_pickaxe",
+      "virtual_additions:smithing/gilded_tools/amethyst/netherite_pickaxe",
+      "virtual_additions:smithing/gilded_tools/amethyst/steel_pickaxe",
+      "virtual_additions:smithing/gilded_tools/amethyst/diamond_axe",
+      "virtual_additions:smithing/gilded_tools/amethyst/golden_axe",
+      "virtual_additions:smithing/gilded_tools/amethyst/iron_axe",
+      "virtual_additions:smithing/gilded_tools/amethyst/netherite_axe",
+      "virtual_additions:smithing/gilded_tools/amethyst/steel_axe",
+      "virtual_additions:smithing/gilded_tools/amethyst/diamond_hoe",
+      "virtual_additions:smithing/gilded_tools/amethyst/golden_hoe",
+      "virtual_additions:smithing/gilded_tools/amethyst/iron_hoe",
+      "virtual_additions:smithing/gilded_tools/amethyst/netherite_hoe",
+      "virtual_additions:smithing/gilded_tools/amethyst/steel_hoe"
+    ]
+  }
+}

@@ -1,0 +1,13 @@
+{
+  "variants": {
+    "type=bottom": {
+      "model": "virtual_additions:block/cobbled_blueschist_slab"
+    },
+    "type=double": {
+      "model": "virtual_additions:block/cobbled_blueschist"
+    },
+    "type=top": {
+      "model": "virtual_additions:block/cobbled_blueschist_slab_top"
+    }
+  }
+}

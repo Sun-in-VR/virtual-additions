@@ -1,0 +1,20 @@
+{
+  "variants": {
+    "": [
+      {
+        "model": "virtual_additions:block/syenite"
+      },
+      {
+        "model": "virtual_additions:block/syenite_mirrored"
+      },
+      {
+        "model": "virtual_additions:block/syenite",
+        "y": 180
+      },
+      {
+        "model": "virtual_additions:block/syenite_mirrored",
+        "y": 180
+      }
+    ]
+  }
+}

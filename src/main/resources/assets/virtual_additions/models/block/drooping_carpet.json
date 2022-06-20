@@ -1,0 +1,56 @@
+{
+	"credit": "Made with Blockbench",
+	"parent": "minecraft:block/thin_block",
+	"textures": {
+		"base": "#base",
+		"side": "#side",
+		"particle": "#base"
+	},
+	"elements": [
+		{
+			"name": "carpet",
+			"from": [0, 0, 0],
+			"to": [16, 1, 16],
+			"faces": {
+				"north": {"uv": [0, 15, 16, 16], "texture": "#base", "cullface": "north"},
+				"east": {"uv": [0, 15, 16, 16], "texture": "#base", "cullface": "east"},
+				"south": {"uv": [0, 15, 16, 16], "texture": "#base", "cullface": "south"},
+				"west": {"uv": [0, 15, 16, 16], "texture": "#base", "cullface": "west"},
+				"up": {"uv": [0, 0, 16, 16], "texture": "#base"},
+				"down": {"uv": [0, 0, 16, 16], "texture": "#base", "cullface": "down"}
+			}
+		},
+		{
+			"name": "side_north",
+			"from": [0, -4, -0.05],
+			"to": [16, 1, -0.05],
+			"faces": {
+				"north": {"uv": [0, 0, 16, 5], "texture": "#side", "cullface": "north"}
+			}
+		},
+		{
+			"name": "side_south",
+			"from": [0, -4, 16.05],
+			"to": [16, 1, 16.05],
+			"faces": {
+				"south": {"uv": [0, 0, 16, 5], "texture": "#side", "cullface": "south"}
+			}
+		},
+		{
+			"name": "side_west",
+			"from": [-0.05, -4, 0],
+			"to": [-0.05, 1, 16],
+			"faces": {
+				"west": {"uv": [0, 0, 16, 5], "texture": "#side", "cullface": "west"}
+			}
+		},
+		{
+			"name": "side_east",
+			"from": [16.05, -4, 0],
+			"to": [16.05, 1, 16],
+			"faces": {
+				"east": {"uv": [0, 0, 16, 5], "texture": "#side", "cullface": "east"}
+			}
+		}
+	]
+}

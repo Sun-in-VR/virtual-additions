@@ -1,0 +1,16 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "bbb",
+    "bbb"
+  ],
+  "key": {
+    "b": {
+      "item": "virtual_additions:cobbled_syenite"
+    }
+  },
+  "result": {
+    "item": "virtual_additions:cobbled_syenite_wall",
+    "count": 6
+  }
+}

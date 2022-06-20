@@ -1,0 +1,12 @@
+{
+    "type": "virtual_additions:workbench_single",
+    "tool": {
+        "tag": "fabric:axes"
+    },
+    "input": {
+        "item": "minecraft:weathered_cut_copper"
+    },
+    "damage": "1",
+    "sound": "minecraft:item.axe.scrape",
+    "output": "minecraft:exposed_cut_copper"
+}

@@ -1,0 +1,8 @@
+{
+  "replace": "false",
+  "values": [
+    "virtual_additions:hornfels",
+    "virtual_additions:syenite",
+    "virtual_additions:blueschist"
+  ]
+}

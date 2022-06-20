@@ -1,0 +1,7 @@
+{
+  "parent": "virtual_additions:block/drooping_carpet",
+  "textures": {
+    "base": "minecraft:block/ice",
+    "side": "virtual_additions:block/ice_sheet_side"
+  }
+}

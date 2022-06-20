@@ -1,0 +1,115 @@
+package com.github.suninvr.virtualadditions.block.entity;
+
+import com.github.suninvr.virtualadditions.block.enums.LightStatus;
+import net.minecraft.block.BlockState;
+import net.minecraft.block.Blocks;
+import net.minecraft.block.entity.BlockEntity;
+import net.minecraft.block.entity.BlockEntityType;
+import net.minecraft.fluid.Fluids;
+import net.minecraft.nbt.NbtCompound;
+import net.minecraft.nbt.NbtElement;
+import net.minecraft.nbt.NbtHelper;
+import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.math.Direction;
+import net.minecraft.world.World;
+import com.github.suninvr.virtualadditions.block.SpotlightBlock;
+import com.github.suninvr.virtualadditions.block.SpotlightLightBlock;
+import com.github.suninvr.virtualadditions.registry.VABlockEntities;
+import com.github.suninvr.virtualadditions.registry.VABlockTags;
+import com.github.suninvr.virtualadditions.registry.VABlocks;
+import org.jetbrains.annotations.Nullable;
+
+public class SpotlightBlockEntity extends BlockEntity {
+    public final BlockState ON_STATE = VABlocks.SPOTLIGHT_LIGHT.getDefaultState();
+    public final BlockState OFF_STATE = VABlocks.SPOTLIGHT_LIGHT.getDefaultState().with(SpotlightLightBlock.LIT, false);
+    private NbtElement lightPos;
+
+    public SpotlightBlockEntity(BlockEntityType<?> blockEntityType, BlockPos blockPos, BlockState blockState) {
+        super(blockEntityType, blockPos, blockState);
+    }
+
+    public SpotlightBlockEntity(BlockPos pos, BlockState state) {
+        super(VABlockEntities.SPOTLIGHT_BLOCK_ENTITY, pos, state);
+        NbtCompound defaultNbt = new NbtCompound();
+        defaultNbt.put("LightPos", NbtHelper.fromBlockPos(pos));
+        readNbt(defaultNbt);
+    }
+
+    @Override
+    protected void writeNbt(NbtCompound nbt) {
+        super.writeNbt(nbt);
+        if (this.lightPos != null) nbt.put("LightPos", this.lightPos);
+    }
+
+    @Override
+    public void readNbt(NbtCompound nbt) {
+        super.readNbt(nbt);
+        if (nbt.contains("LightPos")) this.lightPos = nbt.get("LightPos");
+    }
+
+    public static void tick(World world, BlockPos pos, BlockState state, SpotlightBlockEntity blockEntity) {
+        if (world.getTime() % 20 == 0) {
+            if (state.get(SpotlightBlock.POWERED)) blockEntity.updateLightLocation(world, pos, state);
+        }
+    }
+
+    public void updateLightLocation(World world, BlockPos pos, BlockState state) {
+        if (world.isClient) return;
+        if (!state.isOf(VABlocks.SPOTLIGHT)) return;
+
+        Direction direction = state.get(SpotlightBlock.FACING);
+        BlockPos newPos = this.getUpdatedLightLocation(world, pos, direction);
+        if (newPos != null) {
+            boolean powered = state.get(SpotlightBlock.POWERED);
+            //Initialize position and state variables.
+            BlockState newState = world.getBlockState(newPos);
+            BlockPos oldPos = this.getLightLocation();
+            BlockState oldState = world.getBlockState(oldPos);
+
+            if (newState.isOf(VABlocks.SPOTLIGHT_LIGHT)) {
+                //Update the state if already a light block
+                SpotlightLightBlock.setStatus(world, newState, newPos, direction, powered ? LightStatus.LIT : LightStatus.UNLIT);
+                this.setLightLocation(newPos);
+            } else {
+                //Place the new light if the space is available
+                boolean isWater = world.getFluidState(newPos).isEqualAndStill(Fluids.WATER);
+                if (world.isAir(newPos) || newState.isOf(Blocks.WATER)) {
+                    this.setLightLocation(newPos);
+                    BlockState lightState = VABlocks.SPOTLIGHT_LIGHT.getDefaultState().with(SpotlightLightBlock.WATERLOGGED, isWater).with(SpotlightLightBlock.LIT, powered);
+                    world.setBlockState(newPos, SpotlightLightBlock.getStateWithStatus(lightState, direction, powered ? LightStatus.LIT : LightStatus.UNLIT));
+                }
+            }
+
+            //Update the old state
+            if (!oldPos.equals(newPos) && oldState.isOf(VABlocks.SPOTLIGHT_LIGHT)) SpotlightLightBlock.setStatus(world, oldState, oldPos, direction, LightStatus.NONE);
+        }
+
+    }
+
+    @Nullable
+    private BlockPos getUpdatedLightLocation(World world, BlockPos startPos, Direction direction) {
+        BlockPos pos = startPos.offset(direction);
+        if (!world.isAir(pos) && !world.getBlockState(pos).isIn(VABlockTags.SPOTLIGHT_PERMEABLE)) return pos;
+        int i = 0;
+
+        BlockPos finalPos = pos;
+        BlockPos offsetPos = pos.offset(direction);
+        while ((world.isAir(offsetPos) || world.getBlockState(offsetPos).isIn(VABlockTags.SPOTLIGHT_PERMEABLE)) && i < 31) {
+            pos = pos.offset(direction);
+            offsetPos = pos.offset(direction);
+            i++;
+            if (world.isAir(pos) || world.getBlockState(pos).isOf(Blocks.WATER) || world.getBlockState(pos).isOf(VABlocks.SPOTLIGHT_LIGHT)) finalPos = pos;
+        }
+
+        return finalPos;
+    }
+
+    public BlockPos getLightLocation() {
+        return NbtHelper.toBlockPos( (NbtCompound) this.lightPos );
+    }
+
+    private void setLightLocation(BlockPos pos) {
+        this.lightPos = NbtHelper.fromBlockPos(pos);
+        this.markDirty();
+    }
+}

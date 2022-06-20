@@ -1,0 +1,105 @@
+{
+  "block.rope.break": {
+    "subtitle": "subtitles.block.generic.break",
+    "sounds": [
+      "entity/leashknot/break1",
+      "entity/leashknot/break2",
+      "entity/leashknot/break3"
+    ]
+  },
+  "block.rope.step": {
+    "subtitle": "subtitles.block.generic.footsteps",
+    "sounds": [
+      "entity/leashknot/break1",
+      "entity/leashknot/break2",
+      "entity/leashknot/break3"
+    ]
+  },
+  "block.rope.fall": {
+    "subtitle": "subtitles.block.generic.fall",
+    "sounds": [
+      "entity/leashknot/break1",
+      "entity/leashknot/break2",
+      "entity/leashknot/break3"
+    ]
+  },
+  "block.rope.hit": {
+    "subtitle": "subtitles.block.generic.hit",
+    "sounds": [
+      "entity/leashknot/break1",
+      "entity/leashknot/break2",
+      "entity/leashknot/break3"
+    ]
+  },
+  "block.rope.place": {
+    "subtitle": "subtitles.block.generic.place",
+    "sounds": [
+      "entity/leashknot/place1",
+      "entity/leashknot/place2",
+      "entity/leashknot/place3"
+    ]
+  },
+  "block.rope.extend": {
+    "subtitle": "subtitles.block.climbing_rope.extends",
+    "sounds": [
+      "entity/leashknot/break1",
+      "entity/leashknot/break2",
+      "entity/leashknot/break3"
+    ]
+  },
+  "block.iolite_tether.warp": {
+    "subtitle": "subtitles.block.iolite_tether.warp",
+    "sounds": [
+      {
+        "name": "block/respawn_anchor/set_spawn1",
+        "pitch": 1.8
+      },
+      {
+        "name": "block/respawn_anchor/set_spawn2",
+        "pitch": 1.8
+      },
+      {
+        "name": "block/respawn_anchor/set_spawn3",
+        "pitch": 1.8
+      }
+    ]
+  },
+  "block.workbench.used.iron_hammer": {
+    "subtitle": "subtitles.block.workbench.used",
+    "sounds": [
+      {
+        "name": "mob/zombie/metal1",
+        "pitch": 1.4
+      },
+      {
+        "name": "mob/zombie/metal2",
+        "pitch": 1.4
+      },
+      {
+        "name": "mob/zombie/metal3",
+        "pitch": 1.4
+      }
+    ]
+
+  },
+  "entity.steel_bomb.throw": {
+    "subtitle": "subtitles.entity.steel_bomb.throw",
+    "sounds": [
+      "random/bow"
+    ]
+  },
+  "item.bucket.empty_acid": {
+    "subtitle": "subtitles.item.bucket.empty",
+    "sounds": [
+      "virtual_additions:item/bucket/empty_acid_1",
+      "virtual_additions:item/bucket/empty_acid_2",
+      "virtual_additions:item/bucket/empty_acid_3"
+    ]
+  },
+  "item.bucket.fill_acid": {
+    "subtitle": "subtitles.item.bucket.fill",
+    "sounds": [
+      "virtual_additions:item/bucket/fill_acid_3"
+    ]
+  }
+}

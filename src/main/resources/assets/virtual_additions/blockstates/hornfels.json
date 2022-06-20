@@ -1,0 +1,62 @@
+{
+  "variants": {
+    "axis=x": [
+      {
+        "model": "virtual_additions:block/hornfels",
+        "x": 90,
+        "y": 90
+      },
+      {
+        "model": "virtual_additions:block/hornfels_mirrored",
+        "x": 90,
+        "y": 90
+      },
+      {
+        "model": "virtual_additions:block/hornfels",
+        "y": 90,
+        "x": 90
+      },
+      {
+        "model": "virtual_additions:block/hornfels_mirrored",
+        "y": 90,
+        "x": 90
+      }
+    ],
+    "axis=y": [
+      {
+        "model": "virtual_additions:block/hornfels"
+      },
+      {
+        "model": "virtual_additions:block/hornfels_mirrored"
+      },
+      {
+        "model": "virtual_additions:block/hornfels",
+        "y": 180
+      },
+      {
+        "model": "virtual_additions:block/hornfels_mirrored",
+        "y": 180
+      }
+    ],
+    "axis=z": [
+      {
+        "model": "virtual_additions:block/hornfels",
+        "x": 90
+      },
+      {
+        "model": "virtual_additions:block/hornfels_mirrored",
+        "x": 90
+      },
+      {
+        "model": "virtual_additions:block/hornfels",
+        "y": 180,
+        "x": 90
+      },
+      {
+        "model": "virtual_additions:block/hornfels_mirrored",
+        "y": 180,
+        "x": 90
+      }
+    ]
+  }
+}

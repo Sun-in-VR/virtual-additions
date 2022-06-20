@@ -1,0 +1,6 @@
+{
+  "variants": {
+    "cooldown=true": { "model": "virtual_additions:block/iolite_tether" },
+    "cooldown=false": { "model": "virtual_additions:block/iolite_tether_active" }
+  }
+}
