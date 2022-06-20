@@ -9,7 +9,7 @@ import java.util.Locale;
 import java.util.function.BiFunction;
 
 public enum GildType implements StringIdentifiable {
-    AMETHYST(1, 1.5F, 1, 1, 1, Operation.MULTIPLICATION, "amethyst"),
+    AMETHYST(0, 1F, 0, 0, 0, Operation.ADDITION, "amethyst"),
     COPPER(1.5F, 1, 1, 1, 1, Operation.MULTIPLICATION, "copper"),
     EMERALD(0, 0, 0, 1, 6, Operation.ADDITION, "emerald"),
     QUARTZ(0, 0, 2, 0, 0, Operation.ADDITION, "quartz"),
