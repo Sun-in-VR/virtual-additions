@@ -5,17 +5,29 @@ import com.github.suninvr.virtualadditions.entity.SteelBombEntity;
 import com.github.suninvr.virtualadditions.item.*;
 import com.github.suninvr.virtualadditions.item.enums.GildType;
 import com.github.suninvr.virtualadditions.mixin.BrewingRecipeRegistryAccessor;
+import com.github.suninvr.virtualadditions.mixin.ComposterBlockAccessor;
 import com.github.suninvr.virtualadditions.registry.constructors.block.CustomBucketItem;
 import net.fabricmc.fabric.api.item.v1.FabricItemSettings;
+import net.fabricmc.fabric.api.loot.v2.LootTableEvents;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
+import net.minecraft.block.Blocks;
 import net.minecraft.block.DispenserBlock;
 import net.minecraft.block.dispenser.DispenserBehavior;
 import net.minecraft.block.dispenser.ItemDispenserBehavior;
 import net.minecraft.block.dispenser.ProjectileDispenserBehavior;
+import net.minecraft.enchantment.Enchantments;
 import net.minecraft.entity.projectile.PersistentProjectileEntity;
 import net.minecraft.entity.projectile.ProjectileEntity;
 import net.minecraft.item.*;
+import net.minecraft.loot.LootPool;
+import net.minecraft.loot.condition.InvertedLootCondition;
+import net.minecraft.loot.condition.MatchToolLootCondition;
+import net.minecraft.loot.condition.RandomChanceLootCondition;
+import net.minecraft.loot.entry.ItemEntry;
+import net.minecraft.loot.function.ApplyBonusLootFunction;
+import net.minecraft.loot.function.ExplosionDecayLootFunction;
+import net.minecraft.predicate.item.ItemPredicate;
 import net.minecraft.sound.SoundCategory;
 import net.minecraft.sound.SoundEvents;
 import net.minecraft.util.Rarity;
@@ -100,6 +112,8 @@ public class VAItems {
     public static final Item KEY;
     public static final Item BOTTLED_SOULS;
     public static final Item STAFF;
+    public static final Item COTTON_SEEDS;
+    public static final Item COTTON;
     //public static final Item PROJECTION_SPYGLASS;
 
 
@@ -184,6 +198,8 @@ public class VAItems {
         KEY = register("key", new KeyItem(new FabricItemSettings().group(ItemGroup.MISC).maxCount(1)));
         BOTTLED_SOULS = register("bottled_souls", new Item((new Item.Settings()).recipeRemainder(Items.GLASS_BOTTLE).group(ItemGroup.MISC).rarity(Rarity.UNCOMMON)));
         STAFF = register("staff", new StaffItem(ToolMaterials.WOOD, new FabricItemSettings().group(ItemGroup.TOOLS)));
+        COTTON_SEEDS = register("cotton_seeds", new AliasedBlockItem(VABlocks.COTTON, new FabricItemSettings().group(ItemGroup.MISC)));
+        COTTON = register("cotton", ItemGroup.MISC);
         //PROJECTION_SPYGLASS = register("projection_spyglass", new ProjectionSpyglassItem(new FabricItemSettings().group(ItemGroup.MISC)));
         //FRIED_EGG = register("fried_egg", new Item(new FabricItemSettings().group(ItemGroup.FOOD).food(FoodComponents.APPLE)));
 
@@ -246,6 +262,23 @@ public class VAItems {
         //Brewing Recipes
         BrewingRecipeRegistryAccessor.virtualAdditions$registerCustomPotionType(APPLICABLE_POTION_ITEM);
         BrewingRecipeRegistryAccessor.virtualAdditions$registerCustomItemRecipe(Items.POTION, Items.SLIME_BALL, APPLICABLE_POTION_ITEM);
+
+        //Compostable Items
+        ComposterBlockAccessor.virtualAdditions$registerCompostableItem(0.3F, COTTON_SEEDS);
+        ComposterBlockAccessor.virtualAdditions$registerCompostableItem(0.3F, COTTON);
+
+        //Modified Loot Tables
+        LootTableEvents.MODIFY.register(((resourceManager, lootManager, id, tableBuilder, source) -> {
+            if (source.isBuiltin() && Blocks.GRASS.getLootTableId().equals(id)) {
+                LootPool.Builder builder = LootPool.builder()
+                        .apply(ApplyBonusLootFunction.uniformBonusCount(Enchantments.FORTUNE, 2))
+                        .apply(ExplosionDecayLootFunction.builder())
+                        .conditionally(RandomChanceLootCondition.builder(0.125F))
+                        .conditionally(InvertedLootCondition.builder(MatchToolLootCondition.builder(ItemPredicate.Builder.create().items(Items.SHEARS))))
+                        .with(ItemEntry.builder(COTTON_SEEDS));
+                tableBuilder.pool(builder);
+            }
+        }));
     }
 
     //Register an Item

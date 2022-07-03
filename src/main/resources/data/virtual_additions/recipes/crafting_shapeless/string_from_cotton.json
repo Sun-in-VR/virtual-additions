@@ -1,0 +1,22 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "group": "virtual_additions:steel",
+  "ingredients": [
+    {
+      "item": "virtual_additions:cotton"
+    },
+    {
+      "item": "virtual_additions:cotton"
+    },
+    {
+      "item": "virtual_additions:cotton"
+    },
+    {
+      "item": "virtual_additions:cotton"
+    }
+  ],
+  "result": {
+    "item": "minecraft:string",
+    "count": 1
+  }
+}

@@ -55,6 +55,7 @@
     "block.virtual_additions.toxic_roots": "Toxic Roots",
     "block.virtual_additions.toxic_heap": "Toxic Heap",
     "block.virtual_additions.ice_sheet": "Ice Sheet",
+    "block.virtual_additions.cotton": "Cotton",
 
     "container.workbench": "Workbench",
     "container.virtual_additions.imbuement": "Imbue",
@@ -125,6 +126,8 @@
     "item.virtual_additions.bottled_souls": "Bottle o' Souls",
     "item.virtual_additions.staff": "Staff",
     "item.virtual_additions.fried_egg": "Fried Egg",
+    "item.virtual_additions.cotton_seeds": "Cotton Seeds",
+    "item.virtual_additions.cotton": "Cotton",
 
 
     "subtitles.block.climbing_rope.extends": "Rope extends",

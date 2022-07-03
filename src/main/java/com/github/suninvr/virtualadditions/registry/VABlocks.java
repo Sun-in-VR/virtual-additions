@@ -75,6 +75,7 @@ public class VABlocks {
     //public static final Block ACID_CAULDRON;
     public static final Block ICE_SHEET;
     public static final Block SLIME_TENDRILS;
+    public static final Block COTTON;
 
     static {
         CLIMBING_ROPE = register("climbing_rope", new ClimbingRopeBlock(FabricBlockSettings.of(Material.WOOL).sounds(ROPE_SOUND_GROUP).collidable(false).nonOpaque().hardness(0.1F)));
@@ -136,6 +137,7 @@ public class VABlocks {
         //ACID_CAULDRON = register("acid_cauldron", new AcidCauldronBlock(FabricBlockSettings.copyOf(Blocks.CAULDRON).mapColor(MapColor.GRAY)));
         ICE_SHEET = register("ice_sheet", new IceSheetBlock(FabricBlockSettings.copyOf(Blocks.ICE).nonOpaque()));
         SLIME_TENDRILS = register("slime_tendrils", new SlimeTendrilsBlock(FabricBlockSettings.copyOf(Blocks.SLIME_BLOCK).nonOpaque().noCollision()));
+        COTTON = register("cotton", new CropBlock(AbstractBlock.Settings.of(Material.PLANT).noCollision().ticksRandomly().breakInstantly().sounds(BlockSoundGroup.CROP)));
     }
 
     public static void init(){}

@@ -44,7 +44,8 @@ public class VirtualAdditionsClient implements ClientModInitializer {
         BlockRenderLayerMap.INSTANCE.putBlocks(RenderLayer.getCutout(),
                 VABlocks.CLIMBING_ROPE_ANCHOR,
                 VABlocks.VENOMOUS_BOIL,
-                VABlocks.TOXIC_ROOTS
+                VABlocks.TOXIC_ROOTS,
+                VABlocks.COTTON
         );
 
         BlockRenderLayerMap.INSTANCE.putBlocks(RenderLayer.getTranslucent(),

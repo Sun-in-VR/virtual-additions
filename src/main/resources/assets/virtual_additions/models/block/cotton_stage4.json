@@ -1,0 +1,6 @@
+{
+  "parent": "minecraft:block/crop",
+  "textures": {
+    "crop": "virtual_additions:block/cotton_stage4"
+  }
+}
