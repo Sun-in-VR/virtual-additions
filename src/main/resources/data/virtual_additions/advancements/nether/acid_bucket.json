@@ -1,0 +1,37 @@
+{
+  "display": {
+    "icon": {
+      "item": "virtual_additions:acid_bucket"
+    },
+    "title": {
+      "text": "Sour Punch"
+    },
+    "description": {
+      "text": "Fill a Bucket with Acid"
+    },
+    "frame": "task",
+    "show_toast": true,
+    "announce_to_chat": true,
+    "hidden": false
+  },
+  "parent": "minecraft:nether/root",
+  "criteria": {
+    "acid_bucket": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "virtual_additions:acid_bucket"
+            ]
+          }
+        ]
+      }
+    }
+  },
+  "requirements": [
+    [
+      "acid_bucket"
+    ]
+  ]
+}
