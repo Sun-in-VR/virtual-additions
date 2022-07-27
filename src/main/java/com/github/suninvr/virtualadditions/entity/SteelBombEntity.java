@@ -50,9 +50,21 @@ public class SteelBombEntity extends ThrownItemEntity {
     }
 
     protected float getExplosivePower() {
-        float power = this.stackNbt.getFloat("Power");
-        power = power <= 0 ? 2.0F : power;
+        float power;
+        if (this.stackNbt != null) {
+            power = this.stackNbt.getFloat("Power");
+            power = power <= 0 ? 2.0F : power;
+        } else power = 2.0F;
         return power;
+    }
+
+    protected int getFuseLength() {
+        int fuseLength;
+        if (this.stackNbt != null) {
+            fuseLength = this.stackNbt.getInt("FuseLength");
+            fuseLength = fuseLength <= 0 ? -1 : fuseLength;
+        } else fuseLength = -1;
+        return fuseLength;
     }
 
     @Override
@@ -63,8 +75,8 @@ public class SteelBombEntity extends ThrownItemEntity {
     @Override
     public void setItem(ItemStack item) {
         super.setItem(item);
-        this.stackNbt = item.getOrCreateNbt();
-        this.fuseLength = stackNbt.getInt("FuseLength") > 0 ? stackNbt.getInt("FuseLength") : -1;
+        this.stackNbt = item.getNbt();
+        this.fuseLength = this.getFuseLength();
     }
 
     @Override
