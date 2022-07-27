@@ -83,7 +83,7 @@ public class IoliteTetherBlock extends BlockWithEntity implements Waterloggable 
     //Initiate the teleport once an entity steps on the block
     @Override
     public void onSteppedOn(World world, BlockPos pos, BlockState state, Entity entity) {
-        if(!world.isClient() && !world.getBlockState(pos).get(COOLDOWN)) {
+        if(!world.isClient() && !world.getBlockState(pos).get(COOLDOWN) && !entity.isSneaking()) {
             teleportEntity(world, pos, entity);
         }
     }
