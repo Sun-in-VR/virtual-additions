@@ -64,6 +64,23 @@
       }
     ]
   },
+  "block.iolite_anchor.warp": {
+    "subtitle": "subtitles.block.iolite_anchor.warp",
+    "sounds": [
+      {
+        "name": "block/respawn_anchor/set_spawn1",
+        "pitch": 1.8
+      },
+      {
+        "name": "block/respawn_anchor/set_spawn2",
+        "pitch": 1.8
+      },
+      {
+        "name": "block/respawn_anchor/set_spawn3",
+        "pitch": 1.8
+      }
+    ]
+  },
   "block.workbench.used.iron_hammer": {
     "subtitle": "subtitles.block.workbench.used",
     "sounds": [

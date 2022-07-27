@@ -14,6 +14,7 @@ public class VASoundEvents {
     public static final SoundEvent BLOCK_ROPE_PLACE ;
     public static final SoundEvent BLOCK_ROPE_STEP ;
     public static final SoundEvent BLOCK_IOLITE_TETHER_WARP;
+    public static final SoundEvent BLOCK_IOLITE_ANCHOR_WARP;
     public static final SoundEvent BLOCK_WORKBENCH_USED_IRON_HAMMER;
     public static final SoundEvent ENTITY_STEEL_BOMB_THROW;
     public static final SoundEvent ITEM_BUCKET_EMPTY_ACID;
@@ -27,6 +28,7 @@ public class VASoundEvents {
         BLOCK_ROPE_PLACE = register("block.rope.place");
         BLOCK_ROPE_STEP = register("block.rope.step");
         BLOCK_IOLITE_TETHER_WARP = register("block.iolite_tether.warp");
+        BLOCK_IOLITE_ANCHOR_WARP = register("block.iolite_anchor.warp");
         BLOCK_WORKBENCH_USED_IRON_HAMMER = register("block.workbench.used.iron_hammer");
         ENTITY_STEEL_BOMB_THROW = register("entity.steel_bomb.throw");
         ITEM_BUCKET_EMPTY_ACID = register("item.bucket.empty_acid");

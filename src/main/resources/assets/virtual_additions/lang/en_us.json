@@ -131,8 +131,8 @@
 
 
     "subtitles.block.climbing_rope.extends": "Rope extends",
-    "subtitles.block.iolite_tether.warp": "Something warped away",
-    "subtitles.block.iolite_anchor.warp": "Something warped here",
+    "subtitles.block.iolite_tether.warp": "Something teleported away",
+    "subtitles.block.iolite_anchor.warp": "Something teleported nearby",
     "subtitles.block.workbench.used": "Workbench used",
     "subtitles.entity.steel_bomb.throw": "Steel Bomb flies"
 }

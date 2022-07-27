@@ -137,7 +137,7 @@ public class IoliteTetherBlock extends BlockWithEntity implements Waterloggable 
                     }
 
                     //Play sounds on teleport.
-                    destWorld.playSound(null, destX, destY, destZ, VASoundEvents.BLOCK_IOLITE_TETHER_WARP, SoundCategory.BLOCKS, 1.0F, 1.0F, 0);
+                    destWorld.playSound(null, destX, destY, destZ, VASoundEvents.BLOCK_IOLITE_ANCHOR_WARP, SoundCategory.BLOCKS, 1.0F, 1.0F);
                     world.playSound(null, pos, VASoundEvents.BLOCK_IOLITE_TETHER_WARP, SoundCategory.BLOCKS, 1.0F, 1.0F);
                 }
                 case "obstructed", "fail" -> world.playSound(null, pos, SoundEvents.BLOCK_RESPAWN_ANCHOR_DEPLETE, SoundCategory.BLOCKS, 1.0F, 1.8F);
