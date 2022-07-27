@@ -2,6 +2,7 @@ package com.github.suninvr.virtualadditions.mixin;
 
 import com.mojang.authlib.GameProfile;
 import net.minecraft.block.BlockState;
+import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.MovementType;
@@ -31,11 +32,12 @@ public abstract class PlayerEntityMixin extends LivingEntity {
     @Inject(method = "getBlockBreakingSpeed", at = @At("RETURN"), cancellable = true)
     public void virtualAdditions$getBlockBreakingSpeed(BlockState block, CallbackInfoReturnable<Float> cir) {
         PlayerEntity player = ((PlayerEntity)(Object)this);
-        ItemStack stack = player.getOffHandStack();
-        if (TomeItem.getType(stack).equals(TomeItem.TomeType.HASTE)) {
-            float faster = (cir.getReturnValue() * (TomeItem.TomeType.HASTE.getModifierAmount(TomeItem.getLevel(stack)) + 1));
-            cir.setReturnValue(faster);
+        Entity entity = player.getRootVehicle();
+        boolean bl = entity.isOnGround();
+        if (entity instanceof LivingEntity livingEntity) {
+            bl = bl || livingEntity.isClimbing();
         }
+        if (bl && !player.isOnGround()) cir.setReturnValue(cir.getReturnValue() * 5.0F);
     }
 
 
