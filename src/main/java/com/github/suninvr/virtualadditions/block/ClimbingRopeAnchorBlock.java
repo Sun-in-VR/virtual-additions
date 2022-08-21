@@ -2,6 +2,7 @@ package com.github.suninvr.virtualadditions.block;
 
 import com.github.suninvr.virtualadditions.registry.VAItems;
 import net.minecraft.block.*;
+import net.minecraft.block.entity.BlockEntity;
 import net.minecraft.block.piston.PistonBehavior;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.player.PlayerEntity;
@@ -14,6 +15,7 @@ import net.minecraft.loot.context.LootContext;
 import net.minecraft.loot.context.LootContextParameters;
 import net.minecraft.server.world.ServerWorld;
 import net.minecraft.sound.SoundCategory;
+import net.minecraft.stat.Stats;
 import net.minecraft.state.StateManager;
 import net.minecraft.state.property.BooleanProperty;
 import net.minecraft.state.property.DirectionProperty;
@@ -72,7 +74,20 @@ public class ClimbingRopeAnchorBlock extends Block implements Waterloggable {
     public void onPlaced(World world, BlockPos pos, BlockState state, @Nullable LivingEntity placer, ItemStack itemStack) {
         super.onPlaced(world, pos, state, placer, itemStack);
         world.createAndScheduleBlockTick( pos, state.getBlock(), 0 );
+    }
 
+    @Override
+    public void afterBreak(World world, PlayerEntity player, BlockPos pos, BlockState state, @Nullable BlockEntity blockEntity, ItemStack stack) {
+        player.incrementStat(Stats.MINED.getOrCreateStat(this));
+        player.addExhaustion(0.005F);
+        if (world instanceof ServerWorld serverWorld) {
+            getDroppedStacks(state, serverWorld, pos, blockEntity, null, stack).forEach((stackx) -> {
+                if (!player.getInventory().insertStack(stackx)) {
+                    dropStack(world, pos, stackx);
+                }
+            });
+            state.onStacksDropped(serverWorld, pos, stack, true);
+        }
     }
 
     public PistonBehavior getPistonBehavior(BlockState state) {
