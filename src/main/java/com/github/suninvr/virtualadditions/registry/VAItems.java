@@ -188,7 +188,7 @@ public class VAItems {
         TOXIC_NYLIUM = registerBlockItem("toxic_nylium", VABlocks.TOXIC_NYLIUM, ItemGroup.DECORATIONS);
         TOXIC_ROOTS = registerBlockItem("toxic_roots", VABlocks.TOXIC_ROOTS, ItemGroup.DECORATIONS);
         TOXIC_HEAP = registerBlockItem("toxic_heap", VABlocks.TOXIC_HEAP, ItemGroup.BUILDING_BLOCKS);
-        ACID_BUCKET = register("acid_bucket", new CustomBucketItem(VAFluids.STILL_ACID, VASoundEvents.ITEM_BUCKET_EMPTY_ACID, new FabricItemSettings().recipeRemainder(Items.BUCKET).maxCount(1).group(ItemGroup.MISC)));
+        ACID_BUCKET = register("acid_bucket", new CustomBucketItem(VAFluids.ACID, VASoundEvents.ITEM_BUCKET_EMPTY_ACID, new FabricItemSettings().recipeRemainder(Items.BUCKET).maxCount(1).group(ItemGroup.MISC)));
         APPLICABLE_POTION_ITEM = register("applicable_potion", new ApplicablePotionItem(new FabricItemSettings().group(ItemGroup.BREWING).maxCount(1)));
         RAW_STEEL_BLOCK = registerBlockItem("raw_steel_block", VABlocks.RAW_STEEL_BLOCK, ItemGroup.BUILDING_BLOCKS);
         STEEL_BLOCK = registerBlockItem("steel_block", VABlocks.STEEL_BLOCK, ItemGroup.BUILDING_BLOCKS);

@@ -2,13 +2,11 @@ package com.github.suninvr.virtualadditions.fluid;
 
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
-import net.minecraft.block.FluidDrainable;
 import net.minecraft.block.entity.BlockEntity;
 import net.minecraft.fluid.FlowableFluid;
 import net.minecraft.fluid.Fluid;
 import net.minecraft.fluid.FluidState;
 import net.minecraft.item.Item;
-import net.minecraft.item.ItemStack;
 import net.minecraft.sound.SoundEvent;
 import net.minecraft.state.StateManager;
 import net.minecraft.state.property.Properties;
@@ -40,7 +38,7 @@ public class AcidFluid extends FlowableFluid {
 
     @Override
     public Fluid getStill() {
-        return VAFluids.STILL_ACID;
+        return VAFluids.ACID;
     }
 
     @Override
@@ -91,7 +89,7 @@ public class AcidFluid extends FlowableFluid {
 
     @Override
     public boolean isStill(FluidState state) {
-        return state.isOf(VAFluids.STILL_ACID);
+        return state.isOf(VAFluids.ACID);
     }
 
     @Override

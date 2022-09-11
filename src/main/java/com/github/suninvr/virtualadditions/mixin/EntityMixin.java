@@ -51,7 +51,7 @@ public abstract class EntityMixin implements Nameable, EntityLike, CommandOutput
     void virtualAdditions$baseTick(CallbackInfo ci) {
 
         if(this.isInAcid() && !(((Object)(this)) instanceof ItemEntity)) {
-            this.damage(VADamageSource.ACID_BURN, 4F);
+            this.damage(VADamageSource.ACID_BURN, 1F);
             this.fallDistance *= 0.5F;
         }
     }

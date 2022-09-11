@@ -54,7 +54,7 @@ public class VirtualAdditionsClient implements ClientModInitializer {
                 VABlocks.LUMINOUS_CRYSTAL
                 );
         BlockRenderLayerMap.INSTANCE.putFluids(RenderLayer.getTranslucent(),
-                    VAFluids.STILL_ACID,
+                    VAFluids.ACID,
                     VAFluids.FLOWING_ACID
                 );
 
@@ -73,7 +73,7 @@ public class VirtualAdditionsClient implements ClientModInitializer {
 
         ScreenRegistry.register(VAScreenHandlers.WORKBENCH_SCREEN_HANDLER, WorkbenchScreen::new);
 
-        setupFluidRendering(VAFluids.STILL_ACID, VAFluids.FLOWING_ACID, idOf("acid"), 0x95be21);//0x549300);
+        setupFluidRendering(VAFluids.ACID, VAFluids.FLOWING_ACID, idOf("acid"), 0x95be21);//0x549300);
     }
 
     public static void setupFluidRendering(final Fluid still, final Fluid flowing, final Identifier textureFluidId, final int color) {

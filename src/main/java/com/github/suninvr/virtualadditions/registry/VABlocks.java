@@ -133,7 +133,7 @@ public class VABlocks {
         TOXIC_NYLIUM = register("toxic_nylium", new ToxicNyliumBlock(FabricBlockSettings.of(Material.STONE, MapColor.LIME).sounds(BlockSoundGroup.NYLIUM).requiresTool().strength(0.4F)));
         TOXIC_ROOTS = register("toxic_roots", new CustomRootsBlock(FabricBlockSettings.of(Material.NETHER_SHOOTS, MapColor.LIME).sounds(BlockSoundGroup.ROOTS).noCollision().breakInstantly()));
         TOXIC_HEAP = register("toxic_heap", new Block(FabricBlockSettings.of(Material.ORGANIC_PRODUCT, MapColor.LIME).sounds(BlockSoundGroup.WART_BLOCK)));
-        ACID = register("acid", new CustomFluidBlock(VAFluids.STILL_ACID, FabricBlockSettings.copyOf(Blocks.WATER).mapColor(MapColor.DARK_GREEN)));
+        ACID = register("acid", new CustomFluidBlock(VAFluids.ACID, false, FabricBlockSettings.of(Material.WATER).noCollision().strength(100.0F).dropsNothing().mapColor(MapColor.DARK_GREEN)));
         //ACID_CAULDRON = register("acid_cauldron", new AcidCauldronBlock(FabricBlockSettings.copyOf(Blocks.CAULDRON).mapColor(MapColor.GRAY)));
         ICE_SHEET = register("ice_sheet", new IceSheetBlock(FabricBlockSettings.copyOf(Blocks.ICE).nonOpaque()));
         SLIME_TENDRILS = register("slime_tendrils", new SlimeTendrilsBlock(FabricBlockSettings.copyOf(Blocks.SLIME_BLOCK).nonOpaque().noCollision()));
