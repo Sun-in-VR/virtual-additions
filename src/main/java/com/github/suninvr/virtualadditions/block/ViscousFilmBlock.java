@@ -8,9 +8,11 @@ import net.minecraft.server.world.ServerWorld;
 import net.minecraft.state.StateManager;
 import net.minecraft.state.property.BooleanProperty;
 import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.math.Direction;
 import net.minecraft.util.math.random.Random;
 import net.minecraft.world.BlockView;
 import net.minecraft.world.World;
+import org.checkerframework.checker.units.qual.A;
 
 public class ViscousFilmBlock extends AbstractFilmBlock implements Fertilizable {
     public static final BooleanProperty GROWTHS = BooleanProperty.of("growths");
@@ -23,6 +25,17 @@ public class ViscousFilmBlock extends AbstractFilmBlock implements Fertilizable 
     @Override
     protected void appendProperties(StateManager.Builder<Block, BlockState> builder) {
         super.appendProperties(builder.add(GROWTHS));
+    }
+
+    @Override
+    public boolean hasRandomTicks(BlockState state) {
+        if (state.isOf(this)) return state.get(GROWTHS);
+        return false;
+    }
+
+    @Override
+    public void randomTick(BlockState state, ServerWorld world, BlockPos pos, Random random) {
+        Direction.Axis axis = state.get(AXIS);
     }
 
     @Override
