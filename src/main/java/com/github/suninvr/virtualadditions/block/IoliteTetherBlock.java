@@ -1,9 +1,13 @@
 package com.github.suninvr.virtualadditions.block;
 
+import com.github.suninvr.virtualadditions.registry.VABlockEntities;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
 import net.minecraft.block.*;
+import net.minecraft.block.entity.BeaconBlockEntity;
 import net.minecraft.block.entity.BlockEntity;
+import net.minecraft.block.entity.BlockEntityTicker;
+import net.minecraft.block.entity.BlockEntityType;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.ItemEntity;
 import net.minecraft.entity.LivingEntity;
@@ -191,13 +195,18 @@ public class IoliteTetherBlock extends BlockWithEntity implements Waterloggable 
     @Environment(EnvType.CLIENT)
     @Override
     public void randomDisplayTick(BlockState state, World world, BlockPos pos, net.minecraft.util.math.random.Random random) {
-        if(!state.get(COOLDOWN)){
-            double d = (double) pos.getX() + 0.5D;
-            double e = (double) pos.getY() + 0.4D;
-            double f = (double) pos.getZ() + 0.5D;
-            double g = (double) random.nextFloat() * 0.04D;
-            world.addParticle(new DustColorTransitionParticleEffect(new Vec3f(Vec3d.unpackRgb(15321342)), new Vec3f(Vec3d.unpackRgb(16777215)), 1.0F), d, e, f, 0.0D, g, 0.0D);
-        }
+        //if(!state.get(COOLDOWN)){
+        //    double d = (double) pos.getX() + 0.5D;
+        //    double e = (double) pos.getY() + 0.4D;
+        //    double f = (double) pos.getZ() + 0.5D;
+        //    double g = (double) random.nextFloat() * 0.04D;
+        //    world.addParticle(new DustColorTransitionParticleEffect(new Vec3f(Vec3d.unpackRgb(15321342)), new Vec3f(Vec3d.unpackRgb(16777215)), 1.0F), d, e, f, 0.0D, g, 0.0D);
+        //}
+    }
+
+    @Nullable
+    public <T extends BlockEntity> BlockEntityTicker<T> getTicker(World world, BlockState state, BlockEntityType<T> type) {
+        return checkType(type, VABlockEntities.IOLITE_TETHER_BLOCK_ENTITY, IoliteTetherBlockEntity::tick);
     }
 
     //Waterlogged State
