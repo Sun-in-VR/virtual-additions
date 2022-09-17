@@ -4,7 +4,6 @@ import com.github.suninvr.virtualadditions.registry.VABlocks;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.ShapeContext;
-import net.minecraft.block.TransparentBlock;
 import net.minecraft.block.piston.PistonBehavior;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.projectile.ProjectileEntity;
@@ -12,12 +11,10 @@ import net.minecraft.server.world.ServerWorld;
 import net.minecraft.sound.SoundCategory;
 import net.minecraft.sound.SoundEvents;
 import net.minecraft.state.StateManager;
-import net.minecraft.state.property.BooleanProperty;
 import net.minecraft.state.property.EnumProperty;
 import net.minecraft.state.property.Properties;
 import net.minecraft.util.hit.BlockHitResult;
 import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.math.Box;
 import net.minecraft.util.math.Direction;
 import net.minecraft.util.math.random.Random;
 import net.minecraft.util.shape.VoxelShape;
@@ -113,10 +110,10 @@ public class AbstractFilmBlock extends Block {
     }
 
     public static boolean isFilm(BlockState state) {
-        if (state.isOf(VABlocks.VISCOUS_FILM)) {
+        if (state.isOf(VABlocks.CYTOSOL)) {
             return true;
-        } else if (state.isOf(VABlocks.VISCOUS_POD)) {
-            return state.get(ViscousPodBlock.FILM);
+        } else if (state.isOf(VABlocks.ORGANELLE)) {
+            return state.get(OrganelleBlock.FILM);
         }
         return false;
     }

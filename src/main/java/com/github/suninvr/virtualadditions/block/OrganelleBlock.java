@@ -5,7 +5,6 @@ import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.LandingBlock;
 import net.minecraft.block.entity.BlockEntity;
-import net.minecraft.client.particle.BlockDustParticle;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.FallingBlockEntity;
 import net.minecraft.entity.player.PlayerEntity;
@@ -23,10 +22,10 @@ import net.minecraft.world.WorldView;
 
 import javax.annotation.Nullable;
 
-public class ViscousPodBlock extends AbstractFilmBlock implements LandingBlock {
+public class OrganelleBlock extends AbstractFilmBlock implements LandingBlock {
     public static final BooleanProperty FILM = BooleanProperty.of("film");
 
-    public ViscousPodBlock(Settings settings) {
+    public OrganelleBlock(Settings settings) {
         super(settings);
         this.setDefaultState(this.getDefaultState().with(AXIS, Direction.Axis.X).with(FILM, true));
     }
@@ -40,7 +39,7 @@ public class ViscousPodBlock extends AbstractFilmBlock implements LandingBlock {
     public void scheduledTick(BlockState state, ServerWorld world, BlockPos pos, Random random) {
         if (state.get(FILM)) {
             breakFilm(world, pos, state);
-            world.createAndScheduleBlockTick(pos, VABlocks.VISCOUS_POD, 5);
+            world.createAndScheduleBlockTick(pos, VABlocks.ORGANELLE, 5);
         } else {
             FallingBlockEntity.spawnFromBlock(world, pos, state.with(FILM, false));
         }

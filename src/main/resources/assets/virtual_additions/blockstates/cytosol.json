@@ -2,36 +2,36 @@
   "variants": {
     "axis=x,growths=true": [
       {
-        "model": "virtual_additions:block/viscous_film_growths",
+        "model": "virtual_additions:block/cytosol_growths",
         "y": 90
       }
     ],
     "axis=y,growths=true": [
       {
-        "model": "virtual_additions:block/viscous_film_growths",
+        "model": "virtual_additions:block/cytosol_growths",
         "x":90
       }
     ],
     "axis=z,growths=true": [
       {
-        "model": "virtual_additions:block/viscous_film_growths"
+        "model": "virtual_additions:block/cytosol_growths"
       }
     ],
     "axis=x,growths=false": [
       {
-        "model": "virtual_additions:block/viscous_film",
+        "model": "virtual_additions:block/cytosol",
         "y": 90
       }
     ],
     "axis=y,growths=false": [
       {
-        "model": "virtual_additions:block/viscous_film",
+        "model": "virtual_additions:block/cytosol",
         "x":90
       }
     ],
     "axis=z,growths=false": [
       {
-        "model": "virtual_additions:block/viscous_film"
+        "model": "virtual_additions:block/cytosol"
       }
     ]
   }

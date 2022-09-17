@@ -52,8 +52,8 @@ public class VirtualAdditionsClient implements ClientModInitializer {
                 VABlocks.ICE_SHEET,
                 VABlocks.LUMINOUS_CRYSTAL_BLOCK,
                 VABlocks.LUMINOUS_CRYSTAL,
-                VABlocks.VISCOUS_FILM,
-                VABlocks.VISCOUS_POD
+                VABlocks.CYTOSOL,
+                VABlocks.ORGANELLE
                 );
         BlockRenderLayerMap.INSTANCE.putFluids(RenderLayer.getTranslucent(),
                     VAFluids.ACID,

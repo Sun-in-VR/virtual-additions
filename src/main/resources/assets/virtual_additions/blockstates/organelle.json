@@ -2,36 +2,36 @@
   "variants": {
     "axis=x,film=true": [
       {
-        "model": "virtual_additions:block/viscous_pod_with_film",
+        "model": "virtual_additions:block/organelle_with_cytosol",
         "y": 90
       }
     ],
     "axis=y,film=true": [
       {
-        "model": "virtual_additions:block/viscous_pod_with_film",
+        "model": "virtual_additions:block/organelle_with_cytosol",
         "x":90
       }
     ],
     "axis=z,film=true": [
       {
-        "model": "virtual_additions:block/viscous_pod_with_film"
+        "model": "virtual_additions:block/organelle_with_cytosol"
       }
     ],
     "axis=x,film=false": [
       {
-        "model": "virtual_additions:block/viscous_pod",
+        "model": "virtual_additions:block/organelle",
         "y": 90
       }
     ],
     "axis=y,film=false": [
       {
-        "model": "virtual_additions:block/viscous_pod",
+        "model": "virtual_additions:block/organelle",
         "x":90
       }
     ],
     "axis=z,film=false": [
       {
-        "model": "virtual_additions:block/viscous_pod"
+        "model": "virtual_additions:block/organelle"
       }
     ]
   }

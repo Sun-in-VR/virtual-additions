@@ -2,8 +2,8 @@
 	"credit": "Made with Blockbench",
 	"ambientocclusion": false,
 	"textures": {
-		"1": "virtual_additions:block/viscous_pod",
-		"particle": "virtual_additions:block/viscous_film_growths"
+		"1": "virtual_additions:block/organelle",
+		"particle": "virtual_additions:block/cytosol_growths"
 	},
 	"elements": [
 		{

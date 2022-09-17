@@ -12,12 +12,11 @@ import net.minecraft.util.math.Direction;
 import net.minecraft.util.math.random.Random;
 import net.minecraft.world.BlockView;
 import net.minecraft.world.World;
-import org.checkerframework.checker.units.qual.A;
 
-public class ViscousFilmBlock extends AbstractFilmBlock implements Fertilizable {
+public class CytosolBlock extends AbstractFilmBlock implements Fertilizable {
     public static final BooleanProperty GROWTHS = BooleanProperty.of("growths");
 
-    public ViscousFilmBlock(Settings settings) {
+    public CytosolBlock(Settings settings) {
         super(settings);
         this.setDefaultState(this.getDefaultState().with(GROWTHS, false));
     }
@@ -53,7 +52,7 @@ public class ViscousFilmBlock extends AbstractFilmBlock implements Fertilizable 
         if (!state.get(GROWTHS)) {
             world.setBlockState(pos, state.with(GROWTHS, true));
         } else {
-            world.setBlockState(pos, VABlocks.VISCOUS_POD.getDefaultState().with(AXIS, state.get(AXIS)));
+            world.setBlockState(pos, VABlocks.ORGANELLE.getDefaultState().with(AXIS, state.get(AXIS)));
         }
     }
 }

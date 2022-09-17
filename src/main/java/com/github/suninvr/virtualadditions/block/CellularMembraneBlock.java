@@ -16,12 +16,12 @@ import net.minecraft.util.math.random.Random;
 import net.minecraft.world.BlockView;
 import net.minecraft.world.World;
 
-public class ViscousMembraneBlock extends Block implements Fertilizable {
+public class CellularMembraneBlock extends Block implements Fertilizable {
     public static final IntProperty AGE = IntProperty.of("age", 0, 24);
     public static final EnumProperty<MembraneStatus> STATUS = EnumProperty.of("status", MembraneStatus.class);
     public static final EnumProperty<Direction.Axis> AXIS = Properties.AXIS;
 
-    public ViscousMembraneBlock(Settings settings) {
+    public CellularMembraneBlock(Settings settings) {
         super(settings);
         this.setDefaultState(this.getDefaultState().with(AGE, 0).with(STATUS, MembraneStatus.STARTING).with(AXIS, Direction.Axis.X));
     }
@@ -55,9 +55,9 @@ public class ViscousMembraneBlock extends Block implements Fertilizable {
     public void grow(ServerWorld world, Random random, BlockPos pos, BlockState state) {
         int sel = random.nextInt(10) + 1;
         BlockState filmState = switch (sel) {
-            case 6, 7, 8, 9, 10 -> VABlocks.VISCOUS_FILM.getDefaultState();
-            case 2, 3, 4, 5 -> VABlocks.VISCOUS_FILM.getDefaultState().with(ViscousFilmBlock.GROWTHS, true);
-            case 1 -> VABlocks.VISCOUS_POD.getDefaultState();
+            case 6, 7, 8, 9, 10 -> VABlocks.CYTOSOL.getDefaultState();
+            case 2, 3, 4, 5 -> VABlocks.CYTOSOL.getDefaultState().with(CytosolBlock.GROWTHS, true);
+            case 1 -> VABlocks.ORGANELLE.getDefaultState();
             default -> throw new IllegalStateException("Unexpected value: " + sel);
         };
 
