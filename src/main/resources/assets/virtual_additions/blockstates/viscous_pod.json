@@ -1,0 +1,38 @@
+{
+  "variants": {
+    "axis=x,film=true": [
+      {
+        "model": "virtual_additions:block/viscous_pod_with_film",
+        "y": 90
+      }
+    ],
+    "axis=y,film=true": [
+      {
+        "model": "virtual_additions:block/viscous_pod_with_film",
+        "x":90
+      }
+    ],
+    "axis=z,film=true": [
+      {
+        "model": "virtual_additions:block/viscous_pod_with_film"
+      }
+    ],
+    "axis=x,film=false": [
+      {
+        "model": "virtual_additions:block/viscous_pod",
+        "y": 90
+      }
+    ],
+    "axis=y,film=false": [
+      {
+        "model": "virtual_additions:block/viscous_pod",
+        "x":90
+      }
+    ],
+    "axis=z,film=false": [
+      {
+        "model": "virtual_additions:block/viscous_pod"
+      }
+    ]
+  }
+}

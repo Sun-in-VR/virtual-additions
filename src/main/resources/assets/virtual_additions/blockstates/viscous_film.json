@@ -1,0 +1,38 @@
+{
+  "variants": {
+    "axis=x,growths=true": [
+      {
+        "model": "virtual_additions:block/viscous_film_growths",
+        "y": 90
+      }
+    ],
+    "axis=y,growths=true": [
+      {
+        "model": "virtual_additions:block/viscous_film_growths",
+        "x":90
+      }
+    ],
+    "axis=z,growths=true": [
+      {
+        "model": "virtual_additions:block/viscous_film_growths"
+      }
+    ],
+    "axis=x,growths=false": [
+      {
+        "model": "virtual_additions:block/viscous_film",
+        "y": 90
+      }
+    ],
+    "axis=y,growths=false": [
+      {
+        "model": "virtual_additions:block/viscous_film",
+        "x":90
+      }
+    ],
+    "axis=z,growths=false": [
+      {
+        "model": "virtual_additions:block/viscous_film"
+      }
+    ]
+  }
+}

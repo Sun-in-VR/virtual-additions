@@ -71,6 +71,8 @@ public class VABlocks {
     public static final Block TOXIC_NYLIUM;
     public static final Block TOXIC_ROOTS;
     public static final Block TOXIC_HEAP;
+    public static final Block VISCOUS_FILM;
+    public static final Block VISCOUS_POD;
     public static final Block ACID;
     //public static final Block ACID_CAULDRON;
     public static final Block ICE_SHEET;
@@ -133,6 +135,8 @@ public class VABlocks {
         TOXIC_NYLIUM = register("toxic_nylium", new ToxicNyliumBlock(FabricBlockSettings.of(Material.STONE, MapColor.LIME).sounds(BlockSoundGroup.NYLIUM).requiresTool().strength(0.4F)));
         TOXIC_ROOTS = register("toxic_roots", new CustomRootsBlock(FabricBlockSettings.of(Material.NETHER_SHOOTS, MapColor.LIME).sounds(BlockSoundGroup.ROOTS).noCollision().breakInstantly()));
         TOXIC_HEAP = register("toxic_heap", new Block(FabricBlockSettings.of(Material.ORGANIC_PRODUCT, MapColor.LIME).sounds(BlockSoundGroup.WART_BLOCK)));
+        VISCOUS_FILM = register("viscous_film", new ViscousFilmBlock(FabricBlockSettings.of(Material.ORGANIC_PRODUCT, MapColor.PALE_YELLOW).nonOpaque().sounds(BlockSoundGroup.FROGSPAWN)));
+        VISCOUS_POD = register("viscous_pod", new ViscousPodBlock(FabricBlockSettings.of(Material.ORGANIC_PRODUCT, MapColor.LIME).nonOpaque().sounds(BlockSoundGroup.FROGSPAWN)));
         ACID = register("acid", new CustomFluidBlock(VAFluids.ACID, false, FabricBlockSettings.of(Material.WATER).noCollision().strength(100.0F).dropsNothing().mapColor(MapColor.DARK_GREEN)));
         //ACID_CAULDRON = register("acid_cauldron", new AcidCauldronBlock(FabricBlockSettings.copyOf(Blocks.CAULDRON).mapColor(MapColor.GRAY)));
         ICE_SHEET = register("ice_sheet", new IceSheetBlock(FabricBlockSettings.copyOf(Blocks.ICE).nonOpaque()));

@@ -1,0 +1,37 @@
+{
+	"credit": "Made with Blockbench",
+	"ambientocclusion": false,
+	"textures": {
+		"0": "virtual_additions:block/viscous_film_growths",
+		"1": "virtual_additions:block/viscous_pod",
+		"particle": "virtual_additions:block/viscous_film_growths"
+	},
+	"elements": [
+		{
+			"name": "film",
+			"from": [0, 0, 6],
+			"to": [16, 16, 10],
+			"faces": {
+				"north": {"uv": [0, 0, 16, 16], "texture": "#0"},
+				"east": {"uv": [0, 0, 4, 16], "texture": "#0", "cullface": "east"},
+				"south": {"uv": [0, 0, 16, 16], "texture": "#0"},
+				"west": {"uv": [0, 0, 4, 16], "texture": "#0", "cullface": "west"},
+				"up": {"uv": [0, 0, 16, 4], "texture": "#0", "cullface": "up"},
+				"down": {"uv": [0, 0, 16, 4], "texture": "#0", "cullface": "down"}
+			}
+		},
+		{
+			"name": "pod",
+			"from": [3, 3, 4],
+			"to": [13, 13, 12],
+			"faces": {
+				"north": {"uv": [0, 0, 10, 10], "texture": "#1"},
+				"east": {"uv": [1, 0, 9, 10], "texture": "#1"},
+				"south": {"uv": [0, 0, 10, 10], "texture": "#1"},
+				"west": {"uv": [1, 0, 9, 10], "texture": "#1"},
+				"up": {"uv": [0, 1, 10, 9], "texture": "#1"},
+				"down": {"uv": [0, 1, 10, 9], "texture": "#1"}
+			}
+		}
+	]
+}
