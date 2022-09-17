@@ -31,8 +31,9 @@ public class VenomousBoilBlockEntity extends BlockEntity implements GameEventLis
 
     @Override
     public int getRange() {
-        if (this.world != null) return this.world.getBlockState(this.pos).get(VenomousBoilBlock.AGE) * 2;
-        return 0;
+        return 3;
+        //if (this.world != null) return this.world.getBlockState(this.pos).get(VenomousBoilBlock.AGE) * 2;
+        //return 0;
     }
 
     private boolean shouldListen() {

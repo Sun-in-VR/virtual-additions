@@ -65,7 +65,6 @@ public class VenomousBoilBlock extends BlockWithEntity {
 
     @Override
     public void onEntityCollision(BlockState state, World world, BlockPos pos, Entity entity) {
-        super.onEntityCollision(state, world, pos, entity);
         if(!world.isClient && state.get(AGE) > 0) {
             explode(world, pos, state);
         }
