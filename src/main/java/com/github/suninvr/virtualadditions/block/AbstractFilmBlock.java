@@ -112,7 +112,7 @@ public class AbstractFilmBlock extends Block {
     public static boolean isFilm(BlockState state) {
         if (state.isOf(VABlocks.CYTOSOL)) {
             return true;
-        } else if (state.isOf(VABlocks.ORGANELLE)) {
+        } else if (state.getBlock() instanceof OrganelleBlock) {
             return state.get(OrganelleBlock.FILM);
         }
         return false;

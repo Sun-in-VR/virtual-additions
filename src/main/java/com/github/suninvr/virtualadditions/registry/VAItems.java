@@ -102,6 +102,9 @@ public class VAItems {
     public static final Item TOXIC_ROOTS;
     public static final Item TOXIC_HEAP;
     public static final Item ACID_BUCKET;
+    public static final Item CYTOSOL;
+    public static final Item CYTOSOL_BLOCK;
+    public static final Item NUCLEUS;
     public static final Item ICE_SHEET;
     public static final Item SLIME_TENDRILS;
     public static final Item RAW_STEEL;
@@ -188,6 +191,9 @@ public class VAItems {
         TOXIC_NYLIUM = registerBlockItem("toxic_nylium", VABlocks.TOXIC_NYLIUM, ItemGroup.DECORATIONS);
         TOXIC_ROOTS = registerBlockItem("toxic_roots", VABlocks.TOXIC_ROOTS, ItemGroup.DECORATIONS);
         TOXIC_HEAP = registerBlockItem("toxic_heap", VABlocks.TOXIC_HEAP, ItemGroup.BUILDING_BLOCKS);
+        CYTOSOL = register("cytosol", ItemGroup.BREWING);
+        CYTOSOL_BLOCK = registerBlockItem("cytosol_block", VABlocks.CYTOSOL_BLOCK, ItemGroup.BUILDING_BLOCKS);
+        NUCLEUS = register("nucleus", ItemGroup.MISC);
         ACID_BUCKET = register("acid_bucket", new CustomBucketItem(VAFluids.ACID, VASoundEvents.ITEM_BUCKET_EMPTY_ACID, new FabricItemSettings().recipeRemainder(Items.BUCKET).maxCount(1).group(ItemGroup.MISC)));
         APPLICABLE_POTION_ITEM = register("applicable_potion", new ApplicablePotionItem(new FabricItemSettings().group(ItemGroup.BREWING).maxCount(1)));
         RAW_STEEL_BLOCK = registerBlockItem("raw_steel_block", VABlocks.RAW_STEEL_BLOCK, ItemGroup.BUILDING_BLOCKS);
@@ -261,7 +267,7 @@ public class VAItems {
 
         //Brewing Recipes
         BrewingRecipeRegistryAccessor.virtualAdditions$registerCustomPotionType(APPLICABLE_POTION_ITEM);
-        BrewingRecipeRegistryAccessor.virtualAdditions$registerCustomItemRecipe(Items.POTION, Items.SLIME_BALL, APPLICABLE_POTION_ITEM);
+        BrewingRecipeRegistryAccessor.virtualAdditions$registerCustomItemRecipe(Items.POTION, CYTOSOL, APPLICABLE_POTION_ITEM);
 
         //Compostable Items
         ComposterBlockAccessor.virtualAdditions$registerCompostableItem(0.3F, COTTON_SEEDS);

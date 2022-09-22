@@ -73,8 +73,10 @@ public class VABlocks {
     public static final Block TOXIC_HEAP;
     public static final Block CYTOSOL;
     public static final Block ORGANELLE;
+    public static final Block NUCLEUS;
     public static final Block CELLULAR_MEMBRANE;
     public static final Block ACID;
+    public static final Block CYTOSOL_BLOCK;
     //public static final Block ACID_CAULDRON;
     public static final Block ICE_SHEET;
     public static final Block SLIME_TENDRILS;
@@ -136,9 +138,11 @@ public class VABlocks {
         TOXIC_NYLIUM = register("toxic_nylium", new ToxicNyliumBlock(FabricBlockSettings.of(Material.STONE, MapColor.LIME).sounds(BlockSoundGroup.NYLIUM).requiresTool().strength(0.4F)));
         TOXIC_ROOTS = register("toxic_roots", new CustomRootsBlock(FabricBlockSettings.of(Material.NETHER_SHOOTS, MapColor.LIME).sounds(BlockSoundGroup.ROOTS).noCollision().breakInstantly()));
         TOXIC_HEAP = register("toxic_heap", new Block(FabricBlockSettings.of(Material.ORGANIC_PRODUCT, MapColor.LIME).sounds(BlockSoundGroup.WART_BLOCK)));
-        CYTOSOL = register("cytosol", new CytosolBlock(FabricBlockSettings.of(Material.ORGANIC_PRODUCT, MapColor.PALE_YELLOW).nonOpaque().sounds(BlockSoundGroup.FROGSPAWN)));
-        ORGANELLE = register("organelle", new OrganelleBlock(FabricBlockSettings.of(Material.ORGANIC_PRODUCT, MapColor.LIME).nonOpaque().sounds(BlockSoundGroup.FROGSPAWN)));
+        CYTOSOL = register("cytosol", new CytosolFilmBlock(FabricBlockSettings.of(Material.ORGANIC_PRODUCT, MapColor.PALE_YELLOW).nonOpaque().sounds(BlockSoundGroup.FROGSPAWN).hardness(0.3F)));
+        ORGANELLE = register("organelle", new OrganelleBlock(FabricBlockSettings.of(Material.ORGANIC_PRODUCT, MapColor.LIME).nonOpaque().sounds(BlockSoundGroup.FROGSPAWN).hardness(0.3F)));
+        NUCLEUS = register("nucleus", new OrganelleBlock(FabricBlockSettings.of(Material.ORGANIC_PRODUCT, MapColor.YELLOW).nonOpaque().sounds(BlockSoundGroup.FROGSPAWN).hardness(0.3F)));
         CELLULAR_MEMBRANE = register("cellular_membrane", new CellularMembraneBlock(FabricBlockSettings.of(Material.ORGANIC_PRODUCT, MapColor.LIME).nonOpaque().sounds(BlockSoundGroup.CORAL).hardness(1.0F)));
+        CYTOSOL_BLOCK = register("cytosol_block", new CytosolBlock(FabricBlockSettings.of(Material.ORGANIC_PRODUCT, MapColor.PALE_YELLOW).nonOpaque().sounds(BlockSoundGroup.FROGSPAWN).hardness(0.3F)));
         ACID = register("acid", new CustomFluidBlock(VAFluids.ACID, false, FabricBlockSettings.of(Material.WATER).noCollision().strength(100.0F).dropsNothing().mapColor(MapColor.DARK_GREEN)));
         //ACID_CAULDRON = register("acid_cauldron", new AcidCauldronBlock(FabricBlockSettings.copyOf(Blocks.CAULDRON).mapColor(MapColor.GRAY)));
         ICE_SHEET = register("ice_sheet", new IceSheetBlock(FabricBlockSettings.copyOf(Blocks.ICE).nonOpaque()));

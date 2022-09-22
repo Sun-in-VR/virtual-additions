@@ -2,6 +2,10 @@
   "replace": "false",
   "values": [
     "virtual_additions:toxic_heap",
+    "virtual_additions:cytosol_block",
+    "virtual_additions:cytosol",
+    "virtual_additions:organelle",
+    "virtual_additions:nucleus",
     "virtual_additions:cellular_membrane"
   ]
 }

@@ -7,7 +7,8 @@ import java.util.Locale;
 public enum MembraneStatus implements StringIdentifiable {
     STARTING,
     EXPANDING,
-    STOPPED;
+    STOPPED,
+    DYING;
 
     private final String name;
 
