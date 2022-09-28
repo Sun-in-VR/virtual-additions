@@ -22,17 +22,14 @@ import com.github.suninvr.virtualadditions.registry.VABlockEntities;
 
 public class IoliteTetherBlockEntity extends BlockEntity {
     private NbtElement destination;
-    private NbtElement destinationDim;
     private static final ParticleEffect particle;
 
     public IoliteTetherBlockEntity(BlockPos blockPos, BlockState blockState) {
         super(VABlockEntities.IOLITE_TETHER_BLOCK_ENTITY, blockPos, blockState);
         RegistryKey<World> worldKey = ServerWorld.OVERWORLD;
-        DataResult<NbtElement> worldDim = World.CODEC.encodeStart(NbtOps.INSTANCE, worldKey);
 
         NbtCompound defaultTag = new NbtCompound();
         defaultTag.put("destination", NbtHelper.fromBlockPos(blockPos));
-        worldDim.resultOrPartial(VirtualAdditions.LOGGER::error).ifPresent((dimName) -> defaultTag.put("destinationDim", dimName));
         readNbt(defaultTag);
     }
 
@@ -42,9 +39,6 @@ public class IoliteTetherBlockEntity extends BlockEntity {
         if (this.destination != null) {
             tag.put("destination", destination);
         }
-        if (this.destinationDim != null) {
-            tag.put("destinationDim", destinationDim);
-        }
     }
 
     @Override
@@ -52,9 +46,6 @@ public class IoliteTetherBlockEntity extends BlockEntity {
         super.readNbt(tag);
         if (tag.contains("destination")) {
             destination = tag.get("destination");
-        }
-        if (tag.contains("destinationDim")) {
-            destinationDim = tag.get("destinationDim");
         }
     }
 

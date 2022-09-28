@@ -50,35 +50,17 @@
   "block.iolite_tether.warp": {
     "subtitle": "subtitles.block.iolite_tether.warp",
     "sounds": [
-      {
-        "name": "block/respawn_anchor/set_spawn1",
-        "pitch": 1.8
-      },
-      {
-        "name": "block/respawn_anchor/set_spawn2",
-        "pitch": 1.8
-      },
-      {
-        "name": "block/respawn_anchor/set_spawn3",
-        "pitch": 1.8
-      }
+      "virtual_additions:block/iolite_warp_pad/warp1",
+      "virtual_additions:block/iolite_warp_pad/warp2",
+      "virtual_additions:block/iolite_warp_pad/warp3"
     ]
   },
   "block.iolite_anchor.warp": {
     "subtitle": "subtitles.block.iolite_anchor.warp",
     "sounds": [
-      {
-        "name": "block/respawn_anchor/set_spawn1",
-        "pitch": 1.8
-      },
-      {
-        "name": "block/respawn_anchor/set_spawn2",
-        "pitch": 1.8
-      },
-      {
-        "name": "block/respawn_anchor/set_spawn3",
-        "pitch": 1.8
-      }
+      "virtual_additions:block/iolite_warp_pad/warp1",
+      "virtual_additions:block/iolite_warp_pad/warp2",
+      "virtual_additions:block/iolite_warp_pad/warp3"
     ]
   },
   "block.workbench.used.iron_hammer": {

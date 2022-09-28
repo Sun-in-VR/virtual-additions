@@ -17,6 +17,7 @@ import net.minecraft.fluid.Fluids;
 import net.minecraft.item.ItemPlacementContext;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NbtCompound;
+import net.minecraft.nbt.NbtHelper;
 import net.minecraft.nbt.NbtOps;
 import net.minecraft.particle.DustColorTransitionParticleEffect;
 import net.minecraft.server.network.ServerPlayerEntity;
@@ -100,24 +101,21 @@ public class IoliteTetherBlock extends BlockWithEntity implements Waterloggable 
 
             blockEntity = (IoliteTetherBlockEntity) world.getBlockEntity(pos);
             blockEntity.writeNbt(blockEntityTag);
-            NbtCompound destinationNbt = blockEntityTag.getCompound("destination");
-            float destX = destinationNbt.getInt("X");
-            float destY = destinationNbt.getInt("Y");
-            float destZ = destinationNbt.getInt("Z");
-            Optional<RegistryKey<World>> destWorldKey = World.CODEC.parse(NbtOps.INSTANCE, blockEntityTag.get("destinationDim")).result();
-            ServerWorld destWorld = destWorldKey.isPresent() ? ((ServerWorld)world).getServer().getWorld(destWorldKey.get()) : (ServerWorld) world;
-            String result;
+            BlockPos destPos = NbtHelper.toBlockPos(blockEntityTag.getCompound("destination"));
+            float destX = destPos.getX();
+            float destY = destPos.getY();
+            float destZ = destPos.getZ();
             double offsetY = 0;
             boolean ceiling;
-            BlockPos destination = new BlockPos(destX, destY, destZ);
-            BlockState block = destWorld.getBlockState(destination);
+            String result;
+            BlockState block = world.getBlockState(destPos);
 
             //Check if the block at the location is an anchor. If so, then check if it is obstructed by redstone or blocks.
-            result = block.getBlock() == VABlocks.IOLITE_ANCHOR ? "success" : "fail";
+            result = pos.getSquaredDistance(destPos) <= 65536 ? block.getBlock() == VABlocks.IOLITE_ANCHOR ? "success" : "fail" : "fail";
             if (result.equals("success")) {
                 ceiling = block.get(IoliteAnchorBlock.CEILING);
                 offsetY = ceiling ? (entity.getBoundingBox().getYLength()) * -1 + 0.375: 0.375;
-                result = !destWorld.isSpaceEmpty(entity.getType().createSimpleBoundingBox(destX + 0.5, (destY + offsetY), destZ + 0.5)) || block.get(IoliteAnchorBlock.POWERED) ? "obstructed" : "success";
+                result = block.get(IoliteAnchorBlock.POWERED) || !world.isSpaceEmpty(entity.getType().createSimpleBoundingBox(destX + 0.5, (destY + offsetY), destZ + 0.5)) ? "obstructed" : "success";
             }
             switch (result) {
                 case "success" -> {
@@ -125,23 +123,14 @@ public class IoliteTetherBlock extends BlockWithEntity implements Waterloggable 
                     destY += offsetY;
                     destZ += 0.5;
 
-                    if (entity instanceof ServerPlayerEntity) {
-                        ((ServerPlayerEntity) entity).teleport(destWorld, destX, destY, destZ, entity.getYaw(1F), entity.getPitch(1F));
-                    } else if (entity.world != destWorld) {
-                        //Recreate the entity in the target world.
-                        entity.detach();
-                        Entity destEntity = entity.getType().create(destWorld);
-                        destEntity.copyFrom(entity);
-                        destEntity.refreshPositionAndAngles(destX, destY, destZ, entity.getYaw(1F), entity.getPitch(1F));
-                        destEntity.setVelocity(entity.getVelocity());
-                        destWorld.onDimensionChanged(destEntity);
-                        entity.remove(Entity.RemovalReason.CHANGED_DIMENSION);
+                    if (entity instanceof ServerPlayerEntity && world instanceof ServerWorld serverWorld) {
+                        ((ServerPlayerEntity) entity).teleport(serverWorld, destX, destY, destZ, entity.getYaw(1F), entity.getPitch(1F));
                     } else {
                         entity.teleport(destX, destY, destZ);
                     }
 
                     //Play sounds on teleport.
-                    destWorld.playSound(null, destX, destY, destZ, VASoundEvents.BLOCK_IOLITE_ANCHOR_WARP, SoundCategory.BLOCKS, 1.0F, 1.0F);
+                    world.playSound(null, destX, destY, destZ, VASoundEvents.BLOCK_IOLITE_ANCHOR_WARP, SoundCategory.BLOCKS, 1.0F, 1.0F);
                     world.playSound(null, pos, VASoundEvents.BLOCK_IOLITE_TETHER_WARP, SoundCategory.BLOCKS, 1.0F, 1.0F);
                 }
                 case "obstructed", "fail" -> world.playSound(null, pos, SoundEvents.BLOCK_RESPAWN_ANCHOR_DEPLETE, SoundCategory.BLOCKS, 1.0F, 1.8F);
@@ -175,7 +164,6 @@ public class IoliteTetherBlock extends BlockWithEntity implements Waterloggable 
                 ioliteTetherBlockEntity.writeNbt(blockEntityTag);
 
                 tag.put("destination", blockEntityTag.get("destination"));
-                tag.put("destinationDim", blockEntityTag.get("destinationDim"));
 
                 ItemEntity itemEntity = new ItemEntity(world, (double)pos.getX() + 0.5D, (double)pos.getY() + 0.5D, (double)pos.getZ() + 0.5D, itemStack);
                 itemEntity.setToDefaultPickupDelay();
@@ -190,18 +178,6 @@ public class IoliteTetherBlock extends BlockWithEntity implements Waterloggable 
     @Override
     public VoxelShape getOutlineShape(BlockState state, BlockView view, BlockPos pos, ShapeContext context) {
         return VoxelShapes.cuboid(0f, 0f, 0f, 1f, 0.375, 1f);
-    }
-
-    @Environment(EnvType.CLIENT)
-    @Override
-    public void randomDisplayTick(BlockState state, World world, BlockPos pos, net.minecraft.util.math.random.Random random) {
-        //if(!state.get(COOLDOWN)){
-        //    double d = (double) pos.getX() + 0.5D;
-        //    double e = (double) pos.getY() + 0.4D;
-        //    double f = (double) pos.getZ() + 0.5D;
-        //    double g = (double) random.nextFloat() * 0.04D;
-        //    world.addParticle(new DustColorTransitionParticleEffect(new Vec3f(Vec3d.unpackRgb(15321342)), new Vec3f(Vec3d.unpackRgb(16777215)), 1.0F), d, e, f, 0.0D, g, 0.0D);
-        //}
     }
 
     @Nullable

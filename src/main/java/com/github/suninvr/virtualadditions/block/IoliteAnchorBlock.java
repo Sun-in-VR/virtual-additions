@@ -76,18 +76,11 @@ public class IoliteAnchorBlock extends Block implements Waterloggable {
 
         //Check the Item stack
         if (stack.isOf(VAItems.IOLITE_TETHER)) {
-            world.playSound(pos.getX() + 0.5, pos.getY() + 0.5, pos.getZ() + 0.5, SoundEvents.BLOCK_END_PORTAL_FRAME_FILL, SoundCategory.BLOCKS, 1.0F, 0.6F, false);
-
-            //Get the dimension the player is in via registry key
-            RegistryKey<World> worldKey = world.getRegistryKey();
-            DataResult<NbtElement> worldDim = World.CODEC.encodeStart(NbtOps.INSTANCE, worldKey);
+            world.playSound(null, pos.getX() + 0.5, pos.getY() + 0.5, pos.getZ() + 0.5, SoundEvents.BLOCK_END_PORTAL_FRAME_FILL, SoundCategory.BLOCKS, 1.0F, 0.6F);
 
             NbtCompound tag = stack.getOrCreateNbt();
-
             tag.put("destination", NbtHelper.fromBlockPos(pos));
-            worldDim.resultOrPartial(LOGGER::error).ifPresent((dimName) -> tag.put("destinationDim", dimName));
-            //if (!stack.hasTag()) {stack.setTag(tag);}
-            //stack.setTag(tag);
+
             return ActionResult.SUCCESS;
         }
         return ActionResult.PASS;
