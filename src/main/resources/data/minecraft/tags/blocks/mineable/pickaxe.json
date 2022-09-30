@@ -46,7 +46,9 @@
     "virtual_additions:raw_steel_block",
     "virtual_additions:steel_block",
     "virtual_additions:toxic_nylium",
-    "virtual_additions:luminous_crystal",
+    "virtual_additions:red_glimmer_crystal",
+    "virtual_additions:green_glimmer_crystal",
+    "virtual_additions:blue_glimmer_crystal",
     "virtual_additions:luminous_crystal_block",
     "virtual_additions:spotlight"
   ]

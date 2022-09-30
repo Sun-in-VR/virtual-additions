@@ -6,11 +6,11 @@
     ],
     "key": {
         "c": {
-            "tag": "virtual_additions:crystals"
+            "item": "virtual_additions:crystal_dust"
         }
     },
     "result": {
-        "item": "virtual_additions:luminous_crystal_block",
+        "item": "minecraft:calcite",
         "count": 1
     }
 }

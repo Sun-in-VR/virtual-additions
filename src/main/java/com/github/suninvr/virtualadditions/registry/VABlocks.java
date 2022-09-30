@@ -63,7 +63,9 @@ public class VABlocks {
     public static final Block IOLITE_ORE;
     public static final Block IOLITE_ANCHOR;
     public static final Block IOLITE_TETHER;
-    public static final Block LUMINOUS_CRYSTAL;
+    public static final Block RED_GLIMMER_CRYSTAL;
+    public static final Block GREEN_GLIMMER_CRYSTAL;
+    public static final Block BLUE_GLIMMER_CRYSTAL;
     public static final Block LUMINOUS_CRYSTAL_BLOCK;
     public static final Block SPOTLIGHT;
     public static final Block SPOTLIGHT_LIGHT;
@@ -130,8 +132,10 @@ public class VABlocks {
         IOLITE_ORE = register("iolite_ore", new OreBlock(FabricBlockSettings.copyOf(Blocks.END_STONE).strength(4.5F, 4.5F), UniformIntProvider.create(5, 9)));
         IOLITE_ANCHOR = register("iolite_anchor", new IoliteAnchorBlock(FabricBlockSettings.of(Material.METAL).nonOpaque().sounds(BlockSoundGroup.NETHERITE).luminance(3).emissiveLighting( (state, world, pos) -> !state.get(IoliteAnchorBlock.POWERED) ).hardness(22.5F).resistance(600.0F)));
         IOLITE_TETHER = register("iolite_tether", new IoliteTetherBlock(FabricBlockSettings.of(Material.METAL).nonOpaque().sounds(BlockSoundGroup.NETHERITE).luminance(3).emissiveLighting( (state, world, pos) -> !state.get(IoliteTetherBlock.COOLDOWN) ).hardness(22.5F).resistance(600.0F)));
-        LUMINOUS_CRYSTAL = register("luminous_crystal", new CrystalBlock(FabricBlockSettings.copyOf(Blocks.AMETHYST_CLUSTER).mapColor(MapColor.WHITE_GRAY).nonOpaque().emissiveLighting(((state, world, pos) -> true))));
-        LUMINOUS_CRYSTAL_BLOCK = register("luminous_crystal_block", new TransparentBlock(FabricBlockSettings.copyOf(Blocks.AMETHYST_BLOCK).mapColor(MapColor.WHITE_GRAY).nonOpaque().luminance(5).emissiveLighting(((state, world, pos) -> true))));
+        RED_GLIMMER_CRYSTAL = register("red_glimmer_crystal", new CrystalBlock(FabricBlockSettings.copyOf(Blocks.AMETHYST_CLUSTER).mapColor(MapColor.WHITE_GRAY).nonOpaque()));
+        GREEN_GLIMMER_CRYSTAL = register("green_glimmer_crystal", new CrystalBlock(FabricBlockSettings.copyOf(Blocks.AMETHYST_CLUSTER).mapColor(MapColor.WHITE_GRAY).nonOpaque()));
+        BLUE_GLIMMER_CRYSTAL = register("blue_glimmer_crystal", new CrystalBlock(FabricBlockSettings.copyOf(Blocks.AMETHYST_CLUSTER).mapColor(MapColor.WHITE_GRAY).nonOpaque()));
+        LUMINOUS_CRYSTAL_BLOCK = register("luminous_crystal_block", new TransparentBlock(FabricBlockSettings.copyOf(Blocks.AMETHYST_BLOCK).mapColor(MapColor.WHITE_GRAY).nonOpaque().luminance(5)));
         SPOTLIGHT = register("spotlight", new SpotlightBlock(FabricBlockSettings.copyOf(Blocks.COPPER_BLOCK).mapColor(MapColor.ORANGE).nonOpaque().luminance((state) -> state.get(SpotlightBlock.POWERED) ? 6 : 0).emissiveLighting((state, world, pos) -> state.get(Properties.POWERED)) ));
         SPOTLIGHT_LIGHT = register("spotlight_light", new SpotlightLightBlock(FabricBlockSettings.of(Material.AIR).strength(-1.0F, 3600000.8F).dropsNothing().nonOpaque().luminance((state) -> state.get(SpotlightLightBlock.LIT) ? 13 : 0)));
         VENOMOUS_BOIL = register("venomous_boil", new VenomousBoilBlock(FabricBlockSettings.of(Material.ORGANIC_PRODUCT).mapColor(MapColor.LIME).sounds(BlockSoundGroup.FUNGUS).collidable(false).nonOpaque().luminance(1).emissiveLighting( ((state, world, pos) -> state.get(VenomousBoilBlock.AGE) == 3) )));

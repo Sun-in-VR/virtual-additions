@@ -1,6 +1,6 @@
 {
   "parent": "virtual_additions:block/cross_segmented",
   "textures": {
-    "cross": "virtual_additions:block/luminous_crystal"
+    "cross": "virtual_additions:block/blue_glimmer_crystal"
   }
 }

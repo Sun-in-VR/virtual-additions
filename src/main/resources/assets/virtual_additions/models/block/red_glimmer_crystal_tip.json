@@ -1,0 +1,6 @@
+{
+  "parent": "virtual_additions:block/cross_segmented",
+  "textures": {
+    "cross": "virtual_additions:block/red_glimmer_crystal_tip"
+  }
+}

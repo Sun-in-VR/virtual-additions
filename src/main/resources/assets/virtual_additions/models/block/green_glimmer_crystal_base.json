@@ -1,0 +1,7 @@
+{
+  "parent": "virtual_additions:block/cross_with_base",
+  "textures": {
+    "cross": "virtual_additions:block/green_glimmer_crystal",
+    "base": "virtual_additions:block/green_glimmer_crystal_base"
+  }
+}

@@ -1,5 +1,8 @@
 package com.github.suninvr.virtualadditions.client;
 
+import com.github.suninvr.virtualadditions.client.render.entity.ClimbingRopeEntityRenderer;
+import com.github.suninvr.virtualadditions.registry.*;
+import com.github.suninvr.virtualadditions.screen.WorkbenchScreen;
 import net.fabricmc.api.ClientModInitializer;
 import net.fabricmc.fabric.api.blockrenderlayer.v1.BlockRenderLayerMap;
 import net.fabricmc.fabric.api.client.particle.v1.ParticleFactoryRegistry;
@@ -13,6 +16,7 @@ import net.fabricmc.fabric.api.object.builder.v1.client.model.FabricModelPredica
 import net.fabricmc.fabric.api.resource.ResourceManagerHelper;
 import net.fabricmc.fabric.api.resource.SimpleSynchronousResourceReloadListener;
 import net.minecraft.client.MinecraftClient;
+import net.minecraft.client.particle.ShriekParticle;
 import net.minecraft.client.particle.WaterSuspendParticle;
 import net.minecraft.client.render.RenderLayer;
 import net.minecraft.client.render.entity.FlyingItemEntityRenderer;
@@ -29,20 +33,20 @@ import net.minecraft.util.Identifier;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.registry.Registry;
 import net.minecraft.world.BlockRenderView;
-import com.github.suninvr.virtualadditions.client.render.entity.ClimbingRopeEntityRenderer;
-import com.github.suninvr.virtualadditions.registry.*;
-import com.github.suninvr.virtualadditions.screen.WorkbenchScreen;
 
 import java.util.function.Function;
 
-import static net.minecraft.resource.ResourceType.CLIENT_RESOURCES;
 import static com.github.suninvr.virtualadditions.VirtualAdditions.idOf;
+import static net.minecraft.resource.ResourceType.CLIENT_RESOURCES;
 
 public class VirtualAdditionsClient implements ClientModInitializer {
     @Override
     public void onInitializeClient() {
         BlockRenderLayerMap.INSTANCE.putBlocks(RenderLayer.getCutout(),
                 VABlocks.CLIMBING_ROPE_ANCHOR,
+                VABlocks.RED_GLIMMER_CRYSTAL,
+                VABlocks.GREEN_GLIMMER_CRYSTAL,
+                VABlocks.BLUE_GLIMMER_CRYSTAL,
                 VABlocks.VENOMOUS_BOIL,
                 VABlocks.TOXIC_ROOTS,
                 VABlocks.COTTON
@@ -51,7 +55,6 @@ public class VirtualAdditionsClient implements ClientModInitializer {
         BlockRenderLayerMap.INSTANCE.putBlocks(RenderLayer.getTranslucent(),
                 VABlocks.ICE_SHEET,
                 VABlocks.LUMINOUS_CRYSTAL_BLOCK,
-                VABlocks.LUMINOUS_CRYSTAL,
                 VABlocks.CYTOSOL,
                 VABlocks.CYTOSOL_BLOCK,
                 VABlocks.ORGANELLE,
@@ -74,6 +77,9 @@ public class VirtualAdditionsClient implements ClientModInitializer {
 
         ClientSpriteRegistryCallback.event(PlayerScreenHandler.BLOCK_ATLAS_TEXTURE).register(((atlasTexture, registry) -> registry.register(idOf("particle/icy_fog"))));
         ParticleFactoryRegistry.getInstance().register(VAParticleTypes.ICY_FOG, WaterSuspendParticle.UnderwaterFactory::new);
+
+        ClientSpriteRegistryCallback.event(PlayerScreenHandler.BLOCK_ATLAS_TEXTURE).register(((atlasTexture, registry) -> registry.register(idOf("particle/iolite_tether_ring"))));
+        ParticleFactoryRegistry.getInstance().register(VAParticleTypes.IOLITE_TETHER_RING, ShriekParticle.Factory::new);
 
         ScreenRegistry.register(VAScreenHandlers.WORKBENCH_SCREEN_HANDLER, WorkbenchScreen::new);
 

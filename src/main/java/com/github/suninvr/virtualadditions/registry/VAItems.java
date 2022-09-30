@@ -94,7 +94,10 @@ public class VAItems {
     public static final Item IOLITE_ORE;
     public static final Item IOLITE_ANCHOR;
     public static final Item IOLITE_TETHER;
-    public static final Item LUMINOUS_CRYSTAL;
+    public static final Item RED_GLIMMER_CRYSTAL;
+    public static final Item GREEN_GLIMMER_CRYSTAL;
+    public static final Item BLUE_GLIMMER_CRYSTAL;
+    public static final Item CRYSTAL_DUST;
     public static final Item SHIMMERING_LUMINOUS_CRYSTAL_BLOCK;
     public static final Item SPOTLIGHT;
     public static final Item VENOMOUS_BOIL;
@@ -182,7 +185,10 @@ public class VAItems {
         IOLITE_ORE = registerBlockItem("iolite_ore", VABlocks.IOLITE_ORE, ItemGroup.BUILDING_BLOCKS);
         IOLITE_ANCHOR = register("iolite_anchor", new BlockItem(VABlocks.IOLITE_ANCHOR, new FabricItemSettings().rarity(Rarity.RARE).group(ItemGroup.TRANSPORTATION)));
         IOLITE_TETHER = register("iolite_tether", new BlockItem(VABlocks.IOLITE_TETHER, new FabricItemSettings().rarity(Rarity.RARE).group(ItemGroup.TRANSPORTATION)));
-        LUMINOUS_CRYSTAL = registerBlockItem("luminous_crystal", VABlocks.LUMINOUS_CRYSTAL, ItemGroup.DECORATIONS);
+        RED_GLIMMER_CRYSTAL = registerBlockItem("red_glimmer_crystal", VABlocks.RED_GLIMMER_CRYSTAL, ItemGroup.DECORATIONS);
+        GREEN_GLIMMER_CRYSTAL = registerBlockItem("green_glimmer_crystal", VABlocks.GREEN_GLIMMER_CRYSTAL, ItemGroup.DECORATIONS);
+        BLUE_GLIMMER_CRYSTAL = registerBlockItem("blue_glimmer_crystal", VABlocks.BLUE_GLIMMER_CRYSTAL, ItemGroup.DECORATIONS);
+        CRYSTAL_DUST = register("crystal_dust", ItemGroup.MISC);
         SHIMMERING_LUMINOUS_CRYSTAL_BLOCK = registerBlockItem("luminous_crystal_block", VABlocks.LUMINOUS_CRYSTAL_BLOCK, ItemGroup.BUILDING_BLOCKS);
         SPOTLIGHT = registerBlockItem("spotlight", VABlocks.SPOTLIGHT, ItemGroup.REDSTONE);
         VENOMOUS_BOIL = registerBlockItem("venomous_boil", VABlocks.VENOMOUS_BOIL, ItemGroup.DECORATIONS);

@@ -7,7 +7,7 @@
       "entries": [
         {
           "type": "minecraft:item",
-          "name": "virtual_additions:luminous_crystal"
+          "name": "virtual_additions:red_glimmer_crystal"
         }
       ],
       "conditions": [

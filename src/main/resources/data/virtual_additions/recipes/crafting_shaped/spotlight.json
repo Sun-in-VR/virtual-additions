@@ -1,13 +1,13 @@
 {
     "type": "minecraft:crafting_shaped",
     "pattern": [
-        "ccc",
+        "DDD",
         "CSC",
         "CRC"
     ],
     "key": {
-        "c": {
-            "item": "virtual_additions:luminous_crystal_block"
+        "D": {
+            "item": "virtual_additions:crystal_dust"
         },
         "C": {
             "item": "minecraft:copper_ingot"

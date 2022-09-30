@@ -5,9 +5,7 @@
       "conditions": {
         "items": [
           {
-            "items": [
-              "virtual_additions:luminous_crystal"
-            ]
+            "tag": "virtual_additions:crystals"
           }
         ]
       }
