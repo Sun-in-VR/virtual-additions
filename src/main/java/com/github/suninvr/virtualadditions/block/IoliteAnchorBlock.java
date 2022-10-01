@@ -43,6 +43,8 @@ public class IoliteAnchorBlock extends BlockWithEntity implements Waterloggable 
     public static final BooleanProperty POWERED = Properties.POWERED;
     public static final BooleanProperty CEILING = BooleanProperty.of("ceiling");
     public static final BooleanProperty WATERLOGGED = Properties.WATERLOGGED;
+    private static final VoxelShape HITBOX;
+    private static final VoxelShape HITBOX_CEILING;
 
 
     @Override
@@ -57,11 +59,9 @@ public class IoliteAnchorBlock extends BlockWithEntity implements Waterloggable 
 
         //Check the Item stack
         if (stack.isOf(VAItems.IOLITE_TETHER)) {
-            world.playSound(null, pos.getX() + 0.5, pos.getY() + 0.5, pos.getZ() + 0.5, SoundEvents.BLOCK_END_PORTAL_FRAME_FILL, SoundCategory.BLOCKS, 1.0F, 0.6F);
-
             NbtCompound tag = stack.getOrCreateNbt();
             tag.put("destination", NbtHelper.fromBlockPos(pos));
-
+            world.playSound(null, pos.getX() + 0.5, pos.getY() + 0.5, pos.getZ() + 0.5, SoundEvents.BLOCK_END_PORTAL_FRAME_FILL, SoundCategory.BLOCKS, 1.0F, 0.6F);
             return ActionResult.SUCCESS;
         }
         return ActionResult.PASS;
@@ -84,10 +84,7 @@ public class IoliteAnchorBlock extends BlockWithEntity implements Waterloggable 
     //Define the voxel shape. This is the block's hit box.
     @Override
     public VoxelShape getOutlineShape(BlockState state, BlockView view, BlockPos pos, ShapeContext context) {
-        if (state.get(CEILING)) {
-            return VoxelShapes.cuboid(0f, 0.625f, 0f, 1f, 1f, 1f);
-        }
-        return VoxelShapes.cuboid(0f, 0f, 0f, 1f, 0.375, 1f);
+        return state.get(CEILING) ? HITBOX_CEILING : HITBOX;
     }
 
     //Water logging
@@ -127,5 +124,10 @@ public class IoliteAnchorBlock extends BlockWithEntity implements Waterloggable 
     @Override
     public <T extends BlockEntity> BlockEntityTicker<T> getTicker(World world, BlockState state, BlockEntityType<T> type) {
         return checkType(type, VABlockEntities.IOLITE_ANCHOR_BLOCK_ENTITY, IoliteAnchorBlockEntity::tick);
+    }
+
+    static {
+        HITBOX = VoxelShapes.cuboid(0f, 0f, 0f, 1f, 0.375, 1f);
+        HITBOX_CEILING = VoxelShapes.cuboid(0f, 0.625f, 0f, 1f, 1f, 1f);
     }
 }
