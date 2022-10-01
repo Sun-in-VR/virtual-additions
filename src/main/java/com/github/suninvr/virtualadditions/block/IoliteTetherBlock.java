@@ -41,9 +41,6 @@ public class IoliteTetherBlock extends BlockWithEntity implements Waterloggable 
     public static BooleanProperty WATERLOGGED = BooleanProperty.of("waterlogged");
     private static final VoxelShape SHAPE;
 
-    //Block entity and its tag.
-    IoliteTetherBlockEntity blockEntity;
-
     public IoliteTetherBlock(Settings settings) {
         super(settings);
         setDefaultState(getStateManager().getDefaultState().with(COOLDOWN, false).with(WATERLOGGED, false));
@@ -62,7 +59,7 @@ public class IoliteTetherBlock extends BlockWithEntity implements Waterloggable 
     //Copy NBT from the item once placed.
     @Override
     public void onPlaced(World world, BlockPos pos, BlockState state, @Nullable LivingEntity placer, ItemStack itemStack) {
-        blockEntity = (IoliteTetherBlockEntity) world.getBlockEntity(pos);
+        IoliteTetherBlockEntity blockEntity = (IoliteTetherBlockEntity) world.getBlockEntity(pos);
         if (blockEntity == null) return;
         blockEntity.readNbt(itemStack.getOrCreateNbt());
         blockEntity.markDirty();
@@ -72,49 +69,37 @@ public class IoliteTetherBlock extends BlockWithEntity implements Waterloggable 
     //Initiate the teleport once an entity steps on the block
     @Override
     public void onSteppedOn(World world, BlockPos pos, BlockState state, Entity entity) {
-        if(!world.isClient() && !world.getBlockState(pos).get(COOLDOWN) && !entity.isSneaking()) {
-            teleportEntity(world, pos, entity);
+        if(!world.isClient() && !state.get(COOLDOWN) && !entity.isSneaking()) {
+            teleportEntity(world, state, pos, entity);
         }
     }
 
     //Teleport Process.
-    public void teleportEntity(World world, BlockPos pos, Entity entity) {
+    public void teleportEntity(World world, BlockState state, BlockPos pos, Entity entity) {
         if (!world.isClient()){
             // Only activate if we are allowed to by vanilla portal logic
             if (entity.hasVehicle() || entity.hasPassengers() || !entity.canUsePortals()) return;
+
             NbtCompound blockEntityTag = getBlockEntityNbt(world, pos);
             if (blockEntityTag == null) return;
-            BlockPos destPos = NbtHelper.toBlockPos(blockEntityTag.getCompound("destination"));
-            float destX = (float) (destPos.getX() + (entity.getX() - pos.getX()) - 0.5);
-            float destY = (float) (destPos.getY() + (entity.getY() - pos.getY()) - 0.375);
-            float destZ = (float) (destPos.getZ() + (entity.getZ() - pos.getZ()) - 0.5);
-            double offsetY = 0;
-            boolean ceiling;
-            boolean success = false;
-            BlockState block = world.getBlockState(destPos);
 
-            if (pos.getSquaredDistance(destPos) <= 65536 && block.getBlock() == VABlocks.IOLITE_ANCHOR) {
-                ceiling = block.get(IoliteAnchorBlock.CEILING);
-                offsetY = ceiling ? (entity.getBoundingBox().getYLength()) * -1 + 0.375: 0.375;
-                success = !block.get(IoliteAnchorBlock.POWERED) && world.isSpaceEmpty(entity.getType().createSimpleBoundingBox(destX + 0.5, (destY + offsetY), destZ + 0.5));
-            }
-            if (success) {
-                destX += 0.5;
-                destY += offsetY;
-                destZ += 0.5;
+            BlockPos destPos = NbtHelper.toBlockPos(blockEntityTag.getCompound("destination"));
+            float destX = (float) (destPos.getX() + (entity.getX() - pos.getX()));
+            float destY = (float) (destPos.getY() + (entity.getY() - pos.getY()));
+            float destZ = (float) (destPos.getZ() + (entity.getZ() - pos.getZ()));
+            BlockState destState = world.getBlockState(destPos);
+
+            if (pos.getSquaredDistance(destPos) <= 65536 && destState.getBlock() == VABlocks.IOLITE_ANCHOR && !destState.get(IoliteAnchorBlock.POWERED)) {
+                destY += destState.get(IoliteAnchorBlock.FACING).equals(Direction.DOWN) ? (entity.getBoundingBox().getYLength()) * -1 : 0;
                 entity.teleport(destX, destY, destZ);
 
-                if (!block.get(Properties.WATERLOGGED)) {
-                    world.playSound(null, destPos, VASoundEvents.BLOCK_IOLITE_ANCHOR_WARP, SoundCategory.BLOCKS, 1.0F, 1.0F);
-                }
+                if (!destState.get(Properties.WATERLOGGED)) world.playSound(null, destPos, VASoundEvents.BLOCK_IOLITE_ANCHOR_WARP, SoundCategory.BLOCKS, 1.0F, 1.0F);
+                if (!state.get(WATERLOGGED)) world.playSound(null, pos, VASoundEvents.BLOCK_IOLITE_TETHER_WARP, SoundCategory.BLOCKS, 1.0F, 1.0F);
 
-                if (!world.getBlockState(pos).get(WATERLOGGED)) {
-                    world.playSound(null, pos, VASoundEvents.BLOCK_IOLITE_TETHER_WARP, SoundCategory.BLOCKS, 1.0F, 1.0F);
-                }
-            } else if (!world.getBlockState(pos).get(WATERLOGGED)) world.playSound(null, pos, SoundEvents.BLOCK_RESPAWN_ANCHOR_DEPLETE, SoundCategory.BLOCKS, 1.0F, 1.8F);
+            } else if (!state.get(WATERLOGGED)) world.playSound(null, pos, SoundEvents.BLOCK_RESPAWN_ANCHOR_DEPLETE, SoundCategory.BLOCKS, 1.0F, 1.8F);
 
-            world.setBlockState(pos, world.getBlockState(pos).with(COOLDOWN, true));
-            world.createAndScheduleBlockTick(pos, world.getBlockState(pos).getBlock(), 20);
+            world.setBlockState(pos, state.with(COOLDOWN, true));
+            world.createAndScheduleBlockTick(pos, state.getBlock(), 20);
         }
     }
 

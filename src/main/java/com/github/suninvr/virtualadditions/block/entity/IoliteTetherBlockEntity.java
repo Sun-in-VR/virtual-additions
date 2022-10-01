@@ -10,9 +10,7 @@ import net.minecraft.nbt.NbtCompound;
 import net.minecraft.nbt.NbtElement;
 import net.minecraft.nbt.NbtHelper;
 import net.minecraft.particle.ParticleEffect;
-import net.minecraft.server.world.ServerWorld;
 import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.registry.RegistryKey;
 import net.minecraft.world.World;
 
 public class IoliteTetherBlockEntity extends BlockEntity {
@@ -48,8 +46,8 @@ public class IoliteTetherBlockEntity extends BlockEntity {
         float i = pos.getX() + 0.5F;
         float j = pos.getY();
         float k = pos.getZ() + 0.5F;
-        if (world.getTime() % 4L == 0L) {
-            world.addParticle(particle, i, j + 0.626, k, 0.0D, 0.1D, 0.0D);
+        if (world.getTime() % 2L == 0L) {
+            world.addParticle(particle, i, j + 0.525, k, 0.0D, 0.1D, 0.0D);
         }
     }
 

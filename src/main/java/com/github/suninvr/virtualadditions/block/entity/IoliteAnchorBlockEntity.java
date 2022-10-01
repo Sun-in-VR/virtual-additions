@@ -8,6 +8,7 @@ import net.minecraft.block.BlockState;
 import net.minecraft.block.entity.BlockEntity;
 import net.minecraft.particle.ParticleEffect;
 import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.math.Direction;
 import net.minecraft.world.World;
 
 public class IoliteAnchorBlockEntity extends BlockEntity {
@@ -23,7 +24,7 @@ public class IoliteAnchorBlockEntity extends BlockEntity {
         float i = pos.getX() + 0.5F;
         float j = pos.getY();
         float k = pos.getZ() + 0.5F;
-        if (world.getTime() % 4L - 2 == 0L) {
+        if (world.getTime() % 2L == 0L) {
             if (blockEntity.isUpsideDown()) world.addParticle(particleCeiling, i, j + 0.624, k, 0.0D, 0.0D, 0.0D);
             else world.addParticle(particle, i, j + 0.376, k, 0.0D, 0.0D, 0.0D);
         }
@@ -36,7 +37,7 @@ public class IoliteAnchorBlockEntity extends BlockEntity {
             } else return false;
         }
 
-        return this.blockState.get(IoliteAnchorBlock.CEILING);
+        return this.blockState.get(IoliteAnchorBlock.FACING).equals(Direction.DOWN);
     }
 
     static {

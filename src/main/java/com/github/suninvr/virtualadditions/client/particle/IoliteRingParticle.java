@@ -25,7 +25,7 @@ public class IoliteRingParticle extends SpriteBillboardParticle {
     protected IoliteRingParticle(ClientWorld clientWorld, double d, double e, double f, boolean inverse, double velocity) {
         super(clientWorld, d, e, f, 0.0, 0.0, 0.0);
         this.scale = 0.5F;
-        this.maxAge = 5;
+        this.maxAge = 4;
         this.gravityStrength = 0.0F;
         this.velocityX = 0.0;
         this.velocityY = velocity;
@@ -35,7 +35,8 @@ public class IoliteRingParticle extends SpriteBillboardParticle {
 
     @Override
     public void buildGeometry(VertexConsumer vertexConsumer, Camera camera, float tickDelta) {
-        this.alpha = this.inverse ? MathHelper.clamp(((this.age + tickDelta) / this.maxAge), 0.0F, 1.0F) : 1 - MathHelper.clamp(((this.age + tickDelta) / this.maxAge), 0.0F, 1.0F);
+        this.alpha = this.inverse ? MathHelper.clamp(((this.age + tickDelta) / this.maxAge) - 0.25F, 0.0F, 1F) : 1 - MathHelper.clamp(((this.age + tickDelta) / this.maxAge), 0.0F, 1.0F);
+        if (this.age > 2) this.velocityY = 0;
         this.buildParticleFace(vertexConsumer, camera, tickDelta, (quaternion) -> quaternion.hamiltonProduct(Vec3f.POSITIVE_X.getRadialQuaternion(1.57079F)));
         this.buildParticleFace(vertexConsumer, camera, tickDelta, (quaternion) -> quaternion.hamiltonProduct(Vec3f.POSITIVE_X.getRadialQuaternion(-1.57079F)));
     }

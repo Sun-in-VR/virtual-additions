@@ -1,8 +1,8 @@
 {
   "variants": {
-    "powered=true,ceiling=false": { "model": "virtual_additions:block/iolite_anchor" },
-    "powered=false,ceiling=false": { "model": "virtual_additions:block/iolite_anchor_active" },
-    "powered=true,ceiling=true": { "model": "virtual_additions:block/iolite_anchor", "x": 180 },
-    "powered=false,ceiling=true": { "model": "virtual_additions:block/iolite_anchor_active", "x": 180 }
+    "powered=true,vertical_direction=up": { "model": "virtual_additions:block/iolite_anchor" },
+    "powered=false,vertical_direction=up": { "model": "virtual_additions:block/iolite_anchor_active" },
+    "powered=true,vertical_direction=down": { "model": "virtual_additions:block/iolite_anchor", "x": 180 },
+    "powered=false,vertical_direction=down": { "model": "virtual_additions:block/iolite_anchor_active", "x": 180 }
   }
 }
