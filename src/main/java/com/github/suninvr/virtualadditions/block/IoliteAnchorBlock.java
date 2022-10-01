@@ -1,23 +1,19 @@
 package com.github.suninvr.virtualadditions.block;
 
-import com.mojang.logging.LogUtils;
-import com.mojang.serialization.DataResult;
-import net.fabricmc.api.EnvType;
-import net.fabricmc.api.Environment;
-import net.minecraft.block.Block;
-import net.minecraft.block.BlockState;
-import net.minecraft.block.ShapeContext;
-import net.minecraft.block.Waterloggable;
+import com.github.suninvr.virtualadditions.block.entity.IoliteAnchorBlockEntity;
+import com.github.suninvr.virtualadditions.registry.VABlockEntities;
+import com.github.suninvr.virtualadditions.registry.VAItems;
+import net.minecraft.block.*;
+import net.minecraft.block.entity.BlockEntity;
+import net.minecraft.block.entity.BlockEntityTicker;
+import net.minecraft.block.entity.BlockEntityType;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.fluid.FluidState;
 import net.minecraft.fluid.Fluids;
 import net.minecraft.item.ItemPlacementContext;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NbtCompound;
-import net.minecraft.nbt.NbtElement;
 import net.minecraft.nbt.NbtHelper;
-import net.minecraft.nbt.NbtOps;
-import net.minecraft.particle.DustColorTransitionParticleEffect;
 import net.minecraft.sound.SoundCategory;
 import net.minecraft.sound.SoundEvents;
 import net.minecraft.state.StateManager;
@@ -28,24 +24,14 @@ import net.minecraft.util.Hand;
 import net.minecraft.util.hit.BlockHitResult;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Direction;
-import net.minecraft.util.math.Vec3d;
-import net.minecraft.util.math.Vec3f;
-import net.minecraft.util.registry.RegistryKey;
 import net.minecraft.util.shape.VoxelShape;
 import net.minecraft.util.shape.VoxelShapes;
 import net.minecraft.world.BlockView;
 import net.minecraft.world.World;
 import net.minecraft.world.WorldAccess;
-import com.github.suninvr.virtualadditions.registry.VAItems;
 import org.jetbrains.annotations.Nullable;
-import org.slf4j.Logger;
 
-import java.util.Random;
-
-public class IoliteAnchorBlock extends Block implements Waterloggable {
-    private static final Logger LOGGER = LogUtils.getLogger();
-    //Setup
-
+public class IoliteAnchorBlock extends BlockWithEntity implements Waterloggable {
     public IoliteAnchorBlock(Settings settings) {
         super(settings);
         setDefaultState(getStateManager().getDefaultState()
@@ -63,11 +49,6 @@ public class IoliteAnchorBlock extends Block implements Waterloggable {
     protected void appendProperties(StateManager.Builder<Block, BlockState> builder) {
         builder.add(POWERED).add(CEILING).add(WATERLOGGED);
     }
-
-
-
-
-    //Functions
 
     //On use: if the player is holding the Tether block, set its data appropriately.
     @Override
@@ -98,12 +79,6 @@ public class IoliteAnchorBlock extends Block implements Waterloggable {
         }
     }
 
-
-
-
-
-
-
     //Appearance & Shape
 
     //Define the voxel shape. This is the block's hit box.
@@ -113,25 +88,6 @@ public class IoliteAnchorBlock extends Block implements Waterloggable {
             return VoxelShapes.cuboid(0f, 0.625f, 0f, 1f, 1f, 1f);
         }
         return VoxelShapes.cuboid(0f, 0f, 0f, 1f, 0.375, 1f);
-    }
-
-    @Environment(EnvType.CLIENT)
-    @Override
-    //Fancy Particle Effects!
-    public void randomDisplayTick(BlockState state, World world, BlockPos pos, net.minecraft.util.math.random.Random random) {
-        if (!state.get(POWERED)) {
-            double posY;
-            if (state.get(CEILING)) {
-                posY = 0.6D;
-            } else {
-                posY = 0.4D;
-            }
-            double d = (double) pos.getX() + 0.5D;
-            double e = (double) pos.getY() + posY;
-            double f = (double) pos.getZ() + 0.5D;
-            double g = (double) random.nextFloat() * 0.04D;
-            world.addParticle(new DustColorTransitionParticleEffect(new Vec3f(Vec3d.unpackRgb(15321342)), new Vec3f(Vec3d.unpackRgb(16777215)), 1.0F), d, e, f, 0.0D, g, 0.0D);
-        }
     }
 
     //Water logging
@@ -154,5 +110,22 @@ public class IoliteAnchorBlock extends Block implements Waterloggable {
         }
 
         return super.getStateForNeighborUpdate(state, direction, newState, world, pos, posFrom);
+    }
+
+    @Nullable
+    @Override
+    public BlockEntity createBlockEntity(BlockPos pos, BlockState state) {
+        return new IoliteAnchorBlockEntity(pos, state);
+    }
+
+    @Override
+    public BlockRenderType getRenderType(BlockState state) {
+        return BlockRenderType.MODEL;
+    }
+
+    @Nullable
+    @Override
+    public <T extends BlockEntity> BlockEntityTicker<T> getTicker(World world, BlockState state, BlockEntityType<T> type) {
+        return checkType(type, VABlockEntities.IOLITE_ANCHOR_BLOCK_ENTITY, IoliteAnchorBlockEntity::tick);
     }
 }

@@ -1,10 +1,9 @@
 package com.github.suninvr.virtualadditions.block;
 
-import com.github.suninvr.virtualadditions.registry.VABlockEntities;
-import net.fabricmc.api.EnvType;
-import net.fabricmc.api.Environment;
+import com.github.suninvr.virtualadditions.block.entity.IoliteTetherBlockEntity;
+import com.github.suninvr.virtualadditions.particle.IoliteRingParticleEffect;
+import com.github.suninvr.virtualadditions.registry.*;
 import net.minecraft.block.*;
-import net.minecraft.block.entity.BeaconBlockEntity;
 import net.minecraft.block.entity.BlockEntity;
 import net.minecraft.block.entity.BlockEntityTicker;
 import net.minecraft.block.entity.BlockEntityType;
@@ -18,8 +17,6 @@ import net.minecraft.item.ItemPlacementContext;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NbtCompound;
 import net.minecraft.nbt.NbtHelper;
-import net.minecraft.nbt.NbtOps;
-import net.minecraft.particle.DustColorTransitionParticleEffect;
 import net.minecraft.server.network.ServerPlayerEntity;
 import net.minecraft.server.world.ServerWorld;
 import net.minecraft.sound.SoundCategory;
@@ -28,22 +25,12 @@ import net.minecraft.state.StateManager;
 import net.minecraft.state.property.BooleanProperty;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Direction;
-import net.minecraft.util.math.Vec3d;
-import net.minecraft.util.math.Vec3f;
-import net.minecraft.util.registry.RegistryKey;
 import net.minecraft.util.shape.VoxelShape;
 import net.minecraft.util.shape.VoxelShapes;
 import net.minecraft.world.BlockView;
 import net.minecraft.world.World;
 import net.minecraft.world.WorldAccess;
-import com.github.suninvr.virtualadditions.block.entity.IoliteTetherBlockEntity;
-import com.github.suninvr.virtualadditions.registry.VABlocks;
-import com.github.suninvr.virtualadditions.registry.VAItems;
-import com.github.suninvr.virtualadditions.registry.VASoundEvents;
 import org.jetbrains.annotations.Nullable;
-
-import java.util.Optional;
-import java.util.Random;
 
 public class IoliteTetherBlock extends BlockWithEntity implements Waterloggable {
     //Setup
@@ -132,6 +119,7 @@ public class IoliteTetherBlock extends BlockWithEntity implements Waterloggable 
                     //Play sounds on teleport.
                     world.playSound(null, destX, destY, destZ, VASoundEvents.BLOCK_IOLITE_ANCHOR_WARP, SoundCategory.BLOCKS, 1.0F, 1.0F);
                     world.playSound(null, pos, VASoundEvents.BLOCK_IOLITE_TETHER_WARP, SoundCategory.BLOCKS, 1.0F, 1.0F);
+                    world.addParticle(new IoliteRingParticleEffect(true, 0.5, VAParticleTypes.IOLITE_ANCHOR_RING), destX, destY + 0.5, destZ, 0, 0, 0);
                 }
                 case "obstructed", "fail" -> world.playSound(null, pos, SoundEvents.BLOCK_RESPAWN_ANCHOR_DEPLETE, SoundCategory.BLOCKS, 1.0F, 1.8F);
             }

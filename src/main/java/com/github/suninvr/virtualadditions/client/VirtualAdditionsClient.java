@@ -1,8 +1,8 @@
 package com.github.suninvr.virtualadditions.client;
 
+import com.github.suninvr.virtualadditions.client.particle.IoliteRingParticle;
 import com.github.suninvr.virtualadditions.client.render.entity.ClimbingRopeEntityRenderer;
 import com.github.suninvr.virtualadditions.registry.*;
-import com.github.suninvr.virtualadditions.screen.WorkbenchScreen;
 import net.fabricmc.api.ClientModInitializer;
 import net.fabricmc.fabric.api.blockrenderlayer.v1.BlockRenderLayerMap;
 import net.fabricmc.fabric.api.client.particle.v1.ParticleFactoryRegistry;
@@ -10,13 +10,11 @@ import net.fabricmc.fabric.api.client.render.fluid.v1.FluidRenderHandler;
 import net.fabricmc.fabric.api.client.render.fluid.v1.FluidRenderHandlerRegistry;
 import net.fabricmc.fabric.api.client.rendering.v1.ColorProviderRegistry;
 import net.fabricmc.fabric.api.client.rendering.v1.EntityRendererRegistry;
-import net.fabricmc.fabric.api.client.screenhandler.v1.ScreenRegistry;
 import net.fabricmc.fabric.api.event.client.ClientSpriteRegistryCallback;
 import net.fabricmc.fabric.api.object.builder.v1.client.model.FabricModelPredicateProviderRegistry;
 import net.fabricmc.fabric.api.resource.ResourceManagerHelper;
 import net.fabricmc.fabric.api.resource.SimpleSynchronousResourceReloadListener;
 import net.minecraft.client.MinecraftClient;
-import net.minecraft.client.particle.ShriekParticle;
 import net.minecraft.client.particle.WaterSuspendParticle;
 import net.minecraft.client.render.RenderLayer;
 import net.minecraft.client.render.entity.FlyingItemEntityRenderer;
@@ -79,9 +77,10 @@ public class VirtualAdditionsClient implements ClientModInitializer {
         ParticleFactoryRegistry.getInstance().register(VAParticleTypes.ICY_FOG, WaterSuspendParticle.UnderwaterFactory::new);
 
         ClientSpriteRegistryCallback.event(PlayerScreenHandler.BLOCK_ATLAS_TEXTURE).register(((atlasTexture, registry) -> registry.register(idOf("particle/iolite_tether_ring"))));
-        ParticleFactoryRegistry.getInstance().register(VAParticleTypes.IOLITE_TETHER_RING, ShriekParticle.Factory::new);
+        ParticleFactoryRegistry.getInstance().register(VAParticleTypes.IOLITE_TETHER_RING, IoliteRingParticle.Factory::new);
 
-        ScreenRegistry.register(VAScreenHandlers.WORKBENCH_SCREEN_HANDLER, WorkbenchScreen::new);
+        ClientSpriteRegistryCallback.event(PlayerScreenHandler.BLOCK_ATLAS_TEXTURE).register(((atlasTexture, registry) -> registry.register(idOf("particle/iolite_anchor_ring"))));
+        ParticleFactoryRegistry.getInstance().register(VAParticleTypes.IOLITE_ANCHOR_RING, IoliteRingParticle.Factory::new);
 
         setupFluidRendering(VAFluids.ACID, VAFluids.FLOWING_ACID, idOf("acid"), 0x95be21);//0x549300);
     }
