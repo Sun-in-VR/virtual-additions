@@ -67,7 +67,7 @@ public class ClimbingRopeBlock extends Block implements Waterloggable {
                 world.setBlockState(belowPos, newState);
                 world.setBlockState(pos, state.with(END, false));
                 world.playSound(null, belowPos, VASoundEvents.BLOCK_ROPE_EXTEND, SoundCategory.BLOCKS, 0.33F, 1.2F);
-                world.createAndScheduleBlockTick(belowPos, VABlocks.CLIMBING_ROPE, 1);
+                world.scheduleBlockTick(belowPos, VABlocks.CLIMBING_ROPE, 1);
                 world.emitGameEvent(null, GameEvent.BLOCK_PLACE, belowPos);
             }
         } else {
@@ -77,8 +77,8 @@ public class ClimbingRopeBlock extends Block implements Waterloggable {
 
     @Override
     public void neighborUpdate(BlockState state, World world, BlockPos pos, Block sourceBlock, BlockPos sourcePos, boolean notify) {
-        if (state.get(WATERLOGGED)) world.createAndScheduleFluidTick(pos, Fluids.WATER, Fluids.WATER.getTickRate(world));
-        if (!state.canPlaceAt(world, pos)) world.createAndScheduleBlockTick(pos, VABlocks.CLIMBING_ROPE, 1);
+        if (state.get(WATERLOGGED)) world.scheduleFluidTick(pos, Fluids.WATER, Fluids.WATER.getTickRate(world));
+        if (!state.canPlaceAt(world, pos)) world.scheduleBlockTick(pos, VABlocks.CLIMBING_ROPE, 1);
     }
 
     @Override

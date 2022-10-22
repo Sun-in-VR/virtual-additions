@@ -94,10 +94,10 @@ public class CrystalBlock extends Block implements Waterloggable {
 
     @Override
     public void neighborUpdate(BlockState state, World world, BlockPos pos, Block sourceBlock, BlockPos sourcePos, boolean notify) {
-        if (state.get(WATERLOGGED)) world.createAndScheduleFluidTick(pos, Fluids.WATER, Fluids.WATER.getTickRate(world));
+        if (state.get(WATERLOGGED)) world.scheduleFluidTick(pos, Fluids.WATER, Fluids.WATER.getTickRate(world));
         Direction pointing = state.get(POINTING);
         if (!canPlaceOn(world, pos.offset(pointing.getOpposite()), pointing)) {
-            world.createAndScheduleBlockTick(pos, this, 1);
+            world.scheduleBlockTick(pos, this, 1);
         }
         super.neighborUpdate(state, world, pos, sourceBlock, sourcePos, notify);
     }
