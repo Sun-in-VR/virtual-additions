@@ -1,8 +1,8 @@
 package com.github.suninvr.virtualadditions.item.interfaces;
 
+import com.github.suninvr.virtualadditions.item.enums.GildType;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.ToolMaterial;
-import com.github.suninvr.virtualadditions.item.enums.GildType;
 
 public interface GildedToolItem{
 

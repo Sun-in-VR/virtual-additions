@@ -1,5 +1,7 @@
 package com.github.suninvr.virtualadditions.entity;
 
+import com.github.suninvr.virtualadditions.registry.VAEntityType;
+import com.github.suninvr.virtualadditions.registry.VAItems;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.projectile.thrown.ThrownItemEntity;
@@ -11,8 +13,6 @@ import net.minecraft.util.hit.EntityHitResult;
 import net.minecraft.util.hit.HitResult;
 import net.minecraft.world.World;
 import net.minecraft.world.explosion.Explosion;
-import com.github.suninvr.virtualadditions.registry.VAEntityType;
-import com.github.suninvr.virtualadditions.registry.VAItems;
 
 public class SteelBombEntity extends ThrownItemEntity {
     NbtCompound stackNbt;

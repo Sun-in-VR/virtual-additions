@@ -1,8 +1,8 @@
 package com.github.suninvr.virtualadditions.item.materials;
 
+import com.github.suninvr.virtualadditions.registry.VAItems;
 import net.minecraft.item.ToolMaterial;
 import net.minecraft.recipe.Ingredient;
-import com.github.suninvr.virtualadditions.registry.VAItems;
 
 public class SteelToolMaterial implements ToolMaterial {
     public static final SteelToolMaterial INSTANCE = new SteelToolMaterial();

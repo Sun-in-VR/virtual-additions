@@ -1,5 +1,9 @@
 package com.github.suninvr.virtualadditions.entity;
 
+import com.github.suninvr.virtualadditions.block.ClimbingRopeAnchorBlock;
+import com.github.suninvr.virtualadditions.registry.VABlocks;
+import com.github.suninvr.virtualadditions.registry.VAEntityType;
+import com.github.suninvr.virtualadditions.registry.VAItems;
 import net.minecraft.block.BlockState;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityType;
@@ -10,10 +14,6 @@ import net.minecraft.util.hit.BlockHitResult;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Direction;
 import net.minecraft.world.World;
-import com.github.suninvr.virtualadditions.block.ClimbingRopeAnchorBlock;
-import com.github.suninvr.virtualadditions.registry.VABlocks;
-import com.github.suninvr.virtualadditions.registry.VAEntityType;
-import com.github.suninvr.virtualadditions.registry.VAItems;
 
 public class ClimbingRopeEntity extends PersistentProjectileEntity {
 
@@ -23,10 +23,6 @@ public class ClimbingRopeEntity extends PersistentProjectileEntity {
 
     public ClimbingRopeEntity(double x, double y, double z, World world) {
         super(VAEntityType.CLIMBING_ROPE, x, y, z, world);
-    }
-
-    protected ClimbingRopeEntity(LivingEntity owner, World world) {
-        super(VAEntityType.CLIMBING_ROPE, owner, world);
     }
 
     @Override

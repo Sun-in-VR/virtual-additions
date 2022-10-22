@@ -39,17 +39,11 @@
     "virtual_additions:blueschist_brick_stairs",
     "virtual_additions:blueschist_brick_slab",
     "virtual_additions:blueschist_brick_wall",
-    "virtual_additions:entanglement_drive",
-    "virtual_additions:iolite_ore",
-    "virtual_additions:iolite_tether",
-    "virtual_additions:iolite_anchor",
     "virtual_additions:raw_steel_block",
     "virtual_additions:steel_block",
-    "virtual_additions:toxic_nylium",
     "virtual_additions:red_glimmer_crystal",
     "virtual_additions:green_glimmer_crystal",
     "virtual_additions:blue_glimmer_crystal",
-    "virtual_additions:luminous_crystal_block",
     "virtual_additions:spotlight"
   ]
 }

@@ -1,6 +1,11 @@
 package com.github.suninvr.virtualadditions.block.entity;
 
+import com.github.suninvr.virtualadditions.block.SpotlightBlock;
+import com.github.suninvr.virtualadditions.block.SpotlightLightBlock;
 import com.github.suninvr.virtualadditions.block.enums.LightStatus;
+import com.github.suninvr.virtualadditions.registry.VABlockEntities;
+import com.github.suninvr.virtualadditions.registry.VABlockTags;
+import com.github.suninvr.virtualadditions.registry.VABlocks;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.Blocks;
 import net.minecraft.block.entity.BlockEntity;
@@ -12,21 +17,12 @@ import net.minecraft.nbt.NbtHelper;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Direction;
 import net.minecraft.world.World;
-import com.github.suninvr.virtualadditions.block.SpotlightBlock;
-import com.github.suninvr.virtualadditions.block.SpotlightLightBlock;
-import com.github.suninvr.virtualadditions.registry.VABlockEntities;
-import com.github.suninvr.virtualadditions.registry.VABlockTags;
-import com.github.suninvr.virtualadditions.registry.VABlocks;
 import org.jetbrains.annotations.Nullable;
 
 public class SpotlightBlockEntity extends BlockEntity {
     public final BlockState ON_STATE = VABlocks.SPOTLIGHT_LIGHT.getDefaultState();
     public final BlockState OFF_STATE = VABlocks.SPOTLIGHT_LIGHT.getDefaultState().with(SpotlightLightBlock.LIT, false);
     private NbtElement lightPos;
-
-    public SpotlightBlockEntity(BlockEntityType<?> blockEntityType, BlockPos blockPos, BlockState blockState) {
-        super(blockEntityType, blockPos, blockState);
-    }
 
     public SpotlightBlockEntity(BlockPos pos, BlockState state) {
         super(VABlockEntities.SPOTLIGHT_BLOCK_ENTITY, pos, state);

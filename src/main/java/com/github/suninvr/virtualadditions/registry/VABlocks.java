@@ -1,16 +1,13 @@
 package com.github.suninvr.virtualadditions.registry;
 
+import com.github.suninvr.virtualadditions.VirtualAdditions;
+import com.github.suninvr.virtualadditions.block.*;
+import com.github.suninvr.virtualadditions.registry.constructors.block.CustomStairsBlock;
 import net.fabricmc.fabric.api.object.builder.v1.block.FabricBlockSettings;
 import net.minecraft.block.*;
 import net.minecraft.sound.BlockSoundGroup;
 import net.minecraft.state.property.Properties;
-import net.minecraft.util.math.intprovider.UniformIntProvider;
 import net.minecraft.util.registry.Registry;
-import com.github.suninvr.virtualadditions.VirtualAdditions;
-import com.github.suninvr.virtualadditions.block.*;
-import com.github.suninvr.virtualadditions.registry.constructors.block.CustomFluidBlock;
-import com.github.suninvr.virtualadditions.registry.constructors.block.CustomRootsBlock;
-import com.github.suninvr.virtualadditions.registry.constructors.block.CustomStairsBlock;
 
 public class VABlocks {
 
@@ -59,29 +56,11 @@ public class VABlocks {
     public static final Block SYENITE_BRICK_STAIRS;
     public static final Block SYENITE_BRICK_SLAB;
     public static final Block SYENITE_BRICK_WALL;
-    public static final Block ENTANGLEMENT_DRIVE;
-    public static final Block IOLITE_ORE;
-    public static final Block IOLITE_ANCHOR;
-    public static final Block IOLITE_TETHER;
     public static final Block RED_GLIMMER_CRYSTAL;
     public static final Block GREEN_GLIMMER_CRYSTAL;
     public static final Block BLUE_GLIMMER_CRYSTAL;
-    public static final Block LUMINOUS_CRYSTAL_BLOCK;
     public static final Block SPOTLIGHT;
     public static final Block SPOTLIGHT_LIGHT;
-    public static final Block VENOMOUS_BOIL;
-    public static final Block TOXIC_NYLIUM;
-    public static final Block TOXIC_ROOTS;
-    public static final Block TOXIC_HEAP;
-    public static final Block CYTOSOL;
-    public static final Block ORGANELLE;
-    public static final Block NUCLEUS;
-    public static final Block CELLULAR_MEMBRANE;
-    public static final Block ACID;
-    public static final Block CYTOSOL_BLOCK;
-    //public static final Block ACID_CAULDRON;
-    public static final Block ICE_SHEET;
-    public static final Block SLIME_TENDRILS;
     public static final Block COTTON;
 
     static {
@@ -128,29 +107,11 @@ public class VABlocks {
         SYENITE_BRICK_STAIRS = register("syenite_brick_stairs", new CustomStairsBlock(SYENITE_BRICKS.getDefaultState(), AbstractBlock.Settings.copy(Blocks.DEEPSLATE_BRICK_STAIRS)));
         SYENITE_BRICK_SLAB = register("syenite_brick_slab", new SlabBlock(AbstractBlock.Settings.copy(Blocks.DEEPSLATE_BRICK_SLAB)));
         SYENITE_BRICK_WALL = register("syenite_brick_wall", new WallBlock(FabricBlockSettings.copyOf(Blocks.DEEPSLATE_BRICK_WALL)));
-        ENTANGLEMENT_DRIVE = register("entanglement_drive", new EntanglementDriveBlock(FabricBlockSettings.of(Material.METAL).nonOpaque().sounds(BlockSoundGroup.NETHERITE).luminance(3).emissiveLighting( (state, world, pos) -> true ).hardness(22.5F).resistance(600.0F)));
-        IOLITE_ORE = register("iolite_ore", new OreBlock(FabricBlockSettings.copyOf(Blocks.END_STONE).strength(4.5F, 4.5F), UniformIntProvider.create(5, 9)));
-        IOLITE_ANCHOR = register("iolite_anchor", new IoliteAnchorBlock(FabricBlockSettings.of(Material.METAL).nonOpaque().sounds(BlockSoundGroup.NETHERITE).luminance(3).emissiveLighting( (state, world, pos) -> !state.get(IoliteAnchorBlock.POWERED) ).hardness(22.5F).resistance(600.0F)));
-        IOLITE_TETHER = register("iolite_tether", new IoliteTetherBlock(FabricBlockSettings.of(Material.METAL).nonOpaque().sounds(BlockSoundGroup.NETHERITE).luminance(3).emissiveLighting( (state, world, pos) -> !state.get(IoliteTetherBlock.COOLDOWN) ).hardness(22.5F).resistance(600.0F)));
         RED_GLIMMER_CRYSTAL = register("red_glimmer_crystal", new CrystalBlock(FabricBlockSettings.copyOf(Blocks.AMETHYST_CLUSTER).mapColor(MapColor.WHITE_GRAY).nonOpaque()));
         GREEN_GLIMMER_CRYSTAL = register("green_glimmer_crystal", new CrystalBlock(FabricBlockSettings.copyOf(Blocks.AMETHYST_CLUSTER).mapColor(MapColor.WHITE_GRAY).nonOpaque()));
         BLUE_GLIMMER_CRYSTAL = register("blue_glimmer_crystal", new CrystalBlock(FabricBlockSettings.copyOf(Blocks.AMETHYST_CLUSTER).mapColor(MapColor.WHITE_GRAY).nonOpaque()));
-        LUMINOUS_CRYSTAL_BLOCK = register("luminous_crystal_block", new TransparentBlock(FabricBlockSettings.copyOf(Blocks.AMETHYST_BLOCK).mapColor(MapColor.WHITE_GRAY).nonOpaque().luminance(5)));
         SPOTLIGHT = register("spotlight", new SpotlightBlock(FabricBlockSettings.copyOf(Blocks.COPPER_BLOCK).mapColor(MapColor.ORANGE).nonOpaque().luminance((state) -> state.get(SpotlightBlock.POWERED) ? 6 : 0).emissiveLighting((state, world, pos) -> state.get(Properties.POWERED)) ));
         SPOTLIGHT_LIGHT = register("spotlight_light", new SpotlightLightBlock(FabricBlockSettings.of(Material.AIR).strength(-1.0F, 3600000.8F).dropsNothing().nonOpaque().luminance((state) -> state.get(SpotlightLightBlock.LIT) ? 13 : 0)));
-        VENOMOUS_BOIL = register("venomous_boil", new VenomousBoilBlock(FabricBlockSettings.of(Material.ORGANIC_PRODUCT).mapColor(MapColor.LIME).sounds(BlockSoundGroup.FUNGUS).collidable(false).nonOpaque().luminance(1).emissiveLighting( ((state, world, pos) -> state.get(VenomousBoilBlock.AGE) == 3) )));
-        TOXIC_NYLIUM = register("toxic_nylium", new ToxicNyliumBlock(FabricBlockSettings.of(Material.STONE, MapColor.LIME).sounds(BlockSoundGroup.NYLIUM).requiresTool().strength(0.4F)));
-        TOXIC_ROOTS = register("toxic_roots", new CustomRootsBlock(FabricBlockSettings.of(Material.NETHER_SHOOTS, MapColor.LIME).sounds(BlockSoundGroup.ROOTS).noCollision().breakInstantly()));
-        TOXIC_HEAP = register("toxic_heap", new Block(FabricBlockSettings.of(Material.ORGANIC_PRODUCT, MapColor.LIME).sounds(BlockSoundGroup.WART_BLOCK)));
-        CYTOSOL = register("cytosol", new CytosolFilmBlock(FabricBlockSettings.of(Material.ORGANIC_PRODUCT, MapColor.PALE_YELLOW).nonOpaque().sounds(BlockSoundGroup.FROGSPAWN).hardness(0.3F)));
-        ORGANELLE = register("organelle", new OrganelleBlock(FabricBlockSettings.of(Material.ORGANIC_PRODUCT, MapColor.LIME).nonOpaque().sounds(BlockSoundGroup.FROGSPAWN).hardness(0.3F)));
-        NUCLEUS = register("nucleus", new OrganelleBlock(FabricBlockSettings.of(Material.ORGANIC_PRODUCT, MapColor.YELLOW).nonOpaque().sounds(BlockSoundGroup.FROGSPAWN).hardness(0.3F)));
-        CELLULAR_MEMBRANE = register("cellular_membrane", new CellularMembraneBlock(FabricBlockSettings.of(Material.ORGANIC_PRODUCT, MapColor.LIME).nonOpaque().sounds(BlockSoundGroup.CORAL).hardness(1.0F)));
-        CYTOSOL_BLOCK = register("cytosol_block", new CytosolBlock(FabricBlockSettings.of(Material.ORGANIC_PRODUCT, MapColor.PALE_YELLOW).nonOpaque().sounds(BlockSoundGroup.FROGSPAWN).hardness(0.3F)));
-        ACID = register("acid", new CustomFluidBlock(VAFluids.ACID, false, FabricBlockSettings.of(Material.WATER).noCollision().strength(100.0F).dropsNothing().mapColor(MapColor.DARK_GREEN)));
-        //ACID_CAULDRON = register("acid_cauldron", new AcidCauldronBlock(FabricBlockSettings.copyOf(Blocks.CAULDRON).mapColor(MapColor.GRAY)));
-        ICE_SHEET = register("ice_sheet", new IceSheetBlock(FabricBlockSettings.copyOf(Blocks.ICE).nonOpaque()));
-        SLIME_TENDRILS = register("slime_tendrils", new SlimeTendrilsBlock(FabricBlockSettings.copyOf(Blocks.SLIME_BLOCK).nonOpaque().noCollision()));
         COTTON = register("cotton", new CropBlock(AbstractBlock.Settings.of(Material.PLANT).noCollision().ticksRandomly().breakInstantly().sounds(BlockSoundGroup.CROP)));
     }
 

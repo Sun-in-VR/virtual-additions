@@ -1,13 +1,13 @@
 package com.github.suninvr.virtualadditions.registry;
 
+import com.github.suninvr.virtualadditions.VirtualAdditions;
+import com.github.suninvr.virtualadditions.entity.ClimbingRopeEntity;
+import com.github.suninvr.virtualadditions.entity.SteelBombEntity;
 import net.fabricmc.fabric.api.object.builder.v1.entity.FabricEntityTypeBuilder;
 import net.minecraft.entity.EntityDimensions;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.SpawnGroup;
 import net.minecraft.util.registry.Registry;
-import com.github.suninvr.virtualadditions.VirtualAdditions;
-import com.github.suninvr.virtualadditions.entity.ClimbingRopeEntity;
-import com.github.suninvr.virtualadditions.entity.SteelBombEntity;
 
 import static com.github.suninvr.virtualadditions.VirtualAdditions.idOf;
 

@@ -1,5 +1,7 @@
 package com.github.suninvr.virtualadditions.item;
 
+import com.github.suninvr.virtualadditions.entity.SteelBombEntity;
+import com.github.suninvr.virtualadditions.registry.VASoundEvents;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
@@ -8,8 +10,6 @@ import net.minecraft.stat.Stats;
 import net.minecraft.util.Hand;
 import net.minecraft.util.TypedActionResult;
 import net.minecraft.world.World;
-import com.github.suninvr.virtualadditions.entity.SteelBombEntity;
-import com.github.suninvr.virtualadditions.registry.VASoundEvents;
 
 public class SteelBombItem extends Item {
 

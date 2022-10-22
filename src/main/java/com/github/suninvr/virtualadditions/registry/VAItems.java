@@ -4,17 +4,13 @@ import com.github.suninvr.virtualadditions.entity.ClimbingRopeEntity;
 import com.github.suninvr.virtualadditions.entity.SteelBombEntity;
 import com.github.suninvr.virtualadditions.item.*;
 import com.github.suninvr.virtualadditions.item.enums.GildType;
-import com.github.suninvr.virtualadditions.mixin.BrewingRecipeRegistryAccessor;
 import com.github.suninvr.virtualadditions.mixin.ComposterBlockAccessor;
-import com.github.suninvr.virtualadditions.registry.constructors.block.CustomBucketItem;
 import net.fabricmc.fabric.api.item.v1.FabricItemSettings;
 import net.fabricmc.fabric.api.loot.v2.LootTableEvents;
 import net.minecraft.block.Block;
-import net.minecraft.block.BlockState;
 import net.minecraft.block.Blocks;
 import net.minecraft.block.DispenserBlock;
 import net.minecraft.block.dispenser.DispenserBehavior;
-import net.minecraft.block.dispenser.ItemDispenserBehavior;
 import net.minecraft.block.dispenser.ProjectileDispenserBehavior;
 import net.minecraft.enchantment.Enchantments;
 import net.minecraft.entity.projectile.PersistentProjectileEntity;
@@ -28,12 +24,7 @@ import net.minecraft.loot.entry.ItemEntry;
 import net.minecraft.loot.function.ApplyBonusLootFunction;
 import net.minecraft.loot.function.ExplosionDecayLootFunction;
 import net.minecraft.predicate.item.ItemPredicate;
-import net.minecraft.sound.SoundCategory;
-import net.minecraft.sound.SoundEvents;
-import net.minecraft.util.Rarity;
 import net.minecraft.util.Util;
-import net.minecraft.util.math.BlockPointer;
-import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Position;
 import net.minecraft.util.registry.Registry;
 import net.minecraft.world.World;
@@ -50,7 +41,6 @@ public class VAItems {
     public static final ToolSet IRON_TOOL_SET = new ToolSet(Items.IRON_SWORD, Items.IRON_SHOVEL, Items.IRON_PICKAXE, Items.IRON_AXE, Items.IRON_HOE, "iron");
     public static final ToolSet NETHERITE_TOOL_SET = new ToolSet(Items.NETHERITE_SWORD, Items.NETHERITE_SHOVEL, Items.NETHERITE_PICKAXE, Items.NETHERITE_AXE, Items.NETHERITE_HOE, "netherite");
     public static final Item CLIMBING_ROPE;
-    public static final Item APPLICABLE_POTION_ITEM;
     public static final Item HORNFELS;
     public static final Item COBBLED_HORNFELS;
     public static final Item COBBLED_HORNFELS_STAIRS;
@@ -89,35 +79,16 @@ public class VAItems {
     public static final Item SYENITE_BRICK_STAIRS;
     public static final Item SYENITE_BRICK_SLAB;
     public static final Item SYENITE_BRICK_WALL;
-    public static final Item ENTANGLEMENT_DRIVE;
-    public static final Item IOLITE;
-    public static final Item IOLITE_ORE;
-    public static final Item IOLITE_ANCHOR;
-    public static final Item IOLITE_TETHER;
     public static final Item RED_GLIMMER_CRYSTAL;
     public static final Item GREEN_GLIMMER_CRYSTAL;
     public static final Item BLUE_GLIMMER_CRYSTAL;
     public static final Item CRYSTAL_DUST;
-    public static final Item SHIMMERING_LUMINOUS_CRYSTAL_BLOCK;
     public static final Item SPOTLIGHT;
-    public static final Item VENOMOUS_BOIL;
-    public static final Item TOXIC_NYLIUM;
-    public static final Item TOXIC_ROOTS;
-    public static final Item TOXIC_HEAP;
-    public static final Item ACID_BUCKET;
-    public static final Item CYTOSOL;
-    public static final Item CYTOSOL_BLOCK;
-    public static final Item NUCLEUS;
-    public static final Item ICE_SHEET;
-    public static final Item SLIME_TENDRILS;
     public static final Item RAW_STEEL;
     public static final Item RAW_STEEL_BLOCK;
     public static final Item STEEL_INGOT;
     public static final Item STEEL_BLOCK;
     public static final Item STEEL_BOMB;
-    public static final Item KEY;
-    public static final Item BOTTLED_SOULS;
-    public static final Item STAFF;
     public static final Item COTTON_SEEDS;
     public static final Item COTTON;
     //public static final Item PROJECTION_SPYGLASS;
@@ -180,36 +151,16 @@ public class VAItems {
         SYENITE_BRICK_STAIRS = registerBlockItem("syenite_brick_stairs", VABlocks.SYENITE_BRICK_STAIRS, ItemGroup.BUILDING_BLOCKS);
         SYENITE_BRICK_SLAB = registerBlockItem("syenite_brick_slab", VABlocks.SYENITE_BRICK_SLAB, ItemGroup.BUILDING_BLOCKS);
         SYENITE_BRICK_WALL = registerBlockItem("syenite_brick_wall", VABlocks.SYENITE_BRICK_WALL, ItemGroup.BUILDING_BLOCKS);
-        ENTANGLEMENT_DRIVE = register("entanglement_drive", new BlockItem(VABlocks.ENTANGLEMENT_DRIVE, new FabricItemSettings().rarity(Rarity.RARE).group(ItemGroup.REDSTONE)));
-        IOLITE = register("iolite", ItemGroup.MISC);
-        IOLITE_ORE = registerBlockItem("iolite_ore", VABlocks.IOLITE_ORE, ItemGroup.BUILDING_BLOCKS);
-        IOLITE_ANCHOR = register("iolite_anchor", new BlockItem(VABlocks.IOLITE_ANCHOR, new FabricItemSettings().rarity(Rarity.RARE).group(ItemGroup.TRANSPORTATION)));
-        IOLITE_TETHER = register("iolite_tether", new BlockItem(VABlocks.IOLITE_TETHER, new FabricItemSettings().rarity(Rarity.RARE).group(ItemGroup.TRANSPORTATION)));
         RED_GLIMMER_CRYSTAL = registerBlockItem("red_glimmer_crystal", VABlocks.RED_GLIMMER_CRYSTAL, ItemGroup.DECORATIONS);
         GREEN_GLIMMER_CRYSTAL = registerBlockItem("green_glimmer_crystal", VABlocks.GREEN_GLIMMER_CRYSTAL, ItemGroup.DECORATIONS);
         BLUE_GLIMMER_CRYSTAL = registerBlockItem("blue_glimmer_crystal", VABlocks.BLUE_GLIMMER_CRYSTAL, ItemGroup.DECORATIONS);
         CRYSTAL_DUST = register("crystal_dust", ItemGroup.MISC);
-        SHIMMERING_LUMINOUS_CRYSTAL_BLOCK = registerBlockItem("luminous_crystal_block", VABlocks.LUMINOUS_CRYSTAL_BLOCK, ItemGroup.BUILDING_BLOCKS);
         SPOTLIGHT = registerBlockItem("spotlight", VABlocks.SPOTLIGHT, ItemGroup.REDSTONE);
-        VENOMOUS_BOIL = registerBlockItem("venomous_boil", VABlocks.VENOMOUS_BOIL, ItemGroup.DECORATIONS);
-        ICE_SHEET = registerBlockItem("ice_sheet", VABlocks.ICE_SHEET, ItemGroup.DECORATIONS);
-        SLIME_TENDRILS = registerBlockItem("slime_tendrils", VABlocks.SLIME_TENDRILS);
-        TOXIC_NYLIUM = registerBlockItem("toxic_nylium", VABlocks.TOXIC_NYLIUM, ItemGroup.DECORATIONS);
-        TOXIC_ROOTS = registerBlockItem("toxic_roots", VABlocks.TOXIC_ROOTS, ItemGroup.DECORATIONS);
-        TOXIC_HEAP = registerBlockItem("toxic_heap", VABlocks.TOXIC_HEAP, ItemGroup.BUILDING_BLOCKS);
-        CYTOSOL = register("cytosol", ItemGroup.BREWING);
-        CYTOSOL_BLOCK = registerBlockItem("cytosol_block", VABlocks.CYTOSOL_BLOCK, ItemGroup.BUILDING_BLOCKS);
-        NUCLEUS = register("nucleus", ItemGroup.MISC);
-        ACID_BUCKET = register("acid_bucket", new CustomBucketItem(VAFluids.ACID, VASoundEvents.ITEM_BUCKET_EMPTY_ACID, new FabricItemSettings().recipeRemainder(Items.BUCKET).maxCount(1).group(ItemGroup.MISC)));
-        APPLICABLE_POTION_ITEM = register("applicable_potion", new ApplicablePotionItem(new FabricItemSettings().group(ItemGroup.BREWING).maxCount(1)));
         RAW_STEEL_BLOCK = registerBlockItem("raw_steel_block", VABlocks.RAW_STEEL_BLOCK, ItemGroup.BUILDING_BLOCKS);
         STEEL_BLOCK = registerBlockItem("steel_block", VABlocks.STEEL_BLOCK, ItemGroup.BUILDING_BLOCKS);
         RAW_STEEL = register("raw_steel", ItemGroup.MISC);
         STEEL_INGOT = register("steel_ingot", ItemGroup.MISC);
         STEEL_BOMB = register("steel_bomb", new SteelBombItem(new FabricItemSettings().group(ItemGroup.TOOLS).maxCount(16)));
-        KEY = register("key", new KeyItem(new FabricItemSettings().group(ItemGroup.MISC).maxCount(1)));
-        BOTTLED_SOULS = register("bottled_souls", new Item((new Item.Settings()).recipeRemainder(Items.GLASS_BOTTLE).group(ItemGroup.MISC).rarity(Rarity.UNCOMMON)));
-        STAFF = register("staff", new StaffItem(ToolMaterials.WOOD, new FabricItemSettings().group(ItemGroup.TOOLS)));
         COTTON_SEEDS = register("cotton_seeds", new AliasedBlockItem(VABlocks.COTTON, new FabricItemSettings().group(ItemGroup.MISC)));
         COTTON = register("cotton", ItemGroup.MISC);
         //PROJECTION_SPYGLASS = register("projection_spyglass", new ProjectionSpyglassItem(new FabricItemSettings().group(ItemGroup.MISC)));
@@ -249,31 +200,6 @@ public class VAItems {
                 return climbingRopeEntity;
             }
         });
-
-        registerDispenserBehavior(ACID_BUCKET, new ItemDispenserBehavior(){
-                private final ItemDispenserBehavior fallbackBehavior = new ItemDispenserBehavior();
-
-                public ItemStack dispenseSilently(BlockPointer pointer, ItemStack stack) {
-                FluidModificationItem fluidModificationItem = (FluidModificationItem)stack.getItem();
-                BlockPos blockPos = pointer.getPos().offset(pointer.getBlockState().get(DispenserBlock.FACING));
-                World world = pointer.getWorld();
-                BlockState state = world.getBlockState(blockPos);
-                if (!state.isIn(VABlockTags.ACID_UNBREAKABLE)){
-                    world.breakBlock(blockPos, true);
-                    world.playSound(null, blockPos, SoundEvents.BLOCK_FIRE_EXTINGUISH, SoundCategory.BLOCKS, 0.5F, 1.0F);
-                }
-                if (fluidModificationItem.placeFluid(null, world, blockPos, null)) {
-                    fluidModificationItem.onEmptied(null, world, stack, blockPos);
-                    return new ItemStack(Items.BUCKET);
-                } else {
-                    return this.fallbackBehavior.dispense(pointer, stack);
-                }
-            }
-        });
-
-        //Brewing Recipes
-        BrewingRecipeRegistryAccessor.virtualAdditions$registerCustomPotionType(APPLICABLE_POTION_ITEM);
-        BrewingRecipeRegistryAccessor.virtualAdditions$registerCustomItemRecipe(Items.POTION, CYTOSOL, APPLICABLE_POTION_ITEM);
 
         //Compostable Items
         ComposterBlockAccessor.virtualAdditions$registerCompostableItem(0.3F, COTTON_SEEDS);

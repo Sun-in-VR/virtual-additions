@@ -1,5 +1,7 @@
 package com.github.suninvr.virtualadditions.block;
 
+import com.github.suninvr.virtualadditions.block.enums.CrystalShape;
+import com.github.suninvr.virtualadditions.registry.VABlockTags;
 import net.minecraft.block.*;
 import net.minecraft.block.piston.PistonBehavior;
 import net.minecraft.entity.Entity;
@@ -18,8 +20,6 @@ import net.minecraft.util.math.Direction;
 import net.minecraft.util.math.random.Random;
 import net.minecraft.util.shape.VoxelShape;
 import net.minecraft.world.*;
-import com.github.suninvr.virtualadditions.block.enums.CrystalShape;
-import com.github.suninvr.virtualadditions.registry.VABlockTags;
 import org.jetbrains.annotations.Nullable;
 
 public class CrystalBlock extends Block implements Waterloggable {

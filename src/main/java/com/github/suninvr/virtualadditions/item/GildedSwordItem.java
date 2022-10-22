@@ -1,5 +1,7 @@
 package com.github.suninvr.virtualadditions.item;
 
+import com.github.suninvr.virtualadditions.item.enums.GildType;
+import com.github.suninvr.virtualadditions.item.interfaces.GildedToolItem;
 import net.minecraft.client.item.TooltipContext;
 import net.minecraft.entity.EquipmentSlot;
 import net.minecraft.entity.attribute.EntityAttributeModifier;
@@ -7,8 +9,6 @@ import net.minecraft.entity.attribute.EntityAttributes;
 import net.minecraft.item.*;
 import net.minecraft.text.Text;
 import net.minecraft.world.World;
-import com.github.suninvr.virtualadditions.item.enums.GildType;
-import com.github.suninvr.virtualadditions.item.interfaces.GildedToolItem;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.List;
