@@ -1,0 +1,12 @@
+{
+  "type": "minecraft:smithing",
+  "base": {
+    "item": "virtual_additions:steel_pickaxe"
+  },
+  "addition": {
+    "item": "minecraft:emerald_block"
+  },
+  "result": {
+    "item": "virtual_additions:emerald_steel_pickaxe"
+  }
+}

@@ -1,0 +1,12 @@
+{
+  "type": "minecraft:smithing",
+  "base": {
+    "item": "virtual_additions:steel_shovel"
+  },
+  "addition": {
+    "item": "minecraft:copper_block"
+  },
+  "result": {
+    "item": "virtual_additions:copper_steel_shovel"
+  }
+}

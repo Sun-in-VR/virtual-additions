@@ -5,17 +5,22 @@
     "virtual_additions:amethyst_golden_pickaxe",
     "virtual_additions:amethyst_iron_pickaxe",
     "virtual_additions:amethyst_netherite_pickaxe",
+    "virtual_additions:amethyst_steel_pickaxe",
     "virtual_additions:copper_diamond_pickaxe",
     "virtual_additions:copper_golden_pickaxe",
     "virtual_additions:copper_iron_pickaxe",
     "virtual_additions:copper_netherite_pickaxe",
+    "virtual_additions:copper_steel_pickaxe",
     "virtual_additions:emerald_diamond_pickaxe",
     "virtual_additions:emerald_golden_pickaxe",
     "virtual_additions:emerald_iron_pickaxe",
     "virtual_additions:emerald_netherite_pickaxe",
+    "virtual_additions:emerald_steel_pickaxe",
     "virtual_additions:quartz_diamond_pickaxe",
     "virtual_additions:quartz_golden_pickaxe",
     "virtual_additions:quartz_iron_pickaxe",
-    "virtual_additions:quartz_netherite_pickaxe"
+    "virtual_additions:quartz_netherite_pickaxe",
+    "virtual_additions:quartz_steel_pickaxe",
+    "virtual_additions:steel_pickaxe"
   ]
 }
