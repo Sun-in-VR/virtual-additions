@@ -31,6 +31,7 @@ public class VirtualAdditions implements ModInitializer {
 
 	@Override
 	public void onInitialize() {
+		//test
 		VABlocks.init();
 		VABlockEntities.init();
 		VABlockTags.init();
