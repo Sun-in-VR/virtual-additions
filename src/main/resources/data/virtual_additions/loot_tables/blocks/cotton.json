@@ -6,26 +6,26 @@
       "bonus_rolls": 0,
       "entries": [
         {
-          "type": "minecraft:item",
-          "name": "virtual_additions:cotton_seeds"
-        }
-      ]
-    },
-    {
-      "rolls": 1,
-      "entries": [
-        {
-          "type": "minecraft:item",
-          "name": "virtual_additions:cotton"
-        }
-      ],
-      "conditions": [
-        {
-          "condition": "minecraft:block_state_property",
-          "block": "virtual_additions:cotton",
-          "properties": {
-            "age": "7"
-          }
+          "type": "minecraft:alternatives",
+          "children": [
+            {
+              "type": "minecraft:item",
+              "name": "virtual_additions:cotton",
+              "conditions": [
+                {
+                  "condition": "minecraft:block_state_property",
+                  "block": "virtual_additions:cotton",
+                  "properties": {
+                    "age": "7"
+                  }
+                }
+              ]
+            },
+            {
+              "type": "minecraft:item",
+              "name": "virtual_additions:cotton_seeds"
+            }
+          ]
         }
       ]
     },
@@ -35,7 +35,7 @@
       "entries": [
         {
           "type": "minecraft:item",
-          "name": "virtual_additions:cotton",
+          "name": "virtual_additions:cotton_seeds",
           "functions": [
             {
               "function": "minecraft:apply_bonus",
@@ -64,15 +64,15 @@
       "entries": [
         {
           "type": "minecraft:item",
-          "name": "virtual_additions:cotton_seeds",
+          "name": "virtual_additions:cotton",
           "functions": [
             {
               "function": "minecraft:apply_bonus",
               "enchantment": "minecraft:fortune",
               "formula": "minecraft:binomial_with_bonus_count",
               "parameters": {
-                "extra": 3,
-                "probability": 5714286
+                "extra": 2,
+                "probability": 0.5714286
               }
             }
           ]
