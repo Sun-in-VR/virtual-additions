@@ -101,8 +101,9 @@ public class VAItems {
     public static final Item STEEL_HOE;
     public static final Item COTTON_SEEDS;
     public static final Item COTTON;
-    //public static final Item PROJECTION_SPYGLASS;
+    public static final Item FRIED_EGG;
 
+    public static final FoodComponent FRIED_EGG_FOOD = (new FoodComponent.Builder().hunger(3).saturationModifier(0.4F).snack().build());
 
     public static final ToolSet AMETHYST_DIAMOND_TOOL_SET;
     public static final ToolSet COPPER_DIAMOND_TOOL_SET;
@@ -182,8 +183,7 @@ public class VAItems {
         STEEL_HOE = register("steel_hoe", new CustomHoeItem(SteelToolMaterial.INSTANCE, -2, -1.0F, new FabricItemSettings().group(ItemGroup.TOOLS)));
         COTTON_SEEDS = register("cotton_seeds", new AliasedBlockItem(VABlocks.COTTON, new FabricItemSettings().group(ItemGroup.MISC)));
         COTTON = register("cotton", ItemGroup.MISC);
-        //PROJECTION_SPYGLASS = register("projection_spyglass", new ProjectionSpyglassItem(new FabricItemSettings().group(ItemGroup.MISC)));
-        //FRIED_EGG = register("fried_egg", new Item(new FabricItemSettings().group(ItemGroup.FOOD).food(FoodComponents.APPLE)));
+        FRIED_EGG = register("fried_egg", new Item(new FabricItemSettings().group(ItemGroup.FOOD).food(FRIED_EGG_FOOD)));
 
         DIAMOND_TOOL_SET = new ToolSet(Items.DIAMOND_SWORD, Items.DIAMOND_SHOVEL, Items.DIAMOND_PICKAXE, Items.DIAMOND_AXE, Items.DIAMOND_HOE, "diamond");
         GOLDEN_TOOL_SET = new ToolSet(Items.GOLDEN_SWORD, Items.GOLDEN_SHOVEL, Items.GOLDEN_PICKAXE, Items.GOLDEN_AXE, Items.GOLDEN_HOE, "golden");

@@ -1,0 +1,9 @@
+{
+  "type": "minecraft:smelting",
+  "ingredient": {
+    "item": "minecraft:egg"
+  },
+  "result": "virtual_additions:fried_egg",
+  "experience": 0.3,
+  "cookingtime": 100
+}
