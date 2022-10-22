@@ -1,7 +1,0 @@
-{
-    "parent": "item/generated",
-    "textures": {
-        "layer0": "virtual_additions:item/acid_bucket"
-    }
-}
-

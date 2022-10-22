@@ -47,58 +47,10 @@
       "entity/leashknot/break3"
     ]
   },
-  "block.iolite_tether.warp": {
-    "subtitle": "subtitles.block.iolite_tether.warp",
-    "sounds": [
-      "virtual_additions:block/iolite_warp_pad/warp1",
-      "virtual_additions:block/iolite_warp_pad/warp2",
-      "virtual_additions:block/iolite_warp_pad/warp3"
-    ]
-  },
-  "block.iolite_anchor.warp": {
-    "subtitle": "subtitles.block.iolite_anchor.warp",
-    "sounds": [
-      "virtual_additions:block/iolite_warp_pad/warp1",
-      "virtual_additions:block/iolite_warp_pad/warp2",
-      "virtual_additions:block/iolite_warp_pad/warp3"
-    ]
-  },
-  "block.workbench.used.iron_hammer": {
-    "subtitle": "subtitles.block.workbench.used",
-    "sounds": [
-      {
-        "name": "mob/zombie/metal1",
-        "pitch": 1.4
-      },
-      {
-        "name": "mob/zombie/metal2",
-        "pitch": 1.4
-      },
-      {
-        "name": "mob/zombie/metal3",
-        "pitch": 1.4
-      }
-    ]
-
-  },
   "entity.steel_bomb.throw": {
     "subtitle": "subtitles.entity.steel_bomb.throw",
     "sounds": [
       "random/bow"
-    ]
-  },
-  "item.bucket.empty_acid": {
-    "subtitle": "subtitles.item.bucket.empty",
-    "sounds": [
-      "virtual_additions:item/bucket/empty_acid_1",
-      "virtual_additions:item/bucket/empty_acid_2",
-      "virtual_additions:item/bucket/empty_acid_3"
-    ]
-  },
-  "item.bucket.fill_acid": {
-    "subtitle": "subtitles.item.bucket.fill",
-    "sounds": [
-      "virtual_additions:item/bucket/fill_acid_3"
     ]
   }
 }
