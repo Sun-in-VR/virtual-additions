@@ -29,7 +29,7 @@ public class ClimbingRopeEntity extends PersistentProjectileEntity {
     protected void onBlockHit(BlockHitResult blockHitResult) {
         super.onBlockHit(blockHitResult);
         Direction hitSide = blockHitResult.getSide();
-        BlockPos placePos = blockHitResult.getBlockPos().offset(hitSide);
+        BlockPos placePos = new BlockPos(blockHitResult.getBlockPos().offset(hitSide));
         if(hitSide != Direction.UP) {
             BlockState state = VABlocks.CLIMBING_ROPE_ANCHOR.getDefaultState().with(ClimbingRopeAnchorBlock.FACING, hitSide);
             if( VABlocks.CLIMBING_ROPE_ANCHOR.canPlaceAt( state, this.world, placePos ) && this.world.getBlockState( placePos ).isAir() ) {

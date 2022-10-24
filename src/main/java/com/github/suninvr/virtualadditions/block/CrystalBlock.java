@@ -80,7 +80,7 @@ public class CrystalBlock extends Block implements Waterloggable {
     @Override
     public boolean canPlaceAt(BlockState state, WorldView world, BlockPos pos) {
         Direction direction = state.get(POINTING);
-        return this.canPlaceOn(world, pos.offset(direction.getOpposite()), direction);
+        return this.canPlaceOn(world, new BlockPos(pos.offset(direction.getOpposite())), direction);
     }
 
     public  boolean canPlaceOn(WorldView world, BlockPos pos, Direction direction) {
@@ -96,7 +96,7 @@ public class CrystalBlock extends Block implements Waterloggable {
     public void neighborUpdate(BlockState state, World world, BlockPos pos, Block sourceBlock, BlockPos sourcePos, boolean notify) {
         if (state.get(WATERLOGGED)) world.scheduleFluidTick(pos, Fluids.WATER, Fluids.WATER.getTickRate(world));
         Direction pointing = state.get(POINTING);
-        if (!canPlaceOn(world, pos.offset(pointing.getOpposite()), pointing)) {
+        if (!canPlaceOn(world, new BlockPos(pos.offset(pointing.getOpposite())), pointing)) {
             world.scheduleBlockTick(pos, this, 1);
         }
         super.neighborUpdate(state, world, pos, sourceBlock, sourcePos, notify);
@@ -106,7 +106,7 @@ public class CrystalBlock extends Block implements Waterloggable {
     public BlockState getStateForNeighborUpdate(BlockState state, Direction direction, BlockState neighborState, WorldAccess world, BlockPos pos, BlockPos neighborPos) {
         Direction pointing = state.get(POINTING);
         if (direction == pointing) {
-            BlockState fromState = world.getBlockState(pos.offset(direction));
+            BlockState fromState = world.getBlockState(new BlockPos(pos.offset(direction)));
             if (fromState.isIn(VABlockTags.CRYSTALS) && fromState.get(POINTING) == direction) {
                 return state.with(SHAPE, CrystalShape.BODY);
             } else {
@@ -125,7 +125,7 @@ public class CrystalBlock extends Block implements Waterloggable {
     @Override
     public void randomTick(BlockState state, ServerWorld world, BlockPos pos, net.minecraft.util.math.random.Random random) {
         if (world.getLightLevel(LightType.BLOCK, pos) >= 14) {
-            BlockPos nextPos = pos.offset(state.get(POINTING));
+            BlockPos nextPos = new BlockPos(pos.offset(state.get(POINTING)));
             if (random.nextInt(6) == 1 && (world.isAir(nextPos) || world.getBlockState(nextPos).isOf(Blocks.WATER)) ) world.setBlockState(nextPos, state.with(Properties.WATERLOGGED, world.getFluidState(nextPos).getFluid().equals(Fluids.WATER)));
         }
     }

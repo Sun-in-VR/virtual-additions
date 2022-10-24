@@ -84,15 +84,15 @@ public class SpotlightBlockEntity extends BlockEntity {
 
     @Nullable
     private BlockPos getUpdatedLightLocation(World world, BlockPos startPos, Direction direction) {
-        BlockPos pos = startPos.offset(direction);
+        BlockPos pos = new BlockPos(startPos.offset(direction));
         if (!world.isAir(pos) && !world.getBlockState(pos).isIn(VABlockTags.SPOTLIGHT_PERMEABLE)) return pos;
         int i = 0;
 
         BlockPos finalPos = pos;
-        BlockPos offsetPos = pos.offset(direction);
+        BlockPos offsetPos = new BlockPos(pos.offset(direction));
         while ((world.isAir(offsetPos) || world.getBlockState(offsetPos).isIn(VABlockTags.SPOTLIGHT_PERMEABLE)) && i < 31) {
-            pos = pos.offset(direction);
-            offsetPos = pos.offset(direction);
+            pos = new BlockPos(pos.offset(direction));
+            offsetPos = new BlockPos(pos.offset(direction));
             i++;
             if (world.isAir(pos) || world.getBlockState(pos).isOf(Blocks.WATER) || world.getBlockState(pos).isOf(VABlocks.SPOTLIGHT_LIGHT)) finalPos = pos;
         }

@@ -86,7 +86,7 @@ public class ClimbingRopeAnchorBlock extends Block implements Waterloggable {
     @Override
     public void scheduledTick(BlockState state, ServerWorld world, BlockPos pos, net.minecraft.util.math.random.Random random) {
         if (state.canPlaceAt(world,pos)) {
-            BlockPos belowPos = pos.down();
+            BlockPos belowPos = new BlockPos(pos.down());
             BlockState belowState = world.getBlockState(belowPos);
             if (world.getBottomY() <= belowPos.getY() && (belowState.canReplace(new AutomaticItemPlacementContext(world, belowPos, Direction.DOWN, ItemStack.EMPTY, Direction.UP))) && !belowState.isOf(Blocks.LAVA)) {
                 BlockState newState = VABlocks.CLIMBING_ROPE.getDefaultState().with(ClimbingRopeBlock.FACING, state.get(FACING)).with(ClimbingRopeBlock.WATERLOGGED, world.getFluidState(belowPos).getFluid() == Fluids.WATER);
@@ -110,8 +110,8 @@ public class ClimbingRopeAnchorBlock extends Block implements Waterloggable {
     @Override
     public boolean canPlaceAt(BlockState state, WorldView world, BlockPos pos) {
         Direction direction = state.get(FACING);
-        boolean bl = this.canPlaceOn(world, pos.offset(direction.getOpposite()), direction);
-        return state.get(END) ? bl : bl && world.getBlockState(pos.down()).isIn(VABlockTags.CLIMBING_ROPES);
+        boolean bl = this.canPlaceOn(world, new BlockPos(pos.offset(direction.getOpposite())), direction);
+        return state.get(END) ? bl : bl && world.getBlockState(new BlockPos(pos.down())).isIn(VABlockTags.CLIMBING_ROPES);
     }
 
     private boolean canPlaceOn(WorldView world, BlockPos pos, Direction direction) {

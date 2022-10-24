@@ -60,7 +60,7 @@ public class ClimbingRopeBlock extends Block implements Waterloggable {
     @Override
     public void scheduledTick(BlockState state, ServerWorld world, BlockPos pos, net.minecraft.util.math.random.Random random) {
         if (state.canPlaceAt(world, pos)) {
-            BlockPos belowPos = pos.down();
+            BlockPos belowPos = new BlockPos(pos.down());
             BlockState belowState = world.getBlockState(belowPos);
             if (world.getBottomY() <= belowPos.getY() && (belowState.canReplace(new AutomaticItemPlacementContext(world, belowPos, Direction.DOWN, ItemStack.EMPTY, Direction.UP))) && !belowState.isOf(Blocks.LAVA)) {
                 BlockState newState = state.with(WATERLOGGED, world.getFluidState(belowPos).getFluid() == Fluids.WATER);
@@ -83,7 +83,7 @@ public class ClimbingRopeBlock extends Block implements Waterloggable {
 
     @Override
     public boolean canPlaceAt(BlockState state, WorldView world, BlockPos pos) {
-        return world.getBlockState(pos.up()).isIn(VABlockTags.CLIMBING_ROPES) && (world.getBlockState(pos.down()).isIn(VABlockTags.CLIMBING_ROPES) || state.get(END));
+        return world.getBlockState(pos.up()).isIn(VABlockTags.CLIMBING_ROPES) && (world.getBlockState(new BlockPos(pos.down())).isIn(VABlockTags.CLIMBING_ROPES) || state.get(END));
     }
 
     public FluidState getFluidState(BlockState state) {
