@@ -5,6 +5,7 @@ import com.github.suninvr.virtualadditions.entity.SteelBombEntity;
 import com.github.suninvr.virtualadditions.item.*;
 import com.github.suninvr.virtualadditions.item.enums.GildType;
 import com.github.suninvr.virtualadditions.item.materials.SteelToolMaterial;
+import com.github.suninvr.virtualadditions.mixin.BrewingRecipeRegistryAccessor;
 import com.github.suninvr.virtualadditions.mixin.ComposterBlockAccessor;
 import com.github.suninvr.virtualadditions.registry.constructors.item.CustomArmorMaterials;
 import com.github.suninvr.virtualadditions.registry.constructors.item.CustomAxeItem;
@@ -108,6 +109,7 @@ public class VAItems {
     public static final Item COTTON_SEEDS;
     public static final Item COTTON;
     public static final Item FRIED_EGG;
+    public static final Item APPLICABLE_POTION_ITEM;
 
     public static final FoodComponent FRIED_EGG_FOOD = (new FoodComponent.Builder().hunger(3).saturationModifier(0.4F).snack().build());
 
@@ -194,6 +196,7 @@ public class VAItems {
         COTTON_SEEDS = register("cotton_seeds", new AliasedBlockItem(VABlocks.COTTON, new FabricItemSettings().group(ItemGroup.MISC)));
         COTTON = register("cotton", ItemGroup.MISC);
         FRIED_EGG = register("fried_egg", new Item(new FabricItemSettings().group(ItemGroup.FOOD).food(FRIED_EGG_FOOD)));
+        APPLICABLE_POTION_ITEM = register("applicable_potion", new ApplicablePotionItem(new FabricItemSettings().group(ItemGroup.BREWING).maxCount(1)));
 
         DIAMOND_TOOL_SET = new ToolSet(Items.DIAMOND_SWORD, Items.DIAMOND_SHOVEL, Items.DIAMOND_PICKAXE, Items.DIAMOND_AXE, Items.DIAMOND_HOE, "diamond");
         GOLDEN_TOOL_SET = new ToolSet(Items.GOLDEN_SWORD, Items.GOLDEN_SHOVEL, Items.GOLDEN_PICKAXE, Items.GOLDEN_AXE, Items.GOLDEN_HOE, "golden");
@@ -255,6 +258,10 @@ public class VAItems {
                 tableBuilder.pool(builder);
             }
         }));
+
+        //Brewing Recipes
+        BrewingRecipeRegistryAccessor.virtualAdditions$registerCustomPotionType(APPLICABLE_POTION_ITEM);
+        BrewingRecipeRegistryAccessor.virtualAdditions$registerCustomItemRecipe(Items.POTION, Items.SLIME_BALL, APPLICABLE_POTION_ITEM);
     }
 
     //Register an Item
