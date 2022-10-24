@@ -4,7 +4,12 @@ import com.github.suninvr.virtualadditions.entity.ClimbingRopeEntity;
 import com.github.suninvr.virtualadditions.entity.SteelBombEntity;
 import com.github.suninvr.virtualadditions.item.*;
 import com.github.suninvr.virtualadditions.item.enums.GildType;
+import com.github.suninvr.virtualadditions.item.materials.SteelToolMaterial;
 import com.github.suninvr.virtualadditions.mixin.ComposterBlockAccessor;
+import com.github.suninvr.virtualadditions.registry.constructors.item.CustomArmorMaterials;
+import com.github.suninvr.virtualadditions.registry.constructors.item.CustomAxeItem;
+import com.github.suninvr.virtualadditions.registry.constructors.item.CustomHoeItem;
+import com.github.suninvr.virtualadditions.registry.constructors.item.CustomPickaxeItem;
 import net.fabricmc.fabric.api.item.v1.FabricItemSettings;
 import net.fabricmc.fabric.api.itemgroup.v1.ItemGroupEvents;
 import net.fabricmc.fabric.api.loot.v2.LootTableEvents;
@@ -14,6 +19,7 @@ import net.minecraft.block.DispenserBlock;
 import net.minecraft.block.dispenser.DispenserBehavior;
 import net.minecraft.block.dispenser.ProjectileDispenserBehavior;
 import net.minecraft.enchantment.Enchantments;
+import net.minecraft.entity.EquipmentSlot;
 import net.minecraft.entity.projectile.PersistentProjectileEntity;
 import net.minecraft.entity.projectile.ProjectileEntity;
 import net.minecraft.item.*;
@@ -37,10 +43,11 @@ import static com.github.suninvr.virtualadditions.VirtualAdditions.idOf;
 public class VAItems {
     protected record ToolSet(Item SWORD, Item SHOVEL, Item PICKAXE, Item AXE, Item HOE, String NAME){}
     protected record ItemGroupLocation(ItemGroup GROUP, Item AFTER){}
-    public static final ToolSet DIAMOND_TOOL_SET = new ToolSet(Items.DIAMOND_SWORD, Items.DIAMOND_SHOVEL, Items.DIAMOND_PICKAXE, Items.DIAMOND_AXE, Items.DIAMOND_HOE, "diamond");
-    public static final ToolSet GOLDEN_TOOL_SET = new ToolSet(Items.GOLDEN_SWORD, Items.GOLDEN_SHOVEL, Items.GOLDEN_PICKAXE, Items.GOLDEN_AXE, Items.GOLDEN_HOE, "golden");
-    public static final ToolSet IRON_TOOL_SET = new ToolSet(Items.IRON_SWORD, Items.IRON_SHOVEL, Items.IRON_PICKAXE, Items.IRON_AXE, Items.IRON_HOE, "iron");
-    public static final ToolSet NETHERITE_TOOL_SET = new ToolSet(Items.NETHERITE_SWORD, Items.NETHERITE_SHOVEL, Items.NETHERITE_PICKAXE, Items.NETHERITE_AXE, Items.NETHERITE_HOE, "netherite");
+    public static final ToolSet DIAMOND_TOOL_SET;
+    public static final ToolSet GOLDEN_TOOL_SET;
+    public static final ToolSet IRON_TOOL_SET;
+    public static final ToolSet NETHERITE_TOOL_SET;
+    public static final ToolSet STEEL_TOOL_SET;
     public static final Item CLIMBING_ROPE;
     public static final Item HORNFELS;
     public static final Item COBBLED_HORNFELS;
@@ -90,10 +97,20 @@ public class VAItems {
     public static final Item STEEL_INGOT;
     public static final Item STEEL_BLOCK;
     public static final Item STEEL_BOMB;
+    public static final Item STEEL_SWORD;
+    public static final Item STEEL_SHOVEL;
+    public static final Item STEEL_PICKAXE;
+    public static final Item STEEL_AXE;
+    public static final Item STEEL_HOE;
+    public static final Item STEEL_HELMET;
+    public static final Item STEEL_CHESTPLATE;
+    public static final Item STEEL_LEGGINGS;
+    public static final Item STEEL_BOOTS;
     public static final Item COTTON_SEEDS;
     public static final Item COTTON;
-    //public static final Item PROJECTION_SPYGLASS;
+    public static final Item FRIED_EGG;
 
+    public static final FoodComponent FRIED_EGG_FOOD = (new FoodComponent.Builder().hunger(3).saturationModifier(0.4F).snack().build());
 
     public static final ToolSet AMETHYST_DIAMOND_TOOL_SET;
     public static final ToolSet COPPER_DIAMOND_TOOL_SET;
@@ -111,6 +128,10 @@ public class VAItems {
     public static final ToolSet COPPER_NETHERITE_TOOL_SET;
     public static final ToolSet EMERALD_NETHERITE_TOOL_SET;
     public static final ToolSet QUARTZ_NETHERITE_TOOL_SET;
+    public static final ToolSet AMETHYST_STEEL_TOOL_SET;
+    public static final ToolSet COPPER_STEEL_TOOL_SET;
+    public static final ToolSet EMERALD_STEEL_TOOL_SET;
+    public static final ToolSet QUARTZ_STEEL_TOOL_SET;
 
     static {
         CLIMBING_ROPE = register("climbing_rope", new AliasedBlockItem(VABlocks.CLIMBING_ROPE_ANCHOR, new FabricItemSettings().maxCount(16)), ItemGroups.TOOLS, Items.LEAD);
@@ -161,14 +182,31 @@ public class VAItems {
         BLUE_GLIMMER_CRYSTAL = registerBlockItem("blue_glimmer_crystal", VABlocks.BLUE_GLIMMER_CRYSTAL, ItemGroups.NATURE, GREEN_GLIMMER_CRYSTAL);
         CRYSTAL_DUST = register("crystal_dust", ItemGroups.CRAFTING, Items.GUNPOWDER);
         SPOTLIGHT = registerBlockItem("spotlight", VABlocks.SPOTLIGHT, ItemGroups.REDSTONE, Items.REDSTONE_LAMP);
+
         RAW_STEEL_BLOCK = registerBlockItem("raw_steel_block", VABlocks.RAW_STEEL_BLOCK, ItemGroups.NATURE, Items.RAW_IRON_BLOCK);
         STEEL_BLOCK = registerBlockItem("steel_block", VABlocks.STEEL_BLOCK, ItemGroups.BUILDING_BLOCKS, Items.IRON_TRAPDOOR);
         RAW_STEEL = register("raw_steel", ItemGroups.CRAFTING, Items.RAW_IRON);
         STEEL_INGOT = register("steel_ingot", ItemGroups.CRAFTING, Items.IRON_INGOT);
         STEEL_BOMB = register("steel_bomb", new SteelBombItem(new FabricItemSettings().maxCount(16)), new ItemGroupLocation(ItemGroups.COMBAT, Items.SNOWBALL), new ItemGroupLocation(ItemGroups.TOOLS, CLIMBING_ROPE));
+        STEEL_SWORD = register("steel_sword", new SwordItem(SteelToolMaterial.INSTANCE, 3, -2.4F, new FabricItemSettings()), ItemGroups.COMBAT, Items.IRON_SWORD);
+        STEEL_SHOVEL = register("steel_shovel", new ShovelItem(SteelToolMaterial.INSTANCE, 1.5F, -3.0F, new FabricItemSettings()), ItemGroups.TOOLS, Items.IRON_HOE);
+        STEEL_PICKAXE = register("steel_pickaxe", new CustomPickaxeItem(SteelToolMaterial.INSTANCE, 1, -2.8F, new FabricItemSettings()), ItemGroups.TOOLS, STEEL_SHOVEL);
+        STEEL_AXE = register("steel_axe", new CustomAxeItem(SteelToolMaterial.INSTANCE, 6.0F, -3.1F, new FabricItemSettings()), ItemGroups.TOOLS, STEEL_PICKAXE);
+        STEEL_HOE = register("steel_hoe", new CustomHoeItem(SteelToolMaterial.INSTANCE, -2, -1.0F, new FabricItemSettings()), ItemGroups.TOOLS, STEEL_AXE);
+        STEEL_HELMET = register("steel_helmet", new ArmorItem(CustomArmorMaterials.STEEL, EquipmentSlot.HEAD, new Item.Settings()), ItemGroups.COMBAT, Items.IRON_BOOTS);
+        STEEL_CHESTPLATE = register("steel_chestplate", new ArmorItem(CustomArmorMaterials.STEEL, EquipmentSlot.CHEST, new Item.Settings()), ItemGroups.COMBAT, STEEL_HELMET);
+        STEEL_LEGGINGS = register("steel_leggings", new ArmorItem(CustomArmorMaterials.STEEL, EquipmentSlot.LEGS, new Item.Settings()), ItemGroups.COMBAT, STEEL_CHESTPLATE);
+        STEEL_BOOTS = register("steel_boots", new ArmorItem(CustomArmorMaterials.STEEL, EquipmentSlot.FEET, new Item.Settings()), ItemGroups.COMBAT, STEEL_LEGGINGS);
+
         COTTON_SEEDS = register("cotton_seeds", new AliasedBlockItem(VABlocks.COTTON, new FabricItemSettings()), ItemGroups.NATURE, Items.BEETROOT_SEEDS);
         COTTON = register("cotton", ItemGroups.CRAFTING, Items.WHEAT);
+        FRIED_EGG = register("fried_egg", new Item(new FabricItemSettings().food(FRIED_EGG_FOOD)), ItemGroups.CONSUMABLES, Items.PUMPKIN_PIE);
 
+        DIAMOND_TOOL_SET = new ToolSet(Items.DIAMOND_SWORD, Items.DIAMOND_SHOVEL, Items.DIAMOND_PICKAXE, Items.DIAMOND_AXE, Items.DIAMOND_HOE, "diamond");
+        GOLDEN_TOOL_SET = new ToolSet(Items.GOLDEN_SWORD, Items.GOLDEN_SHOVEL, Items.GOLDEN_PICKAXE, Items.GOLDEN_AXE, Items.GOLDEN_HOE, "golden");
+        IRON_TOOL_SET = new ToolSet(Items.IRON_SWORD, Items.IRON_SHOVEL, Items.IRON_PICKAXE, Items.IRON_AXE, Items.IRON_HOE, "iron");
+        NETHERITE_TOOL_SET = new ToolSet(Items.NETHERITE_SWORD, Items.NETHERITE_SHOVEL, Items.NETHERITE_PICKAXE, Items.NETHERITE_AXE, Items.NETHERITE_HOE, "netherite");
+        STEEL_TOOL_SET = new ToolSet(STEEL_SWORD, STEEL_SHOVEL, STEEL_PICKAXE, STEEL_AXE, STEEL_HOE, "steel");
 
         AMETHYST_DIAMOND_TOOL_SET = registerGildedToolSet(DIAMOND_TOOL_SET, GildType.AMETHYST);
         COPPER_DIAMOND_TOOL_SET = registerGildedToolSet(DIAMOND_TOOL_SET, GildType.COPPER);
@@ -186,6 +224,10 @@ public class VAItems {
         COPPER_NETHERITE_TOOL_SET = registerGildedToolSet(NETHERITE_TOOL_SET, GildType.COPPER);
         EMERALD_NETHERITE_TOOL_SET = registerGildedToolSet(NETHERITE_TOOL_SET, GildType.EMERALD);
         QUARTZ_NETHERITE_TOOL_SET = registerGildedToolSet(NETHERITE_TOOL_SET, GildType.QUARTZ);
+        AMETHYST_STEEL_TOOL_SET = registerGildedToolSet(STEEL_TOOL_SET, GildType.AMETHYST);
+        COPPER_STEEL_TOOL_SET = registerGildedToolSet(STEEL_TOOL_SET, GildType.COPPER);
+        EMERALD_STEEL_TOOL_SET = registerGildedToolSet(STEEL_TOOL_SET, GildType.EMERALD);
+        QUARTZ_STEEL_TOOL_SET = registerGildedToolSet(STEEL_TOOL_SET, GildType.QUARTZ);
     }
 
     public static void init(){
