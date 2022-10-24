@@ -1,0 +1,12 @@
+{
+  "type": "minecraft:smithing",
+  "base": {
+    "item": "virtual_additions:steel_sword"
+  },
+  "addition": {
+    "item": "minecraft:amethyst_block"
+  },
+  "result": {
+    "item": "virtual_additions:amethyst_steel_sword"
+  }
+}
