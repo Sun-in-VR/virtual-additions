@@ -30,12 +30,16 @@ import net.minecraft.loot.condition.RandomChanceLootCondition;
 import net.minecraft.loot.entry.ItemEntry;
 import net.minecraft.loot.function.ApplyBonusLootFunction;
 import net.minecraft.loot.function.ExplosionDecayLootFunction;
+import net.minecraft.potion.Potion;
+import net.minecraft.potion.PotionUtil;
 import net.minecraft.predicate.item.ItemPredicate;
+import net.minecraft.recipe.BrewingRecipeRegistry;
 import net.minecraft.util.Util;
 import net.minecraft.util.math.Position;
 import net.minecraft.util.registry.Registry;
 import net.minecraft.world.World;
 
+import java.util.Iterator;
 import java.util.Locale;
 
 import static com.github.suninvr.virtualadditions.VirtualAdditions.idOf;
@@ -109,6 +113,7 @@ public class VAItems {
     public static final Item COTTON_SEEDS;
     public static final Item COTTON;
     public static final Item FRIED_EGG;
+    public static final Item APPLICABLE_POTION;
 
     public static final FoodComponent FRIED_EGG_FOOD = (new FoodComponent.Builder().hunger(3).saturationModifier(0.4F).snack().build());
 
@@ -202,6 +207,8 @@ public class VAItems {
         COTTON = register("cotton", ItemGroups.CRAFTING, Items.WHEAT);
         FRIED_EGG = register("fried_egg", new Item(new FabricItemSettings().food(FRIED_EGG_FOOD)), ItemGroups.CONSUMABLES, Items.PUMPKIN_PIE);
 
+        APPLICABLE_POTION = register("applicable_potion", new ApplicablePotionItem(new FabricItemSettings()));
+
         DIAMOND_TOOL_SET = new ToolSet(Items.DIAMOND_SWORD, Items.DIAMOND_SHOVEL, Items.DIAMOND_PICKAXE, Items.DIAMOND_AXE, Items.DIAMOND_HOE, "diamond");
         GOLDEN_TOOL_SET = new ToolSet(Items.GOLDEN_SWORD, Items.GOLDEN_SHOVEL, Items.GOLDEN_PICKAXE, Items.GOLDEN_AXE, Items.GOLDEN_HOE, "golden");
         IRON_TOOL_SET = new ToolSet(Items.IRON_SWORD, Items.IRON_SHOVEL, Items.IRON_PICKAXE, Items.IRON_AXE, Items.IRON_HOE, "iron");
@@ -262,6 +269,16 @@ public class VAItems {
                 tableBuilder.pool(builder);
             }
         }));
+
+        //Brewing Recipes
+        BrewingRecipeRegistry.registerPotionType(APPLICABLE_POTION);
+        BrewingRecipeRegistry.registerItemRecipe(Items.POTION, Items.SLIME_BALL, APPLICABLE_POTION);
+
+        ItemGroupEvents.modifyEntriesEvent(ItemGroups.CONSUMABLES).register( (content) -> {
+            for (Potion potion : Registry.POTION) {
+                if (!potion.getEffects().isEmpty()) content.add(PotionUtil.setPotion(new ItemStack(APPLICABLE_POTION), potion));
+            }
+        } );
     }
 
     //Register an Item
