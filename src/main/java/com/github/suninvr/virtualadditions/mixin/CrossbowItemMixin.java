@@ -42,7 +42,7 @@ public abstract class CrossbowItemMixin {
                     Vec3d vec3d = shooter.getOppositeRotationVector(1.0F);
                     Quaternionf quaternionf = (new Quaternionf()).setAngleAxis(simulated, vec3d.x, vec3d.y, vec3d.z);
                     Vec3d vec3d2 = shooter.getRotationVec(1.0F);
-                    Vector3f vector3f = vec3d2.method_46409().rotate(quaternionf);
+                    Vector3f vector3f = vec3d2.toVector3f().rotate(quaternionf);
                     projectileEntity.setVelocity(vector3f.x(), vector3f.y(), vector3f.z(), speed * 0.8F, 0.0F);
                 }
 

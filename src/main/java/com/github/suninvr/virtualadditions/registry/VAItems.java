@@ -32,6 +32,7 @@ import net.minecraft.loot.function.ApplyBonusLootFunction;
 import net.minecraft.loot.function.ExplosionDecayLootFunction;
 import net.minecraft.potion.Potion;
 import net.minecraft.potion.PotionUtil;
+import net.minecraft.potion.Potions;
 import net.minecraft.predicate.item.ItemPredicate;
 import net.minecraft.recipe.BrewingRecipeRegistry;
 import net.minecraft.util.Util;
@@ -276,7 +277,7 @@ public class VAItems {
 
         ItemGroupEvents.modifyEntriesEvent(ItemGroups.CONSUMABLES).register( (content) -> {
             for (Potion potion : Registry.POTION) {
-                if (!potion.getEffects().isEmpty()) content.add(PotionUtil.setPotion(new ItemStack(APPLICABLE_POTION), potion));
+                if (!(potion.equals(Potions.EMPTY))) content.add(PotionUtil.setPotion(new ItemStack(APPLICABLE_POTION), potion));
             }
         } );
     }
