@@ -2,7 +2,7 @@ package com.github.suninvr.virtualadditions.registry;
 
 import net.minecraft.block.Block;
 import net.minecraft.tag.TagKey;
-import net.minecraft.util.registry.Registry;
+import net.minecraft.util.registry.Registries;
 
 import static com.github.suninvr.virtualadditions.VirtualAdditions.idOf;
 
@@ -15,7 +15,7 @@ public class VABlockTags {
     public static void init(){}
 
     private static TagKey<Block> register(String id) {
-        return TagKey.of(Registry.BLOCK_KEY, idOf(id));
+        return TagKey.of(Registries.BLOCK.getKey(), idOf(id));
     }
 
 }

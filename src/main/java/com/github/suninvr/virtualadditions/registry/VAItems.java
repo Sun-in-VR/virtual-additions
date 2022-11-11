@@ -37,10 +37,10 @@ import net.minecraft.predicate.item.ItemPredicate;
 import net.minecraft.recipe.BrewingRecipeRegistry;
 import net.minecraft.util.Util;
 import net.minecraft.util.math.Position;
+import net.minecraft.util.registry.Registries;
 import net.minecraft.util.registry.Registry;
 import net.minecraft.world.World;
 
-import java.util.Iterator;
 import java.util.Locale;
 
 import static com.github.suninvr.virtualadditions.VirtualAdditions.idOf;
@@ -186,13 +186,13 @@ public class VAItems {
         RED_GLIMMER_CRYSTAL = registerBlockItem("red_glimmer_crystal", VABlocks.RED_GLIMMER_CRYSTAL, ItemGroups.NATURAL, Items.POINTED_DRIPSTONE);
         GREEN_GLIMMER_CRYSTAL = registerBlockItem("green_glimmer_crystal", VABlocks.GREEN_GLIMMER_CRYSTAL, ItemGroups.NATURAL, RED_GLIMMER_CRYSTAL);
         BLUE_GLIMMER_CRYSTAL = registerBlockItem("blue_glimmer_crystal", VABlocks.BLUE_GLIMMER_CRYSTAL, ItemGroups.NATURAL, GREEN_GLIMMER_CRYSTAL);
-        CRYSTAL_DUST = register("crystal_dust", ItemGroups.CRAFTING, Items.GUNPOWDER);
+        CRYSTAL_DUST = register("crystal_dust", ItemGroups.INGREDIENTS, Items.GUNPOWDER);
         SPOTLIGHT = registerBlockItem("spotlight", VABlocks.SPOTLIGHT, ItemGroups.REDSTONE, Items.REDSTONE_LAMP);
 
         RAW_STEEL_BLOCK = registerBlockItem("raw_steel_block", VABlocks.RAW_STEEL_BLOCK, ItemGroups.NATURAL, Items.RAW_GOLD_BLOCK);
         STEEL_BLOCK = registerBlockItem("steel_block", VABlocks.STEEL_BLOCK, ItemGroups.BUILDING_BLOCKS, Items.GOLD_BLOCK);
-        RAW_STEEL = register("raw_steel", ItemGroups.CRAFTING, Items.RAW_GOLD);
-        STEEL_INGOT = register("steel_ingot", ItemGroups.CRAFTING, Items.GOLD_INGOT);
+        RAW_STEEL = register("raw_steel", ItemGroups.INGREDIENTS, Items.RAW_GOLD);
+        STEEL_INGOT = register("steel_ingot", ItemGroups.INGREDIENTS, Items.GOLD_INGOT);
         STEEL_BOMB = register("steel_bomb", new SteelBombItem(new FabricItemSettings().maxCount(16)), new ItemGroupLocation(ItemGroups.COMBAT, Items.SNOWBALL), new ItemGroupLocation(ItemGroups.TOOLS, CLIMBING_ROPE));
         STEEL_SWORD = register("steel_sword", new SwordItem(SteelToolMaterial.INSTANCE, 3, -2.4F, new FabricItemSettings()), ItemGroups.COMBAT, Items.GOLDEN_SWORD);
         STEEL_SHOVEL = register("steel_shovel", new ShovelItem(SteelToolMaterial.INSTANCE, 1.5F, -3.0F, new FabricItemSettings()), ItemGroups.TOOLS, Items.GOLDEN_HOE);
@@ -205,8 +205,8 @@ public class VAItems {
         STEEL_BOOTS = register("steel_boots", new ArmorItem(CustomArmorMaterials.STEEL, EquipmentSlot.FEET, new Item.Settings()), ItemGroups.COMBAT, STEEL_LEGGINGS);
 
         COTTON_SEEDS = register("cotton_seeds", new AliasedBlockItem(VABlocks.COTTON, new FabricItemSettings()), ItemGroups.NATURAL, Items.BEETROOT_SEEDS);
-        COTTON = register("cotton", ItemGroups.CRAFTING, Items.WHEAT);
-        FRIED_EGG = register("fried_egg", new Item(new FabricItemSettings().food(FRIED_EGG_FOOD)), ItemGroups.CONSUMABLES, Items.PUMPKIN_PIE);
+        COTTON = register("cotton", ItemGroups.INGREDIENTS, Items.WHEAT);
+        FRIED_EGG = register("fried_egg", new Item(new FabricItemSettings().food(FRIED_EGG_FOOD)), ItemGroups.FOOD_AND_DRINK, Items.PUMPKIN_PIE);
 
         APPLICABLE_POTION = register("applicable_potion", new ApplicablePotionItem(new FabricItemSettings()));
 
@@ -275,8 +275,8 @@ public class VAItems {
         BrewingRecipeRegistry.registerPotionType(APPLICABLE_POTION);
         BrewingRecipeRegistry.registerItemRecipe(Items.POTION, Items.SLIME_BALL, APPLICABLE_POTION);
 
-        ItemGroupEvents.modifyEntriesEvent(ItemGroups.CONSUMABLES).register( (content) -> {
-            for (Potion potion : Registry.POTION) {
+        ItemGroupEvents.modifyEntriesEvent(ItemGroups.FOOD_AND_DRINK).register( (content) -> {
+            for (Potion potion : Registries.POTION) {
                 if (!(potion.equals(Potions.EMPTY))) content.add(PotionUtil.setPotion(new ItemStack(APPLICABLE_POTION), potion));
             }
         } );
@@ -284,7 +284,7 @@ public class VAItems {
 
     //Register an Item
     protected static <T extends Item> Item register(String id, T item) { // Register a given item
-        return Registry.register(Registry.ITEM, idOf(id), item);
+        return Registry.register(Registries.ITEM, idOf(id), item);
     }
     protected static <T extends Item> Item register(String id, T item, ItemGroup itemGroup) { // Register an item, add to a group
         Item item1 = register(id, item);

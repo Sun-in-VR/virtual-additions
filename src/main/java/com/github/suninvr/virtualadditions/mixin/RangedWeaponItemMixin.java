@@ -14,11 +14,11 @@ import java.util.function.Predicate;
 
 @Mixin(RangedWeaponItem.class)
 public class RangedWeaponItemMixin {
+    private static final Predicate<ItemStack> climbingRopePredicate = (itemStack -> itemStack.isOf(VAItems.CLIMBING_ROPE));
 
     @Inject(at = @At("HEAD"), method = "getHeldProjectile", cancellable = true)
     private static void virtualAdditions$getHeldProjectile(LivingEntity entity, Predicate<ItemStack> predicate, CallbackInfoReturnable<ItemStack> cir) {
         if(predicate.equals(RangedWeaponItem.CROSSBOW_HELD_PROJECTILES)) {
-            Predicate<ItemStack> climbingRopePredicate = (itemStack -> itemStack.isOf(VAItems.CLIMBING_ROPE));
             if (climbingRopePredicate.test(entity.getStackInHand(Hand.OFF_HAND))) {
                 cir.setReturnValue(entity.getStackInHand(Hand.OFF_HAND));
             } else if (climbingRopePredicate.test(entity.getStackInHand(Hand.MAIN_HAND))){

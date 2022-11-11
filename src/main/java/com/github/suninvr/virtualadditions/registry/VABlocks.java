@@ -7,6 +7,7 @@ import net.fabricmc.fabric.api.object.builder.v1.block.FabricBlockSettings;
 import net.minecraft.block.*;
 import net.minecraft.sound.BlockSoundGroup;
 import net.minecraft.state.property.Properties;
+import net.minecraft.util.registry.Registries;
 import net.minecraft.util.registry.Registry;
 
 public class VABlocks {
@@ -124,7 +125,7 @@ public class VABlocks {
      * @param block The block to be registered. Any class that extends the class Block will work.
      * **/
     protected static <T extends Block> Block register(String id, T block) {
-        return Registry.register(Registry.BLOCK, VirtualAdditions.idOf(id), block);
+        return Registry.register(Registries.BLOCK, VirtualAdditions.idOf(id), block);
     }
 
 }
