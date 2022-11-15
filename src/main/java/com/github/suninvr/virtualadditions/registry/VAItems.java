@@ -111,7 +111,7 @@ public class VAItems {
     public static final Item FRIED_EGG;
     public static final Item APPLICABLE_POTION_ITEM;
 
-    public static final FoodComponent FRIED_EGG_FOOD = (new FoodComponent.Builder().hunger(3).saturationModifier(0.4F).snack().build());
+    public static final FoodComponent FRIED_EGG_FOOD = (new FoodComponent.Builder().hunger(4).saturationModifier(0.4F).build());
 
     public static final ToolSet AMETHYST_DIAMOND_TOOL_SET;
     public static final ToolSet COPPER_DIAMOND_TOOL_SET;
