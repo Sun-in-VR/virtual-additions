@@ -1,0 +1,16 @@
+{
+    "type": "minecraft:crafting_shaped",
+    "pattern": [
+        "S S",
+        "S S"
+    ],
+    "key": {
+        "S": {
+            "item": "virtual_additions:steel_ingot"
+        }
+    },
+    "result": {
+        "item": "virtual_additions:steel_boots",
+        "count": 1
+    }
+}
