@@ -148,12 +148,12 @@ public class VAItems {
         CRACKED_HORNFELS_TILES = registerBlockItem("cracked_hornfels_tiles", VABlocks.CRACKED_HORNFELS_TILES, ItemGroup.BUILDING_BLOCKS);
         HORNFELS_TILE_STAIRS = registerBlockItem("hornfels_tile_stairs", VABlocks.HORNFELS_TILE_STAIRS, ItemGroup.BUILDING_BLOCKS);
         HORNFELS_TILE_SLAB = registerBlockItem("hornfels_tile_slab", VABlocks.HORNFELS_TILE_SLAB, ItemGroup.BUILDING_BLOCKS);
-        BLUESCHIST = registerBlockItem("polished_blueschist", VABlocks.POLISHED_BLUESCHIST, ItemGroup.BUILDING_BLOCKS);
+        BLUESCHIST = registerBlockItem("blueschist", VABlocks.BLUESCHIST, ItemGroup.BUILDING_BLOCKS);
         COBBLED_BLUESCHIST = registerBlockItem("cobbled_blueschist", VABlocks.COBBLED_BLUESCHIST, ItemGroup.BUILDING_BLOCKS);
         COBBLED_BLUESCHIST_STAIRS = registerBlockItem("cobbled_blueschist_stairs", VABlocks.COBBLED_BLUESCHIST_STAIRS, ItemGroup.BUILDING_BLOCKS);
         COBBLED_BLUESCHIST_SLAB = registerBlockItem("cobbled_blueschist_slab", VABlocks.COBBLED_BLUESCHIST_SLAB, ItemGroup.BUILDING_BLOCKS);
         COBBLED_BLUESCHIST_WALL = registerBlockItem("cobbled_blueschist_wall", VABlocks.COBBLED_BLUESCHIST_WALL, ItemGroup.BUILDING_BLOCKS);
-        POLISHED_BLUESCHIST = registerBlockItem("blueschist", VABlocks.BLUESCHIST, ItemGroup.BUILDING_BLOCKS);
+        POLISHED_BLUESCHIST = registerBlockItem("polished_blueschist", VABlocks.POLISHED_BLUESCHIST, ItemGroup.BUILDING_BLOCKS);
         POLISHED_BLUESCHIST_STAIRS = registerBlockItem("polished_blueschist_stairs", VABlocks.POLISHED_BLUESCHIST_STAIRS, ItemGroup.BUILDING_BLOCKS);
         POLISHED_BLUESCHIST_SLAB = registerBlockItem("polished_blueschist_slab", VABlocks.POLISHED_BLUESCHIST_SLAB, ItemGroup.BUILDING_BLOCKS);
         BLUESCHIST_BRICKS = registerBlockItem("blueschist_bricks", VABlocks.BLUESCHIST_BRICKS, ItemGroup.BUILDING_BLOCKS);
