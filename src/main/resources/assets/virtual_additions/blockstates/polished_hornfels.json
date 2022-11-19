@@ -1,7 +1,16 @@
 {
-    "variants": {
-      "": {
-        "model": "virtual_additions:block/polished_hornfels"
-      }
+  "variants": {
+    "axis=x": {
+      "model": "virtual_additions:block/polished_hornfels_horizontal",
+      "x": 90,
+      "y": 90
+    },
+    "axis=y": {
+      "model": "virtual_additions:block/polished_hornfels"
+    },
+    "axis=z": {
+      "model": "virtual_additions:block/polished_hornfels_horizontal",
+      "x": 90
     }
   }
+}

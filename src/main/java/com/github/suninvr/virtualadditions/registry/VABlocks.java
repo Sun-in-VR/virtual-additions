@@ -68,13 +68,12 @@ public class VABlocks {
         CLIMBING_ROPE_ANCHOR = register("climbing_rope_anchor", new ClimbingRopeAnchorBlock(FabricBlockSettings.of(Material.WOOL).sounds(ROPE_SOUND_GROUP).collidable(false).nonOpaque().hardness(0.1F)));
         RAW_STEEL_BLOCK = register("raw_steel_block", new Block(FabricBlockSettings.of(Material.STONE).mapColor(MapColor.GRAY).requiresTool().strength(5.0F, 300.0F)));
         STEEL_BLOCK = register("steel_block", new Block(FabricBlockSettings.of(Material.METAL).mapColor(MapColor.GRAY).sounds(BlockSoundGroup.NETHERITE).requiresTool().hardness(5.0F).resistance(300.0F)));
-        //WORKBENCH = register("workbench", new WorkbenchBlock(FabricBlockSettings.copyOf(Blocks.SMITHING_TABLE)));
         HORNFELS = register("hornfels", new PillarBlock(AbstractBlock.Settings.copy(Blocks.DEEPSLATE)));
         COBBLED_HORNFELS = register("cobbled_hornfels", new Block(FabricBlockSettings.copyOf(Blocks.COBBLED_DEEPSLATE)));
         COBBLED_HORNFELS_STAIRS = register("cobbled_hornfels_stairs", new CustomStairsBlock(COBBLED_HORNFELS.getDefaultState(), FabricBlockSettings.copyOf(Blocks.COBBLED_DEEPSLATE)));
         COBBLED_HORNFELS_SLAB = register("cobbled_hornfels_slab", new SlabBlock(FabricBlockSettings.copyOf(Blocks.COBBLED_DEEPSLATE)));
         COBBLED_HORNFELS_WALL = register("cobbled_hornfels_wall", new WallBlock(FabricBlockSettings.copyOf(Blocks.COBBLED_DEEPSLATE)));
-        POLISHED_HORNFELS = register("polished_hornfels", new Block(AbstractBlock.Settings.copy(Blocks.POLISHED_DEEPSLATE)));
+        POLISHED_HORNFELS = register("polished_hornfels", new PillarBlock(AbstractBlock.Settings.copy(Blocks.POLISHED_DEEPSLATE)));
         POLISHED_HORNFELS_STAIRS = register("polished_hornfels_stairs", new CustomStairsBlock(POLISHED_HORNFELS.getDefaultState(), FabricBlockSettings.copyOf(Blocks.POLISHED_DEEPSLATE_STAIRS).mapColor(MapColor.LIGHT_BLUE_GRAY)));
         POLISHED_HORNFELS_SLAB = register("polished_hornfels_slab", new SlabBlock(FabricBlockSettings.copyOf(Blocks.POLISHED_DEEPSLATE_SLAB).mapColor(MapColor.LIGHT_BLUE_GRAY)));
         HORNFELS_TILES = register("hornfels_tiles", new Block(AbstractBlock.Settings.copy(Blocks.DEEPSLATE_TILES)));
