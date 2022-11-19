@@ -1,6 +1,7 @@
 {
-  "parent": "minecraft:block/cube_mirrored_all",
+  "parent": "minecraft:block/cube_column_mirrored",
   "textures": {
-    "all": "virtual_additions:block/syenite"
+    "end": "virtual_additions:block/syenite",
+    "side": "virtual_additions:block/syenite_side"
   }
 }
