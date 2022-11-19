@@ -35,10 +35,10 @@ import net.minecraft.potion.PotionUtil;
 import net.minecraft.potion.Potions;
 import net.minecraft.predicate.item.ItemPredicate;
 import net.minecraft.recipe.BrewingRecipeRegistry;
+import net.minecraft.registry.Registries;
+import net.minecraft.registry.Registry;
 import net.minecraft.util.Util;
 import net.minecraft.util.math.Position;
-import net.minecraft.util.registry.Registries;
-import net.minecraft.util.registry.Registry;
 import net.minecraft.world.World;
 
 import java.util.Locale;
@@ -206,7 +206,7 @@ public class VAItems {
 
         COTTON_SEEDS = register("cotton_seeds", new AliasedBlockItem(VABlocks.COTTON, new FabricItemSettings()), ItemGroups.NATURAL, Items.BEETROOT_SEEDS);
         COTTON = register("cotton", ItemGroups.INGREDIENTS, Items.WHEAT);
-        FRIED_EGG = register("fried_egg", new Item(new FabricItemSettings().food(FRIED_EGG_FOOD)), ItemGroups.FOOD_AND_DRINK, Items.PUMPKIN_PIE);
+        FRIED_EGG = register("fried_egg", new Item(new FabricItemSettings().food(FRIED_EGG_FOOD)), ItemGroups.FOOD_AND_DRINK, Items.COOKED_CHICKEN);
 
         APPLICABLE_POTION = register("applicable_potion", new ApplicablePotionItem(new FabricItemSettings()));
 

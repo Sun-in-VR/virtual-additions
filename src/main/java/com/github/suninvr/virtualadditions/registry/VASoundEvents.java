@@ -1,8 +1,8 @@
 package com.github.suninvr.virtualadditions.registry;
 
+import net.minecraft.registry.Registries;
+import net.minecraft.registry.Registry;
 import net.minecraft.sound.SoundEvent;
-import net.minecraft.util.registry.Registries;
-import net.minecraft.util.registry.Registry;
 
 import static com.github.suninvr.virtualadditions.VirtualAdditions.idOf;
 

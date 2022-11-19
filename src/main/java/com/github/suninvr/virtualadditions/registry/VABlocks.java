@@ -5,10 +5,10 @@ import com.github.suninvr.virtualadditions.block.*;
 import com.github.suninvr.virtualadditions.registry.constructors.block.CustomStairsBlock;
 import net.fabricmc.fabric.api.object.builder.v1.block.FabricBlockSettings;
 import net.minecraft.block.*;
+import net.minecraft.registry.Registries;
+import net.minecraft.registry.Registry;
 import net.minecraft.sound.BlockSoundGroup;
 import net.minecraft.state.property.Properties;
-import net.minecraft.util.registry.Registries;
-import net.minecraft.util.registry.Registry;
 
 public class VABlocks {
 
