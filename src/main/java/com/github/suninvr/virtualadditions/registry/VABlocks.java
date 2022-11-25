@@ -63,6 +63,15 @@ public class VABlocks {
     public static final Block SPOTLIGHT;
     public static final Block SPOTLIGHT_LIGHT;
     public static final Block COTTON;
+    public static final Block OAK_HEDGE;
+    public static final Block SPRUCE_HEDGE;
+    public static final Block BIRCH_HEDGE;
+    public static final Block JUNGLE_HEDGE;
+    public static final Block ACACIA_HEDGE;
+    public static final Block DARK_OAK_HEDGE;
+    public static final Block MANGROVE_HEDGE;
+    public static final Block AZALEA_HEDGE;
+    public static final Block FLOWERING_AZALEA_HEDGE;
 
     static {
         CLIMBING_ROPE = register("climbing_rope", new ClimbingRopeBlock(FabricBlockSettings.of(Material.WOOL).sounds(ROPE_SOUND_GROUP).collidable(false).nonOpaque().hardness(0.1F)));
@@ -113,6 +122,15 @@ public class VABlocks {
         SPOTLIGHT = register("spotlight", new SpotlightBlock(FabricBlockSettings.copyOf(Blocks.COPPER_BLOCK).mapColor(MapColor.ORANGE).nonOpaque().luminance((state) -> state.get(SpotlightBlock.POWERED) ? 6 : 0).emissiveLighting((state, world, pos) -> state.get(Properties.POWERED)) ));
         SPOTLIGHT_LIGHT = register("spotlight_light", new SpotlightLightBlock(FabricBlockSettings.of(Material.AIR).strength(-1.0F, 3600000.8F).dropsNothing().nonOpaque().luminance((state) -> state.get(SpotlightLightBlock.LIT) ? 13 : 0)));
         COTTON = register("cotton", new CropBlock(AbstractBlock.Settings.of(Material.PLANT).noCollision().ticksRandomly().breakInstantly().sounds(BlockSoundGroup.CROP)));
+        OAK_HEDGE = register("oak_hedge", new HedgeBlock(AbstractBlock.Settings.copy(Blocks.OAK_LEAVES)));
+        SPRUCE_HEDGE = register("spruce_hedge", new HedgeBlock(AbstractBlock.Settings.copy(Blocks.SPRUCE_LEAVES)));
+        BIRCH_HEDGE = register("birch_hedge", new HedgeBlock(AbstractBlock.Settings.copy(Blocks.BIRCH_LEAVES)));
+        JUNGLE_HEDGE = register("jungle_hedge", new HedgeBlock(AbstractBlock.Settings.copy(Blocks.JUNGLE_LEAVES)));
+        ACACIA_HEDGE = register("acacia_hedge", new HedgeBlock(AbstractBlock.Settings.copy(Blocks.ACACIA_LEAVES)));
+        DARK_OAK_HEDGE = register("dark_oak_hedge", new HedgeBlock(AbstractBlock.Settings.copy(Blocks.DARK_OAK_LEAVES)));
+        MANGROVE_HEDGE = register("mangrove_hedge", new HedgeBlock(AbstractBlock.Settings.copy(Blocks.MANGROVE_LEAVES)));
+        AZALEA_HEDGE = register("azalea_hedge", new HedgeBlock(AbstractBlock.Settings.copy(Blocks.AZALEA_LEAVES)));
+        FLOWERING_AZALEA_HEDGE = register("flowering_azalea_hedge", new HedgeBlock(AbstractBlock.Settings.copy(Blocks.FLOWERING_AZALEA_LEAVES)));
     }
 
     public static void init(){}

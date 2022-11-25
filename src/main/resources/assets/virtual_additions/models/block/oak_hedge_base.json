@@ -1,0 +1,6 @@
+{
+  "parent": "virtual_additions:block/template_hedge_base",
+  "textures": {
+    "hedge": "minecraft:block/oak_leaves"
+  }
+}

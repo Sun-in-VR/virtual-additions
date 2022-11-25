@@ -1,0 +1,18 @@
+{
+	"textures": {
+		"particle": "#hedge"
+	},
+	"elements": [
+		{
+			"from": [4, 0, 0],
+			"to": [12, 16, 4],
+			"faces": {
+				"north": {"uv": [4, 0, 12, 16], "texture": "#hedge", "tintindex": 0, "cullface": "north"},
+				"east": {"uv": [12, 0, 16, 16], "texture": "#hedge", "tintindex": 0},
+				"west": {"uv": [0, 0, 4, 16], "texture": "#hedge", "tintindex": 0},
+				"up": {"uv": [4, 0, 12, 4], "texture": "#hedge", "tintindex": 0, "cullface": "up"},
+				"down": {"uv": [4, 0, 12, 4], "texture": "#hedge", "tintindex": 0, "cullface": "down"}
+			}
+		}
+	]
+}

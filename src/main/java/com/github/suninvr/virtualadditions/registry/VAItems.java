@@ -92,6 +92,15 @@ public class VAItems {
     public static final Item SYENITE_BRICK_STAIRS;
     public static final Item SYENITE_BRICK_SLAB;
     public static final Item SYENITE_BRICK_WALL;
+    public static final Item OAK_HEDGE;
+    public static final Item SPRUCE_HEDGE;
+    public static final Item BIRCH_HEDGE;
+    public static final Item JUNGLE_HEDGE;
+    public static final Item ACACIA_HEDGE;
+    public static final Item DARK_OAK_HEDGE;
+    public static final Item MANGROVE_HEDGE;
+    public static final Item AZALEA_HEDGE;
+    public static final Item FLOWERING_AZALEA_HEDGE;
     public static final Item RED_GLIMMER_CRYSTAL;
     public static final Item GREEN_GLIMMER_CRYSTAL;
     public static final Item BLUE_GLIMMER_CRYSTAL;
@@ -182,6 +191,16 @@ public class VAItems {
         SYENITE_BRICK_STAIRS = registerBlockItem("syenite_brick_stairs", VABlocks.SYENITE_BRICK_STAIRS, ItemGroups.BUILDING_BLOCKS, CRACKED_SYENITE_BRICKS);
         SYENITE_BRICK_SLAB = registerBlockItem("syenite_brick_slab", VABlocks.SYENITE_BRICK_SLAB, ItemGroups.BUILDING_BLOCKS, SYENITE_BRICK_STAIRS);
         SYENITE_BRICK_WALL = registerBlockItem("syenite_brick_wall", VABlocks.SYENITE_BRICK_WALL, ItemGroups.BUILDING_BLOCKS, SYENITE_BRICK_SLAB);
+
+        OAK_HEDGE = registerBlockItem("oak_hedge", VABlocks.OAK_HEDGE, ItemGroups.BUILDING_BLOCKS, Items.WARPED_BUTTON);
+        SPRUCE_HEDGE = registerBlockItem("spruce_hedge", VABlocks.SPRUCE_HEDGE, ItemGroups.BUILDING_BLOCKS, OAK_HEDGE);
+        BIRCH_HEDGE = registerBlockItem("birch_hedge", VABlocks.BIRCH_HEDGE, ItemGroups.BUILDING_BLOCKS, SPRUCE_HEDGE);
+        JUNGLE_HEDGE = registerBlockItem("jungle_hedge", VABlocks.JUNGLE_HEDGE, ItemGroups.BUILDING_BLOCKS, BIRCH_HEDGE);
+        ACACIA_HEDGE = registerBlockItem("acacia_hedge", VABlocks.ACACIA_HEDGE, ItemGroups.BUILDING_BLOCKS, JUNGLE_HEDGE);
+        DARK_OAK_HEDGE = registerBlockItem("dark_oak_hedge", VABlocks.DARK_OAK_HEDGE, ItemGroups.BUILDING_BLOCKS, ACACIA_HEDGE);
+        MANGROVE_HEDGE = registerBlockItem("mangrove_hedge", VABlocks.MANGROVE_HEDGE, ItemGroups.BUILDING_BLOCKS, DARK_OAK_HEDGE);
+        AZALEA_HEDGE = registerBlockItem("azalea_hedge", VABlocks.AZALEA_HEDGE, ItemGroups.BUILDING_BLOCKS, MANGROVE_HEDGE);
+        FLOWERING_AZALEA_HEDGE = registerBlockItem("flowering_azalea_hedge", VABlocks.FLOWERING_AZALEA_HEDGE, ItemGroups.BUILDING_BLOCKS, AZALEA_HEDGE);
 
         RED_GLIMMER_CRYSTAL = registerBlockItem("red_glimmer_crystal", VABlocks.RED_GLIMMER_CRYSTAL, ItemGroups.NATURAL, Items.POINTED_DRIPSTONE);
         GREEN_GLIMMER_CRYSTAL = registerBlockItem("green_glimmer_crystal", VABlocks.GREEN_GLIMMER_CRYSTAL, ItemGroups.NATURAL, RED_GLIMMER_CRYSTAL);

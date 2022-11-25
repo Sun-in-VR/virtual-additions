@@ -1,0 +1,6 @@
+{
+  "parent": "virtual_additions:block/template_hedge_side",
+  "textures": {
+    "hedge": "minecraft:block/azalea_leaves"
+  }
+}

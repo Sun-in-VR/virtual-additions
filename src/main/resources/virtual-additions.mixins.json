@@ -10,11 +10,13 @@
     "ComposterBlockAccessor",
     "CrossbowItemMixin",
     "EntityMixin",
+    "FenceBlockMixin",
     "ItemMixin",
     "LivingEntityMixin",
     "MobEntityMixin",
     "PlayerEntityMixin",
-    "RangedWeaponItemMixin"
+    "RangedWeaponItemMixin",
+    "WallBlockMixin"
   ],
   "client": [
   ],

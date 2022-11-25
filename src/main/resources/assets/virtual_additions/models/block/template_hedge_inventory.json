@@ -1,0 +1,32 @@
+{
+	"parent": "minecraft:block/block",
+	"display": {
+		"gui": {
+			"rotation": [ 30, 135, 0 ],
+			"translation": [ 0, 0, 0],
+			"scale":[ 0.625, 0.625, 0.625 ]
+		},
+		"fixed": {
+			"rotation": [ 0, 90, 0 ],
+			"translation": [ 0, 0, 0 ],
+			"scale": [ 0.5, 0.5, 0.5 ]
+		}
+	},
+	"textures": {
+		"particle": "#hedge"
+	},
+	"elements": [
+		{
+			"from": [4, 0, 0],
+			"to": [12, 16, 16],
+			"faces": {
+				"north": {"uv": [4, 0, 12, 16], "texture": "#hedge", "tintindex": 0},
+				"east": {"uv": [0, 0, 16, 16], "texture": "#hedge", "tintindex": 0},
+				"south": {"uv": [4, 0, 12, 16], "texture": "#hedge", "tintindex": 0},
+				"west": {"uv": [0, 0, 16, 16], "texture": "#hedge", "tintindex": 0},
+				"up": {"uv": [4, 0, 12, 16], "texture": "#hedge", "tintindex": 0},
+				"down": {"uv": [4, 0, 12, 16], "texture": "#hedge", "tintindex": 0}
+			}
+		}
+	]
+}
