@@ -3,6 +3,7 @@ package com.github.suninvr.virtualadditions.registry;
 import net.minecraft.registry.Registries;
 import net.minecraft.registry.Registry;
 import net.minecraft.sound.SoundEvent;
+import net.minecraft.util.Identifier;
 
 import static com.github.suninvr.virtualadditions.VirtualAdditions.idOf;
 
@@ -27,6 +28,7 @@ public class VASoundEvents {
     }
 
     private static SoundEvent register(String id) {
-        return Registry.register(Registries.SOUND_EVENT, idOf(id), new SoundEvent(idOf(id)));
+        Identifier identifier = idOf(id);
+        return Registry.register(Registries.SOUND_EVENT, identifier, SoundEvent.of(identifier) );
     }
 }
