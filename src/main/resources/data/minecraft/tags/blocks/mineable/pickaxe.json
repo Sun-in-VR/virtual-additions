@@ -1,6 +1,7 @@
 {
   "replace": false,
   "values": [
+    "virtual_additions:climbing_rope_anchor",
     "virtual_additions:hornfels",
     "virtual_additions:cobbled_hornfels",
     "virtual_additions:cobbled_hornfels_stairs",

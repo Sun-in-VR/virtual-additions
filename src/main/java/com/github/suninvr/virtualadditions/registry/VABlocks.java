@@ -74,8 +74,8 @@ public class VABlocks {
     public static final Block FLOWERING_AZALEA_HEDGE;
 
     static {
-        CLIMBING_ROPE = register("climbing_rope", new ClimbingRopeBlock(FabricBlockSettings.of(Material.WOOL).sounds(ROPE_SOUND_GROUP).collidable(false).nonOpaque().hardness(0.1F)));
-        CLIMBING_ROPE_ANCHOR = register("climbing_rope_anchor", new ClimbingRopeAnchorBlock(FabricBlockSettings.of(Material.WOOL).sounds(ROPE_SOUND_GROUP).collidable(false).nonOpaque().hardness(0.1F)));
+        CLIMBING_ROPE = register("climbing_rope", new ClimbingRopeBlock(FabricBlockSettings.of(Material.WOOL).sounds(ROPE_SOUND_GROUP).collidable(false).nonOpaque().hardness(0.5F)));
+        CLIMBING_ROPE_ANCHOR = register("climbing_rope_anchor", new ClimbingRopeAnchorBlock(FabricBlockSettings.of(Material.WOOL).sounds(ROPE_SOUND_GROUP).collidable(false).nonOpaque().hardness(0.5F)));
         RAW_STEEL_BLOCK = register("raw_steel_block", new Block(FabricBlockSettings.of(Material.STONE).mapColor(MapColor.GRAY).requiresTool().strength(5.0F, 300.0F)));
         STEEL_BLOCK = register("steel_block", new Block(FabricBlockSettings.of(Material.METAL).mapColor(MapColor.GRAY).sounds(BlockSoundGroup.NETHERITE).requiresTool().hardness(5.0F).resistance(300.0F)));
         HORNFELS = register("hornfels", new PillarBlock(AbstractBlock.Settings.copy(Blocks.DEEPSLATE)));
