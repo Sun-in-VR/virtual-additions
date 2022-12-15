@@ -1,0 +1,23 @@
+{
+    "type": "minecraft:crafting_shaped",
+    "pattern": [
+        "c",
+        "s",
+        "/"
+    ],
+    "key": {
+        "c": {
+            "item": "virtual_additions:blue_glimmer_crystal"
+        },
+        "s": {
+            "item": "minecraft:sugar"
+        },
+        "/": {
+            "item": "minecraft:stick"
+        }
+    },
+    "result": {
+        "item": "virtual_additions:blue_rock_candy",
+        "count": 1
+    }
+}

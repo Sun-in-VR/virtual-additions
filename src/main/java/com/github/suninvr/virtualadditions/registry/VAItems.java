@@ -123,9 +123,14 @@ public class VAItems {
     public static final Item COTTON_SEEDS;
     public static final Item COTTON;
     public static final Item FRIED_EGG;
+    public static final Item RED_ROCK_CANDY;
+    public static final Item GREEN_ROCK_CANDY;
+    public static final Item BLUE_ROCK_CANDY;
+    public static final Item MIXED_ROCK_CANDY;
     public static final Item APPLICABLE_POTION;
 
     public static final FoodComponent FRIED_EGG_FOOD = (new FoodComponent.Builder().hunger(4).saturationModifier(0.4F).build());
+    public static final FoodComponent ROCK_CANDY_FOOD = (new FoodComponent.Builder().hunger(2).saturationModifier(0.1F).build());
 
     public static final ToolSet AMETHYST_DIAMOND_TOOL_SET;
     public static final ToolSet COPPER_DIAMOND_TOOL_SET;
@@ -147,6 +152,8 @@ public class VAItems {
     public static final ToolSet COPPER_STEEL_TOOL_SET;
     public static final ToolSet EMERALD_STEEL_TOOL_SET;
     public static final ToolSet QUARTZ_STEEL_TOOL_SET;
+
+    private static Item prev;
 
     static {
         CLIMBING_ROPE = register("climbing_rope", new AliasedBlockItem(VABlocks.CLIMBING_ROPE_ANCHOR, new FabricItemSettings().maxCount(16)), ItemGroups.TOOLS, Items.LEAD);
@@ -227,6 +234,11 @@ public class VAItems {
         COTTON = register("cotton", ItemGroups.INGREDIENTS, Items.WHEAT);
         FRIED_EGG = register("fried_egg", new Item(new FabricItemSettings().food(FRIED_EGG_FOOD)), ItemGroups.FOOD_AND_DRINK, Items.COOKED_CHICKEN);
 
+        RED_ROCK_CANDY = register("red_rock_candy", new RockCandyItem(new FabricItemSettings().food(ROCK_CANDY_FOOD)), ItemGroups.FOOD_AND_DRINK, Items.COOKIE);
+        GREEN_ROCK_CANDY = register("green_rock_candy", new RockCandyItem(new FabricItemSettings().food(ROCK_CANDY_FOOD)), ItemGroups.FOOD_AND_DRINK, prev);
+        BLUE_ROCK_CANDY = register("blue_rock_candy", new RockCandyItem(new FabricItemSettings().food(ROCK_CANDY_FOOD)), ItemGroups.FOOD_AND_DRINK, prev);
+        MIXED_ROCK_CANDY = register("mixed_rock_candy", new RockCandyItem(new FabricItemSettings().food(ROCK_CANDY_FOOD)), ItemGroups.FOOD_AND_DRINK, prev);
+
         APPLICABLE_POTION = register("applicable_potion", new ApplicablePotionItem(new FabricItemSettings()));
 
         DIAMOND_TOOL_SET = new ToolSet(Items.DIAMOND_SWORD, Items.DIAMOND_SHOVEL, Items.DIAMOND_PICKAXE, Items.DIAMOND_AXE, Items.DIAMOND_HOE, "diamond");
@@ -303,16 +315,20 @@ public class VAItems {
 
     //Register an Item
     protected static <T extends Item> Item register(String id, T item) { // Register a given item
-        return Registry.register(Registries.ITEM, idOf(id), item);
+        Item item1 = Registry.register(Registries.ITEM, idOf(id), item);
+        prev = item1;
+        return item1;
     }
     protected static <T extends Item> Item register(String id, T item, ItemGroup itemGroup) { // Register an item, add to a group
         Item item1 = register(id, item);
         ItemGroupEvents.modifyEntriesEvent(itemGroup).register( (content) -> content.add(item1));
+        prev = item1;
         return item1;
     }
     protected static <T extends Item> Item register(String id, T item, ItemGroup itemGroup, Item itemAfter) { // Register an item, add to a specific location in a group
         Item item1 = register(id, item);
         ItemGroupEvents.modifyEntriesEvent(itemGroup).register( (content) -> content.addAfter(itemAfter, item1));
+        prev = item1;
         return item1;
     }
 
@@ -321,6 +337,7 @@ public class VAItems {
         for (ItemGroupLocation location : locations) {
             ItemGroupEvents.modifyEntriesEvent(location.GROUP).register( (content) -> content.addAfter(location.AFTER, item1));
         }
+        prev = item1;
         return item1;
     }
 
@@ -339,12 +356,9 @@ public class VAItems {
         return register(id, new Item(settings), itemGroup, itemAfter);
     }
 
-    protected static Item register(String id, ItemGroup itemGroup, ItemGroupLocation... locations) { // Create and register an item, give several locations
+    protected static Item register(String id, ItemGroupLocation... locations) { // Create and register an item, give several locations
         FabricItemSettings settings = new FabricItemSettings();
-        Item item = register(id, new Item(settings));
-        for (ItemGroupLocation location : locations) {
-            ItemGroupEvents.modifyEntriesEvent(location.GROUP).register( (content) -> content.addAfter(location.AFTER, item));
-        }
+        Item item = register(id, new Item(settings), locations);
         return item;
     }
 
@@ -361,10 +375,7 @@ public class VAItems {
     }
 
     protected static Item registerBlockItem(String id, Block block, ItemGroupLocation... locations) { // Create and register a block item, give several locations
-        Item item = register(id, new BlockItem(block, new FabricItemSettings()));
-        for (ItemGroupLocation location : locations) {
-            ItemGroupEvents.modifyEntriesEvent(location.GROUP).register( (content) -> content.addAfter(location.AFTER, item));
-        }
+        Item item = register(id, new BlockItem(block, new FabricItemSettings()), locations);
         return item;
     }
 
