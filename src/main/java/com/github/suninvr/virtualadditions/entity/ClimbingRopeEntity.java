@@ -5,6 +5,7 @@ import com.github.suninvr.virtualadditions.registry.VABlocks;
 import com.github.suninvr.virtualadditions.registry.VAEntityType;
 import com.github.suninvr.virtualadditions.registry.VAItems;
 import net.minecraft.block.BlockState;
+import net.minecraft.block.enums.BlockHalf;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.LivingEntity;
@@ -30,8 +31,9 @@ public class ClimbingRopeEntity extends PersistentProjectileEntity {
         super.onBlockHit(blockHitResult);
         Direction hitSide = blockHitResult.getSide();
         BlockPos placePos = new BlockPos(blockHitResult.getBlockPos().offset(hitSide));
+        BlockHalf half = ClimbingRopeAnchorBlock.getPlacementHeight(this.world, blockHitResult.getBlockPos(), blockHitResult.getSide());
         if(hitSide != Direction.UP) {
-            BlockState state = VABlocks.CLIMBING_ROPE_ANCHOR.getDefaultState().with(ClimbingRopeAnchorBlock.FACING, hitSide);
+            BlockState state = VABlocks.CLIMBING_ROPE_ANCHOR.getDefaultState().with(ClimbingRopeAnchorBlock.FACING, hitSide).with(ClimbingRopeAnchorBlock.HALF, half);
             if( VABlocks.CLIMBING_ROPE_ANCHOR.canPlaceAt( state, this.world, placePos ) && this.world.getBlockState( placePos ).isAir() ) {
                 world.setBlockState(placePos, state);
                 this.world.scheduleBlockTick(placePos, state.getBlock(), 1);
