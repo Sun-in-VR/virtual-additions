@@ -1,0 +1,10 @@
+{
+  "variants": {
+    "larvae=true": {
+      "model": "virtual_additions:block/glowworm_nest_larvae"
+    },
+    "larvae=false": {
+      "model": "virtual_additions:block/glowworm_nest"
+    }
+  }
+}

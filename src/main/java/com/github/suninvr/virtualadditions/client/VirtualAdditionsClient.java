@@ -36,7 +36,8 @@ public class VirtualAdditionsClient implements ClientModInitializer {
                 VABlocks.DARK_OAK_HEDGE,
                 VABlocks.MANGROVE_HEDGE,
                 VABlocks.AZALEA_HEDGE,
-                VABlocks.FLOWERING_AZALEA_HEDGE
+                VABlocks.FLOWERING_AZALEA_HEDGE,
+                VABlocks.HANGING_GLOWSILK
         );
 
         EntityRendererRegistry.register(VAEntityType.CLIMBING_ROPE, ClimbingRopeEntityRenderer::new);

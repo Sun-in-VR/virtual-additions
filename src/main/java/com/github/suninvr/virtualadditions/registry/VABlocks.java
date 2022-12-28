@@ -72,6 +72,25 @@ public class VABlocks {
     public static final Block MANGROVE_HEDGE;
     public static final Block AZALEA_HEDGE;
     public static final Block FLOWERING_AZALEA_HEDGE;
+    public static final Block HANGING_GLOWSILK;
+    public static final Block GLOWWORM_NEST;
+    public static final Block SILKBULB;
+    public static final Block WHITE_SILKBULB;
+    public static final Block LIGHT_GRAY_SILKBULB;
+    public static final Block GRAY_SILKBULB;
+    public static final Block BLACK_SILKBULB;
+    public static final Block BROWN_SILKBULB;
+    public static final Block RED_SILKBULB;
+    public static final Block ORANGE_SILKBULB;
+    public static final Block YELLOW_SILKBULB;
+    public static final Block LIME_SILKBULB;
+    public static final Block GREEN_SILKBULB;
+    public static final Block CYAN_SILKBULB;
+    public static final Block LIGHT_BLUE_SILKBULB;
+    public static final Block BLUE_SILKBULB;
+    public static final Block PURPLE_SILKBULB;
+    public static final Block MAGENTA_SILKBULB;
+    public static final Block PINK_SILKBULB;
 
     static {
         CLIMBING_ROPE = register("climbing_rope", new ClimbingRopeBlock(FabricBlockSettings.of(Material.WOOL).sounds(ROPE_SOUND_GROUP).collidable(false).nonOpaque().hardness(0.5F)));
@@ -131,6 +150,25 @@ public class VABlocks {
         MANGROVE_HEDGE = register("mangrove_hedge", new HedgeBlock(AbstractBlock.Settings.copy(Blocks.MANGROVE_LEAVES)));
         AZALEA_HEDGE = register("azalea_hedge", new HedgeBlock(AbstractBlock.Settings.copy(Blocks.AZALEA_LEAVES)));
         FLOWERING_AZALEA_HEDGE = register("flowering_azalea_hedge", new HedgeBlock(AbstractBlock.Settings.copy(Blocks.FLOWERING_AZALEA_LEAVES)));
+        HANGING_GLOWSILK = register("hanging_glowsilk", new HangingGlowsilkBlock(AbstractBlock.Settings.of(Material.PLANT).mapColor(MapColor.LIGHT_BLUE).sounds(BlockSoundGroup.WART_BLOCK).emissiveLighting((state, world, pos) -> true).noCollision().nonOpaque().breakInstantly()));
+        GLOWWORM_NEST = register("glowworm_nest", new GlowwormNestBlock(AbstractBlock.Settings.copy(Blocks.HONEYCOMB_BLOCK).mapColor(MapColor.DARK_AQUA).luminance( (state) -> state.get(GlowwormNestBlock.LARVAE) ? 8 : 0 ).emissiveLighting((state, world, pos) -> state.get(GlowwormNestBlock.LARVAE)).nonOpaque()));
+        SILKBULB = register("silkbulb", new Block(AbstractBlock.Settings.copy(Blocks.SHROOMLIGHT).mapColor(MapColor.DARK_AQUA).luminance( (state) -> 15 ).nonOpaque()));
+        WHITE_SILKBULB = register("white_silkbulb", new Block(AbstractBlock.Settings.copy(SILKBULB).mapColor(MapColor.WHITE)));
+        LIGHT_GRAY_SILKBULB = register("light_gray_silkbulb", new Block(AbstractBlock.Settings.copy(SILKBULB).mapColor(MapColor.LIGHT_GRAY)));
+        GRAY_SILKBULB = register("gray_silkbulb", new Block(AbstractBlock.Settings.copy(SILKBULB).mapColor(MapColor.GRAY)));
+        BLACK_SILKBULB = register("black_silkbulb", new Block(AbstractBlock.Settings.copy(SILKBULB).mapColor(MapColor.BLACK)));
+        BROWN_SILKBULB = register("brown_silkbulb", new Block(AbstractBlock.Settings.copy(SILKBULB).mapColor(MapColor.BROWN)));
+        RED_SILKBULB = register("red_silkbulb", new Block(AbstractBlock.Settings.copy(SILKBULB).mapColor(MapColor.RED)));
+        ORANGE_SILKBULB = register("orange_silkbulb", new Block(AbstractBlock.Settings.copy(SILKBULB).mapColor(MapColor.ORANGE)));
+        YELLOW_SILKBULB = register("yellow_silkbulb", new Block(AbstractBlock.Settings.copy(SILKBULB).mapColor(MapColor.YELLOW)));
+        LIME_SILKBULB = register("lime_silkbulb", new Block(AbstractBlock.Settings.copy(SILKBULB).mapColor(MapColor.LIME)));
+        GREEN_SILKBULB = register("green_silkbulb", new Block(AbstractBlock.Settings.copy(SILKBULB).mapColor(MapColor.GREEN)));
+        CYAN_SILKBULB = register("cyan_silkbulb", new Block(AbstractBlock.Settings.copy(SILKBULB).mapColor(MapColor.CYAN)));
+        LIGHT_BLUE_SILKBULB = register("light_blue_silkbulb", new Block(AbstractBlock.Settings.copy(SILKBULB).mapColor(MapColor.LIGHT_BLUE)));
+        BLUE_SILKBULB = register("blue_silkbulb", new Block(AbstractBlock.Settings.copy(SILKBULB).mapColor(MapColor.BLUE)));
+        PURPLE_SILKBULB = register("purple_silkbulb", new Block(AbstractBlock.Settings.copy(SILKBULB).mapColor(MapColor.PURPLE)));
+        MAGENTA_SILKBULB = register("magenta_silkbulb", new Block(AbstractBlock.Settings.copy(SILKBULB).mapColor(MapColor.MAGENTA)));
+        PINK_SILKBULB = register("pink_silkbulb", new Block(AbstractBlock.Settings.copy(SILKBULB).mapColor(MapColor.PINK)));
     }
 
     public static void init(){}
