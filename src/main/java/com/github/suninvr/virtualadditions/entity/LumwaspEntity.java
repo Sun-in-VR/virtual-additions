@@ -21,9 +21,11 @@ import net.minecraft.entity.passive.BeeEntity;
 import net.minecraft.entity.passive.IronGolemEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.projectile.thrown.SnowballEntity;
+import net.minecraft.sound.SoundEvent;
 import net.minecraft.sound.SoundEvents;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
+import org.jetbrains.annotations.Nullable;
 
 public class LumwaspEntity extends HostileEntity implements RangedAttackMob, Flutterer {
     public LumwaspEntity(EntityType<? extends HostileEntity> entityType, World world) {
@@ -89,6 +91,12 @@ public class LumwaspEntity extends HostileEntity implements RangedAttackMob, Flu
 
     public EntityGroup getGroup() {
         return EntityGroup.ARTHROPOD;
+    }
+
+    @Nullable
+    @Override
+    protected SoundEvent getAmbientSound() {
+        return null;
     }
 
     @Override
