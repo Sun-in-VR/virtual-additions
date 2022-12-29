@@ -7,9 +7,11 @@ import net.minecraft.entity.Flutterer;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.ai.RangedAttackMob;
 import net.minecraft.entity.ai.control.FlightMoveControl;
+import net.minecraft.entity.ai.control.MoveControl;
 import net.minecraft.entity.ai.goal.*;
 import net.minecraft.entity.ai.pathing.BirdNavigation;
 import net.minecraft.entity.ai.pathing.EntityNavigation;
+import net.minecraft.entity.ai.pathing.MobNavigation;
 import net.minecraft.entity.ai.pathing.PathNodeType;
 import net.minecraft.entity.attribute.DefaultAttributeContainer;
 import net.minecraft.entity.attribute.EntityAttributes;
@@ -20,7 +22,6 @@ import net.minecraft.entity.mob.PathAwareEntity;
 import net.minecraft.entity.passive.BeeEntity;
 import net.minecraft.entity.passive.IronGolemEntity;
 import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.entity.projectile.thrown.SnowballEntity;
 import net.minecraft.sound.SoundEvent;
 import net.minecraft.sound.SoundEvents;
 import net.minecraft.util.math.BlockPos;
@@ -41,7 +42,7 @@ public class LumwaspEntity extends HostileEntity implements RangedAttackMob, Flu
     public static DefaultAttributeContainer createLumwaspAttributes() {
         return MobEntity.createMobAttributes()
                 .add(EntityAttributes.GENERIC_MAX_HEALTH, 16.0)
-                .add(EntityAttributes.GENERIC_FLYING_SPEED, 0.95)
+                .add(EntityAttributes.GENERIC_FLYING_SPEED, 1.55)
                 .add(EntityAttributes.GENERIC_MOVEMENT_SPEED, 0.25)
                 .add(EntityAttributes.GENERIC_ATTACK_DAMAGE, 4.0)
                 .add(EntityAttributes.GENERIC_FOLLOW_RANGE, 32.0)
@@ -59,7 +60,7 @@ public class LumwaspEntity extends HostileEntity implements RangedAttackMob, Flu
             double f = d - projectile.getY();
             double g = target.getZ() - this.getZ();
             double h = Math.sqrt(e * e + g * g) * 0.20000000298023224;
-            projectile.setVelocity(e, f + h, g, 1.6F, 8.0F);
+            projectile.setVelocity(e, f + h, g, 1.6F, 10.0F);
             this.world.spawnEntity(projectile);
             i++;
         }
@@ -67,10 +68,10 @@ public class LumwaspEntity extends HostileEntity implements RangedAttackMob, Flu
 
     @Override
     protected void initGoals() {
-        this.goalSelector.add(0, new AvoidSunlightGoal(this));
-        this.goalSelector.add(1, new EscapeSunlightGoal(this, 1.75));
-        this.goalSelector.add(2, new MeleeCloseRangeGoal(this, 1.75, 4, true));
-        this.goalSelector.add(3, new ProjectileAttackGoal(this, 1.75, 45, 8));
+        //this.goalSelector.add(0, new AvoidSunlightGoal(this));
+        //this.goalSelector.add(1, new EscapeSunlightGoal(this, 1.25));
+        this.goalSelector.add(2, new MeleeCloseRangeGoal(this, 1.95, 4, true));
+        this.goalSelector.add(3, new ProjectileAttackGoal(this, 1.95, 45, 8));
         this.goalSelector.add(4, new FlyGoal(this, 1.0D));
         this.goalSelector.add(6, new LookAtEntityGoal(this, PlayerEntity.class, 8.0F));
         this.goalSelector.add(6, new LookAroundGoal(this));
@@ -116,14 +117,14 @@ public class LumwaspEntity extends HostileEntity implements RangedAttackMob, Flu
     public boolean isInAir() {
         return !this.onGround;
     }
-    
+
     private class MeleeCloseRangeGoal extends MeleeAttackGoal {
         private final int startRange;
         private final int continueRange;
         public MeleeCloseRangeGoal(PathAwareEntity mob, double speed, int range, boolean pauseWhenMobIdle) {
             super(mob, speed, pauseWhenMobIdle);
             this.startRange = range * range;
-            this.continueRange = (2 * range) * (2 * range);
+            this.continueRange = (2 + range) * (2 + range);
         }
 
         @Override
