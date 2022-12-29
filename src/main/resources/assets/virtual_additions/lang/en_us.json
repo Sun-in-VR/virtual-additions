@@ -79,6 +79,7 @@
 
     "entity.virtual_additions.climbing_rope": "Climbing Rope",
     "entity.virtual_additions.steel_bomb": "Steel Bomb",
+    "entity.virtual_additions.lumwasp": "Lumwasp",
 
     "generator.virtual_additions.virtual_world": "VA Preview",
 
@@ -107,6 +108,7 @@
     "item.virtual_additions.mixed_rock_candy": "Mixed Rock Candy",
     "item.virtual_additions.cotton_seeds": "Cotton Seeds",
     "item.virtual_additions.cotton": "Cotton",
+    "item.virtual_additions.lumwasp_spawn_egg": "Lumwasp Spawn Egg",
 
     "item.virtual_additions.applicable_potion.effect.empty": "Applicable Uncraftable Potion",
     "item.virtual_additions.applicable_potion.effect.water": "Applicable Water Bottle",
@@ -131,7 +133,8 @@
     "item.virtual_additions.applicable_potion.effect.turtle_master": "Applicable Potion of the Turtle Master",
     "item.virtual_additions.applicable_potion.effect.slow_falling": "Applicable Potion of Slow Falling",
 
-
     "subtitles.block.climbing_rope.extends": "Rope extends",
-    "subtitles.entity.steel_bomb.throw": "Steel Bomb flies"
+    "subtitles.entity.steel_bomb.throw": "Steel Bomb flies",
+
+    "death.attack.acid": "%s was drenched in acid by %s"
 }

@@ -38,6 +38,7 @@ import net.minecraft.recipe.BrewingRecipeRegistry;
 import net.minecraft.registry.Registries;
 import net.minecraft.registry.Registry;
 import net.minecraft.util.Util;
+import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.math.Position;
 import net.minecraft.world.World;
 
@@ -148,6 +149,8 @@ public class VAItems {
     public static final Item MAGENTA_SILKBULB;
     public static final Item PINK_SILKBULB;
     public static final Item APPLICABLE_POTION;
+
+    private static final Item LUMWASP_SPAWN_EGG;
 
     public static final FoodComponent FRIED_EGG_FOOD = (new FoodComponent.Builder().hunger(4).saturationModifier(0.4F).build());
     public static final FoodComponent ROCK_CANDY_FOOD = (new FoodComponent.Builder().hunger(2).saturationModifier(0.1F).build());
@@ -309,6 +312,8 @@ public class VAItems {
         COPPER_STEEL_TOOL_SET = registerGildedToolSet(STEEL_TOOL_SET, GildType.COPPER);
         EMERALD_STEEL_TOOL_SET = registerGildedToolSet(STEEL_TOOL_SET, GildType.EMERALD);
         QUARTZ_STEEL_TOOL_SET = registerGildedToolSet(STEEL_TOOL_SET, GildType.QUARTZ);
+
+        LUMWASP_SPAWN_EGG = register("lumwasp_spawn_egg", new SpawnEggItem(VAEntityType.LUMWASP, 0x2ee0a6, 0x2c424b, new FabricItemSettings()), ItemGroups.SPAWN_EGGS, Items.LLAMA_SPAWN_EGG);
     }
 
     public static void init(){
