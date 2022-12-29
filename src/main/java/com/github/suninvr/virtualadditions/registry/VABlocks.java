@@ -73,7 +73,7 @@ public class VABlocks {
     public static final Block AZALEA_HEDGE;
     public static final Block FLOWERING_AZALEA_HEDGE;
     public static final Block HANGING_GLOWSILK;
-    public static final Block GLOWWORM_NEST;
+    public static final Block LUMWASP_NEST;
     public static final Block SILKBULB;
     public static final Block WHITE_SILKBULB;
     public static final Block LIGHT_GRAY_SILKBULB;
@@ -151,7 +151,7 @@ public class VABlocks {
         AZALEA_HEDGE = register("azalea_hedge", new HedgeBlock(AbstractBlock.Settings.copy(Blocks.AZALEA_LEAVES)));
         FLOWERING_AZALEA_HEDGE = register("flowering_azalea_hedge", new HedgeBlock(AbstractBlock.Settings.copy(Blocks.FLOWERING_AZALEA_LEAVES)));
         HANGING_GLOWSILK = register("hanging_glowsilk", new HangingGlowsilkBlock(AbstractBlock.Settings.of(Material.PLANT).mapColor(MapColor.LIGHT_BLUE).sounds(BlockSoundGroup.WART_BLOCK).emissiveLighting((state, world, pos) -> true).noCollision().nonOpaque().breakInstantly()));
-        GLOWWORM_NEST = register("glowworm_nest", new GlowwormNestBlock(AbstractBlock.Settings.copy(Blocks.HONEYCOMB_BLOCK).mapColor(MapColor.DARK_AQUA).luminance( (state) -> state.get(GlowwormNestBlock.LARVAE) ? 8 : 0 ).emissiveLighting((state, world, pos) -> state.get(GlowwormNestBlock.LARVAE)).nonOpaque()));
+        LUMWASP_NEST = register("lumwasp_nest", new LumwaspNestBlock(AbstractBlock.Settings.copy(Blocks.HONEYCOMB_BLOCK).mapColor(MapColor.DARK_AQUA).luminance( (state) -> state.get(LumwaspNestBlock.LARVAE) ? 8 : 0 ).emissiveLighting((state, world, pos) -> state.get(LumwaspNestBlock.LARVAE)).nonOpaque()));
         SILKBULB = register("silkbulb", new Block(AbstractBlock.Settings.copy(Blocks.SHROOMLIGHT).mapColor(MapColor.DARK_AQUA).luminance( (state) -> 15 ).nonOpaque()));
         WHITE_SILKBULB = register("white_silkbulb", new Block(AbstractBlock.Settings.copy(SILKBULB).mapColor(MapColor.WHITE)));
         LIGHT_GRAY_SILKBULB = register("light_gray_silkbulb", new Block(AbstractBlock.Settings.copy(SILKBULB).mapColor(MapColor.LIGHT_GRAY)));

@@ -1,6 +1,6 @@
 {
   "parent": "minecraft:block/cube_all",
   "textures": {
-    "all": "virtual_additions:block/glowworm_nest"
+    "all": "virtual_additions:block/lumwasp_nest_larvae"
   }
 }

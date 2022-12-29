@@ -1,7 +1,7 @@
 {
   "replace": false,
   "values": [
-    "virtual_additions:glowworm_nest",
+    "virtual_additions:lumwasp_nest",
     "#virtual_additions:hedges",
     "#virtual_additions:silkbulbs"
   ]

@@ -7,7 +7,7 @@
       "entries": [
         {
           "type": "minecraft:item",
-          "name": "virtual_additions:glowworm_nest"
+          "name": "virtual_additions:lumwasp_nest"
         }
       ],
       "conditions": [

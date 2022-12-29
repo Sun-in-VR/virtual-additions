@@ -4,6 +4,7 @@ import com.github.suninvr.virtualadditions.block.enums.HangingGlowsilkShape;
 import com.github.suninvr.virtualadditions.registry.VABlocks;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
+import net.minecraft.block.TransparentBlock;
 import net.minecraft.server.world.ServerWorld;
 import net.minecraft.state.StateManager;
 import net.minecraft.state.property.BooleanProperty;
@@ -12,9 +13,9 @@ import net.minecraft.util.math.random.Random;
 import net.minecraft.world.LightType;
 import net.minecraft.world.World;
 
-public class GlowwormNestBlock extends Block {
+public class LumwaspNestBlock extends TransparentBlock {
     public static final BooleanProperty LARVAE = BooleanProperty.of("larvae");
-    public GlowwormNestBlock(Settings settings) {
+    public LumwaspNestBlock(Settings settings) {
         super(settings);
         setDefaultState(getStateManager().getDefaultState().with(LARVAE, false));
     }
