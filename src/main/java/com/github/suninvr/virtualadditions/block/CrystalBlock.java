@@ -2,6 +2,7 @@ package com.github.suninvr.virtualadditions.block;
 
 import com.github.suninvr.virtualadditions.block.enums.CrystalShape;
 import com.github.suninvr.virtualadditions.registry.VABlockTags;
+import com.github.suninvr.virtualadditions.registry.VABlocks;
 import net.minecraft.block.*;
 import net.minecraft.block.piston.PistonBehavior;
 import net.minecraft.entity.Entity;
@@ -17,6 +18,7 @@ import net.minecraft.state.property.EnumProperty;
 import net.minecraft.state.property.Properties;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Direction;
+import net.minecraft.util.math.Vec3d;
 import net.minecraft.util.math.random.Random;
 import net.minecraft.util.shape.VoxelShape;
 import net.minecraft.world.*;
@@ -43,6 +45,11 @@ public class CrystalBlock extends Block implements Waterloggable {
                 .with(POINTING, Direction.UP)
                 .with(WATERLOGGED, false)
         );
+    }
+
+    public static OffsetType getOffsetType(BlockState blockState) {
+        Direction.Axis axis = blockState.get(POINTING).getAxis();
+        return axis == Direction.Axis.Y ? OffsetType.XZ : OffsetType.NONE;
     }
 
     @Override
@@ -138,9 +145,10 @@ public class CrystalBlock extends Block implements Waterloggable {
     @Override
     public VoxelShape getOutlineShape(BlockState state, BlockView world, BlockPos pos, ShapeContext context) {
         boolean isBody = state.get(SHAPE) == CrystalShape.BODY;
+        Vec3d vec3d = state.getModelOffset(world, pos);
         return switch (state.get(POINTING)) {
-            case UP -> isBody ? BODY_Y_SHAPE : TIP_UP_SHAPE;
-            case DOWN -> isBody ? BODY_Y_SHAPE : TIP_DOWN_SHAPE;
+            case UP -> isBody ? BODY_Y_SHAPE.offset(vec3d.x, vec3d.y, vec3d.z) : TIP_UP_SHAPE.offset(vec3d.x, vec3d.y, vec3d.z);
+            case DOWN -> isBody ? BODY_Y_SHAPE.offset(vec3d.x, vec3d.y, vec3d.z) : TIP_DOWN_SHAPE.offset(vec3d.x, vec3d.y, vec3d.z);
             case NORTH -> isBody ? BODY_Z_SHAPE : TIP_NORTH_SHAPE;
             case SOUTH -> isBody ? BODY_Z_SHAPE : TIP_SOUTH_SHAPE;
             case EAST -> isBody ? BODY_X_SHAPE : TIP_EAST_SHAPE;
