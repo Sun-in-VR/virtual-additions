@@ -103,7 +103,7 @@ public class LumwaspEntityModel<T extends LumwaspEntity> extends EntityModel<Lum
             this.right_wing.pitch = (float) (1.0873F + Math.sin(animationProgress * 1.5) * 0.3);
             this.right_wing.yaw = 0.1745F;
             this.right_wing.roll = -0.8963F;
-            this.thorax.pitch = v - 0.6F;
+            this.thorax.pitch = v;
             this.front_left_leg.yaw = -0.6084F + w;
             this.front_left_leg.roll = 1.2819F + x;
             this.front_right_leg.yaw = 0.6084F + w;

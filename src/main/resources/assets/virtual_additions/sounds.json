@@ -52,5 +52,14 @@
     "sounds": [
       "random/bow"
     ]
+  },
+  "entity.lumwasp.hurt": {
+    "subtitle": "subtitles.entity.lumwasp.hurt",
+    "sounds": [
+      "virtual_additions:entity/lumwasp/hurt1",
+      "virtual_additions:entity/lumwasp/hurt2",
+      "virtual_additions:entity/lumwasp/hurt3",
+      "virtual_additions:entity/lumwasp/hurt4"
+    ]
   }
 }

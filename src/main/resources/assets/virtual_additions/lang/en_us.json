@@ -135,6 +135,7 @@
 
     "subtitles.block.climbing_rope.extends": "Rope extends",
     "subtitles.entity.steel_bomb.throw": "Steel Bomb flies",
+    "subtitles.entity.lumwasp.hurt": "Lumwasp hurts",
 
     "death.attack.acid": "%s was drenched in acid by %s"
 }

@@ -41,7 +41,7 @@ public class FlyingLumwaspSoundInstance extends MovingSoundInstance {
                 float f = (float)this.lumwasp.getVelocity().horizontalLength();
                 if (f >= 0.01F) {
                     this.pitch = MathHelper.lerp(MathHelper.clamp(f, 0.6F, 1.0F), 0.6F, 1.0F);
-                    this.volume = MathHelper.lerp(MathHelper.clamp(f, 0.0F, 0.5F), 0F, 12F);
+                    this.volume = MathHelper.lerp(MathHelper.clamp(f, 0.0F, 0.5F), 0F, 3.6F);
                 }
             } else {
                 this.volume = 0.0F;

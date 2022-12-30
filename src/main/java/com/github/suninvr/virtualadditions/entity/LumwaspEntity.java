@@ -1,5 +1,6 @@
 package com.github.suninvr.virtualadditions.entity;
 
+import com.github.suninvr.virtualadditions.registry.VASoundEvents;
 import net.minecraft.block.BlockState;
 import net.minecraft.entity.EntityGroup;
 import net.minecraft.entity.EntityType;
@@ -68,10 +69,10 @@ public class LumwaspEntity extends HostileEntity implements RangedAttackMob, Flu
 
     @Override
     protected void initGoals() {
-        //this.goalSelector.add(0, new AvoidSunlightGoal(this));
-        //this.goalSelector.add(1, new EscapeSunlightGoal(this, 1.25));
-        this.goalSelector.add(2, new MeleeCloseRangeGoal(this, 1.95, 4, true));
-        this.goalSelector.add(3, new ProjectileAttackGoal(this, 1.95, 45, 8));
+        this.goalSelector.add(0, new AvoidSunlightGoal(this));
+        this.goalSelector.add(1, new EscapeSunlightGoal(this, 1.0D));
+        this.goalSelector.add(2, new MeleeCloseRangeGoal(this, 1.0D, 4, true));
+        this.goalSelector.add(3, new ProjectileAttackGoal(this, 1.0D, 45, 8));
         this.goalSelector.add(4, new FlyGoal(this, 1.0D));
         this.goalSelector.add(6, new LookAtEntityGoal(this, PlayerEntity.class, 8.0F));
         this.goalSelector.add(6, new LookAroundGoal(this));
@@ -98,6 +99,11 @@ public class LumwaspEntity extends HostileEntity implements RangedAttackMob, Flu
     @Override
     protected SoundEvent getAmbientSound() {
         return null;
+    }
+
+    @Override
+    protected SoundEvent getHurtSound(DamageSource source) {
+        return VASoundEvents.ENTITY_LUMWASP_HURT;
     }
 
     @Override

@@ -16,6 +16,7 @@ public class VASoundEvents {
     public static final SoundEvent BLOCK_ROPE_PLACE ;
     public static final SoundEvent BLOCK_ROPE_STEP ;
     public static final SoundEvent ENTITY_STEEL_BOMB_THROW;
+    public static final SoundEvent ENTITY_LUMWASP_HURT;
 
     static {
         BLOCK_ROPE_BREAK = register("block.rope.break");
@@ -25,6 +26,7 @@ public class VASoundEvents {
         BLOCK_ROPE_PLACE = register("block.rope.place");
         BLOCK_ROPE_STEP = register("block.rope.step");
         ENTITY_STEEL_BOMB_THROW = register("entity.steel_bomb.throw");
+        ENTITY_LUMWASP_HURT = register("entity.lumwasp.hurt");
     }
 
     private static SoundEvent register(String id) {
