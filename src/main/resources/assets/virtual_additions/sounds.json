@@ -61,5 +61,21 @@
       "virtual_additions:entity/lumwasp/hurt3",
       "virtual_additions:entity/lumwasp/hurt4"
     ]
+  },
+  "item.bucket.empty_acid": {
+    "subtitle": "subtitles.item.bucket.empty",
+    "sounds": [
+      "virtual_additions:item/bucket/empty_acid_1",
+      "virtual_additions:item/bucket/empty_acid_2",
+      "virtual_additions:item/bucket/empty_acid_3"
+    ]
+  },
+  "item.bucket.fill_acid": {
+    "subtitle": "subtitles.item.bucket.fill",
+    "sounds": [
+      "virtual_additions:item/bucket/fill_acid_1",
+      "virtual_additions:item/bucket/fill_acid_2",
+      "virtual_additions:item/bucket/fill_acid_3"
+    ]
   }
 }

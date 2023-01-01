@@ -17,6 +17,7 @@ import net.minecraft.block.Block;
 import net.minecraft.block.Blocks;
 import net.minecraft.block.DispenserBlock;
 import net.minecraft.block.dispenser.DispenserBehavior;
+import net.minecraft.block.dispenser.ItemDispenserBehavior;
 import net.minecraft.block.dispenser.ProjectileDispenserBehavior;
 import net.minecraft.enchantment.Enchantments;
 import net.minecraft.entity.EquipmentSlot;
@@ -38,7 +39,8 @@ import net.minecraft.recipe.BrewingRecipeRegistry;
 import net.minecraft.registry.Registries;
 import net.minecraft.registry.Registry;
 import net.minecraft.util.Util;
-import net.minecraft.util.math.MathHelper;
+import net.minecraft.util.math.BlockPointer;
+import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Position;
 import net.minecraft.world.World;
 
@@ -47,6 +49,7 @@ import java.util.Locale;
 import static com.github.suninvr.virtualadditions.VirtualAdditions.idOf;
 
 public class VAItems {
+
     protected record ToolSet(Item SWORD, Item SHOVEL, Item PICKAXE, Item AXE, Item HOE, String NAME){}
     protected record ItemGroupLocation(ItemGroup GROUP, Item AFTER){}
     public static final ToolSet DIAMOND_TOOL_SET;
@@ -147,6 +150,7 @@ public class VAItems {
     public static final Item BLUE_SILKBULB;
     public static final Item PURPLE_SILKBULB;
     public static final Item MAGENTA_SILKBULB;
+    public static final Item ACID_BUCKET;
     public static final Item PINK_SILKBULB;
     public static final Item APPLICABLE_POTION;
 
@@ -284,6 +288,8 @@ public class VAItems {
         MAGENTA_SILKBULB = registerBlockItem("magenta_silkbulb", VABlocks.MAGENTA_SILKBULB, ItemGroups.COLORED_BLOCKS, prev);
         PINK_SILKBULB = registerBlockItem("pink_silkbulb", VABlocks.PINK_SILKBULB, ItemGroups.COLORED_BLOCKS, prev);
 
+        ACID_BUCKET = register("acid_bucket", new AcidBucketItem(VAFluids.ACID, new FabricItemSettings().recipeRemainder(Items.BUCKET).maxCount(1)), ItemGroups.TOOLS, Items.LAVA_BUCKET);
+
         APPLICABLE_POTION = register("applicable_potion", new ApplicablePotionItem(new FabricItemSettings()));
 
         DIAMOND_TOOL_SET = new ToolSet(Items.DIAMOND_SWORD, Items.DIAMOND_SHOVEL, Items.DIAMOND_PICKAXE, Items.DIAMOND_AXE, Items.DIAMOND_HOE, "diamond");
@@ -331,6 +337,21 @@ public class VAItems {
                 return climbingRopeEntity;
             }
         });
+
+        registerDispenserBehavior(ACID_BUCKET, new ItemDispenserBehavior(){
+            private final ItemDispenserBehavior fallbackBehavior = new ItemDispenserBehavior();
+
+            public ItemStack dispenseSilently(BlockPointer pointer, ItemStack stack) {
+                FluidModificationItem fluidModificationItem = (FluidModificationItem)stack.getItem();
+                BlockPos blockPos = pointer.getPos().offset(pointer.getBlockState().get(DispenserBlock.FACING));
+                World world = pointer.getWorld();
+                if (fluidModificationItem.placeFluid(null, world, blockPos, null)) {
+                    fluidModificationItem.onEmptied(null, world, stack, blockPos);
+                    return new ItemStack(Items.BUCKET);
+                } else {
+                    return this.fallbackBehavior.dispense(pointer, stack);
+                }
+            }});
 
         //Compostable Items
         ComposterBlockAccessor.virtualAdditions$registerCompostableItem(0.3F, COTTON_SEEDS);

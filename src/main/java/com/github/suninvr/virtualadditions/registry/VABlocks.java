@@ -4,7 +4,9 @@ import com.github.suninvr.virtualadditions.VirtualAdditions;
 import com.github.suninvr.virtualadditions.block.*;
 import com.github.suninvr.virtualadditions.registry.constructors.block.CustomStairsBlock;
 import net.fabricmc.fabric.api.object.builder.v1.block.FabricBlockSettings;
+import net.fabricmc.fabric.api.registry.LandPathNodeTypesRegistry;
 import net.minecraft.block.*;
+import net.minecraft.entity.ai.pathing.PathNodeType;
 import net.minecraft.registry.Registries;
 import net.minecraft.registry.Registry;
 import net.minecraft.sound.BlockSoundGroup;
@@ -91,6 +93,8 @@ public class VABlocks {
     public static final Block PURPLE_SILKBULB;
     public static final Block MAGENTA_SILKBULB;
     public static final Block PINK_SILKBULB;
+    public static final Block ACID;
+
 
     static {
         CLIMBING_ROPE = register("climbing_rope", new ClimbingRopeBlock(FabricBlockSettings.of(Material.WOOL).sounds(ROPE_SOUND_GROUP).collidable(false).nonOpaque().hardness(0.5F)));
@@ -169,9 +173,11 @@ public class VABlocks {
         PURPLE_SILKBULB = register("purple_silkbulb", new Block(AbstractBlock.Settings.copy(SILKBULB).mapColor(MapColor.PURPLE)));
         MAGENTA_SILKBULB = register("magenta_silkbulb", new Block(AbstractBlock.Settings.copy(SILKBULB).mapColor(MapColor.MAGENTA)));
         PINK_SILKBULB = register("pink_silkbulb", new Block(AbstractBlock.Settings.copy(SILKBULB).mapColor(MapColor.PINK)));
+        ACID = register("acid", new AcidFluidBlock(VAFluids.ACID, AbstractBlock.Settings.of(Material.WATER).mapColor(MapColor.LIME).emissiveLighting(((state, world, pos) -> true)).noCollision().strength(100.0F).dropsNothing()));
     }
-
-    public static void init(){}
+    public static void init(){
+        LandPathNodeTypesRegistry.register(ACID, PathNodeType.LAVA, PathNodeType.DANGER_FIRE);
+    }
 
     /**
      * Registers a new block

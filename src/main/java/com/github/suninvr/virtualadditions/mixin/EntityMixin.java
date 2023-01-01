@@ -2,14 +2,17 @@ package com.github.suninvr.virtualadditions.mixin;
 
 import com.github.suninvr.virtualadditions.interfaces.EntityInterface;
 import com.github.suninvr.virtualadditions.registry.VABlockTags;
+import com.github.suninvr.virtualadditions.registry.VADamageSource;
+import com.github.suninvr.virtualadditions.registry.VAFluids;
+import it.unimi.dsi.fastutil.objects.Object2DoubleMap;
 import net.minecraft.block.BlockState;
-import net.minecraft.block.FenceGateBlock;
 import net.minecraft.entity.Entity;
-import net.minecraft.registry.tag.BlockTags;
+import net.minecraft.entity.damage.DamageSource;
+import net.minecraft.fluid.Fluid;
+import net.minecraft.registry.tag.TagKey;
 import net.minecraft.server.command.CommandOutput;
 import net.minecraft.util.Nameable;
 import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.World;
 import net.minecraft.world.entity.EntityLike;
@@ -17,22 +20,25 @@ import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
-import org.spongepowered.asm.mixin.injection.Slice;
+import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 import org.spongepowered.asm.mixin.injection.callback.LocalCapture;
 
 @Mixin(Entity.class)
 public abstract class EntityMixin implements Nameable, EntityLike, CommandOutput, EntityInterface {
 
+    @Shadow public World world;
+    @Shadow public abstract boolean damage(DamageSource source, float amount);
+    @Shadow protected boolean firstUpdate;
+    @Shadow protected Object2DoubleMap<TagKey<Fluid>> fluidHeight;
+
+    @Shadow public abstract World getWorld();
+
     @Shadow private Vec3d pos;
 
-    @Shadow public World world;
+    @Shadow public abstract boolean updateMovementInFluid(TagKey<Fluid> tag, double speed);
 
-    @Inject(method = "getVelocityAffectingPos", at = @At("HEAD"), cancellable = true)
-    void virtualAdditions$getInsideVelocetyAffectingPos(CallbackInfoReturnable<BlockPos> cir) {
-        BlockPos insidePos = new BlockPos(this.pos);
-        if(this.world.getBlockState(insidePos).isIn(VABlockTags.INSIDE_VELOCITY_AFFECTING)) cir.setReturnValue(insidePos);
-    }
+    private int ticksInAcid;
 
     @Inject(method = "getPosWithYOffset", at = @At("RETURN"), locals = LocalCapture.CAPTURE_FAILHARD, cancellable = true)
     void virtualAdditions$getPosWithYOffsetForHedge(float offset, CallbackInfoReturnable<BlockPos> cir, int i, int j, int k, BlockPos blockPos) {
@@ -43,5 +49,25 @@ public abstract class EntityMixin implements Nameable, EntityLike, CommandOutput
                 cir.setReturnValue(blockPos2);
             }
         }
+    }
+
+    @Inject(method = "baseTick", at = @At("TAIL"))
+    void virtualAdditions$baseTickInAcid(CallbackInfo ci) {
+        if(this.isInAcid()) {
+            if (this.ticksInAcid >= 30) this.damage(VADamageSource.ACID, 1F);
+            else this.ticksInAcid = Math.min(this.ticksInAcid + 1, 30);
+        } else {
+            this.ticksInAcid = Math.max(this.ticksInAcid - 1, 0);
+        }
+    }
+
+    @Inject(method = "updateWaterState", at = @At("RETURN"), cancellable = true)
+    void virtualAdditions$updateAcidState(CallbackInfoReturnable<Boolean> cir) {
+        boolean bl = this.updateMovementInFluid(VAFluids.ACID_TAG, 0);
+        if (bl) cir.setReturnValue(true);
+    }
+
+    public boolean isInAcid() {
+        return !this.firstUpdate && this.fluidHeight.getDouble(VAFluids.ACID_TAG) > 0.0;
     }
 }

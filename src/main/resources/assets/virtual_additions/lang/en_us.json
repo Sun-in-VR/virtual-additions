@@ -109,6 +109,7 @@
     "item.virtual_additions.cotton_seeds": "Cotton Seeds",
     "item.virtual_additions.cotton": "Cotton",
     "item.virtual_additions.lumwasp_spawn_egg": "Lumwasp Spawn Egg",
+    "item.virtual_additions.acid_bucket": "Acid Bucket",
 
     "item.virtual_additions.applicable_potion.effect.empty": "Applicable Uncraftable Potion",
     "item.virtual_additions.applicable_potion.effect.water": "Applicable Water Bottle",
@@ -137,5 +138,6 @@
     "subtitles.entity.steel_bomb.throw": "Steel Bomb flies",
     "subtitles.entity.lumwasp.hurt": "Lumwasp hurts",
 
-    "death.attack.acid": "%s was drenched in acid by %s"
+    "death.attack.acid": "%s dissolved in acid",
+    "death.attack.acid.player": "%s dissolved in acid while trying to escape %s"
 }

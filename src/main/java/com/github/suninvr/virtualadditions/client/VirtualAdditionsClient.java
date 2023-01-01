@@ -6,9 +6,12 @@ import com.github.suninvr.virtualadditions.client.render.entity.LumwaspEntityMod
 import com.github.suninvr.virtualadditions.client.render.entity.LumwaspEntityRenderer;
 import com.github.suninvr.virtualadditions.registry.VABlocks;
 import com.github.suninvr.virtualadditions.registry.VAEntityType;
+import com.github.suninvr.virtualadditions.registry.VAFluids;
 import com.github.suninvr.virtualadditions.registry.VAItems;
 import net.fabricmc.api.ClientModInitializer;
 import net.fabricmc.fabric.api.blockrenderlayer.v1.BlockRenderLayerMap;
+import net.fabricmc.fabric.api.client.render.fluid.v1.FluidRenderHandlerRegistry;
+import net.fabricmc.fabric.api.client.render.fluid.v1.SimpleFluidRenderHandler;
 import net.fabricmc.fabric.api.client.rendering.v1.ColorProviderRegistry;
 import net.fabricmc.fabric.api.client.rendering.v1.EntityModelLayerRegistry;
 import net.fabricmc.fabric.api.client.rendering.v1.EntityRendererRegistry;
@@ -30,6 +33,11 @@ public class VirtualAdditionsClient implements ClientModInitializer {
     public static EntityModelLayer LUMWASP_LAYER = new EntityModelLayer(new Identifier("virtual_additions", "lumwasp"), "main");
     @Override
     public void onInitializeClient() {
+        BlockRenderLayerMap.INSTANCE.putFluids(RenderLayer.getTranslucent(),
+                VAFluids.ACID,
+                VAFluids.FLOWING_ACID
+        );
+
         BlockRenderLayerMap.INSTANCE.putBlocks(RenderLayer.getCutout(),
                 VABlocks.CLIMBING_ROPE_ANCHOR,
                 VABlocks.RED_GLIMMER_CRYSTAL,
@@ -75,6 +83,12 @@ public class VirtualAdditionsClient implements ClientModInitializer {
         ColorProviderRegistry.ITEM.register( ((stack, tintIndex) -> FoliageColors.getBirchColor()), VAItems.BIRCH_HEDGE );
         ColorProviderRegistry.ITEM.register( ((stack, tintIndex) -> FoliageColors.getSpruceColor()), VAItems.SPRUCE_HEDGE );
         ColorProviderRegistry.ITEM.register( ((stack, tintIndex) -> FoliageColors.getMangroveColor()), VAItems.MANGROVE_HEDGE );
+
+        FluidRenderHandlerRegistry.INSTANCE.register(VAFluids.ACID, VAFluids.FLOWING_ACID, new SimpleFluidRenderHandler(
+                new Identifier("minecraft:block/water_still"),
+                new Identifier("minecraft:block/water_flow"),
+                0x95be21
+        ));
 
         ModelPredicateProviderRegistry.register(Items.CROSSBOW, idOf("climbing_rope"), (itemStack, clientWorld, livingEntity, a) -> {
             if(!itemStack.isOf(Items.CROSSBOW)) return 0.0F;

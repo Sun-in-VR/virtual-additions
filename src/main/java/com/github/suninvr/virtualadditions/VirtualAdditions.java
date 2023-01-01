@@ -20,6 +20,7 @@ public class VirtualAdditions implements ModInitializer {
 		VABlockTags.init();
 		VACallbacks.init();
 		VAEntityType.init();
+		VAFluids.init();
 		VAItems.init();
 		VAParticleTypes.init();
 		VASoundEvents.init();
