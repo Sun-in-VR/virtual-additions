@@ -10,6 +10,7 @@ import net.minecraft.block.entity.BlockEntity;
 import net.minecraft.fluid.FlowableFluid;
 import net.minecraft.fluid.Fluid;
 import net.minecraft.fluid.FluidState;
+import net.minecraft.fluid.Fluids;
 import net.minecraft.item.Item;
 import net.minecraft.sound.SoundEvent;
 import net.minecraft.state.StateManager;
@@ -36,7 +37,7 @@ public abstract class AcidFluid extends FlowableFluid {
 
     @Override
     public boolean matchesType(Fluid fluid) {
-        return fluid == getStill() || fluid == getFlowing();
+        return fluid == getStill() || fluid == getFlowing() || fluid == Fluids.WATER || fluid == Fluids.FLOWING_WATER;
     }
 
     @Override

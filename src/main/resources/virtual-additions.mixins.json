@@ -15,7 +15,8 @@
     "MobEntityMixin",
     "PlayerEntityMixin",
     "RangedWeaponItemMixin",
-    "WallBlockMixin"
+    "WallBlockMixin",
+    "WaterFluidMixin"
   ],
   "client": [
     "ClientPlayNetworkHandlerMixin"
