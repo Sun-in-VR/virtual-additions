@@ -1,15 +1,14 @@
 package com.github.suninvr.virtualadditions.client;
 
+import com.github.suninvr.virtualadditions.client.particle.AcidSplashEmitterParticle;
 import com.github.suninvr.virtualadditions.client.render.entity.AcidSpitEntityRenderer;
 import com.github.suninvr.virtualadditions.client.render.entity.ClimbingRopeEntityRenderer;
 import com.github.suninvr.virtualadditions.client.render.entity.LumwaspEntityModel;
 import com.github.suninvr.virtualadditions.client.render.entity.LumwaspEntityRenderer;
-import com.github.suninvr.virtualadditions.registry.VABlocks;
-import com.github.suninvr.virtualadditions.registry.VAEntityType;
-import com.github.suninvr.virtualadditions.registry.VAFluids;
-import com.github.suninvr.virtualadditions.registry.VAItems;
+import com.github.suninvr.virtualadditions.registry.*;
 import net.fabricmc.api.ClientModInitializer;
 import net.fabricmc.fabric.api.blockrenderlayer.v1.BlockRenderLayerMap;
+import net.fabricmc.fabric.api.client.particle.v1.ParticleFactoryRegistry;
 import net.fabricmc.fabric.api.client.render.fluid.v1.FluidRenderHandlerRegistry;
 import net.fabricmc.fabric.api.client.render.fluid.v1.SimpleFluidRenderHandler;
 import net.fabricmc.fabric.api.client.rendering.v1.ColorProviderRegistry;
@@ -18,6 +17,7 @@ import net.fabricmc.fabric.api.client.rendering.v1.EntityRendererRegistry;
 import net.minecraft.client.color.world.BiomeColors;
 import net.minecraft.client.color.world.FoliageColors;
 import net.minecraft.client.item.ModelPredicateProviderRegistry;
+import net.minecraft.client.particle.WaterSplashParticle;
 import net.minecraft.client.render.RenderLayer;
 import net.minecraft.client.render.entity.FlyingItemEntityRenderer;
 import net.minecraft.client.render.entity.model.EntityModelLayer;
@@ -72,6 +72,7 @@ public class VirtualAdditionsClient implements ClientModInitializer {
                 );
         ColorProviderRegistry.BLOCK.register( ((state, world, pos, tintIndex) -> FoliageColors.getSpruceColor()), VABlocks.SPRUCE_HEDGE);
         ColorProviderRegistry.BLOCK.register( ((state, world, pos, tintIndex) -> FoliageColors.getBirchColor()), VABlocks.BIRCH_HEDGE);
+        ColorProviderRegistry.BLOCK.register(((state, world, pos, tintIndex) -> 0x95be21), VABlocks.ACID);
 
         ColorProviderRegistry.ITEM.register( ((stack, tintIndex) -> tintIndex > 0 ? -1 : PotionUtil.getColor(stack)), VAItems.APPLICABLE_POTION);
         ColorProviderRegistry.ITEM.register( ((stack, tintIndex) -> FoliageColors.getDefaultColor()),
@@ -94,6 +95,9 @@ public class VirtualAdditionsClient implements ClientModInitializer {
             if(!itemStack.isOf(Items.CROSSBOW)) return 0.0F;
             return CrossbowItem.hasProjectile(itemStack, VAItems.CLIMBING_ROPE) ? 1.0F : 0.0F;
         });
+
+        ParticleFactoryRegistry.getInstance().register(VAParticleTypes.ACID_SPLASH_EMITTER, new AcidSplashEmitterParticle.Factory());
+        ParticleFactoryRegistry.getInstance().register(VAParticleTypes.ACID_SPLASH, WaterSplashParticle.Factory::new);
     }
 
 }

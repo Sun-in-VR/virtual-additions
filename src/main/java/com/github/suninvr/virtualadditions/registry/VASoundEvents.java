@@ -17,8 +17,10 @@ public class VASoundEvents {
     public static final SoundEvent BLOCK_ROPE_STEP ;
     public static final SoundEvent ENTITY_STEEL_BOMB_THROW;
     public static final SoundEvent ENTITY_LUMWASP_HURT;
-    public static final SoundEvent ACID_FILL;
-    public static final SoundEvent ACID_EMPTY;
+    public static final SoundEvent BUCKET_FILL_ACID;
+    public static final SoundEvent BUCKET_EMPTY_ACID;
+    public static final SoundEvent ACID_SIZZLE;
+    public static final SoundEvent ACID_AMBIENT;
 
     static {
         BLOCK_ROPE_BREAK = register("block.rope.break");
@@ -29,8 +31,10 @@ public class VASoundEvents {
         BLOCK_ROPE_STEP = register("block.rope.step");
         ENTITY_STEEL_BOMB_THROW = register("entity.steel_bomb.throw");
         ENTITY_LUMWASP_HURT = register("entity.lumwasp.hurt");
-        ACID_FILL = register("item.bucket.fill_acid");
-        ACID_EMPTY = register("item.bucket.empty_acid");
+        BUCKET_FILL_ACID = register("item.bucket.fill_acid");
+        BUCKET_EMPTY_ACID = register("item.bucket.empty_acid");
+        ACID_SIZZLE = register("block.acid.sizzle");
+        ACID_AMBIENT = register("block.acid.ambient");
     }
 
     private static SoundEvent register(String id) {

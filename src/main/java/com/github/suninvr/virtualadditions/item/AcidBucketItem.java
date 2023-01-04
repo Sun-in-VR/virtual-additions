@@ -80,7 +80,7 @@ public class AcidBucketItem extends BucketItem {
 
     @Override
     protected void playEmptyingSound(@Nullable PlayerEntity player, WorldAccess world, BlockPos pos) {
-        world.playSound(player, pos, VASoundEvents.ACID_EMPTY, SoundCategory.BLOCKS, 1.0F, 1.0F);
+        world.playSound(player, pos, VASoundEvents.BUCKET_EMPTY_ACID, SoundCategory.BLOCKS, 1.0F, 1.0F);
         world.emitGameEvent(player, GameEvent.FLUID_PLACE, pos);
     }
 }

@@ -47,6 +47,18 @@
       "entity/leashknot/break3"
     ]
   },
+  "block.acid.sizzle": {
+    "subtitle": "subtitles.block.acid.sizzle",
+    "sounds": [
+      "virtual_additions:block/acid_sizzle"
+    ]
+  },
+  "block.acid.ambient": {
+    "subtitle": "subtitles.block.acid.sizzle",
+    "sounds": [
+      "virtual_additions:block/acid_ambient"
+    ]
+  },
   "entity.steel_bomb.throw": {
     "subtitle": "subtitles.entity.steel_bomb.throw",
     "sounds": [
