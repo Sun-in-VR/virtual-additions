@@ -26,6 +26,7 @@ import net.minecraft.sound.SoundEvent;
 import net.minecraft.sound.SoundEvents;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
+import net.minecraft.world.WorldView;
 import org.jetbrains.annotations.Nullable;
 
 public class LumwaspEntity extends HostileEntity implements RangedAttackMob, Flutterer {
@@ -126,6 +127,11 @@ public class LumwaspEntity extends HostileEntity implements RangedAttackMob, Flu
     @Override
     public boolean isInAir() {
         return !this.onGround;
+    }
+
+    @Override
+    public boolean canSpawn(WorldView world) {
+        return world.doesNotIntersectEntities(this);
     }
 
     private class MeleeCloseRangeGoal extends MeleeAttackGoal {

@@ -1,0 +1,15 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "ingredients": [
+    {
+      "item": "minecraft:diamond"
+    },
+    {
+      "item": "virtual_additions:steel_ingot"
+    }
+  ],
+  "result": {
+    "item": "virtual_additions:tool_gild_smithing_template",
+    "count": 1
+  }
+}

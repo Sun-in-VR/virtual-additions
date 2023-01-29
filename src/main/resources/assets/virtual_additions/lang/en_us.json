@@ -140,5 +140,14 @@
     "subtitles.entity.lumwasp.hurt": "Lumwasp hurts",
 
     "death.attack.acid": "%s dissolved in acid",
-    "death.attack.acid.player": "%s dissolved in acid while trying to escape %s"
+    "death.attack.acid.player": "%s dissolved in acid while trying to escape %s",
+
+    "upgrade.virtual_additions.tool_gild": "Tool Upgrade",
+
+    "item.virtual_additions.smithing_template.tool_gild.applies_to": "Tools",
+    "item.virtual_additions.smithing_template.tool_gild.ingredients": "Copper, Amethyst, Quartz, Emerald",
+    "item.virtual_additions.smithing_template.tool_gild.base_slot_description": "Put any Iron or better tool here",
+    "item.virtual_additions.smithing_template.tool_gild.additions_slot_description": "Put a Copper Ingot, Amethyst Shard, Nether Quartz, or Emerald here",
+
+    "trim_material.virtual_additions.steel": "Steel Material"
 }

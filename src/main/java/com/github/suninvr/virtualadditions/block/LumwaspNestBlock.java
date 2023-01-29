@@ -32,7 +32,7 @@ public class LumwaspNestBlock extends TransparentBlock {
 
     @Override
     public void randomTick(BlockState state, ServerWorld world, BlockPos pos, Random random) {
-        if (world.getLightLevel(LightType.BLOCK, pos) >= 14 && random.nextInt(5) == 0) {
+        if (world.getLightLevel(LightType.BLOCK, pos.up()) >= 15 && random.nextInt(5) == 0) {
             if (state.get(LARVAE)) {
                 growSilk(world, pos);
             } else {
@@ -42,20 +42,30 @@ public class LumwaspNestBlock extends TransparentBlock {
     }
 
     private void growSilk(World world, BlockPos pos) {
-        int i = 8;
+        int i = 0;
         BlockState checkState;
         BlockPos checkPos;
         BlockPos checkPosDown;
-        while (i >= 0) {
+        while (i <= 7) {
             checkPos = pos.down(i);
             checkPosDown = checkPos.down();
             checkState = world.getBlockState(checkPos);
-            if (checkState.isOf(VABlocks.HANGING_GLOWSILK) && checkState.get(HangingGlowsilkBlock.SHAPE).isEnd() && world.getBlockState(checkPosDown).isAir()) {
-                world.setBlockState(checkPos, checkState.with(HangingGlowsilkBlock.SHAPE, HangingGlowsilkShape.STRAIGHT));
-                world.setBlockState(checkPosDown, checkState.with(HangingGlowsilkBlock.SHAPE, HangingGlowsilkShape.END));
+
+            if (checkPos == pos) {
+                if (world.getBlockState(checkPosDown).isAir()) {
+                    world.setBlockState(checkPosDown, VABlocks.HANGING_GLOWSILK.getDefaultState());
+                    return;
+                }
+            } else if (checkState.isOf(VABlocks.HANGING_GLOWSILK)) {
+                if (checkState.get(HangingGlowsilkBlock.SHAPE).isEnd() && world.getBlockState(checkPosDown).isAir()) {
+                    world.setBlockState(checkPos, checkState.with(HangingGlowsilkBlock.SHAPE, HangingGlowsilkShape.STRAIGHT));
+                    world.setBlockState(checkPosDown, checkState.with(HangingGlowsilkBlock.SHAPE, HangingGlowsilkShape.END));
+                    return;
+                }
+            } else {
                 return;
             }
-            i -= 1;
+            i += 1;
         }
         if (world.getBlockState(pos.down()).isAir()) world.setBlockState(pos.down(), VABlocks.HANGING_GLOWSILK.getDefaultState());
     }

@@ -1,0 +1,6 @@
+{
+  "parent": "minecraft:item/generated",
+  "textures": {
+    "layer0": "virtual_additions:item/tool_gild_smithing_template"
+  }
+}

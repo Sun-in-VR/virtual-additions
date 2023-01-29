@@ -1,0 +1,7 @@
+{
+  "parent": "minecraft:block/cube_column",
+  "textures": {
+    "end": "virtual_additions:block/lumwasp_nest_larvae_3c",
+    "side": "virtual_additions:block/lumwasp_nest_side"
+  }
+}

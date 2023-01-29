@@ -38,12 +38,16 @@ import net.minecraft.predicate.item.ItemPredicate;
 import net.minecraft.recipe.BrewingRecipeRegistry;
 import net.minecraft.registry.Registries;
 import net.minecraft.registry.Registry;
+import net.minecraft.text.Text;
+import net.minecraft.util.Formatting;
+import net.minecraft.util.Identifier;
 import net.minecraft.util.Util;
 import net.minecraft.util.math.BlockPointer;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Position;
 import net.minecraft.world.World;
 
+import java.util.List;
 import java.util.Locale;
 
 import static com.github.suninvr.virtualadditions.VirtualAdditions.idOf;
@@ -153,6 +157,7 @@ public class VAItems {
     public static final Item ACID_BUCKET;
     public static final Item PINK_SILKBULB;
     public static final Item APPLICABLE_POTION;
+    public static final Item TOOL_GILD_SMITHING_TEMPLATE;
 
     private static final Item LUMWASP_SPAWN_EGG;
 
@@ -180,9 +185,53 @@ public class VAItems {
     public static final ToolSet EMERALD_STEEL_TOOL_SET;
     public static final ToolSet QUARTZ_STEEL_TOOL_SET;
 
+    private static final Text TOOL_GILD_APPLIES_TO_TEXT;
+    private static final Text TOOL_GILD_INGREDIENTS_TEXT;
+    private static final Text TOOL_GILD_BASE_SLOT_DESCRIPTION_TEXT;
+    private static final Text TOOL_GILD_ADDITIONS_SLOT_DESCRIPTION_TEXT;
+    private static final Text TOOL_GILD_TEXT;
+    private static final Identifier EMPTY_ARMOR_SLOT_HELMET_TEXTURE;
+    private static final Identifier EMPTY_ARMOR_SLOT_CHESTPLATE_TEXTURE;
+    private static final Identifier EMPTY_ARMOR_SLOT_LEGGINGS_TEXTURE;
+    private static final Identifier EMPTY_ARMOR_SLOT_BOOTS_TEXTURE;
+    private static final Identifier EMPTY_SLOT_HOE_TEXTURE;
+    private static final Identifier EMPTY_SLOT_AXE_TEXTURE;
+    private static final Identifier EMPTY_SLOT_SWORD_TEXTURE;
+    private static final Identifier EMPTY_SLOT_SHOVEL_TEXTURE;
+    private static final Identifier EMPTY_SLOT_PICKAXE_TEXTURE;
+    private static final Identifier EMPTY_SLOT_INGOT_TEXTURE;
+    private static final Identifier EMPTY_SLOT_REDSTONE_DUST_TEXTURE;
+    private static final Identifier EMPTY_SLOT_QUARTZ_TEXTURE;
+    private static final Identifier EMPTY_SLOT_EMERALD_TEXTURE;
+    private static final Identifier EMPTY_SLOT_DIAMOND_TEXTURE;
+    private static final Identifier EMPTY_SLOT_LAPIS_LAZULI_TEXTURE;
+
     private static Item prev;
 
     static {
+
+        TOOL_GILD_APPLIES_TO_TEXT = Text.translatable(Util.createTranslationKey("item", idOf("smithing_template.tool_gild.applies_to"))).formatted(Formatting.BLUE);
+        TOOL_GILD_INGREDIENTS_TEXT = Text.translatable(Util.createTranslationKey("item", idOf("smithing_template.tool_gild.ingredients"))).formatted(Formatting.BLUE);
+        TOOL_GILD_BASE_SLOT_DESCRIPTION_TEXT = Text.translatable(Util.createTranslationKey("item", idOf("smithing_template.tool_gild.base_slot_description")));
+        TOOL_GILD_ADDITIONS_SLOT_DESCRIPTION_TEXT = Text.translatable(Util.createTranslationKey("item", idOf("smithing_template.tool_gild.additions_slot_description")));
+        TOOL_GILD_TEXT = Text.translatable(Util.createTranslationKey("upgrade", idOf("tool_gild"))).formatted(Formatting.GRAY);
+
+        EMPTY_ARMOR_SLOT_HELMET_TEXTURE = new Identifier("item/empty_armor_slot_helmet");
+        EMPTY_ARMOR_SLOT_CHESTPLATE_TEXTURE = new Identifier("item/empty_armor_slot_chestplate");
+        EMPTY_ARMOR_SLOT_LEGGINGS_TEXTURE = new Identifier("item/empty_armor_slot_leggings");
+        EMPTY_ARMOR_SLOT_BOOTS_TEXTURE = new Identifier("item/empty_armor_slot_boots");
+        EMPTY_SLOT_HOE_TEXTURE = new Identifier("item/empty_slot_hoe");
+        EMPTY_SLOT_AXE_TEXTURE = new Identifier("item/empty_slot_axe");
+        EMPTY_SLOT_SWORD_TEXTURE = new Identifier("item/empty_slot_sword");
+        EMPTY_SLOT_SHOVEL_TEXTURE = new Identifier("item/empty_slot_shovel");
+        EMPTY_SLOT_PICKAXE_TEXTURE = new Identifier("item/empty_slot_pickaxe");
+        EMPTY_SLOT_INGOT_TEXTURE = new Identifier("item/empty_slot_ingot");
+        EMPTY_SLOT_REDSTONE_DUST_TEXTURE = new Identifier("item/empty_slot_redstone_dust");
+        EMPTY_SLOT_QUARTZ_TEXTURE = new Identifier("item/empty_slot_quartz");
+        EMPTY_SLOT_EMERALD_TEXTURE = new Identifier("item/empty_slot_emerald");
+        EMPTY_SLOT_DIAMOND_TEXTURE = new Identifier("item/empty_slot_diamond");
+        EMPTY_SLOT_LAPIS_LAZULI_TEXTURE = new Identifier("item/empty_slot_lapis_lazuli");
+
         CLIMBING_ROPE = register("climbing_rope", new AliasedBlockItem(VABlocks.CLIMBING_ROPE_ANCHOR, new FabricItemSettings().maxCount(16)), ItemGroups.TOOLS, Items.LEAD);
 
         HORNFELS = registerBlockItem("hornfels", VABlocks.HORNFELS, new ItemGroupLocation(ItemGroups.NATURAL, Items.DEEPSLATE), new ItemGroupLocation(ItemGroups.BUILDING_BLOCKS, Items.DEEPSLATE_TILE_WALL));
@@ -252,10 +301,10 @@ public class VAItems {
         STEEL_PICKAXE = register("steel_pickaxe", new CustomPickaxeItem(SteelToolMaterial.INSTANCE, 1, -2.8F, new FabricItemSettings()), ItemGroups.TOOLS, prev);
         STEEL_AXE = register("steel_axe", new CustomAxeItem(SteelToolMaterial.INSTANCE, 6.0F, -3.1F, new FabricItemSettings()), ItemGroups.TOOLS, prev);
         STEEL_HOE = register("steel_hoe", new CustomHoeItem(SteelToolMaterial.INSTANCE, -2, -1.0F, new FabricItemSettings()), ItemGroups.TOOLS, prev);
-        STEEL_HELMET = register("steel_helmet", new ArmorItem(CustomArmorMaterials.STEEL, EquipmentSlot.HEAD, new Item.Settings()), ItemGroups.COMBAT, Items.GOLDEN_BOOTS);
-        STEEL_CHESTPLATE = register("steel_chestplate", new ArmorItem(CustomArmorMaterials.STEEL, EquipmentSlot.CHEST, new Item.Settings()), ItemGroups.COMBAT, prev);
-        STEEL_LEGGINGS = register("steel_leggings", new ArmorItem(CustomArmorMaterials.STEEL, EquipmentSlot.LEGS, new Item.Settings()), ItemGroups.COMBAT, prev);
-        STEEL_BOOTS = register("steel_boots", new ArmorItem(CustomArmorMaterials.STEEL, EquipmentSlot.FEET, new Item.Settings()), ItemGroups.COMBAT, prev);
+        STEEL_HELMET = register("steel_helmet", new ArmorItem(CustomArmorMaterials.STEEL, ArmorItem.Type.HELMET, new Item.Settings()), ItemGroups.COMBAT, Items.GOLDEN_BOOTS);
+        STEEL_CHESTPLATE = register("steel_chestplate", new ArmorItem(CustomArmorMaterials.STEEL, ArmorItem.Type.CHESTPLATE, new Item.Settings()), ItemGroups.COMBAT, prev);
+        STEEL_LEGGINGS = register("steel_leggings", new ArmorItem(CustomArmorMaterials.STEEL, ArmorItem.Type.LEGGINGS, new Item.Settings()), ItemGroups.COMBAT, prev);
+        STEEL_BOOTS = register("steel_boots", new ArmorItem(CustomArmorMaterials.STEEL, ArmorItem.Type.BOOTS, new Item.Settings()), ItemGroups.COMBAT, prev);
 
         COTTON_SEEDS = register("cotton_seeds", new AliasedBlockItem(VABlocks.COTTON, new FabricItemSettings()), ItemGroups.NATURAL, Items.BEETROOT_SEEDS);
         COTTON = register("cotton", ItemGroups.INGREDIENTS, Items.WHEAT);
@@ -297,6 +346,11 @@ public class VAItems {
         IRON_TOOL_SET = new ToolSet(Items.IRON_SWORD, Items.IRON_SHOVEL, Items.IRON_PICKAXE, Items.IRON_AXE, Items.IRON_HOE, "iron");
         NETHERITE_TOOL_SET = new ToolSet(Items.NETHERITE_SWORD, Items.NETHERITE_SHOVEL, Items.NETHERITE_PICKAXE, Items.NETHERITE_AXE, Items.NETHERITE_HOE, "netherite");
         STEEL_TOOL_SET = new ToolSet(STEEL_SWORD, STEEL_SHOVEL, STEEL_PICKAXE, STEEL_AXE, STEEL_HOE, "steel");
+
+        TOOL_GILD_SMITHING_TEMPLATE = register("tool_gild_smithing_template", new SmithingTemplateItem(TOOL_GILD_APPLIES_TO_TEXT, TOOL_GILD_INGREDIENTS_TEXT, TOOL_GILD_TEXT, TOOL_GILD_BASE_SLOT_DESCRIPTION_TEXT, TOOL_GILD_ADDITIONS_SLOT_DESCRIPTION_TEXT,
+                List.of(EMPTY_SLOT_PICKAXE_TEXTURE, EMPTY_SLOT_AXE_TEXTURE, EMPTY_SLOT_SHOVEL_TEXTURE, EMPTY_SLOT_SWORD_TEXTURE, EMPTY_SLOT_HOE_TEXTURE),
+                List.of(EMPTY_SLOT_INGOT_TEXTURE, EMPTY_SLOT_EMERALD_TEXTURE, EMPTY_SLOT_QUARTZ_TEXTURE)
+        ), ItemGroups.INGREDIENTS, Items.NETHERITE_UPGRADE_SMITHING_TEMPLATE);
 
         AMETHYST_DIAMOND_TOOL_SET = registerGildedToolSet(DIAMOND_TOOL_SET, GildType.AMETHYST);
         COPPER_DIAMOND_TOOL_SET = registerGildedToolSet(DIAMOND_TOOL_SET, GildType.COPPER);

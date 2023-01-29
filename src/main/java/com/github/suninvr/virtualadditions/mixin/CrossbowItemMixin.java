@@ -57,7 +57,7 @@ public abstract class CrossbowItemMixin {
     @Inject(at = @At("HEAD"), method = "loadProjectiles", cancellable = true)
     private static void virtualAdditions$loadProjectiles(LivingEntity shooter, ItemStack crossbow, CallbackInfoReturnable<Boolean> cir) {
         boolean bl = shooter instanceof PlayerEntity && ((PlayerEntity)shooter).getAbilities().creativeMode;
-        ItemStack projectile = shooter.getArrowType(crossbow);
+        ItemStack projectile = shooter.getProjectileType(crossbow);
 
         if (projectile.isOf(VAItems.CLIMBING_ROPE)) {
             cir.setReturnValue(virtualAdditions$loadProjectile(shooter, crossbow, projectile, false, bl));

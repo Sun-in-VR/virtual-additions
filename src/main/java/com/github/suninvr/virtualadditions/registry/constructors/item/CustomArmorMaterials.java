@@ -2,46 +2,62 @@ package com.github.suninvr.virtualadditions.registry.constructors.item;
 
 import com.github.suninvr.virtualadditions.registry.VAItems;
 import net.minecraft.entity.EquipmentSlot;
+import net.minecraft.item.ArmorItem;
 import net.minecraft.item.ArmorMaterial;
+import net.minecraft.item.ArmorMaterials;
 import net.minecraft.recipe.Ingredient;
 import net.minecraft.sound.SoundEvent;
 import net.minecraft.sound.SoundEvents;
 import net.minecraft.util.Lazy;
+import net.minecraft.util.StringIdentifiable;
+import net.minecraft.util.Util;
 
+import java.util.EnumMap;
 import java.util.function.Supplier;
 
 public class CustomArmorMaterials implements ArmorMaterial {
 
     public static final CustomArmorMaterials STEEL = new CustomArmorMaterials(
-            "steel", 27, new int[]{2, 5, 6, 2}, 9, SoundEvents.ITEM_ARMOR_EQUIP_IRON, 1.0F, 0.0F, () -> Ingredient.ofItems(VAItems.STEEL_INGOT));
+            "steel", 27, Util.make(new EnumMap(ArmorItem.Type.class), (enumMap -> {
+        enumMap.put(ArmorItem.Type.BOOTS, 2);
+        enumMap.put(ArmorItem.Type.LEGGINGS, 5);
+        enumMap.put(ArmorItem.Type.CHESTPLATE, 6);
+        enumMap.put(ArmorItem.Type.HELMET, 2);
+    })), 9, SoundEvents.ITEM_ARMOR_EQUIP_IRON, 1.0F, 0.0F, () -> Ingredient.ofItems(VAItems.STEEL_INGOT));
 
     private static final int[] BASE_DURABILITY = new int[]{13, 15, 16, 11};
     private final String name;
     private final int durabilityMultiplier;
-    private final int[] protectionAmounts;
     private final int enchantability;
     private final SoundEvent equipSound;
     private final float toughness;
     private final float knockbackResistance;
     private final Lazy<Ingredient> repairIngredientSupplier;
+    private static final EnumMap multipliers = Util.make(new EnumMap(ArmorItem.Type.class), (enumMap) -> {
+        enumMap.put(ArmorItem.Type.BOOTS, 13);
+        enumMap.put(ArmorItem.Type.LEGGINGS, 15);
+        enumMap.put(ArmorItem.Type.CHESTPLATE, 16);
+        enumMap.put(ArmorItem.Type.HELMET, 11);
+    });
+    private final EnumMap<ArmorItem.Type, Integer> materialProtection;
 
-    public CustomArmorMaterials(String name, int durabilityMultiplier, int[] protectionAmounts, int enchantability, SoundEvent equipSound, float toughness, float knockbackResistance, Supplier repairIngredientSupplier) {
+    public CustomArmorMaterials(String name, int durabilityMultiplier, EnumMap enumMap, int enchantability, SoundEvent equipSound, float toughness, float knockbackResistance, Supplier repairIngredientSupplier) {
         this.name = name;
         this.durabilityMultiplier = durabilityMultiplier;
-        this.protectionAmounts = protectionAmounts;
         this.enchantability = enchantability;
         this.equipSound = equipSound;
         this.toughness = toughness;
         this.knockbackResistance = knockbackResistance;
+        this.materialProtection = enumMap;
         this.repairIngredientSupplier = new Lazy(repairIngredientSupplier);
     }
 
-    public int getDurability(EquipmentSlot slot) {
-        return BASE_DURABILITY[slot.getEntitySlotId()] * this.durabilityMultiplier;
+    public int getDurability(ArmorItem.Type arg) {
+        return (int)multipliers.get(arg) * this.durabilityMultiplier;
     }
 
-    public int getProtectionAmount(EquipmentSlot slot) {
-        return this.protectionAmounts[slot.getEntitySlotId()];
+    public int getProtection(ArmorItem.Type arg) {
+        return this.materialProtection.get(arg);
     }
 
     public int getEnchantability() {
@@ -66,5 +82,10 @@ public class CustomArmorMaterials implements ArmorMaterial {
 
     public float getKnockbackResistance() {
         return this.knockbackResistance;
+    }
+
+    @Override
+    public boolean isTrimmable() {
+        return false;
     }
 }
