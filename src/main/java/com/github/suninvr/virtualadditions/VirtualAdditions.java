@@ -23,7 +23,7 @@ public class VirtualAdditions implements ModInitializer {
 
 		FabricLoader.getInstance().getModContainer(MODID).ifPresent(
 				modContainer -> ResourceManagerHelper.registerBuiltinResourcePack(
-						idOf("worldgen_preview"),
+						idOf("preview"),
 						modContainer,
 						ResourcePackActivationType.NORMAL
 				)
