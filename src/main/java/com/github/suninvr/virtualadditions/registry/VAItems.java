@@ -302,7 +302,7 @@ public class VAItems {
         STEEL_SWORD = register("steel_sword", new SwordItem(SteelToolMaterial.INSTANCE, 3, -2.4F, new FabricItemSettings()), ItemGroups.COMBAT, Items.GOLDEN_SWORD);
         STEEL_SHOVEL = register("steel_shovel", new ShovelItem(SteelToolMaterial.INSTANCE, 1.5F, -3.0F, new FabricItemSettings()), ItemGroups.TOOLS, Items.GOLDEN_HOE);
         STEEL_PICKAXE = register("steel_pickaxe", new CustomPickaxeItem(SteelToolMaterial.INSTANCE, 1, -2.8F, new FabricItemSettings()), ItemGroups.TOOLS, prev);
-        STEEL_AXE = register("steel_axe", new CustomAxeItem(SteelToolMaterial.INSTANCE, 6.0F, -3.1F, new FabricItemSettings()), ItemGroups.TOOLS, prev);
+        STEEL_AXE = register("steel_axe", new CustomAxeItem(SteelToolMaterial.INSTANCE, 6.0F, -3.1F, new FabricItemSettings()), new ItemGroupLocation(ItemGroups.TOOLS, prev), new ItemGroupLocation(ItemGroups.COMBAT, Items.GOLDEN_AXE));
         STEEL_HOE = register("steel_hoe", new CustomHoeItem(SteelToolMaterial.INSTANCE, -2, -1.0F, new FabricItemSettings()), ItemGroups.TOOLS, prev);
         STEEL_HELMET = register("steel_helmet", new ArmorItem(CustomArmorMaterials.STEEL, ArmorItem.Type.HELMET, new Item.Settings()), ItemGroups.COMBAT, Items.GOLDEN_BOOTS);
         STEEL_CHESTPLATE = register("steel_chestplate", new ArmorItem(CustomArmorMaterials.STEEL, ArmorItem.Type.CHESTPLATE, new Item.Settings()), ItemGroups.COMBAT, prev);
