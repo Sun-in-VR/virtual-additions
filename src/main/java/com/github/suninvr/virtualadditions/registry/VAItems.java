@@ -21,7 +21,6 @@ import net.minecraft.block.dispenser.DispenserBehavior;
 import net.minecraft.block.dispenser.ItemDispenserBehavior;
 import net.minecraft.block.dispenser.ProjectileDispenserBehavior;
 import net.minecraft.enchantment.Enchantments;
-import net.minecraft.entity.EquipmentSlot;
 import net.minecraft.entity.projectile.PersistentProjectileEntity;
 import net.minecraft.entity.projectile.ProjectileEntity;
 import net.minecraft.item.*;
@@ -40,10 +39,10 @@ import net.minecraft.recipe.BrewingRecipeRegistry;
 import net.minecraft.registry.Registries;
 import net.minecraft.registry.Registry;
 import net.minecraft.resource.featuretoggle.FeatureFlag;
-import net.minecraft.resource.featuretoggle.FeatureFlags;
 import net.minecraft.text.Text;
 import net.minecraft.util.Formatting;
 import net.minecraft.util.Identifier;
+import net.minecraft.util.Rarity;
 import net.minecraft.util.Util;
 import net.minecraft.util.math.BlockPointer;
 import net.minecraft.util.math.BlockPos;
@@ -161,6 +160,11 @@ public class VAItems {
     public static final Item PINK_SILKBULB;
     public static final Item APPLICABLE_POTION;
     public static final Item TOOL_GILD_SMITHING_TEMPLATE;
+    public static final Item IOLITE;
+    public static final Item IOLITE_ORE;
+    public static final Item WARP_ANCHOR;
+    public static final Item WARP_TETHER;
+    public static final Item ENTANGLEMENT_DRIVE;
 
     private static final Item LUMWASP_SPAWN_EGG;
 
@@ -354,6 +358,12 @@ public class VAItems {
                 List.of(EMPTY_SLOT_PICKAXE_TEXTURE, EMPTY_SLOT_AXE_TEXTURE, EMPTY_SLOT_SHOVEL_TEXTURE, EMPTY_SLOT_SWORD_TEXTURE, EMPTY_SLOT_HOE_TEXTURE),
                 List.of(EMPTY_SLOT_INGOT_TEXTURE, EMPTY_SLOT_EMERALD_TEXTURE, EMPTY_SLOT_QUARTZ_TEXTURE)
         ), ItemGroups.INGREDIENTS, Items.NETHERITE_UPGRADE_SMITHING_TEMPLATE);
+
+        IOLITE = register("iolite", ItemGroups.INGREDIENTS, Items.ANCIENT_DEBRIS, VirtualAdditions.PREVIEW);
+        IOLITE_ORE = registerBlockItem("iolite_ore", VABlocks.IOLITE_ORE, ItemGroups.NATURAL, Items.ANCIENT_DEBRIS, VirtualAdditions.PREVIEW);
+        WARP_ANCHOR = register("warp_anchor", new BlockItem(VABlocks.WARP_ANCHOR, new FabricItemSettings().rarity(Rarity.RARE).requires(VirtualAdditions.PREVIEW)), ItemGroups.REDSTONE, Items.CAULDRON);
+        WARP_TETHER = register("warp_tether", new BlockItem(VABlocks.WARP_TETHER, new FabricItemSettings().rarity(Rarity.RARE).requires(VirtualAdditions.PREVIEW)), ItemGroups.REDSTONE, prev);
+        ENTANGLEMENT_DRIVE = register("entanglement_drive", new BlockItem(VABlocks.ENTANGLEMENT_DRIVE, new FabricItemSettings().rarity(Rarity.RARE).requires(VirtualAdditions.PREVIEW)), ItemGroups.REDSTONE, prev);
 
         AMETHYST_DIAMOND_TOOL_SET = registerGildedToolSet(DIAMOND_TOOL_SET, GildType.AMETHYST);
         COPPER_DIAMOND_TOOL_SET = registerGildedToolSet(DIAMOND_TOOL_SET, GildType.COPPER);

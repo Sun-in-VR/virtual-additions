@@ -89,5 +89,21 @@
       "virtual_additions:item/bucket/fill_acid_2",
       "virtual_additions:item/bucket/fill_acid_3"
     ]
+  },
+  "block.warp_tether.warp": {
+    "subtitle": "subtitles.block.warp_tether.warp",
+    "sounds": [
+      "virtual_additions:block/warp_pad/warp1",
+      "virtual_additions:block/warp_pad/warp2",
+      "virtual_additions:block/warp_pad/warp3"
+    ]
+  },
+  "block.warp_anchor.warp": {
+    "subtitle": "subtitles.block.warp_anchor.warp",
+    "sounds": [
+      "virtual_additions:block/warp_pad/warp1",
+      "virtual_additions:block/warp_pad/warp2",
+      "virtual_additions:block/warp_pad/warp3"
+    ]
   }
 }

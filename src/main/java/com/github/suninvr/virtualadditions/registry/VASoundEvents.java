@@ -21,6 +21,8 @@ public class VASoundEvents {
     public static final SoundEvent BUCKET_EMPTY_ACID;
     public static final SoundEvent ACID_SIZZLE;
     public static final SoundEvent ACID_AMBIENT;
+    public static final SoundEvent BLOCK_WARP_TETHER_WARP;
+    public static final SoundEvent BLOCK_WARP_ANCHOR_WARP;
 
     static {
         BLOCK_ROPE_BREAK = register("block.rope.break");
@@ -35,6 +37,8 @@ public class VASoundEvents {
         BUCKET_EMPTY_ACID = register("item.bucket.empty_acid");
         ACID_SIZZLE = register("block.acid.sizzle");
         ACID_AMBIENT = register("block.acid.ambient");
+        BLOCK_WARP_TETHER_WARP = register("block.warp_tether.warp");
+        BLOCK_WARP_ANCHOR_WARP = register("block.warp_anchor.warp");
     }
 
     private static SoundEvent register(String id) {

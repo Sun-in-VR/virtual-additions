@@ -9,9 +9,9 @@ import net.minecraft.block.*;
 import net.minecraft.entity.ai.pathing.PathNodeType;
 import net.minecraft.registry.Registries;
 import net.minecraft.registry.Registry;
-import net.minecraft.resource.featuretoggle.FeatureFlags;
 import net.minecraft.sound.BlockSoundGroup;
 import net.minecraft.state.property.Properties;
+import net.minecraft.util.math.intprovider.UniformIntProvider;
 
 public class VABlocks {
 
@@ -95,6 +95,10 @@ public class VABlocks {
     public static final Block MAGENTA_SILKBULB;
     public static final Block PINK_SILKBULB;
     public static final Block ACID;
+    public static final Block IOLITE_ORE;
+    public static final Block WARP_ANCHOR;
+    public static final Block WARP_TETHER;
+    public static final Block ENTANGLEMENT_DRIVE;
 
 
     static {
@@ -175,6 +179,10 @@ public class VABlocks {
         MAGENTA_SILKBULB = register("magenta_silkbulb", new Block(AbstractBlock.Settings.copy(SILKBULB).mapColor(MapColor.MAGENTA).requires(VirtualAdditions.PREVIEW)));
         PINK_SILKBULB = register("pink_silkbulb", new Block(AbstractBlock.Settings.copy(SILKBULB).mapColor(MapColor.PINK).requires(VirtualAdditions.PREVIEW)));
         ACID = register("acid", new AcidFluidBlock(VAFluids.ACID, AbstractBlock.Settings.of(Material.WATER).mapColor(MapColor.LIME).luminance(((state) -> 6)).noCollision().strength(100.0F).dropsNothing().allowsSpawning(((state, world, pos, type) -> type == VAEntityType.LUMWASP)).requires(VirtualAdditions.PREVIEW)));
+        IOLITE_ORE = register("iolite_ore", new ExperienceDroppingBlock(FabricBlockSettings.copyOf(Blocks.END_STONE).strength(4.5F, 4.5F).requires(VirtualAdditions.PREVIEW), UniformIntProvider.create(5, 9)));
+        WARP_ANCHOR = register("warp_anchor", new WarpTetherBlock(FabricBlockSettings.of(Material.METAL).nonOpaque().sounds(BlockSoundGroup.NETHERITE).luminance(3).emissiveLighting( (state, world, pos) -> !state.get(WarpTetherBlock.POWERED) ).hardness(22.5F).resistance(600.0F).requires(VirtualAdditions.PREVIEW)));
+        WARP_TETHER = register("warp_tether", new WarpAnchorBlock(FabricBlockSettings.of(Material.METAL).nonOpaque().sounds(BlockSoundGroup.NETHERITE).luminance(3).emissiveLighting( (state, world, pos) -> !state.get(WarpAnchorBlock.COOLDOWN) ).hardness(22.5F).resistance(600.0F).requires(VirtualAdditions.PREVIEW)));
+        ENTANGLEMENT_DRIVE = register("entanglement_drive", new EntanglementDriveBlock(FabricBlockSettings.of(Material.METAL).nonOpaque().sounds(BlockSoundGroup.NETHERITE).luminance(3).emissiveLighting( (state, world, pos) -> true ).hardness(22.5F).resistance(600.0F).requires(VirtualAdditions.PREVIEW)));
     }
     public static void init(){
         LandPathNodeTypesRegistry.register(ACID, PathNodeType.LAVA, PathNodeType.DANGER_FIRE);

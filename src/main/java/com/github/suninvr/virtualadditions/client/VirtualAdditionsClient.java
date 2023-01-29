@@ -1,6 +1,7 @@
 package com.github.suninvr.virtualadditions.client;
 
 import com.github.suninvr.virtualadditions.client.particle.AcidSplashEmitterParticle;
+import com.github.suninvr.virtualadditions.client.particle.IoliteRingParticle;
 import com.github.suninvr.virtualadditions.client.render.entity.AcidSpitEntityRenderer;
 import com.github.suninvr.virtualadditions.client.render.entity.ClimbingRopeEntityRenderer;
 import com.github.suninvr.virtualadditions.client.render.entity.LumwaspEntityModel;
@@ -24,6 +25,7 @@ import net.minecraft.client.render.entity.model.EntityModelLayer;
 import net.minecraft.item.CrossbowItem;
 import net.minecraft.item.Items;
 import net.minecraft.potion.PotionUtil;
+import net.minecraft.screen.PlayerScreenHandler;
 import net.minecraft.util.Identifier;
 
 import static com.github.suninvr.virtualadditions.VirtualAdditions.idOf;
@@ -98,6 +100,8 @@ public class VirtualAdditionsClient implements ClientModInitializer {
 
         ParticleFactoryRegistry.getInstance().register(VAParticleTypes.ACID_SPLASH_EMITTER, new AcidSplashEmitterParticle.Factory());
         ParticleFactoryRegistry.getInstance().register(VAParticleTypes.ACID_SPLASH, WaterSplashParticle.Factory::new);
+        ParticleFactoryRegistry.getInstance().register(VAParticleTypes.IOLITE_ANCHOR_RING, IoliteRingParticle.Factory::new);
+        ParticleFactoryRegistry.getInstance().register(VAParticleTypes.IOLITE_TETHER_RING, IoliteRingParticle.Factory::new);
     }
 
 }

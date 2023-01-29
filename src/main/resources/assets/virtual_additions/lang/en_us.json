@@ -76,6 +76,10 @@
     "block.virtual_additions.purple_silkbulb": "Purple Silkbulb",
     "block.virtual_additions.magenta_silkbulb": "Magenta Silkbulb",
     "block.virtual_additions.pink_silkbulb": "Pink Silkbulb",
+    "block.virtual_additions.iolite_ore": "Iolite Ore",
+    "block.virtual_additions.warp_anchor": "Warp Anchor",
+    "block.virtual_additions.warp_tether": "Warp Tether",
+    "block.virtual_additions.entanglement_drive": "Entanglement Drive",
 
     "entity.virtual_additions.climbing_rope": "Climbing Rope",
     "entity.virtual_additions.steel_bomb": "Steel Bomb",
@@ -110,6 +114,7 @@
     "item.virtual_additions.cotton": "Cotton",
     "item.virtual_additions.lumwasp_spawn_egg": "Lumwasp Spawn Egg",
     "item.virtual_additions.acid_bucket": "Acid Bucket",
+    "item.virtual_additions.iolite": "Iolite",
 
     "item.virtual_additions.applicable_potion.effect.empty": "Applicable Uncraftable Potion",
     "item.virtual_additions.applicable_potion.effect.water": "Applicable Water Bottle",
