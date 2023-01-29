@@ -1,0 +1,11 @@
+{
+    "features": {
+        "enabled": [
+            "virtual_additions:preview"
+        ]
+    },
+    "pack": {
+        "pack_format": 11,
+        "description": "Preview for future Virtual Additions content"
+    }
+}

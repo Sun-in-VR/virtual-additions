@@ -41,10 +41,6 @@
     "virtual_additions:blueschist_brick_slab",
     "virtual_additions:blueschist_brick_wall",
     "virtual_additions:raw_steel_block",
-    "virtual_additions:steel_block",
-    "virtual_additions:red_glimmer_crystal",
-    "virtual_additions:green_glimmer_crystal",
-    "virtual_additions:blue_glimmer_crystal",
-    "virtual_additions:spotlight"
+    "virtual_additions:steel_block"
   ]
 }

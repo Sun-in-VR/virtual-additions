@@ -9,6 +9,7 @@
     "ComposterBlockAccessor",
     "CrossbowItemMixin",
     "EntityMixin",
+    "FeatureFlagsMixin",
     "FenceBlockMixin",
     "ItemMixin",
     "LivingEntityMixin",

@@ -1,5 +1,6 @@
 package com.github.suninvr.virtualadditions.registry;
 
+import com.github.suninvr.virtualadditions.VirtualAdditions;
 import com.github.suninvr.virtualadditions.entity.ClimbingRopeEntity;
 import com.github.suninvr.virtualadditions.entity.SteelBombEntity;
 import com.github.suninvr.virtualadditions.item.*;
@@ -287,11 +288,11 @@ public class VAItems {
         AZALEA_HEDGE = registerBlockItem("azalea_hedge", VABlocks.AZALEA_HEDGE, ItemGroups.BUILDING_BLOCKS, MANGROVE_HEDGE);
         FLOWERING_AZALEA_HEDGE = registerBlockItem("flowering_azalea_hedge", VABlocks.FLOWERING_AZALEA_HEDGE, ItemGroups.BUILDING_BLOCKS, AZALEA_HEDGE);
 
-        RED_GLIMMER_CRYSTAL = registerBlockItem("red_glimmer_crystal", VABlocks.RED_GLIMMER_CRYSTAL, ItemGroups.NATURAL, Items.POINTED_DRIPSTONE, FeatureFlags.UPDATE_1_20);
-        GREEN_GLIMMER_CRYSTAL = registerBlockItem("green_glimmer_crystal", VABlocks.GREEN_GLIMMER_CRYSTAL, ItemGroups.NATURAL, prev, FeatureFlags.UPDATE_1_20);
-        BLUE_GLIMMER_CRYSTAL = registerBlockItem("blue_glimmer_crystal", VABlocks.BLUE_GLIMMER_CRYSTAL, ItemGroups.NATURAL, prev, FeatureFlags.UPDATE_1_20);
-        CRYSTAL_DUST = register("crystal_dust", ItemGroups.INGREDIENTS, Items.GUNPOWDER, FeatureFlags.UPDATE_1_20);
-        SPOTLIGHT = registerBlockItem("spotlight", VABlocks.SPOTLIGHT, ItemGroups.REDSTONE, Items.REDSTONE_LAMP, FeatureFlags.UPDATE_1_20);
+        RED_GLIMMER_CRYSTAL = registerBlockItem("red_glimmer_crystal", VABlocks.RED_GLIMMER_CRYSTAL, ItemGroups.NATURAL, Items.POINTED_DRIPSTONE, VirtualAdditions.PREVIEW);
+        GREEN_GLIMMER_CRYSTAL = registerBlockItem("green_glimmer_crystal", VABlocks.GREEN_GLIMMER_CRYSTAL, ItemGroups.NATURAL, prev, VirtualAdditions.PREVIEW);
+        BLUE_GLIMMER_CRYSTAL = registerBlockItem("blue_glimmer_crystal", VABlocks.BLUE_GLIMMER_CRYSTAL, ItemGroups.NATURAL, prev, VirtualAdditions.PREVIEW);
+        CRYSTAL_DUST = register("crystal_dust", ItemGroups.INGREDIENTS, Items.GUNPOWDER, VirtualAdditions.PREVIEW);
+        SPOTLIGHT = registerBlockItem("spotlight", VABlocks.SPOTLIGHT, ItemGroups.REDSTONE, Items.REDSTONE_LAMP, VirtualAdditions.PREVIEW);
 
         RAW_STEEL_BLOCK = registerBlockItem("raw_steel_block", VABlocks.RAW_STEEL_BLOCK, ItemGroups.NATURAL, Items.RAW_GOLD_BLOCK);
         STEEL_BLOCK = registerBlockItem("steel_block", VABlocks.STEEL_BLOCK, ItemGroups.BUILDING_BLOCKS, Items.GOLD_BLOCK);
@@ -312,34 +313,34 @@ public class VAItems {
         COTTON = register("cotton", ItemGroups.INGREDIENTS, Items.WHEAT);
         FRIED_EGG = register("fried_egg", new Item(new FabricItemSettings().food(FRIED_EGG_FOOD)), ItemGroups.FOOD_AND_DRINK, Items.COOKED_CHICKEN);
 
-        RED_ROCK_CANDY = register("red_rock_candy", new RockCandyItem(new FabricItemSettings().food(ROCK_CANDY_FOOD).requires(FeatureFlags.UPDATE_1_20)), ItemGroups.FOOD_AND_DRINK, Items.COOKIE);
-        GREEN_ROCK_CANDY = register("green_rock_candy", new RockCandyItem(new FabricItemSettings().food(ROCK_CANDY_FOOD).requires(FeatureFlags.UPDATE_1_20)), ItemGroups.FOOD_AND_DRINK, prev);
-        BLUE_ROCK_CANDY = register("blue_rock_candy", new RockCandyItem(new FabricItemSettings().food(ROCK_CANDY_FOOD).requires(FeatureFlags.UPDATE_1_20)), ItemGroups.FOOD_AND_DRINK, prev);
-        MIXED_ROCK_CANDY = register("mixed_rock_candy", new RockCandyItem(new FabricItemSettings().food(ROCK_CANDY_FOOD).requires(FeatureFlags.UPDATE_1_20)), ItemGroups.FOOD_AND_DRINK, prev);
+        RED_ROCK_CANDY = register("red_rock_candy", new RockCandyItem(new FabricItemSettings().food(ROCK_CANDY_FOOD).requires(VirtualAdditions.PREVIEW)), ItemGroups.FOOD_AND_DRINK, Items.COOKIE);
+        GREEN_ROCK_CANDY = register("green_rock_candy", new RockCandyItem(new FabricItemSettings().food(ROCK_CANDY_FOOD).requires(VirtualAdditions.PREVIEW)), ItemGroups.FOOD_AND_DRINK, prev);
+        BLUE_ROCK_CANDY = register("blue_rock_candy", new RockCandyItem(new FabricItemSettings().food(ROCK_CANDY_FOOD).requires(VirtualAdditions.PREVIEW)), ItemGroups.FOOD_AND_DRINK, prev);
+        MIXED_ROCK_CANDY = register("mixed_rock_candy", new RockCandyItem(new FabricItemSettings().food(ROCK_CANDY_FOOD).requires(VirtualAdditions.PREVIEW)), ItemGroups.FOOD_AND_DRINK, prev);
 
-        LUMWASP_NEST = registerBlockItem("lumwasp_nest", VABlocks.LUMWASP_NEST, ItemGroups.NATURAL, Items.POINTED_DRIPSTONE, FeatureFlags.UPDATE_1_20);
-        HANGING_GLOWSILK = registerBlockItem("hanging_glowsilk", VABlocks.HANGING_GLOWSILK, ItemGroups.NATURAL, prev, FeatureFlags.UPDATE_1_20);
-        GLOW_SILK = register("glow_silk", ItemGroups.INGREDIENTS, Items.STRING, FeatureFlags.UPDATE_1_20);
-        SILKBULB = registerBlockItem("silkbulb", VABlocks.SILKBULB, new ItemGroupLocation[]{new ItemGroupLocation(ItemGroups.FUNCTIONAL, Items.GLOWSTONE), new ItemGroupLocation(ItemGroups.COLORED_BLOCKS, Items.PINK_BANNER)}, FeatureFlags.UPDATE_1_20);
+        LUMWASP_NEST = registerBlockItem("lumwasp_nest", VABlocks.LUMWASP_NEST, ItemGroups.NATURAL, Items.POINTED_DRIPSTONE, VirtualAdditions.PREVIEW);
+        HANGING_GLOWSILK = registerBlockItem("hanging_glowsilk", VABlocks.HANGING_GLOWSILK, ItemGroups.NATURAL, prev, VirtualAdditions.PREVIEW);
+        GLOW_SILK = register("glow_silk", ItemGroups.INGREDIENTS, Items.STRING, VirtualAdditions.PREVIEW);
+        SILKBULB = registerBlockItem("silkbulb", VABlocks.SILKBULB, new ItemGroupLocation[]{new ItemGroupLocation(ItemGroups.FUNCTIONAL, Items.GLOWSTONE), new ItemGroupLocation(ItemGroups.COLORED_BLOCKS, Items.PINK_BANNER)}, VirtualAdditions.PREVIEW);
 
-        WHITE_SILKBULB = registerBlockItem("white_silkbulb", VABlocks.WHITE_SILKBULB, ItemGroups.COLORED_BLOCKS, prev, FeatureFlags.UPDATE_1_20);
-        LIGHT_GRAY_SILKBULB = registerBlockItem("light_gray_silkbulb", VABlocks.LIGHT_GRAY_SILKBULB, ItemGroups.COLORED_BLOCKS, prev, FeatureFlags.UPDATE_1_20);
-        GRAY_SILKBULB = registerBlockItem("gray_silkbulb", VABlocks.GRAY_SILKBULB, ItemGroups.COLORED_BLOCKS, prev, FeatureFlags.UPDATE_1_20);
-        BLACK_SILKBULB = registerBlockItem("black_silkbulb", VABlocks.BLACK_SILKBULB, ItemGroups.COLORED_BLOCKS, prev, FeatureFlags.UPDATE_1_20);
-        BROWN_SILKBULB = registerBlockItem("brown_silkbulb", VABlocks.BROWN_SILKBULB, ItemGroups.COLORED_BLOCKS, prev, FeatureFlags.UPDATE_1_20);
-        RED_SILKBULB = registerBlockItem("red_silkbulb", VABlocks.RED_SILKBULB, ItemGroups.COLORED_BLOCKS, prev, FeatureFlags.UPDATE_1_20);
-        ORANGE_SILKBULB = registerBlockItem("orange_silkbulb", VABlocks.ORANGE_SILKBULB, ItemGroups.COLORED_BLOCKS, prev, FeatureFlags.UPDATE_1_20);
-        YELLOW_SILKBULB = registerBlockItem("yellow_silkbulb", VABlocks.YELLOW_SILKBULB, ItemGroups.COLORED_BLOCKS, prev, FeatureFlags.UPDATE_1_20);
-        LIME_SILKBULB = registerBlockItem("lime_silkbulb", VABlocks.LIME_SILKBULB, ItemGroups.COLORED_BLOCKS, prev, FeatureFlags.UPDATE_1_20);
-        GREEN_SILKBULB = registerBlockItem("green_silkbulb", VABlocks.GREEN_SILKBULB, ItemGroups.COLORED_BLOCKS, prev, FeatureFlags.UPDATE_1_20);
-        CYAN_SILKBULB = registerBlockItem("cyan_silkbulb", VABlocks.CYAN_SILKBULB, ItemGroups.COLORED_BLOCKS, prev, FeatureFlags.UPDATE_1_20);
-        LIGHT_BLUE_SILKBULB = registerBlockItem("light_blue_silkbulb", VABlocks.LIGHT_BLUE_SILKBULB, ItemGroups.COLORED_BLOCKS, prev, FeatureFlags.UPDATE_1_20);
-        BLUE_SILKBULB = registerBlockItem("blue_silkbulb", VABlocks.BLUE_SILKBULB, ItemGroups.COLORED_BLOCKS, prev, FeatureFlags.UPDATE_1_20);
-        PURPLE_SILKBULB = registerBlockItem("purple_silkbulb", VABlocks.PURPLE_SILKBULB, ItemGroups.COLORED_BLOCKS, prev, FeatureFlags.UPDATE_1_20);
-        MAGENTA_SILKBULB = registerBlockItem("magenta_silkbulb", VABlocks.MAGENTA_SILKBULB, ItemGroups.COLORED_BLOCKS, prev, FeatureFlags.UPDATE_1_20);
-        PINK_SILKBULB = registerBlockItem("pink_silkbulb", VABlocks.PINK_SILKBULB, ItemGroups.COLORED_BLOCKS, prev, FeatureFlags.UPDATE_1_20);
+        WHITE_SILKBULB = registerBlockItem("white_silkbulb", VABlocks.WHITE_SILKBULB, ItemGroups.COLORED_BLOCKS, prev, VirtualAdditions.PREVIEW);
+        LIGHT_GRAY_SILKBULB = registerBlockItem("light_gray_silkbulb", VABlocks.LIGHT_GRAY_SILKBULB, ItemGroups.COLORED_BLOCKS, prev, VirtualAdditions.PREVIEW);
+        GRAY_SILKBULB = registerBlockItem("gray_silkbulb", VABlocks.GRAY_SILKBULB, ItemGroups.COLORED_BLOCKS, prev, VirtualAdditions.PREVIEW);
+        BLACK_SILKBULB = registerBlockItem("black_silkbulb", VABlocks.BLACK_SILKBULB, ItemGroups.COLORED_BLOCKS, prev, VirtualAdditions.PREVIEW);
+        BROWN_SILKBULB = registerBlockItem("brown_silkbulb", VABlocks.BROWN_SILKBULB, ItemGroups.COLORED_BLOCKS, prev, VirtualAdditions.PREVIEW);
+        RED_SILKBULB = registerBlockItem("red_silkbulb", VABlocks.RED_SILKBULB, ItemGroups.COLORED_BLOCKS, prev, VirtualAdditions.PREVIEW);
+        ORANGE_SILKBULB = registerBlockItem("orange_silkbulb", VABlocks.ORANGE_SILKBULB, ItemGroups.COLORED_BLOCKS, prev, VirtualAdditions.PREVIEW);
+        YELLOW_SILKBULB = registerBlockItem("yellow_silkbulb", VABlocks.YELLOW_SILKBULB, ItemGroups.COLORED_BLOCKS, prev, VirtualAdditions.PREVIEW);
+        LIME_SILKBULB = registerBlockItem("lime_silkbulb", VABlocks.LIME_SILKBULB, ItemGroups.COLORED_BLOCKS, prev, VirtualAdditions.PREVIEW);
+        GREEN_SILKBULB = registerBlockItem("green_silkbulb", VABlocks.GREEN_SILKBULB, ItemGroups.COLORED_BLOCKS, prev, VirtualAdditions.PREVIEW);
+        CYAN_SILKBULB = registerBlockItem("cyan_silkbulb", VABlocks.CYAN_SILKBULB, ItemGroups.COLORED_BLOCKS, prev, VirtualAdditions.PREVIEW);
+        LIGHT_BLUE_SILKBULB = registerBlockItem("light_blue_silkbulb", VABlocks.LIGHT_BLUE_SILKBULB, ItemGroups.COLORED_BLOCKS, prev, VirtualAdditions.PREVIEW);
+        BLUE_SILKBULB = registerBlockItem("blue_silkbulb", VABlocks.BLUE_SILKBULB, ItemGroups.COLORED_BLOCKS, prev, VirtualAdditions.PREVIEW);
+        PURPLE_SILKBULB = registerBlockItem("purple_silkbulb", VABlocks.PURPLE_SILKBULB, ItemGroups.COLORED_BLOCKS, prev, VirtualAdditions.PREVIEW);
+        MAGENTA_SILKBULB = registerBlockItem("magenta_silkbulb", VABlocks.MAGENTA_SILKBULB, ItemGroups.COLORED_BLOCKS, prev, VirtualAdditions.PREVIEW);
+        PINK_SILKBULB = registerBlockItem("pink_silkbulb", VABlocks.PINK_SILKBULB, ItemGroups.COLORED_BLOCKS, prev, VirtualAdditions.PREVIEW);
 
-        ACID_BUCKET = register("acid_bucket", new AcidBucketItem(VAFluids.ACID, new FabricItemSettings().recipeRemainder(Items.BUCKET).maxCount(1).requires(FeatureFlags.UPDATE_1_20)), ItemGroups.TOOLS, Items.LAVA_BUCKET);
+        ACID_BUCKET = register("acid_bucket", new AcidBucketItem(VAFluids.ACID, new FabricItemSettings().recipeRemainder(Items.BUCKET).maxCount(1).requires(VirtualAdditions.PREVIEW)), ItemGroups.TOOLS, Items.LAVA_BUCKET);
 
         APPLICABLE_POTION = register("applicable_potion", new ApplicablePotionItem(new FabricItemSettings()));
 
@@ -375,7 +376,7 @@ public class VAItems {
         EMERALD_STEEL_TOOL_SET = registerGildedToolSet(STEEL_TOOL_SET, GildType.EMERALD);
         QUARTZ_STEEL_TOOL_SET = registerGildedToolSet(STEEL_TOOL_SET, GildType.QUARTZ);
 
-        LUMWASP_SPAWN_EGG = register("lumwasp_spawn_egg", new SpawnEggItem(VAEntityType.LUMWASP, 0x2ee0a6, 0x2c424b, new Item.Settings().requires(FeatureFlags.UPDATE_1_20)), ItemGroups.SPAWN_EGGS, Items.LLAMA_SPAWN_EGG);
+        LUMWASP_SPAWN_EGG = register("lumwasp_spawn_egg", new SpawnEggItem(VAEntityType.LUMWASP, 0x2ee0a6, 0x2c424b, new Item.Settings().requires(VirtualAdditions.PREVIEW)), ItemGroups.SPAWN_EGGS, Items.LLAMA_SPAWN_EGG);
     }
 
     public static void init(){

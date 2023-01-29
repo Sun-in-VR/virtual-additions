@@ -44,12 +44,12 @@ public class VAEntityType {
         ACID_SPIT = Registry.register(Registries.ENTITY_TYPE, idOf("acid_spit"), FabricEntityTypeBuilder.<AcidSpitEntity>create(SpawnGroup.MISC, AcidSpitEntity::new)
                 .dimensions(EntityDimensions.fixed(0.25F, 0.25F))
                 .trackRangeBlocks(4).trackedUpdateRate(10)
-                .requires(FeatureFlags.UPDATE_1_20)
+                .requires(VirtualAdditions.PREVIEW)
                 .build());
 
         LUMWASP = Registry.register(Registries.ENTITY_TYPE, idOf("lumwasp"), FabricEntityTypeBuilder.create(SpawnGroup.MONSTER, LumwaspEntity::new)
                 .dimensions(EntityDimensions.fixed(1.5F, 0.75F))
-                .requires(FeatureFlags.UPDATE_1_20)
+                .requires(VirtualAdditions.PREVIEW)
                 .build());
     }
 }

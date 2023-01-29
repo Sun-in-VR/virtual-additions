@@ -5,6 +5,7 @@ import net.fabricmc.api.ModInitializer;
 import net.fabricmc.fabric.api.resource.ResourceManagerHelper;
 import net.fabricmc.fabric.api.resource.ResourcePackActivationType;
 import net.fabricmc.loader.api.FabricLoader;
+import net.minecraft.resource.featuretoggle.FeatureFlag;
 import net.minecraft.util.Identifier;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -13,6 +14,7 @@ public class VirtualAdditions implements ModInitializer {
 
 	public static final String MODID = "virtual_additions";
 	public static final String MODNAME = "Virtual Additions";
+	public static FeatureFlag PREVIEW;
 
 	public static Logger LOGGER = LogManager.getLogger();
 
