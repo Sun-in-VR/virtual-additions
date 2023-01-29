@@ -1,0 +1,20 @@
+{
+  "feature": "virtual_additions:crystal_patch_ceiling",
+  "placement": [
+    {
+      "type": "minecraft:count",
+      "count": 18
+    },
+    {
+      "type": "minecraft:in_square"
+    },
+    {
+      "type": "minecraft:environment_scan",
+      "direction_of_search": "up",
+      "max_steps": 12,
+      "target_condition": {
+        "type": "minecraft:true"
+      }
+    }
+  ]
+}
