@@ -81,6 +81,8 @@
     "block.virtual_additions.warp_tether": "Warp Tether",
     "block.virtual_additions.entanglement_drive": "Entanglement Drive",
 
+    "container.virtual_additions.entanglement_drive": "Entangle Slots",
+
     "entity.virtual_additions.climbing_rope": "Climbing Rope",
     "entity.virtual_additions.steel_bomb": "Steel Bomb",
     "entity.virtual_additions.lumwasp": "Lumwasp",

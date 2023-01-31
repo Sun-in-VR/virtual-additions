@@ -37,6 +37,7 @@ public class VirtualAdditions implements ModInitializer {
 		VAFluids.init();
 		VAItems.init();
 		VAParticleTypes.init();
+		VAScreenHandler.init();
 		VASoundEvents.init();
 	}
 

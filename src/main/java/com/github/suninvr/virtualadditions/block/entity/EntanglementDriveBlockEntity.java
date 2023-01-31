@@ -1,76 +1,203 @@
 package com.github.suninvr.virtualadditions.block.entity;
 
+import com.github.suninvr.virtualadditions.screen.EntanglementDriveScreenHandler;
+import net.fabricmc.fabric.api.screenhandler.v1.ExtendedScreenHandlerFactory;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.entity.BlockEntity;
 import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.entity.player.PlayerInventory;
 import net.minecraft.inventory.Inventory;
 import net.minecraft.inventory.SidedInventory;
+import net.minecraft.inventory.SimpleInventory;
+import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NbtCompound;
+import net.minecraft.network.PacketByteBuf;
+import net.minecraft.screen.*;
+import net.minecraft.screen.slot.Slot;
+import net.minecraft.server.network.ServerPlayerEntity;
+import net.minecraft.text.Text;
 import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.math.Direction;
 import net.minecraft.world.World;
 import com.github.suninvr.virtualadditions.registry.VABlockEntities;
 import com.github.suninvr.virtualadditions.registry.VABlocks;
 import org.jetbrains.annotations.Nullable;
 
+import java.util.Optional;
 import java.util.UUID;
 
-public class EntanglementDriveBlockEntity extends BlockEntity {
-    private int slot;
+public class EntanglementDriveBlockEntity extends BlockEntity implements ExtendedScreenHandlerFactory, SidedInventory {
+    private static final Text TITLE = Text.translatable("container.virtual_additions.entanglement_drive");
+    private int slotId;
+    private int syncedSlot;
     private UUID playerId;
-    private Inventory inventory;
+    private final Inventory dummyInventory = new DummyInventory();
+    private static final UUID nullId = UUID.fromString("0-0-0-0-0");
 
     public EntanglementDriveBlockEntity(BlockPos pos, BlockState state) {
         super(VABlockEntities.ENTANGLEMENT_DRIVE_BLOCK_ENTITY, pos, state);
-
         NbtCompound defaultTag = new NbtCompound();
         defaultTag.putInt("Slot", 0);
+        defaultTag.putUuid("UUID", nullId);
         this.readNbt(defaultTag);
     }
 
     @Override
     public void readNbt(NbtCompound nbt) {
         super.readNbt(nbt);
-        if (nbt.contains("Slot")) this.slot = nbt.getInt("Slot");
+        if (nbt.contains("Slot")) this.slotId = nbt.getInt("Slot");
         if (nbt.contains("UUID")) this.playerId = nbt.getUuid("UUID"); else this.playerId = null;
     }
 
     @Override
     protected void writeNbt(NbtCompound nbt) {
         super.writeNbt(nbt);
-        nbt.putInt("Slot", this.slot);
+        nbt.putInt("Slot", this.slotId);
         if (this.playerId != null) nbt.putUuid("UUID", this.playerId);
     }
 
     @Nullable
     public PlayerEntity getPlayer() {
-        if (this.getWorld() == null) return null;
-        if (this.playerId != null) return this.getWorld().getPlayerByUuid(this.playerId);
+        if (this.getWorld() == null || this.getWorld().isClient()) return null;
+        if (this.playerId != null) return this.getWorld().getServer().getPlayerManager().getPlayer(this.playerId);
         return null;
     }
 
-    public int getSlot() {
-        return this.slot;
+    @Nullable
+    private PlayerInventory getPlayerInventory() {
+        if (this.getPlayer() == null) return null;
+        return this.getPlayer().getInventory();
     }
 
-    public void setPlayer(@Nullable PlayerEntity player) {
-        NbtCompound nbt = new NbtCompound();
+    public int getSlotId() {
+        return this.slotId;
+    }
+
+    public void setPlayerSlot(@Nullable PlayerEntity player, int slot) {
         if (player != null) {
-            nbt.putUuid("UUID", player.getUuid());
-            nbt.putInt("Slot", player.getInventory().selectedSlot);
+            if (this.world != null && this.world.isClient()) return;
+            NbtCompound nbt = new NbtCompound();
+            UUID uuid = player.getUuid();
+            nbt.putUuid("UUID", uuid);
+            nbt.putInt("Slot", slot);
+            this.readNbt(nbt);
+            this.markDirty();
         }
-        this.readNbt(nbt);
-        this.markDirty();
     }
 
     public static <E extends BlockEntity> void tick(World world, BlockPos pos, BlockState state, EntanglementDriveBlockEntity blockEntity) {
         world.updateComparators(pos, VABlocks.ENTANGLEMENT_DRIVE);
     }
 
-    public void setInventory(Inventory inventory) {
-        this.inventory = inventory;
+    public SidedInventory getInventory() {
+        return this;
     }
 
-    public SidedInventory getInventory() {
-        return (SidedInventory) this.inventory;
+    @Nullable
+    @Override
+    public ScreenHandler createMenu(int syncId, PlayerInventory inv, PlayerEntity player) {
+        return new EntanglementDriveScreenHandler(syncId, inv, ScreenHandlerContext.create(this.world, this.pos));
+    }
+
+    public void writeScreenData(PacketByteBuf buf) {
+        buf.writeInt(this.slotId);
+        buf.writeOptional(Optional.ofNullable(this.playerId), PacketByteBuf::writeUuid);
+
+    }
+
+    @Override
+    public void writeScreenOpeningData(ServerPlayerEntity player, PacketByteBuf buf) {
+        writeScreenData(buf);
+    }
+
+    @Override
+    public Text getDisplayName() {
+        return TITLE;
+    }
+
+    @Override
+    public int[] getAvailableSlots(Direction side) {
+        return new int[]{0};
+    }
+
+    public boolean canInsert(int slot, ItemStack stack, @Nullable Direction dir) {
+        return dir == Direction.UP && this.canModifyPlayerInventory();
+    }
+
+    public boolean canExtract(int slot, ItemStack stack, Direction dir) {
+        return dir == Direction.DOWN && this.canModifyPlayerInventory();
+    }
+
+    @Override
+    public int size() {
+        return 1;
+    }
+
+    @Override
+    public boolean isEmpty() {
+        if (this.getPlayerInventory() == null) return dummyInventory.isEmpty();
+        return this.getPlayerInventory().getStack(this.getSlotId()) == ItemStack.EMPTY;
+    }
+
+    @Override
+    public ItemStack getStack(int slot) {
+        if (this.getPlayerInventory() == null) return dummyInventory.getStack(slot);
+        return this.getPlayerInventory().getStack(this.getSlotId());
+    }
+
+    @Override
+    public ItemStack removeStack(int slot, int amount) {
+        if (this.getPlayerInventory() == null) return dummyInventory.removeStack(slot);
+        this.markDirty();
+        return this.getPlayerInventory().removeStack(this.getSlotId(), amount);
+    }
+
+    @Override
+    public ItemStack removeStack(int slot) {
+        if (this.getPlayerInventory() == null) return ItemStack.EMPTY;
+        this.markDirty();
+        return this.getPlayerInventory().removeStack(this.getSlotId());
+    }
+
+    @Override
+    public void setStack(int slot, ItemStack stack) {
+        if (this.getPlayerInventory() == null) return;
+        this.getPlayerInventory().setStack(this.getSlotId(), stack);
+        this.markDirty();
+    }
+
+    @Override
+    public boolean canPlayerUse(PlayerEntity player) {
+        if (this.getPlayerInventory() == null) return dummyInventory.canPlayerUse(player);
+        return this.getPlayerInventory().canPlayerUse(player);
+    }
+
+    @Override
+    public void clear() {
+        if (this.getPlayerInventory() == null) return;
+        this.getPlayerInventory().removeStack(this.getSlotId());
+        this.markDirty();
+    }
+
+    private boolean canModifyPlayerInventory() {
+        return this.getPlayer() != null && !this.getPlayer().isDead() && !this.getPlayer().isSpectator();
+    }
+
+    static class DummyInventory extends SimpleInventory implements SidedInventory {
+        public DummyInventory() {
+            super(0);
+        }
+
+        public int[] getAvailableSlots(Direction side) {
+            return new int[0];
+        }
+
+        public boolean canInsert(int slot, ItemStack stack, @Nullable Direction dir) {
+            return false;
+        }
+
+        public boolean canExtract(int slot, ItemStack stack, Direction dir) {
+            return false;
+        }
     }
 }
