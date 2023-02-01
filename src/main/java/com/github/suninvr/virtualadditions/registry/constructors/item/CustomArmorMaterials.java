@@ -83,9 +83,4 @@ public class CustomArmorMaterials implements ArmorMaterial {
     public float getKnockbackResistance() {
         return this.knockbackResistance;
     }
-
-    @Override
-    public boolean isTrimmable() {
-        return false;
-    }
 }

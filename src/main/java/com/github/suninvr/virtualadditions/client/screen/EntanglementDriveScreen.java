@@ -53,9 +53,7 @@ public class EntanglementDriveScreen extends HandledScreen<EntanglementDriveScre
         this.addDrawableChild(confirm);
 
         this.titleX = 80;
-        Slot slot = this.handler.getActiveSlot();
-        this.setActiveSlotPos(slot);
-        this.samePlayer = this.playerId.equals(this.handler.getPlayerId());
+        this.updateActiveSlot();
     }
 
     @Override
@@ -91,9 +89,8 @@ public class EntanglementDriveScreen extends HandledScreen<EntanglementDriveScre
 
     public void updateActiveSlot() {
         this.samePlayer = this.playerId.equals(this.handler.getPlayerId());
-        //Slot slot = this.handler.getActiveSlot();
-        //this.setActiveSlotPos(slot);
-        this.clearAndInit();
+        Slot slot = this.handler.getActiveSlot();
+        this.setActiveSlotPos(slot);
     }
 
     @Override
@@ -105,13 +102,13 @@ public class EntanglementDriveScreen extends HandledScreen<EntanglementDriveScre
         this.mouseY = (float)mouseY;
     }
 
-    private class ConfirmButtonWidget extends ClickableWidget {
+    private class ConfirmButtonWidget extends PressableWidget {
 
         protected ConfirmButtonWidget(int x, int y) {
             super(x, y, 18, 18, Text.empty());
         }
 
-        public void renderButton(MatrixStack matrices, int mouseX, int mouseY, float delta) {
+        public void method_48579(MatrixStack matrices, int mouseX, int mouseY, float delta) {
             RenderSystem.setShader(GameRenderer::getPositionTexProgram);
             RenderSystem.setShaderTexture(0, BACKGROUND_TEXTURE);
 
@@ -128,10 +125,13 @@ public class EntanglementDriveScreen extends HandledScreen<EntanglementDriveScre
         }
 
         @Override
-        public void onClick(double mouseX, double mouseY) {
-            PacketByteBuf buf = PacketByteBufs.create();
+        public void onPress() {
+            if (!this.isDisabled()) ClientPlayNetworking.send(VAPackets.ENTANGLEMENT_DRIVE_SET_ACTIVE_SLOT_ID, PacketByteBufs.empty());
+        }
 
-            ClientPlayNetworking.send(VAPackets.ENTANGLEMENT_DRIVE_SET_ACTIVE_SLOT_ID, PacketByteBufs.empty());
+        @Override
+        protected boolean isValidClickButton(int button) {
+            return super.isValidClickButton(button) && !this.isDisabled() ;
         }
 
         public boolean isDisabled() {

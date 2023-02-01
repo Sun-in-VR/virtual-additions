@@ -156,15 +156,17 @@ public class EntanglementDriveBlockEntity extends BlockEntity implements Extende
     @Override
     public ItemStack removeStack(int slot, int amount) {
         if (this.getPlayerInventory() == null) return dummyInventory.removeStack(slot);
+        ItemStack stack = this.getPlayerInventory().removeStack(this.getSlotIndex(), amount);
         this.markDirty();
-        return this.getPlayerInventory().removeStack(this.getSlotIndex(), amount);
+        return stack;
     }
 
     @Override
     public ItemStack removeStack(int slot) {
         if (this.getPlayerInventory() == null) return ItemStack.EMPTY;
+        ItemStack stack = this.getPlayerInventory().removeStack(this.getSlotIndex());
         this.markDirty();
-        return this.getPlayerInventory().removeStack(this.getSlotIndex());
+        return stack;
     }
 
     @Override

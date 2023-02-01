@@ -211,16 +211,19 @@ public class EntanglementDriveScreenHandler extends ScreenHandler {
         if (slotFrom != null && slotFrom.hasStack()) {
             ItemStack itemStack2 = slotFrom.getStack();
             itemStack = itemStack2.copy();
+
+            if (!this.paymentSlot.hasStack() && this.paymentSlot.canInsert(itemStack2) ) {
+                if (this.insertItem(itemStack2, 41, 42, false)) { // To payment
+                    return ItemStack.EMPTY;
+                }
+            }
+
             if (slot == 42) { // From Payment
                 if (!this.insertItem(itemStack2, 4, 40, true)) { // To Hotbar + Inventory
                     return ItemStack.EMPTY;
                 }
 
                 slotFrom.onQuickTransfer(itemStack2, itemStack);
-            } else if (!this.paymentSlot.hasStack() && this.paymentSlot.canInsert(itemStack2) && itemStack2.getCount() == 1 ) {
-                if (!this.insertItem(itemStack2, 41, 42, false)) { // To payment
-                    return ItemStack.EMPTY;
-                }
             } else if (slot >= 4 && slot < 31) { // From Inventory
                 if (!this.insertItem(itemStack2, 31, 40, false)) { // To Hotbar
                     return ItemStack.EMPTY;
