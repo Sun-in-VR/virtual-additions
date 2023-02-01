@@ -41,8 +41,6 @@ public class VirtualAdditionsClient implements ClientModInitializer {
 
     private static final UUID nullId = UUID.fromString("0-0-0-0-0");
 
-    public static Identifier ENTANGLEMENT_DRIVE_SCREEN_SYNC_ID = VirtualAdditions.idOf("entanglement_drive_screen_updater");
-
     public static EntityModelLayer LUMWASP_LAYER = new EntityModelLayer(new Identifier("virtual_additions", "lumwasp"), "main");
     @Override
     public void onInitializeClient() {
@@ -116,12 +114,19 @@ public class VirtualAdditionsClient implements ClientModInitializer {
 
         HandledScreens.register(VAScreenHandler.ENTANGLEMENT_DRIVE_SCREEN_HANDLER, EntanglementDriveScreen::new);
 
-        ClientPlayNetworking.registerGlobalReceiver(ENTANGLEMENT_DRIVE_SCREEN_SYNC_ID, ((client, handler, buf, responseSender) -> {
+        ClientPlayNetworking.registerGlobalReceiver(VAPackets.ENTANGLEMENT_DRIVE_ACTIVE_SLOT_SYNC_ID, ((client, handler, buf, responseSender) -> {
             if (client.currentScreen instanceof EntanglementDriveScreen entanglementDriveScreen) {
                 EntanglementDriveScreenHandler screenHandler = entanglementDriveScreen.getScreenHandler();
-                screenHandler.setSlotId(buf.readInt());
+                screenHandler.setActiveSlotId(buf.readInt());
+                screenHandler.setActiveSlotIndex(buf.readInt());
                 screenHandler.setPlayerId( buf.readOptional((PacketByteBuf::readUuid)).orElse(nullId) );
-                entanglementDriveScreen.updateParams();
+                entanglementDriveScreen.updateActiveSlot();
+            }
+        }));
+
+        ClientPlayNetworking.registerGlobalReceiver(VAPackets.ENTANGLEMENT_DRIVE_SELECTED_SLOT_SYNC_ID, ((client, handler, buf, responseSender) -> {
+            if (client.currentScreen instanceof EntanglementDriveScreen entanglementDriveScreen) {
+                entanglementDriveScreen.setSelectingSlotPos(buf.readInt(), buf.readInt());
             }
         }));
     }

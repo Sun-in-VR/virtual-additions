@@ -62,7 +62,7 @@ public class EntanglementDriveBlock extends BlockWithEntity implements Inventory
 
     @Override
     public int getComparatorOutput(BlockState state, World world, BlockPos pos) {
-        return ScreenHandler.calculateComparatorOutput( world.getBlockEntity(pos) /*getInventory(state, world, pos)*/);
+        return ScreenHandler.calculateComparatorOutput( world.getBlockEntity(pos) );
     }
 
     @Override

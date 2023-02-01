@@ -29,7 +29,7 @@ import java.util.UUID;
 public class EntanglementDriveBlockEntity extends BlockEntity implements ExtendedScreenHandlerFactory, SidedInventory {
     private static final Text TITLE = Text.translatable("container.virtual_additions.entanglement_drive");
     private int slotId;
-    private int syncedSlot;
+    private int slotIndex;
     private UUID playerId;
     private final Inventory dummyInventory = new DummyInventory();
     private static final UUID nullId = UUID.fromString("0-0-0-0-0");
@@ -37,7 +37,8 @@ public class EntanglementDriveBlockEntity extends BlockEntity implements Extende
     public EntanglementDriveBlockEntity(BlockPos pos, BlockState state) {
         super(VABlockEntities.ENTANGLEMENT_DRIVE_BLOCK_ENTITY, pos, state);
         NbtCompound defaultTag = new NbtCompound();
-        defaultTag.putInt("Slot", 0);
+        defaultTag.putInt("SlotId", 0);
+        defaultTag.putInt("SlotIndex", 0);
         defaultTag.putUuid("UUID", nullId);
         this.readNbt(defaultTag);
     }
@@ -45,15 +46,17 @@ public class EntanglementDriveBlockEntity extends BlockEntity implements Extende
     @Override
     public void readNbt(NbtCompound nbt) {
         super.readNbt(nbt);
-        if (nbt.contains("Slot")) this.slotId = nbt.getInt("Slot");
+        if (nbt.contains("SlotId")) this.slotId = nbt.getInt("SlotId");
+        if (nbt.contains("SlotIndex")) this.slotIndex = nbt.getInt("SlotIndex");
         if (nbt.contains("UUID")) this.playerId = nbt.getUuid("UUID"); else this.playerId = null;
     }
 
     @Override
     protected void writeNbt(NbtCompound nbt) {
         super.writeNbt(nbt);
-        nbt.putInt("Slot", this.slotId);
-        if (this.playerId != null) nbt.putUuid("UUID", this.playerId);
+        nbt.putInt("SlotId", this.slotId);
+        nbt.putInt("SlotIndex", this.slotIndex);
+        nbt.putUuid("UUID", this.playerId);
     }
 
     @Nullable
@@ -73,13 +76,18 @@ public class EntanglementDriveBlockEntity extends BlockEntity implements Extende
         return this.slotId;
     }
 
-    public void setPlayerSlot(@Nullable PlayerEntity player, int slot) {
+    public int getSlotIndex() {
+        return this.slotIndex;
+    }
+
+    public void setPlayerSlot(@Nullable PlayerEntity player, int slotIndex, int slotId) {
         if (player != null) {
             if (this.world != null && this.world.isClient()) return;
             NbtCompound nbt = new NbtCompound();
             UUID uuid = player.getUuid();
             nbt.putUuid("UUID", uuid);
-            nbt.putInt("Slot", slot);
+            nbt.putInt("SlotId", slotId);
+            nbt.putInt("SlotIndex", slotIndex);
             this.readNbt(nbt);
             this.markDirty();
         }
@@ -101,8 +109,8 @@ public class EntanglementDriveBlockEntity extends BlockEntity implements Extende
 
     public void writeScreenData(PacketByteBuf buf) {
         buf.writeInt(this.slotId);
+        buf.writeInt(this.slotIndex);
         buf.writeOptional(Optional.ofNullable(this.playerId), PacketByteBuf::writeUuid);
-
     }
 
     @Override
@@ -136,33 +144,33 @@ public class EntanglementDriveBlockEntity extends BlockEntity implements Extende
     @Override
     public boolean isEmpty() {
         if (this.getPlayerInventory() == null) return dummyInventory.isEmpty();
-        return this.getPlayerInventory().getStack(this.getSlotId()) == ItemStack.EMPTY;
+        return this.getPlayerInventory().getStack(this.getSlotIndex()) == ItemStack.EMPTY;
     }
 
     @Override
     public ItemStack getStack(int slot) {
         if (this.getPlayerInventory() == null) return dummyInventory.getStack(slot);
-        return this.getPlayerInventory().getStack(this.getSlotId());
+        return this.getPlayerInventory().getStack(this.getSlotIndex());
     }
 
     @Override
     public ItemStack removeStack(int slot, int amount) {
         if (this.getPlayerInventory() == null) return dummyInventory.removeStack(slot);
         this.markDirty();
-        return this.getPlayerInventory().removeStack(this.getSlotId(), amount);
+        return this.getPlayerInventory().removeStack(this.getSlotIndex(), amount);
     }
 
     @Override
     public ItemStack removeStack(int slot) {
         if (this.getPlayerInventory() == null) return ItemStack.EMPTY;
         this.markDirty();
-        return this.getPlayerInventory().removeStack(this.getSlotId());
+        return this.getPlayerInventory().removeStack(this.getSlotIndex());
     }
 
     @Override
     public void setStack(int slot, ItemStack stack) {
         if (this.getPlayerInventory() == null) return;
-        this.getPlayerInventory().setStack(this.getSlotId(), stack);
+        this.getPlayerInventory().setStack(this.getSlotIndex(), stack);
         this.markDirty();
     }
 
@@ -175,7 +183,7 @@ public class EntanglementDriveBlockEntity extends BlockEntity implements Extende
     @Override
     public void clear() {
         if (this.getPlayerInventory() == null) return;
-        this.getPlayerInventory().removeStack(this.getSlotId());
+        this.getPlayerInventory().removeStack(this.getSlotIndex());
         this.markDirty();
     }
 
