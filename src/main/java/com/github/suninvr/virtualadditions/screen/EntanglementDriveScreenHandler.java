@@ -31,11 +31,9 @@ import java.util.concurrent.atomic.AtomicReference;
 
 public class EntanglementDriveScreenHandler extends ScreenHandler {
 
-    public static final Identifier EMPTY_HELMET_SLOT_TEXTURE = new Identifier("item/empty_armor_slot_helmet");
-    public static final Identifier EMPTY_CHESTPLATE_SLOT_TEXTURE = new Identifier("item/empty_armor_slot_chestplate");
-    public static final Identifier EMPTY_LEGGINGS_SLOT_TEXTURE = new Identifier("item/empty_armor_slot_leggings");
-    public static final Identifier EMPTY_BOOTS_SLOT_TEXTURE = new Identifier("item/empty_armor_slot_boots");
-    public static final Identifier EMPTY_OFFHAND_ARMOR_SLOT = new Identifier("item/empty_armor_slot_shield");
+    public static final Identifier ENTANGLEMENT_DRIVE_ACTIVE_SLOT_SYNC_ID = VirtualAdditions.idOf("entanglement_drive_active_slot_sync");
+    public static final Identifier ENTANGLEMENT_DRIVE_SELECTED_SLOT_SYNC_ID = VirtualAdditions.idOf("entanglement_drive_selected_slot_sync");
+    public static final Identifier EMPTY_IOLITE_SLOT = VirtualAdditions.idOf("item/empty_iolite_slot");
     static final Identifier[] EMPTY_ARMOR_SLOT_TEXTURES;
     private static final EquipmentSlot[] EQUIPMENT_SLOT_ORDER;
     private final EntanglementDriveBlockEntity entity;
@@ -49,8 +47,6 @@ public class EntanglementDriveScreenHandler extends ScreenHandler {
     private int activeSlotIndex;
     private UUID playerId;
     private static final UUID nullId = UUID.fromString("0-0-0-0-0");
-    public static Identifier ENTANGLEMENT_DRIVE_ACTIVE_SLOT_SYNC_ID = VirtualAdditions.idOf("entanglement_drive_active_slot_sync");
-    public static Identifier ENTANGLEMENT_DRIVE_SELECTED_SLOT_SYNC_ID = VirtualAdditions.idOf("entanglement_drive_selected_slot_sync");
 
     public EntanglementDriveScreenHandler(int syncId, PlayerInventory playerInventory, PacketByteBuf buf) {
         this(syncId, playerInventory, ScreenHandlerContext.EMPTY);
@@ -130,6 +126,10 @@ public class EntanglementDriveScreenHandler extends ScreenHandler {
             @Override
             public boolean canInsert(ItemStack stack) {
                 return stack.isOf(VAItems.IOLITE);
+            }
+
+            public Pair<Identifier, Identifier> getBackgroundSprite() {
+                return Pair.of(PlayerScreenHandler.BLOCK_ATLAS_TEXTURE, EMPTY_IOLITE_SLOT);
             }
         }); // Payment Slot ( 42 )
     }
@@ -264,7 +264,7 @@ public class EntanglementDriveScreenHandler extends ScreenHandler {
     }
 
     static {
-        EMPTY_ARMOR_SLOT_TEXTURES = new Identifier[]{EMPTY_BOOTS_SLOT_TEXTURE, EMPTY_LEGGINGS_SLOT_TEXTURE, EMPTY_CHESTPLATE_SLOT_TEXTURE, EMPTY_HELMET_SLOT_TEXTURE};
+        EMPTY_ARMOR_SLOT_TEXTURES = new Identifier[]{PlayerScreenHandler.EMPTY_BOOTS_SLOT_TEXTURE, PlayerScreenHandler.EMPTY_LEGGINGS_SLOT_TEXTURE, PlayerScreenHandler.EMPTY_CHESTPLATE_SLOT_TEXTURE, PlayerScreenHandler.EMPTY_HELMET_SLOT_TEXTURE};
         EQUIPMENT_SLOT_ORDER = new EquipmentSlot[]{EquipmentSlot.HEAD, EquipmentSlot.CHEST, EquipmentSlot.LEGS, EquipmentSlot.FEET};
     }
 

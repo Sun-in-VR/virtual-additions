@@ -82,6 +82,9 @@
     "block.virtual_additions.entanglement_drive": "Entanglement Drive",
 
     "container.virtual_additions.entanglement_drive": "Entangle Slots",
+    "container.virtual_additions.entanglement_drive.select_slot_hint": "Click this slot to select it",
+    "container.virtual_additions.entanglement_drive.payment_slot_hint": "Put an Iolite gemstone here",
+    "container.virtual_additions.entanglement_drive.confirm_button": "Confirm selection",
 
     "entity.virtual_additions.climbing_rope": "Climbing Rope",
     "entity.virtual_additions.steel_bomb": "Steel Bomb",

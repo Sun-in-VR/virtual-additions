@@ -3,33 +3,29 @@ package com.github.suninvr.virtualadditions.client.screen;
 import com.github.suninvr.virtualadditions.VirtualAdditions;
 import com.github.suninvr.virtualadditions.registry.VAPackets;
 import com.github.suninvr.virtualadditions.screen.EntanglementDriveScreenHandler;
-import com.google.common.collect.Lists;
 import com.mojang.blaze3d.systems.RenderSystem;
 import net.fabricmc.fabric.api.client.networking.v1.ClientPlayNetworking;
 import net.fabricmc.fabric.api.networking.v1.PacketByteBufs;
-import net.minecraft.client.gui.screen.ingame.BeaconScreen;
 import net.minecraft.client.gui.screen.ingame.HandledScreen;
 import net.minecraft.client.gui.screen.ingame.InventoryScreen;
 import net.minecraft.client.gui.screen.narration.NarrationMessageBuilder;
 import net.minecraft.client.gui.tooltip.Tooltip;
-import net.minecraft.client.gui.widget.ClickableWidget;
 import net.minecraft.client.gui.widget.PressableWidget;
 import net.minecraft.client.render.GameRenderer;
 import net.minecraft.client.util.math.MatrixStack;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.PlayerInventory;
-import net.minecraft.network.PacketByteBuf;
 import net.minecraft.screen.slot.Slot;
 import net.minecraft.screen.slot.SlotActionType;
 import net.minecraft.text.Text;
 import net.minecraft.util.Identifier;
 
-import java.util.List;
 import java.util.UUID;
 
 public class EntanglementDriveScreen extends HandledScreen<EntanglementDriveScreenHandler> {
     public static final Identifier BACKGROUND_TEXTURE = VirtualAdditions.idOf("textures/gui/container/entanglement_drive.png");
-    private final List<ClickableWidget> buttons = Lists.newArrayList();
+    private static final Text SLOT_HINT = Text.translatable("container.virtual_additions.entanglement_drive.select_slot_hint");
+    private static final Text PAYMENT_SLOT_HINT = Text.translatable("container.virtual_additions.entanglement_drive.payment_slot_hint");
     private PlayerEntity player;
     private float mouseX;
     private float mouseY;
@@ -102,7 +98,25 @@ public class EntanglementDriveScreen extends HandledScreen<EntanglementDriveScre
         this.mouseY = (float)mouseY;
     }
 
+    @Override
+    protected void drawMouseoverTooltip(MatrixStack matrices, int x, int y) {
+
+        int i = 0;
+        boolean bl = this.focusedSlot != null;
+        if (bl) i = this.focusedSlot.id;
+
+        if ( bl && i == 41 && !this.handler.isSelectingSlot() ) {
+            this.renderTooltip(matrices, PAYMENT_SLOT_HINT, x, y);
+        } else if ( bl && i != 41 && this.handler.getCursorStack().isEmpty() && this.handler.isSelectingSlot() ) {
+            this.renderTooltip(matrices, SLOT_HINT, x, y);
+        } else {
+            super.drawMouseoverTooltip(matrices, x, y);
+        }
+    }
+
     private class ConfirmButtonWidget extends PressableWidget {
+        private static final Tooltip CONFIRM_BUTTON_TOOLTIP = Tooltip.of(Text.translatable("container.virtual_additions.entanglement_drive.confirm_button"));
+
 
         protected ConfirmButtonWidget(int x, int y) {
             super(x, y, 18, 18, Text.empty());
@@ -112,7 +126,8 @@ public class EntanglementDriveScreen extends HandledScreen<EntanglementDriveScre
             RenderSystem.setShader(GameRenderer::getPositionTexProgram);
             RenderSystem.setShaderTexture(0, BACKGROUND_TEXTURE);
 
-            this.setTooltip(Tooltip.of(Text.of("Confirm Slot")));
+            if (this.isDisabled()) this.setTooltip(null);
+            else this.setTooltip(CONFIRM_BUTTON_TOOLTIP);
 
             int j = 178;
             if (this.isDisabled()) {
