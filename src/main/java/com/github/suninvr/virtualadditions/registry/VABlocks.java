@@ -96,6 +96,7 @@ public class VABlocks {
     public static final Block PINK_SILKBULB;
     public static final Block ACID;
     public static final Block IOLITE_ORE;
+    public static final Block IOLITE_BLOCK;
     public static final Block WARP_ANCHOR;
     public static final Block WARP_TETHER;
     public static final Block ENTANGLEMENT_DRIVE;
@@ -180,6 +181,7 @@ public class VABlocks {
         PINK_SILKBULB = register("pink_silkbulb", new Block(AbstractBlock.Settings.copy(SILKBULB).mapColor(MapColor.PINK).requires(VirtualAdditions.PREVIEW)));
         ACID = register("acid", new AcidFluidBlock(VAFluids.ACID, AbstractBlock.Settings.of(Material.WATER).mapColor(MapColor.LIME).luminance(((state) -> 6)).noCollision().strength(100.0F).dropsNothing().allowsSpawning(((state, world, pos, type) -> type == VAEntityType.LUMWASP)).requires(VirtualAdditions.PREVIEW)));
         IOLITE_ORE = register("iolite_ore", new ExperienceDroppingBlock(FabricBlockSettings.copyOf(Blocks.END_STONE).strength(4.5F, 4.5F).requiresTool().requires(VirtualAdditions.PREVIEW), UniformIntProvider.create(5, 9)));
+        IOLITE_BLOCK = register("iolite_block", new Block(FabricBlockSettings.of(Material.METAL).mapColor(MapColor.MAGENTA).sounds(BlockSoundGroup.METAL).requiresTool().hardness(5.0F).resistance(300.0F).requires(VirtualAdditions.PREVIEW)));
         WARP_ANCHOR = register("warp_anchor", new WarpTetherBlock(FabricBlockSettings.of(Material.METAL).nonOpaque().sounds(BlockSoundGroup.NETHERITE).luminance(3).emissiveLighting( (state, world, pos) -> !state.get(WarpTetherBlock.POWERED) ).hardness(22.5F).requiresTool().resistance(600.0F).requires(VirtualAdditions.PREVIEW)));
         WARP_TETHER = register("warp_tether", new WarpAnchorBlock(FabricBlockSettings.of(Material.METAL).nonOpaque().sounds(BlockSoundGroup.NETHERITE).luminance(3).emissiveLighting( (state, world, pos) -> !state.get(WarpAnchorBlock.COOLDOWN) ).hardness(22.5F).requiresTool().resistance(600.0F).requires(VirtualAdditions.PREVIEW)));
         ENTANGLEMENT_DRIVE = register("entanglement_drive", new EntanglementDriveBlock(FabricBlockSettings.of(Material.METAL).nonOpaque().sounds(BlockSoundGroup.NETHERITE).luminance(3).emissiveLighting( (state, world, pos) -> true ).hardness(22.5F).requiresTool().resistance(600.0F).requires(VirtualAdditions.PREVIEW)));

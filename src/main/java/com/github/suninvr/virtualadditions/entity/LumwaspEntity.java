@@ -113,7 +113,7 @@ public class LumwaspEntity extends HostileEntity implements RangedAttackMob, Flu
 
     @Override
     public boolean isInvulnerableTo(DamageSource damageSource) {
-        return super.isInvulnerableTo(damageSource) || damageSource == VADamageSource.ACID;
+        return super.isInvulnerableTo(damageSource);
     }
 
     protected void fall(double heightDifference, boolean onGround, BlockState state, BlockPos landedPosition) {

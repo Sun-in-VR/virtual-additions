@@ -53,12 +53,12 @@ public abstract class EntityMixin implements Nameable, EntityLike, CommandOutput
 
     @Inject(method = "baseTick", at = @At("TAIL"))
     void virtualAdditions$baseTickInAcid(CallbackInfo ci) {
-        if(this.isInAcid()) {
-            if (this.ticksInAcid >= 30) this.damage(VADamageSource.ACID, 1F);
-            else this.ticksInAcid = Math.min(this.ticksInAcid + 1, 30);
-        } else {
-            this.ticksInAcid = Math.max(this.ticksInAcid - 1, 0);
-        }
+        //if(this.isInAcid()) {
+        //    if (this.ticksInAcid >= 30) this.damage(VADamageSource.ACID, 1F);
+        //    else this.ticksInAcid = Math.min(this.ticksInAcid + 1, 30);
+        //} else {
+        //    this.ticksInAcid = Math.max(this.ticksInAcid - 1, 0);
+        //}
     }
 
     @Inject(method = "updateWaterState", at = @At("RETURN"), cancellable = true)

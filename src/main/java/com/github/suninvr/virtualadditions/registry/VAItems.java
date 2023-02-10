@@ -162,6 +162,7 @@ public class VAItems {
     public static final Item TOOL_GILD_SMITHING_TEMPLATE;
     public static final Item IOLITE;
     public static final Item IOLITE_ORE;
+    public static final Item IOLITE_BLOCK;
     public static final Item WARP_ANCHOR;
     public static final Item WARP_TETHER;
     public static final Item ENTANGLEMENT_DRIVE;
@@ -361,6 +362,7 @@ public class VAItems {
 
         IOLITE = register("iolite", ItemGroups.INGREDIENTS, Items.ANCIENT_DEBRIS, VirtualAdditions.PREVIEW);
         IOLITE_ORE = registerBlockItem("iolite_ore", VABlocks.IOLITE_ORE, ItemGroups.NATURAL, Items.ANCIENT_DEBRIS, VirtualAdditions.PREVIEW);
+        IOLITE_BLOCK = registerBlockItem("iolite_block", VABlocks.IOLITE_BLOCK, ItemGroups.BUILDING_BLOCKS, STEEL_BLOCK, VirtualAdditions.PREVIEW);
         WARP_ANCHOR = register("warp_anchor", new BlockItem(VABlocks.WARP_ANCHOR, new FabricItemSettings().rarity(Rarity.RARE).requires(VirtualAdditions.PREVIEW)), ItemGroups.REDSTONE, Items.CAULDRON);
         WARP_TETHER = register("warp_tether", new BlockItem(VABlocks.WARP_TETHER, new FabricItemSettings().rarity(Rarity.RARE).requires(VirtualAdditions.PREVIEW)), ItemGroups.REDSTONE, prev);
         ENTANGLEMENT_DRIVE = register("entanglement_drive", new BlockItem(VABlocks.ENTANGLEMENT_DRIVE, new FabricItemSettings().rarity(Rarity.RARE).requires(VirtualAdditions.PREVIEW)), ItemGroups.REDSTONE, prev);

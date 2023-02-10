@@ -1,0 +1,13 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "group": "virtual_additions:steel",
+  "ingredients": [
+    {
+      "item": "virtual_additions:iolite_block"
+    }
+  ],
+  "result": {
+    "item": "virtual_additions:iolite",
+    "count": 9
+  }
+}

@@ -122,7 +122,7 @@ public class EntanglementDriveScreen extends HandledScreen<EntanglementDriveScre
             super(x, y, 18, 18, Text.empty());
         }
 
-        public void method_48579(MatrixStack matrices, int mouseX, int mouseY, float delta) {
+        public void renderButton(MatrixStack matrices, int mouseX, int mouseY, float delta) {
             RenderSystem.setShader(GameRenderer::getPositionTexProgram);
             RenderSystem.setShaderTexture(0, BACKGROUND_TEXTURE);
 

@@ -1,20 +1,13 @@
 package com.github.suninvr.virtualadditions.entity;
 
-import com.github.suninvr.virtualadditions.registry.VADamageSource;
 import com.github.suninvr.virtualadditions.registry.VAEntityType;
-import com.github.suninvr.virtualadditions.registry.VAItems;
 import net.minecraft.block.AbstractBlock;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.damage.DamageSource;
-import net.minecraft.entity.damage.EntityDamageSource;
 import net.minecraft.entity.projectile.ProjectileEntity;
 import net.minecraft.entity.projectile.ProjectileUtil;
-import net.minecraft.entity.projectile.thrown.ThrownItemEntity;
-import net.minecraft.item.Item;
-import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NbtCompound;
-import net.minecraft.particle.ParticleTypes;
 import net.minecraft.util.hit.BlockHitResult;
 import net.minecraft.util.hit.EntityHitResult;
 import net.minecraft.util.hit.HitResult;
@@ -69,7 +62,7 @@ public class AcidSpitEntity extends ProjectileEntity {
     protected void onEntityHit(EntityHitResult entityHitResult) {
         super.onEntityHit(entityHitResult);
         if (entityHitResult.getEntity() instanceof LumwaspEntity) return;
-        entityHitResult.getEntity().damage(DamageSource.thrownProjectile(this, this.getOwner()), 3.0F);
+        entityHitResult.getEntity().damage(this.getDamageSources().method_48800(this, this.getOwner() instanceof LivingEntity livingOwner ? livingOwner : null ), 3.0F);
         this.discard();
     }
 

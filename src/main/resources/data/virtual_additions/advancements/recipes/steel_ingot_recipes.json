@@ -21,6 +21,10 @@
       "virtual_additions:crafting_shaped/steel_pickaxe",
       "virtual_additions:crafting_shaped/steel_axe",
       "virtual_additions:crafting_shaped/steel_hoe",
+      "virtual_additions:crafting_shaped/steel_helmet",
+      "virtual_additions:crafting_shaped/steel_chestplate",
+      "virtual_additions:crafting_shaped/steel_leggings",
+      "virtual_additions:crafting_shaped/steel_boots",
       "virtual_additions:crafting_shaped/steel_bomb"
     ]
   }
