@@ -138,7 +138,7 @@ public class VAItems {
     public static final Item BLUE_ROCK_CANDY;
     public static final Item MIXED_ROCK_CANDY;
     public static final Item HANGING_GLOWSILK;
-    public static final Item GLOW_SILK;
+    public static final Item GLOWSILK;
     public static final Item LUMWASP_NEST;
     public static final Item CARVED_STONE;
     public static final Item SILKBULB;
@@ -327,7 +327,7 @@ public class VAItems {
         LUMWASP_NEST = registerBlockItem("lumwasp_nest", VABlocks.LUMWASP_NEST, ItemGroups.NATURAL, Items.POINTED_DRIPSTONE, VirtualAdditions.PREVIEW);
         CARVED_STONE = registerBlockItem("carved_stone", VABlocks.CARVED_STONE, ItemGroups.NATURAL, prev, VirtualAdditions.PREVIEW);
         HANGING_GLOWSILK = registerBlockItem("hanging_glowsilk", VABlocks.HANGING_GLOWSILK, ItemGroups.NATURAL, prev, VirtualAdditions.PREVIEW);
-        GLOW_SILK = register("glow_silk", ItemGroups.INGREDIENTS, Items.STRING, VirtualAdditions.PREVIEW);
+        GLOWSILK = register("glowsilk", ItemGroups.INGREDIENTS, Items.STRING, VirtualAdditions.PREVIEW);
         SILKBULB = registerBlockItem("silkbulb", VABlocks.SILKBULB, new ItemGroupLocation[]{new ItemGroupLocation(ItemGroups.FUNCTIONAL, Items.GLOWSTONE), new ItemGroupLocation(ItemGroups.COLORED_BLOCKS, Items.PINK_BANNER)}, VirtualAdditions.PREVIEW);
 
         WHITE_SILKBULB = registerBlockItem("white_silkbulb", VABlocks.WHITE_SILKBULB, ItemGroups.COLORED_BLOCKS, prev, VirtualAdditions.PREVIEW);

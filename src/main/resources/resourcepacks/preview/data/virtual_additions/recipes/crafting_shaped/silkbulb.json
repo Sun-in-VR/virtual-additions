@@ -1,0 +1,16 @@
+{
+    "type": "minecraft:crafting_shaped",
+    "pattern": [
+        "gg",
+        "gg"
+    ],
+    "key": {
+        "g": {
+            "item": "virtual_additions:glowsilk"
+        }
+    },
+    "result": {
+        "item": "virtual_additions:silkbulb",
+        "count": 1
+    }
+}

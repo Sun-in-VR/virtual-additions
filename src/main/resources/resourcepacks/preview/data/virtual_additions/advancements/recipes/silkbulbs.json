@@ -15,7 +15,6 @@
   },
   "rewards": {
     "recipes": [
-      "virtual_additions:crafting_shapeless/silkbulb",
       "virtual_additions:crafting_shapeless/white_silkbulb",
       "virtual_additions:crafting_shapeless/light_gray_silkbulb",
       "virtual_additions:crafting_shapeless/gray_silkbulb",
