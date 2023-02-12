@@ -111,8 +111,7 @@
     [],
     [
       "minecraft:lake_lava_underground",
-      "minecraft:lake_lava_surface",
-      "virtual_additions:acid_delta"
+      "minecraft:lake_lava_surface"
     ],
     [
       "minecraft:amethyst_geode"

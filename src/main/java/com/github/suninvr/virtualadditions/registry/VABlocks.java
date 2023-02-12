@@ -77,6 +77,7 @@ public class VABlocks {
     public static final Block FLOWERING_AZALEA_HEDGE;
     public static final Block HANGING_GLOWSILK;
     public static final Block LUMWASP_NEST;
+    public static final Block CARVED_STONE;
     public static final Block SILKBULB;
     public static final Block WHITE_SILKBULB;
     public static final Block LIGHT_GRAY_SILKBULB;
@@ -162,6 +163,7 @@ public class VABlocks {
         FLOWERING_AZALEA_HEDGE = register("flowering_azalea_hedge", new HedgeBlock(AbstractBlock.Settings.copy(Blocks.FLOWERING_AZALEA_LEAVES)));
         HANGING_GLOWSILK = register("hanging_glowsilk", new HangingGlowsilkBlock(AbstractBlock.Settings.of(Material.PLANT).mapColor(MapColor.LIGHT_BLUE).sounds(BlockSoundGroup.WART_BLOCK).luminance((state) -> 6).noCollision().nonOpaque().breakInstantly().requires(VirtualAdditions.PREVIEW)));
         LUMWASP_NEST = register("lumwasp_nest", new LumwaspNestBlock(AbstractBlock.Settings.copy(Blocks.HONEYCOMB_BLOCK).mapColor(MapColor.DARK_AQUA).requires(VirtualAdditions.PREVIEW)));
+        CARVED_STONE = register("carved_stone", new Block(AbstractBlock.Settings.copy(Blocks.HONEYCOMB_BLOCK).mapColor(MapColor.DARK_AQUA).requires(VirtualAdditions.PREVIEW)));
         SILKBULB = register("silkbulb", new Block(AbstractBlock.Settings.copy(Blocks.SHROOMLIGHT).mapColor(MapColor.DARK_AQUA).luminance( (state) -> 15 ).nonOpaque().requires(VirtualAdditions.PREVIEW)));
         WHITE_SILKBULB = register("white_silkbulb", new Block(AbstractBlock.Settings.copy(SILKBULB).mapColor(MapColor.WHITE).requires(VirtualAdditions.PREVIEW)));
         LIGHT_GRAY_SILKBULB = register("light_gray_silkbulb", new Block(AbstractBlock.Settings.copy(SILKBULB).mapColor(MapColor.LIGHT_GRAY).requires(VirtualAdditions.PREVIEW)));
