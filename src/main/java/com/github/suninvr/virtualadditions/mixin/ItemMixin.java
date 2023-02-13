@@ -39,12 +39,8 @@ public class ItemMixin {
             List<StatusEffectInstance> allEffects = new java.util.ArrayList<>(List.of());
             allEffects.addAll(potionEffects);
             allEffects.addAll(customPotionEffects);
-            for (StatusEffectInstance effectInstance : allEffects) {
-                MutableText text = Text.translatable(effectInstance.getTranslationKey());
-                if(effectInstance.getAmplifier() > 0) text.append(" ").append(Text.translatable("potion.potency." + effectInstance.getAmplifier()));
-                text = effectInstance.getDuration() < (20 * 0.125F) ? text : text.append(" (" + StatusEffectUtil.durationToString(effectInstance, 0.125F) + ")");
-                tooltip.add(text.formatted(effectInstance.getEffectType().getCategory().getFormatting()));
-            }
+
+            PotionUtil.buildTooltip(allEffects, tooltip, 0.125F);
         }
     }
 
