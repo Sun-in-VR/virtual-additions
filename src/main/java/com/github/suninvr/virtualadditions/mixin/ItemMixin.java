@@ -32,7 +32,7 @@ public class ItemMixin {
         NbtCompound appliedPotionData = stack.getNbt().getCompound("AppliedPotion");
 
         if (hasAppliedPotionEffects(stack)) {
-            tooltip.add( ((MutableText)Text.of("Applied Effects" + ((context.isAdvanced() && getMaxAppliedPotionUses(stack) > 0) ? (" (" + getAppliedPotionUses(stack) + "/" + getMaxAppliedPotionUses(stack) + "):") : ":") )).formatted(Formatting.DARK_PURPLE) );
+            tooltip.add(Text.translatable("item.virtual_additions.applied_effect_tooltip", Text.of(((context.isAdvanced() && getMaxAppliedPotionUses(stack) > 0) ? (" (" + getAppliedPotionUses(stack) + "/" + getMaxAppliedPotionUses(stack) + ")") : ""))).formatted(Formatting.DARK_PURPLE));
 
             List<StatusEffectInstance> potionEffects = getAppliedPotion(stack).getEffects();
             List<StatusEffectInstance> customPotionEffects = PotionUtil.getCustomPotionEffects(appliedPotionData);
@@ -54,7 +54,7 @@ public class ItemMixin {
             }
 
             Potion potion = PotionUtil.getPotion(appliedPotionData);
-            if (potion != Potions.EMPTY) {
+            if (!potion.getEffects().isEmpty()) {
                 cir.setReturnValue( PotionUtil.getColor(potion) );
             }
 

@@ -49,8 +49,8 @@ public class GildedAxeItem extends AxeItem implements GildedToolItem {
 
     @Override
     public void appendTooltip(ItemStack stack, @Nullable World world, List<Text> tooltip, TooltipContext context) {
-        super.appendTooltip(stack, world, tooltip, context);
         tooltip.add(Text.translatable(this.gildType.buildTooltipTranslationKey()));
+        super.appendTooltip(stack, world, tooltip, context);
     }
 
     @Override

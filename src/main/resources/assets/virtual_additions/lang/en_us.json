@@ -124,6 +124,7 @@
     "item.virtual_additions.acid_bucket": "Acid Bucket",
     "item.virtual_additions.iolite": "Iolite",
 
+    "item.virtual_additions.applied_effect_tooltip": "Effects on Hit%s:",
     "item.virtual_additions.applicable_potion.effect.empty": "Applicable Uncraftable Potion",
     "item.virtual_additions.applicable_potion.effect.water": "Applicable Water Bottle",
     "item.virtual_additions.applicable_potion.effect.mundane": "Mundane Applicable Potion",
