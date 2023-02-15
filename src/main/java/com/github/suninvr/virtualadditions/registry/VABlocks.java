@@ -73,6 +73,7 @@ public class VABlocks {
     public static final Block ACACIA_HEDGE;
     public static final Block DARK_OAK_HEDGE;
     public static final Block MANGROVE_HEDGE;
+    public static final Block CHERRY_HEDGE;
     public static final Block AZALEA_HEDGE;
     public static final Block FLOWERING_AZALEA_HEDGE;
     public static final Block HANGING_GLOWSILK;
@@ -146,9 +147,9 @@ public class VABlocks {
         SYENITE_BRICK_STAIRS = register("syenite_brick_stairs", new CustomStairsBlock(SYENITE_BRICKS.getDefaultState(), AbstractBlock.Settings.copy(Blocks.DEEPSLATE_BRICK_STAIRS)));
         SYENITE_BRICK_SLAB = register("syenite_brick_slab", new SlabBlock(AbstractBlock.Settings.copy(Blocks.DEEPSLATE_BRICK_SLAB)));
         SYENITE_BRICK_WALL = register("syenite_brick_wall", new WallBlock(FabricBlockSettings.copyOf(Blocks.DEEPSLATE_BRICK_WALL)));
-        RED_GLIMMER_CRYSTAL = register("red_glimmer_crystal", new CrystalBlock(FabricBlockSettings.copyOf(Blocks.AMETHYST_CLUSTER).mapColor(MapColor.WHITE_GRAY).nonOpaque().dynamicBounds().offsetType(CrystalBlock::getOffsetType).requires(VirtualAdditions.PREVIEW)));
-        GREEN_GLIMMER_CRYSTAL = register("green_glimmer_crystal", new CrystalBlock(FabricBlockSettings.copyOf(Blocks.AMETHYST_CLUSTER).mapColor(MapColor.WHITE_GRAY).nonOpaque().dynamicBounds().offsetType(CrystalBlock::getOffsetType).requires(VirtualAdditions.PREVIEW)));
-        BLUE_GLIMMER_CRYSTAL = register("blue_glimmer_crystal", new CrystalBlock(FabricBlockSettings.copyOf(Blocks.AMETHYST_CLUSTER).mapColor(MapColor.WHITE_GRAY).nonOpaque().dynamicBounds().offsetType(CrystalBlock::getOffsetType).requires(VirtualAdditions.PREVIEW)));
+        RED_GLIMMER_CRYSTAL = register("red_glimmer_crystal", new CrystalBlock(FabricBlockSettings.copyOf(Blocks.AMETHYST_CLUSTER).mapColor(MapColor.WHITE_GRAY).nonOpaque().dynamicBounds().requires(VirtualAdditions.PREVIEW)));
+        GREEN_GLIMMER_CRYSTAL = register("green_glimmer_crystal", new CrystalBlock(FabricBlockSettings.copyOf(Blocks.AMETHYST_CLUSTER).mapColor(MapColor.WHITE_GRAY).nonOpaque().dynamicBounds().requires(VirtualAdditions.PREVIEW)));
+        BLUE_GLIMMER_CRYSTAL = register("blue_glimmer_crystal", new CrystalBlock(FabricBlockSettings.copyOf(Blocks.AMETHYST_CLUSTER).mapColor(MapColor.WHITE_GRAY).nonOpaque().dynamicBounds().requires(VirtualAdditions.PREVIEW)));
         SPOTLIGHT = register("spotlight", new SpotlightBlock(FabricBlockSettings.copyOf(Blocks.COPPER_BLOCK).mapColor(MapColor.ORANGE).nonOpaque().luminance((state) -> state.get(SpotlightBlock.POWERED) ? 6 : 0).emissiveLighting((state, world, pos) -> state.get(Properties.POWERED)) .requires(VirtualAdditions.PREVIEW)));
         SPOTLIGHT_LIGHT = register("spotlight_light", new SpotlightLightBlock(FabricBlockSettings.of(Material.AIR).strength(-1.0F, 3600000.8F).dropsNothing().nonOpaque().luminance((state) -> state.get(SpotlightLightBlock.LIT) ? 13 : 0).requires(VirtualAdditions.PREVIEW)));
         COTTON = register("cotton", new CropBlock(AbstractBlock.Settings.of(Material.PLANT).noCollision().ticksRandomly().breakInstantly().sounds(BlockSoundGroup.CROP)));
@@ -159,6 +160,7 @@ public class VABlocks {
         ACACIA_HEDGE = register("acacia_hedge", new HedgeBlock(AbstractBlock.Settings.copy(Blocks.ACACIA_LEAVES)));
         DARK_OAK_HEDGE = register("dark_oak_hedge", new HedgeBlock(AbstractBlock.Settings.copy(Blocks.DARK_OAK_LEAVES)));
         MANGROVE_HEDGE = register("mangrove_hedge", new HedgeBlock(AbstractBlock.Settings.copy(Blocks.MANGROVE_LEAVES)));
+        CHERRY_HEDGE = register("cherry_hedge", new HedgeBlock(AbstractBlock.Settings.copy(Blocks.CHERRY_LEAVES)));
         AZALEA_HEDGE = register("azalea_hedge", new HedgeBlock(AbstractBlock.Settings.copy(Blocks.AZALEA_LEAVES)));
         FLOWERING_AZALEA_HEDGE = register("flowering_azalea_hedge", new HedgeBlock(AbstractBlock.Settings.copy(Blocks.FLOWERING_AZALEA_LEAVES)));
         HANGING_GLOWSILK = register("hanging_glowsilk", new HangingGlowsilkBlock(AbstractBlock.Settings.of(Material.PLANT).mapColor(MapColor.LIGHT_BLUE).sounds(BlockSoundGroup.WART_BLOCK).luminance((state) -> 6).noCollision().nonOpaque().breakInstantly().requires(VirtualAdditions.PREVIEW)));

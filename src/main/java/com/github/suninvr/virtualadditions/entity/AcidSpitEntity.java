@@ -62,7 +62,7 @@ public class AcidSpitEntity extends ProjectileEntity {
     protected void onEntityHit(EntityHitResult entityHitResult) {
         super.onEntityHit(entityHitResult);
         if (entityHitResult.getEntity() instanceof LumwaspEntity) return;
-        entityHitResult.getEntity().damage(this.getDamageSources().method_48800(this, this.getOwner() instanceof LivingEntity livingOwner ? livingOwner : null ), 3.0F);
+        entityHitResult.getEntity().damage(this.getDamageSources().mobProjectile(this, this.getOwner() instanceof LivingEntity livingOwner ? livingOwner : null ), 3.0F);
         this.discard();
     }
 

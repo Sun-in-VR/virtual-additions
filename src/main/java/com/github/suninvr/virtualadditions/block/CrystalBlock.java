@@ -64,7 +64,7 @@ public class CrystalBlock extends Block implements Waterloggable {
 
     public void onLandedUpon(World world, BlockState state, BlockPos pos, Entity entity, float fallDistance) {
         if (state.get(POINTING) == Direction.UP && state.get(SHAPE) == CrystalShape.TIP) {
-            entity.handleFallDamage(fallDistance + 2.0F, 2.0F, world.method_48963().method_48837());
+            entity.handleFallDamage(fallDistance + 2.0F, 2.0F, world.getDamageSources().stalagmite());
 
         } else {
             super.onLandedUpon(world, state, pos, entity, fallDistance);

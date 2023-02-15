@@ -62,6 +62,7 @@ public class VirtualAdditionsClient implements ClientModInitializer {
                 VABlocks.ACACIA_HEDGE,
                 VABlocks.DARK_OAK_HEDGE,
                 VABlocks.MANGROVE_HEDGE,
+                VABlocks.CHERRY_HEDGE,
                 VABlocks.AZALEA_HEDGE,
                 VABlocks.FLOWERING_AZALEA_HEDGE,
                 VABlocks.HANGING_GLOWSILK

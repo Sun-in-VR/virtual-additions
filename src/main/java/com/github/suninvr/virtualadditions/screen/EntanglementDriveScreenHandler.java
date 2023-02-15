@@ -237,7 +237,7 @@ public class EntanglementDriveScreenHandler extends ScreenHandler {
             }
 
             if (itemStack2.isEmpty()) {
-                slotFrom.setStack(ItemStack.EMPTY);
+                slotFrom.setStackNoCallbacks(ItemStack.EMPTY);
             } else {
                 slotFrom.markDirty();
             }
