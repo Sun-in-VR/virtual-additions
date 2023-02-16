@@ -8,6 +8,7 @@
     "ClientPlayerInteractionManagerMixin",
     "ComposterBlockAccessor",
     "CrossbowItemMixin",
+    "DamageSourcesMixin",
     "EntityMixin",
     "FeatureFlagsMixin",
     "FenceBlockMixin",
@@ -15,6 +16,7 @@
     "LivingEntityMixin",
     "MobEntityMixin",
     "PlayerEntityMixin",
+    "PlayerInventoryMixin",
     "RangedWeaponItemMixin",
     "WallBlockMixin",
     "WaterFluidMixin"

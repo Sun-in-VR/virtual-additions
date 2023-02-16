@@ -1,6 +1,5 @@
 package com.github.suninvr.virtualadditions.entity;
 
-import com.github.suninvr.virtualadditions.registry.VADamageSource;
 import com.github.suninvr.virtualadditions.registry.VASoundEvents;
 import net.minecraft.block.BlockState;
 import net.minecraft.entity.EntityGroup;

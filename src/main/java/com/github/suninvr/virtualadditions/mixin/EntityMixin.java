@@ -1,13 +1,14 @@
 package com.github.suninvr.virtualadditions.mixin;
 
+import com.github.suninvr.virtualadditions.interfaces.DamageSourcesInterface;
 import com.github.suninvr.virtualadditions.interfaces.EntityInterface;
 import com.github.suninvr.virtualadditions.registry.VABlockTags;
-import com.github.suninvr.virtualadditions.registry.VADamageSource;
 import com.github.suninvr.virtualadditions.registry.VAFluids;
 import it.unimi.dsi.fastutil.objects.Object2DoubleMap;
 import net.minecraft.block.BlockState;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.damage.DamageSource;
+import net.minecraft.entity.damage.DamageSources;
 import net.minecraft.fluid.Fluid;
 import net.minecraft.registry.tag.TagKey;
 import net.minecraft.server.command.CommandOutput;
@@ -38,6 +39,10 @@ public abstract class EntityMixin implements Nameable, EntityLike, CommandOutput
 
     @Shadow public abstract boolean updateMovementInFluid(TagKey<Fluid> tag, double speed);
 
+    @Shadow public abstract DamageSources getDamageSources();
+
+    @Shadow public abstract boolean isInvulnerable();
+
     private int ticksInAcid;
 
     @Inject(method = "getPosWithYOffset", at = @At("RETURN"), locals = LocalCapture.CAPTURE_FAILHARD, cancellable = true)
@@ -53,12 +58,12 @@ public abstract class EntityMixin implements Nameable, EntityLike, CommandOutput
 
     @Inject(method = "baseTick", at = @At("TAIL"))
     void virtualAdditions$baseTickInAcid(CallbackInfo ci) {
-        //if(this.isInAcid()) {
-        //    if (this.ticksInAcid >= 30) this.damage(VADamageSource.ACID, 1F);
-        //    else this.ticksInAcid = Math.min(this.ticksInAcid + 1, 30);
-        //} else {
-        //    this.ticksInAcid = Math.max(this.ticksInAcid - 1, 0);
-        //}
+        if(this.isInAcid()) {
+            if (this.ticksInAcid >= 20) this.damage( ((DamageSourcesInterface)(this.getDamageSources())).acid() , 4.0F);
+            this.ticksInAcid = Math.min(this.ticksInAcid + 1, 20);
+        } else {
+            this.ticksInAcid = Math.max(this.ticksInAcid - 1, 0);
+        }
     }
 
     @Inject(method = "updateWaterState", at = @At("RETURN"), cancellable = true)
