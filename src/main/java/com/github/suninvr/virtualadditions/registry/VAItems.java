@@ -14,10 +14,8 @@ import com.github.suninvr.virtualadditions.registry.constructors.item.CustomPick
 import net.fabricmc.fabric.api.item.v1.FabricItemSettings;
 import net.fabricmc.fabric.api.itemgroup.v1.ItemGroupEvents;
 import net.fabricmc.fabric.api.loot.v2.LootTableEvents;
-import net.minecraft.block.Block;
 import net.minecraft.block.Blocks;
 import net.minecraft.block.DispenserBlock;
-import net.minecraft.block.dispenser.DispenserBehavior;
 import net.minecraft.block.dispenser.ItemDispenserBehavior;
 import net.minecraft.block.dispenser.ProjectileDispenserBehavior;
 import net.minecraft.enchantment.Enchantments;
@@ -37,8 +35,6 @@ import net.minecraft.potion.Potions;
 import net.minecraft.predicate.item.ItemPredicate;
 import net.minecraft.recipe.BrewingRecipeRegistry;
 import net.minecraft.registry.Registries;
-import net.minecraft.registry.Registry;
-import net.minecraft.resource.featuretoggle.FeatureFlag;
 import net.minecraft.text.Text;
 import net.minecraft.util.Formatting;
 import net.minecraft.util.Identifier;
@@ -50,14 +46,11 @@ import net.minecraft.util.math.Position;
 import net.minecraft.world.World;
 
 import java.util.List;
-import java.util.Locale;
 
 import static com.github.suninvr.virtualadditions.VirtualAdditions.idOf;
+import static com.github.suninvr.virtualadditions.registry.RegistryHelper.ItemHelper.*;
 
 public class VAItems {
-
-    protected record ToolSet(Item SWORD, Item SHOVEL, Item PICKAXE, Item AXE, Item HOE, String NAME){}
-    protected record ItemGroupLocation(ItemGroup GROUP, Item AFTER){}
     public static final ToolSet DIAMOND_TOOL_SET;
     public static final ToolSet GOLDEN_TOOL_SET;
     public static final ToolSet IRON_TOOL_SET;
@@ -168,7 +161,6 @@ public class VAItems {
     public static final Item WARP_ANCHOR;
     public static final Item WARP_TETHER;
     public static final Item ENTANGLEMENT_DRIVE;
-
     private static final Item LUMWASP_SPAWN_EGG;
 
     public static final FoodComponent FRIED_EGG_FOOD = (new FoodComponent.Builder().hunger(4).saturationModifier(0.4F).build());
@@ -216,8 +208,6 @@ public class VAItems {
     private static final Identifier EMPTY_SLOT_DIAMOND_TEXTURE;
     private static final Identifier EMPTY_SLOT_AMETHYST_TEXTURE;
     private static final Identifier EMPTY_SLOT_LAPIS_LAZULI_TEXTURE;
-
-    private static Item prev;
 
     static {
 
@@ -398,14 +388,26 @@ public class VAItems {
     }
 
     public static void init(){
-        //Dispenser Behaviors
-        registerDispenserBehavior(STEEL_BOMB, new ProjectileDispenserBehavior() {
+        initDispenserBehaviors();
+        initCompostables();
+        initLootTableModifiers();
+        initBrewingRecipes();
+
+        ItemGroupEvents.modifyEntriesEvent(ItemGroups.FOOD_AND_DRINK).register( (content) -> {
+            for (Potion potion : Registries.POTION) {
+                if (!(potion.equals(Potions.EMPTY))) content.add(PotionUtil.setPotion(new ItemStack(APPLICABLE_POTION), potion));
+            }
+        } );
+    }
+
+    protected static void initDispenserBehaviors() {
+        DispenserBlock.registerBehavior(STEEL_BOMB, new ProjectileDispenserBehavior() {
             protected ProjectileEntity createProjectile(World world, Position position, ItemStack stack) {
                 return Util.make(new SteelBombEntity(world, position.getX(), position.getY(), position.getZ()), (steelBombEntity) -> steelBombEntity.setItem(stack));
             }
         });
 
-        registerDispenserBehavior(CLIMBING_ROPE, new ProjectileDispenserBehavior() {
+        DispenserBlock.registerBehavior(CLIMBING_ROPE, new ProjectileDispenserBehavior() {
             protected ProjectileEntity createProjectile(World world, Position position, ItemStack stack) {
                 ClimbingRopeEntity climbingRopeEntity = new ClimbingRopeEntity( position.getX(), position.getY(), position.getZ(), world);
                 climbingRopeEntity.pickupType = PersistentProjectileEntity.PickupPermission.ALLOWED;
@@ -413,7 +415,7 @@ public class VAItems {
             }
         });
 
-        registerDispenserBehavior(ACID_BUCKET, new ItemDispenserBehavior(){
+        DispenserBlock.registerBehavior(ACID_BUCKET, new ItemDispenserBehavior(){
             private final ItemDispenserBehavior fallbackBehavior = new ItemDispenserBehavior();
 
             public ItemStack dispenseSilently(BlockPointer pointer, ItemStack stack) {
@@ -427,12 +429,12 @@ public class VAItems {
                     return this.fallbackBehavior.dispense(pointer, stack);
                 }
             }});
-
-        //Compostable Items
+    }
+    protected static void initCompostables() {
         ComposterBlockAccessor.virtualAdditions$registerCompostableItem(0.3F, COTTON_SEEDS);
         ComposterBlockAccessor.virtualAdditions$registerCompostableItem(0.3F, COTTON);
-
-        //Modified Loot Tables
+    }
+    protected static void initLootTableModifiers() {
         LootTableEvents.MODIFY.register(((resourceManager, lootManager, id, tableBuilder, source) -> {
             if (source.isBuiltin() && Blocks.GRASS.getLootTableId().equals(id)) {
                 LootPool.Builder builder = LootPool.builder()
@@ -445,109 +447,10 @@ public class VAItems {
             }
         }));
 
-        //Brewing Recipes
+    }
+    protected static void initBrewingRecipes() {
         BrewingRecipeRegistry.registerPotionType(APPLICABLE_POTION);
         BrewingRecipeRegistry.registerItemRecipe(Items.POTION, Items.SLIME_BALL, APPLICABLE_POTION);
-
-        ItemGroupEvents.modifyEntriesEvent(ItemGroups.FOOD_AND_DRINK).register( (content) -> {
-            for (Potion potion : Registries.POTION) {
-                if (!(potion.equals(Potions.EMPTY))) content.add(PotionUtil.setPotion(new ItemStack(APPLICABLE_POTION), potion));
-            }
-        } );
-    }
-
-    //Register an Item
-    protected static <T extends Item> Item register(String id, T item) { // Register a given item
-        Item item1 = Registry.register(Registries.ITEM, idOf(id), item);
-        prev = item1;
-        return item1;
-    }
-    protected static <T extends Item> Item register(String id, T item, ItemGroup itemGroup) { // Register an item, add to a group
-        Item item1 = register(id, item);
-        ItemGroupEvents.modifyEntriesEvent(itemGroup).register( (content) -> content.add(item1));
-        prev = item1;
-        return item1;
-    }
-    protected static <T extends Item> Item register(String id, T item, ItemGroup itemGroup, Item itemAfter) { // Register an item, add to a specific location in a group
-        Item item1 = register(id, item);
-        ItemGroupEvents.modifyEntriesEvent(itemGroup).register( (content) -> content.addAfter(itemAfter, item1));
-        prev = item1;
-        return item1;
-    }
-
-    protected static <T extends Item> Item register(String id, T item, ItemGroupLocation... locations) { // Register an item, add to several locations
-        Item item1 = register(id, item);
-        for (ItemGroupLocation location : locations) {
-            ItemGroupEvents.modifyEntriesEvent(location.GROUP).register( (content) -> content.addAfter(location.AFTER, item1));
-        }
-        prev = item1;
-        return item1;
-    }
-
-    protected static Item register(String id) { // Create and register an item
-        FabricItemSettings settings = new FabricItemSettings();
-        return register(id, new Item(settings));
-    }
-
-    protected static Item register(String id, ItemGroup itemGroup) { // Create and register an item, give a group
-        FabricItemSettings settings = new FabricItemSettings();
-        return register(id, new Item(settings), itemGroup);
-    }
-
-    protected static Item register(String id, ItemGroup itemGroup, Item itemAfter) { // Create and register an item, give a location in a group
-        FabricItemSettings settings = new FabricItemSettings();
-        return register(id, new Item(settings), itemGroup, itemAfter);
-    }
-
-    protected static Item register(String id, ItemGroup itemGroup, Item itemAfter, FeatureFlag... features) { // Create and register an item, give a location in a group
-        FabricItemSettings settings = new FabricItemSettings().requires(features);
-        return register(id, new Item(settings), itemGroup, itemAfter);
-    }
-
-    protected static Item register(String id, ItemGroupLocation... locations) { // Create and register an item, give several locations
-        FabricItemSettings settings = new FabricItemSettings();
-        return register(id, new Item(settings), locations);
-    }
-
-    protected static Item registerBlockItem(String id, Block block) { // Create and register a block item
-        return register(id, new BlockItem(block, new FabricItemSettings()));
-    }
-
-    protected static Item registerBlockItem(String id, Block block, ItemGroup itemGroup) { // Create and register a block item, give a group
-        return register(id, new BlockItem(block, new FabricItemSettings()), itemGroup);
-    }
-
-    protected static Item registerBlockItem(String id, Block block, ItemGroup itemGroup, Item itemAfter) { // Create and register a block item, give a location in a group
-        return register(id, new BlockItem(block, new FabricItemSettings()), itemGroup, itemAfter);
-    }
-
-    protected static Item registerBlockItem(String id, Block block, ItemGroupLocation... locations) { // Create and register a block item, give several locations
-        return register(id, new BlockItem(block, new FabricItemSettings()), locations);
-    }
-
-    protected static Item registerBlockItem(String id, Block block, ItemGroup itemGroup, Item itemAfter, FeatureFlag... features) { // Create and register a block item, give a location in a group, assign required feature flags
-        return register(id, new BlockItem(block, new FabricItemSettings().requires(features)), itemGroup, itemAfter);
-    }
-
-    protected static Item registerBlockItem(String id, Block block, ItemGroupLocation[] locations, FeatureFlag... features) { // Create and register a block item, give several locations, assign required feature flags
-        return register(id, new BlockItem(block, new FabricItemSettings().requires(features)), locations);
-    }
-
-    protected static ToolSet registerGildedToolSet(ToolSet baseSet, GildType gildedToolMaterial) {
-        String newName = gildedToolMaterial.name().toLowerCase(Locale.ROOT) +"_"+ baseSet.NAME;
-        return new ToolSet(
-                register(newName +"_sword", new GildedSwordItem(gildedToolMaterial, (SwordItem) baseSet.SWORD, GildedToolUtil.settingsOf(baseSet.SWORD))),
-                register(newName +"_shovel", new GildedShovelItem(gildedToolMaterial, (ShovelItem) baseSet.SHOVEL, GildedToolUtil.settingsOf(baseSet.SHOVEL))),
-                register(newName +"_pickaxe", new GildedPickaxeItem(gildedToolMaterial, (PickaxeItem) baseSet.PICKAXE, GildedToolUtil.settingsOf(baseSet.PICKAXE))),
-                register(newName +"_axe", new GildedAxeItem(gildedToolMaterial, (AxeItem) baseSet.AXE, GildedToolUtil.settingsOf(baseSet.AXE))),
-                register(newName +"_hoe", new GildedHoeItem(gildedToolMaterial, (HoeItem) baseSet.HOE, GildedToolUtil.settingsOf(baseSet.HOE))),
-                newName
-        );
-    }
-
-    //Register a dispenser behavior
-    protected static void registerDispenserBehavior(ItemConvertible item, DispenserBehavior behavior) {
-        DispenserBlock.registerBehavior(item, behavior);
     }
 
 }
