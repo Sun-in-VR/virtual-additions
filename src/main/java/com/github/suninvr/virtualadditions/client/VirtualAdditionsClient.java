@@ -1,6 +1,5 @@
 package com.github.suninvr.virtualadditions.client;
 
-import com.github.suninvr.virtualadditions.VirtualAdditions;
 import com.github.suninvr.virtualadditions.client.particle.AcidSplashEmitterParticle;
 import com.github.suninvr.virtualadditions.client.particle.IoliteRingParticle;
 import com.github.suninvr.virtualadditions.client.render.entity.AcidSpitEntityRenderer;

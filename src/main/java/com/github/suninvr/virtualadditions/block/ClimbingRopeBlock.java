@@ -62,7 +62,7 @@ public class ClimbingRopeBlock extends Block implements Waterloggable {
         if (state.canPlaceAt(world, pos)) {
             BlockPos belowPos = new BlockPos(pos.down());
             BlockState belowState = world.getBlockState(belowPos);
-            if (world.getBottomY() <= belowPos.getY() && (belowState.canReplace(new AutomaticItemPlacementContext(world, belowPos, Direction.DOWN, ItemStack.EMPTY, Direction.UP))) && !belowState.isOf(Blocks.LAVA)) {
+            if (world.getBottomY() <= belowPos.getY() && (belowState.canReplace(new AutomaticItemPlacementContext(world, belowPos, Direction.DOWN, ItemStack.EMPTY, Direction.UP))) && !belowState.isOf(Blocks.LAVA) && !belowState.isOf(VABlocks.ACID)) {
                 BlockState newState = state.with(WATERLOGGED, world.getFluidState(belowPos).getFluid() == Fluids.WATER);
                 world.setBlockState(belowPos, newState);
                 world.setBlockState(pos, state.with(END, false));

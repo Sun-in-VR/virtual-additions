@@ -1,5 +1,6 @@
 {
-  "message_id": "acid",
+  "effects": "burning",
   "exhaustion": 0.1,
+  "message_id": "acid",
   "scaling": "never"
 }
