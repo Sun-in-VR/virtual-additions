@@ -23,12 +23,17 @@ import net.minecraft.entity.projectile.PersistentProjectileEntity;
 import net.minecraft.entity.projectile.ProjectileEntity;
 import net.minecraft.item.*;
 import net.minecraft.loot.LootPool;
+import net.minecraft.loot.LootTables;
 import net.minecraft.loot.condition.InvertedLootCondition;
 import net.minecraft.loot.condition.MatchToolLootCondition;
 import net.minecraft.loot.condition.RandomChanceLootCondition;
 import net.minecraft.loot.entry.ItemEntry;
 import net.minecraft.loot.function.ApplyBonusLootFunction;
+import net.minecraft.loot.function.EnchantWithLevelsLootFunction;
 import net.minecraft.loot.function.ExplosionDecayLootFunction;
+import net.minecraft.loot.function.SetCountLootFunction;
+import net.minecraft.loot.provider.number.LootNumberProvider;
+import net.minecraft.loot.provider.number.UniformLootNumberProvider;
 import net.minecraft.potion.Potion;
 import net.minecraft.potion.PotionUtil;
 import net.minecraft.potion.Potions;
@@ -446,6 +451,35 @@ public class VAItems {
                 tableBuilder.pool(builder);
             }
         }));
+
+        LootTableEvents.MODIFY.register( (resourceManager, lootManager, id, tableBuilder, source) -> {
+            if (!source.isBuiltin()) return;
+            if (LootTables.ABANDONED_MINESHAFT_CHEST.equals(id)) {
+                LootPool.Builder builder = LootPool.builder()
+                        .with(ItemEntry.builder(CLIMBING_ROPE).weight(5).apply(SetCountLootFunction.builder(UniformLootNumberProvider.create(5.0F, 16.0F))))
+                        .with(ItemEntry.builder(Items.AIR).weight(5));
+                tableBuilder.pool(builder);
+            }
+        });
+
+        LootTableEvents.MODIFY.register( (resourceManager, lootManager, id, tableBuilder, source) -> {
+            if (!source.isBuiltin()) return;
+            if (LootTables.VILLAGE_TOOLSMITH_CHEST.equals(id) || LootTables.VILLAGE_WEAPONSMITH_CHEST.equals(id)) {
+                tableBuilder.modifyPools( modifier -> modifier.with(ItemEntry.builder(STEEL_INGOT).weight(3).apply(SetCountLootFunction.builder(UniformLootNumberProvider.create(1.0F, 5.0F)))));
+            }
+        } );
+        LootTableEvents.MODIFY.register( (resourceManager, lootManager, id, tableBuilder, source) -> {
+            if (!source.isBuiltin()) return;
+            if (LootTables.JUNGLE_TEMPLE_CHEST.equals(id)) {
+                tableBuilder.modifyPools( modifier -> modifier.with(ItemEntry.builder(STEEL_INGOT).weight(7).apply(SetCountLootFunction.builder(UniformLootNumberProvider.create(1.0F, 5.0F)))));
+            }
+        } );
+        LootTableEvents.MODIFY.register( (resourceManager, lootManager, id, tableBuilder, source) -> {
+            if (!source.isBuiltin()) return;
+            if (LootTables.ANCIENT_CITY_CHEST.equals(id)) {
+                tableBuilder.modifyPools( modifier -> modifier.with(ItemEntry.builder(STEEL_LEGGINGS).weight(3).apply(EnchantWithLevelsLootFunction.builder(UniformLootNumberProvider.create(25, 40)).allowTreasureEnchantments())));
+            }
+        } );
 
     }
     protected static void initBrewingRecipes() {
