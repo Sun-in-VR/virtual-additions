@@ -4,7 +4,7 @@
 	"textures": {
 		"0": "virtual_additions:block/entanglement_drive_top",
 		"1": "virtual_additions:block/entanglement_drive_side",
-		"particle": "virtual_additions:block/entanglement_drive_top"
+		"particle": "virtual_additions:block/entanglement_drive_side"
 	},
 	"elements": [
 		{
