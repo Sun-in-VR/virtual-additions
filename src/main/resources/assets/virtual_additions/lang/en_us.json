@@ -151,6 +151,8 @@
 
     "subtitles.block.climbing_rope.extends": "Rope extends",
     "subtitles.block.acid.sizzle": "Acid sizzles",
+    "subtitles.block.warp_anchor.warp": "Something warps nearby",
+    "subtitles.block.warp_tether.warp": "Something warps away",
     "subtitles.entity.steel_bomb.throw": "Steel Bomb flies",
     "subtitles.entity.lumwasp.hurt": "Lumwasp hurts",
 

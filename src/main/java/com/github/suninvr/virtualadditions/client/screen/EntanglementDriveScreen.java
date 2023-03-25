@@ -61,7 +61,7 @@ public class EntanglementDriveScreen extends HandledScreen<EntanglementDriveScre
         this.drawTexture(matrices, i, j, 0, 0, this.backgroundWidth, this.backgroundHeight);
         if (this.handler.isSelectingSlot() && this.handler.isSlotSelected()) this.drawTexture(matrices, i + selectedSlotX - 1, j + selectedSlotY - 1, 196, 0, 18, 18);
         if (samePlayer) this.drawTexture(matrices, i + activeSlotX, j + activeSlotY, 178, 0, 18, 18);
-        InventoryScreen.drawEntity(i + 51, j + 75, 30, (float)(i + 51) - this.mouseX, (float)(j + 75 - 50) - this.mouseY, this.client.player);
+        InventoryScreen.drawEntity(matrices, i + 51, j + 75, 30, (float)(i + 51) - this.mouseX, (float)(j + 75 - 50) - this.mouseY, this.client.player);
     }
 
     protected void drawForeground(MatrixStack matrices, int mouseX, int mouseY) {
@@ -132,7 +132,7 @@ public class EntanglementDriveScreen extends HandledScreen<EntanglementDriveScre
             int j = 178;
             if (this.isDisabled()) {
                 j += this.width * 2;
-            } else if (this.isHovered()) {
+            } else if (this.isSelected()) {
                 j += this.width;
             }
 
