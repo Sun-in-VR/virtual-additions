@@ -13,7 +13,6 @@ import net.minecraft.text.MutableText;
 import net.minecraft.text.Text;
 import net.minecraft.util.Formatting;
 import net.minecraft.world.World;
-import org.checkerframework.checker.units.qual.A;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
@@ -33,19 +32,15 @@ public class ItemMixin {
         NbtCompound appliedPotionData = stack.getNbt().getCompound("AppliedPotion");
 
         if (hasAppliedPotionEffects(stack)) {
-            tooltip.add( ((MutableText)Text.of("Applied Effects" + ((context.isAdvanced() && getMaxAppliedPotionUses(stack) > 0) ? (" (" + getAppliedPotionUses(stack) + "/" + getMaxAppliedPotionUses(stack) + "):") : ":") )).formatted(Formatting.DARK_PURPLE) );
+            tooltip.add(Text.translatable("item.virtual_additions.applied_effect_tooltip", Text.of(((context.isAdvanced() && getMaxAppliedPotionUses(stack) > 0) ? (" (" + getAppliedPotionUses(stack) + "/" + getMaxAppliedPotionUses(stack) + ")") : ""))).formatted(Formatting.DARK_PURPLE));
 
             List<StatusEffectInstance> potionEffects = getAppliedPotion(stack).getEffects();
             List<StatusEffectInstance> customPotionEffects = PotionUtil.getCustomPotionEffects(appliedPotionData);
             List<StatusEffectInstance> allEffects = new java.util.ArrayList<>(List.of());
             allEffects.addAll(potionEffects);
             allEffects.addAll(customPotionEffects);
-            for (StatusEffectInstance effectInstance : allEffects) {
-                MutableText text = Text.translatable(effectInstance.getTranslationKey());
-                if(effectInstance.getAmplifier() > 0) text.append(" ").append(Text.translatable("potion.potency." + effectInstance.getAmplifier()));
-                text = effectInstance.getDuration() < (20 * 0.125F) ? text : text.append(" (" + StatusEffectUtil.durationToString(effectInstance, 0.125F) + ")");
-                tooltip.add(text.formatted(effectInstance.getEffectType().getCategory().getFormatting()));
-            }
+
+            PotionUtil.buildTooltip(allEffects, tooltip, 0.125F);
         }
     }
 
@@ -59,7 +54,7 @@ public class ItemMixin {
             }
 
             Potion potion = PotionUtil.getPotion(appliedPotionData);
-            if (potion != Potions.EMPTY) {
+            if (!potion.getEffects().isEmpty()) {
                 cir.setReturnValue( PotionUtil.getColor(potion) );
             }
 

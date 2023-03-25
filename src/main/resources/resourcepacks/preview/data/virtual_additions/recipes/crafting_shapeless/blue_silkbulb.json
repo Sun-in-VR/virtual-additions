@@ -1,0 +1,16 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "group": "virtual_additions:silkbulbs",
+  "ingredients": [
+    {
+      "item": "virtual_additions:silkbulb"
+    },
+    {
+      "item": "minecraft:blue_dye"
+    }
+  ],
+  "result": {
+    "item": "virtual_additions:blue_silkbulb",
+    "count": 1
+  }
+}

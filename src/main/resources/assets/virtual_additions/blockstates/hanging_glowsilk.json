@@ -1,0 +1,16 @@
+{
+  "variants": {
+    "shape=single": {
+      "model": "virtual_additions:block/hanging_glowsilk"
+    },
+    "shape=base": {
+      "model": "virtual_additions:block/hanging_glowsilk_base"
+    },
+    "shape=end": {
+      "model": "virtual_additions:block/hanging_glowsilk_end"
+    },
+    "shape=straight": {
+      "model": "virtual_additions:block/hanging_glowsilk_straight"
+    }
+  }
+}

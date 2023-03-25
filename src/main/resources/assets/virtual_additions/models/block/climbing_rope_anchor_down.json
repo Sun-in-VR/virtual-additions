@@ -1,6 +1,6 @@
 {
 	"credit": "Made with Blockbench",
-    "ambientocclusion": false,
+	"ambientocclusion": false,
 	"textures": {
 		"0": "virtual_additions:block/climbing_rope",
 		"1": "virtual_additions:block/climbing_rope_anchor",
@@ -23,8 +23,8 @@
 		{
 			"from": [8, 0, 7],
 			"to": [8, 8, 9],
-			"rotation": {"angle": 45, "axis": "y", "origin": [8, 4, 8]},
 			"shade": false,
+			"rotation": {"angle": 45, "axis": "y", "origin": [8, 4, 8]},
 			"faces": {
 				"north": {"uv": [7, 8, 9, 16], "texture": "#0"},
 				"east": {"uv": [7, 8, 9, 16], "texture": "#0"},
@@ -37,8 +37,8 @@
 		{
 			"from": [8, 0, 7],
 			"to": [8, 8, 9],
-			"rotation": {"angle": -45, "axis": "y", "origin": [8, 4, 8]},
 			"shade": false,
+			"rotation": {"angle": -45, "axis": "y", "origin": [8, 4, 8]},
 			"faces": {
 				"north": {"uv": [7, 8, 9, 16], "texture": "#0"},
 				"east": {"uv": [7, 8, 9, 16], "texture": "#0"},
@@ -50,16 +50,12 @@
 		},
 		{
 			"from": [5, 9, 8],
-			"to": [11, 16, 8],
-			"rotation": {"angle": 0, "axis": "y", "origin": [8, 14, 7]},
+			"to": [11, 25, 8],
 			"shade": false,
+			"rotation": {"angle": 0, "axis": "y", "origin": [8, 14, 7]},
 			"faces": {
-				"north": {"uv": [5, 9, 11, 16], "rotation": 180, "texture": "#1"},
-				"east": {"uv": [0, 0, 3, 0], "rotation": 270, "texture": "#1"},
-				"south": {"uv": [5, 9, 11, 16], "rotation": 180, "texture": "#1"},
-				"west": {"uv": [0, 0, 3, 0], "rotation": 90, "texture": "#1"},
-				"up": {"uv": [0, 0, 2, 0], "rotation": 180, "texture": "#1"},
-				"down": {"uv": [0, 0, 2, 0], "texture": "#1"}
+				"north": {"uv": [5, 0, 11, 16], "rotation": 180, "texture": "#1"},
+				"south": {"uv": [5, 0, 11, 16], "rotation": 180, "texture": "#1"}
 			}
 		}
 	],

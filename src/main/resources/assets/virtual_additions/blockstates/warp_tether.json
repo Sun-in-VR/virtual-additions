@@ -1,0 +1,6 @@
+{
+  "variants": {
+    "cooldown=true": { "model": "virtual_additions:block/warp_tether" },
+    "cooldown=false": { "model": "virtual_additions:block/warp_tether_active" }
+  }
+}

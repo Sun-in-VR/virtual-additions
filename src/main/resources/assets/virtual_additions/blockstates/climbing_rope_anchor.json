@@ -1,21 +1,36 @@
  
 {
     "variants": {
-     "facing=north":{
+     "facing=north,half=top":{
         "model": "virtual_additions:block/climbing_rope_anchor",
         "y": 180
      },
-     "facing=south": {
+     "facing=south,half=top": {
         "model": "virtual_additions:block/climbing_rope_anchor"
      },
-     "facing=east": {
+     "facing=east,half=top": {
         "model": "virtual_additions:block/climbing_rope_anchor",
         "y": 270
      },
-     "facing=west": {
+     "facing=west,half=top": {
         "model": "virtual_additions:block/climbing_rope_anchor",
         "y": 90
      },
+      "facing=north,half=bottom":{
+        "model": "virtual_additions:block/climbing_rope_anchor_low",
+        "y": 180
+      },
+      "facing=south,half=bottom": {
+        "model": "virtual_additions:block/climbing_rope_anchor_low"
+      },
+      "facing=east,half=bottom": {
+        "model": "virtual_additions:block/climbing_rope_anchor_low",
+        "y": 270
+      },
+      "facing=west,half=bottom": {
+        "model": "virtual_additions:block/climbing_rope_anchor_low",
+        "y": 90
+      },
      "facing=down": {
         "model": "virtual_additions:block/climbing_rope_anchor_down"
      }

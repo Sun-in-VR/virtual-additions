@@ -58,7 +58,7 @@ public class ApplicablePotionItem extends PotionItem {
                 PotionUtil.setPotion(tippedArrowStack, PotionUtil.getPotion(stack));
                 if(clickedStack.getCount() <= 10) {
                     tippedArrowStack.setCount(clickedStack.getCount());
-                    slot.setStack(tippedArrowStack);
+                    slot.setStackNoCallbacks(tippedArrowStack);
                 } else {
                     tippedArrowStack.setCount(10);
                     clickedStack.decrement(10);

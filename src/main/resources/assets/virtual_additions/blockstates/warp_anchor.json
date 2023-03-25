@@ -1,0 +1,8 @@
+{
+  "variants": {
+    "powered=true,vertical_direction=up": { "model": "virtual_additions:block/warp_anchor" },
+    "powered=false,vertical_direction=up": { "model": "virtual_additions:block/warp_anchor_active" },
+    "powered=true,vertical_direction=down": { "model": "virtual_additions:block/warp_anchor", "x": 180 },
+    "powered=false,vertical_direction=down": { "model": "virtual_additions:block/warp_anchor_active", "x": 180 }
+  }
+}

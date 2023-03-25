@@ -1,11 +1,16 @@
 package com.github.suninvr.virtualadditions.registry;
 
+import com.github.suninvr.virtualadditions.VirtualAdditions;
 import com.github.suninvr.virtualadditions.entity.ClimbingRopeEntity;
 import com.github.suninvr.virtualadditions.entity.SteelBombEntity;
-import com.github.suninvr.virtualadditions.item.*;
+import com.github.suninvr.virtualadditions.item.AcidBucketItem;
+import com.github.suninvr.virtualadditions.item.ApplicablePotionItem;
+import com.github.suninvr.virtualadditions.item.RockCandyItem;
+import com.github.suninvr.virtualadditions.item.SteelBombItem;
 import com.github.suninvr.virtualadditions.item.enums.GildType;
 import com.github.suninvr.virtualadditions.item.materials.SteelToolMaterial;
 import com.github.suninvr.virtualadditions.mixin.ComposterBlockAccessor;
+import com.github.suninvr.virtualadditions.registry.RegistryHelper.ItemHelper.*;
 import com.github.suninvr.virtualadditions.registry.constructors.item.CustomArmorMaterials;
 import com.github.suninvr.virtualadditions.registry.constructors.item.CustomAxeItem;
 import com.github.suninvr.virtualadditions.registry.constructors.item.CustomHoeItem;
@@ -13,41 +18,47 @@ import com.github.suninvr.virtualadditions.registry.constructors.item.CustomPick
 import net.fabricmc.fabric.api.item.v1.FabricItemSettings;
 import net.fabricmc.fabric.api.itemgroup.v1.ItemGroupEvents;
 import net.fabricmc.fabric.api.loot.v2.LootTableEvents;
-import net.minecraft.block.Block;
 import net.minecraft.block.Blocks;
 import net.minecraft.block.DispenserBlock;
-import net.minecraft.block.dispenser.DispenserBehavior;
+import net.minecraft.block.dispenser.ItemDispenserBehavior;
 import net.minecraft.block.dispenser.ProjectileDispenserBehavior;
 import net.minecraft.enchantment.Enchantments;
-import net.minecraft.entity.EquipmentSlot;
 import net.minecraft.entity.projectile.PersistentProjectileEntity;
 import net.minecraft.entity.projectile.ProjectileEntity;
 import net.minecraft.item.*;
 import net.minecraft.loot.LootPool;
+import net.minecraft.loot.LootTables;
 import net.minecraft.loot.condition.InvertedLootCondition;
 import net.minecraft.loot.condition.MatchToolLootCondition;
 import net.minecraft.loot.condition.RandomChanceLootCondition;
 import net.minecraft.loot.entry.ItemEntry;
 import net.minecraft.loot.function.ApplyBonusLootFunction;
+import net.minecraft.loot.function.EnchantWithLevelsLootFunction;
 import net.minecraft.loot.function.ExplosionDecayLootFunction;
+import net.minecraft.loot.function.SetCountLootFunction;
+import net.minecraft.loot.provider.number.UniformLootNumberProvider;
 import net.minecraft.potion.Potion;
 import net.minecraft.potion.PotionUtil;
 import net.minecraft.potion.Potions;
 import net.minecraft.predicate.item.ItemPredicate;
 import net.minecraft.recipe.BrewingRecipeRegistry;
 import net.minecraft.registry.Registries;
-import net.minecraft.registry.Registry;
+import net.minecraft.text.Text;
+import net.minecraft.util.Formatting;
+import net.minecraft.util.Identifier;
+import net.minecraft.util.Rarity;
 import net.minecraft.util.Util;
+import net.minecraft.util.math.BlockPointer;
+import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Position;
 import net.minecraft.world.World;
 
-import java.util.Locale;
+import java.util.List;
 
 import static com.github.suninvr.virtualadditions.VirtualAdditions.idOf;
+import static com.github.suninvr.virtualadditions.registry.RegistryHelper.ItemHelper.*;
 
 public class VAItems {
-    protected record ToolSet(Item SWORD, Item SHOVEL, Item PICKAXE, Item AXE, Item HOE, String NAME){}
-    protected record ItemGroupLocation(ItemGroup GROUP, Item AFTER){}
     public static final ToolSet DIAMOND_TOOL_SET;
     public static final ToolSet GOLDEN_TOOL_SET;
     public static final ToolSet IRON_TOOL_SET;
@@ -99,6 +110,7 @@ public class VAItems {
     public static final Item ACACIA_HEDGE;
     public static final Item DARK_OAK_HEDGE;
     public static final Item MANGROVE_HEDGE;
+    public static final Item CHERRY_HEDGE;
     public static final Item AZALEA_HEDGE;
     public static final Item FLOWERING_AZALEA_HEDGE;
     public static final Item RED_GLIMMER_CRYSTAL;
@@ -127,7 +139,37 @@ public class VAItems {
     public static final Item GREEN_ROCK_CANDY;
     public static final Item BLUE_ROCK_CANDY;
     public static final Item MIXED_ROCK_CANDY;
+    public static final Item HANGING_GLOWSILK;
+    public static final Item GLOWSILK;
+    public static final Item LUMWASP_NEST;
+    public static final Item CARVED_STONE;
+    public static final Item SILKBULB;
+    public static final Item WHITE_SILKBULB;
+    public static final Item LIGHT_GRAY_SILKBULB;
+    public static final Item GRAY_SILKBULB;
+    public static final Item BLACK_SILKBULB;
+    public static final Item BROWN_SILKBULB;
+    public static final Item RED_SILKBULB;
+    public static final Item ORANGE_SILKBULB;
+    public static final Item YELLOW_SILKBULB;
+    public static final Item LIME_SILKBULB;
+    public static final Item GREEN_SILKBULB;
+    public static final Item CYAN_SILKBULB;
+    public static final Item LIGHT_BLUE_SILKBULB;
+    public static final Item BLUE_SILKBULB;
+    public static final Item PURPLE_SILKBULB;
+    public static final Item MAGENTA_SILKBULB;
+    public static final Item ACID_BUCKET;
+    public static final Item PINK_SILKBULB;
     public static final Item APPLICABLE_POTION;
+    public static final Item TOOL_GILD_SMITHING_TEMPLATE;
+    public static final Item IOLITE;
+    public static final Item IOLITE_ORE;
+    public static final Item IOLITE_BLOCK;
+    public static final Item WARP_ANCHOR;
+    public static final Item WARP_TETHER;
+    public static final Item ENTANGLEMENT_DRIVE;
+    private static final Item LUMWASP_SPAWN_EGG;
 
     public static final FoodComponent FRIED_EGG_FOOD = (new FoodComponent.Builder().hunger(4).saturationModifier(0.4F).build());
     public static final FoodComponent ROCK_CANDY_FOOD = (new FoodComponent.Builder().hunger(2).saturationModifier(0.1F).build());
@@ -153,9 +195,53 @@ public class VAItems {
     public static final ToolSet EMERALD_STEEL_TOOL_SET;
     public static final ToolSet QUARTZ_STEEL_TOOL_SET;
 
-    private static Item prev;
+    private static final Text TOOL_GILD_APPLIES_TO_TEXT;
+    private static final Text TOOL_GILD_INGREDIENTS_TEXT;
+    private static final Text TOOL_GILD_BASE_SLOT_DESCRIPTION_TEXT;
+    private static final Text TOOL_GILD_ADDITIONS_SLOT_DESCRIPTION_TEXT;
+    private static final Text TOOL_GILD_TEXT;
+    private static final Identifier EMPTY_ARMOR_SLOT_HELMET_TEXTURE;
+    private static final Identifier EMPTY_ARMOR_SLOT_CHESTPLATE_TEXTURE;
+    private static final Identifier EMPTY_ARMOR_SLOT_LEGGINGS_TEXTURE;
+    private static final Identifier EMPTY_ARMOR_SLOT_BOOTS_TEXTURE;
+    private static final Identifier EMPTY_SLOT_HOE_TEXTURE;
+    private static final Identifier EMPTY_SLOT_AXE_TEXTURE;
+    private static final Identifier EMPTY_SLOT_SWORD_TEXTURE;
+    private static final Identifier EMPTY_SLOT_SHOVEL_TEXTURE;
+    private static final Identifier EMPTY_SLOT_PICKAXE_TEXTURE;
+    private static final Identifier EMPTY_SLOT_INGOT_TEXTURE;
+    private static final Identifier EMPTY_SLOT_REDSTONE_DUST_TEXTURE;
+    private static final Identifier EMPTY_SLOT_QUARTZ_TEXTURE;
+    private static final Identifier EMPTY_SLOT_EMERALD_TEXTURE;
+    private static final Identifier EMPTY_SLOT_DIAMOND_TEXTURE;
+    private static final Identifier EMPTY_SLOT_AMETHYST_TEXTURE;
+    private static final Identifier EMPTY_SLOT_LAPIS_LAZULI_TEXTURE;
 
     static {
+
+        TOOL_GILD_APPLIES_TO_TEXT = Text.translatable(Util.createTranslationKey("item", idOf("smithing_template.tool_gild.applies_to"))).formatted(Formatting.BLUE);
+        TOOL_GILD_INGREDIENTS_TEXT = Text.translatable(Util.createTranslationKey("item", idOf("smithing_template.tool_gild.ingredients"))).formatted(Formatting.BLUE);
+        TOOL_GILD_BASE_SLOT_DESCRIPTION_TEXT = Text.translatable(Util.createTranslationKey("item", idOf("smithing_template.tool_gild.base_slot_description")));
+        TOOL_GILD_ADDITIONS_SLOT_DESCRIPTION_TEXT = Text.translatable(Util.createTranslationKey("item", idOf("smithing_template.tool_gild.additions_slot_description")));
+        TOOL_GILD_TEXT = Text.translatable(Util.createTranslationKey("upgrade", idOf("tool_gild"))).formatted(Formatting.GRAY);
+
+        EMPTY_ARMOR_SLOT_HELMET_TEXTURE = new Identifier("item/empty_armor_slot_helmet");
+        EMPTY_ARMOR_SLOT_CHESTPLATE_TEXTURE = new Identifier("item/empty_armor_slot_chestplate");
+        EMPTY_ARMOR_SLOT_LEGGINGS_TEXTURE = new Identifier("item/empty_armor_slot_leggings");
+        EMPTY_ARMOR_SLOT_BOOTS_TEXTURE = new Identifier("item/empty_armor_slot_boots");
+        EMPTY_SLOT_HOE_TEXTURE = new Identifier("item/empty_slot_hoe");
+        EMPTY_SLOT_AXE_TEXTURE = new Identifier("item/empty_slot_axe");
+        EMPTY_SLOT_SWORD_TEXTURE = new Identifier("item/empty_slot_sword");
+        EMPTY_SLOT_SHOVEL_TEXTURE = new Identifier("item/empty_slot_shovel");
+        EMPTY_SLOT_PICKAXE_TEXTURE = new Identifier("item/empty_slot_pickaxe");
+        EMPTY_SLOT_INGOT_TEXTURE = new Identifier("item/empty_slot_ingot");
+        EMPTY_SLOT_REDSTONE_DUST_TEXTURE = new Identifier("item/empty_slot_redstone_dust");
+        EMPTY_SLOT_QUARTZ_TEXTURE = new Identifier("item/empty_slot_quartz");
+        EMPTY_SLOT_EMERALD_TEXTURE = new Identifier("item/empty_slot_emerald");
+        EMPTY_SLOT_DIAMOND_TEXTURE = new Identifier("item/empty_slot_diamond");
+        EMPTY_SLOT_AMETHYST_TEXTURE = new Identifier("item/empty_slot_amethyst");
+        EMPTY_SLOT_LAPIS_LAZULI_TEXTURE = new Identifier("item/empty_slot_lapis_lazuli");
+
         CLIMBING_ROPE = register("climbing_rope", new AliasedBlockItem(VABlocks.CLIMBING_ROPE_ANCHOR, new FabricItemSettings().maxCount(16)), ItemGroups.TOOLS, Items.LEAD);
 
         HORNFELS = registerBlockItem("hornfels", VABlocks.HORNFELS, new ItemGroupLocation(ItemGroups.NATURAL, Items.DEEPSLATE), new ItemGroupLocation(ItemGroups.BUILDING_BLOCKS, Items.DEEPSLATE_TILE_WALL));
@@ -200,20 +286,21 @@ public class VAItems {
         SYENITE_BRICK_WALL = registerBlockItem("syenite_brick_wall", VABlocks.SYENITE_BRICK_WALL, ItemGroups.BUILDING_BLOCKS, SYENITE_BRICK_SLAB);
 
         OAK_HEDGE = registerBlockItem("oak_hedge", VABlocks.OAK_HEDGE, ItemGroups.BUILDING_BLOCKS, Items.WARPED_BUTTON);
-        SPRUCE_HEDGE = registerBlockItem("spruce_hedge", VABlocks.SPRUCE_HEDGE, ItemGroups.BUILDING_BLOCKS, OAK_HEDGE);
-        BIRCH_HEDGE = registerBlockItem("birch_hedge", VABlocks.BIRCH_HEDGE, ItemGroups.BUILDING_BLOCKS, SPRUCE_HEDGE);
-        JUNGLE_HEDGE = registerBlockItem("jungle_hedge", VABlocks.JUNGLE_HEDGE, ItemGroups.BUILDING_BLOCKS, BIRCH_HEDGE);
-        ACACIA_HEDGE = registerBlockItem("acacia_hedge", VABlocks.ACACIA_HEDGE, ItemGroups.BUILDING_BLOCKS, JUNGLE_HEDGE);
-        DARK_OAK_HEDGE = registerBlockItem("dark_oak_hedge", VABlocks.DARK_OAK_HEDGE, ItemGroups.BUILDING_BLOCKS, ACACIA_HEDGE);
-        MANGROVE_HEDGE = registerBlockItem("mangrove_hedge", VABlocks.MANGROVE_HEDGE, ItemGroups.BUILDING_BLOCKS, DARK_OAK_HEDGE);
-        AZALEA_HEDGE = registerBlockItem("azalea_hedge", VABlocks.AZALEA_HEDGE, ItemGroups.BUILDING_BLOCKS, MANGROVE_HEDGE);
-        FLOWERING_AZALEA_HEDGE = registerBlockItem("flowering_azalea_hedge", VABlocks.FLOWERING_AZALEA_HEDGE, ItemGroups.BUILDING_BLOCKS, AZALEA_HEDGE);
+        SPRUCE_HEDGE = registerBlockItem("spruce_hedge", VABlocks.SPRUCE_HEDGE, ItemGroups.BUILDING_BLOCKS, prev);
+        BIRCH_HEDGE = registerBlockItem("birch_hedge", VABlocks.BIRCH_HEDGE, ItemGroups.BUILDING_BLOCKS, prev);
+        JUNGLE_HEDGE = registerBlockItem("jungle_hedge", VABlocks.JUNGLE_HEDGE, ItemGroups.BUILDING_BLOCKS, prev);
+        ACACIA_HEDGE = registerBlockItem("acacia_hedge", VABlocks.ACACIA_HEDGE, ItemGroups.BUILDING_BLOCKS, prev);
+        DARK_OAK_HEDGE = registerBlockItem("dark_oak_hedge", VABlocks.DARK_OAK_HEDGE, ItemGroups.BUILDING_BLOCKS, prev);
+        MANGROVE_HEDGE = registerBlockItem("mangrove_hedge", VABlocks.MANGROVE_HEDGE, ItemGroups.BUILDING_BLOCKS, prev);
+        AZALEA_HEDGE = registerBlockItem("azalea_hedge", VABlocks.AZALEA_HEDGE, ItemGroups.BUILDING_BLOCKS, prev);
+        FLOWERING_AZALEA_HEDGE = registerBlockItem("flowering_azalea_hedge", VABlocks.FLOWERING_AZALEA_HEDGE, ItemGroups.BUILDING_BLOCKS, prev);
+        CHERRY_HEDGE = registerBlockItem("cherry_hedge", VABlocks.CHERRY_HEDGE, ItemGroups.BUILDING_BLOCKS, MANGROVE_HEDGE);
 
-        RED_GLIMMER_CRYSTAL = registerBlockItem("red_glimmer_crystal", VABlocks.RED_GLIMMER_CRYSTAL, ItemGroups.NATURAL, Items.POINTED_DRIPSTONE);
-        GREEN_GLIMMER_CRYSTAL = registerBlockItem("green_glimmer_crystal", VABlocks.GREEN_GLIMMER_CRYSTAL, ItemGroups.NATURAL, RED_GLIMMER_CRYSTAL);
-        BLUE_GLIMMER_CRYSTAL = registerBlockItem("blue_glimmer_crystal", VABlocks.BLUE_GLIMMER_CRYSTAL, ItemGroups.NATURAL, GREEN_GLIMMER_CRYSTAL);
-        CRYSTAL_DUST = register("crystal_dust", ItemGroups.INGREDIENTS, Items.GUNPOWDER);
-        SPOTLIGHT = registerBlockItem("spotlight", VABlocks.SPOTLIGHT, ItemGroups.REDSTONE, Items.REDSTONE_LAMP);
+        RED_GLIMMER_CRYSTAL = registerBlockItem("red_glimmer_crystal", VABlocks.RED_GLIMMER_CRYSTAL, ItemGroups.NATURAL, Items.POINTED_DRIPSTONE, VirtualAdditions.PREVIEW);
+        GREEN_GLIMMER_CRYSTAL = registerBlockItem("green_glimmer_crystal", VABlocks.GREEN_GLIMMER_CRYSTAL, ItemGroups.NATURAL, prev, VirtualAdditions.PREVIEW);
+        BLUE_GLIMMER_CRYSTAL = registerBlockItem("blue_glimmer_crystal", VABlocks.BLUE_GLIMMER_CRYSTAL, ItemGroups.NATURAL, prev, VirtualAdditions.PREVIEW);
+        CRYSTAL_DUST = register("crystal_dust", ItemGroups.INGREDIENTS, Items.GUNPOWDER, VirtualAdditions.PREVIEW);
+        SPOTLIGHT = registerBlockItem("spotlight", VABlocks.SPOTLIGHT, ItemGroups.REDSTONE, Items.REDSTONE_LAMP, VirtualAdditions.PREVIEW);
 
         RAW_STEEL_BLOCK = registerBlockItem("raw_steel_block", VABlocks.RAW_STEEL_BLOCK, ItemGroups.NATURAL, Items.RAW_GOLD_BLOCK);
         STEEL_BLOCK = registerBlockItem("steel_block", VABlocks.STEEL_BLOCK, ItemGroups.BUILDING_BLOCKS, Items.GOLD_BLOCK);
@@ -222,22 +309,47 @@ public class VAItems {
         STEEL_BOMB = register("steel_bomb", new SteelBombItem(new FabricItemSettings().maxCount(16)), new ItemGroupLocation(ItemGroups.COMBAT, Items.SNOWBALL), new ItemGroupLocation(ItemGroups.TOOLS, CLIMBING_ROPE));
         STEEL_SWORD = register("steel_sword", new SwordItem(SteelToolMaterial.INSTANCE, 3, -2.4F, new FabricItemSettings()), ItemGroups.COMBAT, Items.GOLDEN_SWORD);
         STEEL_SHOVEL = register("steel_shovel", new ShovelItem(SteelToolMaterial.INSTANCE, 1.5F, -3.0F, new FabricItemSettings()), ItemGroups.TOOLS, Items.GOLDEN_HOE);
-        STEEL_PICKAXE = register("steel_pickaxe", new CustomPickaxeItem(SteelToolMaterial.INSTANCE, 1, -2.8F, new FabricItemSettings()), ItemGroups.TOOLS, STEEL_SHOVEL);
-        STEEL_AXE = register("steel_axe", new CustomAxeItem(SteelToolMaterial.INSTANCE, 6.0F, -3.1F, new FabricItemSettings()), ItemGroups.TOOLS, STEEL_PICKAXE);
-        STEEL_HOE = register("steel_hoe", new CustomHoeItem(SteelToolMaterial.INSTANCE, -2, -1.0F, new FabricItemSettings()), ItemGroups.TOOLS, STEEL_AXE);
-        STEEL_HELMET = register("steel_helmet", new ArmorItem(CustomArmorMaterials.STEEL, EquipmentSlot.HEAD, new Item.Settings()), ItemGroups.COMBAT, Items.GOLDEN_BOOTS);
-        STEEL_CHESTPLATE = register("steel_chestplate", new ArmorItem(CustomArmorMaterials.STEEL, EquipmentSlot.CHEST, new Item.Settings()), ItemGroups.COMBAT, STEEL_HELMET);
-        STEEL_LEGGINGS = register("steel_leggings", new ArmorItem(CustomArmorMaterials.STEEL, EquipmentSlot.LEGS, new Item.Settings()), ItemGroups.COMBAT, STEEL_CHESTPLATE);
-        STEEL_BOOTS = register("steel_boots", new ArmorItem(CustomArmorMaterials.STEEL, EquipmentSlot.FEET, new Item.Settings()), ItemGroups.COMBAT, STEEL_LEGGINGS);
+        STEEL_PICKAXE = register("steel_pickaxe", new CustomPickaxeItem(SteelToolMaterial.INSTANCE, 1, -2.8F, new FabricItemSettings()), ItemGroups.TOOLS, prev);
+        STEEL_AXE = register("steel_axe", new CustomAxeItem(SteelToolMaterial.INSTANCE, 6.0F, -3.1F, new FabricItemSettings()), new ItemGroupLocation(ItemGroups.TOOLS, prev), new ItemGroupLocation(ItemGroups.COMBAT, Items.GOLDEN_AXE));
+        STEEL_HOE = register("steel_hoe", new CustomHoeItem(SteelToolMaterial.INSTANCE, -2, -1.0F, new FabricItemSettings()), ItemGroups.TOOLS, prev);
+        STEEL_HELMET = register("steel_helmet", new ArmorItem(CustomArmorMaterials.STEEL, ArmorItem.Type.HELMET, new Item.Settings()), ItemGroups.COMBAT, Items.GOLDEN_BOOTS);
+        STEEL_CHESTPLATE = register("steel_chestplate", new ArmorItem(CustomArmorMaterials.STEEL, ArmorItem.Type.CHESTPLATE, new Item.Settings()), ItemGroups.COMBAT, prev);
+        STEEL_LEGGINGS = register("steel_leggings", new ArmorItem(CustomArmorMaterials.STEEL, ArmorItem.Type.LEGGINGS, new Item.Settings()), ItemGroups.COMBAT, prev);
+        STEEL_BOOTS = register("steel_boots", new ArmorItem(CustomArmorMaterials.STEEL, ArmorItem.Type.BOOTS, new Item.Settings()), ItemGroups.COMBAT, prev);
 
         COTTON_SEEDS = register("cotton_seeds", new AliasedBlockItem(VABlocks.COTTON, new FabricItemSettings()), ItemGroups.NATURAL, Items.BEETROOT_SEEDS);
         COTTON = register("cotton", ItemGroups.INGREDIENTS, Items.WHEAT);
         FRIED_EGG = register("fried_egg", new Item(new FabricItemSettings().food(FRIED_EGG_FOOD)), ItemGroups.FOOD_AND_DRINK, Items.COOKED_CHICKEN);
 
-        RED_ROCK_CANDY = register("red_rock_candy", new RockCandyItem(new FabricItemSettings().food(ROCK_CANDY_FOOD)), ItemGroups.FOOD_AND_DRINK, Items.COOKIE);
-        GREEN_ROCK_CANDY = register("green_rock_candy", new RockCandyItem(new FabricItemSettings().food(ROCK_CANDY_FOOD)), ItemGroups.FOOD_AND_DRINK, prev);
-        BLUE_ROCK_CANDY = register("blue_rock_candy", new RockCandyItem(new FabricItemSettings().food(ROCK_CANDY_FOOD)), ItemGroups.FOOD_AND_DRINK, prev);
-        MIXED_ROCK_CANDY = register("mixed_rock_candy", new RockCandyItem(new FabricItemSettings().food(ROCK_CANDY_FOOD)), ItemGroups.FOOD_AND_DRINK, prev);
+        RED_ROCK_CANDY = register("red_rock_candy", new RockCandyItem(new FabricItemSettings().food(ROCK_CANDY_FOOD).requires(VirtualAdditions.PREVIEW)), ItemGroups.FOOD_AND_DRINK, Items.COOKIE);
+        GREEN_ROCK_CANDY = register("green_rock_candy", new RockCandyItem(new FabricItemSettings().food(ROCK_CANDY_FOOD).requires(VirtualAdditions.PREVIEW)), ItemGroups.FOOD_AND_DRINK, prev);
+        BLUE_ROCK_CANDY = register("blue_rock_candy", new RockCandyItem(new FabricItemSettings().food(ROCK_CANDY_FOOD).requires(VirtualAdditions.PREVIEW)), ItemGroups.FOOD_AND_DRINK, prev);
+        MIXED_ROCK_CANDY = register("mixed_rock_candy", new RockCandyItem(new FabricItemSettings().food(ROCK_CANDY_FOOD).requires(VirtualAdditions.PREVIEW)), ItemGroups.FOOD_AND_DRINK, prev);
+
+        LUMWASP_NEST = registerBlockItem("lumwasp_nest", VABlocks.LUMWASP_NEST, ItemGroups.NATURAL, Items.POINTED_DRIPSTONE, VirtualAdditions.PREVIEW);
+        CARVED_STONE = registerBlockItem("carved_stone", VABlocks.CARVED_STONE, ItemGroups.NATURAL, prev, VirtualAdditions.PREVIEW);
+        HANGING_GLOWSILK = registerBlockItem("hanging_glowsilk", VABlocks.HANGING_GLOWSILK, ItemGroups.NATURAL, prev, VirtualAdditions.PREVIEW);
+        GLOWSILK = register("glowsilk", ItemGroups.INGREDIENTS, Items.STRING, VirtualAdditions.PREVIEW);
+        SILKBULB = registerBlockItem("silkbulb", VABlocks.SILKBULB, new ItemGroupLocation[]{new ItemGroupLocation(ItemGroups.FUNCTIONAL, Items.GLOWSTONE), new ItemGroupLocation(ItemGroups.COLORED_BLOCKS, Items.PINK_BANNER)}, VirtualAdditions.PREVIEW);
+
+        WHITE_SILKBULB = registerBlockItem("white_silkbulb", VABlocks.WHITE_SILKBULB, ItemGroups.COLORED_BLOCKS, prev, VirtualAdditions.PREVIEW);
+        LIGHT_GRAY_SILKBULB = registerBlockItem("light_gray_silkbulb", VABlocks.LIGHT_GRAY_SILKBULB, ItemGroups.COLORED_BLOCKS, prev, VirtualAdditions.PREVIEW);
+        GRAY_SILKBULB = registerBlockItem("gray_silkbulb", VABlocks.GRAY_SILKBULB, ItemGroups.COLORED_BLOCKS, prev, VirtualAdditions.PREVIEW);
+        BLACK_SILKBULB = registerBlockItem("black_silkbulb", VABlocks.BLACK_SILKBULB, ItemGroups.COLORED_BLOCKS, prev, VirtualAdditions.PREVIEW);
+        BROWN_SILKBULB = registerBlockItem("brown_silkbulb", VABlocks.BROWN_SILKBULB, ItemGroups.COLORED_BLOCKS, prev, VirtualAdditions.PREVIEW);
+        RED_SILKBULB = registerBlockItem("red_silkbulb", VABlocks.RED_SILKBULB, ItemGroups.COLORED_BLOCKS, prev, VirtualAdditions.PREVIEW);
+        ORANGE_SILKBULB = registerBlockItem("orange_silkbulb", VABlocks.ORANGE_SILKBULB, ItemGroups.COLORED_BLOCKS, prev, VirtualAdditions.PREVIEW);
+        YELLOW_SILKBULB = registerBlockItem("yellow_silkbulb", VABlocks.YELLOW_SILKBULB, ItemGroups.COLORED_BLOCKS, prev, VirtualAdditions.PREVIEW);
+        LIME_SILKBULB = registerBlockItem("lime_silkbulb", VABlocks.LIME_SILKBULB, ItemGroups.COLORED_BLOCKS, prev, VirtualAdditions.PREVIEW);
+        GREEN_SILKBULB = registerBlockItem("green_silkbulb", VABlocks.GREEN_SILKBULB, ItemGroups.COLORED_BLOCKS, prev, VirtualAdditions.PREVIEW);
+        CYAN_SILKBULB = registerBlockItem("cyan_silkbulb", VABlocks.CYAN_SILKBULB, ItemGroups.COLORED_BLOCKS, prev, VirtualAdditions.PREVIEW);
+        LIGHT_BLUE_SILKBULB = registerBlockItem("light_blue_silkbulb", VABlocks.LIGHT_BLUE_SILKBULB, ItemGroups.COLORED_BLOCKS, prev, VirtualAdditions.PREVIEW);
+        BLUE_SILKBULB = registerBlockItem("blue_silkbulb", VABlocks.BLUE_SILKBULB, ItemGroups.COLORED_BLOCKS, prev, VirtualAdditions.PREVIEW);
+        PURPLE_SILKBULB = registerBlockItem("purple_silkbulb", VABlocks.PURPLE_SILKBULB, ItemGroups.COLORED_BLOCKS, prev, VirtualAdditions.PREVIEW);
+        MAGENTA_SILKBULB = registerBlockItem("magenta_silkbulb", VABlocks.MAGENTA_SILKBULB, ItemGroups.COLORED_BLOCKS, prev, VirtualAdditions.PREVIEW);
+        PINK_SILKBULB = registerBlockItem("pink_silkbulb", VABlocks.PINK_SILKBULB, ItemGroups.COLORED_BLOCKS, prev, VirtualAdditions.PREVIEW);
+
+        ACID_BUCKET = register("acid_bucket", new AcidBucketItem(VAFluids.ACID, new FabricItemSettings().recipeRemainder(Items.BUCKET).maxCount(1).requires(VirtualAdditions.PREVIEW)), ItemGroups.TOOLS, Items.LAVA_BUCKET);
 
         APPLICABLE_POTION = register("applicable_potion", new ApplicablePotionItem(new FabricItemSettings()));
 
@@ -246,6 +358,18 @@ public class VAItems {
         IRON_TOOL_SET = new ToolSet(Items.IRON_SWORD, Items.IRON_SHOVEL, Items.IRON_PICKAXE, Items.IRON_AXE, Items.IRON_HOE, "iron");
         NETHERITE_TOOL_SET = new ToolSet(Items.NETHERITE_SWORD, Items.NETHERITE_SHOVEL, Items.NETHERITE_PICKAXE, Items.NETHERITE_AXE, Items.NETHERITE_HOE, "netherite");
         STEEL_TOOL_SET = new ToolSet(STEEL_SWORD, STEEL_SHOVEL, STEEL_PICKAXE, STEEL_AXE, STEEL_HOE, "steel");
+
+        TOOL_GILD_SMITHING_TEMPLATE = register("tool_gild_smithing_template", new SmithingTemplateItem(TOOL_GILD_APPLIES_TO_TEXT, TOOL_GILD_INGREDIENTS_TEXT, TOOL_GILD_TEXT, TOOL_GILD_BASE_SLOT_DESCRIPTION_TEXT, TOOL_GILD_ADDITIONS_SLOT_DESCRIPTION_TEXT,
+                List.of(EMPTY_SLOT_SWORD_TEXTURE, EMPTY_SLOT_SHOVEL_TEXTURE, EMPTY_SLOT_PICKAXE_TEXTURE, EMPTY_SLOT_AXE_TEXTURE, EMPTY_SLOT_HOE_TEXTURE),
+                List.of(EMPTY_SLOT_AMETHYST_TEXTURE, EMPTY_SLOT_INGOT_TEXTURE, EMPTY_SLOT_EMERALD_TEXTURE, EMPTY_SLOT_QUARTZ_TEXTURE)
+        ), ItemGroups.INGREDIENTS, Items.NETHERITE_UPGRADE_SMITHING_TEMPLATE);
+
+        IOLITE = register("iolite", ItemGroups.INGREDIENTS, Items.ANCIENT_DEBRIS, VirtualAdditions.PREVIEW);
+        IOLITE_ORE = registerBlockItem("iolite_ore", VABlocks.IOLITE_ORE, ItemGroups.NATURAL, Items.ANCIENT_DEBRIS, VirtualAdditions.PREVIEW);
+        IOLITE_BLOCK = registerBlockItem("iolite_block", VABlocks.IOLITE_BLOCK, ItemGroups.BUILDING_BLOCKS, STEEL_BLOCK, VirtualAdditions.PREVIEW);
+        WARP_ANCHOR = register("warp_anchor", new BlockItem(VABlocks.WARP_ANCHOR, new FabricItemSettings().rarity(Rarity.RARE).requires(VirtualAdditions.PREVIEW)), ItemGroups.REDSTONE, Items.CAULDRON);
+        WARP_TETHER = register("warp_tether", new BlockItem(VABlocks.WARP_TETHER, new FabricItemSettings().rarity(Rarity.RARE).requires(VirtualAdditions.PREVIEW)), ItemGroups.REDSTONE, prev);
+        ENTANGLEMENT_DRIVE = register("entanglement_drive", new BlockItem(VABlocks.ENTANGLEMENT_DRIVE, new FabricItemSettings().rarity(Rarity.RARE).requires(VirtualAdditions.PREVIEW)), ItemGroups.REDSTONE, prev);
 
         AMETHYST_DIAMOND_TOOL_SET = registerGildedToolSet(DIAMOND_TOOL_SET, GildType.AMETHYST);
         COPPER_DIAMOND_TOOL_SET = registerGildedToolSet(DIAMOND_TOOL_SET, GildType.COPPER);
@@ -267,17 +391,31 @@ public class VAItems {
         COPPER_STEEL_TOOL_SET = registerGildedToolSet(STEEL_TOOL_SET, GildType.COPPER);
         EMERALD_STEEL_TOOL_SET = registerGildedToolSet(STEEL_TOOL_SET, GildType.EMERALD);
         QUARTZ_STEEL_TOOL_SET = registerGildedToolSet(STEEL_TOOL_SET, GildType.QUARTZ);
+
+        LUMWASP_SPAWN_EGG = register("lumwasp_spawn_egg", new SpawnEggItem(VAEntityType.LUMWASP, 0x2ee0a6, 0x2c424b, new Item.Settings().requires(VirtualAdditions.PREVIEW)), ItemGroups.SPAWN_EGGS, Items.LLAMA_SPAWN_EGG);
     }
 
     public static void init(){
-        //Dispenser Behaviors
-        registerDispenserBehavior(STEEL_BOMB, new ProjectileDispenserBehavior() {
+        initDispenserBehaviors();
+        initCompostables();
+        initLootTableModifiers();
+        initBrewingRecipes();
+
+        ItemGroupEvents.modifyEntriesEvent(ItemGroups.FOOD_AND_DRINK).register( (content) -> {
+            for (Potion potion : Registries.POTION) {
+                if (!(potion.equals(Potions.EMPTY))) content.add(PotionUtil.setPotion(new ItemStack(APPLICABLE_POTION), potion));
+            }
+        } );
+    }
+
+    protected static void initDispenserBehaviors() {
+        DispenserBlock.registerBehavior(STEEL_BOMB, new ProjectileDispenserBehavior() {
             protected ProjectileEntity createProjectile(World world, Position position, ItemStack stack) {
                 return Util.make(new SteelBombEntity(world, position.getX(), position.getY(), position.getZ()), (steelBombEntity) -> steelBombEntity.setItem(stack));
             }
         });
 
-        registerDispenserBehavior(CLIMBING_ROPE, new ProjectileDispenserBehavior() {
+        DispenserBlock.registerBehavior(CLIMBING_ROPE, new ProjectileDispenserBehavior() {
             protected ProjectileEntity createProjectile(World world, Position position, ItemStack stack) {
                 ClimbingRopeEntity climbingRopeEntity = new ClimbingRopeEntity( position.getX(), position.getY(), position.getZ(), world);
                 climbingRopeEntity.pickupType = PersistentProjectileEntity.PickupPermission.ALLOWED;
@@ -285,11 +423,26 @@ public class VAItems {
             }
         });
 
-        //Compostable Items
+        DispenserBlock.registerBehavior(ACID_BUCKET, new ItemDispenserBehavior(){
+            private final ItemDispenserBehavior fallbackBehavior = new ItemDispenserBehavior();
+
+            public ItemStack dispenseSilently(BlockPointer pointer, ItemStack stack) {
+                FluidModificationItem fluidModificationItem = (FluidModificationItem)stack.getItem();
+                BlockPos blockPos = pointer.getPos().offset(pointer.getBlockState().get(DispenserBlock.FACING));
+                World world = pointer.getWorld();
+                if (fluidModificationItem.placeFluid(null, world, blockPos, null)) {
+                    fluidModificationItem.onEmptied(null, world, stack, blockPos);
+                    return new ItemStack(Items.BUCKET);
+                } else {
+                    return this.fallbackBehavior.dispense(pointer, stack);
+                }
+            }});
+    }
+    protected static void initCompostables() {
         ComposterBlockAccessor.virtualAdditions$registerCompostableItem(0.3F, COTTON_SEEDS);
         ComposterBlockAccessor.virtualAdditions$registerCompostableItem(0.3F, COTTON);
-
-        //Modified Loot Tables
+    }
+    protected static void initLootTableModifiers() {
         LootTableEvents.MODIFY.register(((resourceManager, lootManager, id, tableBuilder, source) -> {
             if (source.isBuiltin() && Blocks.GRASS.getLootTableId().equals(id)) {
                 LootPool.Builder builder = LootPool.builder()
@@ -302,98 +455,39 @@ public class VAItems {
             }
         }));
 
-        //Brewing Recipes
-        BrewingRecipeRegistry.registerPotionType(APPLICABLE_POTION);
-        BrewingRecipeRegistry.registerItemRecipe(Items.POTION, Items.SLIME_BALL, APPLICABLE_POTION);
+        LootTableEvents.MODIFY.register( (resourceManager, lootManager, id, tableBuilder, source) -> {
+            if (!source.isBuiltin()) return;
+            if (LootTables.ABANDONED_MINESHAFT_CHEST.equals(id)) {
+                LootPool.Builder builder = LootPool.builder()
+                        .with(ItemEntry.builder(CLIMBING_ROPE).weight(5).apply(SetCountLootFunction.builder(UniformLootNumberProvider.create(5.0F, 16.0F))))
+                        .with(ItemEntry.builder(Items.AIR).weight(5));
+                tableBuilder.pool(builder);
+            }
+        });
 
-        ItemGroupEvents.modifyEntriesEvent(ItemGroups.FOOD_AND_DRINK).register( (content) -> {
-            for (Potion potion : Registries.POTION) {
-                if (!(potion.equals(Potions.EMPTY))) content.add(PotionUtil.setPotion(new ItemStack(APPLICABLE_POTION), potion));
+        LootTableEvents.MODIFY.register( (resourceManager, lootManager, id, tableBuilder, source) -> {
+            if (!source.isBuiltin()) return;
+            if (LootTables.VILLAGE_TOOLSMITH_CHEST.equals(id) || LootTables.VILLAGE_WEAPONSMITH_CHEST.equals(id)) {
+                tableBuilder.modifyPools( modifier -> modifier.with(ItemEntry.builder(STEEL_INGOT).weight(3).apply(SetCountLootFunction.builder(UniformLootNumberProvider.create(1.0F, 5.0F)))));
             }
         } );
-    }
+        LootTableEvents.MODIFY.register( (resourceManager, lootManager, id, tableBuilder, source) -> {
+            if (!source.isBuiltin()) return;
+            if (LootTables.JUNGLE_TEMPLE_CHEST.equals(id)) {
+                tableBuilder.modifyPools( modifier -> modifier.with(ItemEntry.builder(STEEL_INGOT).weight(7).apply(SetCountLootFunction.builder(UniformLootNumberProvider.create(1.0F, 5.0F)))));
+            }
+        } );
+        LootTableEvents.MODIFY.register( (resourceManager, lootManager, id, tableBuilder, source) -> {
+            if (!source.isBuiltin()) return;
+            if (LootTables.ANCIENT_CITY_CHEST.equals(id)) {
+                tableBuilder.modifyPools( modifier -> modifier.with(ItemEntry.builder(STEEL_LEGGINGS).weight(3).apply(EnchantWithLevelsLootFunction.builder(UniformLootNumberProvider.create(25, 40)).allowTreasureEnchantments())));
+            }
+        } );
 
-    //Register an Item
-    protected static <T extends Item> Item register(String id, T item) { // Register a given item
-        Item item1 = Registry.register(Registries.ITEM, idOf(id), item);
-        prev = item1;
-        return item1;
     }
-    protected static <T extends Item> Item register(String id, T item, ItemGroup itemGroup) { // Register an item, add to a group
-        Item item1 = register(id, item);
-        ItemGroupEvents.modifyEntriesEvent(itemGroup).register( (content) -> content.add(item1));
-        prev = item1;
-        return item1;
-    }
-    protected static <T extends Item> Item register(String id, T item, ItemGroup itemGroup, Item itemAfter) { // Register an item, add to a specific location in a group
-        Item item1 = register(id, item);
-        ItemGroupEvents.modifyEntriesEvent(itemGroup).register( (content) -> content.addAfter(itemAfter, item1));
-        prev = item1;
-        return item1;
-    }
-
-    protected static <T extends Item> Item register(String id, T item, ItemGroupLocation... locations) { // Register an item, add to several locations
-        Item item1 = register(id, item);
-        for (ItemGroupLocation location : locations) {
-            ItemGroupEvents.modifyEntriesEvent(location.GROUP).register( (content) -> content.addAfter(location.AFTER, item1));
-        }
-        prev = item1;
-        return item1;
-    }
-
-    protected static Item register(String id) { // Create and register an item
-        FabricItemSettings settings = new FabricItemSettings();
-        return register(id, new Item(settings));
-    }
-
-    protected static Item register(String id, ItemGroup itemGroup) { // Create and register an item, give a group
-        FabricItemSettings settings = new FabricItemSettings();
-        return register(id, new Item(settings), itemGroup);
-    }
-
-    protected static Item register(String id, ItemGroup itemGroup, Item itemAfter) { // Create and register an item, give a location in a group
-        FabricItemSettings settings = new FabricItemSettings();
-        return register(id, new Item(settings), itemGroup, itemAfter);
-    }
-
-    protected static Item register(String id, ItemGroupLocation... locations) { // Create and register an item, give several locations
-        FabricItemSettings settings = new FabricItemSettings();
-        Item item = register(id, new Item(settings), locations);
-        return item;
-    }
-
-    protected static Item registerBlockItem(String id, Block block) { // Create and register a block item
-        return register(id, new BlockItem(block, new FabricItemSettings()));
-    }
-
-    protected static Item registerBlockItem(String id, Block block, ItemGroup itemGroup) { // Create and register a block item, give a group
-        return register(id, new BlockItem(block, new FabricItemSettings()), itemGroup);
-    }
-
-    protected static Item registerBlockItem(String id, Block block, ItemGroup itemGroup, Item itemAfter) { // Create and register a block item, give a location in a group
-        return register(id, new BlockItem(block, new FabricItemSettings()), itemGroup, itemAfter);
-    }
-
-    protected static Item registerBlockItem(String id, Block block, ItemGroupLocation... locations) { // Create and register a block item, give several locations
-        Item item = register(id, new BlockItem(block, new FabricItemSettings()), locations);
-        return item;
-    }
-
-    protected static ToolSet registerGildedToolSet(ToolSet baseSet, GildType gildedToolMaterial) {
-        String newName = gildedToolMaterial.name().toLowerCase(Locale.ROOT) +"_"+ baseSet.NAME;
-        return new ToolSet(
-                register(newName +"_sword", new GildedSwordItem(gildedToolMaterial, (SwordItem) baseSet.SWORD, GildedToolUtil.settingsOf(baseSet.SWORD))),
-                register(newName +"_shovel", new GildedShovelItem(gildedToolMaterial, (ShovelItem) baseSet.SHOVEL, GildedToolUtil.settingsOf(baseSet.SHOVEL))),
-                register(newName +"_pickaxe", new GildedPickaxeItem(gildedToolMaterial, (PickaxeItem) baseSet.PICKAXE, GildedToolUtil.settingsOf(baseSet.PICKAXE))),
-                register(newName +"_axe", new GildedAxeItem(gildedToolMaterial, (AxeItem) baseSet.AXE, GildedToolUtil.settingsOf(baseSet.AXE))),
-                register(newName +"_hoe", new GildedHoeItem(gildedToolMaterial, (HoeItem) baseSet.HOE, GildedToolUtil.settingsOf(baseSet.HOE))),
-                newName
-        );
-    }
-
-    //Register a dispenser behavior
-    protected static void registerDispenserBehavior(ItemConvertible item, DispenserBehavior behavior) {
-        DispenserBlock.registerBehavior(item, behavior);
+    protected static void initBrewingRecipes() {
+        BrewingRecipeRegistry.registerPotionType(APPLICABLE_POTION);
+        BrewingRecipeRegistry.registerItemRecipe(Items.POTION, Items.SLIME_BALL, APPLICABLE_POTION);
     }
 
 }

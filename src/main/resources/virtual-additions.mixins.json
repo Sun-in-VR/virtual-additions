@@ -8,16 +8,21 @@
     "ClientPlayerInteractionManagerMixin",
     "ComposterBlockAccessor",
     "CrossbowItemMixin",
+    "DamageSourcesMixin",
     "EntityMixin",
+    "FeatureFlagsMixin",
     "FenceBlockMixin",
     "ItemMixin",
     "LivingEntityMixin",
     "MobEntityMixin",
     "PlayerEntityMixin",
+    "PlayerInventoryMixin",
     "RangedWeaponItemMixin",
-    "WallBlockMixin"
+    "WallBlockMixin",
+    "WaterFluidMixin"
   ],
   "client": [
+    "ClientPlayNetworkHandlerMixin"
   ],
   "injectors": {
     "defaultRequire": 1

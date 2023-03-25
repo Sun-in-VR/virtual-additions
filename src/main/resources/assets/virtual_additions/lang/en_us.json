@@ -57,9 +57,41 @@
     "block.virtual_additions.mangrove_hedge": "Mangrove Hedge",
     "block.virtual_additions.azalea_hedge": "Azalea Hedge",
     "block.virtual_additions.flowering_azalea_hedge": "Flowering Azalea Hedge",
+    "block.virtual_additions.cherry_hedge": "Cherry Hedge",
+    "block.virtual_additions.hanging_glowsilk": "Hanging Glowsilk",
+    "block.virtual_additions.lumwasp_nest": "Lumwasp Nest",
+    "block.virtual_additions.carved_stone": "Carved Stone",
+    "block.virtual_additions.silkbulb": "Silkbulb",
+    "block.virtual_additions.white_silkbulb": "White Silkbulb",
+    "block.virtual_additions.light_gray_silkbulb": "Light Gray Silkbulb",
+    "block.virtual_additions.gray_silkbulb": "Gray Silkbulb",
+    "block.virtual_additions.black_silkbulb": "Black Silkbulb",
+    "block.virtual_additions.brown_silkbulb": "Brown Silkbulb",
+    "block.virtual_additions.red_silkbulb": "Red Silkbulb",
+    "block.virtual_additions.orange_silkbulb": "Orange Silkbulb",
+    "block.virtual_additions.yellow_silkbulb": "Yellow Silkbulb",
+    "block.virtual_additions.lime_silkbulb": "Lime Silkbulb",
+    "block.virtual_additions.green_silkbulb": "Green Silkbulb",
+    "block.virtual_additions.cyan_silkbulb": "Cyan Silkbulb",
+    "block.virtual_additions.light_blue_silkbulb": "Light Blue Silkbulb",
+    "block.virtual_additions.blue_silkbulb": "Blue Silkbulb",
+    "block.virtual_additions.purple_silkbulb": "Purple Silkbulb",
+    "block.virtual_additions.magenta_silkbulb": "Magenta Silkbulb",
+    "block.virtual_additions.pink_silkbulb": "Pink Silkbulb",
+    "block.virtual_additions.iolite_ore": "Iolite Ore",
+    "block.virtual_additions.iolite_block": "Block of Iolite",
+    "block.virtual_additions.warp_anchor": "Warp Anchor",
+    "block.virtual_additions.warp_tether": "Warp Tether",
+    "block.virtual_additions.entanglement_drive": "Entanglement Drive",
+
+    "container.virtual_additions.entanglement_drive": "Entangle Slots",
+    "container.virtual_additions.entanglement_drive.select_slot_hint": "Click this slot to select it",
+    "container.virtual_additions.entanglement_drive.payment_slot_hint": "Put an Iolite gemstone here",
+    "container.virtual_additions.entanglement_drive.confirm_button": "Confirm selection",
 
     "entity.virtual_additions.climbing_rope": "Climbing Rope",
     "entity.virtual_additions.steel_bomb": "Steel Bomb",
+    "entity.virtual_additions.lumwasp": "Lumwasp",
 
     "generator.virtual_additions.virtual_world": "VA Preview",
 
@@ -86,9 +118,14 @@
     "item.virtual_additions.green_rock_candy": "Green Rock Candy",
     "item.virtual_additions.blue_rock_candy": "Blue Rock Candy",
     "item.virtual_additions.mixed_rock_candy": "Mixed Rock Candy",
+    "item.virtual_additions.glowsilk": "Glowsilk",
     "item.virtual_additions.cotton_seeds": "Cotton Seeds",
     "item.virtual_additions.cotton": "Cotton",
+    "item.virtual_additions.lumwasp_spawn_egg": "Lumwasp Spawn Egg",
+    "item.virtual_additions.acid_bucket": "Acid Bucket",
+    "item.virtual_additions.iolite": "Iolite",
 
+    "item.virtual_additions.applied_effect_tooltip": "Effects on Hit%s:",
     "item.virtual_additions.applicable_potion.effect.empty": "Applicable Uncraftable Potion",
     "item.virtual_additions.applicable_potion.effect.water": "Applicable Water Bottle",
     "item.virtual_additions.applicable_potion.effect.mundane": "Mundane Applicable Potion",
@@ -112,7 +149,22 @@
     "item.virtual_additions.applicable_potion.effect.turtle_master": "Applicable Potion of the Turtle Master",
     "item.virtual_additions.applicable_potion.effect.slow_falling": "Applicable Potion of Slow Falling",
 
-
     "subtitles.block.climbing_rope.extends": "Rope extends",
-    "subtitles.entity.steel_bomb.throw": "Steel Bomb flies"
+    "subtitles.block.acid.sizzle": "Acid sizzles",
+    "subtitles.block.warp_anchor.warp": "Something warps nearby",
+    "subtitles.block.warp_tether.warp": "Something warps away",
+    "subtitles.entity.steel_bomb.throw": "Steel Bomb flies",
+    "subtitles.entity.lumwasp.hurt": "Lumwasp hurts",
+
+    "death.attack.acid": "%s dissolved in acid",
+    "death.attack.acid.player": "%s dissolved in acid while trying to escape %s",
+
+    "upgrade.virtual_additions.tool_gild": "Tool Upgrade",
+
+    "item.virtual_additions.smithing_template.tool_gild.applies_to": "Tools",
+    "item.virtual_additions.smithing_template.tool_gild.ingredients": "Copper, Amethyst, Quartz, Emerald",
+    "item.virtual_additions.smithing_template.tool_gild.base_slot_description": "Put any Iron or better tool here",
+    "item.virtual_additions.smithing_template.tool_gild.additions_slot_description": "Put a Copper Ingot, Amethyst Shard, Nether Quartz, or Emerald here",
+
+    "trim_material.virtual_additions.steel": "Steel Material"
 }

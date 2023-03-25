@@ -1,0 +1,36 @@
+{
+  "criteria": {
+    "inventory": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "virtual_additions:silkbulb"
+            ]
+          }
+        ]
+      }
+    }
+  },
+  "rewards": {
+    "recipes": [
+      "virtual_additions:crafting_shapeless/white_silkbulb",
+      "virtual_additions:crafting_shapeless/light_gray_silkbulb",
+      "virtual_additions:crafting_shapeless/gray_silkbulb",
+      "virtual_additions:crafting_shapeless/black_silkbulb",
+      "virtual_additions:crafting_shapeless/brown_silkbulb",
+      "virtual_additions:crafting_shapeless/red_silkbulb",
+      "virtual_additions:crafting_shapeless/orange_silkbulb",
+      "virtual_additions:crafting_shapeless/yellow_silkbulb",
+      "virtual_additions:crafting_shapeless/lime_silkbulb",
+      "virtual_additions:crafting_shapeless/green_silkbulb",
+      "virtual_additions:crafting_shapeless/cyan_silkbulb",
+      "virtual_additions:crafting_shapeless/light_blue_silkbulb",
+      "virtual_additions:crafting_shapeless/blue_silkbulb",
+      "virtual_additions:crafting_shapeless/purple_silkbulb",
+      "virtual_additions:crafting_shapeless/magenta_silkbulb",
+      "virtual_additions:crafting_shapeless/pink_silkbulb"
+    ]
+  }
+}

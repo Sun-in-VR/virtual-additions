@@ -1,0 +1,14 @@
+{
+  "replace": false,
+  "values": [
+    "virtual_additions:red_glimmer_crystal",
+    "virtual_additions:green_glimmer_crystal",
+    "virtual_additions:blue_glimmer_crystal",
+    "virtual_additions:spotlight",
+    "virtual_additions:warp_tether",
+    "virtual_additions:warp_anchor",
+    "virtual_additions:entanglement_drive",
+    "virtual_additions:iolite_ore",
+    "virtual_additions:iolite_block"
+  ]
+}
