@@ -53,11 +53,6 @@ public class CrystalBlock extends Block implements Waterloggable {
     }
 
     @Override
-    public PistonBehavior getPistonBehavior(BlockState state) {
-        return PistonBehavior.DESTROY;
-    }
-
-    @Override
     protected void appendProperties(StateManager.Builder<Block, BlockState> builder) {
         builder.add(SHAPE).add(POINTING).add(WATERLOGGED);
     }

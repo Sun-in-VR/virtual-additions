@@ -239,7 +239,7 @@ public class VAItems {
         EMPTY_SLOT_QUARTZ_TEXTURE = new Identifier("item/empty_slot_quartz");
         EMPTY_SLOT_EMERALD_TEXTURE = new Identifier("item/empty_slot_emerald");
         EMPTY_SLOT_DIAMOND_TEXTURE = new Identifier("item/empty_slot_diamond");
-        EMPTY_SLOT_AMETHYST_TEXTURE = new Identifier("item/empty_slot_amethyst");
+        EMPTY_SLOT_AMETHYST_TEXTURE = new Identifier("item/empty_slot_amethyst_shard");
         EMPTY_SLOT_LAPIS_LAZULI_TEXTURE = new Identifier("item/empty_slot_lapis_lazuli");
 
         CLIMBING_ROPE = register("climbing_rope", new AliasedBlockItem(VABlocks.CLIMBING_ROPE_ANCHOR, new FabricItemSettings().maxCount(16)), ItemGroups.TOOLS, Items.LEAD);

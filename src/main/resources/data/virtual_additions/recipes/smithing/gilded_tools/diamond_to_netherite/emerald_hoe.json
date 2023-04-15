@@ -1,5 +1,5 @@
 {
-  "type": "minecraft:smithing",
+  "type": "minecraft:smithing_transform",
   "base": {
     "item": "virtual_additions:emerald_diamond_hoe"
   },
@@ -8,5 +8,8 @@
   },
   "result": {
     "item": "virtual_additions:emerald_netherite_hoe"
+  },
+  "template": {
+    "item": "minecraft:netherite_upgrade_smithing_template"
   }
 }

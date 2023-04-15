@@ -1,5 +1,5 @@
 {
-  "type": "minecraft:smithing",
+  "type": "minecraft:smithing_transform",
   "base": {
     "item": "virtual_additions:quartz_diamond_axe"
   },
@@ -8,5 +8,11 @@
   },
   "result": {
     "item": "virtual_additions:quartz_netherite_axe"
+  },
+  "template": {
+    "item": "minecraft:netherite_upgrade_smithing_template"
+  },
+  "template": {
+    "item": "minecraft:netherite_upgrade_smithing_template"
   }
 }

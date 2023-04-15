@@ -31,6 +31,7 @@ import net.minecraft.util.shape.VoxelShape;
 import net.minecraft.util.shape.VoxelShapes;
 import net.minecraft.world.BlockView;
 import net.minecraft.world.World;
+import net.minecraft.world.event.GameEvent;
 import org.jetbrains.annotations.Nullable;
 
 public class WarpAnchorBlock extends BlockWithEntity implements Waterloggable {
@@ -90,6 +91,7 @@ public class WarpAnchorBlock extends BlockWithEntity implements Waterloggable {
                 destY += destState.get(WarpTetherBlock.FACING).equals(Direction.DOWN) ? (entity.getBoundingBox().getYLength()) * -1 : 0;
                 entity.teleport(destX, destY, destZ);
 
+                world.emitGameEvent(entity, GameEvent.TELEPORT, destPos);
                 if (!destState.get(Properties.WATERLOGGED)) world.playSound(null, destPos, VASoundEvents.BLOCK_WARP_ANCHOR_WARP, SoundCategory.BLOCKS, 1.0F, 1.0F);
                 if (!state.get(WATERLOGGED)) world.playSound(null, pos, VASoundEvents.BLOCK_WARP_TETHER_WARP, SoundCategory.BLOCKS, 1.0F, 1.0F);
 

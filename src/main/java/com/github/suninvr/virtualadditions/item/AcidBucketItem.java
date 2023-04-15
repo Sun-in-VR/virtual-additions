@@ -56,7 +56,7 @@ public class AcidBucketItem extends BucketItem {
             this.playEmptyingSound(player, world, pos);
             return true;
         } else {
-            if (!world.isClient && bl && !material.isLiquid()) {
+            if (!world.isClient && bl && !blockState.isLiquid()) {
                 world.breakBlock(pos, true);
                 if (destroyBlock) {
                     int i = pos.getX();

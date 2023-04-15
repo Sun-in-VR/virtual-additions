@@ -1,10 +1,13 @@
 {
-  "type": "minecraft:smithing",
+  "type": "minecraft:smithing_transform",
+  "template": {
+    "item": "virtual_additions:tool_gild_smithing_template"
+  },
   "base": {
     "item": "minecraft:netherite_axe"
   },
   "addition": {
-    "item": "minecraft:quartz_block"
+    "item": "minecraft:quartz"
   },
   "result": {
     "item": "virtual_additions:quartz_netherite_axe"
