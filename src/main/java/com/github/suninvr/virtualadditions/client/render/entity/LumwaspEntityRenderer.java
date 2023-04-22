@@ -1,6 +1,5 @@
 package com.github.suninvr.virtualadditions.client.render.entity;
 
-import com.github.suninvr.virtualadditions.client.LumwaspBrightGlowFeatureRenderer;
 import com.github.suninvr.virtualadditions.client.VirtualAdditionsClient;
 import com.github.suninvr.virtualadditions.entity.LumwaspEntity;
 import net.minecraft.client.render.entity.EntityRendererFactory;

@@ -106,11 +106,11 @@ public class VABlocks {
 
 
     static {
-        CLIMBING_ROPE = register("climbing_rope", new ClimbingRopeBlock(FabricBlockSettings.of(Material.GENERIC).sounds(ROPE_SOUND_GROUP).collidable(false).nonOpaque().hardness(0.5F)));
-        CLIMBING_ROPE_ANCHOR = register("climbing_rope_anchor", new ClimbingRopeAnchorBlock(FabricBlockSettings.of(Material.GENERIC).sounds(ROPE_SOUND_GROUP).collidable(false).nonOpaque().hardness(0.5F)));
+        CLIMBING_ROPE = register("climbing_rope", new ClimbingRopeBlock(FabricBlockSettings.of(Material.LIGHT_PASSES_THROUGH).sounds(ROPE_SOUND_GROUP).collidable(false).nonOpaque().hardness(0.5F)));
+        CLIMBING_ROPE_ANCHOR = register("climbing_rope_anchor", new ClimbingRopeAnchorBlock(FabricBlockSettings.of(Material.LIGHT_PASSES_THROUGH).sounds(ROPE_SOUND_GROUP).collidable(false).nonOpaque().hardness(0.5F)));
 
-        RAW_STEEL_BLOCK = register("raw_steel_block", new Block(FabricBlockSettings.of(Material.STONE).mapColor(MapColor.GRAY).requiresTool().strength(5.0F, 300.0F)));
-        STEEL_BLOCK = register("steel_block", new Block(FabricBlockSettings.of(Material.GENERIC).mapColor(MapColor.GRAY).sounds(BlockSoundGroup.NETHERITE).requiresTool().hardness(5.0F).resistance(300.0F)));
+        RAW_STEEL_BLOCK = register("raw_steel_block", new Block(FabricBlockSettings.of(Material.BLOCKS_LIGHT).mapColor(MapColor.GRAY).requiresTool().strength(5.0F, 300.0F)));
+        STEEL_BLOCK = register("steel_block", new Block(FabricBlockSettings.of(Material.BLOCKS_LIGHT).mapColor(MapColor.GRAY).sounds(BlockSoundGroup.NETHERITE).requiresTool().hardness(5.0F).resistance(300.0F)));
 
         HORNFELS = register("hornfels", new PillarBlock(AbstractBlock.Settings.copy(Blocks.DEEPSLATE)));
         COBBLED_HORNFELS = register("cobbled_hornfels", new Block(FabricBlockSettings.copyOf(Blocks.COBBLED_DEEPSLATE)));
@@ -157,7 +157,7 @@ public class VABlocks {
         GREEN_GLIMMER_CRYSTAL = register("green_glimmer_crystal", new CrystalBlock(FabricBlockSettings.copyOf(Blocks.AMETHYST_CLUSTER).mapColor(MapColor.WHITE_GRAY).nonOpaque().dynamicBounds().pistonBehavior(PistonBehavior.DESTROY).requires(VirtualAdditions.PREVIEW)));
         BLUE_GLIMMER_CRYSTAL = register("blue_glimmer_crystal", new CrystalBlock(FabricBlockSettings.copyOf(Blocks.AMETHYST_CLUSTER).mapColor(MapColor.WHITE_GRAY).nonOpaque().dynamicBounds().pistonBehavior(PistonBehavior.DESTROY).requires(VirtualAdditions.PREVIEW)));
         SPOTLIGHT = register("spotlight", new SpotlightBlock(FabricBlockSettings.copyOf(Blocks.COPPER_BLOCK).mapColor(MapColor.ORANGE).nonOpaque().luminance((state) -> state.get(SpotlightBlock.POWERED) ? 6 : 0).emissiveLighting((state, world, pos) -> state.get(Properties.POWERED)) .requires(VirtualAdditions.PREVIEW)));
-        SPOTLIGHT_LIGHT = register("spotlight_light", new SpotlightLightBlock(FabricBlockSettings.of(Material.ALLOWS_MOVEMENT_LIGHT_PASSES_THROUGH_NOT_SOLID_REPLACEABLE).strength(-1.0F, 3600000.8F).dropsNothing().nonOpaque().luminance((state) -> state.get(SpotlightLightBlock.LIT) ? 13 : 0).requires(VirtualAdditions.PREVIEW)));
+        SPOTLIGHT_LIGHT = register("spotlight_light", new SpotlightLightBlock(FabricBlockSettings.of(Material.LIGHT_PASSES_THROUGH).strength(-1.0F, 3600000.8F).replaceable().dropsNothing().nonOpaque().luminance((state) -> state.get(SpotlightLightBlock.LIT) ? 13 : 0).requires(VirtualAdditions.PREVIEW)));
 
         COTTON = register("cotton", new CropBlock(AbstractBlock.Settings.of(Material.PLANT).noCollision().ticksRandomly().breakInstantly().sounds(BlockSoundGroup.CROP)));
 
@@ -193,13 +193,13 @@ public class VABlocks {
         MAGENTA_SILKBULB = register("magenta_silkbulb", new Block(AbstractBlock.Settings.copy(SILKBULB).mapColor(MapColor.MAGENTA).requires(VirtualAdditions.PREVIEW)));
         PINK_SILKBULB = register("pink_silkbulb", new Block(AbstractBlock.Settings.copy(SILKBULB).mapColor(MapColor.PINK).requires(VirtualAdditions.PREVIEW)));
 
-        ACID = register("acid", new AcidFluidBlock(VAFluids.ACID, AbstractBlock.Settings.of(Material.ALLOWS_MOVEMENT_LIGHT_PASSES_THROUGH_NOT_SOLID_REPLACEABLE).mapColor(MapColor.LIME).luminance(((state) -> 6)).noCollision().strength(100.0F).dropsNothing().allowsSpawning(((state, world, pos, type) -> type == VAEntityType.LUMWASP)).requires(VirtualAdditions.PREVIEW)));
+        ACID = register("acid", new AcidFluidBlock(VAFluids.ACID, AbstractBlock.Settings.of(Material.LIGHT_PASSES_THROUGH).mapColor(MapColor.LIME).luminance(((state) -> 6)).replaceable().noCollision().strength(100.0F).dropsNothing().allowsSpawning(((state, world, pos, type) -> type == VAEntityType.LUMWASP)).requires(VirtualAdditions.PREVIEW)));
 
-        IOLITE_ORE = register("iolite_ore", new ExperienceDroppingBlock(FabricBlockSettings.copyOf(Blocks.END_STONE).strength(4.5F, 4.5F).requiresTool().requires(VirtualAdditions.PREVIEW), UniformIntProvider.create(5, 9)));
-        IOLITE_BLOCK = register("iolite_block", new Block(FabricBlockSettings.of(Material.GENERIC).mapColor(MapColor.MAGENTA).sounds(BlockSoundGroup.METAL).requiresTool().hardness(5.0F).resistance(300.0F).requires(VirtualAdditions.PREVIEW)));
-        WARP_ANCHOR = register("warp_anchor", new WarpTetherBlock(FabricBlockSettings.of(Material.GENERIC).nonOpaque().sounds(BlockSoundGroup.NETHERITE).luminance(3).emissiveLighting( (state, world, pos) -> !state.get(WarpTetherBlock.POWERED) ).hardness(22.5F).requiresTool().resistance(600.0F).requires(VirtualAdditions.PREVIEW)));
-        WARP_TETHER = register("warp_tether", new WarpAnchorBlock(FabricBlockSettings.of(Material.GENERIC).nonOpaque().sounds(BlockSoundGroup.NETHERITE).luminance(3).emissiveLighting( (state, world, pos) -> !state.get(WarpAnchorBlock.COOLDOWN) ).hardness(22.5F).requiresTool().resistance(600.0F).requires(VirtualAdditions.PREVIEW)));
-        ENTANGLEMENT_DRIVE = register("entanglement_drive", new EntanglementDriveBlock(FabricBlockSettings.of(Material.GENERIC).nonOpaque().sounds(BlockSoundGroup.NETHERITE).luminance(3).emissiveLighting( (state, world, pos) -> true ).hardness(22.5F).requiresTool().resistance(600.0F).requires(VirtualAdditions.PREVIEW)));
+        IOLITE_ORE = register("iolite_ore", new ExperienceDroppingBlock(FabricBlockSettings.copyOf(Blocks.END_STONE).strength(4.5F, 4.5F).requiresTool(), UniformIntProvider.create(5, 9)));
+        IOLITE_BLOCK = register("iolite_block", new Block(FabricBlockSettings.of(Material.BLOCKS_LIGHT).mapColor(MapColor.MAGENTA).sounds(BlockSoundGroup.METAL).requiresTool().hardness(5.0F).resistance(300.0F)));
+        WARP_ANCHOR = register("warp_anchor", new WarpTetherBlock(FabricBlockSettings.of(Material.BLOCKS_LIGHT).nonOpaque().sounds(BlockSoundGroup.NETHERITE).luminance(3).emissiveLighting( (state, world, pos) -> !state.get(WarpTetherBlock.POWERED) ).hardness(22.5F).requiresTool().resistance(600.0F)));
+        WARP_TETHER = register("warp_tether", new WarpAnchorBlock(FabricBlockSettings.of(Material.BLOCKS_LIGHT).nonOpaque().sounds(BlockSoundGroup.NETHERITE).luminance(3).emissiveLighting( (state, world, pos) -> !state.get(WarpAnchorBlock.COOLDOWN) ).hardness(22.5F).requiresTool().resistance(600.0F)));
+        ENTANGLEMENT_DRIVE = register("entanglement_drive", new EntanglementDriveBlock(FabricBlockSettings.of(Material.BLOCKS_LIGHT).nonOpaque().sounds(BlockSoundGroup.NETHERITE).luminance(3).emissiveLighting( (state, world, pos) -> true ).hardness(22.5F).requiresTool().resistance(600.0F)));
     }
     public static void init(){
         LandPathNodeTypesRegistry.register(ACID, PathNodeType.LAVA, PathNodeType.DANGER_FIRE);

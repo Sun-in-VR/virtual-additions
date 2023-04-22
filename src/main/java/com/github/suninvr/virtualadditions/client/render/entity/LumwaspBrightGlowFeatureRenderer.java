@@ -1,4 +1,4 @@
-package com.github.suninvr.virtualadditions.client;
+package com.github.suninvr.virtualadditions.client.render.entity;
 
 import com.github.suninvr.virtualadditions.entity.LumwaspEntity;
 import net.minecraft.client.render.OverlayTexture;

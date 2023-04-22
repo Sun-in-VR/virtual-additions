@@ -38,7 +38,8 @@
             ],
             "palette_key": "minecraft:trims/color_palettes/trim_palette",
             "permutations": {
-                "steel": "virtual_additions:trims/color_palettes/steel"
+                "steel": "virtual_additions:trims/color_palettes/steel",
+                "iolite": "virtual_additions:trims/color_palettes/iolite"
             }
         }
     ]
