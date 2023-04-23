@@ -24,7 +24,7 @@ public class WarpAnchorBlockEntity extends BlockEntity {
         float i = pos.getX() + 0.5F;
         float j = pos.getY();
         float k = pos.getZ() + 0.5F;
-        if (world.getTime() % 8L == 0L) {
+        if (world.getTime() % 4L == 0L) {
             if (blockEntity.isUpsideDown()) world.addParticle(particleCeiling, i, j + 0.624, k, 0.0D, 0.0D, 0.0D);
             else world.addParticle(particle, i, j + 0.376, k, 0.0D, 0.0D, 0.0D);
         }

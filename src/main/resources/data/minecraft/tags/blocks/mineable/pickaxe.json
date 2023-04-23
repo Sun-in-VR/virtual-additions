@@ -41,6 +41,11 @@
     "virtual_additions:blueschist_brick_slab",
     "virtual_additions:blueschist_brick_wall",
     "virtual_additions:raw_steel_block",
-    "virtual_additions:steel_block"
+    "virtual_additions:steel_block",
+    "virtual_additions:warp_tether",
+    "virtual_additions:warp_anchor",
+    "virtual_additions:entanglement_drive",
+    "virtual_additions:iolite_ore",
+    "virtual_additions:iolite_block"
   ]
 }
