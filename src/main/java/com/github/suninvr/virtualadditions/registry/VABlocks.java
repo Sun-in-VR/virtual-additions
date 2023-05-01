@@ -79,6 +79,7 @@ public class VABlocks {
     public static final Block AZALEA_HEDGE;
     public static final Block FLOWERING_AZALEA_HEDGE;
     public static final Block HANGING_GLOWSILK;
+    public static final Block FRAYED_SILK;
     public static final Block LUMWASP_NEST;
     public static final Block BOUND_SILK;
     public static final Block SILK_FLUFF;
@@ -174,10 +175,11 @@ public class VABlocks {
         AZALEA_HEDGE = register("azalea_hedge", new HedgeBlock(AbstractBlock.Settings.copy(Blocks.AZALEA_LEAVES)));
         FLOWERING_AZALEA_HEDGE = register("flowering_azalea_hedge", new HedgeBlock(AbstractBlock.Settings.copy(Blocks.FLOWERING_AZALEA_LEAVES)));
 
-        HANGING_GLOWSILK = register("hanging_glowsilk", new HangingGlowsilkBlock(AbstractBlock.Settings.of(Material.PLANT).mapColor(MapColor.LIGHT_BLUE).sounds(BlockSoundGroup.WART_BLOCK).luminance((state) -> 6).noCollision().nonOpaque().breakInstantly().burnable().requires(VirtualAdditions.PREVIEW)));
+        HANGING_GLOWSILK = register("hanging_glowsilk", new HangingGlowsilkBlock(AbstractBlock.Settings.of(Material.PLANT).mapColor(MapColor.LIGHT_BLUE).sounds(BlockSoundGroup.WART_BLOCK).luminance((state) -> 6).noCollision().nonOpaque().breakInstantly().offset(AbstractBlock.OffsetType.XZ).burnable().pistonBehavior(PistonBehavior.DESTROY).requires(VirtualAdditions.PREVIEW)));
+        FRAYED_SILK = register("frayed_silk", new SilkThreadsBlock(AbstractBlock.Settings.of(Material.PLANT).mapColor(MapColor.DARK_AQUA).sounds(BlockSoundGroup.WART_BLOCK).noCollision().nonOpaque().breakInstantly().replaceable().offset(AbstractBlock.OffsetType.XYZ).burnable().pistonBehavior(PistonBehavior.DESTROY).requires(VirtualAdditions.PREVIEW)));
         LUMWASP_NEST = register("lumwasp_nest", new LumwaspNestBlock(AbstractBlock.Settings.copy(Blocks.HONEYCOMB_BLOCK).sounds(BlockSoundGroup.WART_BLOCK).mapColor(MapColor.DARK_AQUA).burnable().requires(VirtualAdditions.PREVIEW)));
-        BOUND_SILK = register("bound_silk", new Block(AbstractBlock.Settings.copy(Blocks.HONEYCOMB_BLOCK).sounds(BlockSoundGroup.WART_BLOCK).mapColor(MapColor.DARK_AQUA).burnable().requires(VirtualAdditions.PREVIEW)));
-        SILK_FLUFF = register("silk_fluff", new SilkFluffBlock(AbstractBlock.Settings.copy(Blocks.POWDER_SNOW).mapColor(MapColor.DARK_AQUA).nonOpaque().burnable().requires(VirtualAdditions.PREVIEW)));
+        BOUND_SILK = register("bound_silk", new BoundSilkBlock(AbstractBlock.Settings.copy(Blocks.HONEYCOMB_BLOCK).sounds(BlockSoundGroup.WART_BLOCK).mapColor(MapColor.DARK_AQUA).burnable().requires(VirtualAdditions.PREVIEW)));
+        SILK_FLUFF = register("silk_fluff", new SilkFluffBlock(AbstractBlock.Settings.of(Material.BLOCKS_LIGHT).strength(0.25F).sounds(BlockSoundGroup.POWDER_SNOW).mapColor(MapColor.DARK_AQUA).nonOpaque().suffocates(((state, world, pos) -> false)).blockVision((state, world, pos) -> false).burnable().requires(VirtualAdditions.PREVIEW)));
         SILKBULB = register("silkbulb", new Block(AbstractBlock.Settings.copy(Blocks.SHROOMLIGHT).mapColor(MapColor.DARK_AQUA).luminance( (state) -> 15 ).nonOpaque().burnable().requires(VirtualAdditions.PREVIEW)));
         WHITE_SILKBULB = register("white_silkbulb", new Block(AbstractBlock.Settings.copy(SILKBULB).mapColor(MapColor.WHITE).burnable().requires(VirtualAdditions.PREVIEW)));
         LIGHT_GRAY_SILKBULB = register("light_gray_silkbulb", new Block(AbstractBlock.Settings.copy(SILKBULB).mapColor(MapColor.LIGHT_GRAY).burnable().requires(VirtualAdditions.PREVIEW)));
@@ -220,6 +222,7 @@ public class VABlocks {
         fire.virtualAdditions$registerFlammableBlock(AZALEA_HEDGE, 30, 60);
         fire.virtualAdditions$registerFlammableBlock(FLOWERING_AZALEA_HEDGE, 30, 60);
         fire.virtualAdditions$registerFlammableBlock(HANGING_GLOWSILK, 30, 60);
+        fire.virtualAdditions$registerFlammableBlock(FRAYED_SILK, 30, 60);
         fire.virtualAdditions$registerFlammableBlock(LUMWASP_NEST, 5, 20);
         fire.virtualAdditions$registerFlammableBlock(BOUND_SILK, 5, 20);
         fire.virtualAdditions$registerFlammableBlock(SILK_FLUFF, 30, 60);

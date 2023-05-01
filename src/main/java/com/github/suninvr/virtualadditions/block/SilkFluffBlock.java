@@ -28,9 +28,14 @@ public class SilkFluffBlock extends TransparentBlock {
     public VoxelShape getCollisionShape(BlockState state, BlockView world, BlockPos pos, ShapeContext context) {
         if (context instanceof EntityShapeContext entityContext) {
             if (entityContext.getEntity() != null) {
-                if (entityContext.getEntity().getType().isIn(VAEntityTypeTags.COLLIDES_WITH_SILK_FLUFF) || entityContext.getEntity().isSneaking()) return VoxelShapes.fullCube();
+                if (!(entityContext.getEntity().getType().isIn(VAEntityTypeTags.COLLIDES_WITH_SILK_FLUFF) || entityContext.getEntity().isSneaking())) return VoxelShapes.empty();
             }
         }
+        return VoxelShapes.fullCube();
+    }
+
+    @Override
+    public VoxelShape getSidesShape(BlockState state, BlockView world, BlockPos pos) {
         return VoxelShapes.empty();
     }
 

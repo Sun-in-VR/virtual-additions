@@ -10,7 +10,6 @@ import com.github.suninvr.virtualadditions.item.SteelBombItem;
 import com.github.suninvr.virtualadditions.item.enums.GildType;
 import com.github.suninvr.virtualadditions.item.materials.SteelToolMaterial;
 import com.github.suninvr.virtualadditions.mixin.ComposterBlockAccessor;
-import com.github.suninvr.virtualadditions.registry.RegistryHelper.ItemHelper.*;
 import com.github.suninvr.virtualadditions.registry.constructors.item.CustomArmorMaterials;
 import com.github.suninvr.virtualadditions.registry.constructors.item.CustomAxeItem;
 import com.github.suninvr.virtualadditions.registry.constructors.item.CustomHoeItem;
@@ -140,6 +139,7 @@ public class VAItems {
     public static final Item BLUE_ROCK_CANDY;
     public static final Item MIXED_ROCK_CANDY;
     public static final Item HANGING_GLOWSILK;
+    public static final Item FRAYED_SILK;
     public static final Item GLOWSILK;
     public static final Item LUMWASP_NEST;
     public static final Item BOUND_SILK;
@@ -327,12 +327,13 @@ public class VAItems {
         BLUE_ROCK_CANDY = register("blue_rock_candy", new RockCandyItem(new FabricItemSettings().food(ROCK_CANDY_FOOD).requires(VirtualAdditions.PREVIEW)), ItemGroups.FOOD_AND_DRINK, prev);
         MIXED_ROCK_CANDY = register("mixed_rock_candy", new RockCandyItem(new FabricItemSettings().food(ROCK_CANDY_FOOD).requires(VirtualAdditions.PREVIEW)), ItemGroups.FOOD_AND_DRINK, prev);
 
-        LUMWASP_NEST = registerBlockItem("lumwasp_nest", VABlocks.LUMWASP_NEST, ItemGroups.NATURAL, Items.POINTED_DRIPSTONE, VirtualAdditions.PREVIEW);
-        BOUND_SILK = registerBlockItem("bound_silk", VABlocks.BOUND_SILK, ItemGroups.NATURAL, prev, VirtualAdditions.PREVIEW);
+        BOUND_SILK = registerBlockItem("bound_silk", VABlocks.BOUND_SILK, ItemGroups.NATURAL, Items.POINTED_DRIPSTONE, VirtualAdditions.PREVIEW);
+        LUMWASP_NEST = registerBlockItem("lumwasp_nest", VABlocks.LUMWASP_NEST, ItemGroups.NATURAL, prev, VirtualAdditions.PREVIEW);
         SILK_FLUFF = registerBlockItem("silk_fluff", VABlocks.SILK_FLUFF, ItemGroups.NATURAL, prev, VirtualAdditions.PREVIEW);
         HANGING_GLOWSILK = registerBlockItem("hanging_glowsilk", VABlocks.HANGING_GLOWSILK, ItemGroups.NATURAL, prev, VirtualAdditions.PREVIEW);
+        FRAYED_SILK = registerBlockItem("frayed_silk", VABlocks.FRAYED_SILK, ItemGroups.NATURAL, prev, VirtualAdditions.PREVIEW);
         GLOWSILK = register("glowsilk", ItemGroups.INGREDIENTS, Items.STRING, VirtualAdditions.PREVIEW);
-        SILKBULB = registerBlockItem("silkbulb", VABlocks.SILKBULB, new ItemGroupLocation[]{new ItemGroupLocation(ItemGroups.FUNCTIONAL, Items.GLOWSTONE), new ItemGroupLocation(ItemGroups.COLORED_BLOCKS, Items.PINK_BANNER)}, VirtualAdditions.PREVIEW);
+        SILKBULB = registerBlockItem("silkbulb", VABlocks.SILKBULB, new ItemGroupLocation[]{new ItemGroupLocation(ItemGroups.FUNCTIONAL, Items.GLOWSTONE), new ItemGroupLocation(ItemGroups.COLORED_BLOCKS, Items.PINK_BANNER), new ItemGroupLocation(ItemGroups.NATURAL, LUMWASP_NEST)}, VirtualAdditions.PREVIEW);
 
         WHITE_SILKBULB = registerBlockItem("white_silkbulb", VABlocks.WHITE_SILKBULB, ItemGroups.COLORED_BLOCKS, prev, VirtualAdditions.PREVIEW);
         LIGHT_GRAY_SILKBULB = registerBlockItem("light_gray_silkbulb", VABlocks.LIGHT_GRAY_SILKBULB, ItemGroups.COLORED_BLOCKS, prev, VirtualAdditions.PREVIEW);

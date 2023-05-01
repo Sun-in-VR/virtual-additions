@@ -1,0 +1,11 @@
+{
+    "features": {
+        "enabled": [
+            "virtual_additions:preview"
+        ]
+    },
+    "pack": {
+        "pack_format": 14,
+        "description": "World Generation for Virtual Additions"
+    }
+}

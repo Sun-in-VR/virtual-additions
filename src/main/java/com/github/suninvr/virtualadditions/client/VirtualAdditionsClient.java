@@ -68,7 +68,8 @@ public class VirtualAdditionsClient implements ClientModInitializer {
                 VABlocks.CHERRY_HEDGE,
                 VABlocks.AZALEA_HEDGE,
                 VABlocks.FLOWERING_AZALEA_HEDGE,
-                VABlocks.HANGING_GLOWSILK
+                VABlocks.HANGING_GLOWSILK,
+                VABlocks.FRAYED_SILK
         );
 
         EntityRendererRegistry.register(VAEntityType.CLIMBING_ROPE, ClimbingRopeEntityRenderer::new);
@@ -87,7 +88,7 @@ public class VirtualAdditionsClient implements ClientModInitializer {
                 );
         ColorProviderRegistry.BLOCK.register( ((state, world, pos, tintIndex) -> FoliageColors.getSpruceColor()), VABlocks.SPRUCE_HEDGE);
         ColorProviderRegistry.BLOCK.register( ((state, world, pos, tintIndex) -> FoliageColors.getBirchColor()), VABlocks.BIRCH_HEDGE);
-        ColorProviderRegistry.BLOCK.register(((state, world, pos, tintIndex) -> 0x95be21), VABlocks.ACID);
+        ColorProviderRegistry.BLOCK.register(((state, world, pos, tintIndex) -> 0x00e076), VABlocks.ACID);
 
         ColorProviderRegistry.ITEM.register( ((stack, tintIndex) -> tintIndex > 0 ? -1 : PotionUtil.getColor(stack)), VAItems.APPLICABLE_POTION);
         ColorProviderRegistry.ITEM.register( ((stack, tintIndex) -> FoliageColors.getDefaultColor()),
@@ -103,7 +104,7 @@ public class VirtualAdditionsClient implements ClientModInitializer {
         FluidRenderHandlerRegistry.INSTANCE.register(VAFluids.ACID, VAFluids.FLOWING_ACID, new SimpleFluidRenderHandler(
                 new Identifier("minecraft:block/water_still"),
                 new Identifier("minecraft:block/water_flow"),
-                0x95be21
+                0x00e076
         ));
 
         ModelPredicateProviderRegistry.register(Items.CROSSBOW, idOf("climbing_rope"), (itemStack, clientWorld, livingEntity, a) -> {
