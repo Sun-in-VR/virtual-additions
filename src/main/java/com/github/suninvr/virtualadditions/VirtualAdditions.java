@@ -22,11 +22,10 @@ public class VirtualAdditions implements ModInitializer {
 	public void onInitialize() {
 
 		FabricLoader.getInstance().getModContainer(MODID).ifPresent(
-				modContainer -> ResourceManagerHelper.registerBuiltinResourcePack(
-						idOf("preview"),
-						modContainer,
-						ResourcePackActivationType.NORMAL
-				)
+				modContainer -> {
+					ResourceManagerHelper.registerBuiltinResourcePack(idOf("preview"), modContainer, ResourcePackActivationType.NORMAL);
+					ResourceManagerHelper.registerBuiltinResourcePack(idOf("worldgen"), modContainer, ResourcePackActivationType.NORMAL);
+				}
 		);
 
 		VABlocks.init();
@@ -35,9 +34,11 @@ public class VirtualAdditions implements ModInitializer {
 		VACallbacks.init();
 		VADamageTypes.init();
 		VAEntityType.init();
+		VAEntityTypeTags.init();
 		VAFeatures.init();
 		VAFluids.init();
 		VAItems.init();
+		VAItemTags.init();
 		VAPackets.init();
 		VAParticleTypes.init();
 		VAScreenHandler.init();

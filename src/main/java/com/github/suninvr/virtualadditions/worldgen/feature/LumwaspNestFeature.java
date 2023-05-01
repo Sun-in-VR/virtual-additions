@@ -15,7 +15,7 @@ import net.minecraft.world.gen.feature.Feature;
 import net.minecraft.world.gen.feature.util.FeatureContext;
 
 public class LumwaspNestFeature extends Feature<DefaultFeatureConfig> {
-    private static final BlockState CARVED_STONE = VABlocks.CARVED_STONE.getDefaultState();
+    private static final BlockState BOUND_SILK = VABlocks.BOUND_SILK.getDefaultState();
     private static final BlockState NEST = VABlocks.LUMWASP_NEST.getDefaultState();
     private static final BlockState NEST_LARVAE = VABlocks.LUMWASP_NEST.getDefaultState().with(LumwaspNestBlock.LARVAE, true);
     private static final BlockState SILKBULB = VABlocks.SILKBULB.getDefaultState();
@@ -45,11 +45,11 @@ public class LumwaspNestFeature extends Feature<DefaultFeatureConfig> {
     }
 
     private void generateSmall(StructureWorldAccess world, BlockPos origin, Random random) {
-        setBlockStateIfReplaceable(world, origin, CARVED_STONE);
-        setBlockStateIfReplaceable(world, origin.add(1, 0, 0), CARVED_STONE);
-        setBlockStateIfReplaceable(world, origin.add(-1, 0, 0), CARVED_STONE);
-        setBlockStateIfReplaceable(world, origin.add(0, 0, 1), CARVED_STONE);
-        setBlockStateIfReplaceable(world, origin.add(0, 0, -1), CARVED_STONE);
+        setBlockStateIfReplaceable(world, origin, BOUND_SILK);
+        setBlockStateIfReplaceable(world, origin.add(1, 0, 0), BOUND_SILK);
+        setBlockStateIfReplaceable(world, origin.add(-1, 0, 0), BOUND_SILK);
+        setBlockStateIfReplaceable(world, origin.add(0, 0, 1), BOUND_SILK);
+        setBlockStateIfReplaceable(world, origin.add(0, 0, -1), BOUND_SILK);
 
         for (int i = 0; i < 3; ++i) {
             for (int j = 0; j < 3; ++j) {
@@ -74,10 +74,10 @@ public class LumwaspNestFeature extends Feature<DefaultFeatureConfig> {
                 int m = -1 - j;
 
                 if (m != -3) {
-                    setBlockStateIfReplaceable(world, origin.add(k, m, l), CARVED_STONE);
-                    setBlockStateIfReplaceable(world, origin.add(k, m, -l), CARVED_STONE);
-                    setBlockStateIfReplaceable(world, origin.add(l, m, k), CARVED_STONE);
-                    setBlockStateIfReplaceable(world, origin.add(-l, m, k), CARVED_STONE);
+                    setBlockStateIfReplaceable(world, origin.add(k, m, l), BOUND_SILK);
+                    setBlockStateIfReplaceable(world, origin.add(k, m, -l), BOUND_SILK);
+                    setBlockStateIfReplaceable(world, origin.add(l, m, k), BOUND_SILK);
+                    setBlockStateIfReplaceable(world, origin.add(-l, m, k), BOUND_SILK);
                 } else {
                     setRandomNestState(world, origin.add(k, m, l), random);
                     setRandomNestState(world, origin.add(k, m, -l), random);
@@ -89,10 +89,10 @@ public class LumwaspNestFeature extends Feature<DefaultFeatureConfig> {
         
         for (int i = 0; i < 2; ++i) {
             int j = i + 1;
-            setBlockStateIfReplaceable(world, origin.add(j, -j, j), CARVED_STONE);
-            setBlockStateIfReplaceable(world, origin.add(j, -j, -j), CARVED_STONE);
-            setBlockStateIfReplaceable(world, origin.add(-j, -j, j), CARVED_STONE);
-            setBlockStateIfReplaceable(world, origin.add(-j, -j, -j), CARVED_STONE);
+            setBlockStateIfReplaceable(world, origin.add(j, -j, j), BOUND_SILK);
+            setBlockStateIfReplaceable(world, origin.add(j, -j, -j), BOUND_SILK);
+            setBlockStateIfReplaceable(world, origin.add(-j, -j, j), BOUND_SILK);
+            setBlockStateIfReplaceable(world, origin.add(-j, -j, -j), BOUND_SILK);
         }
 
         for (int i = 0; i < 3; ++i) {
@@ -106,17 +106,17 @@ public class LumwaspNestFeature extends Feature<DefaultFeatureConfig> {
         // Layer 0
         for (int i = 0; i < 3; ++i) {
             for (int j = 0; j < 3; ++j) {
-                setBlockStateIfReplaceable(world, origin.add(i - 1, 0, j - 1), CARVED_STONE);
+                setBlockStateIfReplaceable(world, origin.add(i - 1, 0, j - 1), BOUND_SILK);
             }
         }
 
         // Layer 1
         for (int i = 0; i < 3; ++i) {
             int j = i - 1;
-            setBlockStateIfReplaceable(world, origin.add(2, -1, j), CARVED_STONE);
-            setBlockStateIfReplaceable(world, origin.add(-2, -1, j), CARVED_STONE);
-            setBlockStateIfReplaceable(world, origin.add(j, -1, 2), CARVED_STONE);
-            setBlockStateIfReplaceable(world, origin.add(j, -1, -2), CARVED_STONE);
+            setBlockStateIfReplaceable(world, origin.add(2, -1, j), BOUND_SILK);
+            setBlockStateIfReplaceable(world, origin.add(-2, -1, j), BOUND_SILK);
+            setBlockStateIfReplaceable(world, origin.add(j, -1, 2), BOUND_SILK);
+            setBlockStateIfReplaceable(world, origin.add(j, -1, -2), BOUND_SILK);
         }
 
         for (int i = 0; i < 3; ++i) {
@@ -137,16 +137,16 @@ public class LumwaspNestFeature extends Feature<DefaultFeatureConfig> {
             setBlockStateIfReplaceable(world, origin.add(-2, -2, j), AIR);
             setBlockStateIfReplaceable(world, origin.add(j, -2, 2), AIR);
             setBlockStateIfReplaceable(world, origin.add(j, -2, -2), AIR);
-            setBlockStateIfReplaceable(world, origin.add(3, -2, j), CARVED_STONE);
-            setBlockStateIfReplaceable(world, origin.add(-3, -2, j), CARVED_STONE);
-            setBlockStateIfReplaceable(world, origin.add(j, -2, 3), CARVED_STONE);
-            setBlockStateIfReplaceable(world, origin.add(j, -2, -3), CARVED_STONE);
+            setBlockStateIfReplaceable(world, origin.add(3, -2, j), BOUND_SILK);
+            setBlockStateIfReplaceable(world, origin.add(-3, -2, j), BOUND_SILK);
+            setBlockStateIfReplaceable(world, origin.add(j, -2, 3), BOUND_SILK);
+            setBlockStateIfReplaceable(world, origin.add(j, -2, -3), BOUND_SILK);
         }
 
-        setBlockStateIfReplaceable(world, origin.add(2, -2, 2), CARVED_STONE);
-        setBlockStateIfReplaceable(world, origin.add(2, -2, -2), CARVED_STONE);
-        setBlockStateIfReplaceable(world, origin.add(-2, -2, 2), CARVED_STONE);
-        setBlockStateIfReplaceable(world, origin.add(-2, -2, -2), CARVED_STONE);
+        setBlockStateIfReplaceable(world, origin.add(2, -2, 2), BOUND_SILK);
+        setBlockStateIfReplaceable(world, origin.add(2, -2, -2), BOUND_SILK);
+        setBlockStateIfReplaceable(world, origin.add(-2, -2, 2), BOUND_SILK);
+        setBlockStateIfReplaceable(world, origin.add(-2, -2, -2), BOUND_SILK);
 
         // Layer 3
         for (int i = 0; i < 5; ++i) {
@@ -156,10 +156,10 @@ public class LumwaspNestFeature extends Feature<DefaultFeatureConfig> {
         }
         for (int i = 0; i < 5; ++i) {
             int j = i - 2;
-            setBlockStateIfReplaceable(world, origin.add(3, -3, j), CARVED_STONE);
-            setBlockStateIfReplaceable(world, origin.add(-3, -3, j), CARVED_STONE);
-            setBlockStateIfReplaceable(world, origin.add(j, -3, 3), CARVED_STONE);
-            setBlockStateIfReplaceable(world, origin.add(j, -3, -3), CARVED_STONE);
+            setBlockStateIfReplaceable(world, origin.add(3, -3, j), BOUND_SILK);
+            setBlockStateIfReplaceable(world, origin.add(-3, -3, j), BOUND_SILK);
+            setBlockStateIfReplaceable(world, origin.add(j, -3, 3), BOUND_SILK);
+            setBlockStateIfReplaceable(world, origin.add(j, -3, -3), BOUND_SILK);
         }
 
         // Layer 4
@@ -174,34 +174,34 @@ public class LumwaspNestFeature extends Feature<DefaultFeatureConfig> {
             setBlockStateIfReplaceable(world, origin.add(-3, -4, j), ACID);
             setBlockStateIfReplaceable(world, origin.add(j, -4, 3), ACID);
             setBlockStateIfReplaceable(world, origin.add(j, -4, -3), ACID);
-            setBlockStateIfReplaceable(world, origin.add(4, -4, j), CARVED_STONE);
-            setBlockStateIfReplaceable(world, origin.add(-4, -4, j), CARVED_STONE);
-            setBlockStateIfReplaceable(world, origin.add(j, -4, 4), CARVED_STONE);
-            setBlockStateIfReplaceable(world, origin.add(j, -4, -4), CARVED_STONE);
+            setBlockStateIfReplaceable(world, origin.add(4, -4, j), BOUND_SILK);
+            setBlockStateIfReplaceable(world, origin.add(-4, -4, j), BOUND_SILK);
+            setBlockStateIfReplaceable(world, origin.add(j, -4, 4), BOUND_SILK);
+            setBlockStateIfReplaceable(world, origin.add(j, -4, -4), BOUND_SILK);
         }
 
-        setBlockStateIfReplaceable(world, origin.add(3, -4, 2), CARVED_STONE);
-        setBlockStateIfReplaceable(world, origin.add(3, -4, -2), CARVED_STONE);
-        setBlockStateIfReplaceable(world, origin.add(-3, -4, 2), CARVED_STONE);
-        setBlockStateIfReplaceable(world, origin.add(-3, -4, -2), CARVED_STONE);
-        setBlockStateIfReplaceable(world, origin.add(2, -4, 3), CARVED_STONE);
-        setBlockStateIfReplaceable(world, origin.add(2, -4, -3), CARVED_STONE);
-        setBlockStateIfReplaceable(world, origin.add(-2, -4, 3), CARVED_STONE);
-        setBlockStateIfReplaceable(world, origin.add(-2, -4, -3), CARVED_STONE);
+        setBlockStateIfReplaceable(world, origin.add(3, -4, 2), BOUND_SILK);
+        setBlockStateIfReplaceable(world, origin.add(3, -4, -2), BOUND_SILK);
+        setBlockStateIfReplaceable(world, origin.add(-3, -4, 2), BOUND_SILK);
+        setBlockStateIfReplaceable(world, origin.add(-3, -4, -2), BOUND_SILK);
+        setBlockStateIfReplaceable(world, origin.add(2, -4, 3), BOUND_SILK);
+        setBlockStateIfReplaceable(world, origin.add(2, -4, -3), BOUND_SILK);
+        setBlockStateIfReplaceable(world, origin.add(-2, -4, 3), BOUND_SILK);
+        setBlockStateIfReplaceable(world, origin.add(-2, -4, -3), BOUND_SILK);
 
         // Layer 5
         for (int i = 0; i < 5; ++i) {
             int j = i - 2;
-            setBlockStateIfReplaceable(world, origin.add(4, -5, j), CARVED_STONE);
-            setBlockStateIfReplaceable(world, origin.add(-4, -5, j), CARVED_STONE);
-            setBlockStateIfReplaceable(world, origin.add(j, -5, 4), CARVED_STONE);
-            setBlockStateIfReplaceable(world, origin.add(j, -5, -4), CARVED_STONE);
+            setBlockStateIfReplaceable(world, origin.add(4, -5, j), BOUND_SILK);
+            setBlockStateIfReplaceable(world, origin.add(-4, -5, j), BOUND_SILK);
+            setBlockStateIfReplaceable(world, origin.add(j, -5, 4), BOUND_SILK);
+            setBlockStateIfReplaceable(world, origin.add(j, -5, -4), BOUND_SILK);
         }
 
-        setBlockStateIfReplaceable(world, origin.add(3, -5, 3), CARVED_STONE);
-        setBlockStateIfReplaceable(world, origin.add(3, -5, -3), CARVED_STONE);
-        setBlockStateIfReplaceable(world, origin.add(-3, -5, 3), CARVED_STONE);
-        setBlockStateIfReplaceable(world, origin.add(-3, -5, -3), CARVED_STONE);
+        setBlockStateIfReplaceable(world, origin.add(3, -5, 3), BOUND_SILK);
+        setBlockStateIfReplaceable(world, origin.add(3, -5, -3), BOUND_SILK);
+        setBlockStateIfReplaceable(world, origin.add(-3, -5, 3), BOUND_SILK);
+        setBlockStateIfReplaceable(world, origin.add(-3, -5, -3), BOUND_SILK);
 
         for (int i = 0; i < 7; ++i) {
             for (int j = 0; j < 7; ++j) {
@@ -249,8 +249,8 @@ public class LumwaspNestFeature extends Feature<DefaultFeatureConfig> {
         boolean bl = random.nextInt(3) == 1;
         BlockState state = bl ? NEST_LARVAE : NEST;
         setBlockStateIfReplaceable(world, pos, state);
-        if (bl) setBlockStateIfReplaceable(world, pos.up(), SILKBULB);
-        if (bl && random.nextInt(2) == 1) setBlockStateIfReplaceable(world, pos.down(), random.nextInt(10) == 1 ? SILKBULB : HANGING_GLOWSILK);
+        //if (bl) setBlockStateIfReplaceable(world, pos.up(), SILKBULB);
+        if (bl && random.nextInt(2) == 1) setBlockStateIfReplaceable(world, pos.down(), HANGING_GLOWSILK);
     }
 
     private boolean isValidSpace(StructureWorldAccess worldAccess, BlockPos origin, boolean large) {
@@ -269,6 +269,10 @@ public class LumwaspNestFeature extends Feature<DefaultFeatureConfig> {
     }
     
     protected void setBlockStateIfReplaceable(StructureWorldAccess world, BlockPos pos, BlockState state) {
+        if (state == ACID) {
+            if (world.getBlockState(pos).isAir()) setBlockState(world, pos, state);
+            return;
+        }
         if (canReplace(world.getBlockState(pos))) setBlockState(world, pos, state);
     }
 }

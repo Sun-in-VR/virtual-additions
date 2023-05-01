@@ -35,57 +35,9 @@
     "monster": [
       {
         "type": "virtual_additions:lumwasp",
-        "weight": 800,
-        "minCount": 2,
-        "maxCount": 4
-      },
-      {
-        "type": "minecraft:spider",
         "weight": 100,
-        "minCount": 4,
-        "maxCount": 4
-      },
-      {
-        "type": "minecraft:zombie",
-        "weight": 95,
-        "minCount": 4,
-        "maxCount": 4
-      },
-      {
-        "type": "minecraft:zombie_villager",
-        "weight": 5,
         "minCount": 1,
-        "maxCount": 1
-      },
-      {
-        "type": "minecraft:skeleton",
-        "weight": 100,
-        "minCount": 4,
-        "maxCount": 4
-      },
-      {
-        "type": "minecraft:creeper",
-        "weight": 100,
-        "minCount": 4,
-        "maxCount": 4
-      },
-      {
-        "type": "minecraft:slime",
-        "weight": 100,
-        "minCount": 4,
-        "maxCount": 4
-      },
-      {
-        "type": "minecraft:enderman",
-        "weight": 10,
-        "minCount": 1,
-        "maxCount": 4
-      },
-      {
-        "type": "minecraft:witch",
-        "weight": 5,
-        "minCount": 1,
-        "maxCount": 1
+        "maxCount": 3
       }
     ],
     "underground_water_creature": [
@@ -159,8 +111,8 @@
     ],
     [
       "minecraft:glow_lichen",
-      "virtual_additions:silkbulb",
-      "virtual_additions:lumwasp_nest"
+      "virtual_additions:wasp_den_ceiling",
+      "virtual_additions:wasp_den_floor"
     ],
     [
       "minecraft:freeze_top_layer"

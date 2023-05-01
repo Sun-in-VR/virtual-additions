@@ -35,7 +35,7 @@ public class IoliteRingParticle extends SpriteBillboardParticle {
 
     @Override
     public void buildGeometry(VertexConsumer vertexConsumer, Camera camera, float tickDelta) {
-        this.alpha = this.inverse ? MathHelper.clamp(((this.age + tickDelta) / this.maxAge) - 0.25F, 0.0F, 1F) : 1 - MathHelper.clamp(((this.age + tickDelta) / this.maxAge), 0.0F, 1.0F);
+        this.alpha = this.inverse ? MathHelper.clamp(((this.age + tickDelta) / this.maxAge), 0.0F, 1F) : 1 - MathHelper.clamp(((this.age + tickDelta) / this.maxAge), 0.0F, 1.0F);
         //if (this.age > 6) this.velocityY = 0;
 
         this.buildGeometry(vertexConsumer, camera, tickDelta, (quaternion) -> {
@@ -48,9 +48,9 @@ public class IoliteRingParticle extends SpriteBillboardParticle {
 
     private void buildGeometry(VertexConsumer vertexConsumer, Camera camera, float tickDelta, Consumer<Quaternionf> rotator) {
         Vec3d vec3d = camera.getPos();
-        float f = (float)(MathHelper.lerp((double)tickDelta, this.prevPosX, this.x) - vec3d.getX());
-        float g = (float)(MathHelper.lerp((double)tickDelta, this.prevPosY, this.y) - vec3d.getY());
-        float h = (float)(MathHelper.lerp((double)tickDelta, this.prevPosZ, this.z) - vec3d.getZ());
+        float f = (float)(MathHelper.lerp(tickDelta, this.prevPosX, this.x) - vec3d.getX());
+        float g = (float)(MathHelper.lerp(tickDelta, this.prevPosY, this.y) - vec3d.getY());
+        float h = (float)(MathHelper.lerp(tickDelta, this.prevPosZ, this.z) - vec3d.getZ());
         Quaternionf quaternionf = (new Quaternionf()).setAngleAxis(0.0F, quarternionVector.x(), quarternionVector.y(), quarternionVector.z());
         rotator.accept(quaternionf);
         quaternionf.transform(thisIsUsedForSomethingIdkWhat);

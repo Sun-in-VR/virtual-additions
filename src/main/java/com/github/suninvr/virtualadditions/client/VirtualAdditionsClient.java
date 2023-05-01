@@ -48,6 +48,10 @@ public class VirtualAdditionsClient implements ClientModInitializer {
                 VAFluids.FLOWING_ACID
         );
 
+        BlockRenderLayerMap.INSTANCE.putBlocks(RenderLayer.getTranslucent(),
+                VABlocks.SILK_FLUFF
+        );
+
         BlockRenderLayerMap.INSTANCE.putBlocks(RenderLayer.getCutout(),
                 VABlocks.CLIMBING_ROPE_ANCHOR,
                 VABlocks.RED_GLIMMER_CRYSTAL,

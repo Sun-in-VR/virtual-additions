@@ -2,19 +2,16 @@
     "type": "minecraft:crafting_shaped",
     "pattern": [
         "sss",
-        "sas",
+        "sss",
         "sss"
     ],
     "key": {
-        "a": {
-            "item": "virtual_additions:acid_bucket"
-        },
         "s": {
             "item": "virtual_additions:silk_fluff"
         }
     },
     "result": {
-        "item": "virtual_additions:silkbulb",
-        "count": 4
+        "item": "virtual_additions:bound_silk",
+        "count": 1
     }
 }

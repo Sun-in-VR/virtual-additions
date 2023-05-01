@@ -12,6 +12,7 @@
     "EntityMixin",
     "FeatureFlagsMixin",
     "FenceBlockMixin",
+    "FireBlockAccessor",
     "ItemMixin",
     "LivingEntityMixin",
     "MobEntityMixin",

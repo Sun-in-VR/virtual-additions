@@ -2,6 +2,8 @@
   "replace": false,
   "values": [
     "#virtual_additions:silkbulbs",
+    "virtual_additions:bound_silk",
+    "virtual_additions:silk_fluff",
     "virtual_additions:lumwasp_nest"
   ]
 }

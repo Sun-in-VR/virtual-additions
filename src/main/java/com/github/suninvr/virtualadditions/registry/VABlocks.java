@@ -2,6 +2,7 @@ package com.github.suninvr.virtualadditions.registry;
 
 import com.github.suninvr.virtualadditions.VirtualAdditions;
 import com.github.suninvr.virtualadditions.block.*;
+import com.github.suninvr.virtualadditions.mixin.FireBlockAccessor;
 import com.github.suninvr.virtualadditions.registry.constructors.block.CustomStairsBlock;
 import net.fabricmc.fabric.api.object.builder.v1.block.FabricBlockSettings;
 import net.fabricmc.fabric.api.registry.LandPathNodeTypesRegistry;
@@ -79,7 +80,8 @@ public class VABlocks {
     public static final Block FLOWERING_AZALEA_HEDGE;
     public static final Block HANGING_GLOWSILK;
     public static final Block LUMWASP_NEST;
-    public static final Block CARVED_STONE;
+    public static final Block BOUND_SILK;
+    public static final Block SILK_FLUFF;
     public static final Block SILKBULB;
     public static final Block WHITE_SILKBULB;
     public static final Block LIGHT_GRAY_SILKBULB;
@@ -106,8 +108,8 @@ public class VABlocks {
 
 
     static {
-        CLIMBING_ROPE = register("climbing_rope", new ClimbingRopeBlock(FabricBlockSettings.of(Material.LIGHT_PASSES_THROUGH).sounds(ROPE_SOUND_GROUP).collidable(false).nonOpaque().hardness(0.5F)));
-        CLIMBING_ROPE_ANCHOR = register("climbing_rope_anchor", new ClimbingRopeAnchorBlock(FabricBlockSettings.of(Material.LIGHT_PASSES_THROUGH).sounds(ROPE_SOUND_GROUP).collidable(false).nonOpaque().hardness(0.5F)));
+        CLIMBING_ROPE = register("climbing_rope", new ClimbingRopeBlock(FabricBlockSettings.of(Material.LIGHT_PASSES_THROUGH).sounds(ROPE_SOUND_GROUP).collidable(false).nonOpaque().burnable().hardness(0.5F)));
+        CLIMBING_ROPE_ANCHOR = register("climbing_rope_anchor", new ClimbingRopeAnchorBlock(FabricBlockSettings.of(Material.LIGHT_PASSES_THROUGH).sounds(ROPE_SOUND_GROUP).collidable(false).nonOpaque().burnable().hardness(0.5F)));
 
         RAW_STEEL_BLOCK = register("raw_steel_block", new Block(FabricBlockSettings.of(Material.BLOCKS_LIGHT).mapColor(MapColor.GRAY).requiresTool().strength(5.0F, 300.0F)));
         STEEL_BLOCK = register("steel_block", new Block(FabricBlockSettings.of(Material.BLOCKS_LIGHT).mapColor(MapColor.GRAY).sounds(BlockSoundGroup.NETHERITE).requiresTool().hardness(5.0F).resistance(300.0F)));
@@ -172,28 +174,29 @@ public class VABlocks {
         AZALEA_HEDGE = register("azalea_hedge", new HedgeBlock(AbstractBlock.Settings.copy(Blocks.AZALEA_LEAVES)));
         FLOWERING_AZALEA_HEDGE = register("flowering_azalea_hedge", new HedgeBlock(AbstractBlock.Settings.copy(Blocks.FLOWERING_AZALEA_LEAVES)));
 
-        HANGING_GLOWSILK = register("hanging_glowsilk", new HangingGlowsilkBlock(AbstractBlock.Settings.of(Material.PLANT).mapColor(MapColor.LIGHT_BLUE).sounds(BlockSoundGroup.WART_BLOCK).luminance((state) -> 6).noCollision().nonOpaque().breakInstantly().requires(VirtualAdditions.PREVIEW)));
-        LUMWASP_NEST = register("lumwasp_nest", new LumwaspNestBlock(AbstractBlock.Settings.copy(Blocks.HONEYCOMB_BLOCK).mapColor(MapColor.DARK_AQUA).requires(VirtualAdditions.PREVIEW)));
-        CARVED_STONE = register("carved_stone", new Block(AbstractBlock.Settings.copy(Blocks.HONEYCOMB_BLOCK).mapColor(MapColor.DARK_AQUA).requires(VirtualAdditions.PREVIEW)));
-        SILKBULB = register("silkbulb", new Block(AbstractBlock.Settings.copy(Blocks.SHROOMLIGHT).mapColor(MapColor.DARK_AQUA).luminance( (state) -> 15 ).nonOpaque().requires(VirtualAdditions.PREVIEW)));
-        WHITE_SILKBULB = register("white_silkbulb", new Block(AbstractBlock.Settings.copy(SILKBULB).mapColor(MapColor.WHITE).requires(VirtualAdditions.PREVIEW)));
-        LIGHT_GRAY_SILKBULB = register("light_gray_silkbulb", new Block(AbstractBlock.Settings.copy(SILKBULB).mapColor(MapColor.LIGHT_GRAY).requires(VirtualAdditions.PREVIEW)));
-        GRAY_SILKBULB = register("gray_silkbulb", new Block(AbstractBlock.Settings.copy(SILKBULB).mapColor(MapColor.GRAY).requires(VirtualAdditions.PREVIEW)));
-        BLACK_SILKBULB = register("black_silkbulb", new Block(AbstractBlock.Settings.copy(SILKBULB).mapColor(MapColor.BLACK).requires(VirtualAdditions.PREVIEW)));
-        BROWN_SILKBULB = register("brown_silkbulb", new Block(AbstractBlock.Settings.copy(SILKBULB).mapColor(MapColor.BROWN).requires(VirtualAdditions.PREVIEW)));
-        RED_SILKBULB = register("red_silkbulb", new Block(AbstractBlock.Settings.copy(SILKBULB).mapColor(MapColor.RED).requires(VirtualAdditions.PREVIEW)));
-        ORANGE_SILKBULB = register("orange_silkbulb", new Block(AbstractBlock.Settings.copy(SILKBULB).mapColor(MapColor.ORANGE).requires(VirtualAdditions.PREVIEW)));
-        YELLOW_SILKBULB = register("yellow_silkbulb", new Block(AbstractBlock.Settings.copy(SILKBULB).mapColor(MapColor.YELLOW).requires(VirtualAdditions.PREVIEW)));
-        LIME_SILKBULB = register("lime_silkbulb", new Block(AbstractBlock.Settings.copy(SILKBULB).mapColor(MapColor.LIME).requires(VirtualAdditions.PREVIEW)));
-        GREEN_SILKBULB = register("green_silkbulb", new Block(AbstractBlock.Settings.copy(SILKBULB).mapColor(MapColor.GREEN).requires(VirtualAdditions.PREVIEW)));
-        CYAN_SILKBULB = register("cyan_silkbulb", new Block(AbstractBlock.Settings.copy(SILKBULB).mapColor(MapColor.CYAN).requires(VirtualAdditions.PREVIEW)));
-        LIGHT_BLUE_SILKBULB = register("light_blue_silkbulb", new Block(AbstractBlock.Settings.copy(SILKBULB).mapColor(MapColor.LIGHT_BLUE).requires(VirtualAdditions.PREVIEW)));
-        BLUE_SILKBULB = register("blue_silkbulb", new Block(AbstractBlock.Settings.copy(SILKBULB).mapColor(MapColor.BLUE).requires(VirtualAdditions.PREVIEW)));
-        PURPLE_SILKBULB = register("purple_silkbulb", new Block(AbstractBlock.Settings.copy(SILKBULB).mapColor(MapColor.PURPLE).requires(VirtualAdditions.PREVIEW)));
-        MAGENTA_SILKBULB = register("magenta_silkbulb", new Block(AbstractBlock.Settings.copy(SILKBULB).mapColor(MapColor.MAGENTA).requires(VirtualAdditions.PREVIEW)));
-        PINK_SILKBULB = register("pink_silkbulb", new Block(AbstractBlock.Settings.copy(SILKBULB).mapColor(MapColor.PINK).requires(VirtualAdditions.PREVIEW)));
+        HANGING_GLOWSILK = register("hanging_glowsilk", new HangingGlowsilkBlock(AbstractBlock.Settings.of(Material.PLANT).mapColor(MapColor.LIGHT_BLUE).sounds(BlockSoundGroup.WART_BLOCK).luminance((state) -> 6).noCollision().nonOpaque().breakInstantly().burnable().requires(VirtualAdditions.PREVIEW)));
+        LUMWASP_NEST = register("lumwasp_nest", new LumwaspNestBlock(AbstractBlock.Settings.copy(Blocks.HONEYCOMB_BLOCK).sounds(BlockSoundGroup.WART_BLOCK).mapColor(MapColor.DARK_AQUA).burnable().requires(VirtualAdditions.PREVIEW)));
+        BOUND_SILK = register("bound_silk", new Block(AbstractBlock.Settings.copy(Blocks.HONEYCOMB_BLOCK).sounds(BlockSoundGroup.WART_BLOCK).mapColor(MapColor.DARK_AQUA).burnable().requires(VirtualAdditions.PREVIEW)));
+        SILK_FLUFF = register("silk_fluff", new SilkFluffBlock(AbstractBlock.Settings.copy(Blocks.POWDER_SNOW).mapColor(MapColor.DARK_AQUA).nonOpaque().burnable().requires(VirtualAdditions.PREVIEW)));
+        SILKBULB = register("silkbulb", new Block(AbstractBlock.Settings.copy(Blocks.SHROOMLIGHT).mapColor(MapColor.DARK_AQUA).luminance( (state) -> 15 ).nonOpaque().burnable().requires(VirtualAdditions.PREVIEW)));
+        WHITE_SILKBULB = register("white_silkbulb", new Block(AbstractBlock.Settings.copy(SILKBULB).mapColor(MapColor.WHITE).burnable().requires(VirtualAdditions.PREVIEW)));
+        LIGHT_GRAY_SILKBULB = register("light_gray_silkbulb", new Block(AbstractBlock.Settings.copy(SILKBULB).mapColor(MapColor.LIGHT_GRAY).burnable().requires(VirtualAdditions.PREVIEW)));
+        GRAY_SILKBULB = register("gray_silkbulb", new Block(AbstractBlock.Settings.copy(SILKBULB).mapColor(MapColor.GRAY).burnable().requires(VirtualAdditions.PREVIEW)));
+        BLACK_SILKBULB = register("black_silkbulb", new Block(AbstractBlock.Settings.copy(SILKBULB).mapColor(MapColor.BLACK).burnable().requires(VirtualAdditions.PREVIEW)));
+        BROWN_SILKBULB = register("brown_silkbulb", new Block(AbstractBlock.Settings.copy(SILKBULB).mapColor(MapColor.BROWN).burnable().requires(VirtualAdditions.PREVIEW)));
+        RED_SILKBULB = register("red_silkbulb", new Block(AbstractBlock.Settings.copy(SILKBULB).mapColor(MapColor.RED).burnable().requires(VirtualAdditions.PREVIEW)));
+        ORANGE_SILKBULB = register("orange_silkbulb", new Block(AbstractBlock.Settings.copy(SILKBULB).mapColor(MapColor.ORANGE).burnable().requires(VirtualAdditions.PREVIEW)));
+        YELLOW_SILKBULB = register("yellow_silkbulb", new Block(AbstractBlock.Settings.copy(SILKBULB).mapColor(MapColor.YELLOW).burnable().requires(VirtualAdditions.PREVIEW)));
+        LIME_SILKBULB = register("lime_silkbulb", new Block(AbstractBlock.Settings.copy(SILKBULB).mapColor(MapColor.LIME).burnable().requires(VirtualAdditions.PREVIEW)));
+        GREEN_SILKBULB = register("green_silkbulb", new Block(AbstractBlock.Settings.copy(SILKBULB).mapColor(MapColor.GREEN).burnable().requires(VirtualAdditions.PREVIEW)));
+        CYAN_SILKBULB = register("cyan_silkbulb", new Block(AbstractBlock.Settings.copy(SILKBULB).mapColor(MapColor.CYAN).burnable().requires(VirtualAdditions.PREVIEW)));
+        LIGHT_BLUE_SILKBULB = register("light_blue_silkbulb", new Block(AbstractBlock.Settings.copy(SILKBULB).mapColor(MapColor.LIGHT_BLUE).burnable().requires(VirtualAdditions.PREVIEW)));
+        BLUE_SILKBULB = register("blue_silkbulb", new Block(AbstractBlock.Settings.copy(SILKBULB).mapColor(MapColor.BLUE).burnable().requires(VirtualAdditions.PREVIEW)));
+        PURPLE_SILKBULB = register("purple_silkbulb", new Block(AbstractBlock.Settings.copy(SILKBULB).mapColor(MapColor.PURPLE).burnable().requires(VirtualAdditions.PREVIEW)));
+        MAGENTA_SILKBULB = register("magenta_silkbulb", new Block(AbstractBlock.Settings.copy(SILKBULB).mapColor(MapColor.MAGENTA).burnable().requires(VirtualAdditions.PREVIEW)));
+        PINK_SILKBULB = register("pink_silkbulb", new Block(AbstractBlock.Settings.copy(SILKBULB).mapColor(MapColor.PINK).burnable().requires(VirtualAdditions.PREVIEW)));
 
-        ACID = register("acid", new AcidFluidBlock(VAFluids.ACID, AbstractBlock.Settings.of(Material.LIGHT_PASSES_THROUGH).mapColor(MapColor.LIME).luminance(((state) -> 6)).replaceable().noCollision().strength(100.0F).dropsNothing().allowsSpawning(((state, world, pos, type) -> type == VAEntityType.LUMWASP)).requires(VirtualAdditions.PREVIEW)));
+        ACID = register("acid", new AcidFluidBlock(VAFluids.ACID, AbstractBlock.Settings.of(Material.LIGHT_PASSES_THROUGH).mapColor(MapColor.LIME).luminance(((state) -> 6)).replaceable().noCollision().strength(100.0F).dropsNothing().allowsSpawning(((state, world, pos, type) -> type == VAEntityType.LUMWASP)).pistonBehavior(PistonBehavior.DESTROY).requires(VirtualAdditions.PREVIEW)));
 
         IOLITE_ORE = register("iolite_ore", new ExperienceDroppingBlock(FabricBlockSettings.copyOf(Blocks.END_STONE).strength(4.5F, 4.5F).requiresTool(), UniformIntProvider.create(5, 9)));
         IOLITE_BLOCK = register("iolite_block", new Block(FabricBlockSettings.of(Material.BLOCKS_LIGHT).mapColor(MapColor.MAGENTA).sounds(BlockSoundGroup.METAL).requiresTool().hardness(5.0F).resistance(300.0F)));
@@ -203,6 +206,41 @@ public class VABlocks {
     }
     public static void init(){
         LandPathNodeTypesRegistry.register(ACID, PathNodeType.LAVA, PathNodeType.DANGER_FIRE);
+        FireBlockAccessor fire = (FireBlockAccessor)Blocks.FIRE;
+        fire.virtualAdditions$registerFlammableBlock(CLIMBING_ROPE_ANCHOR, 5, 20);
+        fire.virtualAdditions$registerFlammableBlock(CLIMBING_ROPE, 5, 20);
+        fire.virtualAdditions$registerFlammableBlock(OAK_HEDGE, 30, 60);
+        fire.virtualAdditions$registerFlammableBlock(SPRUCE_HEDGE, 30, 60);
+        fire.virtualAdditions$registerFlammableBlock(BIRCH_HEDGE, 30, 60);
+        fire.virtualAdditions$registerFlammableBlock(JUNGLE_HEDGE, 30, 60);
+        fire.virtualAdditions$registerFlammableBlock(ACACIA_HEDGE, 30, 60);
+        fire.virtualAdditions$registerFlammableBlock(DARK_OAK_HEDGE, 30, 60);
+        fire.virtualAdditions$registerFlammableBlock(MANGROVE_HEDGE, 30, 60);
+        fire.virtualAdditions$registerFlammableBlock(CHERRY_HEDGE, 30, 60);
+        fire.virtualAdditions$registerFlammableBlock(AZALEA_HEDGE, 30, 60);
+        fire.virtualAdditions$registerFlammableBlock(FLOWERING_AZALEA_HEDGE, 30, 60);
+        fire.virtualAdditions$registerFlammableBlock(HANGING_GLOWSILK, 30, 60);
+        fire.virtualAdditions$registerFlammableBlock(LUMWASP_NEST, 5, 20);
+        fire.virtualAdditions$registerFlammableBlock(BOUND_SILK, 5, 20);
+        fire.virtualAdditions$registerFlammableBlock(SILK_FLUFF, 30, 60);
+        fire.virtualAdditions$registerFlammableBlock(SILKBULB, 5, 20);
+        fire.virtualAdditions$registerFlammableBlock(WHITE_SILKBULB, 5, 20);
+        fire.virtualAdditions$registerFlammableBlock(LIGHT_GRAY_SILKBULB, 5, 20);
+        fire.virtualAdditions$registerFlammableBlock(GRAY_SILKBULB, 5, 20);
+        fire.virtualAdditions$registerFlammableBlock(BLACK_SILKBULB, 5, 20);
+        fire.virtualAdditions$registerFlammableBlock(BROWN_SILKBULB, 5, 20);
+        fire.virtualAdditions$registerFlammableBlock(RED_SILKBULB, 5, 20);
+        fire.virtualAdditions$registerFlammableBlock(ORANGE_SILKBULB, 5, 20);
+        fire.virtualAdditions$registerFlammableBlock(YELLOW_SILKBULB, 5, 20);
+        fire.virtualAdditions$registerFlammableBlock(LIME_SILKBULB, 5, 20);
+        fire.virtualAdditions$registerFlammableBlock(GREEN_SILKBULB, 5, 20);
+        fire.virtualAdditions$registerFlammableBlock(CYAN_SILKBULB, 5, 20);
+        fire.virtualAdditions$registerFlammableBlock(LIGHT_BLUE_SILKBULB, 5, 20);
+        fire.virtualAdditions$registerFlammableBlock(BLUE_SILKBULB, 5, 20);
+        fire.virtualAdditions$registerFlammableBlock(PURPLE_SILKBULB, 5, 20);
+        fire.virtualAdditions$registerFlammableBlock(MAGENTA_SILKBULB, 5, 20);
+        fire.virtualAdditions$registerFlammableBlock(PINK_SILKBULB, 5, 20);
+
     }
 
 }
