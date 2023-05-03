@@ -22,7 +22,7 @@ import static com.github.suninvr.virtualadditions.VirtualAdditions.idOf;
 public class VAEntityType {
     public static void init(){
         FabricDefaultAttributeRegistry.register(LUMWASP, LumwaspEntity.createLumwaspAttributes());
-        SpawnRestriction.register(LUMWASP, SpawnRestriction.Location.ON_GROUND, Heightmap.Type.MOTION_BLOCKING_NO_LEAVES, HostileEntity::canSpawnInDark);
+        SpawnRestriction.register(LUMWASP, SpawnRestriction.Location.ON_GROUND, Heightmap.Type.MOTION_BLOCKING, HostileEntity::canSpawnInDark);
     }
 
     public static final EntityType<ClimbingRopeEntity> CLIMBING_ROPE;

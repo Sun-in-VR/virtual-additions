@@ -31,12 +31,13 @@
     ],
     "axolotls": [],
     "creature": [],
-    "misc": [],
+    "misc": [
+    ],
     "monster": [
       {
         "type": "virtual_additions:lumwasp",
-        "weight": 100,
-        "minCount": 1,
+        "weight": 500,
+        "minCount": 2,
         "maxCount": 3
       }
     ],
@@ -51,7 +52,12 @@
     "water_ambient": [],
     "water_creature": []
   },
-  "spawn_costs": {},
+  "spawn_costs": {
+    "virtual_additions:lumwasp": {
+      "energy_budget": 0.25,
+      "charge": 0.7
+    }
+  },
   "carvers": {
     "air": [
       "minecraft:cave",
@@ -104,15 +110,17 @@
       "minecraft:disk_clay",
       "minecraft:disk_gravel"
     ],
-    [],
     [
+      "virtual_additions:wasp_den_ceiling",
+      "virtual_additions:wasp_den_floor"
+    ],
+    [
+      "virtual_additions:acidic_silk",
       "minecraft:spring_water",
       "minecraft:spring_lava"
     ],
     [
-      "minecraft:glow_lichen",
-      "virtual_additions:wasp_den_ceiling",
-      "virtual_additions:wasp_den_floor"
+      "minecraft:glow_lichen"
     ],
     [
       "minecraft:freeze_top_layer"

@@ -1,5 +1,6 @@
 package com.github.suninvr.virtualadditions.client;
 
+import com.github.suninvr.virtualadditions.client.particle.AcidDropletParticle;
 import com.github.suninvr.virtualadditions.client.particle.AcidSplashEmitterParticle;
 import com.github.suninvr.virtualadditions.client.particle.IoliteRingParticle;
 import com.github.suninvr.virtualadditions.client.render.entity.AcidSpitEntityRenderer;
@@ -114,6 +115,7 @@ public class VirtualAdditionsClient implements ClientModInitializer {
 
         ParticleFactoryRegistry.getInstance().register(VAParticleTypes.ACID_SPLASH_EMITTER, new AcidSplashEmitterParticle.Factory());
         ParticleFactoryRegistry.getInstance().register(VAParticleTypes.ACID_SPLASH, WaterSplashParticle.Factory::new);
+        ParticleFactoryRegistry.getInstance().register(VAParticleTypes.ACID_DROPLET, AcidDropletParticle.Factory::new);
         ParticleFactoryRegistry.getInstance().register(VAParticleTypes.IOLITE_ANCHOR_RING, IoliteRingParticle.Factory::new);
         ParticleFactoryRegistry.getInstance().register(VAParticleTypes.IOLITE_TETHER_RING, IoliteRingParticle.Factory::new);
 

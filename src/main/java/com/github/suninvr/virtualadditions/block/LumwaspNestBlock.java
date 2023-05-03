@@ -32,30 +32,36 @@ public class LumwaspNestBlock extends TransparentBlock {
 
     @Override
     public boolean hasRandomTicks(BlockState state) {
-        return !(state.get(LARVAE));
+        return state.get(LARVAE);
     }
 
     @Override
     public void randomTick(BlockState state, ServerWorld world, BlockPos pos, Random random) {
-        if (world.getFluidState(pos.up()).isOf(VAFluids.ACID) && random.nextInt(8) == 1) {
-            world.setBlockState(pos, state.with(LARVAE, true));
+        if (!world.getFluidState(pos.up()).isOf(VAFluids.ACID)) {
+            world.setBlockState(pos, state.with(LARVAE, false));
         }
     }
 
     @Override
     public void onSteppedOn(World world, BlockPos pos, BlockState state, Entity entity) {
             if (world.isClient()) return;
-            if (state.get(LARVAE) && world.getFluidState(pos.up()).isOf(VAFluids.ACID) && world.getBlockState(pos.down()).isAir() && entity instanceof ItemEntity itemEntity) {
+            if (world.getFluidState(pos.up()).isOf(VAFluids.ACID) && world.getBlockState(pos.down()).isAir() && entity instanceof ItemEntity itemEntity) {
             ItemStack stack = itemEntity.getStack();
             System.out.println(stack);
             int i = 0;
             if (stack.isIn(VAItemTags.LUMWASP_LARVAE_FOOD)) i += stack.getCount();
             else return;
+
+            boolean larvae = state.get(LARVAE);
             while (i > 0) {
                 stack.decrement(1);
-                if (world.getRandom().nextInt(15) == 1) {
-                    world.setBlockState(pos.down(), VABlocks.HANGING_GLOWSILK.getDefaultState());
-                    return;
+                if (world.getRandom().nextInt(6) == 1) {
+                    if (larvae) {
+                        world.setBlockState(pos.down(), VABlocks.HANGING_GLOWSILK.getDefaultState());
+                        return;
+                    } else {
+                        world.setBlockState(pos, state.with(LARVAE, true));
+                    }
                 }
                 i--;
             }

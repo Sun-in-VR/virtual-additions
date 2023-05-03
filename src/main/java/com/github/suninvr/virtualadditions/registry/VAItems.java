@@ -141,8 +141,10 @@ public class VAItems {
     public static final Item HANGING_GLOWSILK;
     public static final Item FRAYED_SILK;
     public static final Item GLOWSILK;
+    public static final Item LUMWASP_MANDIBLE;
     public static final Item LUMWASP_NEST;
     public static final Item BOUND_SILK;
+    public static final Item ACIDIC_SILK;
     public static final Item SILK_FLUFF;
     public static final Item SILKBULB;
     public static final Item WHITE_SILKBULB;
@@ -328,12 +330,14 @@ public class VAItems {
         MIXED_ROCK_CANDY = register("mixed_rock_candy", new RockCandyItem(new FabricItemSettings().food(ROCK_CANDY_FOOD).requires(VirtualAdditions.PREVIEW)), ItemGroups.FOOD_AND_DRINK, prev);
 
         BOUND_SILK = registerBlockItem("bound_silk", VABlocks.BOUND_SILK, ItemGroups.NATURAL, Items.POINTED_DRIPSTONE, VirtualAdditions.PREVIEW);
+        ACIDIC_SILK = registerBlockItem("acidic_silk", VABlocks.ACIDIC_SILK, ItemGroups.NATURAL, prev, VirtualAdditions.PREVIEW);
         LUMWASP_NEST = registerBlockItem("lumwasp_nest", VABlocks.LUMWASP_NEST, ItemGroups.NATURAL, prev, VirtualAdditions.PREVIEW);
         SILK_FLUFF = registerBlockItem("silk_fluff", VABlocks.SILK_FLUFF, ItemGroups.NATURAL, prev, VirtualAdditions.PREVIEW);
-        HANGING_GLOWSILK = registerBlockItem("hanging_glowsilk", VABlocks.HANGING_GLOWSILK, ItemGroups.NATURAL, prev, VirtualAdditions.PREVIEW);
         FRAYED_SILK = registerBlockItem("frayed_silk", VABlocks.FRAYED_SILK, ItemGroups.NATURAL, prev, VirtualAdditions.PREVIEW);
+        HANGING_GLOWSILK = registerBlockItem("hanging_glowsilk", VABlocks.HANGING_GLOWSILK, ItemGroups.NATURAL, prev, VirtualAdditions.PREVIEW);
         GLOWSILK = register("glowsilk", ItemGroups.INGREDIENTS, Items.STRING, VirtualAdditions.PREVIEW);
-        SILKBULB = registerBlockItem("silkbulb", VABlocks.SILKBULB, new ItemGroupLocation[]{new ItemGroupLocation(ItemGroups.FUNCTIONAL, Items.GLOWSTONE), new ItemGroupLocation(ItemGroups.COLORED_BLOCKS, Items.PINK_BANNER), new ItemGroupLocation(ItemGroups.NATURAL, LUMWASP_NEST)}, VirtualAdditions.PREVIEW);
+        LUMWASP_MANDIBLE = register("lumwasp_mandible", ItemGroups.INGREDIENTS, Items.FERMENTED_SPIDER_EYE, VirtualAdditions.PREVIEW);
+        SILKBULB = registerBlockItem("silkbulb", VABlocks.SILKBULB, new ItemGroupLocation[]{new ItemGroupLocation(ItemGroups.FUNCTIONAL, Items.GLOWSTONE), new ItemGroupLocation(ItemGroups.COLORED_BLOCKS, Items.PINK_BANNER), new ItemGroupLocation(ItemGroups.NATURAL, FRAYED_SILK)}, VirtualAdditions.PREVIEW);
 
         WHITE_SILKBULB = registerBlockItem("white_silkbulb", VABlocks.WHITE_SILKBULB, ItemGroups.COLORED_BLOCKS, prev, VirtualAdditions.PREVIEW);
         LIGHT_GRAY_SILKBULB = registerBlockItem("light_gray_silkbulb", VABlocks.LIGHT_GRAY_SILKBULB, ItemGroups.COLORED_BLOCKS, prev, VirtualAdditions.PREVIEW);
@@ -490,7 +494,7 @@ public class VAItems {
     }
     protected static void initBrewingRecipes() {
         BrewingRecipeRegistry.registerPotionType(APPLICABLE_POTION);
-        BrewingRecipeRegistry.registerItemRecipe(Items.POTION, Items.SLIME_BALL, APPLICABLE_POTION);
+        BrewingRecipeRegistry.registerItemRecipe(Items.POTION, LUMWASP_MANDIBLE, APPLICABLE_POTION);
     }
 
 }

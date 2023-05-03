@@ -18,7 +18,7 @@ import static com.github.suninvr.virtualadditions.VirtualAdditions.idOf;
 
 public class RegistryHelper {
 
-    public static class BlocKRegistryHelper {
+    public static class BlockRegistryHelper {
 
         /**
          * Registers a new block

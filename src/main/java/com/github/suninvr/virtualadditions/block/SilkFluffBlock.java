@@ -13,7 +13,7 @@ import net.minecraft.world.World;
 import org.joml.Vector3f;
 
 public class SilkFluffBlock extends TransparentBlock {
-    private static final Vec3d movement = new Vec3d(0.85, 0.85, 0.85);
+    private static final Vec3d movement = new Vec3d(0.85, 1.0, 0.85);
     public SilkFluffBlock(Settings settings) {
         super(settings);
     }
@@ -28,7 +28,7 @@ public class SilkFluffBlock extends TransparentBlock {
     public VoxelShape getCollisionShape(BlockState state, BlockView world, BlockPos pos, ShapeContext context) {
         if (context instanceof EntityShapeContext entityContext) {
             if (entityContext.getEntity() != null) {
-                if (!(entityContext.getEntity().getType().isIn(VAEntityTypeTags.COLLIDES_WITH_SILK_FLUFF) || entityContext.getEntity().isSneaking())) return VoxelShapes.empty();
+                if (!(entityContext.getEntity().getType().isIn(VAEntityTypeTags.COLLIDES_WITH_SILK_FLUFF) || (entityContext.getEntity().isSneaking() && entityContext.isAbove(VoxelShapes.fullCube(), pos, false)))) return VoxelShapes.empty();
             }
         }
         return VoxelShapes.fullCube();

@@ -13,7 +13,6 @@ import net.minecraft.particle.ParticleTypes;
 
 public class AcidSplashEmitterParticle extends NoRenderParticle {
     private int age;
-    private final int maxAge = 8;
     protected AcidSplashEmitterParticle(ClientWorld clientWorld, double d, double e, double f) {
         super(clientWorld, d, e, f);
     }
