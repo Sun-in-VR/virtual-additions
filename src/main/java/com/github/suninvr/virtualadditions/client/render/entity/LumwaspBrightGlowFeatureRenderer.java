@@ -19,7 +19,7 @@ public class LumwaspBrightGlowFeatureRenderer<T extends LumwaspEntity, M extends
 
     public void render(MatrixStack matrices, VertexConsumerProvider vertexConsumers, int light, T entity, float limbAngle, float limbDistance, float tickDelta, float animationProgress, float headYaw, float headPitch) {
         VertexConsumer vertexConsumer = vertexConsumers.getBuffer(this.getEyesTexture());
-        float value = (float) ((Math.sin(entity.age * 0.25) / 4) + 0.5F);
+        float value = (float) ( ((Math.sin(entity.age * 0.25) + 1) / 8) + 0.33F);
         this.getContextModel().render(matrices, vertexConsumer, 15, OverlayTexture.DEFAULT_UV, value, value, value, 1.0F);
     }
 

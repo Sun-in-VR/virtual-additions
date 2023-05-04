@@ -1,8 +1,0 @@
-{
-  "parent": "minecraft:block/cube_bottom_top",
-  "textures": {
-    "bottom": "virtual_additions:block/bound_silk",
-    "top": "virtual_additions:block/acidic_silk",
-    "side": "virtual_additions:block/bound_silk"
-  }
-}

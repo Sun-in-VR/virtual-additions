@@ -28,62 +28,45 @@
       "scale": 1,
       "states": [
         {
-          "Name": "virtual_additions:silk_fluff"
+          "Name": "virtual_additions:webbed_silk"
         },
         {
-          "Name": "virtual_additions:silk_fluff"
+          "Name": "virtual_additions:webbed_silk"
         },
         {
-          "Name": "virtual_additions:bound_silk"
+          "Name": "virtual_additions:silk_block"
         },
         {
-          "Name": "virtual_additions:silk_fluff"
+          "Name": "virtual_additions:webbed_silk"
         },
         {
-          "Name": "virtual_additions:silk_fluff"
+          "Name": "virtual_additions:webbed_silk"
         }
       ]
     },
     "vegetation_feature": {
       "feature": {
-        "type": "minecraft:random_selector",
+        "type": "minecraft:simple_block",
         "config": {
-          "features": [
-            {
-              "chance": 0.05,
-              "feature": "virtual_additions:lumwasp_nest"
-            },
-            {
-              "chance": 0.2,
-              "feature": {
-                "feature": {
-                  "type": "minecraft:simple_block",
-                  "config": {
-                    "to_place": {
-                      "type": "minecraft:simple_state_provider",
-                      "state": {
-                        "Name": "virtual_additions:silkbulb"
-                      }
-                    }
-                  }
-                },
-                "placement": []
-              }
-            }
-          ],
-          "default": {
-            "feature": {
-              "type": "minecraft:simple_block",
-              "config": {
-                "to_place": {
-                  "type": "minecraft:simple_state_provider",
-                  "state": {
-                    "Name": "virtual_additions:hanging_glowsilk"
+          "to_place": {
+            "type": "minecraft:weighted_state_provider",
+            "entries": [
+              {
+                "weight": 9,
+                "data": {
+                  "Name": "virtual_additions:frayed_silk",
+                  "Properties": {
+                    "vertical_direction": "down"
                   }
                 }
+              },
+              {
+                "weight": 1,
+                "data": {
+                  "Name": "virtual_additions:silkbulb"
+                }
               }
-            },
-            "placement": []
+            ]
           }
         }
       },
@@ -97,7 +80,7 @@
               1,
               0
             ],
-            "blocks": "virtual_additions:bound_silk"
+            "blocks": "virtual_additions:silk_block"
           }
         }
       ]

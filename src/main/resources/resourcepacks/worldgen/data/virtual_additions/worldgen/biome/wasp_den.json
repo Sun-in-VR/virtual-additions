@@ -115,7 +115,8 @@
       "virtual_additions:wasp_den_floor"
     ],
     [
-      "virtual_additions:acidic_silk",
+      "virtual_additions:greencap_mushroom",
+      "virtual_additions:lumwasp_nest",
       "minecraft:spring_water",
       "minecraft:spring_lava"
     ],

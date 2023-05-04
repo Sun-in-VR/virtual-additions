@@ -28,19 +28,19 @@
       "scale": 1,
       "states": [
         {
-          "Name": "virtual_additions:silk_fluff"
+          "Name": "virtual_additions:webbed_silk"
         },
         {
-          "Name": "virtual_additions:silk_fluff"
+          "Name": "virtual_additions:webbed_silk"
         },
         {
-          "Name": "virtual_additions:bound_silk"
+          "Name": "virtual_additions:silk_block"
         },
         {
-          "Name": "virtual_additions:silk_fluff"
+          "Name": "virtual_additions:webbed_silk"
         },
         {
-          "Name": "virtual_additions:silk_fluff"
+          "Name": "virtual_additions:webbed_silk"
         }
       ]
     },
@@ -49,10 +49,21 @@
         "type": "minecraft:simple_block",
         "config": {
           "to_place": {
-            "type": "minecraft:simple_state_provider",
-            "state": {
-              "Name": "virtual_additions:frayed_silk"
-            }
+            "type": "minecraft:weighted_state_provider",
+            "entries": [
+              {
+                "weight": 9,
+                "data": {
+                  "Name": "virtual_additions:frayed_silk"
+                }
+              },
+              {
+                "weight": 1,
+                "data": {
+                  "Name": "virtual_additions:greencap_mushroom"
+                }
+              }
+            ]
           }
         }
       },

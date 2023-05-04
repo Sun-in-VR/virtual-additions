@@ -12,7 +12,7 @@ import net.minecraft.registry.Registry;
 public class VAParticleTypes {
     public static final DefaultParticleType ACID_SPLASH_EMITTER;
     public static final DefaultParticleType ACID_SPLASH;
-    public static final DefaultParticleType ACID_DROPLET;
+    public static final DefaultParticleType GREENCAP_SPORE;
     public static final ParticleType<IoliteRingParticleEffect> IOLITE_TETHER_RING;
     public static final ParticleType<IoliteRingParticleEffect> IOLITE_ANCHOR_RING;
     public static void init() {}
@@ -20,7 +20,7 @@ public class VAParticleTypes {
     static{
         ACID_SPLASH_EMITTER = register("acid_splash_emitter");
         ACID_SPLASH = register("acid_splash");
-        ACID_DROPLET = register("acid_droplet");
+        GREENCAP_SPORE = register("greencap_spore");
         IOLITE_TETHER_RING = register("warp_tether_ring", false, IoliteRingParticleEffect.FACTORY_TETHER);
         IOLITE_ANCHOR_RING = register("warp_anchor_ring", false, IoliteRingParticleEffect.FACTORY_ANCHOR);
     }

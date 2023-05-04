@@ -1,6 +1,5 @@
 package com.github.suninvr.virtualadditions.block;
 
-import com.github.suninvr.virtualadditions.block.enums.HangingGlowsilkShape;
 import com.github.suninvr.virtualadditions.registry.VABlocks;
 import com.github.suninvr.virtualadditions.registry.VAFluids;
 import com.github.suninvr.virtualadditions.registry.VAItemTags;
@@ -15,7 +14,6 @@ import net.minecraft.state.StateManager;
 import net.minecraft.state.property.BooleanProperty;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.random.Random;
-import net.minecraft.world.LightType;
 import net.minecraft.world.World;
 
 public class LumwaspNestBlock extends TransparentBlock {
@@ -57,7 +55,7 @@ public class LumwaspNestBlock extends TransparentBlock {
                 stack.decrement(1);
                 if (world.getRandom().nextInt(6) == 1) {
                     if (larvae) {
-                        world.setBlockState(pos.down(), VABlocks.HANGING_GLOWSILK.getDefaultState());
+                        world.setBlockState(pos.down(), VABlocks.GLOWING_SILK.getDefaultState());
                         return;
                     } else {
                         world.setBlockState(pos, state.with(LARVAE, true));

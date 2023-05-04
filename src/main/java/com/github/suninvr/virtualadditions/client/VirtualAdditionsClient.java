@@ -1,6 +1,6 @@
 package com.github.suninvr.virtualadditions.client;
 
-import com.github.suninvr.virtualadditions.client.particle.AcidDropletParticle;
+import com.github.suninvr.virtualadditions.client.particle.GreencapSporeParticle;
 import com.github.suninvr.virtualadditions.client.particle.AcidSplashEmitterParticle;
 import com.github.suninvr.virtualadditions.client.particle.IoliteRingParticle;
 import com.github.suninvr.virtualadditions.client.render.entity.AcidSpitEntityRenderer;
@@ -50,7 +50,7 @@ public class VirtualAdditionsClient implements ClientModInitializer {
         );
 
         BlockRenderLayerMap.INSTANCE.putBlocks(RenderLayer.getTranslucent(),
-                VABlocks.SILK_FLUFF
+                VABlocks.WEBBED_SILK
         );
 
         BlockRenderLayerMap.INSTANCE.putBlocks(RenderLayer.getCutout(),
@@ -69,8 +69,10 @@ public class VirtualAdditionsClient implements ClientModInitializer {
                 VABlocks.CHERRY_HEDGE,
                 VABlocks.AZALEA_HEDGE,
                 VABlocks.FLOWERING_AZALEA_HEDGE,
-                VABlocks.HANGING_GLOWSILK,
-                VABlocks.FRAYED_SILK
+                VABlocks.GLOWING_SILK,
+                VABlocks.FRAYED_SILK,
+                VABlocks.TALL_GREENCAP_MUSHROOMS,
+                VABlocks.GREENCAP_MUSHROOM
         );
 
         EntityRendererRegistry.register(VAEntityType.CLIMBING_ROPE, ClimbingRopeEntityRenderer::new);
@@ -115,7 +117,7 @@ public class VirtualAdditionsClient implements ClientModInitializer {
 
         ParticleFactoryRegistry.getInstance().register(VAParticleTypes.ACID_SPLASH_EMITTER, new AcidSplashEmitterParticle.Factory());
         ParticleFactoryRegistry.getInstance().register(VAParticleTypes.ACID_SPLASH, WaterSplashParticle.Factory::new);
-        ParticleFactoryRegistry.getInstance().register(VAParticleTypes.ACID_DROPLET, AcidDropletParticle.Factory::new);
+        ParticleFactoryRegistry.getInstance().register(VAParticleTypes.GREENCAP_SPORE, GreencapSporeParticle.Factory::new);
         ParticleFactoryRegistry.getInstance().register(VAParticleTypes.IOLITE_ANCHOR_RING, IoliteRingParticle.Factory::new);
         ParticleFactoryRegistry.getInstance().register(VAParticleTypes.IOLITE_TETHER_RING, IoliteRingParticle.Factory::new);
 

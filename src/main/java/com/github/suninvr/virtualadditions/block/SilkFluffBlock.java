@@ -4,6 +4,7 @@ import com.github.suninvr.virtualadditions.registry.VAEntityType;
 import com.github.suninvr.virtualadditions.registry.VAEntityTypeTags;
 import net.minecraft.block.*;
 import net.minecraft.entity.Entity;
+import net.minecraft.entity.ai.pathing.NavigationType;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Vec3d;
 import net.minecraft.util.shape.VoxelShape;
@@ -19,6 +20,11 @@ public class SilkFluffBlock extends TransparentBlock {
     }
 
     @Override
+    public boolean canPathfindThrough(BlockState state, BlockView world, BlockPos pos, NavigationType type) {
+        return true;
+    }
+
+    @Override
     public void onEntityCollision(BlockState state, World world, BlockPos pos, Entity entity) {
         if (entity.getType() == VAEntityType.LUMWASP) return;
         entity.slowMovement(state, movement);
@@ -28,7 +34,7 @@ public class SilkFluffBlock extends TransparentBlock {
     public VoxelShape getCollisionShape(BlockState state, BlockView world, BlockPos pos, ShapeContext context) {
         if (context instanceof EntityShapeContext entityContext) {
             if (entityContext.getEntity() != null) {
-                if (!(entityContext.getEntity().getType().isIn(VAEntityTypeTags.COLLIDES_WITH_SILK_FLUFF) || (entityContext.getEntity().isSneaking() && entityContext.isAbove(VoxelShapes.fullCube(), pos, false)))) return VoxelShapes.empty();
+                if (!(entityContext.getEntity().getType().isIn(VAEntityTypeTags.COLLIDES_WITH_WEBBED_SILK) || (entityContext.getEntity().isSneaking() && entityContext.isAbove(VoxelShapes.fullCube(), pos, false)))) return VoxelShapes.empty();
             }
         }
         return VoxelShapes.fullCube();

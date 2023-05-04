@@ -2,7 +2,7 @@
   "replace": false,
   "values": [
     "#minecraft:base_stone_overworld",
-    "virtual_additions:bound_silk",
-    "virtual_additions:silk_fluff"
+    "virtual_additions:silk_block",
+    "virtual_additions:webbed_silk"
   ]
 }
