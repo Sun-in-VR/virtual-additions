@@ -54,14 +54,14 @@ public class LumwaspEntity extends HostileEntity implements RangedAttackMob, Flu
         int i = 0;
         this.playSound(SoundEvents.ENTITY_LLAMA_SPIT, 1.0F, 1.0F);
         while (i <= 2) {
-            AcidSpitEntity projectile = new AcidSpitEntity(this.world, this);
+            AcidSpitEntity projectile = new AcidSpitEntity(this.getWorld(), this);
             double d = target.getEyeY() - 1.100000023841858;
             double e = target.getX() - this.getX();
             double f = d - projectile.getY();
             double g = target.getZ() - this.getZ();
             double h = Math.sqrt(e * e + g * g) * 0.20000000298023224;
             projectile.setVelocity(e, f + h, g, 1.6F, 10.0F);
-            this.world.spawnEntity(projectile);
+            this.getWorld().spawnEntity(projectile);
             i++;
         }
     }
@@ -125,7 +125,7 @@ public class LumwaspEntity extends HostileEntity implements RangedAttackMob, Flu
 
     @Override
     public boolean isInAir() {
-        return !this.onGround;
+        return !this.isOnGround();
     }
 
     @Override

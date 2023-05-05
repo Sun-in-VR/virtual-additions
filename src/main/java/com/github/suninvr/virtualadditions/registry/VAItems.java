@@ -10,6 +10,8 @@ import com.github.suninvr.virtualadditions.item.SteelBombItem;
 import com.github.suninvr.virtualadditions.item.enums.GildType;
 import com.github.suninvr.virtualadditions.item.materials.SteelToolMaterial;
 import com.github.suninvr.virtualadditions.mixin.ComposterBlockAccessor;
+import com.github.suninvr.virtualadditions.registry.RegistryHelper.ItemHelper.ItemGroupLocation;
+import com.github.suninvr.virtualadditions.registry.RegistryHelper.ItemHelper.ToolSet;
 import com.github.suninvr.virtualadditions.registry.constructors.item.CustomArmorMaterials;
 import com.github.suninvr.virtualadditions.registry.constructors.item.CustomAxeItem;
 import com.github.suninvr.virtualadditions.registry.constructors.item.CustomHoeItem;
