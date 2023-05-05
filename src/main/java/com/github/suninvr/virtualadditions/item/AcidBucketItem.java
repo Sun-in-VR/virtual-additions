@@ -32,7 +32,6 @@ public class AcidBucketItem extends BucketItem {
     public boolean placeFluid(@Nullable PlayerEntity player, World world, BlockPos pos, @Nullable BlockHitResult hitResult) {
         BlockState blockState = world.getBlockState(pos);
         Block block = blockState.getBlock();
-        Material material = blockState.getMaterial();
         boolean bl = blockState.canBucketPlace(this.fluid);
         boolean canPlace = blockState.isAir() || bl || block instanceof FluidFillable && ((FluidFillable)block).canFillWithFluid(world, pos, blockState, this.fluid);
         boolean destroyBlock = !blockState.isIn(VABlockTags.ACID_UNBREAKABLE) && !canPlace;

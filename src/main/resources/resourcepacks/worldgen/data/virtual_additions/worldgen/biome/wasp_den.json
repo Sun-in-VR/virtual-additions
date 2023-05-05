@@ -117,8 +117,7 @@
     [
       "virtual_additions:greencap_mushroom",
       "virtual_additions:lumwasp_nest",
-      "minecraft:spring_water",
-      "minecraft:spring_lava"
+      "minecraft:spring_water"
     ],
     [
       "minecraft:glow_lichen"

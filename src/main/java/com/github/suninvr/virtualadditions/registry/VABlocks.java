@@ -177,14 +177,14 @@ public class VABlocks {
         AZALEA_HEDGE = register("azalea_hedge", new HedgeBlock(AbstractBlock.Settings.copy(Blocks.AZALEA_LEAVES)));
         FLOWERING_AZALEA_HEDGE = register("flowering_azalea_hedge", new HedgeBlock(AbstractBlock.Settings.copy(Blocks.FLOWERING_AZALEA_LEAVES)));
 
-        GLOWING_SILK = register("glowing_silk", new GlowingSilkBlock(AbstractBlock.Settings.of(Material.PLANT).mapColor(MapColor.LIGHT_BLUE).sounds(BlockSoundGroup.WART_BLOCK).luminance((state) -> 6).noCollision().nonOpaque().breakInstantly().offset(AbstractBlock.OffsetType.XZ).burnable().pistonBehavior(PistonBehavior.DESTROY).requires(VirtualAdditions.PREVIEW)));
-        FRAYED_SILK = register("frayed_silk", new FrayedSilkBlock(AbstractBlock.Settings.of(Material.PLANT).mapColor(MapColor.DARK_AQUA).sounds(BlockSoundGroup.WART_BLOCK).noCollision().nonOpaque().breakInstantly().replaceable().offset(AbstractBlock.OffsetType.XZ).burnable().pistonBehavior(PistonBehavior.DESTROY).requires(VirtualAdditions.PREVIEW)));
-        LUMWASP_NEST = register("lumwasp_nest", new LumwaspNestBlock(AbstractBlock.Settings.copy(Blocks.HONEYCOMB_BLOCK).sounds(BlockSoundGroup.WART_BLOCK).mapColor(MapColor.DARK_AQUA).burnable().requires(VirtualAdditions.PREVIEW)));
-        SILK_BLOCK = register("silk_block", new SilkBlock(AbstractBlock.Settings.copy(Blocks.HONEYCOMB_BLOCK).sounds(BlockSoundGroup.WART_BLOCK).mapColor(MapColor.DARK_AQUA).burnable().requires(VirtualAdditions.PREVIEW)));
-        GREENCAP_MUSHROOM = register("greencap_mushroom", new GreencapMushroomBlock(AbstractBlock.Settings.copy(Blocks.CRIMSON_FUNGUS).mapColor(MapColor.DARK_AQUA).luminance((state) -> 2).nonOpaque().burnable().offset(AbstractBlock.OffsetType.XZ).requires(VirtualAdditions.PREVIEW)));
-        TALL_GREENCAP_MUSHROOMS = register("tall_greencap_mushrooms", new TallGreencapMushroomBlock(AbstractBlock.Settings.of(Material.LIGHT_PASSES_THROUGH, MapColor.DARK_GREEN).replaceable().noCollision().breakInstantly().sounds(BlockSoundGroup.NETHER_SPROUTS).offset(AbstractBlock.OffsetType.XZ).burnable().luminance((state) -> 5).pistonBehavior(PistonBehavior.DESTROY)));
-        WEBBED_SILK = register("webbed_silk", new SilkFluffBlock(AbstractBlock.Settings.of(Material.BLOCKS_LIGHT).strength(0.25F).sounds(BlockSoundGroup.POWDER_SNOW).mapColor(MapColor.DARK_AQUA).nonOpaque().solidBlock((state, world, pos) -> false).suffocates(((state, world, pos) -> false)).blockVision((state, world, pos) -> false).burnable().allowsSpawning((state, world, pos, type) -> type == VAEntityType.LUMWASP).requires(VirtualAdditions.PREVIEW)));
-        SILKBULB = register("silkbulb", new Block(AbstractBlock.Settings.copy(Blocks.SHROOMLIGHT).mapColor(MapColor.DARK_AQUA).luminance( (state) -> 15 ).nonOpaque().burnable().requires(VirtualAdditions.PREVIEW)));
+        GLOWING_SILK = register("glowing_silk", new GlowingSilkBlock(AbstractBlock.Settings.of(Material.PLANT).mapColor(MapColor.LIGHT_BLUE).sounds(BlockSoundGroup.WART_BLOCK).luminance((state) -> 6).noCollision().nonOpaque().breakInstantly().offset(AbstractBlock.OffsetType.XZ).burnable().pistonBehavior(PistonBehavior.DESTROY)));
+        FRAYED_SILK = register("frayed_silk", new FrayedSilkBlock(AbstractBlock.Settings.of(Material.PLANT).mapColor(MapColor.DARK_AQUA).sounds(BlockSoundGroup.WART_BLOCK).noCollision().nonOpaque().breakInstantly().replaceable().offset(AbstractBlock.OffsetType.XZ).burnable().pistonBehavior(PistonBehavior.DESTROY)));
+        LUMWASP_NEST = register("lumwasp_nest", new LumwaspNestBlock(AbstractBlock.Settings.copy(Blocks.HONEYCOMB_BLOCK).sounds(BlockSoundGroup.WART_BLOCK).mapColor(MapColor.DARK_AQUA).burnable()));
+        SILK_BLOCK = register("silk_block", new SilkBlock(AbstractBlock.Settings.copy(Blocks.HONEYCOMB_BLOCK).sounds(BlockSoundGroup.WART_BLOCK).mapColor(MapColor.DARK_AQUA).burnable()));
+        GREENCAP_MUSHROOM = register("greencap_mushroom", new GreencapMushroomBlock(AbstractBlock.Settings.copy(Blocks.CRIMSON_FUNGUS).mapColor(MapColor.DARK_AQUA).luminance((state) -> 2).nonOpaque().burnable().offset(AbstractBlock.OffsetType.XZ)));
+        TALL_GREENCAP_MUSHROOMS = register("tall_greencap_mushrooms", new TallGreencapMushroomBlock(AbstractBlock.Settings.of(Material.LIGHT_PASSES_THROUGH, MapColor.DARK_GREEN).noCollision().breakInstantly().sounds(BlockSoundGroup.NETHER_SPROUTS).offset(AbstractBlock.OffsetType.XZ).burnable().luminance((state) -> 5).pistonBehavior(PistonBehavior.DESTROY)));
+        WEBBED_SILK = register("webbed_silk", new SilkFluffBlock(AbstractBlock.Settings.of(Material.BLOCKS_LIGHT).strength(0.25F).sounds(BlockSoundGroup.POWDER_SNOW).mapColor(MapColor.DARK_AQUA).nonOpaque().solidBlock((state, world, pos) -> false).suffocates(((state, world, pos) -> false)).blockVision((state, world, pos) -> false).burnable().allowsSpawning((state, world, pos, type) -> type == VAEntityType.LUMWASP)));
+        SILKBULB = register("silkbulb", new Block(AbstractBlock.Settings.copy(Blocks.SHROOMLIGHT).mapColor(MapColor.DARK_AQUA).luminance( (state) -> 15 ).nonOpaque().burnable()));
         WHITE_SILKBULB = register("white_silkbulb", new Block(AbstractBlock.Settings.copy(SILKBULB).mapColor(MapColor.WHITE)));
         LIGHT_GRAY_SILKBULB = register("light_gray_silkbulb", new Block(AbstractBlock.Settings.copy(SILKBULB).mapColor(MapColor.LIGHT_GRAY)));
         GRAY_SILKBULB = register("gray_silkbulb", new Block(AbstractBlock.Settings.copy(SILKBULB).mapColor(MapColor.GRAY)));
@@ -202,7 +202,7 @@ public class VABlocks {
         MAGENTA_SILKBULB = register("magenta_silkbulb", new Block(AbstractBlock.Settings.copy(SILKBULB).mapColor(MapColor.MAGENTA)));
         PINK_SILKBULB = register("pink_silkbulb", new Block(AbstractBlock.Settings.copy(SILKBULB).mapColor(MapColor.PINK)));
 
-        ACID = register("acid", new AcidFluidBlock(VAFluids.ACID, AbstractBlock.Settings.of(Material.LIGHT_PASSES_THROUGH).mapColor(MapColor.LIME).luminance(((state) -> 6)).replaceable().noCollision().strength(100.0F).dropsNothing().allowsSpawning(((state, world, pos, type) -> type == VAEntityType.LUMWASP)).pistonBehavior(PistonBehavior.DESTROY).requires(VirtualAdditions.PREVIEW)));
+        ACID = register("acid", new AcidFluidBlock(VAFluids.ACID, AbstractBlock.Settings.of(Material.LIGHT_PASSES_THROUGH).mapColor(MapColor.LIME).luminance(((state) -> 6)).replaceable().noCollision().strength(100.0F).dropsNothing().allowsSpawning(((state, world, pos, type) -> type == VAEntityType.LUMWASP)).pistonBehavior(PistonBehavior.DESTROY)));
 
         IOLITE_ORE = register("iolite_ore", new ExperienceDroppingBlock(FabricBlockSettings.copyOf(Blocks.END_STONE).strength(4.5F, 4.5F).requiresTool(), UniformIntProvider.create(5, 9)));
         IOLITE_BLOCK = register("iolite_block", new Block(FabricBlockSettings.of(Material.BLOCKS_LIGHT).mapColor(MapColor.MAGENTA).sounds(BlockSoundGroup.METAL).requiresTool().hardness(5.0F).resistance(300.0F)));
@@ -229,7 +229,6 @@ public class VABlocks {
         fire.virtualAdditions$registerFlammableBlock(FRAYED_SILK, 30, 60);
         fire.virtualAdditions$registerFlammableBlock(LUMWASP_NEST, 5, 20);
         fire.virtualAdditions$registerFlammableBlock(SILK_BLOCK, 5, 20);
-        fire.virtualAdditions$registerFlammableBlock(GREENCAP_MUSHROOM, 5, 20);
         fire.virtualAdditions$registerFlammableBlock(WEBBED_SILK, 30, 60);
         fire.virtualAdditions$registerFlammableBlock(SILKBULB, 5, 20);
         fire.virtualAdditions$registerFlammableBlock(WHITE_SILKBULB, 5, 20);

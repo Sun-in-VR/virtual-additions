@@ -13,10 +13,10 @@ public class GreencapSporeParticle extends SpriteBillboardParticle {
         super(clientWorld, d, e, f, x, y, z);
         this.setBoundingBoxSpacing(0.01F, 0.01F);
         this.setSprite(spriteProvider);
-        this.scale *= this.random.nextFloat() * 0.6F + 0.8F;
+        this.scale *= this.random.nextFloat() * 0.1F + 0.8F;
         this.maxAge = (int)(16.0 / (Math.random() * 0.8 + 0.2));
         this.collidesWithWorld = false;
-        this.velocityMultiplier = 0.97F;
+        this.velocityMultiplier = 0.997F;
         this.gravityStrength = 0.0F;
     }
 

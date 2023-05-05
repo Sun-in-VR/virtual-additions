@@ -1,7 +1,7 @@
 {
     "replace": false,
     "values": [
-        "virtual_additions:spotlight_light",
-        "virtual_additions:acid"
+        "virtual_additions:acid",
+        "virtual_additions:frayed_silk"
     ]
 }
