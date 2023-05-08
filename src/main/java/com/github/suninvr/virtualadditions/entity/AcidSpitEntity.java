@@ -1,5 +1,6 @@
 package com.github.suninvr.virtualadditions.entity;
 
+import com.github.suninvr.virtualadditions.interfaces.DamageSourcesInterface;
 import com.github.suninvr.virtualadditions.registry.VAEntityType;
 import net.minecraft.block.AbstractBlock;
 import net.minecraft.entity.EntityType;
@@ -62,7 +63,7 @@ public class AcidSpitEntity extends ProjectileEntity {
     protected void onEntityHit(EntityHitResult entityHitResult) {
         super.onEntityHit(entityHitResult);
         if (entityHitResult.getEntity() instanceof LumwaspEntity) return;
-        entityHitResult.getEntity().damage(this.getDamageSources().mobProjectile(this, this.getOwner() instanceof LivingEntity livingOwner ? livingOwner : null ), 3.0F);
+        entityHitResult.getEntity().damage(((DamageSourcesInterface)this.getDamageSources()).acidSpit(this, this.getOwner() instanceof LivingEntity livingOwner ? livingOwner : this ), 4.0F);
         this.discard();
     }
 

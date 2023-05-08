@@ -2,15 +2,13 @@ package com.github.suninvr.virtualadditions.entity;
 
 import com.github.suninvr.virtualadditions.registry.VASoundEvents;
 import net.minecraft.block.BlockState;
-import net.minecraft.entity.EntityGroup;
-import net.minecraft.entity.EntityType;
-import net.minecraft.entity.Flutterer;
-import net.minecraft.entity.LivingEntity;
+import net.minecraft.entity.*;
 import net.minecraft.entity.ai.RangedAttackMob;
 import net.minecraft.entity.ai.control.FlightMoveControl;
 import net.minecraft.entity.ai.goal.*;
 import net.minecraft.entity.ai.pathing.BirdNavigation;
 import net.minecraft.entity.ai.pathing.EntityNavigation;
+import net.minecraft.entity.ai.pathing.PathNode;
 import net.minecraft.entity.ai.pathing.PathNodeType;
 import net.minecraft.entity.attribute.DefaultAttributeContainer;
 import net.minecraft.entity.attribute.EntityAttributes;
@@ -68,8 +66,7 @@ public class LumwaspEntity extends HostileEntity implements RangedAttackMob, Flu
 
     @Override
     protected void initGoals() {
-        this.goalSelector.add(0, new AvoidSunlightGoal(this));
-        this.goalSelector.add(1, new EscapeSunlightGoal(this, 1.0D));
+        this.goalSelector.add(1, new AlwaysEscapeSunlightGoal(this, 1.2D));
         this.goalSelector.add(2, new MeleeCloseRangeGoal(this, 1.0D, 4, true));
         this.goalSelector.add(3, new ProjectileAttackGoal(this, 1.0D, 45, 8));
         this.goalSelector.add(4, new FlyGoal(this, 1.0D));
@@ -83,7 +80,25 @@ public class LumwaspEntity extends HostileEntity implements RangedAttackMob, Flu
 
     @Override
     protected EntityNavigation createNavigation(World world) {
-        BirdNavigation birdNavigation = new BirdNavigation(this, world);
+        BirdNavigation birdNavigation = new BirdNavigation(this, world) {
+            public boolean isValidPosition(BlockPos pos) {
+                return this.world.isSkyVisible(pos);
+            }
+
+            protected void adjustPath() {
+                super.adjustPath();
+                if (this.world.isSkyVisible(BlockPos.ofFloored(this.entity.getX(), this.entity.getY() + 0.5, this.entity.getZ()))) {
+                    return;
+                }
+                for(int i = 0; i < this.currentPath.getLength(); ++i) {
+                        PathNode pathNode = this.currentPath.getNode(i);
+                        if (this.world.isSkyVisible(new BlockPos(pathNode.x, pathNode.y, pathNode.z))) {
+                            this.currentPath.setLength(i);
+                            return;
+                        }
+                    }
+                }
+        };
         birdNavigation.setCanPathThroughDoors(false);
         birdNavigation.setCanSwim(false);
         birdNavigation.setCanEnterOpenDoors(true);
@@ -103,6 +118,11 @@ public class LumwaspEntity extends HostileEntity implements RangedAttackMob, Flu
     @Override
     protected SoundEvent getHurtSound(DamageSource source) {
         return VASoundEvents.ENTITY_LUMWASP_HURT;
+    }
+
+    @Override
+    protected void playStepSound(BlockPos pos, BlockState state) {
+        this.playSound(SoundEvents.ENTITY_SPIDER_STEP, 0.15F, 1.0F);
     }
 
     @Override
@@ -133,7 +153,14 @@ public class LumwaspEntity extends HostileEntity implements RangedAttackMob, Flu
         return world.doesNotIntersectEntities(this);
     }
 
-    private class MeleeCloseRangeGoal extends MeleeAttackGoal {
+    @Override
+    protected void mobTick() {
+        if (this.isInsideWaterOrBubbleColumn()) {
+            this.damage(this.getDamageSources().drown(), 1.0F);
+        }
+    }
+
+    private static class MeleeCloseRangeGoal extends MeleeAttackGoal {
         private final int startRange;
         private final int continueRange;
         public MeleeCloseRangeGoal(PathAwareEntity mob, double speed, int range, boolean pauseWhenMobIdle) {
@@ -163,6 +190,28 @@ public class LumwaspEntity extends HostileEntity implements RangedAttackMob, Flu
 
         protected double getSquaredMaxAttackDistance(LivingEntity entity) {
             return 4.0F + entity.getWidth();
+        }
+    }
+    private static class AlwaysEscapeSunlightGoal extends EscapeSunlightGoal {
+
+        private World world;
+
+        public AlwaysEscapeSunlightGoal(PathAwareEntity mob, double speed) {
+            super(mob, speed);
+            this.world = mob.getWorld();
+        }
+
+        @Override
+        public boolean canStart() {
+            if (this.mob.getTarget() != null) {
+                return false;
+            } else if (!this.world.isDay()) {
+                return false;
+            } else if (!this.world.isSkyVisible(this.mob.getBlockPos())) {
+                return false;
+            } else {
+                return this.targetShadedPos();
+            }
         }
     }
 }

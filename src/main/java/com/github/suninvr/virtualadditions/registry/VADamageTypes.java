@@ -11,8 +11,10 @@ import static com.github.suninvr.virtualadditions.VirtualAdditions.idOf;
 
 public interface VADamageTypes {
     RegistryKey<DamageType> ACID = RegistryKey.of(RegistryKeys.DAMAGE_TYPE, idOf("acid"));
-    public static final TagKey<DamageType> INCREASED_ARMOR_DAMAGE = TagKey.of(RegistryKeys.DAMAGE_TYPE, idOf("increased_armor_damage"));
+    RegistryKey<DamageType> ACID_SPIT = RegistryKey.of(RegistryKeys.DAMAGE_TYPE, idOf("acid_spit"));
 
-    public static void init(){};
+    TagKey<DamageType> INCREASED_ARMOR_DAMAGE = TagKey.of(RegistryKeys.DAMAGE_TYPE, idOf("increased_armor_damage"));
+
+    static void init(){};
 
 }

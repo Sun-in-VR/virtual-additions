@@ -41,7 +41,7 @@ public abstract class PlayerEntityMixin extends LivingEntity {
     @Inject(method = "damageArmor", at = @At("HEAD"), cancellable = true)
     void virtualAdditions$damageArmorFromAcid(DamageSource source, float amount, CallbackInfo ci) {
         if (source.isIn(VADamageTypes.INCREASED_ARMOR_DAMAGE)) {
-            if (amount > 1) amount *= 4;
+            if (amount > 1) amount *= 3;
             this.inventory.damageArmor(source, amount, PlayerInventory.ARMOR_SLOTS);
             ci.cancel();
         }

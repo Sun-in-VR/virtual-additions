@@ -163,6 +163,7 @@
 
     "death.attack.acid": "%s dissolved in acid",
     "death.attack.acid.player": "%s dissolved in acid while trying to escape %s",
+    "death.attack.acid_spit": "%s dissolved in the acidic spit of %s",
 
     "upgrade.virtual_additions.tool_gild": "Tool Upgrade",
 

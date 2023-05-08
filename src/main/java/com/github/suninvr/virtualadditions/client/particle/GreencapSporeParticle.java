@@ -1,9 +1,12 @@
 package com.github.suninvr.virtualadditions.client.particle;
 
+import net.minecraft.block.BlockState;
 import net.minecraft.client.particle.*;
 import net.minecraft.client.world.ClientWorld;
 import net.minecraft.particle.DefaultParticleType;
+import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.MathHelper;
+import net.minecraft.world.LightType;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.Optional;
@@ -22,7 +25,21 @@ public class GreencapSporeParticle extends SpriteBillboardParticle {
 
     @Override
     protected int getBrightness(float tint) {
-        return 120;
+        int skyLight = 0;
+        int blockLight = 0;
+        BlockPos blockPos = BlockPos.ofFloored(this.x, this.y, this.z);
+        if (this.world.isChunkLoaded(blockPos)) {
+            BlockState state = world.getBlockState(blockPos);
+            if (state.hasEmissiveLighting(this.world, blockPos)) return 15728880;
+            skyLight = this.world.getLightLevel(LightType.SKY, blockPos);
+            blockLight = this.world.getLightLevel(LightType.BLOCK, blockPos);
+            int luminance = state.getLuminance();
+            if (blockLight < luminance) blockLight = luminance;
+
+            skyLight = Math.max(2, skyLight) << 20;
+            blockLight = Math.max(2, blockLight) << 4;
+        }
+        return skyLight | blockLight;
     }
 
     @Override

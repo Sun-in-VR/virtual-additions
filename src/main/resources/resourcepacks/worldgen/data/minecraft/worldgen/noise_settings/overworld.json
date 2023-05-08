@@ -15,7 +15,7 @@
   },
   "noise": {
     "min_y": -64,
-    "height": 448,
+    "height": 384,
     "size_horizontal": 1,
     "size_vertical": 2
   },
@@ -47,7 +47,7 @@
     "temperature": {
       "type": "minecraft:shifted_noise",
       "noise": "minecraft:temperature",
-      "xz_scale": 0.4,
+      "xz_scale": 0.25,
       "y_scale": 0,
       "shift_x": "minecraft:shift_x",
       "shift_y": 0,
@@ -88,8 +88,8 @@
               "type": "minecraft:mul",
               "argument1": {
                 "type": "minecraft:y_clamped_gradient",
-                "from_y": 304,
-                "to_y": 320,
+                "from_y": 240,
+                "to_y": 256,
                 "from_value": 1,
                 "to_value": 0
               },
@@ -159,8 +159,8 @@
                         "type": "minecraft:mul",
                         "argument1": {
                           "type": "minecraft:y_clamped_gradient",
-                          "from_y": 304,
-                          "to_y": 320,
+                          "from_y": 240,
+                          "to_y": 256,
                           "from_value": 1,
                           "to_value": 0
                         },
