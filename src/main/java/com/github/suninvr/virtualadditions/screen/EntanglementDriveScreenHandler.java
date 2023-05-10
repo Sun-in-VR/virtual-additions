@@ -2,6 +2,7 @@ package com.github.suninvr.virtualadditions.screen;
 
 import com.github.suninvr.virtualadditions.VirtualAdditions;
 import com.github.suninvr.virtualadditions.block.entity.EntanglementDriveBlockEntity;
+import com.github.suninvr.virtualadditions.registry.VAAdvancementCriteria;
 import com.github.suninvr.virtualadditions.registry.VAItems;
 import com.github.suninvr.virtualadditions.registry.VAScreenHandler;
 import com.mojang.datafixers.util.Pair;
@@ -21,6 +22,8 @@ import net.minecraft.screen.*;
 import net.minecraft.screen.slot.Slot;
 import net.minecraft.screen.slot.SlotActionType;
 import net.minecraft.server.network.ServerPlayerEntity;
+import net.minecraft.sound.SoundCategory;
+import net.minecraft.sound.SoundEvents;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.world.World;
@@ -193,12 +196,14 @@ public class EntanglementDriveScreenHandler extends ScreenHandler {
         if (this.selectedSlot == null) return;
         int slotIndex = this.selectedSlot.getIndex();
 
-        if (this.getEntity() instanceof EntanglementDriveBlockEntity entanglementDriveBlockEntity && !(entanglementDriveBlockEntity.getWorld() == null) && !entanglementDriveBlockEntity.getWorld().isClient() ) {
+        if (this.getEntity() instanceof EntanglementDriveBlockEntity entity && !(entity.getWorld() == null) && !entity.getWorld().isClient() ) {
             this.slotSelected = false;
-            entanglementDriveBlockEntity.setPlayerSlot(player, slotIndex, this.selectedSlot.id);
+            entity.setPlayerSlot(player, slotIndex, this.selectedSlot.id);
             PacketByteBuf buf = PacketByteBufs.create();
-            entanglementDriveBlockEntity.writeScreenData(buf);
+            entity.writeScreenData(buf);
             ServerPlayNetworking.send((ServerPlayerEntity) player, ENTANGLEMENT_DRIVE_ACTIVE_SLOT_SYNC_ID, buf);
+            entity.getWorld().playSound(null, entity.getPos(), SoundEvents.BLOCK_RESPAWN_ANCHOR_CHARGE, SoundCategory.BLOCKS, 1.0F, 1.0F);
+            VAAdvancementCriteria.USE_ENTANGLEMENT_DRIVE.trigger((ServerPlayerEntity) player);
 
             this.inventory.clear();
         }

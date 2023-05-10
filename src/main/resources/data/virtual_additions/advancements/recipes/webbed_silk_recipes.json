@@ -6,7 +6,7 @@
         "items": [
           {
             "items": [
-              "virtual_additions:silk_thread"
+              "virtual_additions:silkbulb"
             ]
           }
         ]
@@ -15,6 +15,7 @@
   },
   "rewards": {
     "recipes": [
+      "virtual_additions:crafting_shaped/block_of_silk",
       "virtual_additions:crafting_shaped/silkbulb"
     ]
   }

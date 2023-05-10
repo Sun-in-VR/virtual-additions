@@ -1,0 +1,27 @@
+{
+  "criteria": {
+    "inventory": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "virtual_additions:blueschist_bricks"
+            ]
+          }
+        ]
+      }
+    }
+  },
+  "rewards": {
+    "recipes": [
+      "virtual_additions:crafting_shaped/blueschist_brick_stairs",
+      "virtual_additions:cutting/blueschist_brick_stairs_from_blueschist_bricks",
+      "virtual_additions:crafting_shaped/blueschist_brick_slab",
+      "virtual_additions:cutting/blueschist_brick_slab_from_blueschist_bricks",
+      "virtual_additions:crafting_shaped/blueschist_brick_wall",
+      "virtual_additions:cutting/blueschist_brick_wall_from_blueschist_bricks",
+      "virtual_additions:smelting/cracked_blueschist_bricks"
+    ]
+  }
+}

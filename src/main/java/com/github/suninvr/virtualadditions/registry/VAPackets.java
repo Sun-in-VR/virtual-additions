@@ -3,6 +3,7 @@ package com.github.suninvr.virtualadditions.registry;
 import com.github.suninvr.virtualadditions.VirtualAdditions;
 import com.github.suninvr.virtualadditions.screen.EntanglementDriveScreenHandler;
 import net.fabricmc.fabric.api.networking.v1.ServerPlayNetworking;
+import net.minecraft.server.network.ServerPlayerEntity;
 import net.minecraft.util.Identifier;
 
 public class VAPackets {

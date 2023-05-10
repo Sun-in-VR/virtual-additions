@@ -5,7 +5,9 @@
       "conditions": {
         "items": [
           {
-            "tag": "virtual_additions:crystals"
+            "items": [
+              "virtual_additions:silkbulb"
+            ]
           }
         ]
       }
@@ -13,7 +15,7 @@
   },
   "rewards": {
     "recipes": [
-      "virtual_additions:crafting_shaped/luminous_crystal_block"
+      "virtual_additions:crafting_shaped/webbed_silk"
     ]
   }
 }

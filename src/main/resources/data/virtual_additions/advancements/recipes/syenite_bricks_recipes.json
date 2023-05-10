@@ -1,0 +1,27 @@
+{
+  "criteria": {
+    "inventory": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "virtual_additions:syenite_bricks"
+            ]
+          }
+        ]
+      }
+    }
+  },
+  "rewards": {
+    "recipes": [
+      "virtual_additions:crafting_shaped/syenite_brick_stairs",
+      "virtual_additions:cutting/syenite_brick_stairs_from_syenite_bricks",
+      "virtual_additions:crafting_shaped/syenite_brick_slab",
+      "virtual_additions:cutting/syenite_brick_slab_from_syenite_bricks",
+      "virtual_additions:crafting_shaped/syenite_brick_wall",
+      "virtual_additions:cutting/syenite_brick_wall_from_syenite_bricks",
+      "virtual_additions:smelting/cracked_syenite_bricks"
+    ]
+  }
+}

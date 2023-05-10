@@ -16,10 +16,10 @@
   "rewards": {
     "recipes": [
       "virtual_additions:crafting_shaped/cobbled_blueschist_stairs",
-      "virtual_additions:crafting_shaped/cobbled_blueschist_slab",
-      "virtual_additions:crafting_shaped/cobbled_blueschist_wall",
       "virtual_additions:cutting/cobbled_blueschist_stairs",
+      "virtual_additions:crafting_shaped/cobbled_blueschist_slab",
       "virtual_additions:cutting/cobbled_blueschist_slab",
+      "virtual_additions:crafting_shaped/cobbled_blueschist_wall",
       "virtual_additions:cutting/cobbled_blueschist_wall",
       "virtual_additions:smelting/blueschist"
     ]

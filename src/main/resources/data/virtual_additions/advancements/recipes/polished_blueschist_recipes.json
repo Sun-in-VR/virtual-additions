@@ -1,0 +1,25 @@
+{
+  "criteria": {
+    "inventory": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "virtual_additions:polished_blueschist"
+            ]
+          }
+        ]
+      }
+    }
+  },
+  "rewards": {
+    "recipes": [
+      "virtual_additions:crafting_shaped/polished_blueschist_stairs",
+      "virtual_additions:cutting/polished_blueschist_stairs_from_polished_blueschist",
+      "virtual_additions:crafting_shaped/polished_blueschist_slab",
+      "virtual_additions:cutting/polished_blueschist_slab_from_polished_blueschist",
+      "virtual_additions:crafting_shaped/blueschist_bricks"
+    ]
+  }
+}

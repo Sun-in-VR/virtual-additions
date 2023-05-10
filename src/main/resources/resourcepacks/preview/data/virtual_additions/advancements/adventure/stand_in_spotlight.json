@@ -3,8 +3,12 @@
     "icon": {
       "item": "virtual_additions:spotlight"
     },
-    "title": "Take the Stage",
-    "description": "Stand directly in the light of a Spotlight"
+    "title": {
+      "translate": "advancements.virtual_additions.adventure.stand_in_spotlight.title"
+    },
+    "description": {
+      "translate": "advancements.virtual_additions.adventure.stand_in_spotlight.description"
+    }
   },
   "parent": "minecraft:adventure/root",
   "criteria": {

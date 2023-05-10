@@ -1,16 +1,20 @@
 {
   "display": {
     "icon": {
-      "item": "virtual_additions:amethyst_iron_pickaxe",
+      "item": "virtual_additions:amethyst_steel_pickaxe",
       "nbt": "{Damage:0}"
     },
-    "title": "Tinkering With Tools",
-    "description": "Apply a Gild to a tool at a Smithing Table",
+    "title": {
+      "translate": "advancements.virtual_additions.story.gild_tool.title"
+    },
+    "description": {
+      "translate": "advancements.virtual_additions.story.gild_tool.description"
+    },
     "show_toast": true,
     "announce_to_chat": true,
     "hidden": false
   },
-  "parent": "minecraft:story/iron_tools",
+  "parent": "virtual_additions:story/smelt_steel",
   "criteria": {
     "requirement": {
       "trigger": "minecraft:inventory_changed",

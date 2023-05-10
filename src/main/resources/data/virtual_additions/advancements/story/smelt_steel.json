@@ -1,28 +1,28 @@
 {
   "display": {
     "icon": {
-      "item": "virtual_additions:acid_bucket"
+      "item": "virtual_additions:steel_ingot"
     },
     "title": {
-      "translate": "advancements.virtual_additions.adventure.fill_bucket_acid.title"
+      "translate": "advancements.virtual_additions.story.smelt_steel.title"
     },
     "description": {
-      "translate": "advancements.virtual_additions.adventure.fill_bucket_acid.description"
+      "translate": "advancements.virtual_additions.story.smelt_steel.description"
     },
     "frame": "task",
     "show_toast": true,
     "announce_to_chat": true,
     "hidden": false
   },
-  "parent": "minecraft:adventure/root",
+  "parent": "minecraft:story/iron_tools",
   "criteria": {
-    "acid_bucket": {
+    "steel_ingot": {
       "trigger": "minecraft:inventory_changed",
       "conditions": {
         "items": [
           {
             "items": [
-              "virtual_additions:acid_bucket"
+              "virtual_additions:steel_ingot"
             ]
           }
         ]
@@ -31,7 +31,8 @@
   },
   "requirements": [
     [
-      "acid_bucket"
+      "steel_ingot"
     ]
-  ]
+  ],
+  "sends_telemetry_event": false
 }

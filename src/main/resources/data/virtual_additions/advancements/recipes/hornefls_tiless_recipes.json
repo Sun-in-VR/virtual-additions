@@ -1,0 +1,25 @@
+{
+  "criteria": {
+    "inventory": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "virtual_additions:hornfels_tiles"
+            ]
+          }
+        ]
+      }
+    }
+  },
+  "rewards": {
+    "recipes": [
+      "virtual_additions:crafting_shaped/hornfels_tile_stairs",
+      "virtual_additions:cutting/hornfels_tile_stairs_from_hornfels_tiles",
+      "virtual_additions:crafting_shaped/hornfels_tile_slab",
+      "virtual_additions:cutting/hornfels_tile_slab_from_hornfels_tiles",
+      "virtual_additions:smelting/cracked_hornfels_tiles"
+    ]
+  }
+}
