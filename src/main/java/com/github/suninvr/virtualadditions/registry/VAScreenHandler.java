@@ -1,9 +1,7 @@
 package com.github.suninvr.virtualadditions.registry;
 
 import com.github.suninvr.virtualadditions.screen.EntanglementDriveScreenHandler;
-import net.fabricmc.fabric.api.screenhandler.v1.ExtendedScreenHandlerType;
 import net.fabricmc.fabric.api.screenhandler.v1.ScreenHandlerRegistry;
-import net.minecraft.screen.ScreenHandler;
 import net.minecraft.screen.ScreenHandlerType;
 
 import static com.github.suninvr.virtualadditions.VirtualAdditions.idOf;

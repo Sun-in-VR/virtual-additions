@@ -1,6 +1,5 @@
 package com.github.suninvr.virtualadditions.mixin;
 
-import com.github.suninvr.virtualadditions.registry.VADamageTypes;
 import net.minecraft.entity.damage.DamageSource;
 import net.minecraft.entity.player.PlayerInventory;
 import org.spongepowered.asm.mixin.Mixin;

@@ -13,7 +13,7 @@ import net.minecraft.sound.BlockSoundGroup;
 import net.minecraft.state.property.Properties;
 import net.minecraft.util.math.intprovider.UniformIntProvider;
 
-import static com.github.suninvr.virtualadditions.registry.RegistryHelper.BlockRegistryHelper.*;
+import static com.github.suninvr.virtualadditions.registry.RegistryHelper.BlockRegistryHelper.register;
 
 public class VABlocks {
 

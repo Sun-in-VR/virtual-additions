@@ -14,7 +14,6 @@ import net.minecraft.entity.SpawnRestriction;
 import net.minecraft.entity.mob.HostileEntity;
 import net.minecraft.registry.Registries;
 import net.minecraft.registry.Registry;
-import net.minecraft.resource.featuretoggle.FeatureFlags;
 import net.minecraft.world.Heightmap;
 
 import static com.github.suninvr.virtualadditions.VirtualAdditions.idOf;

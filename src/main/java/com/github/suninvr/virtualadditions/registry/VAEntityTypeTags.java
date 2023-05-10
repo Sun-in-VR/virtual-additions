@@ -1,6 +1,5 @@
 package com.github.suninvr.virtualadditions.registry;
 
-import net.minecraft.block.Block;
 import net.minecraft.entity.EntityType;
 import net.minecraft.registry.Registries;
 import net.minecraft.registry.tag.TagKey;

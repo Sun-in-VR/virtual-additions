@@ -1,7 +1,8 @@
 package com.github.suninvr.virtualadditions.block.entity;
 
 import com.github.suninvr.virtualadditions.block.EntanglementDriveBlock;
-import com.github.suninvr.virtualadditions.registry.VAGameRules;
+import com.github.suninvr.virtualadditions.registry.VABlockEntities;
+import com.github.suninvr.virtualadditions.registry.VABlocks;
 import com.github.suninvr.virtualadditions.registry.VAStatusEffects;
 import com.github.suninvr.virtualadditions.screen.EntanglementDriveScreenHandler;
 import net.fabricmc.fabric.api.screenhandler.v1.ExtendedScreenHandlerFactory;
@@ -15,18 +16,15 @@ import net.minecraft.inventory.Inventory;
 import net.minecraft.inventory.SidedInventory;
 import net.minecraft.inventory.SimpleInventory;
 import net.minecraft.item.ItemStack;
-import net.minecraft.item.Items;
 import net.minecraft.nbt.NbtCompound;
 import net.minecraft.network.PacketByteBuf;
-import net.minecraft.screen.*;
-import net.minecraft.screen.slot.Slot;
+import net.minecraft.screen.ScreenHandler;
+import net.minecraft.screen.ScreenHandlerContext;
 import net.minecraft.server.network.ServerPlayerEntity;
 import net.minecraft.text.Text;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Direction;
 import net.minecraft.world.World;
-import com.github.suninvr.virtualadditions.registry.VABlockEntities;
-import com.github.suninvr.virtualadditions.registry.VABlocks;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.Optional;

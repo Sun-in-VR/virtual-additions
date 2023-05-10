@@ -12,7 +12,6 @@ import net.minecraft.particle.ParticleTypes;
 import net.minecraft.util.hit.EntityHitResult;
 import net.minecraft.util.hit.HitResult;
 import net.minecraft.world.World;
-import net.minecraft.world.explosion.Explosion;
 
 public class SteelBombEntity extends ThrownItemEntity {
     NbtCompound stackNbt;

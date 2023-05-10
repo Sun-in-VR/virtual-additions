@@ -2,7 +2,6 @@ package com.github.suninvr.virtualadditions.registry;
 
 import net.minecraft.block.Block;
 import net.minecraft.registry.Registries;
-import net.minecraft.registry.entry.RegistryEntryList;
 import net.minecraft.registry.tag.TagKey;
 
 import static com.github.suninvr.virtualadditions.VirtualAdditions.idOf;

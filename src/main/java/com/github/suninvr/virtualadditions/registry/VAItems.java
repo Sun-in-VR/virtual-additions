@@ -10,9 +10,7 @@ import com.github.suninvr.virtualadditions.item.SteelBombItem;
 import com.github.suninvr.virtualadditions.item.enums.GildType;
 import com.github.suninvr.virtualadditions.item.materials.SteelToolMaterial;
 import com.github.suninvr.virtualadditions.mixin.ComposterBlockAccessor;
-import com.github.suninvr.virtualadditions.registry.RegistryHelper.ItemHelper.ItemGroupLocation;
-import com.github.suninvr.virtualadditions.registry.RegistryHelper.ItemHelper.ToolSet;
-import com.github.suninvr.virtualadditions.registry.constructors.item.CustomArmorMaterials;
+import com.github.suninvr.virtualadditions.registry.constructors.item.CustomArmorMaterial;
 import com.github.suninvr.virtualadditions.registry.constructors.item.CustomAxeItem;
 import com.github.suninvr.virtualadditions.registry.constructors.item.CustomHoeItem;
 import com.github.suninvr.virtualadditions.registry.constructors.item.CustomPickaxeItem;
@@ -318,10 +316,10 @@ public class VAItems {
         STEEL_PICKAXE = register("steel_pickaxe", new CustomPickaxeItem(SteelToolMaterial.INSTANCE, 1, -2.8F, new FabricItemSettings()), ItemGroups.TOOLS, prev);
         STEEL_AXE = register("steel_axe", new CustomAxeItem(SteelToolMaterial.INSTANCE, 6.0F, -3.1F, new FabricItemSettings()), new ItemGroupLocation(ItemGroups.TOOLS, prev), new ItemGroupLocation(ItemGroups.COMBAT, Items.GOLDEN_AXE));
         STEEL_HOE = register("steel_hoe", new CustomHoeItem(SteelToolMaterial.INSTANCE, -2, -1.0F, new FabricItemSettings()), ItemGroups.TOOLS, prev);
-        STEEL_HELMET = register("steel_helmet", new ArmorItem(CustomArmorMaterials.STEEL, ArmorItem.Type.HELMET, new Item.Settings()), ItemGroups.COMBAT, Items.GOLDEN_BOOTS);
-        STEEL_CHESTPLATE = register("steel_chestplate", new ArmorItem(CustomArmorMaterials.STEEL, ArmorItem.Type.CHESTPLATE, new Item.Settings()), ItemGroups.COMBAT, prev);
-        STEEL_LEGGINGS = register("steel_leggings", new ArmorItem(CustomArmorMaterials.STEEL, ArmorItem.Type.LEGGINGS, new Item.Settings()), ItemGroups.COMBAT, prev);
-        STEEL_BOOTS = register("steel_boots", new ArmorItem(CustomArmorMaterials.STEEL, ArmorItem.Type.BOOTS, new Item.Settings()), ItemGroups.COMBAT, prev);
+        STEEL_HELMET = register("steel_helmet", new ArmorItem(CustomArmorMaterial.STEEL, ArmorItem.Type.HELMET, new Item.Settings()), ItemGroups.COMBAT, Items.GOLDEN_BOOTS);
+        STEEL_CHESTPLATE = register("steel_chestplate", new ArmorItem(CustomArmorMaterial.STEEL, ArmorItem.Type.CHESTPLATE, new Item.Settings()), ItemGroups.COMBAT, prev);
+        STEEL_LEGGINGS = register("steel_leggings", new ArmorItem(CustomArmorMaterial.STEEL, ArmorItem.Type.LEGGINGS, new Item.Settings()), ItemGroups.COMBAT, prev);
+        STEEL_BOOTS = register("steel_boots", new ArmorItem(CustomArmorMaterial.STEEL, ArmorItem.Type.BOOTS, new Item.Settings()), ItemGroups.COMBAT, prev);
 
         COTTON_SEEDS = register("cotton_seeds", new AliasedBlockItem(VABlocks.COTTON, new FabricItemSettings()), ItemGroups.NATURAL, Items.BEETROOT_SEEDS);
         COTTON = register("cotton", ItemGroups.INGREDIENTS, Items.WHEAT);

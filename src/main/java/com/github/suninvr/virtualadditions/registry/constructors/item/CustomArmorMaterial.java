@@ -1,23 +1,20 @@
 package com.github.suninvr.virtualadditions.registry.constructors.item;
 
 import com.github.suninvr.virtualadditions.registry.VAItems;
-import net.minecraft.entity.EquipmentSlot;
 import net.minecraft.item.ArmorItem;
 import net.minecraft.item.ArmorMaterial;
-import net.minecraft.item.ArmorMaterials;
 import net.minecraft.recipe.Ingredient;
 import net.minecraft.sound.SoundEvent;
 import net.minecraft.sound.SoundEvents;
 import net.minecraft.util.Lazy;
-import net.minecraft.util.StringIdentifiable;
 import net.minecraft.util.Util;
 
 import java.util.EnumMap;
 import java.util.function.Supplier;
 
-public class CustomArmorMaterials implements ArmorMaterial {
+public class CustomArmorMaterial implements ArmorMaterial {
 
-    public static final CustomArmorMaterials STEEL = new CustomArmorMaterials(
+    public static final CustomArmorMaterial STEEL = new CustomArmorMaterial(
             "steel", 27, Util.make(new EnumMap(ArmorItem.Type.class), (enumMap -> {
         enumMap.put(ArmorItem.Type.BOOTS, 2);
         enumMap.put(ArmorItem.Type.LEGGINGS, 5);
@@ -41,7 +38,7 @@ public class CustomArmorMaterials implements ArmorMaterial {
     });
     private final EnumMap<ArmorItem.Type, Integer> materialProtection;
 
-    public CustomArmorMaterials(String name, int durabilityMultiplier, EnumMap enumMap, int enchantability, SoundEvent equipSound, float toughness, float knockbackResistance, Supplier repairIngredientSupplier) {
+    public CustomArmorMaterial(String name, int durabilityMultiplier, EnumMap enumMap, int enchantability, SoundEvent equipSound, float toughness, float knockbackResistance, Supplier repairIngredientSupplier) {
         this.name = name;
         this.durabilityMultiplier = durabilityMultiplier;
         this.enchantability = enchantability;

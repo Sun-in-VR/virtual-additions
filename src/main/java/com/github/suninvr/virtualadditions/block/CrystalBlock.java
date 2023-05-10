@@ -2,11 +2,8 @@ package com.github.suninvr.virtualadditions.block;
 
 import com.github.suninvr.virtualadditions.block.enums.CrystalShape;
 import com.github.suninvr.virtualadditions.registry.VABlockTags;
-import com.github.suninvr.virtualadditions.registry.VABlocks;
 import net.minecraft.block.*;
-import net.minecraft.block.piston.PistonBehavior;
 import net.minecraft.entity.Entity;
-import net.minecraft.entity.damage.DamageSource;
 import net.minecraft.fluid.FluidState;
 import net.minecraft.fluid.Fluids;
 import net.minecraft.item.ItemPlacementContext;

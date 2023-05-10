@@ -2,9 +2,9 @@ package com.github.suninvr.virtualadditions.registry;
 
 import com.github.suninvr.virtualadditions.VirtualAdditions;
 import com.github.suninvr.virtualadditions.block.entity.EntanglementDriveBlockEntity;
+import com.github.suninvr.virtualadditions.block.entity.SpotlightBlockEntity;
 import com.github.suninvr.virtualadditions.block.entity.WarpAnchorBlockEntity;
 import com.github.suninvr.virtualadditions.block.entity.WarpTetherBlockEntity;
-import com.github.suninvr.virtualadditions.block.entity.SpotlightBlockEntity;
 import net.fabricmc.fabric.api.object.builder.v1.block.entity.FabricBlockEntityTypeBuilder;
 import net.minecraft.block.Block;
 import net.minecraft.block.entity.BlockEntity;

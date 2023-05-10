@@ -2,7 +2,10 @@ package com.github.suninvr.virtualadditions.block;
 
 import com.github.suninvr.virtualadditions.registry.VAEntityType;
 import com.github.suninvr.virtualadditions.registry.VAEntityTypeTags;
-import net.minecraft.block.*;
+import net.minecraft.block.BlockState;
+import net.minecraft.block.EntityShapeContext;
+import net.minecraft.block.ShapeContext;
+import net.minecraft.block.TransparentBlock;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.ai.pathing.NavigationType;
 import net.minecraft.util.math.BlockPos;
@@ -11,7 +14,6 @@ import net.minecraft.util.shape.VoxelShape;
 import net.minecraft.util.shape.VoxelShapes;
 import net.minecraft.world.BlockView;
 import net.minecraft.world.World;
-import org.joml.Vector3f;
 
 public class SilkFluffBlock extends TransparentBlock {
     private static final Vec3d movement = new Vec3d(0.85, 1.0, 0.85);

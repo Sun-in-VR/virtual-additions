@@ -5,7 +5,6 @@ import com.github.suninvr.virtualadditions.registry.VAEntityType;
 import net.minecraft.block.AbstractBlock;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.LivingEntity;
-import net.minecraft.entity.damage.DamageSource;
 import net.minecraft.entity.projectile.ProjectileEntity;
 import net.minecraft.entity.projectile.ProjectileUtil;
 import net.minecraft.nbt.NbtCompound;
