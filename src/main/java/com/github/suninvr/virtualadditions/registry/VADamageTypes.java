@@ -15,6 +15,6 @@ public interface VADamageTypes {
 
     TagKey<DamageType> INCREASED_ARMOR_DAMAGE = TagKey.of(RegistryKeys.DAMAGE_TYPE, idOf("increased_armor_damage"));
 
-    static void init(){};
+    static void init(){}
 
 }

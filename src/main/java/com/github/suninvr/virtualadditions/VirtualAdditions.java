@@ -37,12 +37,14 @@ public class VirtualAdditions implements ModInitializer {
 		VAEntityTypeTags.init();
 		VAFeatures.init();
 		VAFluids.init();
+		VAGameRules.init();
 		VAItems.init();
 		VAItemTags.init();
 		VAPackets.init();
 		VAParticleTypes.init();
 		VAScreenHandler.init();
 		VASoundEvents.init();
+		VAStatusEffects.init();
 	}
 
 	/**

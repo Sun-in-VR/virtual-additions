@@ -1,5 +1,10 @@
 {
   "variants": {
-    "": { "model": "virtual_additions:block/entanglement_drive" }
+    "powered=false": {
+      "model": "virtual_additions:block/entanglement_drive"
+    },
+    "powered=true": {
+      "model": "virtual_additions:block/entanglement_drive_powered"
+    }
   }
 }

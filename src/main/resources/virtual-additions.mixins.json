@@ -15,6 +15,7 @@
     "FireBlockAccessor",
     "ItemMixin",
     "LivingEntityMixin",
+    "MilkBucketItemMixin",
     "MobEntityMixin",
     "PlayerEntityMixin",
     "PlayerInventoryMixin",

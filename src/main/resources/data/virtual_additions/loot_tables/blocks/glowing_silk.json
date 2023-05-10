@@ -29,7 +29,7 @@
             },
             {
               "type": "minecraft:item",
-              "name": "virtual_additions:glowsilk",
+              "name": "virtual_additions:silk_thread",
               "functions": [
                 {
                   "function": "minecraft:explosion_decay"

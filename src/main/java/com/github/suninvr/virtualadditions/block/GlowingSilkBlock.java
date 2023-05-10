@@ -1,6 +1,6 @@
 package com.github.suninvr.virtualadditions.block;
 
-import com.github.suninvr.virtualadditions.block.enums.HangingGlowsilkShape;
+import com.github.suninvr.virtualadditions.block.enums.GlowingSilkShape;
 import com.github.suninvr.virtualadditions.registry.VABlocks;
 import net.minecraft.block.*;
 import net.minecraft.fluid.FluidState;
@@ -20,14 +20,14 @@ import org.jetbrains.annotations.Nullable;
 
 public class GlowingSilkBlock extends Block implements Waterloggable {
     private static final BooleanProperty WATERLOGGED;
-    public static final EnumProperty<HangingGlowsilkShape> SHAPE;
+    public static final EnumProperty<GlowingSilkShape> SHAPE;
     protected static final VoxelShape BOX;
 
     public GlowingSilkBlock(Settings settings) {
         super(settings);
         setDefaultState(getStateManager().getDefaultState()
                 .with(WATERLOGGED, false)
-                .with(SHAPE, HangingGlowsilkShape.SINGLE)
+                .with(SHAPE, GlowingSilkShape.SINGLE)
         );
     }
 
@@ -61,11 +61,11 @@ public class GlowingSilkBlock extends Block implements Waterloggable {
     private BlockState updateState(BlockState state, WorldAccess world, BlockPos pos) {
         BlockState downState = world.getBlockState(pos.down());
         if (world.getBlockState(pos.up()).isOf(VABlocks.GLOWING_SILK)) {
-            if (downState.isOf(VABlocks.GLOWING_SILK)) state = state.with(SHAPE, HangingGlowsilkShape.STRAIGHT);
-            else state = state.with(SHAPE, HangingGlowsilkShape.END);
+            if (downState.isOf(VABlocks.GLOWING_SILK)) state = state.with(SHAPE, GlowingSilkShape.STRAIGHT);
+            else state = state.with(SHAPE, GlowingSilkShape.END);
         }  else {
-            if (downState.isOf(VABlocks.GLOWING_SILK)) state = state.with(SHAPE, HangingGlowsilkShape.BASE);
-            else state = state.with(SHAPE, HangingGlowsilkShape.SINGLE);}
+            if (downState.isOf(VABlocks.GLOWING_SILK)) state = state.with(SHAPE, GlowingSilkShape.BASE);
+            else state = state.with(SHAPE, GlowingSilkShape.SINGLE);}
         return state;
     }
 
@@ -88,7 +88,7 @@ public class GlowingSilkBlock extends Block implements Waterloggable {
 
     static {
         WATERLOGGED = Properties.WATERLOGGED;
-        SHAPE = EnumProperty.of("shape", HangingGlowsilkShape.class);
+        SHAPE = EnumProperty.of("shape", GlowingSilkShape.class);
         BOX = Block.createCuboidShape(2.0, 0.0, 2.0, 14.0, 16.0, 14.0);
     }
 

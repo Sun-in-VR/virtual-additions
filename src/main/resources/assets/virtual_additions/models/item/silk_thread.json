@@ -1,6 +1,6 @@
  {
     "parent": "minecraft:item/generated",
     "textures": {
-        "layer0": "virtual_additions:item/glowsilk"
+        "layer0": "virtual_additions:item/silk_thread"
     }
  }

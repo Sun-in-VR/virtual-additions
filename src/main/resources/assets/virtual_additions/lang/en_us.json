@@ -93,6 +93,8 @@
     "container.virtual_additions.entanglement_drive.payment_slot_hint": "Put an Iolite gemstone here",
     "container.virtual_additions.entanglement_drive.confirm_button": "Confirm selection",
 
+    "effect.virtual_additions.iolite_interference": "Interference",
+
     "entity.virtual_additions.climbing_rope": "Climbing Rope",
     "entity.virtual_additions.steel_bomb": "Steel Bomb",
     "entity.virtual_additions.lumwasp": "Lumwasp",
@@ -122,7 +124,7 @@
     "item.virtual_additions.green_rock_candy": "Green Rock Candy",
     "item.virtual_additions.blue_rock_candy": "Blue Rock Candy",
     "item.virtual_additions.mixed_rock_candy": "Mixed Rock Candy",
-    "item.virtual_additions.glowsilk": "Glowsilk",
+    "item.virtual_additions.silk_thread": "Silk Thread",
     "item.virtual_additions.lumwasp_mandible": "Lumwasp Mandible",
     "item.virtual_additions.cotton_seeds": "Cotton Seeds",
     "item.virtual_additions.cotton": "Cotton",
@@ -164,6 +166,8 @@
     "death.attack.acid": "%s dissolved in acid",
     "death.attack.acid.player": "%s dissolved in acid while trying to escape %s",
     "death.attack.acid_spit": "%s dissolved in the acidic spit of %s",
+
+    "gamerule.ioliteInterference": "Iolite interference effects",
 
     "upgrade.virtual_additions.tool_gild": "Tool Upgrade",
 

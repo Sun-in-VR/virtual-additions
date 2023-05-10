@@ -143,7 +143,7 @@ public class VAItems {
     public static final Item GLOWING_SILK;
     public static final Item FRAYED_SILK;
     public static final Item TALL_GREENCAP_MUSHROOMS;
-    public static final Item GLOWSILK;
+    public static final Item SILK_THREAD;
     public static final Item LUMWASP_MANDIBLE;
     public static final Item LUMWASP_NEST;
     public static final Item SILK_BLOCK;
@@ -339,7 +339,7 @@ public class VAItems {
         GREENCAP_MUSHROOM = registerBlockItem("greencap_mushroom", VABlocks.GREENCAP_MUSHROOM, ItemGroups.NATURAL, Items.RED_MUSHROOM);
         TALL_GREENCAP_MUSHROOMS = registerBlockItem("tall_greencap_mushrooms", VABlocks.TALL_GREENCAP_MUSHROOMS, ItemGroups.NATURAL, Items.PITCHER_PLANT);
         GLOWING_SILK = registerBlockItem("glowing_silk", VABlocks.GLOWING_SILK, ItemGroups.NATURAL, Items.HANGING_ROOTS);
-        GLOWSILK = register("glowsilk", ItemGroups.INGREDIENTS, Items.STRING);
+        SILK_THREAD = register("silk_thread", ItemGroups.INGREDIENTS, Items.STRING);
         LUMWASP_MANDIBLE = register("lumwasp_mandible", ItemGroups.INGREDIENTS, Items.FERMENTED_SPIDER_EYE);
         SILKBULB = registerBlockItem("silkbulb", VABlocks.SILKBULB, new ItemGroupLocation(ItemGroups.FUNCTIONAL, Items.GLOWSTONE), new ItemGroupLocation(ItemGroups.COLORED_BLOCKS, Items.PINK_BANNER), new ItemGroupLocation(ItemGroups.NATURAL, WEBBED_SILK));
 
