@@ -209,7 +209,10 @@ public class EntanglementDriveBlockEntity extends BlockEntity implements Extende
     }
 
     private boolean canModifyPlayerInventory() {
-        return this.canAccessPlayerInventory() && !this.getPlayer().isDead() && !this.getPlayer().isSpectator() && this.getPlayer().getStatusEffect(VAStatusEffects.IOLITE_INTERFERENCE) == null;
+        if (!canAccessPlayerInventory()) return false;
+        StatusEffectInstance effect = this.getPlayer().getStatusEffect(VAStatusEffects.IOLITE_INTERFERENCE);
+        boolean bl = effect == null || effect.getAmplifier() < 1;
+        return !this.getPlayer().isDead() && !this.getPlayer().isSpectator() && bl;
     }
 
     private boolean canAccessPlayerInventory() {
