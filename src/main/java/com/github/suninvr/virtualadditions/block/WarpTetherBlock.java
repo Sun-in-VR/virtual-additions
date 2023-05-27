@@ -96,7 +96,7 @@ public class WarpTetherBlock extends BlockWithEntity implements Waterloggable {
                 if (entity instanceof ServerPlayerEntity player) {
                     VAAdvancementCriteria.USE_TELEPORTER.trigger(player);
                 }
-            } else if (!state.get(WATERLOGGED)) world.playSound(null, pos, SoundEvents.BLOCK_RESPAWN_ANCHOR_DEPLETE.value(), SoundCategory.BLOCKS, 1.0F, 1.8F);
+            } else if (!state.get(WATERLOGGED)) world.playSound(null, pos, VASoundEvents.BLOCK_WARP_TETHER_FAIL, SoundCategory.BLOCKS, 1.0F, 1.8F);
             world.setBlockState(pos, state.with(COOLDOWN, true));
             world.scheduleBlockTick(pos, state.getBlock(), 20);
         }
@@ -106,7 +106,7 @@ public class WarpTetherBlock extends BlockWithEntity implements Waterloggable {
     public void scheduledTick(BlockState state, ServerWorld world, BlockPos pos, net.minecraft.util.math.random.Random random) {
         if (state.get(COOLDOWN)) {
             world.setBlockState(pos, state.with(COOLDOWN, false));
-            if (!state.get(WATERLOGGED)) world.playSound(null, pos, SoundEvents.BLOCK_RESPAWN_ANCHOR_AMBIENT, SoundCategory.BLOCKS, 1.0F, 1.6F);
+            if (!state.get(WATERLOGGED)) world.playSound(null, pos, VASoundEvents.BLOCK_WARP_TETHER_RECHARGE, SoundCategory.BLOCKS, 1.0F, 1.6F);
         }
     }
 

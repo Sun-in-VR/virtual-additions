@@ -3,6 +3,7 @@ package com.github.suninvr.virtualadditions.block;
 import com.github.suninvr.virtualadditions.block.entity.WarpAnchorBlockEntity;
 import com.github.suninvr.virtualadditions.registry.VABlockEntities;
 import com.github.suninvr.virtualadditions.registry.VAItems;
+import com.github.suninvr.virtualadditions.registry.VASoundEvents;
 import net.minecraft.block.*;
 import net.minecraft.block.entity.BlockEntity;
 import net.minecraft.block.entity.BlockEntityTicker;
@@ -58,7 +59,7 @@ public class WarpAnchorBlock extends BlockWithEntity implements Waterloggable {
         ItemStack stack = player.getStackInHand(hand);
         if (stack.isOf(VAItems.WARP_TETHER)) {
             stack.getOrCreateNbt().put("destination", NbtHelper.fromBlockPos(pos));
-            world.playSound(null, pos, SoundEvents.BLOCK_END_PORTAL_FRAME_FILL, SoundCategory.BLOCKS, 1.0F, 0.6F);
+            world.playSound(null, pos, VASoundEvents.BLOCK_WARP_ANCHOR_USE, SoundCategory.BLOCKS, 1.0F, 0.6F);
             return ActionResult.SUCCESS;
         }
         return ActionResult.PASS;

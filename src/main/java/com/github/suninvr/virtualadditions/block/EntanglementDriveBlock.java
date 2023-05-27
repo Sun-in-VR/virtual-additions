@@ -9,6 +9,7 @@ import net.minecraft.block.entity.BlockEntityTicker;
 import net.minecraft.block.entity.BlockEntityType;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.inventory.SidedInventory;
+import net.minecraft.item.ItemPlacementContext;
 import net.minecraft.screen.NamedScreenHandlerFactory;
 import net.minecraft.screen.ScreenHandler;
 import net.minecraft.screen.ScreenHandlerContext;
@@ -51,6 +52,14 @@ public class EntanglementDriveBlock extends BlockWithEntity implements Inventory
             if(world.isReceivingRedstonePower(pos)) world.setBlockState(pos, state.with(POWERED, true));
             else world.setBlockState(pos, state.with(POWERED, false));
         }
+    }
+
+    @Nullable
+    @Override
+    public BlockState getPlacementState(ItemPlacementContext ctx) {
+        BlockState state = this.getDefaultState();
+        if (ctx.getWorld().isReceivingRedstonePower(ctx.getBlockPos())) state = state.with(POWERED, true);
+        return state;
     }
 
     @Nullable

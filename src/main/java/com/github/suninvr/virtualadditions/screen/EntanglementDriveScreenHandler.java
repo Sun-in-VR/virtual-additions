@@ -5,6 +5,7 @@ import com.github.suninvr.virtualadditions.block.entity.EntanglementDriveBlockEn
 import com.github.suninvr.virtualadditions.registry.VAAdvancementCriteria;
 import com.github.suninvr.virtualadditions.registry.VAItems;
 import com.github.suninvr.virtualadditions.registry.VAScreenHandler;
+import com.github.suninvr.virtualadditions.registry.VASoundEvents;
 import com.mojang.datafixers.util.Pair;
 import net.fabricmc.fabric.api.networking.v1.PacketByteBufs;
 import net.fabricmc.fabric.api.networking.v1.ServerPlayNetworking;
@@ -161,9 +162,11 @@ public class EntanglementDriveScreenHandler extends ScreenHandler {
     public void setActiveSlotId(int readInt) {
         this.activeSlotId = readInt;
     }
+
     public void setActiveSlotIndex(int readInt) {
         this.activeSlotIndex = readInt;
     }
+
     public void setPlayerId(UUID readId) {
         this.playerId = readId;
     }
@@ -193,7 +196,7 @@ public class EntanglementDriveScreenHandler extends ScreenHandler {
         }
     }
 
-    public void setEntitySlot(PlayerEntity player) {
+    public void setPlayerSlot(PlayerEntity player) {
 
         if (this.selectedSlot == null) return;
         int slotIndex = this.selectedSlot.getIndex();
@@ -204,7 +207,7 @@ public class EntanglementDriveScreenHandler extends ScreenHandler {
             PacketByteBuf buf = PacketByteBufs.create();
             entity.writeScreenData(buf);
             ServerPlayNetworking.send((ServerPlayerEntity) player, ENTANGLEMENT_DRIVE_ACTIVE_SLOT_SYNC_ID, buf);
-            entity.getWorld().playSound(null, entity.getPos(), SoundEvents.BLOCK_RESPAWN_ANCHOR_CHARGE, SoundCategory.BLOCKS, 1.0F, 1.0F);
+            entity.getWorld().playSound(null, entity.getPos(), VASoundEvents.BLOCK_ENTANGLEMENT_DRIVE_USE, SoundCategory.BLOCKS, 1.0F, 1.0F);
             VAAdvancementCriteria.USE_ENTANGLEMENT_DRIVE.trigger((ServerPlayerEntity) player);
 
             this.inventory.clear();

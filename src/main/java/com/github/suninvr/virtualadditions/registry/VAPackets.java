@@ -15,7 +15,7 @@ public class VAPackets {
     static {
         ServerPlayNetworking.registerGlobalReceiver(ENTANGLEMENT_DRIVE_SET_ACTIVE_SLOT_ID, ((server, player, handler, buf, responseSender) -> {
             if (player.currentScreenHandler instanceof EntanglementDriveScreenHandler screenHandler) {
-                screenHandler.setEntitySlot(player);
+                screenHandler.setPlayerSlot(player);
             }
         }));
     }

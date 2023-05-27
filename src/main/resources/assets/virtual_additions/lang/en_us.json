@@ -175,8 +175,13 @@
     "subtitles.block.acid.sizzle": "Acid sizzles",
     "subtitles.block.warp_anchor.warp": "Something warps nearby",
     "subtitles.block.warp_tether.warp": "Something warps away",
+    "subtitles.block.warp_tether.fail": "Warp fails",
+    "subtitles.block.warp_tether.recharge": "Warp Tether recharges",
+    "subtitles.block.warp_anchor.use": "Warp Anchor clicks",
+    "subtitles.block.entanglement_drive.use": "Entanglement Drive clicks",
     "subtitles.entity.steel_bomb.throw": "Steel Bomb flies",
     "subtitles.entity.lumwasp.hurt": "Lumwasp hurts",
+    "subtitles.entity.lumwasp.death": "Lumwasp dies",
 
     "death.attack.acid": "%s dissolved in acid",
     "death.attack.acid.player": "%s dissolved in acid while trying to escape %s",

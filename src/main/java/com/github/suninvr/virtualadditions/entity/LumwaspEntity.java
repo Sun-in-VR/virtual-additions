@@ -124,6 +124,11 @@ public class LumwaspEntity extends HostileEntity implements RangedAttackMob, Flu
     }
 
     @Override
+    protected SoundEvent getDeathSound() {
+        return VASoundEvents.ENTITY_LUMWASP_DEATH;
+    }
+
+    @Override
     protected void playStepSound(BlockPos pos, BlockState state) {
         this.playSound(SoundEvents.ENTITY_SPIDER_STEP, 0.15F, 1.0F);
     }

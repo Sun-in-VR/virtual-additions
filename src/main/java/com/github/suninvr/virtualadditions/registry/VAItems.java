@@ -452,46 +452,54 @@ public class VAItems {
         ComposterBlockAccessor.virtualAdditions$registerCompostableItem(0.3F, COTTON);
     }
     protected static void initLootTableModifiers() {
-        LootTableEvents.MODIFY.register(((resourceManager, lootManager, id, tableBuilder, source) -> {
+        LootTableEvents.MODIFY.register( (resourceManager, lootManager, id, tableBuilder, source) -> {
             if (source.isBuiltin() && Blocks.GRASS.getLootTableId().equals(id)) {
                 LootPool.Builder builder = LootPool.builder()
-                        .apply(ApplyBonusLootFunction.uniformBonusCount(Enchantments.FORTUNE, 2))
-                        .apply(ExplosionDecayLootFunction.builder())
-                        .conditionally(RandomChanceLootCondition.builder(0.125F))
-                        .conditionally(InvertedLootCondition.builder(MatchToolLootCondition.builder(ItemPredicate.Builder.create().items(Items.SHEARS))))
-                        .with(ItemEntry.builder(COTTON_SEEDS));
+                        .with(ItemEntry.builder(COTTON_SEEDS)
+                                .apply(ApplyBonusLootFunction.uniformBonusCount(Enchantments.FORTUNE, 2))
+                                .apply(ExplosionDecayLootFunction.builder())
+                                .conditionally(RandomChanceLootCondition.builder(0.125F))
+                                .conditionally(InvertedLootCondition.builder(MatchToolLootCondition.builder(ItemPredicate.Builder.create().items(Items.SHEARS))))
+                        );
                 tableBuilder.pool(builder);
             }
-        }));
-
+        }); // Grass Drop
         LootTableEvents.MODIFY.register( (resourceManager, lootManager, id, tableBuilder, source) -> {
             if (!source.isBuiltin()) return;
             if (LootTables.ABANDONED_MINESHAFT_CHEST.equals(id)) {
                 LootPool.Builder builder = LootPool.builder()
-                        .with(ItemEntry.builder(CLIMBING_ROPE).weight(5).apply(SetCountLootFunction.builder(UniformLootNumberProvider.create(5.0F, 16.0F))))
-                        .with(ItemEntry.builder(Items.AIR).weight(5));
+                        .with(ItemEntry.builder(CLIMBING_ROPE).weight(5).apply(SetCountLootFunction.builder(UniformLootNumberProvider.create(5, 16))))
+                        .with(ItemEntry.builder(Items.AIR).weight(3));
                 tableBuilder.pool(builder);
             }
-        });
-
+        }); // Abandoned Mineshaft Chest
         LootTableEvents.MODIFY.register( (resourceManager, lootManager, id, tableBuilder, source) -> {
             if (!source.isBuiltin()) return;
             if (LootTables.VILLAGE_TOOLSMITH_CHEST.equals(id) || LootTables.VILLAGE_WEAPONSMITH_CHEST.equals(id)) {
-                tableBuilder.modifyPools( modifier -> modifier.with(ItemEntry.builder(STEEL_INGOT).weight(3).apply(SetCountLootFunction.builder(UniformLootNumberProvider.create(1.0F, 5.0F)))));
+                LootPool.Builder builder = LootPool.builder()
+                        .with(ItemEntry.builder(STEEL_INGOT).weight(5).apply(SetCountLootFunction.builder(UniformLootNumberProvider.create(1, 5))))
+                        .with(ItemEntry.builder(Items.AIR).weight(15));
+                tableBuilder.pool(builder);
             }
-        } );
+        }); // Village Toolsmith Chest
         LootTableEvents.MODIFY.register( (resourceManager, lootManager, id, tableBuilder, source) -> {
             if (!source.isBuiltin()) return;
             if (LootTables.JUNGLE_TEMPLE_CHEST.equals(id)) {
-                tableBuilder.modifyPools( modifier -> modifier.with(ItemEntry.builder(STEEL_INGOT).weight(7).apply(SetCountLootFunction.builder(UniformLootNumberProvider.create(1.0F, 5.0F)))));
+                LootPool.Builder builder = LootPool.builder()
+                        .with(ItemEntry.builder(STEEL_INGOT).weight(5).apply(SetCountLootFunction.builder(UniformLootNumberProvider.create(1, 5))))
+                        .with(ItemEntry.builder(Items.AIR).weight(10));
+                tableBuilder.pool(builder);
             }
-        } );
+        }); // Jungle Temple Chest
         LootTableEvents.MODIFY.register( (resourceManager, lootManager, id, tableBuilder, source) -> {
             if (!source.isBuiltin()) return;
-            if (LootTables.ANCIENT_CITY_CHEST.equals(id)) {
-                tableBuilder.modifyPools( modifier -> modifier.with(ItemEntry.builder(STEEL_LEGGINGS).weight(3).apply(EnchantWithLevelsLootFunction.builder(UniformLootNumberProvider.create(25, 40)).allowTreasureEnchantments())));
+            if (LootTables.END_CITY_TREASURE_CHEST.equals(id)) {
+                LootPool.Builder builder = LootPool.builder()
+                        .with(ItemEntry.builder(IOLITE).weight(5).apply(SetCountLootFunction.builder(UniformLootNumberProvider.create(1, 4))))
+                        .with(ItemEntry.builder(Items.AIR).weight(25));
+                tableBuilder.pool(builder);
             }
-        } );
+        }); // End City Chest
 
     }
     protected static void initBrewingRecipes() {

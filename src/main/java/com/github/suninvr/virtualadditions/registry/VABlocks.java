@@ -23,7 +23,6 @@ public class VABlocks {
     public static final Block CLIMBING_ROPE_ANCHOR;
     public static final Block RAW_STEEL_BLOCK;
     public static final Block STEEL_BLOCK;
-    //public static final Block WORKBENCH;
     public static final Block HORNFELS;
     public static final Block COBBLED_HORNFELS;
     public static final Block COBBLED_HORNFELS_STAIRS;
