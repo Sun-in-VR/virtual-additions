@@ -1,0 +1,15 @@
+{
+  "type": "minecraft:smithing_transform",
+  "template": {
+    "item": "virtual_additions:tool_gild_smithing_template"
+  },
+  "base": {
+    "item": "minecraft:iron_shovel"
+  },
+  "addition": {
+    "item": "minecraft:echo_shard"
+  },
+  "result": {
+    "item": "virtual_additions:sculk_iron_shovel"
+  }
+}

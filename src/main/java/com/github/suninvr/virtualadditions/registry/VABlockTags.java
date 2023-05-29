@@ -13,6 +13,7 @@ public class VABlockTags {
     public static final TagKey<Block> HEDGES = register("hedges");
     public static final TagKey<Block> ACID_UNBREAKABLE = register("acid_unbreakable");
     public static final TagKey<Block> LUMWASP_NEST_REPLACEABLE = register("lumwasp_nest_replaceable");
+    public static final TagKey<Block> SCULK_GILD_BREAKABLE = register("sculk_gild_breakable");
 
     public static void init(){}
 

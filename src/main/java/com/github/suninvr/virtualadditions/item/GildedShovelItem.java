@@ -7,6 +7,7 @@ import net.minecraft.entity.EquipmentSlot;
 import net.minecraft.entity.attribute.EntityAttributeModifier;
 import net.minecraft.entity.attribute.EntityAttributes;
 import net.minecraft.item.*;
+import net.minecraft.text.Style;
 import net.minecraft.text.Text;
 import net.minecraft.world.World;
 import org.jetbrains.annotations.Nullable;
@@ -18,6 +19,7 @@ public class GildedShovelItem extends ShovelItem implements GildedToolItem {
     private final ToolMaterial toolMaterial;
     private final ToolMaterial baseMaterial;
     private final Item baseItem;
+    private final Style textStyle;
 
     public GildedShovelItem(GildType gildType, ShovelItem baseItem, Settings settings) {
         super(gildType.getModifiedMaterial(baseItem), (int) (baseItem.getAttackDamage() - baseItem.getMaterial().getAttackDamage()), (float) getAttackSpeed(baseItem, gildType), settings);
@@ -25,6 +27,7 @@ public class GildedShovelItem extends ShovelItem implements GildedToolItem {
         this.toolMaterial = gildType.getModifiedMaterial(baseItem);
         this.baseMaterial = baseItem.getMaterial();
         this.baseItem = baseItem;
+        this.textStyle = Style.EMPTY.withColor(this.gildType.getColor());
     }
 
     private static double getAttackSpeed(ToolItem baseItem, GildType gildType) {
@@ -49,7 +52,7 @@ public class GildedShovelItem extends ShovelItem implements GildedToolItem {
 
     @Override
     public void appendTooltip(ItemStack stack, @Nullable World world, List<Text> tooltip, TooltipContext context) {
-        tooltip.add(Text.translatable(this.gildType.buildTooltipTranslationKey()));
+        if (textStyle != null) tooltip.add(Text.translatable(this.gildType.buildTooltipTranslationKey()).setStyle(textStyle));
         super.appendTooltip(stack, world, tooltip, context);
     }
 

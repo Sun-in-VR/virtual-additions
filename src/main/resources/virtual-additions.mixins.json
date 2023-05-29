@@ -10,6 +10,7 @@
     "CrossbowItemMixin",
     "DamageSourcesMixin",
     "EntityMixin",
+    "ExperienceDroppingBlockMixin",
     "FeatureFlagsMixin",
     "FenceBlockMixin",
     "FireBlockAccessor",

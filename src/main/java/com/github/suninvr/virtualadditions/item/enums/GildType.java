@@ -9,13 +9,13 @@ import java.util.Locale;
 import java.util.function.BiFunction;
 
 public enum GildType implements StringIdentifiable {
-    AMETHYST(0, 1F, 0, 0, 0, Operation.ADDITION, "amethyst"),
-    COPPER(1.5F, 1, 1, 1, 1, Operation.MULTIPLICATION, "copper"),
-    EMERALD(0, 0, 0, 1, 6, Operation.ADDITION, "emerald"),
-    QUARTZ(0, 0, 2, 0, 0, Operation.ADDITION, "quartz"),
-    NONE(0, 0, 0, 0, 0, Operation.ADDITION, "none");
+    AMETHYST(0, 1, 0, 0, 0, Operation.ADDITION, "amethyst", 0x9A5CC6),
+    COPPER(1.5F, 1, 1, 1, 1, Operation.MULTIPLICATION, "copper", 0xB4684D),
+    EMERALD(0, 0, 0, 1, 6, Operation.ADDITION, "emerald", 0x11A036),
+    QUARTZ(0, 0, 2, 0, 0, Operation.ADDITION, "quartz", 0xE3D4C4),
+    SCULK(1, 0.5F, 1, 1, 1, Operation.MULTIPLICATION, "sculk", 0x009295),
+    NONE(0, 0, 0, 0, 0, Operation.ADDITION, "none", 0xFFFFFF);
 
-    public static final Codec<GildType> CODEC = StringIdentifiable.createCodec(GildType::values);
     private final float durabilityModifier;
     private final float miningSpeedMultiplierModifier;
     private final float attackDamageModifier;
@@ -23,8 +23,9 @@ public enum GildType implements StringIdentifiable {
     private final float enchantabilityModifier;
     private final Operation operation;
     private final String name;
+    private final int color;
 
-    GildType(float durabilityModifier, float miningSpeedMultiplierModifier, float attackDamageModifier, float miningLevelModifier, float enchantabilityModifier, Operation operation, String name) {
+    GildType(float durabilityModifier, float miningSpeedMultiplierModifier, float attackDamageModifier, float miningLevelModifier, float enchantabilityModifier, Operation operation, String name, int color) {
         this.durabilityModifier = durabilityModifier;
         this.miningSpeedMultiplierModifier = miningSpeedMultiplierModifier;
         this.attackDamageModifier = attackDamageModifier;
@@ -32,6 +33,7 @@ public enum GildType implements StringIdentifiable {
         this.enchantabilityModifier = enchantabilityModifier;
         this.operation = operation;
         this.name = name;
+        this.color = color;
     }
 
     public ToolMaterial getModifiedMaterial(ToolMaterial baseMaterial) {
@@ -81,6 +83,10 @@ public enum GildType implements StringIdentifiable {
 
     public String buildTooltipTranslationKey() {
         return "item.virtual_additions.gilded_tool_tooltip." + this.name;
+    }
+
+    public int getColor() {
+        return color;
     }
 
     @Override

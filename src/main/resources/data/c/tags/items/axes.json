@@ -21,6 +21,11 @@
     "virtual_additions:quartz_iron_axe",
     "virtual_additions:quartz_netherite_axe",
     "virtual_additions:quartz_steel_axe",
+    "virtual_additions:sculk_diamond_axe",
+    "virtual_additions:sculk_golden_axe",
+    "virtual_additions:sculk_iron_axe",
+    "virtual_additions:sculk_netherite_axe",
+    "virtual_additions:sculk_steel_axe",
     "virtual_additions:steel_axe"
   ]
 }
