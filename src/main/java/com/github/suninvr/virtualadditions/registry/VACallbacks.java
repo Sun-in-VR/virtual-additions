@@ -62,8 +62,8 @@ public class VACallbacks{
             if (GildedToolUtil.getGildType(stack) != GildType.SCULK) return true;
             world.setBlockState(pos, VABlocks.DESTRUCTIVE_SCULK.getDefaultState().with(DestructiveSculkBlock.ORIGIN, true));
             world.scheduleBlockTick(pos, VABlocks.DESTRUCTIVE_SCULK, 2);
-            int hardnessMul = state.isIn(VABlockTags.SCULK_GILD_STRONGLY_EFFECTIVE) ? 3 : 10;
-            int potency = (int) Math.floor(MathHelper.clamp(50 - (state.getHardness(world, pos) * hardnessMul + 1), 0, 50));
+            int hardnessMul = state.isIn(VABlockTags.SCULK_GILD_STRONGLY_EFFECTIVE) ? 3 : 6;
+            int potency = (int) Math.floor(MathHelper.clamp(30 - (state.getHardness(world, pos) * hardnessMul + 1), 0, 30));
             DestructiveSculkBlock.setData(world, pos, state, player.getUuid(), stack, potency, pos);
             stack.damage(10, player, player1 -> player1.sendToolBreakStatus(Hand.MAIN_HAND));
             return false;
