@@ -3,8 +3,12 @@
   "values": [
     "#virtual_additions:sculk_gild_strongly_effective",
     "#minecraft:sculk_replaceable",
-    "#minecraft:logs",
     "minecraft:cobweb",
-    "#minecraft:leaves"
+    "minecraft:ice",
+    "minecraft:packed_ice",
+    "minecraft:blue_ice",
+    "#minecraft:leaves",
+    "minecraft:magma_block",
+    "#minecraft:wart_blocks"
   ]
 }

@@ -13,7 +13,7 @@ public enum GildType implements StringIdentifiable {
     COPPER(1.5F, 1, 1, 1, 1, Operation.MULTIPLICATION, "copper", 0xB4684D),
     EMERALD(0, 0, 0, 1, 6, Operation.ADDITION, "emerald", 0x11A036),
     QUARTZ(0, 0, 2, 0, 0, Operation.ADDITION, "quartz", 0xE3D4C4),
-    SCULK(1, 0.5F, 1, 1, 1, Operation.MULTIPLICATION, "sculk", 0x009295),
+    SCULK(1, 0.2F, 1, 1, 1, Operation.MULTIPLICATION, "sculk", 0x009295),
     NONE(0, 0, 0, 0, 0, Operation.ADDITION, "none", 0xFFFFFF);
 
     private final float durabilityModifier;

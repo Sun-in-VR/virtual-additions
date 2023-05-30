@@ -11,6 +11,7 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NbtCompound;
 import net.minecraft.potion.PotionUtil;
 import net.minecraft.potion.Potions;
+import net.minecraft.stat.Stats;
 import net.minecraft.util.ActionResult;
 import net.minecraft.util.Hand;
 import net.minecraft.util.math.MathHelper;
@@ -65,7 +66,8 @@ public class VACallbacks{
             int hardnessMul = state.isIn(VABlockTags.SCULK_GILD_STRONGLY_EFFECTIVE) ? 3 : 6;
             int potency = (int) Math.floor(MathHelper.clamp(30 - (state.getHardness(world, pos) * hardnessMul + 1), 0, 30));
             DestructiveSculkBlock.setData(world, pos, state, player.getUuid(), stack, potency, pos);
-            stack.damage(10, player, player1 -> player1.sendToolBreakStatus(Hand.MAIN_HAND));
+            player.incrementStat(Stats.USED.getOrCreateStat(stack.getItem()));
+            stack.damage(15, player, player1 -> player1.sendToolBreakStatus(Hand.MAIN_HAND));
             return false;
         } );
 
