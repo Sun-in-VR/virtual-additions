@@ -6,7 +6,6 @@ import com.github.suninvr.virtualadditions.registry.VASoundEvents;
 import net.minecraft.block.*;
 import net.minecraft.block.entity.BlockEntity;
 import net.minecraft.block.enums.BlockHalf;
-import net.minecraft.block.piston.PistonBehavior;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.fluid.FluidState;
@@ -98,10 +97,6 @@ public class ClimbingRopeAnchorBlock extends Block implements Waterloggable {
             });
             state.onStacksDropped(serverWorld, pos, stack, true);
         }
-    }
-
-    public PistonBehavior getPistonBehavior(BlockState state) {
-        return PistonBehavior.DESTROY;
     }
 
     @Override

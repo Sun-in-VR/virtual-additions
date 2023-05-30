@@ -65,7 +65,7 @@ public class VACallbacks{
             world.scheduleBlockTick(pos, VABlocks.DESTRUCTIVE_SCULK, 2);
             int hardnessMul = state.isIn(VABlockTags.SCULK_GILD_STRONGLY_EFFECTIVE) ? 3 : 6;
             int potency = (int) Math.floor(MathHelper.clamp(30 - (state.getHardness(world, pos) * hardnessMul + 1), 0, 30));
-            DestructiveSculkBlock.setData(world, pos, state, player.getUuid(), stack, potency, pos);
+            DestructiveSculkBlock.setData(world, pos, state, player.getUuid(), stack, potency);
             player.incrementStat(Stats.USED.getOrCreateStat(stack.getItem()));
             stack.damage(15, player, player1 -> player1.sendToolBreakStatus(Hand.MAIN_HAND));
             return false;
