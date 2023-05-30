@@ -2,9 +2,12 @@ package com.github.suninvr.virtualadditions.block;
 
 import com.github.suninvr.virtualadditions.block.entity.DestructiveSculkBlockEntity;
 import com.github.suninvr.virtualadditions.interfaces.ExperienceDroppingBlockInterface;
+import com.github.suninvr.virtualadditions.registry.VABlockEntities;
 import com.github.suninvr.virtualadditions.registry.VABlocks;
 import net.minecraft.block.*;
 import net.minecraft.block.entity.BlockEntity;
+import net.minecraft.block.entity.BlockEntityTicker;
+import net.minecraft.block.entity.BlockEntityType;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.loot.context.LootContextParameterSet;
@@ -28,14 +31,15 @@ import java.util.UUID;
 
 public class DestructiveSculkBlock extends BlockWithEntity {
     public static final BooleanProperty SPREADING = BooleanProperty.of("spreading");
+    public static final BooleanProperty ORIGIN = BooleanProperty.of("origin");
     public DestructiveSculkBlock(Settings settings) {
         super(settings);
-        setDefaultState(stateManager.getDefaultState().with(SPREADING, true));
+        setDefaultState(stateManager.getDefaultState().with(SPREADING, true).with(ORIGIN, false));
     }
 
     @Override
     protected void appendProperties(StateManager.Builder<Block, BlockState> builder) {
-        builder.add(SPREADING);
+        builder.add(SPREADING).add(ORIGIN);
     }
 
     @Nullable
@@ -44,16 +48,13 @@ public class DestructiveSculkBlock extends BlockWithEntity {
         return new DestructiveSculkBlockEntity(pos, state);
     }
 
-    public static void setData(World world, BlockPos pos, BlockState replacedState, PlayerEntity player, ItemStack tool, int potency) {
-        setData(world, pos, replacedState, player.getUuid(), tool, potency);
-    }
-
-    public static void setData(World world, BlockPos pos, BlockState replacedState, UUID playerId, ItemStack tool, int potency) {
+    public static void setData(World world, BlockPos pos, BlockState replacedState, UUID playerId, ItemStack tool, int potency, BlockPos originPos) {
         if(world.getBlockEntity(pos) instanceof DestructiveSculkBlockEntity destructiveSculkBlockEntity) {
             destructiveSculkBlockEntity.setReplacedState(replacedState);
             destructiveSculkBlockEntity.setPlayerId(playerId);
             destructiveSculkBlockEntity.setTool(tool);
             destructiveSculkBlockEntity.setPotency(potency);
+            destructiveSculkBlockEntity.setOriginPos(originPos);
         }
     }
 
@@ -63,10 +64,12 @@ public class DestructiveSculkBlock extends BlockWithEntity {
         if (bl) {
             world.setBlockState(pos, state.with(SPREADING, false));
             trySpread(state, world, pos);
-            world.scheduleBlockTick(pos, this, random.nextBetween(5, 20));
         }
         else {
             if (world.getBlockEntity(pos) instanceof DestructiveSculkBlockEntity destructiveSculkBlockEntity) {
+                if (destructiveSculkBlockEntity.isOrigin()) {
+                    destructiveSculkBlockEntity.getAffectedPos().forEach( (blockPos) -> world.scheduleBlockTick(blockPos, this, random.nextBetween(1, 5)));
+                }
                 PlayerEntity player = world.getPlayerByUuid(destructiveSculkBlockEntity.getPlayerId());
                 if (player != null) player.incrementStat(Stats.MINED.getOrCreateStat(destructiveSculkBlockEntity.getReplacedState().getBlock()));
             }
@@ -78,25 +81,44 @@ public class DestructiveSculkBlock extends BlockWithEntity {
         if (!state.isOf(this)) return;
         DestructiveSculkBlockEntity blockEntity = getBlockEntity(world, pos);
         if (blockEntity == null) return;
-        if (blockEntity.getPotency() <= 0) return;
+        DestructiveSculkBlockEntity originEntity = getBlockEntity(world, blockEntity.getOriginPos());
+        if (originEntity == null) return;
+        if (originEntity.getPotency() <= 0) return;
         ArrayList<BlockPos> validPos = new ArrayList<>();
         for (Direction direction : Direction.values()) {
             BlockPos blockPos = pos.offset(direction);
-            BlockState state1 = world.getBlockState(blockPos);
-            if (state1.isOf(blockEntity.getReplacedState().getBlock())) {
+            BlockState stateToReplace = world.getBlockState(blockPos);
+            if (stateToReplace.isOf(blockEntity.getReplacedState().getBlock())) {
                 validPos.add(blockPos);
             }
         }
+        int potency = originEntity.getPotency();
         for (BlockPos blockPos : validPos) {
-            BlockState state1 = world.getBlockState(blockPos);
-            float hardness = Math.max(state1.getHardness(world, blockPos), 2.0F);
-            int size = validPos.size();
-            int nextPotency = Math.round(blockEntity.getPotency() - (1.33F * size * size + hardness * hardness ));
+            if (potency <= 0) {
+                break;
+            }
+            potency -= 1;
+            BlockState replacedState = world.getBlockState(blockPos);
             world.setBlockState(blockPos, VABlocks.DESTRUCTIVE_SCULK.getDefaultState());
-            setData(world, blockPos, state1, blockEntity.getPlayerId(), blockEntity.getTool(), nextPotency);
+            setData(world, blockPos, replacedState, blockEntity.getPlayerId(), blockEntity.getTool(), 0, blockEntity.getOriginPos());
             world.scheduleBlockTick(blockPos, this, 2);
+            originEntity.addAffectedPos(blockPos);
+            originEntity.setPotency(potency);
         }
         world.playSound(null, pos, SoundEvents.BLOCK_SCULK_SPREAD, SoundCategory.BLOCKS);
+    }
+
+    @Override
+    public void onBreak(World world, BlockPos pos, BlockState state, PlayerEntity player) {
+        super.onBreak(world, pos, state, player);
+        if (world.getBlockEntity(pos) instanceof DestructiveSculkBlockEntity blockEntity) {
+            if (blockEntity.isOrigin()) {
+                blockEntity.getAffectedPos().forEach( (blockPos) -> {
+                    world.setBlockState(blockPos, VABlocks.DESTRUCTIVE_SCULK.getDefaultState().with(SPREADING, false));
+                    world.scheduleBlockTick(blockPos, this, world.getRandom().nextBetween(1, 5));
+                } );
+            }
+        }
     }
 
     @Override
@@ -123,6 +145,13 @@ public class DestructiveSculkBlock extends BlockWithEntity {
 
     protected DestructiveSculkBlockEntity getBlockEntity(World world, BlockPos pos) {
         return world.getBlockEntity(pos) instanceof DestructiveSculkBlockEntity destructiveSculkBlockEntity ? destructiveSculkBlockEntity : null;
+    }
+
+    @Nullable
+    @Override
+    public <T extends BlockEntity> BlockEntityTicker<T> getTicker(World world, BlockState state, BlockEntityType<T> type) {
+        if (!state.get(ORIGIN)) return null;
+        return checkType(type, VABlockEntities.DESTRUCTIVE_SCULK_BLOCK_ENTITY, (DestructiveSculkBlockEntity::tick));
     }
 
     @Override

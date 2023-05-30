@@ -1,8 +1,8 @@
 {
   "replace": false,
   "values": [
+    "#virtual_additions:sculk_gild_strongly_effective",
     "#minecraft:sculk_replaceable",
-    "#c:ores",
     "#minecraft:logs",
     "minecraft:cobweb",
     "#minecraft:leaves"

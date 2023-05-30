@@ -37,7 +37,7 @@ public abstract class ClientPlayerInteractionManagerMixin {
     private void virtualAdditions$changeBlockBreakingCooldown(ClientPlayerInteractionManager interactionManager, int x) {
         if (x == 5 && !(client.player == null) && !(client.world == null) && !getCurrentGameMode().equals(GameMode.CREATIVE)) {
             ItemStack heldStack = client.player.getMainHandStack();
-            if (heldStack.isSuitableFor(this.brokenState)) {
+            if (heldStack.isSuitableFor(this.brokenState) && !GildedToolItem.getGildType(heldStack).equals(GildType.SCULK)) {
                 int y = (GildedToolItem.getGildType(heldStack).equals(GildType.AMETHYST) ? 2 : 0) + Math.max(0, EnchantmentHelper.getLevel(Enchantments.EFFICIENCY, heldStack) - 3) + (client.player.hasStatusEffect(StatusEffects.HASTE) ? 1 : 0);
                 x = Math.max(0, x - y);
             }
