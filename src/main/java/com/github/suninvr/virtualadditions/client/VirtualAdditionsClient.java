@@ -56,6 +56,7 @@ public class VirtualAdditionsClient implements ClientModInitializer {
         BlockRenderLayerMap.INSTANCE.putBlocks(RenderLayer.getCutout(),
                 VABlocks.CLIMBING_ROPE_ANCHOR,
                 VABlocks.STEEL_DOOR,
+                VABlocks.STEEL_TRAPDOOR,
                 VABlocks.RED_GLIMMER_CRYSTAL,
                 VABlocks.GREEN_GLIMMER_CRYSTAL,
                 VABlocks.BLUE_GLIMMER_CRYSTAL,

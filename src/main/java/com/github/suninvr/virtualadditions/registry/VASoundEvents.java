@@ -28,6 +28,8 @@ public class VASoundEvents {
     public static final SoundEvent BLOCK_WARP_ANCHOR_WARP;
     public static final SoundEvent BLOCK_WARP_ANCHOR_USE;
     public static final SoundEvent BLOCK_ENTANGLEMENT_DRIVE_USE;
+    public static final SoundEvent BLOCK_STEEL_DOOR_SHUTTER_OPEN;
+    public static final SoundEvent BLOCK_STEEL_DOOR_SHUTTER_CLOSE;
 
     static {
         BLOCK_ROPE_BREAK = register("block.rope.break");
@@ -49,6 +51,8 @@ public class VASoundEvents {
         BLOCK_WARP_ANCHOR_WARP = register("block.warp_anchor.warp");
         BLOCK_WARP_ANCHOR_USE = register("block.warp_anchor.use");
         BLOCK_ENTANGLEMENT_DRIVE_USE = register("block.entanglement_drive.use");
+        BLOCK_STEEL_DOOR_SHUTTER_OPEN = register("block.steel_door.shutter_open");
+        BLOCK_STEEL_DOOR_SHUTTER_CLOSE = register("block.steel_door.shutter_close");
     }
 
     private static SoundEvent register(String id) {

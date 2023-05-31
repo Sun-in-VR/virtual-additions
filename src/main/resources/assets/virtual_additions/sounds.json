@@ -133,9 +133,9 @@
   "block.warp_anchor.use": {
     "subtitle": "subtitles.block.warp_anchor.use",
     "sounds": [
-      "block/respawn_anchor/charge1",
-      "block/respawn_anchor/charge2",
-      "block/respawn_anchor/charge3"
+      "block/end_portal/eyeplace1",
+      "block/end_portal/eyeplace2",
+      "block/end_portal/eyeplace3"
     ]
   },
   "block.entanglement_drive.use": {
@@ -143,6 +143,24 @@
     "sounds": [
       "block/lodestone/lock1",
       "block/lodestone/lock2"
+    ]
+  },
+  "block.steel_door.open_shutter": {
+    "subtitle": "subtitles.block.steel_door.open_shutter",
+    "sounds": [
+      "block/iron_trapdoor/open1",
+      "block/iron_trapdoor/open2",
+      "block/iron_trapdoor/open3",
+      "block/iron_trapdoor/open4"
+    ]
+  },
+  "block.steel_door.close_shutter": {
+    "subtitle": "subtitles.block.steel_door.close_shutter",
+    "sounds": [
+      "block/iron_trapdoor/close1",
+      "block/iron_trapdoor/close2",
+      "block/iron_trapdoor/close3",
+      "block/iron_trapdoor/close4"
     ]
   }
 }

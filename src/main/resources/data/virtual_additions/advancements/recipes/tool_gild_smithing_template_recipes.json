@@ -114,7 +114,32 @@
       "virtual_additions:smithing/gilded_tools/quartz/golden_hoe",
       "virtual_additions:smithing/gilded_tools/quartz/iron_hoe",
       "virtual_additions:smithing/gilded_tools/quartz/netherite_hoe",
-      "virtual_additions:smithing/gilded_tools/quartz/steel_hoe"
+      "virtual_additions:smithing/gilded_tools/quartz/steel_hoe",
+      "virtual_additions:smithing/gilded_tools/sculk/diamond_sword",
+      "virtual_additions:smithing/gilded_tools/sculk/golden_sword",
+      "virtual_additions:smithing/gilded_tools/sculk/iron_sword",
+      "virtual_additions:smithing/gilded_tools/sculk/netherite_sword",
+      "virtual_additions:smithing/gilded_tools/sculk/steel_sword",
+      "virtual_additions:smithing/gilded_tools/sculk/diamond_shovel",
+      "virtual_additions:smithing/gilded_tools/sculk/golden_shovel",
+      "virtual_additions:smithing/gilded_tools/sculk/iron_shovel",
+      "virtual_additions:smithing/gilded_tools/sculk/netherite_shovel",
+      "virtual_additions:smithing/gilded_tools/sculk/steel_shovel",
+      "virtual_additions:smithing/gilded_tools/sculk/diamond_pickaxe",
+      "virtual_additions:smithing/gilded_tools/sculk/golden_pickaxe",
+      "virtual_additions:smithing/gilded_tools/sculk/iron_pickaxe",
+      "virtual_additions:smithing/gilded_tools/sculk/netherite_pickaxe",
+      "virtual_additions:smithing/gilded_tools/sculk/steel_pickaxe",
+      "virtual_additions:smithing/gilded_tools/sculk/diamond_axe",
+      "virtual_additions:smithing/gilded_tools/sculk/golden_axe",
+      "virtual_additions:smithing/gilded_tools/sculk/iron_axe",
+      "virtual_additions:smithing/gilded_tools/sculk/netherite_axe",
+      "virtual_additions:smithing/gilded_tools/sculk/steel_axe",
+      "virtual_additions:smithing/gilded_tools/sculk/diamond_hoe",
+      "virtual_additions:smithing/gilded_tools/sculk/golden_hoe",
+      "virtual_additions:smithing/gilded_tools/sculk/iron_hoe",
+      "virtual_additions:smithing/gilded_tools/sculk/netherite_hoe",
+      "virtual_additions:smithing/gilded_tools/sculk/steel_hoe"
     ]
   }
 }
