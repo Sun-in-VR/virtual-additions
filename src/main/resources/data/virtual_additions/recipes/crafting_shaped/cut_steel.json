@@ -1,0 +1,16 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "ss",
+    "ss"
+  ],
+  "key": {
+    "s": {
+      "item": "virtual_additions:steel_block"
+    }
+  },
+  "result": {
+    "item": "virtual_additions:cut_steel",
+    "count": 64
+  }
+}

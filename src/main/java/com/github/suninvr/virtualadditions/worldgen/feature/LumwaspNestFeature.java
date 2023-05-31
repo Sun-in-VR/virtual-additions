@@ -17,7 +17,6 @@ public class LumwaspNestFeature extends Feature<DefaultFeatureConfig> {
     private static final BlockState SILK_BLOCK = VABlocks.SILK_BLOCK.getDefaultState();
     private static final BlockState NEST = VABlocks.LUMWASP_NEST.getDefaultState();
     private static final BlockState NEST_LARVAE = VABlocks.LUMWASP_NEST.getDefaultState().with(LumwaspNestBlock.LARVAE, true);
-    private static final BlockState SILKBULB = VABlocks.SILKBULB.getDefaultState();
     private static final BlockState ACID = VABlocks.ACID.getDefaultState();
     private static final BlockState GLOWING_SILK = VABlocks.GLOWING_SILK.getDefaultState();
     private static final BlockState AIR = Blocks.AIR.getDefaultState();

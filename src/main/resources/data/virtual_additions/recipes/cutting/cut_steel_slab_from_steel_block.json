@@ -1,0 +1,8 @@
+{
+  "type": "minecraft:stonecutting",
+  "ingredient": {
+    "item": "virtual_additions:steel_block"
+  },
+  "result": "virtual_additions:cut_steel_slab",
+  "count": 32
+}

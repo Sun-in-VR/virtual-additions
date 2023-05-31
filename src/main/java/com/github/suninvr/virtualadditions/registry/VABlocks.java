@@ -23,6 +23,10 @@ public class VABlocks {
     public static final Block CLIMBING_ROPE_ANCHOR;
     public static final Block RAW_STEEL_BLOCK;
     public static final Block STEEL_BLOCK;
+    public static final Block CUT_STEEL;
+    public static final Block CUT_STEEL_STAIRS;
+    public static final Block CUT_STEEL_SLAB;
+    public static final Block STEEL_DOOR;
     public static final Block HORNFELS;
     public static final Block COBBLED_HORNFELS;
     public static final Block COBBLED_HORNFELS_STAIRS;
@@ -116,6 +120,10 @@ public class VABlocks {
 
         RAW_STEEL_BLOCK = register("raw_steel_block", new Block(FabricBlockSettings.create().mapColor(MapColor.GRAY).requiresTool().strength(5.0F, 300.0F)));
         STEEL_BLOCK = register("steel_block", new Block(FabricBlockSettings.create().mapColor(MapColor.GRAY).sounds(BlockSoundGroup.NETHERITE).requiresTool().hardness(5.0F).resistance(300.0F)));
+        CUT_STEEL = register("cut_steel", new Block(FabricBlockSettings.copyOf(STEEL_BLOCK).strength(3.0F, 300.0F)));
+        CUT_STEEL_STAIRS = register("cut_steel_stairs", new StairsBlock(CUT_STEEL.getDefaultState(), FabricBlockSettings.copyOf(CUT_STEEL)));
+        CUT_STEEL_SLAB = register("cut_steel_slab", new SlabBlock(FabricBlockSettings.copyOf(CUT_STEEL)));
+        STEEL_DOOR = register("steel_door", new SteelDoorBlock(FabricBlockSettings.copyOf(STEEL_BLOCK)));
 
         HORNFELS = register("hornfels", new PillarBlock(AbstractBlock.Settings.copy(Blocks.DEEPSLATE)));
         COBBLED_HORNFELS = register("cobbled_hornfels", new Block(FabricBlockSettings.copyOf(Blocks.COBBLED_DEEPSLATE)));

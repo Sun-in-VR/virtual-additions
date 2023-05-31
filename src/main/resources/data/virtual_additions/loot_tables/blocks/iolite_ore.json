@@ -45,5 +45,6 @@
         }
       ]
     }
-  ]
+  ],
+  "random_sequence": "virtual_additions:blocks/iolite_ore"
 }

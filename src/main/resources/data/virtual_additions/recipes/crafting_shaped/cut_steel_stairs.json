@@ -1,0 +1,17 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "s  ",
+    "ss ",
+    "sss"
+  ],
+  "key": {
+    "s": {
+      "item": "virtual_additions:cut_steel"
+    }
+  },
+  "result": {
+    "item": "virtual_additions:cut_steel_stairs",
+    "count": 4
+  }
+}
