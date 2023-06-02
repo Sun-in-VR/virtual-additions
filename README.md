@@ -3,4 +3,6 @@ This mod adds lots of content across various different aspects of the game. New 
 
 Many of the mechanics found in this mod are based on those found in some other mods throughout the game's history, but redone in a way that, to me, feels closer to how those mechanics would be implemented into the vanilla game.
 
-[Downloads can be found on Modrinth][https://modrinth.com/mod/virtual-additions "Virtual Additions on Modrinth"]. Snapshot versions need to be built from sources.
+## Downloads
+
+[Downloads can be found on Modrinth.](https://modrinth.com/mod/virtual-additions/versions "Virtual Additions on Modrinth") Snapshot versions need to be built from sources.
