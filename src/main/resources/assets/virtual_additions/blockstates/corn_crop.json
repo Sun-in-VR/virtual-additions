@@ -1,0 +1,78 @@
+{
+  "variants": {
+    "segment=bottom,age=0": {
+      "model": "virtual_additions:block/corn_bottom_stage0"
+    },
+    "segment=bottom,age=1": {
+      "model": "virtual_additions:block/corn_bottom_stage1"
+    },
+    "segment=bottom,age=2": {
+      "model": "virtual_additions:block/corn_bottom_stage2"
+    },
+    "segment=bottom,age=3": {
+      "model": "virtual_additions:block/corn_bottom_stage3"
+    },
+    "segment=bottom,age=4": {
+      "model": "virtual_additions:block/corn_bottom_stage4"
+    },
+    "segment=bottom,age=5": {
+      "model": "virtual_additions:block/corn_bottom_stage5"
+    },
+    "segment=bottom,age=6": {
+      "model": "virtual_additions:block/corn_bottom_stage6"
+    },
+    "segment=bottom,age=7": {
+      "model": "virtual_additions:block/corn_bottom_stage7"
+    },
+    "segment=middle,age=0": {
+      "model": "virtual_additions:block/corn_unobtainable_state"
+    },
+    "segment=middle,age=1": {
+      "model": "virtual_additions:block/corn_unobtainable_state"
+    },
+    "segment=middle,age=2": {
+      "model": "virtual_additions:block/corn_unobtainable_state"
+    },
+    "segment=middle,age=3": {
+      "model": "virtual_additions:block/corn_middle_stage3"
+    },
+    "segment=middle,age=4": {
+      "model": "virtual_additions:block/corn_middle_stage4"
+    },
+    "segment=middle,age=5": {
+      "model": "virtual_additions:block/corn_middle_stage5"
+    },
+    "segment=middle,age=6": {
+      "model": "virtual_additions:block/corn_middle_stage6"
+    },
+    "segment=middle,age=7": {
+      "model": "virtual_additions:block/corn_middle_stage7"
+    },
+    "segment=top,age=0": {
+      "model": "virtual_additions:block/corn_unobtainable_state"
+    },
+    "segment=top,age=1": {
+      "model": "virtual_additions:block/corn_unobtainable_state"
+    },
+    "segment=top,age=2": {
+      "model": "virtual_additions:block/corn_unobtainable_state"
+    },
+    "segment=top,age=3": {
+      "model": "virtual_additions:block/corn_unobtainable_state"
+    },
+    "segment=top,age=4": {
+      "model": "virtual_additions:block/corn_unobtainable_state"
+    },
+    "segment=top,age=5": {
+      "model": "virtual_additions:block/corn_unobtainable_state"
+    },
+    "segment=top,age=6": {
+      "model": "virtual_additions:block/corn_top_stage6"
+    },
+    "segment=top,age=7": {
+      "model": "virtual_additions:block/corn_top_stage7"
+    }
+    
+    
+  }
+}

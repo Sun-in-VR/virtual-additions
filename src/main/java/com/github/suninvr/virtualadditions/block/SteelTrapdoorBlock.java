@@ -1,5 +1,6 @@
 package com.github.suninvr.virtualadditions.block;
 
+import com.github.suninvr.virtualadditions.registry.VASoundEvents;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockSetType;
 import net.minecraft.block.BlockState;
@@ -37,7 +38,7 @@ public class SteelTrapdoorBlock extends TrapdoorBlock {
     }
 
     private void playOpenCloseShutterSound(@Nullable Entity entity, World world, BlockPos pos, boolean open) {
-        world.playSound(entity, pos, open ? SoundEvents.BLOCK_IRON_TRAPDOOR_OPEN : SoundEvents.BLOCK_IRON_TRAPDOOR_CLOSE, SoundCategory.BLOCKS, 0.4F, world.getRandom().nextFloat() * 0.1F + 1.2F);
+        world.playSound(entity, pos, open ? VASoundEvents.BLOCK_STEEL_DOOR_SHUTTER_OPEN : VASoundEvents.BLOCK_STEEL_DOOR_SHUTTER_CLOSE, SoundCategory.BLOCKS, 0.4F, world.getRandom().nextFloat() * 0.1F + 1.2F);
     }
 
     @Override

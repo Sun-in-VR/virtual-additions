@@ -10,7 +10,6 @@ import com.github.suninvr.virtualadditions.item.SteelBombItem;
 import com.github.suninvr.virtualadditions.item.enums.GildType;
 import com.github.suninvr.virtualadditions.item.materials.SteelToolMaterial;
 import com.github.suninvr.virtualadditions.mixin.ComposterBlockAccessor;
-import com.github.suninvr.virtualadditions.registry.RegistryHelper.ItemHelper.*;
 import com.github.suninvr.virtualadditions.registry.constructors.item.CustomArmorMaterial;
 import com.github.suninvr.virtualadditions.registry.constructors.item.CustomAxeItem;
 import com.github.suninvr.virtualadditions.registry.constructors.item.CustomHoeItem;
@@ -138,6 +137,8 @@ public class VAItems {
     public static final Item STEEL_BOOTS;
     public static final Item COTTON_SEEDS;
     public static final Item COTTON;
+    public static final Item CORN;
+    public static final Item ROASTED_CORN;
     public static final Item FRIED_EGG;
     public static final Item RED_ROCK_CANDY;
     public static final Item GREEN_ROCK_CANDY;
@@ -181,6 +182,8 @@ public class VAItems {
     private static final Item LUMWASP_SPAWN_EGG;
 
     public static final FoodComponent FRIED_EGG_FOOD = (new FoodComponent.Builder().hunger(4).saturationModifier(0.4F).build());
+    public static final FoodComponent CORN_FOOD = (new FoodComponent.Builder()).hunger(1).saturationModifier(0.3F).build();
+    public static final FoodComponent ROASTED_CORN_FOOD = (new FoodComponent.Builder()).hunger(5).saturationModifier(0.6F).build();
     public static final FoodComponent ROCK_CANDY_FOOD = (new FoodComponent.Builder().hunger(2).saturationModifier(0.1F).build());
 
     public static final ToolSet AMETHYST_DIAMOND_TOOL_SET;
@@ -338,6 +341,8 @@ public class VAItems {
 
         COTTON_SEEDS = register("cotton_seeds", new AliasedBlockItem(VABlocks.COTTON, new FabricItemSettings()), ItemGroups.NATURAL, Items.BEETROOT_SEEDS);
         COTTON = register("cotton", ItemGroups.INGREDIENTS, Items.WHEAT);
+        CORN = register("corn", new AliasedBlockItem(VABlocks.CORN_CROP, new FabricItemSettings().food(CORN_FOOD)), ItemGroups.FOOD_AND_DRINK, Items.BEETROOT);
+        ROASTED_CORN = register("roasted_corn", new Item(new FabricItemSettings().food(ROASTED_CORN_FOOD)), ItemGroups.FOOD_AND_DRINK, prev);
         FRIED_EGG = register("fried_egg", new Item(new FabricItemSettings().food(FRIED_EGG_FOOD)), ItemGroups.FOOD_AND_DRINK, Items.COOKED_CHICKEN);
 
         RED_ROCK_CANDY = register("red_rock_candy", new RockCandyItem(new FabricItemSettings().food(ROCK_CANDY_FOOD).requires(VirtualAdditions.PREVIEW)), ItemGroups.FOOD_AND_DRINK, Items.COOKIE);

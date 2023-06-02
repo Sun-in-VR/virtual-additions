@@ -1,0 +1,6 @@
+{
+  "ambientocclusion": false,
+  "textures": {
+    "particle": "virtual_additions:block/corn_middle_stage6"
+  }
+}

@@ -72,6 +72,7 @@ public class VABlocks {
     public static final Block SPOTLIGHT;
     public static final Block SPOTLIGHT_LIGHT;
     public static final Block COTTON;
+    public static final Block CORN_CROP;
     public static final Block OAK_HEDGE;
     public static final Block SPRUCE_HEDGE;
     public static final Block BIRCH_HEDGE;
@@ -175,6 +176,7 @@ public class VABlocks {
         SPOTLIGHT_LIGHT = register("spotlight_light", new SpotlightLightBlock(FabricBlockSettings.create().strength(-1.0F, 3600000.8F).sounds(BlockSoundGroup.field_44608).replaceable().dropsNothing().nonOpaque().luminance((state) -> state.get(SpotlightLightBlock.LIT) ? 13 : 0).requires(VirtualAdditions.PREVIEW)));
 
         COTTON = register("cotton", new CropBlock(AbstractBlock.Settings.create().noCollision().ticksRandomly().breakInstantly().sounds(BlockSoundGroup.CROP)));
+        CORN_CROP = register("corn_crop", new CornCropBlock(AbstractBlock.Settings.create().noCollision().ticksRandomly().breakInstantly().sounds(BlockSoundGroup.CROP).offset(AbstractBlock.OffsetType.XZ)));
 
         OAK_HEDGE = register("oak_hedge", new HedgeBlock(AbstractBlock.Settings.copy(Blocks.OAK_LEAVES)));
         SPRUCE_HEDGE = register("spruce_hedge", new HedgeBlock(AbstractBlock.Settings.copy(Blocks.SPRUCE_LEAVES)));

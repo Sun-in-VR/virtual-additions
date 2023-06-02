@@ -1,0 +1,22 @@
+{
+  "criteria": {
+    "inventory": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "virtual_additions:corn"
+            ]
+          }
+        ]
+      }
+    }
+  },
+  "rewards": {
+    "recipes": [
+      "virtual_additions:smelting/roasted_corn",
+      "virtual_additions:smoking/roasted_corn"
+    ]
+  }
+}

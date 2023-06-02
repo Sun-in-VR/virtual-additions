@@ -61,6 +61,7 @@ public class VirtualAdditionsClient implements ClientModInitializer {
                 VABlocks.GREEN_GLIMMER_CRYSTAL,
                 VABlocks.BLUE_GLIMMER_CRYSTAL,
                 VABlocks.COTTON,
+                VABlocks.CORN_CROP,
                 VABlocks.OAK_HEDGE,
                 VABlocks.SPRUCE_HEDGE,
                 VABlocks.BIRCH_HEDGE,

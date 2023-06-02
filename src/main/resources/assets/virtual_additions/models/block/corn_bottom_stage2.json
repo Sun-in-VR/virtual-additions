@@ -1,0 +1,6 @@
+{
+  "parent": "virtual_additions:block/cross_farmland",
+  "textures": {
+    "cross": "virtual_additions:block/corn_bottom_stage2"
+  }
+}
