@@ -1,7 +1,7 @@
 package com.github.suninvr.virtualadditions.mixin;
 
 import com.github.suninvr.virtualadditions.interfaces.LivingEntityInterface;
-import com.github.suninvr.virtualadditions.item.enums.GildType;
+import com.github.suninvr.virtualadditions.item.GildTypes;
 import com.github.suninvr.virtualadditions.item.interfaces.GildedToolItem;
 import com.github.suninvr.virtualadditions.registry.VABlocks;
 import com.github.suninvr.virtualadditions.registry.VAGameRules;
@@ -41,7 +41,7 @@ public abstract class LivingEntityMixin extends Entity implements LivingEntityIn
         if (!this.isRemoved() && !this.dead && !((LivingEntity)(Object)(this) instanceof PlayerEntity)) {
             Entity entity = source.getAttacker();
             if (entity instanceof PlayerEntity playerEntity) {
-                if (GildedToolItem.getGildType(playerEntity.getMainHandStack()).equals(GildType.EMERALD)) {
+                if (GildedToolItem.getGildType(playerEntity.getMainHandStack()).equals(GildTypes.EMERALD)) {
                     this.experienceMultiplier = 1.6F;
                 }
             }

@@ -8,13 +8,11 @@ import net.minecraft.block.*;
 import net.minecraft.block.entity.BlockEntity;
 import net.minecraft.block.entity.BlockEntityTicker;
 import net.minecraft.block.entity.BlockEntityType;
-import net.minecraft.client.particle.SculkChargePopParticle;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.loot.context.LootContextParameterSet;
 import net.minecraft.loot.context.LootContextParameters;
 import net.minecraft.particle.ParticleTypes;
-import net.minecraft.particle.SculkChargeParticleEffect;
 import net.minecraft.server.world.ServerWorld;
 import net.minecraft.sound.SoundCategory;
 import net.minecraft.sound.SoundEvents;
@@ -22,12 +20,14 @@ import net.minecraft.stat.Stats;
 import net.minecraft.state.StateManager;
 import net.minecraft.state.property.BooleanProperty;
 import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.math.Direction;
 import net.minecraft.util.math.random.Random;
 import net.minecraft.world.World;
 import org.jetbrains.annotations.Nullable;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
+import java.util.UUID;
 
 public class DestructiveSculkBlock extends BlockWithEntity {
     public static final BooleanProperty SPREADING = BooleanProperty.of("spreading");
@@ -75,29 +75,46 @@ public class DestructiveSculkBlock extends BlockWithEntity {
         if (blockEntity == null) return false;
         if (originEntity.getPotency() <= 0) return false;
         ArrayList<BlockPos> validPos = new ArrayList<>();
-        for (Direction direction : Direction.values()) {
-            BlockPos blockPos = pos.offset(direction);
-            BlockState stateToReplace = world.getBlockState(blockPos);
-            if (stateToReplace.isOf(blockEntity.getReplacedState().getBlock())) {
-                validPos.add(blockPos);
+        ArrayList<BlockPos> validPosLater = new ArrayList<>();
+        for (int i = -1; i <= 1; i++) {
+            for (int j = -1; j <= 1; j++) {
+                for (int k = -1; k <= 1; k++) {
+                    BlockPos blockPos = pos.add(i, j, k);
+                    BlockState stateToReplace = world.getBlockState(blockPos);
+                    int ia = Math.abs(i);
+                    int ja = Math.abs(j);
+                    int ka = Math.abs(k);
+                    if (stateToReplace.isOf(blockEntity.getReplacedState().getBlock()) && !(ia == ja && ja == ka)) {
+                        if ( (ia + ja + ka) >= 2) {
+                            validPosLater.add(blockPos);
+                        } else {
+                            validPos.add(blockPos);
+                        }
+                    }
+                }
             }
         }
+
+        validPos.addAll(validPosLater);
+        validPosLater.clear();
+
         boolean bl = false;
         if (!validPos.isEmpty()) {
             BlockPos blockPos = validPos.get(0);
             BlockState stateToReplace = world.getBlockState(blockPos);
             world.setBlockState(blockPos, VABlocks.DESTRUCTIVE_SCULK.getDefaultState());
             setData(world, blockPos, stateToReplace, blockEntity.getPlayerId(), blockEntity.getTool(), 0);
-            world.scheduleBlockTick(blockPos, VABlocks.DESTRUCTIVE_SCULK, 2);
             originEntity.addAffectedPos(blockPos);
             originEntity.setPotency(originEntity.getPotency() - 1);
-            world.playSound(null, blockPos, SoundEvents.BLOCK_SCULK_SPREAD, SoundCategory.BLOCKS);
+            world.playSound(null, blockPos, SoundEvents.BLOCK_SCULK_SPREAD, SoundCategory.BLOCKS, 0.5F, 1.0F);
             if (world instanceof ServerWorld serverWorld) {
-                serverWorld.spawnParticles(ParticleTypes.SCULK_CHARGE_POP, blockPos.getX() + 0.5, blockPos.getY() + 0.5, blockPos.getZ() + 0.5, 50, 0.4, 0.4, 0.4, 0.02);
+                serverWorld.spawnParticles(ParticleTypes.SCULK_CHARGE_POP, blockPos.getX() + 0.5, blockPos.getY() + 0.5, blockPos.getZ() + 0.5, 20, 0.4, 0.4, 0.4, 0.02);
             }
             bl = true;
         }
-        if (validPos.size() <= 1) world.setBlockState(pos, state.with(SPREADING, false));
+        if (validPos.size() <= 1 || originEntity.getPotency() < 1) {
+            world.setBlockState(pos, state.with(SPREADING, false));
+        }
         return bl;
     }
 

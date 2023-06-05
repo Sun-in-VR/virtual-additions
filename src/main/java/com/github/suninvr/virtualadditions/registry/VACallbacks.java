@@ -1,8 +1,8 @@
 package com.github.suninvr.virtualadditions.registry;
 
-import com.github.suninvr.virtualadditions.block.DestructiveSculkBlock;
-import com.github.suninvr.virtualadditions.item.GildedToolUtil;
-import com.github.suninvr.virtualadditions.item.enums.GildType;
+import com.github.suninvr.virtualadditions.item.GildType;
+import com.github.suninvr.virtualadditions.item.GildTypes;
+import com.github.suninvr.virtualadditions.item.interfaces.GildedToolItem;
 import net.fabricmc.fabric.api.event.player.AttackEntityCallback;
 import net.fabricmc.fabric.api.event.player.PlayerBlockBreakEvents;
 import net.minecraft.entity.LivingEntity;
@@ -11,10 +11,8 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NbtCompound;
 import net.minecraft.potion.PotionUtil;
 import net.minecraft.potion.Potions;
-import net.minecraft.stat.Stats;
 import net.minecraft.util.ActionResult;
 import net.minecraft.util.Hand;
-import net.minecraft.util.math.MathHelper;
 
 import java.util.List;
 
@@ -56,19 +54,14 @@ public class VACallbacks{
         PlayerBlockBreakEvents.BEFORE.register( (world, player, pos, state, blockEntity) -> {
             if (player.isSpectator()) return true;
             if (player.isCreative()) return true;
-            if (state.isOf(VABlocks.DESTRUCTIVE_SCULK)) return true;
-            if (!state.isIn(VABlockTags.SCULK_GILD_EFFECTIVE)) return true;
-            ItemStack stack = player.getStackInHand(Hand.MAIN_HAND);
-            if (!stack.isSuitableFor(state)) return true;
-            if (GildedToolUtil.getGildType(stack) != GildType.SCULK) return true;
-            world.setBlockState(pos, VABlocks.DESTRUCTIVE_SCULK.getDefaultState().with(DestructiveSculkBlock.ORIGIN, true));
-            world.scheduleBlockTick(pos, VABlocks.DESTRUCTIVE_SCULK, 2);
-            int hardnessMul = state.isIn(VABlockTags.SCULK_GILD_STRONGLY_EFFECTIVE) ? 3 : 6;
-            int potency = (int) Math.floor(MathHelper.clamp(30 - (state.getHardness(world, pos) * hardnessMul + 1), 0, 30));
-            DestructiveSculkBlock.setData(world, pos, state, player.getUuid(), stack, potency);
-            player.incrementStat(Stats.USED.getOrCreateStat(stack.getItem()));
-            stack.damage(15, player, player1 -> player1.sendToolBreakStatus(Hand.MAIN_HAND));
-            return false;
+            ItemStack tool = player.getStackInHand(Hand.MAIN_HAND);
+            GildType gild = GildedToolItem.getGildType(tool);
+            if (gild.equals(GildTypes.NONE)) return true;
+            if (gild.isGildEffective(world, player, pos, state, tool)) {
+                gild.emitBlockBreakingEffects(world, player, pos, state, tool);
+                return gild.onBlockBroken(world, player, pos, state, tool);
+            }
+            return true;
         } );
 
     }

@@ -1,6 +1,5 @@
 package com.github.suninvr.virtualadditions.item;
 
-import com.github.suninvr.virtualadditions.item.enums.GildType;
 import com.github.suninvr.virtualadditions.item.interfaces.GildedToolItem;
 import net.minecraft.client.item.TooltipContext;
 import net.minecraft.entity.EquipmentSlot;
@@ -32,7 +31,7 @@ public class GildedShovelItem extends ShovelItem implements GildedToolItem {
 
     private static double getAttackSpeed(ToolItem baseItem, GildType gildType) {
         double attackSpeed = baseItem.getAttributeModifiers(EquipmentSlot.MAINHAND).get(EntityAttributes.GENERIC_ATTACK_SPEED).stream().mapToDouble(EntityAttributeModifier::getValue).sum();
-        if (gildType == GildType.AMETHYST) attackSpeed *= 0.8;
+        if (gildType == GildTypes.AMETHYST) attackSpeed *= 0.8;
         return attackSpeed;
     }
 

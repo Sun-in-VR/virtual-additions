@@ -2,7 +2,6 @@ package com.github.suninvr.virtualadditions.registry;
 
 import com.github.suninvr.virtualadditions.VirtualAdditions;
 import com.github.suninvr.virtualadditions.item.*;
-import com.github.suninvr.virtualadditions.item.enums.GildType;
 import net.fabricmc.fabric.api.item.v1.FabricItemSettings;
 import net.fabricmc.fabric.api.itemgroup.v1.ItemGroupEvents;
 import net.minecraft.block.Block;
@@ -11,8 +10,6 @@ import net.minecraft.registry.Registries;
 import net.minecraft.registry.Registry;
 import net.minecraft.registry.RegistryKey;
 import net.minecraft.resource.featuretoggle.FeatureFlag;
-
-import java.util.Locale;
 
 import static com.github.suninvr.virtualadditions.VirtualAdditions.idOf;
 
@@ -116,7 +113,7 @@ public class RegistryHelper {
         }
 
         public static ToolSet registerGildedToolSet(ToolSet baseSet, GildType gildedToolMaterial) {
-            String newName = gildedToolMaterial.name().toLowerCase(Locale.ROOT) +"_"+ baseSet.NAME;
+            String newName = gildedToolMaterial.getId().getPath() +"_"+ baseSet.NAME;
             return new ToolSet(
                     register(newName +"_sword", new GildedSwordItem(gildedToolMaterial, (SwordItem) baseSet.SWORD, GildedToolUtil.settingsOf(baseSet.SWORD))),
                     register(newName +"_shovel", new GildedShovelItem(gildedToolMaterial, (ShovelItem) baseSet.SHOVEL, GildedToolUtil.settingsOf(baseSet.SHOVEL))),

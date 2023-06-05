@@ -1,6 +1,7 @@
 package com.github.suninvr.virtualadditions.item.interfaces;
 
-import com.github.suninvr.virtualadditions.item.enums.GildType;
+import com.github.suninvr.virtualadditions.item.GildType;
+import com.github.suninvr.virtualadditions.item.GildTypes;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.ToolMaterial;
 
@@ -13,7 +14,7 @@ public interface GildedToolItem{
         if (stack.getItem()instanceof GildedToolItem gildedToolItem) {
             return gildedToolItem.getGildType();
         }
-        return GildType.NONE;
+        return GildTypes.NONE;
     }
 
 

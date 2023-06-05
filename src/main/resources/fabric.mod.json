@@ -4,13 +4,13 @@
   "version": "${version}",
 
   "name": "Virtual Additions",
-  "description": "Adds extra content with a focus on preserving the vanilla feel.",
+  "description": "A sizable content mod with a strong focus on preserving the vanilla feel.",
   "authors": [
-    "VirtualSun"
+    "VirtualSun, aka. Sun in VR"
   ],
   "contact": {
     "homepage": "https://github.com/Sun-in-VR",
-    "sources": "https://github.com/Sun-in-VR/virtual-additions"
+    "sources": "https://modrinth.com/mod/virtual-additions"
   },
 
   "license": "MIT",
@@ -31,12 +31,9 @@
   "accessWidener" : "virtualadditions.accesswidener",
 
   "depends": {
-    "fabricloader": ">=0.14.10",
+    "fabricloader": ">=0.14.19",
     "fabric": "*",
     "minecraft": "1.20.x",
     "java": ">=17"
-  },
-  "suggests": {
-    "another-mod": "*"
   }
 }

@@ -1,6 +1,5 @@
 package com.github.suninvr.virtualadditions.item;
 
-import com.github.suninvr.virtualadditions.item.enums.GildType;
 import com.github.suninvr.virtualadditions.item.interfaces.GildedToolItem;
 import net.fabricmc.fabric.api.item.v1.FabricItemSettings;
 import net.minecraft.item.Item;
@@ -19,6 +18,6 @@ public class GildedToolUtil {
 
     public static GildType getGildType(Item item) {
         if (item instanceof GildedToolItem gildedToolItem) return gildedToolItem.getGildType();
-        return GildType.NONE;
+        return GildTypes.NONE;
     }
 }
