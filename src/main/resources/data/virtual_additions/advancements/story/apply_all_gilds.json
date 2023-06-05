@@ -1,0 +1,122 @@
+{
+  "display": {
+    "icon": {
+      "item": "virtual_additions:sculk_netherite_pickaxe"
+    },
+    "title": {
+      "translate": "advancements.virtual_additions.story.apply_all_gilds.title"
+    },
+    "description": {
+      "translate": "advancements.virtual_additions.story.apply_all_gilds.description"
+    },
+    "frame": "challenge",
+    "show_toast": true,
+    "announce_to_chat": true
+  },
+  "parent": "virtual_additions:story/gild_tool",
+  "criteria": {
+    "amethyst_sword": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {"items": [{"tag": "virtual_additions:gilded_tools/from_gild/amethyst_swords"}]}
+    },
+    "copper_sword": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {"items": [{"tag": "virtual_additions:gilded_tools/from_gild/copper_swords"}]}
+    },
+    "emerald_sword": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {"items": [{"tag": "virtual_additions:gilded_tools/from_gild/emerald_swords"}]}
+    },
+    "quartz_sword": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {"items": [{"tag": "virtual_additions:gilded_tools/from_gild/quartz_swords"}]}
+    },
+    "sculk_sword": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {"items": [{"tag": "virtual_additions:gilded_tools/from_gild/sculk_swords"}]}
+    },
+    "amethyst_shovel": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {"items": [{"tag": "virtual_additions:gilded_tools/from_gild/amethyst_shovels"}]}
+    },
+    "copper_shovel": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {"items": [{"tag": "virtual_additions:gilded_tools/from_gild/copper_shovels"}]}
+    },
+    "emerald_shovel": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {"items": [{"tag": "virtual_additions:gilded_tools/from_gild/emerald_shovels"}]}
+    },
+    "quartz_shovel": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {"items": [{"tag": "virtual_additions:gilded_tools/from_gild/quartz_shovels"}]}
+    },
+    "sculk_shovel": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {"items": [{"tag": "virtual_additions:gilded_tools/from_gild/sculk_shovels"}]}
+    },
+    "amethyst_pickaxe": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {"items": [{"tag": "virtual_additions:gilded_tools/from_gild/amethyst_pickaxes"}]}
+    },
+    "copper_pickaxe": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {"items": [{"tag": "virtual_additions:gilded_tools/from_gild/copper_pickaxes"}]}
+    },
+    "emerald_pickaxe": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {"items": [{"tag": "virtual_additions:gilded_tools/from_gild/emerald_pickaxes"}]}
+    },
+    "quartz_pickaxe": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {"items": [{"tag": "virtual_additions:gilded_tools/from_gild/quartz_pickaxes"}]}
+    },
+    "sculk_pickaxe": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {"items": [{"tag": "virtual_additions:gilded_tools/from_gild/sculk_pickaxes"}]}
+    },
+    "amethyst_axe": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {"items": [{"tag": "virtual_additions:gilded_tools/from_gild/amethyst_axes"}]}
+    },
+    "copper_axe": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {"items": [{"tag": "virtual_additions:gilded_tools/from_gild/copper_axes"}]}
+    },
+    "emerald_axe": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {"items": [{"tag": "virtual_additions:gilded_tools/from_gild/emerald_axes"}]}
+    },
+    "quartz_axe": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {"items": [{"tag": "virtual_additions:gilded_tools/from_gild/quartz_axes"}]}
+    },
+    "sculk_axe": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {"items": [{"tag": "virtual_additions:gilded_tools/from_gild/sculk_axes"}]}
+    },
+    "amethyst_hoe": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {"items": [{"tag": "virtual_additions:gilded_tools/from_gild/amethyst_hoes"}]}
+    },
+    "copper_hoe": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {"items": [{"tag": "virtual_additions:gilded_tools/from_gild/copper_hoes"}]}
+    },
+    "emerald_hoe": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {"items": [{"tag": "virtual_additions:gilded_tools/from_gild/emerald_hoes"}]}
+    },
+    "quartz_hoe": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {"items": [{"tag": "virtual_additions:gilded_tools/from_gild/quartz_hoes"}]}
+    },
+    "sculk_hoe": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {"items": [{"tag": "virtual_additions:gilded_tools/from_gild/sculk_hoes"}]}
+    }
+  },
+  "rewards": {
+    "experience": 100
+  }
+}

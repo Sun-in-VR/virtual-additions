@@ -1,7 +1,7 @@
 {
   "display": {
     "icon": {
-      "item": "virtual_additions:amethyst_steel_pickaxe",
+      "item": "virtual_additions:amethyst_diamond_pickaxe",
       "nbt": "{Damage:0}"
     },
     "title": {

@@ -1,0 +1,10 @@
+{
+  "replace": false,
+  "values": [
+    "virtual_additions:emerald_diamond_pickaxe",
+    "virtual_additions:emerald_golden_pickaxe",
+    "virtual_additions:emerald_iron_pickaxe",
+    "virtual_additions:emerald_netherite_pickaxe",
+    "virtual_additions:emerald_steel_pickaxe"
+  ]
+}

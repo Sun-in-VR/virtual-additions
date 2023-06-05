@@ -229,6 +229,7 @@ public class VAItems {
     private static final Identifier EMPTY_SLOT_DIAMOND_TEXTURE;
     private static final Identifier EMPTY_SLOT_AMETHYST_TEXTURE;
     private static final Identifier EMPTY_SLOT_LAPIS_LAZULI_TEXTURE;
+    private static final Identifier EMPTY_SLOT_ECHO_SHARD_TEXTURE;
 
     static {
 
@@ -254,6 +255,7 @@ public class VAItems {
         EMPTY_SLOT_DIAMOND_TEXTURE = new Identifier("item/empty_slot_diamond");
         EMPTY_SLOT_AMETHYST_TEXTURE = new Identifier("item/empty_slot_amethyst_shard");
         EMPTY_SLOT_LAPIS_LAZULI_TEXTURE = new Identifier("item/empty_slot_lapis_lazuli");
+        EMPTY_SLOT_ECHO_SHARD_TEXTURE = new Identifier("virtual_additions:item/empty_slot_echo_shard");
 
         CLIMBING_ROPE = register("climbing_rope", new AliasedBlockItem(VABlocks.CLIMBING_ROPE_ANCHOR, new FabricItemSettings().maxCount(16)), ItemGroups.TOOLS, Items.LEAD);
 
@@ -386,7 +388,7 @@ public class VAItems {
 
         TOOL_GILD_SMITHING_TEMPLATE = register("tool_gild_smithing_template", new SmithingTemplateItem(TOOL_GILD_APPLIES_TO_TEXT, TOOL_GILD_INGREDIENTS_TEXT, TOOL_GILD_TEXT, TOOL_GILD_BASE_SLOT_DESCRIPTION_TEXT, TOOL_GILD_ADDITIONS_SLOT_DESCRIPTION_TEXT,
                 List.of(EMPTY_SLOT_SWORD_TEXTURE, EMPTY_SLOT_SHOVEL_TEXTURE, EMPTY_SLOT_PICKAXE_TEXTURE, EMPTY_SLOT_AXE_TEXTURE, EMPTY_SLOT_HOE_TEXTURE),
-                List.of(EMPTY_SLOT_AMETHYST_TEXTURE, EMPTY_SLOT_INGOT_TEXTURE, EMPTY_SLOT_EMERALD_TEXTURE, EMPTY_SLOT_QUARTZ_TEXTURE)
+                List.of(EMPTY_SLOT_AMETHYST_TEXTURE, EMPTY_SLOT_INGOT_TEXTURE, EMPTY_SLOT_EMERALD_TEXTURE, EMPTY_SLOT_QUARTZ_TEXTURE, EMPTY_SLOT_ECHO_SHARD_TEXTURE)
         ), ItemGroups.INGREDIENTS, Items.NETHERITE_UPGRADE_SMITHING_TEMPLATE);
 
         IOLITE = register("iolite", ItemGroups.INGREDIENTS, Items.ANCIENT_DEBRIS);

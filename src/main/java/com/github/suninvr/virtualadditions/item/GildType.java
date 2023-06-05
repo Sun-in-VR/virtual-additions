@@ -1,6 +1,9 @@
 package com.github.suninvr.virtualadditions.item;
 
 import net.minecraft.block.BlockState;
+import net.minecraft.entity.EquipmentSlot;
+import net.minecraft.entity.attribute.EntityAttributeModifier;
+import net.minecraft.entity.attribute.EntityAttributes;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.ToolItem;
@@ -18,7 +21,15 @@ public abstract class GildType {
     private final ArrayList<Modifier> modifiers = new ArrayList<>();
     private final Identifier id;
     private final int color;
-    protected record Modifier(ModifierType type, float modifier, BiFunction<Float, Float, Float> function){}
+    protected record Modifier(ModifierType type, float modifier, BiFunction<Float, Float, Float> function){
+        public float apply(float f) {
+            return this.function.apply(f, this.modifier);
+        }
+
+        public int apply(int i) {
+            return Math.round(this.function.apply((float) i, this.modifier));
+        }
+    }
 
     public GildType(Identifier id, int color, Modifier... modifiers) {
         this.id = id;
@@ -37,7 +48,7 @@ public abstract class GildType {
     }
 
     public ToolMaterial getModifiedMaterial(ToolMaterial baseMaterial) {
-        if (this.modifiers.isEmpty()) return baseMaterial;
+        if (this.modifiers.isEmpty() || !this.shouldModifyBaseMaterial()) return baseMaterial;
         
         int modifiedDurability = baseMaterial.getDurability();
         float modifiedMiningSpeedMultiplier = baseMaterial.getMiningSpeedMultiplier();
@@ -46,17 +57,25 @@ public abstract class GildType {
         int modifiedEnchantability = baseMaterial.getEnchantability();
 
         for (Modifier modifier : this.modifiers) {
-            BiFunction<Float, Float, Float> function = modifier.function();
             switch (modifier.type) {
-                case DURABILITY -> modifiedDurability = Math.round(function.apply((float)modifiedDurability, modifier.modifier));
-                case MINING_SPEED -> modifiedMiningSpeedMultiplier = function.apply(modifiedMiningSpeedMultiplier, modifier.modifier);
-                case ATTACK_DAMAGE -> modifiedAttackDamage = function.apply(modifiedAttackDamage, modifier.modifier);
-                case MINING_LEVEL -> modifiedMiningLevel = Math.round(function.apply((float)modifiedMiningLevel, modifier.modifier));
-                case ENCHANTABILITY -> modifiedEnchantability = Math.round(function.apply((float)modifiedEnchantability, modifier.modifier));
+                case DURABILITY -> modifiedDurability = modifier.apply(modifiedDurability);
+                case MINING_SPEED -> modifiedMiningSpeedMultiplier = modifier.apply(modifiedMiningSpeedMultiplier);
+                case ATTACK_DAMAGE -> modifiedAttackDamage = modifier.apply(modifiedAttackDamage);
+                case MINING_LEVEL -> modifiedMiningLevel = modifier.apply(modifiedMiningLevel);
+                case ENCHANTABILITY -> modifiedEnchantability = modifier.apply(modifiedEnchantability);
             }
         }
 
         return new ModifiedToolMaterial(modifiedMiningLevel, modifiedDurability, modifiedMiningSpeedMultiplier, modifiedAttackDamage, modifiedEnchantability, baseMaterial.getRepairIngredient());
+    }
+
+    public double getModifiedAttackSpeed(ToolItem baseItem) {
+        double attackSpeed = baseItem.getAttributeModifiers(EquipmentSlot.MAINHAND).get(EntityAttributes.GENERIC_ATTACK_SPEED).stream().mapToDouble(EntityAttributeModifier::getValue).sum();
+        for (Modifier modifier : this.modifiers) {
+            if (modifier.type.equals(ModifierType.ATTACK_SPEED)) attackSpeed = modifier.apply((float) attackSpeed);
+            attackSpeed = Math.round(attackSpeed * 10) / 10.0;
+        }
+        return attackSpeed;
     }
 
     public ToolMaterial getModifiedMaterial(ToolItem item) {
@@ -75,6 +94,13 @@ public abstract class GildType {
         return this.id;
     }
 
+    private boolean shouldModifyBaseMaterial() {
+        for (Modifier modifier : this.modifiers) {
+            if (modifier.type.modifiesBaseMaterial) return true;
+        }
+        return false;
+    }
+
     @Override
     public final boolean equals(Object obj) {
         return obj instanceof GildType gildType && gildType.getId().equals(id);
@@ -85,7 +111,18 @@ public abstract class GildType {
         MINING_SPEED,
         ATTACK_DAMAGE,
         MINING_LEVEL,
-        ENCHANTABILITY
+        ENCHANTABILITY,
+        ATTACK_SPEED(false);
+
+        private boolean modifiesBaseMaterial;
+
+        ModifierType(boolean modifiesBaseMaterial) {
+            this.modifiesBaseMaterial = modifiesBaseMaterial;
+        }
+
+        ModifierType() {
+            this.modifiesBaseMaterial = true;
+        }
     }
 
     public static class ModifiedToolMaterial implements ToolMaterial {

@@ -25,12 +25,7 @@ public class GildTypes {
     private static final BiFunction<Float, Float, Float> ADD = Float::sum;
     private static final BiFunction<Float, Float, Float> MULTIPLY = (attribute, modifier) -> attribute * modifier;
 
-    public static final GildType AMETHYST = new GildType(idOf("amethyst"), 0x9A5CC6, new GildType.Modifier(GildType.ModifierType.MINING_SPEED, 1, ADD)){
-        @Override
-        public void emitBlockBreakingEffects(World world, PlayerEntity player, BlockPos pos, BlockState state, ItemStack tool) {
-            world.playSound(null, pos, SoundEvents.BLOCK_AMETHYST_BLOCK_CHIME, SoundCategory.BLOCKS, 0.6F, world.getRandom().nextFloat() + 0.5F);
-        }
-    };
+    public static final GildType AMETHYST = new GildType(idOf("amethyst"), 0x9A5CC6, new GildType.Modifier(GildType.ModifierType.MINING_SPEED, 1, ADD), new GildType.Modifier(GildType.ModifierType.ATTACK_SPEED, 0.8F, MULTIPLY)){};
     public static final GildType COPPER = new GildType(idOf("copper"), 0xB4684D, new GildType.Modifier(GildType.ModifierType.DURABILITY, 1.5F, MULTIPLY)){};
     public static final GildType EMERALD = new GildType(idOf("emerald"), 0x11A036, new GildType.Modifier(GildType.ModifierType.ENCHANTABILITY, 1.5F, MULTIPLY)){
         @Override
@@ -75,5 +70,4 @@ public class GildTypes {
         }
     };
     public static final GildType NONE = new GildType(idOf("none"), 0xFFFFFF){};
-    
 }

@@ -3,6 +3,10 @@
     "advancements.virtual_additions.adventure.fill_bucket_acid.description": "Fill a Bucket with acid",
     "advancements.virtual_additions.adventure.stand_in_spotlight.title": "Stage Setter",
     "advancements.virtual_additions.adventure.stand_in_spotlight.description": "Stand directly in the light of a Spotlight",
+    "advancements.virtual_additions.adventure.craft_climbing_rope.title": "Down We Go",
+    "advancements.virtual_additions.adventure.craft_climbing_rope.description": "Craft some Climbing Ropes",
+    "advancements.virtual_additions.adventure.fire_climbing_rope_from_crossbow.title": "Up We Go",
+    "advancements.virtual_additions.adventure.fire_climbing_rope_from_crossbow.description": "Fire a Climbing Rope out of a Crossbow",
     "advancements.virtual_additions.end.mine_iolite.title": "Grape-Flavored Gems",
     "advancements.virtual_additions.end.mine_iolite.description": "Obtain Iolite from the outer end islands",
     "advancements.virtual_additions.end.use_teleporter.title": "What Cat?",
@@ -10,9 +14,11 @@
     "advancements.virtual_additions.end.use_entanglement_drive.title": "The Quantum Era",
     "advancements.virtual_additions.end.use_entanglement_drive.description": "Activate an Entanglement Drive",
     "advancements.virtual_additions.story.smelt_steel.title": "Steel Thy Pickaxe!",
-    "advancements.virtual_additions.story.smelt_steel.description": "Acquire Steel",
-    "advancements.virtual_additions.story.gild_tool.title": "Tinkering with Tools",
-    "advancements.virtual_additions.story.gild_tool.description": "Craft a gilded tool at a Smithing Table",
+    "advancements.virtual_additions.story.smelt_steel.description": "Smelt a Steel Ingot in a Blast Furnace",
+    "advancements.virtual_additions.story.gild_tool.title": "Specialized Equipment",
+    "advancements.virtual_additions.story.gild_tool.description": "Craft a Gilded Tool at a Smithing Table",
+    "advancements.virtual_additions.story.apply_all_gilds.title": "Tinkering with Tools",
+    "advancements.virtual_additions.story.apply_all_gilds.description": "Apply every Gild Type to every Category of Tool at least once",
 
     "block.virtual_additions.climbing_rope_anchor": "Climbing Rope Anchor",
     "block.virtual_additions.climbing_rope": "Climbing Rope",
@@ -105,6 +111,8 @@
     "block.virtual_additions.iolite_ore": "Iolite Ore",
     "block.virtual_additions.iolite_block": "Block of Iolite",
     "block.virtual_additions.warp_anchor": "Warp Anchor",
+    "block.virtual_additions.warp_anchor.desc1": "Interact with Warp Tether:",
+    "block.virtual_additions.warp_anchor.desc2": "Sets Tether Destination",
     "block.virtual_additions.warp_tether": "Warp Tether",
     "block.virtual_additions.entanglement_drive": "Entanglement Drive",
 
@@ -203,9 +211,9 @@
     "upgrade.virtual_additions.tool_gild": "Tool Upgrade",
 
     "item.virtual_additions.smithing_template.tool_gild.applies_to": "Tools",
-    "item.virtual_additions.smithing_template.tool_gild.ingredients": "Copper, Amethyst, Quartz, Emerald",
+    "item.virtual_additions.smithing_template.tool_gild.ingredients": "Tool Gild Materials",
     "item.virtual_additions.smithing_template.tool_gild.base_slot_description": "Put any Iron or better tool here",
-    "item.virtual_additions.smithing_template.tool_gild.additions_slot_description": "Put a Copper Ingot, Amethyst Shard, Nether Quartz, or Emerald here",
+    "item.virtual_additions.smithing_template.tool_gild.additions_slot_description": "Put a Gild Material here",
 
     "trim_material.virtual_additions.steel": "Steel Material",
     "trim_material.virtual_additions.iolite": "Iolite Material"

@@ -8,6 +8,7 @@ import net.minecraft.item.ToolMaterial;
 public interface GildedToolItem{
 
     ToolMaterial getBaseMaterial();
+
     GildType getGildType();
 
     static GildType getGildType(ItemStack stack) {

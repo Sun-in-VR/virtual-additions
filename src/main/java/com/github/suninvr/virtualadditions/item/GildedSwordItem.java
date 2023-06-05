@@ -1,13 +1,16 @@
 package com.github.suninvr.virtualadditions.item;
 
 import com.github.suninvr.virtualadditions.item.interfaces.GildedToolItem;
+import com.github.suninvr.virtualadditions.util.AppliedPotionHelper;
 import net.minecraft.client.item.TooltipContext;
 import net.minecraft.entity.EquipmentSlot;
 import net.minecraft.entity.attribute.EntityAttributeModifier;
 import net.minecraft.entity.attribute.EntityAttributes;
 import net.minecraft.item.*;
+import net.minecraft.screen.ScreenTexts;
 import net.minecraft.text.Style;
 import net.minecraft.text.Text;
+import net.minecraft.util.Formatting;
 import net.minecraft.world.World;
 import org.jetbrains.annotations.Nullable;
 
@@ -18,7 +21,8 @@ public class GildedSwordItem extends SwordItem implements GildedToolItem {
     private final ToolMaterial toolMaterial;
     private final ToolMaterial baseMaterial;
     private final Item baseItem;
-    private final Style textStyle;
+    private static final Text desc1 = Text.translatable("item.minecraft.smithing_template.upgrade").formatted(Formatting.GRAY);
+    private final Text desc2;
 
     public GildedSwordItem(GildType gildType, SwordItem baseItem, Settings settings) {
         super(gildType.getModifiedMaterial(baseItem), (int) (baseItem.getAttackDamage() - baseItem.getMaterial().getAttackDamage()), (float) getAttackSpeed(baseItem, gildType), settings);
@@ -26,13 +30,11 @@ public class GildedSwordItem extends SwordItem implements GildedToolItem {
         this.toolMaterial = gildType.getModifiedMaterial(baseItem);
         this.baseMaterial = baseItem.getMaterial();
         this.baseItem = baseItem;
-        this.textStyle = Style.EMPTY.withColor(this.gildType.getColor());
+        this.desc2 = ScreenTexts.space().append(Text.translatable(this.gildType.buildTooltipTranslationKey()).setStyle(Style.EMPTY.withColor(this.gildType.getColor())));
     }
 
     private static double getAttackSpeed(ToolItem baseItem, GildType gildType) {
-        double attackSpeed = baseItem.getAttributeModifiers(EquipmentSlot.MAINHAND).get(EntityAttributes.GENERIC_ATTACK_SPEED).stream().mapToDouble(EntityAttributeModifier::getValue).sum();
-        if (gildType == GildTypes.AMETHYST) attackSpeed *= 0.75;
-        return attackSpeed;
+        return gildType.getModifiedAttackSpeed(baseItem);
     }
 
     @Override
@@ -51,7 +53,8 @@ public class GildedSwordItem extends SwordItem implements GildedToolItem {
 
     @Override
     public void appendTooltip(ItemStack stack, @Nullable World world, List<Text> tooltip, TooltipContext context) {
-        if (textStyle != null) tooltip.add(Text.translatable(this.gildType.buildTooltipTranslationKey()).setStyle(textStyle));
+        tooltip.add(desc1);
+        tooltip.add(this.desc2);
         super.appendTooltip(stack, world, tooltip, context);
     }
 
