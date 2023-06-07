@@ -18,6 +18,7 @@ import net.minecraft.block.DispenserBlock;
 import net.minecraft.block.dispenser.ItemDispenserBehavior;
 import net.minecraft.block.dispenser.ProjectileDispenserBehavior;
 import net.minecraft.enchantment.Enchantments;
+import net.minecraft.entity.EntityType;
 import net.minecraft.entity.projectile.PersistentProjectileEntity;
 import net.minecraft.entity.projectile.ProjectileEntity;
 import net.minecraft.item.*;
@@ -26,6 +27,7 @@ import net.minecraft.loot.LootTables;
 import net.minecraft.loot.condition.InvertedLootCondition;
 import net.minecraft.loot.condition.MatchToolLootCondition;
 import net.minecraft.loot.condition.RandomChanceLootCondition;
+import net.minecraft.loot.condition.RandomChanceWithLootingLootCondition;
 import net.minecraft.loot.entry.ItemEntry;
 import net.minecraft.loot.function.ApplyBonusLootFunction;
 import net.minecraft.loot.function.ExplosionDecayLootFunction;
@@ -509,6 +511,15 @@ public class VAItems {
                 tableBuilder.pool(builder);
             }
         }); // End City Chest
+        LootTableEvents.MODIFY.register( (resourceManager, lootManager, id, tableBuilder, source) -> {
+            if (!source.isBuiltin()) return;
+            if (EntityType.ZOMBIE.getLootTableId().equals(id)) {
+                LootPool.Builder builder = LootPool.builder()
+                        .with(ItemEntry.builder(CORN).weight(1))
+                        .conditionally(RandomChanceWithLootingLootCondition.builder(0.025F, 0.01F));
+                tableBuilder.pool(builder);
+            }
+        }); // Zombie Loot
 
     }
     protected static void initBrewingRecipes() {
