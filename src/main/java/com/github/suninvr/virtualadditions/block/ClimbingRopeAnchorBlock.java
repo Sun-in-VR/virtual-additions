@@ -6,7 +6,6 @@ import com.github.suninvr.virtualadditions.registry.VASoundEvents;
 import net.minecraft.block.*;
 import net.minecraft.block.entity.BlockEntity;
 import net.minecraft.block.enums.BlockHalf;
-import net.minecraft.block.piston.PistonBehavior;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.fluid.FluidState;
@@ -22,7 +21,6 @@ import net.minecraft.state.property.BooleanProperty;
 import net.minecraft.state.property.DirectionProperty;
 import net.minecraft.state.property.EnumProperty;
 import net.minecraft.state.property.Properties;
-import net.minecraft.util.StringIdentifiable;
 import net.minecraft.util.function.BooleanBiFunction;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Direction;
@@ -34,8 +32,7 @@ import net.minecraft.world.WorldView;
 import net.minecraft.world.event.GameEvent;
 import org.jetbrains.annotations.Nullable;
 
-import java.util.Locale;
-
+@SuppressWarnings("deprecation")
 public class ClimbingRopeAnchorBlock extends Block implements Waterloggable {
     public static final DirectionProperty FACING = Properties.HOPPER_FACING;
     public static final BooleanProperty WATERLOGGED = Properties.WATERLOGGED;
@@ -101,10 +98,6 @@ public class ClimbingRopeAnchorBlock extends Block implements Waterloggable {
             });
             state.onStacksDropped(serverWorld, pos, stack, true);
         }
-    }
-
-    public PistonBehavior getPistonBehavior(BlockState state) {
-        return PistonBehavior.DESTROY;
     }
 
     @Override

@@ -1,6 +1,7 @@
 package com.github.suninvr.virtualadditions.mixin;
 
-import com.github.suninvr.virtualadditions.item.enums.GildType;
+import com.github.suninvr.virtualadditions.item.GildType;
+import com.github.suninvr.virtualadditions.item.GildTypes;
 import com.github.suninvr.virtualadditions.item.interfaces.GildedToolItem;
 import net.minecraft.block.BlockState;
 import net.minecraft.client.MinecraftClient;
@@ -37,8 +38,9 @@ public abstract class ClientPlayerInteractionManagerMixin {
     private void virtualAdditions$changeBlockBreakingCooldown(ClientPlayerInteractionManager interactionManager, int x) {
         if (x == 5 && !(client.player == null) && !(client.world == null) && !getCurrentGameMode().equals(GameMode.CREATIVE)) {
             ItemStack heldStack = client.player.getMainHandStack();
-            if (heldStack.isSuitableFor(this.brokenState)) {
-                int y = (GildedToolItem.getGildType(heldStack).equals(GildType.AMETHYST) ? 2 : 0) + Math.max(0, EnchantmentHelper.getLevel(Enchantments.EFFICIENCY, heldStack) - 3) + (client.player.hasStatusEffect(StatusEffects.HASTE) ? 1 : 0);
+            GildType gild = GildedToolItem.getGildType(heldStack);
+            if (heldStack.isSuitableFor(this.brokenState) && !gild.equals(GildTypes.SCULK)) {
+                int y = (gild.equals(GildTypes.AMETHYST) ? 2 : 0) + Math.max(0, EnchantmentHelper.getLevel(Enchantments.EFFICIENCY, heldStack) - 3) + (client.player.hasStatusEffect(StatusEffects.HASTE) ? 1 : 0);
                 x = Math.max(0, x - y);
             }
         }

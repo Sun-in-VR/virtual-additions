@@ -1,0 +1,25 @@
+{
+  "criteria": {
+    "inventory": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "virtual_additions:polished_hornfels"
+            ]
+          }
+        ]
+      }
+    }
+  },
+  "rewards": {
+    "recipes": [
+      "virtual_additions:crafting_shaped/polished_hornfels_stairs",
+      "virtual_additions:cutting/polished_hornfels_stairs_from_polished_hornfels",
+      "virtual_additions:crafting_shaped/polished_hornfels_slab",
+      "virtual_additions:cutting/polished_hornfels_slab_from_polished_hornfels",
+      "virtual_additions:crafting_shaped/hornfels_tiles"
+    ]
+  }
+}

@@ -74,6 +74,15 @@
       "virtual_additions:entity/lumwasp/hurt4"
     ]
   },
+  "entity.lumwasp.death": {
+    "subtitle": "subtitles.entity.lumwasp.death",
+    "sounds": [
+      "virtual_additions:entity/lumwasp/hurt1",
+      "virtual_additions:entity/lumwasp/hurt2",
+      "virtual_additions:entity/lumwasp/hurt3",
+      "virtual_additions:entity/lumwasp/hurt4"
+    ]
+  },
   "item.bucket.empty_acid": {
     "subtitle": "subtitles.item.bucket.empty",
     "sounds": [
@@ -98,12 +107,60 @@
       "virtual_additions:block/warp_pad/warp3"
     ]
   },
+  "block.warp_tether.fail": {
+    "subtitle": "subtitles.block.warp_tether.fail",
+    "sounds": [
+      "block/respawn_anchor/deplete1",
+      "block/respawn_anchor/deplete2"
+    ]
+  },
+  "block.warp_tether.recharge": {
+    "subtitle": "subtitles.block.warp_tether.recharge",
+    "sounds": [
+      "block/respawn_anchor/ambient1",
+      "block/respawn_anchor/ambient2",
+      "block/respawn_anchor/ambient3"
+    ]
+  },
   "block.warp_anchor.warp": {
     "subtitle": "subtitles.block.warp_anchor.warp",
     "sounds": [
       "virtual_additions:block/warp_pad/warp1",
       "virtual_additions:block/warp_pad/warp2",
       "virtual_additions:block/warp_pad/warp3"
+    ]
+  },
+  "block.warp_anchor.use": {
+    "subtitle": "subtitles.block.warp_anchor.use",
+    "sounds": [
+      "block/end_portal/eyeplace1",
+      "block/end_portal/eyeplace2",
+      "block/end_portal/eyeplace3"
+    ]
+  },
+  "block.entanglement_drive.use": {
+    "subtitle": "subtitles.block.entanglement_drive.use",
+    "sounds": [
+      "block/lodestone/lock1",
+      "block/lodestone/lock2"
+    ]
+  },
+  "block.steel_door.shutter_open": {
+    "subtitle": "subtitles.block.steel_door.shutter_open",
+    "sounds": [
+      "block/iron_trapdoor/open1",
+      "block/iron_trapdoor/open2",
+      "block/iron_trapdoor/open3",
+      "block/iron_trapdoor/open4"
+    ]
+  },
+  "block.steel_door.shutter_close": {
+    "subtitle": "subtitles.block.steel_door.shutter_close",
+    "sounds": [
+      "block/iron_trapdoor/close1",
+      "block/iron_trapdoor/close2",
+      "block/iron_trapdoor/close3",
+      "block/iron_trapdoor/close4"
     ]
   }
 }

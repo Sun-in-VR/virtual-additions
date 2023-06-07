@@ -1,0 +1,21 @@
+{
+  "criteria": {
+    "inventory": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "virtual_additions:silkbulb"
+            ]
+          }
+        ]
+      }
+    }
+  },
+  "rewards": {
+    "recipes": [
+      "virtual_additions:crafting_shaped/webbed_silk"
+    ]
+  }
+}

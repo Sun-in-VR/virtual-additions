@@ -1,0 +1,24 @@
+{
+  "criteria": {
+    "inventory": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "virtual_additions:cut_steel"
+            ]
+          }
+        ]
+      }
+    }
+  },
+  "rewards": {
+    "recipes": [
+      "virtual_additions:crafting_shaped/cut_steel_stairs",
+      "virtual_additions:cutting/cut_steel_stairs",
+      "virtual_additions:crafting_shaped/cut_steel_slab",
+      "virtual_additions:cutting/cut_steel_slab"
+    ]
+  }
+}

@@ -1,0 +1,17 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "b  ",
+    "bb ",
+    "bbb"
+  ],
+  "key": {
+    "b": {
+      "item": "virtual_additions:blueschist_bricks"
+    }
+  },
+  "result": {
+    "item": "virtual_additions:blueschist_brick_stairs",
+    "count": 4
+  }
+}

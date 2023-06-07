@@ -6,7 +6,7 @@
         "items": [
           {
             "items": [
-              "virtual_additions:steel_ingot"
+              "virtual_additions:steel_block"
             ]
           }
         ]
@@ -15,7 +15,11 @@
   },
   "rewards": {
     "recipes": [
-      "virtual_additions:crafting_shapeless/steel_ingot"
+      "virtual_additions:crafting_shapeless/steel_ingot",
+      "virtual_additions:crafting_shaped/cut_steel",
+      "virtual_additions:cutting/cut_steel",
+      "virtual_additions:cutting/cut_steel_stairs_from_steel_block",
+      "virtual_additions:cutting/cut_steel_slab_from_steel_block"
     ]
   }
 }

@@ -1,6 +1,10 @@
 package com.github.suninvr.virtualadditions.registry;
 
+import com.github.suninvr.virtualadditions.item.GildType;
+import com.github.suninvr.virtualadditions.item.GildTypes;
+import com.github.suninvr.virtualadditions.item.interfaces.GildedToolItem;
 import net.fabricmc.fabric.api.event.player.AttackEntityCallback;
+import net.fabricmc.fabric.api.event.player.PlayerBlockBreakEvents;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.effect.StatusEffectInstance;
 import net.minecraft.item.ItemStack;
@@ -8,6 +12,7 @@ import net.minecraft.nbt.NbtCompound;
 import net.minecraft.potion.PotionUtil;
 import net.minecraft.potion.Potions;
 import net.minecraft.util.ActionResult;
+import net.minecraft.util.Hand;
 
 import java.util.List;
 
@@ -18,11 +23,11 @@ public class VACallbacks{
         //Applied Potion hit effects callback
         AttackEntityCallback.EVENT.register( ((player, world, hand, entity, hitResult) -> {
             if (player.isSpectator()) return ActionResult.PASS;
-            if(!entity.isAlive()) return ActionResult.PASS;
+            if (!entity.isAlive()) return ActionResult.PASS;
             ItemStack stack = player.getStackInHand(hand);
             if (stack.isEmpty()) return ActionResult.PASS;
             if (!stack.hasNbt()) return ActionResult.PASS;
-            NbtCompound appliedPotionData = stack.getNbt().getCompound("AppliedPotion");
+            @SuppressWarnings("DataFlowIssue") NbtCompound appliedPotionData = stack.getNbt().getCompound("AppliedPotion");
 
             if (getAppliedPotion(stack) != Potions.EMPTY || appliedPotionData.contains("CustomPotionEffects")) {
                 int remainingUses = getAppliedPotionUses(stack);
@@ -45,6 +50,19 @@ public class VACallbacks{
             }
             return ActionResult.PASS;
         } ) );
+
+        PlayerBlockBreakEvents.BEFORE.register( (world, player, pos, state, blockEntity) -> {
+            if (player.isSpectator()) return true;
+            if (player.isCreative()) return true;
+            ItemStack tool = player.getStackInHand(Hand.MAIN_HAND);
+            GildType gild = GildedToolItem.getGildType(tool);
+            if (gild.equals(GildTypes.NONE)) return true;
+            if (gild.isGildEffective(world, player, pos, state, tool)) {
+                gild.emitBlockBreakingEffects(world, pos, tool);
+                return gild.onBlockBroken(world, player, pos, state, tool);
+            }
+            return true;
+        } );
 
     }
 }

@@ -1,9 +1,15 @@
 package com.github.suninvr.virtualadditions.block.entity;
 
+import com.github.suninvr.virtualadditions.block.EntanglementDriveBlock;
+import com.github.suninvr.virtualadditions.registry.VABlockEntities;
+import com.github.suninvr.virtualadditions.registry.VABlocks;
+import com.github.suninvr.virtualadditions.registry.VAStatusEffects;
 import com.github.suninvr.virtualadditions.screen.EntanglementDriveScreenHandler;
 import net.fabricmc.fabric.api.screenhandler.v1.ExtendedScreenHandlerFactory;
 import net.minecraft.block.BlockState;
+import net.minecraft.block.Blocks;
 import net.minecraft.block.entity.BlockEntity;
+import net.minecraft.entity.effect.StatusEffectInstance;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.PlayerInventory;
 import net.minecraft.inventory.Inventory;
@@ -12,26 +18,26 @@ import net.minecraft.inventory.SimpleInventory;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NbtCompound;
 import net.minecraft.network.PacketByteBuf;
-import net.minecraft.screen.*;
-import net.minecraft.screen.slot.Slot;
+import net.minecraft.screen.ScreenHandler;
+import net.minecraft.screen.ScreenHandlerContext;
 import net.minecraft.server.network.ServerPlayerEntity;
 import net.minecraft.text.Text;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Direction;
 import net.minecraft.world.World;
-import com.github.suninvr.virtualadditions.registry.VABlockEntities;
-import com.github.suninvr.virtualadditions.registry.VABlocks;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.Optional;
 import java.util.UUID;
 
+@SuppressWarnings({"unused", "DataFlowIssue"})
 public class EntanglementDriveBlockEntity extends BlockEntity implements ExtendedScreenHandlerFactory, SidedInventory {
     private static final Text TITLE = Text.translatable("container.virtual_additions.entanglement_drive");
     private int slotId;
     private int slotIndex;
     private UUID playerId;
-    private final Inventory dummyInventory = new DummyInventory();
+    private ItemStack cachedStack;
+    private static final Inventory dummyInventory = new DummyInventory();
     private static final UUID nullId = UUID.fromString("0-0-0-0-0");
 
     public EntanglementDriveBlockEntity(BlockPos pos, BlockState state) {
@@ -94,7 +100,11 @@ public class EntanglementDriveBlockEntity extends BlockEntity implements Extende
     }
 
     public static <E extends BlockEntity> void tick(World world, BlockPos pos, BlockState state, EntanglementDriveBlockEntity blockEntity) {
-        world.updateComparators(pos, VABlocks.ENTANGLEMENT_DRIVE);
+        ItemStack stack = blockEntity.getStack();
+        if (blockEntity.cachedStack != stack) {
+            world.updateComparators(pos, VABlocks.ENTANGLEMENT_DRIVE);
+            blockEntity.cachedStack = stack;
+        }
     }
 
     public SidedInventory getInventory() {
@@ -143,54 +153,71 @@ public class EntanglementDriveBlockEntity extends BlockEntity implements Extende
 
     @Override
     public boolean isEmpty() {
-        if (this.getPlayerInventory() == null) return dummyInventory.isEmpty();
+        if (!this.canAccessPlayerInventory()) return dummyInventory.isEmpty();
         return this.getPlayerInventory().getStack(this.getSlotIndex()) == ItemStack.EMPTY;
+    }
+
+    public ItemStack getStack() {
+        return this.getStack(0);
     }
 
     @Override
     public ItemStack getStack(int slot) {
-        if (this.getPlayerInventory() == null) return dummyInventory.getStack(slot);
+        if (!this.canAccessPlayerInventory()) return dummyInventory.getStack(slot);
         return this.getPlayerInventory().getStack(this.getSlotIndex());
     }
 
     @Override
     public ItemStack removeStack(int slot, int amount) {
-        if (this.getPlayerInventory() == null) return dummyInventory.removeStack(slot);
+        if (!this.canModifyPlayerInventory()) return dummyInventory.removeStack(slot, amount);
         ItemStack stack = this.getPlayerInventory().removeStack(this.getSlotIndex(), amount);
+        this.cachedStack = stack;
         this.markDirty();
         return stack;
     }
 
     @Override
     public ItemStack removeStack(int slot) {
-        if (this.getPlayerInventory() == null) return ItemStack.EMPTY;
+        if (!this.canModifyPlayerInventory()) return ItemStack.EMPTY;
         ItemStack stack = this.getPlayerInventory().removeStack(this.getSlotIndex());
+        this.cachedStack = stack;
         this.markDirty();
         return stack;
     }
 
     @Override
     public void setStack(int slot, ItemStack stack) {
-        if (this.getPlayerInventory() == null) return;
+        if (!this.canModifyPlayerInventory()) return;
         this.getPlayerInventory().setStack(this.getSlotIndex(), stack);
+        this.cachedStack = stack;
         this.markDirty();
     }
 
     @Override
     public boolean canPlayerUse(PlayerEntity player) {
-        if (this.getPlayerInventory() == null) return dummyInventory.canPlayerUse(player);
+        if (!this.canAccessPlayerInventory()) return dummyInventory.canPlayerUse(player);
         return this.getPlayerInventory().canPlayerUse(player);
     }
 
     @Override
     public void clear() {
-        if (this.getPlayerInventory() == null) return;
+        if (!this.canModifyPlayerInventory()) return;
         this.getPlayerInventory().removeStack(this.getSlotIndex());
+        this.cachedStack = getStack();
         this.markDirty();
     }
 
     private boolean canModifyPlayerInventory() {
-        return this.getPlayer() != null && !this.getPlayer().isDead() && !this.getPlayer().isSpectator();
+        if (!canAccessPlayerInventory()) return false;
+        StatusEffectInstance effect = this.getPlayer().getStatusEffect(VAStatusEffects.IOLITE_INTERFERENCE);
+        boolean bl = effect == null || effect.getAmplifier() < 1;
+        return !this.getPlayer().isDead() && !this.getPlayer().isSpectator() && bl;
+    }
+
+    @SuppressWarnings("BooleanMethodIsAlwaysInverted")
+    private boolean canAccessPlayerInventory() {
+        BlockState state = this.getWorld() != null ? this.getWorld().getBlockState(this.getPos()) : Blocks.AIR.getDefaultState();
+        return this.getPlayerInventory() != null && state.isOf(VABlocks.ENTANGLEMENT_DRIVE) && !state.get(EntanglementDriveBlock.POWERED);
     }
 
     static class DummyInventory extends SimpleInventory implements SidedInventory {

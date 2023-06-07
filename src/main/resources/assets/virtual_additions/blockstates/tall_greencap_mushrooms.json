@@ -1,0 +1,14 @@
+{
+  "variants": {
+    "half=upper": [
+      {
+        "model": "virtual_additions:block/tall_greencap_mushrooms_top"
+      }
+    ],
+    "half=lower": [
+      {
+        "model": "virtual_additions:block/tall_greencap_mushrooms_bottom"
+      }
+    ]
+  }
+}

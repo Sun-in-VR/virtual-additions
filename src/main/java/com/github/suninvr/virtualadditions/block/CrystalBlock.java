@@ -2,11 +2,8 @@ package com.github.suninvr.virtualadditions.block;
 
 import com.github.suninvr.virtualadditions.block.enums.CrystalShape;
 import com.github.suninvr.virtualadditions.registry.VABlockTags;
-import com.github.suninvr.virtualadditions.registry.VABlocks;
 import net.minecraft.block.*;
-import net.minecraft.block.piston.PistonBehavior;
 import net.minecraft.entity.Entity;
-import net.minecraft.entity.damage.DamageSource;
 import net.minecraft.fluid.FluidState;
 import net.minecraft.fluid.Fluids;
 import net.minecraft.item.ItemPlacementContext;
@@ -24,6 +21,7 @@ import net.minecraft.util.shape.VoxelShape;
 import net.minecraft.world.*;
 import org.jetbrains.annotations.Nullable;
 
+@SuppressWarnings("deprecation")
 public class CrystalBlock extends Block implements Waterloggable {
     public static final EnumProperty<CrystalShape> SHAPE = EnumProperty.of("shape", CrystalShape.class);
     public static final DirectionProperty POINTING = Properties.FACING;
@@ -45,16 +43,6 @@ public class CrystalBlock extends Block implements Waterloggable {
                 .with(POINTING, Direction.UP)
                 .with(WATERLOGGED, false)
         );
-    }
-
-    public static OffsetType getOffsetType(BlockState blockState) {
-        Direction.Axis axis = blockState.get(POINTING).getAxis();
-        return axis == Direction.Axis.Y ? OffsetType.XZ : OffsetType.NONE;
-    }
-
-    @Override
-    public PistonBehavior getPistonBehavior(BlockState state) {
-        return PistonBehavior.DESTROY;
     }
 
     @Override

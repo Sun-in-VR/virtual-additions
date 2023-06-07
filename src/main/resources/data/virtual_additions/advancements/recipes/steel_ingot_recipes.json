@@ -16,6 +16,8 @@
   "rewards": {
     "recipes": [
       "virtual_additions:crafting_shaped/steel_block",
+      "virtual_additions:crafting_shaped/steel_door",
+      "virtual_additions:crafting_shaped/steel_trapdoor",
       "virtual_additions:crafting_shaped/steel_sword",
       "virtual_additions:crafting_shaped/steel_shovel",
       "virtual_additions:crafting_shaped/steel_pickaxe",
@@ -25,7 +27,8 @@
       "virtual_additions:crafting_shaped/steel_chestplate",
       "virtual_additions:crafting_shaped/steel_leggings",
       "virtual_additions:crafting_shaped/steel_boots",
-      "virtual_additions:crafting_shaped/steel_bomb"
+      "virtual_additions:crafting_shaped/steel_bomb",
+      "virtual_additions:crafting_shapeless/tool_gild_smithing_template"
     ]
   }
 }

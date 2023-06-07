@@ -1,0 +1,38 @@
+{
+  "display": {
+    "icon": {
+      "item": "virtual_additions:steel_ingot"
+    },
+    "title": {
+      "translate": "advancements.virtual_additions.story.smelt_steel.title"
+    },
+    "description": {
+      "translate": "advancements.virtual_additions.story.smelt_steel.description"
+    },
+    "frame": "task",
+    "show_toast": true,
+    "announce_to_chat": true,
+    "hidden": false
+  },
+  "parent": "minecraft:story/iron_tools",
+  "criteria": {
+    "steel_ingot": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "virtual_additions:steel_ingot"
+            ]
+          }
+        ]
+      }
+    }
+  },
+  "requirements": [
+    [
+      "steel_ingot"
+    ]
+  ],
+  "sends_telemetry_event": false
+}

@@ -1,6 +1,6 @@
 package com.github.suninvr.virtualadditions.mixin;
 
-import com.github.suninvr.virtualadditions.item.enums.GildType;
+import com.github.suninvr.virtualadditions.item.GildTypes;
 import com.github.suninvr.virtualadditions.item.interfaces.GildedToolItem;
 import net.minecraft.block.Block;
 import net.minecraft.enchantment.EnchantmentHelper;
@@ -21,7 +21,7 @@ public abstract class BlockMixin {
 
     @Inject(method = "dropExperienceWhenMined", at = @At("HEAD"), cancellable = true)
     void virtualAdditions$dropExtraExperienceWhenMined(ServerWorld world, BlockPos pos, ItemStack tool, IntProvider experience, CallbackInfo ci) {
-        if (!GildedToolItem.getGildType(tool).equals(GildType.EMERALD)) return;
+        if (!GildedToolItem.getGildType(tool).equals(GildTypes.EMERALD)) return;
         if (EnchantmentHelper.getLevel(Enchantments.SILK_TOUCH, tool) == 0) {
             int i = (int)Math.ceil(experience.get(world.random) * 1.6);
             if (i > 0) {

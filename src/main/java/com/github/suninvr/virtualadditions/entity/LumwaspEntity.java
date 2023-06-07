@@ -11,6 +11,7 @@ import net.minecraft.entity.ai.control.FlightMoveControl;
 import net.minecraft.entity.ai.goal.*;
 import net.minecraft.entity.ai.pathing.BirdNavigation;
 import net.minecraft.entity.ai.pathing.EntityNavigation;
+import net.minecraft.entity.ai.pathing.PathNode;
 import net.minecraft.entity.ai.pathing.PathNodeType;
 import net.minecraft.entity.attribute.DefaultAttributeContainer;
 import net.minecraft.entity.attribute.EntityAttributes;
@@ -26,7 +27,6 @@ import net.minecraft.sound.SoundEvents;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 import net.minecraft.world.WorldView;
-import org.jetbrains.annotations.Nullable;
 
 public class LumwaspEntity extends HostileEntity implements RangedAttackMob, Flutterer {
     public LumwaspEntity(EntityType<? extends HostileEntity> entityType, World world) {
@@ -54,22 +54,21 @@ public class LumwaspEntity extends HostileEntity implements RangedAttackMob, Flu
         int i = 0;
         this.playSound(SoundEvents.ENTITY_LLAMA_SPIT, 1.0F, 1.0F);
         while (i <= 2) {
-            AcidSpitEntity projectile = new AcidSpitEntity(this.world, this);
+            AcidSpitEntity projectile = new AcidSpitEntity(this.getWorld(), this);
             double d = target.getEyeY() - 1.100000023841858;
             double e = target.getX() - this.getX();
             double f = d - projectile.getY();
             double g = target.getZ() - this.getZ();
             double h = Math.sqrt(e * e + g * g) * 0.20000000298023224;
             projectile.setVelocity(e, f + h, g, 1.6F, 10.0F);
-            this.world.spawnEntity(projectile);
+            this.getWorld().spawnEntity(projectile);
             i++;
         }
     }
 
     @Override
     protected void initGoals() {
-        this.goalSelector.add(0, new AvoidSunlightGoal(this));
-        this.goalSelector.add(1, new EscapeSunlightGoal(this, 1.0D));
+        this.goalSelector.add(1, new AlwaysEscapeSunlightGoal(this, 1.2D));
         this.goalSelector.add(2, new MeleeCloseRangeGoal(this, 1.0D, 4, true));
         this.goalSelector.add(3, new ProjectileAttackGoal(this, 1.0D, 45, 8));
         this.goalSelector.add(4, new FlyGoal(this, 1.0D));
@@ -83,7 +82,27 @@ public class LumwaspEntity extends HostileEntity implements RangedAttackMob, Flu
 
     @Override
     protected EntityNavigation createNavigation(World world) {
-        BirdNavigation birdNavigation = new BirdNavigation(this, world);
+        BirdNavigation birdNavigation = new BirdNavigation(this, world) {
+            public boolean isValidPosition(BlockPos pos) {
+                return this.world.isSkyVisible(pos);
+            }
+
+            protected void adjustPath() {
+                super.adjustPath();
+                if (this.world.isSkyVisible(BlockPos.ofFloored(this.entity.getX(), this.entity.getY() + 0.5, this.entity.getZ()))) {
+                    return;
+                }
+                if (this.currentPath != null) {
+                    for (int i = 0; i < this.currentPath.getLength(); ++i) {
+                        PathNode pathNode = this.currentPath.getNode(i);
+                        if (this.world.isSkyVisible(new BlockPos(pathNode.x, pathNode.y, pathNode.z))) {
+                            this.currentPath.setLength(i);
+                            return;
+                        }
+                    }
+                }
+            }
+        };
         birdNavigation.setCanPathThroughDoors(false);
         birdNavigation.setCanSwim(false);
         birdNavigation.setCanEnterOpenDoors(true);
@@ -94,15 +113,19 @@ public class LumwaspEntity extends HostileEntity implements RangedAttackMob, Flu
         return EntityGroup.ARTHROPOD;
     }
 
-    @Nullable
-    @Override
-    protected SoundEvent getAmbientSound() {
-        return null;
-    }
-
     @Override
     protected SoundEvent getHurtSound(DamageSource source) {
         return VASoundEvents.ENTITY_LUMWASP_HURT;
+    }
+
+    @Override
+    protected SoundEvent getDeathSound() {
+        return VASoundEvents.ENTITY_LUMWASP_DEATH;
+    }
+
+    @Override
+    protected void playStepSound(BlockPos pos, BlockState state) {
+        this.playSound(SoundEvents.ENTITY_SPIDER_STEP, 0.15F, 1.0F);
     }
 
     @Override
@@ -125,7 +148,7 @@ public class LumwaspEntity extends HostileEntity implements RangedAttackMob, Flu
 
     @Override
     public boolean isInAir() {
-        return !this.onGround;
+        return !this.isOnGround();
     }
 
     @Override
@@ -133,7 +156,14 @@ public class LumwaspEntity extends HostileEntity implements RangedAttackMob, Flu
         return world.doesNotIntersectEntities(this);
     }
 
-    private class MeleeCloseRangeGoal extends MeleeAttackGoal {
+    @Override
+    protected void mobTick() {
+        if (this.isInsideWaterOrBubbleColumn()) {
+            this.damage(this.getDamageSources().drown(), 1.0F);
+        }
+    }
+
+    private static class MeleeCloseRangeGoal extends MeleeAttackGoal {
         private final int startRange;
         private final int continueRange;
         public MeleeCloseRangeGoal(PathAwareEntity mob, double speed, int range, boolean pauseWhenMobIdle) {
@@ -163,6 +193,28 @@ public class LumwaspEntity extends HostileEntity implements RangedAttackMob, Flu
 
         protected double getSquaredMaxAttackDistance(LivingEntity entity) {
             return 4.0F + entity.getWidth();
+        }
+    }
+    private static class AlwaysEscapeSunlightGoal extends EscapeSunlightGoal {
+
+        private final World world;
+
+        public AlwaysEscapeSunlightGoal(PathAwareEntity mob, double speed) {
+            super(mob, speed);
+            this.world = mob.getWorld();
+        }
+
+        @Override
+        public boolean canStart() {
+            if (this.mob.getTarget() != null) {
+                return false;
+            } else if (!this.world.isDay()) {
+                return false;
+            } else if (!this.world.isSkyVisible(this.mob.getBlockPos())) {
+                return false;
+            } else {
+                return this.targetShadedPos();
+            }
         }
     }
 }

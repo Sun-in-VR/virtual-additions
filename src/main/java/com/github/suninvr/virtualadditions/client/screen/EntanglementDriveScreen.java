@@ -6,13 +6,13 @@ import com.github.suninvr.virtualadditions.screen.EntanglementDriveScreenHandler
 import com.mojang.blaze3d.systems.RenderSystem;
 import net.fabricmc.fabric.api.client.networking.v1.ClientPlayNetworking;
 import net.fabricmc.fabric.api.networking.v1.PacketByteBufs;
+import net.minecraft.client.gui.DrawContext;
 import net.minecraft.client.gui.screen.ingame.HandledScreen;
 import net.minecraft.client.gui.screen.ingame.InventoryScreen;
 import net.minecraft.client.gui.screen.narration.NarrationMessageBuilder;
 import net.minecraft.client.gui.tooltip.Tooltip;
 import net.minecraft.client.gui.widget.PressableWidget;
 import net.minecraft.client.render.GameRenderer;
-import net.minecraft.client.util.math.MatrixStack;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.PlayerInventory;
 import net.minecraft.screen.slot.Slot;
@@ -26,7 +26,6 @@ public class EntanglementDriveScreen extends HandledScreen<EntanglementDriveScre
     public static final Identifier BACKGROUND_TEXTURE = VirtualAdditions.idOf("textures/gui/container/entanglement_drive.png");
     private static final Text SLOT_HINT = Text.translatable("container.virtual_additions.entanglement_drive.select_slot_hint");
     private static final Text PAYMENT_SLOT_HINT = Text.translatable("container.virtual_additions.entanglement_drive.payment_slot_hint");
-    private PlayerEntity player;
     private float mouseX;
     private float mouseY;
     private boolean samePlayer;
@@ -38,8 +37,8 @@ public class EntanglementDriveScreen extends HandledScreen<EntanglementDriveScre
 
     public EntanglementDriveScreen(EntanglementDriveScreenHandler handler, PlayerInventory inventory, Text title) {
         super(handler, inventory, title);
-        this.player = inventory.player;
-        this.playerId = this.player.getUuid();
+        PlayerEntity player = inventory.player;
+        this.playerId = player.getUuid();
     }
 
     @Override
@@ -53,19 +52,21 @@ public class EntanglementDriveScreen extends HandledScreen<EntanglementDriveScre
     }
 
     @Override
-    protected void drawBackground(MatrixStack matrices, float delta, int mouseX, int mouseY) {
+    protected void drawBackground(DrawContext context, float delta, int mouseX, int mouseY) {
         RenderSystem.setShader(GameRenderer::getPositionTexProgram);
         RenderSystem.setShaderTexture(0, BACKGROUND_TEXTURE);
         int i = this.x;
         int j = this.y;
-        this.drawTexture(matrices, i, j, 0, 0, this.backgroundWidth, this.backgroundHeight);
-        if (this.handler.isSelectingSlot() && this.handler.isSlotSelected()) this.drawTexture(matrices, i + selectedSlotX - 1, j + selectedSlotY - 1, 196, 0, 18, 18);
-        if (samePlayer) this.drawTexture(matrices, i + activeSlotX, j + activeSlotY, 178, 0, 18, 18);
-        InventoryScreen.drawEntity(matrices, i + 51, j + 75, 30, (float)(i + 51) - this.mouseX, (float)(j + 75 - 50) - this.mouseY, this.client.player);
+        context.drawTexture(BACKGROUND_TEXTURE, i, j, 0, 0, this.backgroundWidth, this.backgroundHeight);
+        if (this.handler.isSelectingSlot() && this.handler.isSlotSelected()) context.drawTexture(BACKGROUND_TEXTURE, i + selectedSlotX - 1, j + selectedSlotY - 1, 196, 0, 18, 18);
+        if (samePlayer) context.drawTexture(BACKGROUND_TEXTURE, i + activeSlotX, j + activeSlotY, 178, 0, 18, 18);
+        if (this.client != null && this.client.player != null) {
+            InventoryScreen.drawEntity(context, i + 51, j + 75, 30, (float)(i + 51) - this.mouseX, (float)(j + 75 - 50) - this.mouseY, this.client.player);
+        }
     }
 
-    protected void drawForeground(MatrixStack matrices, int mouseX, int mouseY) {
-        this.textRenderer.draw(matrices, this.title, (float)this.titleX, (float)this.titleY, 4210752);
+    protected void drawForeground(DrawContext context, int mouseX, int mouseY) {
+        context.drawText(this.textRenderer, this.title, this.titleX, this.titleY, 4210752, false);
     }
 
     @Override
@@ -90,27 +91,27 @@ public class EntanglementDriveScreen extends HandledScreen<EntanglementDriveScre
     }
 
     @Override
-    public void render(MatrixStack matrices, int mouseX, int mouseY, float delta) {
-        this.renderBackground(matrices);
-        super.render(matrices, mouseX, mouseY, delta);
-        this.drawMouseoverTooltip(matrices, mouseX, mouseY);
+    public void render(DrawContext context, int mouseX, int mouseY, float delta) {
+        this.renderBackground(context);
+        super.render(context, mouseX, mouseY, delta);
+        this.drawMouseoverTooltip(context, mouseX, mouseY);
         this.mouseX = (float)mouseX;
         this.mouseY = (float)mouseY;
     }
 
     @Override
-    protected void drawMouseoverTooltip(MatrixStack matrices, int x, int y) {
+    protected void drawMouseoverTooltip(DrawContext context, int x, int y) {
 
         int i = 0;
         boolean bl = this.focusedSlot != null;
         if (bl) i = this.focusedSlot.id;
 
         if ( bl && i == 41 && !this.handler.isSelectingSlot() ) {
-            this.renderTooltip(matrices, PAYMENT_SLOT_HINT, x, y);
+            context.drawTooltip(this.textRenderer, PAYMENT_SLOT_HINT, x, y);
         } else if ( bl && i != 41 && this.handler.getCursorStack().isEmpty() && this.handler.isSelectingSlot() ) {
-            this.renderTooltip(matrices, SLOT_HINT, x, y);
+            context.drawTooltip(this.textRenderer, SLOT_HINT, x, y);
         } else {
-            super.drawMouseoverTooltip(matrices, x, y);
+            super.drawMouseoverTooltip(context, x, y);
         }
     }
 
@@ -122,7 +123,7 @@ public class EntanglementDriveScreen extends HandledScreen<EntanglementDriveScre
             super(x, y, 18, 18, Text.empty());
         }
 
-        public void renderButton(MatrixStack matrices, int mouseX, int mouseY, float delta) {
+        public void renderButton(DrawContext context, int mouseX, int mouseY, float delta) {
             RenderSystem.setShader(GameRenderer::getPositionTexProgram);
             RenderSystem.setShaderTexture(0, BACKGROUND_TEXTURE);
 
@@ -136,7 +137,7 @@ public class EntanglementDriveScreen extends HandledScreen<EntanglementDriveScre
                 j += this.width;
             }
 
-            this.drawTexture(matrices, this.getX(), this.getY(), j, 18, this.width, this.height);
+            context.drawTexture(BACKGROUND_TEXTURE, this.getX(), this.getY(), j, 18, this.width, this.height);
         }
 
         @Override

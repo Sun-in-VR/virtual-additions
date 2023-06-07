@@ -1,6 +1,6 @@
 package com.github.suninvr.virtualadditions.block.entity;
 
-import com.github.suninvr.virtualadditions.block.WarpAnchorBlock;
+import com.github.suninvr.virtualadditions.block.WarpTetherBlock;
 import com.github.suninvr.virtualadditions.particle.IoliteRingParticleEffect;
 import com.github.suninvr.virtualadditions.registry.VABlockEntities;
 import com.github.suninvr.virtualadditions.registry.VAParticleTypes;
@@ -42,11 +42,11 @@ public class WarpTetherBlockEntity extends BlockEntity {
     }
 
     public static void tick(World world, BlockPos pos, BlockState state, WarpTetherBlockEntity blockEntity) {
-        if (state.get(WarpAnchorBlock.COOLDOWN)) return;
-        float i = pos.getX() + 0.5F;
-        float j = pos.getY();
-        float k = pos.getZ() + 0.5F;
-        if (world.getTime() % 8L == 0L) {
+        if (state.get(WarpTetherBlock.COOLDOWN)) return;
+        double i = pos.getX() + 0.5;
+        double j = pos.getY();
+        double k = pos.getZ() + 0.5;
+        if (world.getTime() % 4L == 0L) {
             world.addParticle(particle, i, j + 0.576, k, 0.0D, 0.0D, 0.0D);
         }
     }

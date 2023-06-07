@@ -93,5 +93,6 @@
     {
       "function": "minecraft:explosion_decay"
     }
-  ]
+  ],
+  "random_sequence": "virtual_additions:blocks/cotton"
 }

@@ -1,0 +1,16 @@
+{
+  "variants": {
+    "shape=single": {
+      "model": "virtual_additions:block/glowing_silk"
+    },
+    "shape=base": {
+      "model": "virtual_additions:block/glowing_silk_base"
+    },
+    "shape=end": {
+      "model": "virtual_additions:block/glowing_silk_end"
+    },
+    "shape=straight": {
+      "model": "virtual_additions:block/glowing_silk_straight"
+    }
+  }
+}

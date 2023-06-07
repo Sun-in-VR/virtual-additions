@@ -1,0 +1,30 @@
+{
+  "display": {
+    "icon": {
+      "item": "virtual_additions:entanglement_drive"
+    },
+    "title": {
+      "translate": "advancements.virtual_additions.end.use_entanglement_drive.title"
+    },
+    "description": {
+      "translate": "advancements.virtual_additions.end.use_entanglement_drive.description"
+    },
+    "frame": "goal",
+    "show_toast": true,
+    "announce_to_chat": true,
+    "hidden": false
+  },
+  "parent": "virtual_additions:end/mine_iolite",
+  "criteria": {
+    "use_entanglement_drive": {
+      "trigger": "virtual_additions:use_entanglement_drive",
+      "conditions": {}
+    }
+  },
+  "requirements": [
+    [
+      "use_entanglement_drive"
+    ]
+  ],
+  "sends_telemetry_event": false
+}

@@ -1,0 +1,31 @@
+{
+  "display": {
+    "icon": {
+      "item": "virtual_additions:climbing_rope"
+    },
+    "title": {
+      "translate": "advancements.virtual_additions.adventure.craft_climbing_rope.title"
+    },
+    "description": {
+      "translate": "advancements.virtual_additions.adventure.craft_climbing_rope.description"
+    },
+    "frame": "task",
+    "show_toast": true,
+    "announce_to_chat": true
+  },
+  "parent": "minecraft:adventure/root",
+  "criteria": {
+    "climbing_rope": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "virtual_additions:climbing_rope"
+            ]
+          }
+        ]
+      }
+    }
+  }
+}

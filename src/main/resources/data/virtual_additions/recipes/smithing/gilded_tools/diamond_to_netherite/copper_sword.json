@@ -1,5 +1,5 @@
 {
-  "type": "minecraft:smithing",
+  "type": "minecraft:smithing_transform",
   "base": {
     "item": "virtual_additions:copper_diamond_sword"
   },
@@ -8,5 +8,8 @@
   },
   "result": {
     "item": "virtual_additions:copper_netherite_sword"
+  },
+  "template": {
+    "item": "minecraft:netherite_upgrade_smithing_template"
   }
 }

@@ -1,0 +1,20 @@
+{
+    "type": "minecraft:crafting_shaped",
+    "pattern": [
+        "sss",
+        "sas",
+        "sss"
+    ],
+    "key": {
+        "a": {
+            "item": "virtual_additions:acid_bucket"
+        },
+        "s": {
+            "item": "virtual_additions:webbed_silk"
+        }
+    },
+    "result": {
+        "item": "virtual_additions:silkbulb",
+        "count": 4
+    }
+}

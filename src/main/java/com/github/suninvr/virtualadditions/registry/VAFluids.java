@@ -10,13 +10,14 @@ import net.minecraft.registry.tag.TagKey;
 
 import static com.github.suninvr.virtualadditions.VirtualAdditions.idOf;
 
+@SuppressWarnings("SameParameterValue")
 public class VAFluids {
     public static final TagKey<Fluid> ACID_TAG = tag("acid");
 
-    public static void init(){}
-
     public static final FlowableFluid FLOWING_ACID = Registry.register(Registries.FLUID, idOf("flowing_acid"), new AcidFluid.Flowing());
     public static final FlowableFluid ACID = Registry.register(Registries.FLUID, idOf("acid"), new AcidFluid.Still());
+
+    public static void init(){}
 
     private static TagKey<Fluid> tag(String id) {
         return TagKey.of(RegistryKeys.FLUID, idOf(id));

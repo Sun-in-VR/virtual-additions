@@ -1,6 +1,7 @@
 package com.github.suninvr.virtualadditions.client;
 
 import com.github.suninvr.virtualadditions.client.particle.AcidSplashEmitterParticle;
+import com.github.suninvr.virtualadditions.client.particle.GreencapSporeParticle;
 import com.github.suninvr.virtualadditions.client.particle.IoliteRingParticle;
 import com.github.suninvr.virtualadditions.client.render.entity.AcidSpitEntityRenderer;
 import com.github.suninvr.virtualadditions.client.render.entity.ClimbingRopeEntityRenderer;
@@ -48,12 +49,19 @@ public class VirtualAdditionsClient implements ClientModInitializer {
                 VAFluids.FLOWING_ACID
         );
 
+        BlockRenderLayerMap.INSTANCE.putBlocks(RenderLayer.getTranslucent(),
+                VABlocks.WEBBED_SILK
+        );
+
         BlockRenderLayerMap.INSTANCE.putBlocks(RenderLayer.getCutout(),
                 VABlocks.CLIMBING_ROPE_ANCHOR,
+                VABlocks.STEEL_DOOR,
+                VABlocks.STEEL_TRAPDOOR,
                 VABlocks.RED_GLIMMER_CRYSTAL,
                 VABlocks.GREEN_GLIMMER_CRYSTAL,
                 VABlocks.BLUE_GLIMMER_CRYSTAL,
                 VABlocks.COTTON,
+                VABlocks.CORN_CROP,
                 VABlocks.OAK_HEDGE,
                 VABlocks.SPRUCE_HEDGE,
                 VABlocks.BIRCH_HEDGE,
@@ -64,7 +72,10 @@ public class VirtualAdditionsClient implements ClientModInitializer {
                 VABlocks.CHERRY_HEDGE,
                 VABlocks.AZALEA_HEDGE,
                 VABlocks.FLOWERING_AZALEA_HEDGE,
-                VABlocks.HANGING_GLOWSILK
+                VABlocks.GLOWING_SILK,
+                VABlocks.FRAYED_SILK,
+                VABlocks.TALL_GREENCAP_MUSHROOMS,
+                VABlocks.GREENCAP_MUSHROOM
         );
 
         EntityRendererRegistry.register(VAEntityType.CLIMBING_ROPE, ClimbingRopeEntityRenderer::new);
@@ -83,7 +94,7 @@ public class VirtualAdditionsClient implements ClientModInitializer {
                 );
         ColorProviderRegistry.BLOCK.register( ((state, world, pos, tintIndex) -> FoliageColors.getSpruceColor()), VABlocks.SPRUCE_HEDGE);
         ColorProviderRegistry.BLOCK.register( ((state, world, pos, tintIndex) -> FoliageColors.getBirchColor()), VABlocks.BIRCH_HEDGE);
-        ColorProviderRegistry.BLOCK.register(((state, world, pos, tintIndex) -> 0x95be21), VABlocks.ACID);
+        ColorProviderRegistry.BLOCK.register(((state, world, pos, tintIndex) -> 0x00e076), VABlocks.ACID);
 
         ColorProviderRegistry.ITEM.register( ((stack, tintIndex) -> tintIndex > 0 ? -1 : PotionUtil.getColor(stack)), VAItems.APPLICABLE_POTION);
         ColorProviderRegistry.ITEM.register( ((stack, tintIndex) -> FoliageColors.getDefaultColor()),
@@ -99,7 +110,7 @@ public class VirtualAdditionsClient implements ClientModInitializer {
         FluidRenderHandlerRegistry.INSTANCE.register(VAFluids.ACID, VAFluids.FLOWING_ACID, new SimpleFluidRenderHandler(
                 new Identifier("minecraft:block/water_still"),
                 new Identifier("minecraft:block/water_flow"),
-                0x95be21
+                0x00e076
         ));
 
         ModelPredicateProviderRegistry.register(Items.CROSSBOW, idOf("climbing_rope"), (itemStack, clientWorld, livingEntity, a) -> {
@@ -109,6 +120,7 @@ public class VirtualAdditionsClient implements ClientModInitializer {
 
         ParticleFactoryRegistry.getInstance().register(VAParticleTypes.ACID_SPLASH_EMITTER, new AcidSplashEmitterParticle.Factory());
         ParticleFactoryRegistry.getInstance().register(VAParticleTypes.ACID_SPLASH, WaterSplashParticle.Factory::new);
+        ParticleFactoryRegistry.getInstance().register(VAParticleTypes.GREENCAP_SPORE, GreencapSporeParticle.Factory::new);
         ParticleFactoryRegistry.getInstance().register(VAParticleTypes.IOLITE_ANCHOR_RING, IoliteRingParticle.Factory::new);
         ParticleFactoryRegistry.getInstance().register(VAParticleTypes.IOLITE_TETHER_RING, IoliteRingParticle.Factory::new);
 

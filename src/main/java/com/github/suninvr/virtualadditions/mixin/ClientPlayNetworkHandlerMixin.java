@@ -4,10 +4,7 @@ import com.github.suninvr.virtualadditions.client.sound.FlyingLumwaspSoundInstan
 import com.github.suninvr.virtualadditions.entity.LumwaspEntity;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.network.ClientPlayNetworkHandler;
-import net.minecraft.client.sound.MovingMinecartSoundInstance;
-import net.minecraft.client.sound.PassiveBeeSoundInstance;
 import net.minecraft.entity.Entity;
-import net.minecraft.entity.vehicle.AbstractMinecartEntity;
 import org.spongepowered.asm.mixin.Final;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;

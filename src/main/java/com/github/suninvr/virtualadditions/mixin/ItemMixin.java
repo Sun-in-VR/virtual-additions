@@ -2,14 +2,11 @@ package com.github.suninvr.virtualadditions.mixin;
 
 import net.minecraft.client.item.TooltipContext;
 import net.minecraft.entity.effect.StatusEffectInstance;
-import net.minecraft.entity.effect.StatusEffectUtil;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NbtCompound;
 import net.minecraft.potion.Potion;
 import net.minecraft.potion.PotionUtil;
-import net.minecraft.potion.Potions;
-import net.minecraft.text.MutableText;
 import net.minecraft.text.Text;
 import net.minecraft.util.Formatting;
 import net.minecraft.world.World;
@@ -23,6 +20,7 @@ import java.util.List;
 
 import static com.github.suninvr.virtualadditions.util.AppliedPotionHelper.*;
 
+@SuppressWarnings("DataFlowIssue")
 @Mixin(Item.class)
 public class ItemMixin {
 

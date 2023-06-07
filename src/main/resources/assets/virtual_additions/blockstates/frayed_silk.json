@@ -1,0 +1,15 @@
+{
+  "variants": {
+    "vertical_direction=up": [
+      {
+        "model": "virtual_additions:block/frayed_silk"
+      }
+    ],
+    "vertical_direction=down": [
+      {
+        "model": "virtual_additions:block/frayed_silk",
+        "x": 180
+      }
+    ]
+  }
+}

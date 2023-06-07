@@ -1,0 +1,16 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "bbb",
+    "bbb"
+  ],
+  "key": {
+    "b": {
+      "item": "virtual_additions:blueschist_bricks"
+    }
+  },
+  "result": {
+    "item": "virtual_additions:blueschist_brick_wall",
+    "count": 6
+  }
+}

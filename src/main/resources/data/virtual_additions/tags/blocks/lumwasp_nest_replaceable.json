@@ -1,0 +1,8 @@
+{
+  "replace": false,
+  "values": [
+    "#minecraft:base_stone_overworld",
+    "virtual_additions:silk_block",
+    "virtual_additions:webbed_silk"
+  ]
+}

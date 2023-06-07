@@ -1,0 +1,6 @@
+{
+  "parent": "minecraft:block/cross",
+  "textures": {
+    "cross": "virtual_additions:block/tall_greencap_mushrooms_top"
+  }
+}

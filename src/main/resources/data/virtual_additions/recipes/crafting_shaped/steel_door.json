@@ -1,0 +1,17 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "ss",
+    "ss",
+    "ss"
+  ],
+  "key": {
+    "s": {
+      "item": "virtual_additions:steel_ingot"
+    }
+  },
+  "result": {
+    "item": "virtual_additions:steel_door",
+    "count": 3
+  }
+}

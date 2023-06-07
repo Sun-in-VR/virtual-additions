@@ -1,0 +1,37 @@
+{
+  "display": {
+    "icon": {
+      "item": "virtual_additions:acid_bucket"
+    },
+    "title": {
+      "translate": "advancements.virtual_additions.adventure.fill_bucket_acid.title"
+    },
+    "description": {
+      "translate": "advancements.virtual_additions.adventure.fill_bucket_acid.description"
+    },
+    "frame": "task",
+    "show_toast": true,
+    "announce_to_chat": true,
+    "hidden": false
+  },
+  "parent": "minecraft:adventure/root",
+  "criteria": {
+    "acid_bucket": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "virtual_additions:acid_bucket"
+            ]
+          }
+        ]
+      }
+    }
+  },
+  "requirements": [
+    [
+      "acid_bucket"
+    ]
+  ]
+}

@@ -31,61 +31,14 @@
     ],
     "axolotls": [],
     "creature": [],
-    "misc": [],
+    "misc": [
+    ],
     "monster": [
       {
         "type": "virtual_additions:lumwasp",
-        "weight": 800,
+        "weight": 500,
         "minCount": 2,
-        "maxCount": 4
-      },
-      {
-        "type": "minecraft:spider",
-        "weight": 100,
-        "minCount": 4,
-        "maxCount": 4
-      },
-      {
-        "type": "minecraft:zombie",
-        "weight": 95,
-        "minCount": 4,
-        "maxCount": 4
-      },
-      {
-        "type": "minecraft:zombie_villager",
-        "weight": 5,
-        "minCount": 1,
-        "maxCount": 1
-      },
-      {
-        "type": "minecraft:skeleton",
-        "weight": 100,
-        "minCount": 4,
-        "maxCount": 4
-      },
-      {
-        "type": "minecraft:creeper",
-        "weight": 100,
-        "minCount": 4,
-        "maxCount": 4
-      },
-      {
-        "type": "minecraft:slime",
-        "weight": 100,
-        "minCount": 4,
-        "maxCount": 4
-      },
-      {
-        "type": "minecraft:enderman",
-        "weight": 10,
-        "minCount": 1,
-        "maxCount": 4
-      },
-      {
-        "type": "minecraft:witch",
-        "weight": 5,
-        "minCount": 1,
-        "maxCount": 1
+        "maxCount": 3
       }
     ],
     "underground_water_creature": [
@@ -99,7 +52,12 @@
     "water_ambient": [],
     "water_creature": []
   },
-  "spawn_costs": {},
+  "spawn_costs": {
+    "virtual_additions:lumwasp": {
+      "energy_budget": 0.25,
+      "charge": 0.7
+    }
+  },
   "carvers": {
     "air": [
       "minecraft:cave",
@@ -152,15 +110,17 @@
       "minecraft:disk_clay",
       "minecraft:disk_gravel"
     ],
-    [],
     [
-      "minecraft:spring_water",
-      "minecraft:spring_lava"
+      "virtual_additions:wasp_den_ceiling",
+      "virtual_additions:wasp_den_floor"
     ],
     [
-      "minecraft:glow_lichen",
-      "virtual_additions:silkbulb",
-      "virtual_additions:lumwasp_nest"
+      "virtual_additions:greencap_mushroom",
+      "virtual_additions:lumwasp_nest",
+      "minecraft:spring_water"
+    ],
+    [
+      "minecraft:glow_lichen"
     ],
     [
       "minecraft:freeze_top_layer"

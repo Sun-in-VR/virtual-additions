@@ -2,8 +2,10 @@ package com.github.suninvr.virtualadditions.screen;
 
 import com.github.suninvr.virtualadditions.VirtualAdditions;
 import com.github.suninvr.virtualadditions.block.entity.EntanglementDriveBlockEntity;
+import com.github.suninvr.virtualadditions.registry.VAAdvancementCriteria;
 import com.github.suninvr.virtualadditions.registry.VAItems;
 import com.github.suninvr.virtualadditions.registry.VAScreenHandler;
+import com.github.suninvr.virtualadditions.registry.VASoundEvents;
 import com.mojang.datafixers.util.Pair;
 import net.fabricmc.fabric.api.networking.v1.PacketByteBufs;
 import net.fabricmc.fabric.api.networking.v1.ServerPlayNetworking;
@@ -17,10 +19,13 @@ import net.minecraft.inventory.Inventory;
 import net.minecraft.inventory.SimpleInventory;
 import net.minecraft.item.ItemStack;
 import net.minecraft.network.PacketByteBuf;
-import net.minecraft.screen.*;
+import net.minecraft.screen.PlayerScreenHandler;
+import net.minecraft.screen.ScreenHandler;
+import net.minecraft.screen.ScreenHandlerContext;
 import net.minecraft.screen.slot.Slot;
 import net.minecraft.screen.slot.SlotActionType;
 import net.minecraft.server.network.ServerPlayerEntity;
+import net.minecraft.sound.SoundCategory;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.world.World;
@@ -29,6 +34,7 @@ import org.jetbrains.annotations.Nullable;
 import java.util.UUID;
 import java.util.concurrent.atomic.AtomicReference;
 
+@SuppressWarnings("unused")
 public class EntanglementDriveScreenHandler extends ScreenHandler {
 
     public static final Identifier ENTANGLEMENT_DRIVE_ACTIVE_SLOT_SYNC_ID = VirtualAdditions.idOf("entanglement_drive_active_slot_sync");
@@ -156,9 +162,11 @@ public class EntanglementDriveScreenHandler extends ScreenHandler {
     public void setActiveSlotId(int readInt) {
         this.activeSlotId = readInt;
     }
+
     public void setActiveSlotIndex(int readInt) {
         this.activeSlotIndex = readInt;
     }
+
     public void setPlayerId(UUID readId) {
         this.playerId = readId;
     }
@@ -188,17 +196,19 @@ public class EntanglementDriveScreenHandler extends ScreenHandler {
         }
     }
 
-    public void setEntitySlot(PlayerEntity player) {
+    public void setPlayerSlot(PlayerEntity player) {
 
         if (this.selectedSlot == null) return;
         int slotIndex = this.selectedSlot.getIndex();
 
-        if (this.getEntity() instanceof EntanglementDriveBlockEntity entanglementDriveBlockEntity && !(entanglementDriveBlockEntity.getWorld() == null) && !entanglementDriveBlockEntity.getWorld().isClient() ) {
+        if (this.getEntity() instanceof EntanglementDriveBlockEntity blockEntity && !(blockEntity.getWorld() == null) && !blockEntity.getWorld().isClient() ) {
             this.slotSelected = false;
-            entanglementDriveBlockEntity.setPlayerSlot(player, slotIndex, this.selectedSlot.id);
+            blockEntity.setPlayerSlot(player, slotIndex, this.selectedSlot.id);
             PacketByteBuf buf = PacketByteBufs.create();
-            entanglementDriveBlockEntity.writeScreenData(buf);
+            blockEntity.writeScreenData(buf);
             ServerPlayNetworking.send((ServerPlayerEntity) player, ENTANGLEMENT_DRIVE_ACTIVE_SLOT_SYNC_ID, buf);
+            blockEntity.getWorld().playSound(null, blockEntity.getPos(), VASoundEvents.BLOCK_ENTANGLEMENT_DRIVE_USE, SoundCategory.BLOCKS, 1.0F, 1.0F);
+            VAAdvancementCriteria.USE_ENTANGLEMENT_DRIVE.trigger((ServerPlayerEntity) player);
 
             this.inventory.clear();
         }

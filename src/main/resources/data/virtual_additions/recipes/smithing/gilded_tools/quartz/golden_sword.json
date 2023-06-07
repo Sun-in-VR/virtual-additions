@@ -1,10 +1,13 @@
 {
-  "type": "minecraft:smithing",
+  "type": "minecraft:smithing_transform",
+  "template": {
+    "item": "virtual_additions:tool_gild_smithing_template"
+  },
   "base": {
     "item": "minecraft:golden_sword"
   },
   "addition": {
-    "item": "minecraft:quartz_block"
+    "item": "minecraft:quartz"
   },
   "result": {
     "item": "virtual_additions:quartz_golden_sword"

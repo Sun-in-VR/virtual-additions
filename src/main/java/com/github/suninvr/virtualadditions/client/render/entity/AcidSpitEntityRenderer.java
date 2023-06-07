@@ -8,9 +8,7 @@ import net.minecraft.client.render.VertexConsumerProvider;
 import net.minecraft.client.render.entity.EntityRenderer;
 import net.minecraft.client.render.entity.EntityRendererFactory;
 import net.minecraft.client.util.math.MatrixStack;
-import net.minecraft.entity.projectile.DragonFireballEntity;
 import net.minecraft.util.Identifier;
-import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.RotationAxis;
 import org.joml.Matrix3f;
 import org.joml.Matrix4f;
@@ -21,10 +19,6 @@ public class AcidSpitEntityRenderer extends EntityRenderer<AcidSpitEntity> {
 
     public AcidSpitEntityRenderer(EntityRendererFactory.Context ctx) {
         super(ctx);
-    }
-
-    protected int getBlockLight(DragonFireballEntity dragonFireballEntity, BlockPos blockPos) {
-        return 15;
     }
 
     public void render(AcidSpitEntity entity, float f, float g, MatrixStack matrixStack, VertexConsumerProvider vertexConsumerProvider, int i) {

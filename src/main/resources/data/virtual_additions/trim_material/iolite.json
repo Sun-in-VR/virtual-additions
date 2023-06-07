@@ -1,0 +1,9 @@
+{
+  "asset_name": "iolite",
+  "description": {
+    "color": "#702bff",
+    "translate": "trim_material.virtual_additions.iolite"
+  },
+  "ingredient": "virtual_additions:iolite",
+  "item_model_index": 0.0
+}

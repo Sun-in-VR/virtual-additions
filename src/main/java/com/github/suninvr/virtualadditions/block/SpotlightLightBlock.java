@@ -19,6 +19,7 @@ import net.minecraft.world.World;
 import net.minecraft.world.WorldAccess;
 import org.jetbrains.annotations.Nullable;
 
+@SuppressWarnings("deprecation")
 public class SpotlightLightBlock extends Block implements Waterloggable {
     public static BooleanProperty WATERLOGGED = Properties.WATERLOGGED;
     public static BooleanProperty LIT = Properties.LIT;

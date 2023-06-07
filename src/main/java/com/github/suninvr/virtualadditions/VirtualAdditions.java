@@ -10,6 +10,7 @@ import net.minecraft.util.Identifier;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
+@SuppressWarnings("unused")
 public class VirtualAdditions implements ModInitializer {
 
 	public static final String MODID = "virtual_additions";
@@ -22,26 +23,30 @@ public class VirtualAdditions implements ModInitializer {
 	public void onInitialize() {
 
 		FabricLoader.getInstance().getModContainer(MODID).ifPresent(
-				modContainer -> ResourceManagerHelper.registerBuiltinResourcePack(
-						idOf("preview"),
-						modContainer,
-						ResourcePackActivationType.NORMAL
-				)
+				modContainer -> {
+					ResourceManagerHelper.registerBuiltinResourcePack(idOf("preview"), modContainer, ResourcePackActivationType.NORMAL);
+					ResourceManagerHelper.registerBuiltinResourcePack(idOf("worldgen"), modContainer, ResourcePackActivationType.NORMAL);
+				}
 		);
 
+		VAAdvancementCriteria.init();
 		VABlocks.init();
 		VABlockEntities.init();
 		VABlockTags.init();
 		VACallbacks.init();
 		VADamageTypes.init();
 		VAEntityType.init();
+		VAEntityTypeTags.init();
 		VAFeatures.init();
 		VAFluids.init();
+		VAGameRules.init();
 		VAItems.init();
+		VAItemTags.init();
 		VAPackets.init();
 		VAParticleTypes.init();
 		VAScreenHandler.init();
 		VASoundEvents.init();
+		VAStatusEffects.init();
 	}
 
 	/**

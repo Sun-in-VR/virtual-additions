@@ -9,9 +9,9 @@ import net.minecraft.client.render.entity.feature.EyesFeatureRenderer;
 import net.minecraft.client.render.entity.feature.FeatureRendererContext;
 import net.minecraft.client.render.entity.model.EntityModel;
 import net.minecraft.client.util.math.MatrixStack;
-import net.minecraft.entity.Entity;
 import net.minecraft.util.Identifier;
 
+@SuppressWarnings("unchecked")
 public class LumwaspGlowFeatureRenderer<T extends LumwaspEntity, M extends EntityModel<T>> extends EyesFeatureRenderer<T, M> {
     private static final RenderLayer SKIN = RenderLayer.getEyes(new Identifier("virtual_additions","textures/entity/lumwasp/lumwasp_glow.png"));
     public LumwaspGlowFeatureRenderer(FeatureRendererContext featureRendererContext) {

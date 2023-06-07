@@ -6,6 +6,7 @@ import net.minecraft.potion.Potion;
 import net.minecraft.potion.PotionUtil;
 import net.minecraft.potion.Potions;
 
+@SuppressWarnings("DataFlowIssue")
 public class AppliedPotionHelper {
 
     public static boolean hasAppliedPotionEffects(ItemStack stack) {

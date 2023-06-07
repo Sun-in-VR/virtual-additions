@@ -21,6 +21,11 @@
     "virtual_additions:quartz_iron_shovel",
     "virtual_additions:quartz_netherite_shovel",
     "virtual_additions:quartz_steel_shovel",
+    "virtual_additions:sculk_diamond_shovel",
+    "virtual_additions:sculk_golden_shovel",
+    "virtual_additions:sculk_iron_shovel",
+    "virtual_additions:sculk_netherite_shovel",
+    "virtual_additions:sculk_steel_shovel",
     "virtual_additions:steel_shovel"
   ]
 }

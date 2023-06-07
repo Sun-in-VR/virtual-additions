@@ -16,6 +16,7 @@ import net.minecraft.util.math.Direction;
 import net.minecraft.util.math.random.Random;
 import net.minecraft.world.World;
 
+@SuppressWarnings("deprecation")
 public class AcidFluidBlock extends FluidBlock {
     public AcidFluidBlock(FlowableFluid fluid, Settings settings) {
         super(fluid, settings);

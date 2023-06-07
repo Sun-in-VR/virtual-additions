@@ -5,7 +5,6 @@ import com.github.suninvr.virtualadditions.registry.VABlocks;
 import com.github.suninvr.virtualadditions.registry.VAItems;
 import com.github.suninvr.virtualadditions.registry.VASoundEvents;
 import net.minecraft.block.*;
-import net.minecraft.block.piston.PistonBehavior;
 import net.minecraft.fluid.FluidState;
 import net.minecraft.fluid.Fluids;
 import net.minecraft.item.AutomaticItemPlacementContext;
@@ -24,6 +23,7 @@ import net.minecraft.world.World;
 import net.minecraft.world.WorldView;
 import net.minecraft.world.event.GameEvent;
 
+@SuppressWarnings("deprecation")
 public class ClimbingRopeBlock extends Block implements Waterloggable {
     public static final DirectionProperty FACING = Properties.HOPPER_FACING;
     public static final BooleanProperty WATERLOGGED = Properties.WATERLOGGED;
@@ -51,10 +51,6 @@ public class ClimbingRopeBlock extends Block implements Waterloggable {
             case EAST -> EAST_SHAPE;
             default -> DOWN_SHAPE;
         };
-    }
-
-    public PistonBehavior getPistonBehavior(BlockState state) {
-        return PistonBehavior.DESTROY;
     }
 
     @Override

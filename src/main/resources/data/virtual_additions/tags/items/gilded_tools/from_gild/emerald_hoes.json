@@ -1,0 +1,10 @@
+{
+  "replace": false,
+  "values": [
+    "virtual_additions:emerald_diamond_hoe",
+    "virtual_additions:emerald_golden_hoe",
+    "virtual_additions:emerald_iron_hoe",
+    "virtual_additions:emerald_netherite_hoe",
+    "virtual_additions:emerald_steel_hoe"
+  ]
+}

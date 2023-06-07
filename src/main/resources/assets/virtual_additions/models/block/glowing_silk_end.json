@@ -1,0 +1,6 @@
+{
+  "parent": "minecraft:block/cross",
+  "textures": {
+    "cross": "virtual_additions:block/glowing_silk_end"
+  }
+}

@@ -1,0 +1,30 @@
+{
+  "display": {
+    "icon": {
+      "item": "virtual_additions:amethyst_diamond_pickaxe",
+      "nbt": "{Damage:0}"
+    },
+    "title": {
+      "translate": "advancements.virtual_additions.story.gild_tool.title"
+    },
+    "description": {
+      "translate": "advancements.virtual_additions.story.gild_tool.description"
+    },
+    "show_toast": true,
+    "announce_to_chat": true,
+    "hidden": false
+  },
+  "parent": "virtual_additions:story/smelt_steel",
+  "criteria": {
+    "requirement": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "tag": "virtual_additions:gilded_tools"
+          }
+        ]
+      }
+    }
+  }
+}

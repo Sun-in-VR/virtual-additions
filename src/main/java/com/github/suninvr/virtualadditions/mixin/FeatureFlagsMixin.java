@@ -11,9 +11,8 @@ import org.spongepowered.asm.mixin.injection.callback.LocalCapture;
 
 @Mixin(FeatureFlags.class)
 public class FeatureFlagsMixin {
-
-    @Inject(method = "<clinit>", at = @At(value = "FIELD", target = "Lnet/minecraft/resource/featuretoggle/FeatureFlags;UPDATE_1_20:Lnet/minecraft/resource/featuretoggle/FeatureFlag;", shift = At.Shift.AFTER), locals = LocalCapture.CAPTURE_FAILSOFT)
+    @Inject(method = "<clinit>", at = @At(value = "FIELD", target = "Lnet/minecraft/resource/featuretoggle/FeatureFlags;BUNDLE:Lnet/minecraft/resource/featuretoggle/FeatureFlag;", shift = At.Shift.AFTER), locals = LocalCapture.CAPTURE_FAILSOFT)
     private static void virtualAdditions$addPreviewFeatureFlag(CallbackInfo ci, FeatureManager.Builder builder) {
-        VirtualAdditions.PREVIEW = builder.addFlag(VirtualAdditions.idOf("preview"));
+            VirtualAdditions.PREVIEW = builder.addFlag(VirtualAdditions.idOf("preview"));
     }
 }
