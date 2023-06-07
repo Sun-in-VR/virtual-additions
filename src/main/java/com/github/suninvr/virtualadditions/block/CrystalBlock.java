@@ -21,6 +21,7 @@ import net.minecraft.util.shape.VoxelShape;
 import net.minecraft.world.*;
 import org.jetbrains.annotations.Nullable;
 
+@SuppressWarnings("deprecation")
 public class CrystalBlock extends Block implements Waterloggable {
     public static final EnumProperty<CrystalShape> SHAPE = EnumProperty.of("shape", CrystalShape.class);
     public static final DirectionProperty POINTING = Properties.FACING;
@@ -42,11 +43,6 @@ public class CrystalBlock extends Block implements Waterloggable {
                 .with(POINTING, Direction.UP)
                 .with(WATERLOGGED, false)
         );
-    }
-
-    public static OffsetType getOffsetType(BlockState blockState) {
-        Direction.Axis axis = blockState.get(POINTING).getAxis();
-        return axis == Direction.Axis.Y ? OffsetType.XZ : OffsetType.NONE;
     }
 
     @Override

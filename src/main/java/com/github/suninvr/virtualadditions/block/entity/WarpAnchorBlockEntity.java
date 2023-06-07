@@ -12,7 +12,6 @@ import net.minecraft.util.math.Direction;
 import net.minecraft.world.World;
 
 public class WarpAnchorBlockEntity extends BlockEntity {
-    private BlockState blockState;
     private static final ParticleEffect particle;
     private static final ParticleEffect particleCeiling;
 
@@ -20,6 +19,7 @@ public class WarpAnchorBlockEntity extends BlockEntity {
         super(VABlockEntities.IOLITE_ANCHOR_BLOCK_ENTITY, pos, state);
     }
 
+    @SuppressWarnings("unused")
     public static void tick(World world, BlockPos pos, BlockState state, WarpAnchorBlockEntity blockEntity) {
         if (state.get(WarpAnchorBlock.POWERED)) return;
         double i = pos.getX() + 0.5;

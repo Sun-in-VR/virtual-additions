@@ -32,7 +32,7 @@ public class DestructiveSculkBlockEntity extends BlockEntity {
     private ItemStack tool;
     private int potency;
     private int age;
-    private ArrayList<BlockPos> affectedPos;
+    private final ArrayList<BlockPos> affectedPos;
     private int activePosIndex;
 
     public DestructiveSculkBlockEntity(BlockPos pos, BlockState state) {

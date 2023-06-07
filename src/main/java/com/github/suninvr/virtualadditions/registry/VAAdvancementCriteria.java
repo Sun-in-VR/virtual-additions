@@ -9,10 +9,10 @@ public class VAAdvancementCriteria {
     public static final TickCriterion USE_TELEPORTER;
     public static final TickCriterion USE_ENTANGLEMENT_DRIVE;
 
-    public static void init(){};
-
     static {
         USE_TELEPORTER = Criteria.register(new TickCriterion(idOf("use_teleporter")));
         USE_ENTANGLEMENT_DRIVE = Criteria.register(new TickCriterion(idOf("use_entanglement_drive")));
     }
+
+    public static void init(){}
 }

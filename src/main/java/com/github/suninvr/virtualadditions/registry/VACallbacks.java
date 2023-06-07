@@ -27,7 +27,7 @@ public class VACallbacks{
             ItemStack stack = player.getStackInHand(hand);
             if (stack.isEmpty()) return ActionResult.PASS;
             if (!stack.hasNbt()) return ActionResult.PASS;
-            NbtCompound appliedPotionData = stack.getNbt().getCompound("AppliedPotion");
+            @SuppressWarnings("DataFlowIssue") NbtCompound appliedPotionData = stack.getNbt().getCompound("AppliedPotion");
 
             if (getAppliedPotion(stack) != Potions.EMPTY || appliedPotionData.contains("CustomPotionEffects")) {
                 int remainingUses = getAppliedPotionUses(stack);
@@ -58,7 +58,7 @@ public class VACallbacks{
             GildType gild = GildedToolItem.getGildType(tool);
             if (gild.equals(GildTypes.NONE)) return true;
             if (gild.isGildEffective(world, player, pos, state, tool)) {
-                gild.emitBlockBreakingEffects(world, player, pos, state, tool);
+                gild.emitBlockBreakingEffects(world, pos, tool);
                 return gild.onBlockBroken(world, player, pos, state, tool);
             }
             return true;

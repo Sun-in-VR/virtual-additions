@@ -29,6 +29,7 @@ import net.minecraft.world.World;
 import net.minecraft.world.WorldAccess;
 import org.jetbrains.annotations.Nullable;
 
+@SuppressWarnings("deprecation")
 public class EntanglementDriveBlock extends BlockWithEntity implements InventoryProvider {
     public static final BooleanProperty POWERED = Properties.POWERED;
     private static final Text TITLE;

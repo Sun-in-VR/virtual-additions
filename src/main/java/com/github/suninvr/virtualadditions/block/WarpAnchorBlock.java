@@ -35,8 +35,8 @@ import net.minecraft.world.World;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.List;
-import java.util.Optional;
 
+@SuppressWarnings("deprecation")
 public class WarpAnchorBlock extends BlockWithEntity implements Waterloggable {
     public static final BooleanProperty POWERED = Properties.POWERED;
     public static final BooleanProperty WATERLOGGED = Properties.WATERLOGGED;

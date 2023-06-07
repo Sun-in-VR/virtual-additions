@@ -20,11 +20,9 @@ import org.spongepowered.asm.mixin.injection.callback.LocalCapture;
 @Mixin(DamageSources.class)
 public abstract class DamageSourcesMixin implements DamageSourcesInterface {
 
-    @Shadow protected abstract DamageSource create(RegistryKey<DamageType> key);
+    @Shadow public abstract DamageSource create(RegistryKey<DamageType> key);
 
-    @Shadow protected abstract DamageSource create(RegistryKey<DamageType> key, @Nullable Entity attacker);
-
-    @Shadow protected abstract DamageSource create(RegistryKey<DamageType> key, @Nullable Entity source, @Nullable Entity attacker);
+    @Shadow public abstract DamageSource create(RegistryKey<DamageType> key, @Nullable Entity source, @Nullable Entity attacker);
 
     private DamageSource acid;
 

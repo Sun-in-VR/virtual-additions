@@ -2,9 +2,6 @@ package com.github.suninvr.virtualadditions.item;
 
 import com.github.suninvr.virtualadditions.item.interfaces.GildedToolItem;
 import net.minecraft.client.item.TooltipContext;
-import net.minecraft.entity.EquipmentSlot;
-import net.minecraft.entity.attribute.EntityAttributeModifier;
-import net.minecraft.entity.attribute.EntityAttributes;
 import net.minecraft.item.*;
 import net.minecraft.screen.ScreenTexts;
 import net.minecraft.text.Style;
@@ -20,8 +17,8 @@ public class GildedShovelItem extends ShovelItem implements GildedToolItem {
     private final ToolMaterial toolMaterial;
     private final ToolMaterial baseMaterial;
     private final Item baseItem;
-    private static final Text desc1 = Text.translatable("item.minecraft.smithing_template.upgrade").formatted(Formatting.GRAY);
-    private final Text desc2;
+    private static final Text descriptionHeader = Text.translatable("item.minecraft.smithing_template.upgrade").formatted(Formatting.GRAY);
+    private final Text descriptionText;
 
     public GildedShovelItem(GildType gildType, ShovelItem baseItem, Settings settings) {
         super(gildType.getModifiedMaterial(baseItem), (int) (baseItem.getAttackDamage() - baseItem.getMaterial().getAttackDamage()), (float) getAttackSpeed(baseItem, gildType), settings);
@@ -29,7 +26,7 @@ public class GildedShovelItem extends ShovelItem implements GildedToolItem {
         this.toolMaterial = gildType.getModifiedMaterial(baseItem);
         this.baseMaterial = baseItem.getMaterial();
         this.baseItem = baseItem;
-        this.desc2 = ScreenTexts.space().append(Text.translatable(this.gildType.buildTooltipTranslationKey()).setStyle(Style.EMPTY.withColor(this.gildType.getColor())));
+        this.descriptionText = ScreenTexts.space().append(Text.translatable(this.gildType.buildTooltipTranslationKey()).setStyle(Style.EMPTY.withColor(this.gildType.getColor())));
     }
 
     private static double getAttackSpeed(ToolItem baseItem, GildType gildType) {
@@ -52,8 +49,8 @@ public class GildedShovelItem extends ShovelItem implements GildedToolItem {
 
     @Override
     public void appendTooltip(ItemStack stack, @Nullable World world, List<Text> tooltip, TooltipContext context) {
-        tooltip.add(desc1);
-        tooltip.add(this.desc2);
+        tooltip.add(descriptionHeader);
+        tooltip.add(this.descriptionText);
         super.appendTooltip(stack, world, tooltip, context);
     }
 

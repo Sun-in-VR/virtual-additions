@@ -31,6 +31,7 @@ import net.minecraft.world.World;
 import net.minecraft.world.event.GameEvent;
 import org.jetbrains.annotations.Nullable;
 
+@SuppressWarnings("deprecation")
 public class WarpTetherBlock extends BlockWithEntity implements Waterloggable {
     public static BooleanProperty COOLDOWN = BooleanProperty.of("cooldown");
     public static BooleanProperty WATERLOGGED = BooleanProperty.of("waterlogged");

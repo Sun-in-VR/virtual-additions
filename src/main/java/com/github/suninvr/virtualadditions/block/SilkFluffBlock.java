@@ -15,6 +15,7 @@ import net.minecraft.util.shape.VoxelShapes;
 import net.minecraft.world.BlockView;
 import net.minecraft.world.World;
 
+@SuppressWarnings("deprecation")
 public class SilkFluffBlock extends TransparentBlock {
     private static final Vec3d movement = new Vec3d(0.85, 1.0, 0.85);
     public SilkFluffBlock(Settings settings) {

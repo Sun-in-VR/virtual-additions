@@ -6,6 +6,7 @@ import net.minecraft.screen.ScreenHandlerType;
 
 import static com.github.suninvr.virtualadditions.VirtualAdditions.idOf;
 
+@SuppressWarnings("deprecation")
 public class VAScreenHandler {
 
     public static final ScreenHandlerType<EntanglementDriveScreenHandler> ENTANGLEMENT_DRIVE_SCREEN_HANDLER;
@@ -14,5 +15,5 @@ public class VAScreenHandler {
         ENTANGLEMENT_DRIVE_SCREEN_HANDLER = ScreenHandlerRegistry.registerExtended(idOf("entanglement_drive"), EntanglementDriveScreenHandler::new);
     }
 
-    public static void init(){};
+    public static void init(){}
 }

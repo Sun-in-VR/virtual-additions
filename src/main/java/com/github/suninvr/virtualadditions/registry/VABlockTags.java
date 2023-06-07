@@ -16,10 +16,10 @@ public class VABlockTags {
     public static final TagKey<Block> SCULK_GILD_EFFECTIVE = register("sculk_gild_effective");
     public static final TagKey<Block> SCULK_GILD_STRONGLY_EFFECTIVE = register("sculk_gild_strongly_effective");
 
-    public static void init(){}
-
     private static TagKey<Block> register(String id) {
         return TagKey.of(Registries.BLOCK.getKey(), idOf(id));
     }
+
+    public static void init(){}
 
 }

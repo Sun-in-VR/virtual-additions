@@ -30,6 +30,7 @@ import org.jetbrains.annotations.Nullable;
 import java.util.Optional;
 import java.util.UUID;
 
+@SuppressWarnings({"unused", "DataFlowIssue"})
 public class EntanglementDriveBlockEntity extends BlockEntity implements ExtendedScreenHandlerFactory, SidedInventory {
     private static final Text TITLE = Text.translatable("container.virtual_additions.entanglement_drive");
     private int slotId;
@@ -213,6 +214,7 @@ public class EntanglementDriveBlockEntity extends BlockEntity implements Extende
         return !this.getPlayer().isDead() && !this.getPlayer().isSpectator() && bl;
     }
 
+    @SuppressWarnings("BooleanMethodIsAlwaysInverted")
     private boolean canAccessPlayerInventory() {
         BlockState state = this.getWorld() != null ? this.getWorld().getBlockState(this.getPos()) : Blocks.AIR.getDefaultState();
         return this.getPlayerInventory() != null && state.isOf(VABlocks.ENTANGLEMENT_DRIVE) && !state.get(EntanglementDriveBlock.POWERED);

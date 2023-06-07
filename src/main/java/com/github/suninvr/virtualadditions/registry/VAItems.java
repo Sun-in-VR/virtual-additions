@@ -175,7 +175,7 @@ public class VAItems {
     public static final Item WARP_ANCHOR;
     public static final Item WARP_TETHER;
     public static final Item ENTANGLEMENT_DRIVE;
-    private static final Item LUMWASP_SPAWN_EGG;
+    public static final Item LUMWASP_SPAWN_EGG;
 
     public static final FoodComponent FRIED_EGG_FOOD = (new FoodComponent.Builder().hunger(4).saturationModifier(0.4F).build());
     public static final FoodComponent CORN_FOOD = (new FoodComponent.Builder()).hunger(1).saturationModifier(0.3F).build();
@@ -213,22 +213,15 @@ public class VAItems {
     private static final Text TOOL_GILD_BASE_SLOT_DESCRIPTION_TEXT;
     private static final Text TOOL_GILD_ADDITIONS_SLOT_DESCRIPTION_TEXT;
     private static final Text TOOL_GILD_TEXT;
-    private static final Identifier EMPTY_ARMOR_SLOT_HELMET_TEXTURE;
-    private static final Identifier EMPTY_ARMOR_SLOT_CHESTPLATE_TEXTURE;
-    private static final Identifier EMPTY_ARMOR_SLOT_LEGGINGS_TEXTURE;
-    private static final Identifier EMPTY_ARMOR_SLOT_BOOTS_TEXTURE;
     private static final Identifier EMPTY_SLOT_HOE_TEXTURE;
     private static final Identifier EMPTY_SLOT_AXE_TEXTURE;
     private static final Identifier EMPTY_SLOT_SWORD_TEXTURE;
     private static final Identifier EMPTY_SLOT_SHOVEL_TEXTURE;
     private static final Identifier EMPTY_SLOT_PICKAXE_TEXTURE;
     private static final Identifier EMPTY_SLOT_INGOT_TEXTURE;
-    private static final Identifier EMPTY_SLOT_REDSTONE_DUST_TEXTURE;
     private static final Identifier EMPTY_SLOT_QUARTZ_TEXTURE;
     private static final Identifier EMPTY_SLOT_EMERALD_TEXTURE;
-    private static final Identifier EMPTY_SLOT_DIAMOND_TEXTURE;
     private static final Identifier EMPTY_SLOT_AMETHYST_TEXTURE;
-    private static final Identifier EMPTY_SLOT_LAPIS_LAZULI_TEXTURE;
     private static final Identifier EMPTY_SLOT_ECHO_SHARD_TEXTURE;
 
     static {
@@ -239,22 +232,15 @@ public class VAItems {
         TOOL_GILD_ADDITIONS_SLOT_DESCRIPTION_TEXT = Text.translatable(Util.createTranslationKey("item", idOf("smithing_template.tool_gild.additions_slot_description")));
         TOOL_GILD_TEXT = Text.translatable(Util.createTranslationKey("upgrade", idOf("tool_gild"))).formatted(Formatting.GRAY);
 
-        EMPTY_ARMOR_SLOT_HELMET_TEXTURE = new Identifier("item/empty_armor_slot_helmet");
-        EMPTY_ARMOR_SLOT_CHESTPLATE_TEXTURE = new Identifier("item/empty_armor_slot_chestplate");
-        EMPTY_ARMOR_SLOT_LEGGINGS_TEXTURE = new Identifier("item/empty_armor_slot_leggings");
-        EMPTY_ARMOR_SLOT_BOOTS_TEXTURE = new Identifier("item/empty_armor_slot_boots");
         EMPTY_SLOT_HOE_TEXTURE = new Identifier("item/empty_slot_hoe");
         EMPTY_SLOT_AXE_TEXTURE = new Identifier("item/empty_slot_axe");
         EMPTY_SLOT_SWORD_TEXTURE = new Identifier("item/empty_slot_sword");
         EMPTY_SLOT_SHOVEL_TEXTURE = new Identifier("item/empty_slot_shovel");
         EMPTY_SLOT_PICKAXE_TEXTURE = new Identifier("item/empty_slot_pickaxe");
         EMPTY_SLOT_INGOT_TEXTURE = new Identifier("item/empty_slot_ingot");
-        EMPTY_SLOT_REDSTONE_DUST_TEXTURE = new Identifier("item/empty_slot_redstone_dust");
         EMPTY_SLOT_QUARTZ_TEXTURE = new Identifier("item/empty_slot_quartz");
         EMPTY_SLOT_EMERALD_TEXTURE = new Identifier("item/empty_slot_emerald");
-        EMPTY_SLOT_DIAMOND_TEXTURE = new Identifier("item/empty_slot_diamond");
         EMPTY_SLOT_AMETHYST_TEXTURE = new Identifier("item/empty_slot_amethyst_shard");
-        EMPTY_SLOT_LAPIS_LAZULI_TEXTURE = new Identifier("item/empty_slot_lapis_lazuli");
         EMPTY_SLOT_ECHO_SHARD_TEXTURE = new Identifier("virtual_additions:item/empty_slot_echo_shard");
 
         CLIMBING_ROPE = register("climbing_rope", new AliasedBlockItem(VABlocks.CLIMBING_ROPE_ANCHOR, new FabricItemSettings().maxCount(16)), ItemGroups.TOOLS, Items.LEAD);
@@ -376,7 +362,7 @@ public class VAItems {
         MAGENTA_SILKBULB = registerBlockItem("magenta_silkbulb", VABlocks.MAGENTA_SILKBULB, ItemGroups.COLORED_BLOCKS, prev);
         PINK_SILKBULB = registerBlockItem("pink_silkbulb", VABlocks.PINK_SILKBULB, ItemGroups.COLORED_BLOCKS, prev);
 
-        ACID_BUCKET = register("acid_bucket", new AcidBucketItem(VAFluids.ACID, new FabricItemSettings().recipeRemainder(Items.BUCKET).maxCount(1)), ItemGroups.TOOLS, Items.LAVA_BUCKET);
+        ACID_BUCKET = register("acid_bucket", new AcidBucketItem(new FabricItemSettings().recipeRemainder(Items.BUCKET).maxCount(1)), ItemGroups.TOOLS, Items.LAVA_BUCKET);
 
         APPLICABLE_POTION = register("applicable_potion", new ApplicablePotionItem(new FabricItemSettings()));
 

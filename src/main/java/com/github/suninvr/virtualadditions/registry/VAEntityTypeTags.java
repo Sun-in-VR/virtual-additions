@@ -6,6 +6,7 @@ import net.minecraft.registry.tag.TagKey;
 
 import static com.github.suninvr.virtualadditions.VirtualAdditions.idOf;
 
+@SuppressWarnings("SameParameterValue")
 public class VAEntityTypeTags {
     public static final TagKey<EntityType<?>> COLLIDES_WITH_WEBBED_SILK = register("collides_with_webbed_silk");
 

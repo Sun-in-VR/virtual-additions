@@ -11,6 +11,7 @@ import org.jetbrains.annotations.Nullable;
 
 import java.util.Optional;
 
+@SuppressWarnings("deprecation")
 public class GreencapSporeParticle extends SpriteBillboardParticle {
     protected GreencapSporeParticle(ClientWorld clientWorld, SpriteProvider spriteProvider, double d, double e, double f, double x, double y, double z) {
         super(clientWorld, d, e, f, x, y, z);

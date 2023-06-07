@@ -22,6 +22,7 @@ import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
+@SuppressWarnings({"unused", "SameParameterValue"})
 @Mixin(CrossbowItem.class)
 public abstract class CrossbowItemMixin {
     /**

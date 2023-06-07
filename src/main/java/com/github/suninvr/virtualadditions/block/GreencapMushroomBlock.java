@@ -13,6 +13,7 @@ import net.minecraft.world.BlockView;
 import net.minecraft.world.World;
 import net.minecraft.world.WorldView;
 
+@SuppressWarnings("deprecation")
 public class GreencapMushroomBlock extends PlantBlock implements Fertilizable {
     protected static final VoxelShape SHAPE = Block.createCuboidShape(4.0, 0.0, 4.0, 12.0, 9.0, 12.0);
     public GreencapMushroomBlock(Settings settings) {

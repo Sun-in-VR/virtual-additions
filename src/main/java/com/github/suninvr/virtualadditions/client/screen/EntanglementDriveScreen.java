@@ -26,7 +26,6 @@ public class EntanglementDriveScreen extends HandledScreen<EntanglementDriveScre
     public static final Identifier BACKGROUND_TEXTURE = VirtualAdditions.idOf("textures/gui/container/entanglement_drive.png");
     private static final Text SLOT_HINT = Text.translatable("container.virtual_additions.entanglement_drive.select_slot_hint");
     private static final Text PAYMENT_SLOT_HINT = Text.translatable("container.virtual_additions.entanglement_drive.payment_slot_hint");
-    private PlayerEntity player;
     private float mouseX;
     private float mouseY;
     private boolean samePlayer;
@@ -38,8 +37,8 @@ public class EntanglementDriveScreen extends HandledScreen<EntanglementDriveScre
 
     public EntanglementDriveScreen(EntanglementDriveScreenHandler handler, PlayerInventory inventory, Text title) {
         super(handler, inventory, title);
-        this.player = inventory.player;
-        this.playerId = this.player.getUuid();
+        PlayerEntity player = inventory.player;
+        this.playerId = player.getUuid();
     }
 
     @Override
@@ -61,7 +60,9 @@ public class EntanglementDriveScreen extends HandledScreen<EntanglementDriveScre
         context.drawTexture(BACKGROUND_TEXTURE, i, j, 0, 0, this.backgroundWidth, this.backgroundHeight);
         if (this.handler.isSelectingSlot() && this.handler.isSlotSelected()) context.drawTexture(BACKGROUND_TEXTURE, i + selectedSlotX - 1, j + selectedSlotY - 1, 196, 0, 18, 18);
         if (samePlayer) context.drawTexture(BACKGROUND_TEXTURE, i + activeSlotX, j + activeSlotY, 178, 0, 18, 18);
-        InventoryScreen.drawEntity(context, i + 51, j + 75, 30, (float)(i + 51) - this.mouseX, (float)(j + 75 - 50) - this.mouseY, this.client.player);
+        if (this.client != null && this.client.player != null) {
+            InventoryScreen.drawEntity(context, i + 51, j + 75, 30, (float)(i + 51) - this.mouseX, (float)(j + 75 - 50) - this.mouseY, this.client.player);
+        }
     }
 
     protected void drawForeground(DrawContext context, int mouseX, int mouseY) {

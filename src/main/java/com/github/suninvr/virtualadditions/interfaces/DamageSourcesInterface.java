@@ -7,6 +7,5 @@ import org.jetbrains.annotations.Nullable;
 
 public interface DamageSourcesInterface {
     DamageSource acid();
-    DamageSource teleport();
     DamageSource acidSpit(AcidSpitEntity source, @Nullable Entity attacker);
 }

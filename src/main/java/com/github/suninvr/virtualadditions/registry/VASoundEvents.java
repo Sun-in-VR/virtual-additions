@@ -8,7 +8,6 @@ import net.minecraft.util.Identifier;
 import static com.github.suninvr.virtualadditions.VirtualAdditions.idOf;
 
 public class VASoundEvents {
-    public static void init(){}
     public static final SoundEvent BLOCK_ROPE_BREAK ;
     public static final SoundEvent BLOCK_ROPE_EXTEND;
     public static final SoundEvent BLOCK_ROPE_FALL ;
@@ -54,6 +53,8 @@ public class VASoundEvents {
         BLOCK_STEEL_DOOR_SHUTTER_OPEN = register("block.steel_door.shutter_open");
         BLOCK_STEEL_DOOR_SHUTTER_CLOSE = register("block.steel_door.shutter_close");
     }
+
+    public static void init(){}
 
     private static SoundEvent register(String id) {
         Identifier identifier = idOf(id);

@@ -16,6 +16,7 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.random.Random;
 import net.minecraft.world.World;
 
+@SuppressWarnings("deprecation")
 public class LumwaspNestBlock extends TransparentBlock {
     public static final BooleanProperty LARVAE = BooleanProperty.of("larvae");
     public LumwaspNestBlock(Settings settings) {

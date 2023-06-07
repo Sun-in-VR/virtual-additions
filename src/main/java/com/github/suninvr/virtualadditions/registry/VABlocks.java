@@ -115,7 +115,6 @@ public class VABlocks {
     public static final Block ENTANGLEMENT_DRIVE;
     public static final Block DESTRUCTIVE_SCULK;
 
-
     static {
         CLIMBING_ROPE = register("climbing_rope", new ClimbingRopeBlock(FabricBlockSettings.create().sounds(ROPE_SOUND_GROUP).collidable(false).nonOpaque().burnable().hardness(0.5F)));
         CLIMBING_ROPE_ANCHOR = register("climbing_rope_anchor", new ClimbingRopeAnchorBlock(FabricBlockSettings.create().sounds(ROPE_SOUND_GROUP).collidable(false).nonOpaque().burnable().hardness(0.5F)));
@@ -224,6 +223,7 @@ public class VABlocks {
 
         DESTRUCTIVE_SCULK = register("destructive_sculk", new DestructiveSculkBlock(FabricBlockSettings.copyOf(Blocks.SCULK)));
     }
+
     public static void init(){
         LandPathNodeTypesRegistry.register(ACID, PathNodeType.LAVA, PathNodeType.DANGER_FIRE);
         FireBlockAccessor fire = (FireBlockAccessor)Blocks.FIRE;

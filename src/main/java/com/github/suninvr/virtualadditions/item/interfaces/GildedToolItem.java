@@ -5,6 +5,7 @@ import com.github.suninvr.virtualadditions.item.GildTypes;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.ToolMaterial;
 
+@SuppressWarnings("unused")
 public interface GildedToolItem{
 
     ToolMaterial getBaseMaterial();

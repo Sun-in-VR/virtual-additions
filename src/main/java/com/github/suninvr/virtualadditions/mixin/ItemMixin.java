@@ -20,6 +20,7 @@ import java.util.List;
 
 import static com.github.suninvr.virtualadditions.util.AppliedPotionHelper.*;
 
+@SuppressWarnings("DataFlowIssue")
 @Mixin(Item.class)
 public class ItemMixin {
 

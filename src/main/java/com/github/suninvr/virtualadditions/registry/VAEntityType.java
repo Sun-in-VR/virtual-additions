@@ -19,10 +19,6 @@ import net.minecraft.world.Heightmap;
 import static com.github.suninvr.virtualadditions.VirtualAdditions.idOf;
 
 public class VAEntityType {
-    public static void init(){
-        FabricDefaultAttributeRegistry.register(LUMWASP, LumwaspEntity.createLumwaspAttributes());
-        SpawnRestriction.register(LUMWASP, SpawnRestriction.Location.ON_GROUND, Heightmap.Type.MOTION_BLOCKING, HostileEntity::canSpawnInDark);
-    }
 
     public static final EntityType<ClimbingRopeEntity> CLIMBING_ROPE;
     public static final EntityType<SteelBombEntity> STEEL_BOMB;
@@ -48,5 +44,10 @@ public class VAEntityType {
         LUMWASP = Registry.register(Registries.ENTITY_TYPE, idOf("lumwasp"), FabricEntityTypeBuilder.create(SpawnGroup.MONSTER, LumwaspEntity::new)
                 .dimensions(EntityDimensions.fixed(1.5F, 0.75F))
                 .build());
+    }
+
+    public static void init(){
+        FabricDefaultAttributeRegistry.register(LUMWASP, LumwaspEntity.createLumwaspAttributes());
+        SpawnRestriction.register(LUMWASP, SpawnRestriction.Location.ON_GROUND, Heightmap.Type.MOTION_BLOCKING, HostileEntity::canSpawnInDark);
     }
 }

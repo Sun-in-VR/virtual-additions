@@ -15,6 +15,7 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Direction;
 import net.minecraft.world.World;
 
+@SuppressWarnings("deprecation")
 public class ClimbingRopeEntity extends PersistentProjectileEntity {
 
     public ClimbingRopeEntity(EntityType<? extends PersistentProjectileEntity> entityType, World world) {

@@ -24,6 +24,7 @@ import net.minecraft.world.WorldAccess;
 import net.minecraft.world.WorldView;
 import org.jetbrains.annotations.Nullable;
 
+@SuppressWarnings("deprecation")
 public class GlowingSilkBlock extends Block implements Waterloggable {
     private static final BooleanProperty WATERLOGGED;
     public static final EnumProperty<GlowingSilkShape> SHAPE;

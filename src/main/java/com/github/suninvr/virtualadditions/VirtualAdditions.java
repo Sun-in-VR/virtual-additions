@@ -10,6 +10,7 @@ import net.minecraft.util.Identifier;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
+@SuppressWarnings("unused")
 public class VirtualAdditions implements ModInitializer {
 
 	public static final String MODID = "virtual_additions";

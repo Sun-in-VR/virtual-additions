@@ -16,11 +16,8 @@ import net.minecraft.nbt.NbtHelper;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Direction;
 import net.minecraft.world.World;
-import org.jetbrains.annotations.Nullable;
 
 public class SpotlightBlockEntity extends BlockEntity {
-    public final BlockState ON_STATE = VABlocks.SPOTLIGHT_LIGHT.getDefaultState();
-    public final BlockState OFF_STATE = VABlocks.SPOTLIGHT_LIGHT.getDefaultState().with(SpotlightLightBlock.LIT, false);
     private NbtElement lightPos;
 
     public SpotlightBlockEntity(BlockPos pos, BlockState state) {
@@ -81,7 +78,6 @@ public class SpotlightBlockEntity extends BlockEntity {
 
     }
 
-    @Nullable
     private BlockPos getUpdatedLightLocation(World world, BlockPos startPos, Direction direction) {
         BlockPos pos = new BlockPos(startPos.offset(direction));
         if (!world.isAir(pos) && !world.getBlockState(pos).isIn(VABlockTags.SPOTLIGHT_PERMEABLE)) return pos;

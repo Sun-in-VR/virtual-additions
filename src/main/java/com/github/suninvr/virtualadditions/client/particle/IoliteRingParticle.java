@@ -18,6 +18,7 @@ import java.util.function.Consumer;
 /**
  * Most of the code here is reused from {@link ShriekParticle}
  * **/
+@SuppressWarnings("unused")
 public class IoliteRingParticle extends SpriteBillboardParticle {
     private static final Vector3f quarternionVector = Util.make(new Vector3f(0.5F, 0.5F, 0.5F), Vector3f::normalize);
     private static final Vector3f thisIsUsedForSomethingIdkWhat = new Vector3f(-1.0F, -1.0F, 0.0F);
@@ -36,14 +37,8 @@ public class IoliteRingParticle extends SpriteBillboardParticle {
     @Override
     public void buildGeometry(VertexConsumer vertexConsumer, Camera camera, float tickDelta) {
         this.alpha = this.inverse ? MathHelper.clamp(((this.age + tickDelta) / this.maxAge), 0.0F, 1F) : 1 - MathHelper.clamp(((this.age + tickDelta) / this.maxAge), 0.0F, 1.0F);
-        //if (this.age > 6) this.velocityY = 0;
-
-        this.buildGeometry(vertexConsumer, camera, tickDelta, (quaternion) -> {
-            quaternion.mul((new Quaternionf()).rotationX(-1.57079F));
-        });
-        this.buildGeometry(vertexConsumer, camera, tickDelta, (quaternion) -> {
-            quaternion.mul((new Quaternionf()).rotationYXZ(-3.1415927F, 1.57079F, 0.0F));
-        });
+        this.buildGeometry(vertexConsumer, camera, tickDelta, (quaternion) -> quaternion.mul((new Quaternionf()).rotationX(-1.57079F)));
+        this.buildGeometry(vertexConsumer, camera, tickDelta, (quaternion) -> quaternion.mul((new Quaternionf()).rotationYXZ(-3.1415927F, 1.57079F, 0.0F)));
     }
 
     private void buildGeometry(VertexConsumer vertexConsumer, Camera camera, float tickDelta, Consumer<Quaternionf> rotator) {
@@ -73,7 +68,7 @@ public class IoliteRingParticle extends SpriteBillboardParticle {
     }
 
     private void vertex(VertexConsumer vertexConsumer, Vector3f pos, float u, float v, int light) {
-        vertexConsumer.vertex((double)pos.x(), (double)pos.y(), (double)pos.z()).texture(u, v).color(this.red, this.green, this.blue, this.alpha).light(light).next();
+        vertexConsumer.vertex(pos.x(), pos.y(), pos.z()).texture(u, v).color(this.red, this.green, this.blue, this.alpha).light(light).next();
     }
 
     private void applyUv(VertexConsumer vertexConsumer, Vector3f vec3f, float f, float g, int i) {

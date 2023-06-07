@@ -23,8 +23,8 @@ public class VABlockEntities {
         ENTANGLEMENT_DRIVE_BLOCK_ENTITY = register("entanglement_drive", EntanglementDriveBlockEntity::new, VABlocks.ENTANGLEMENT_DRIVE);
         DESTRUCTIVE_SCULK_BLOCK_ENTITY = register("destructive_sculk", DestructiveSculkBlockEntity::new, VABlocks.DESTRUCTIVE_SCULK);
     }
-    public static void init(){
-    }
+
+    public static void init(){}
 
     private static <T extends BlockEntity> BlockEntityType<T> register(String id, FabricBlockEntityTypeBuilder.Factory<T> factory, Block... blocks) {
         return Registry.register(Registries.BLOCK_ENTITY_TYPE, VirtualAdditions.idOf(id), FabricBlockEntityTypeBuilder.create(factory, blocks).build(null));

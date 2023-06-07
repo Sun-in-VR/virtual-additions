@@ -10,6 +10,7 @@ import net.minecraft.util.math.MathHelper;
 // Made with Blockbench 4.5.2
 // Exported for Minecraft version 1.17+ for Yarn
 // Paste this class into your mod and generate all required imports
+@SuppressWarnings({"FieldCanBeLocal", "unused"})
 public class LumwaspEntityModel<T extends LumwaspEntity> extends EntityModel<LumwaspEntity> {
     private final ModelPart body;
     private final ModelPart head;
@@ -85,7 +86,6 @@ public class LumwaspEntityModel<T extends LumwaspEntity> extends EntityModel<Lum
 
     @Override
     public void setAngles(LumwaspEntity entity, float limbAngle, float limbDistance, float animationProgress, float headYaw, float headPitch) {
-        //0.0873F, 0.1745F, -1.3963F
         float u = (float) (Math.sin(animationProgress / 19) / 24);
         float v = (float) (Math.sin(animationProgress / 16) / 12);
         float w = (float) (Math.sin(animationProgress / 22) / 24);
@@ -93,10 +93,6 @@ public class LumwaspEntityModel<T extends LumwaspEntity> extends EntityModel<Lum
         this.head.yaw = headYaw * 0.017453292F;
         this.head.pitch = headPitch  * 0.017453292F;
         this.thorax.yaw = u;
-        //this.left_mandible.yaw = u;
-        //this.left_mandible.pitch = v;
-        //this.right_mandible.yaw = u;
-        //this.right_mandible.pitch = v;
         if (entity.isInAir()) {
             this.left_wing.pitch = (float) (1.0873F + Math.sin(animationProgress * 1.5) * 0.3);
             this.left_wing.yaw = -0.1745F;
@@ -145,18 +141,18 @@ public class LumwaspEntityModel<T extends LumwaspEntity> extends EntityModel<Lum
             float m = Math.abs(MathHelper.sin(limbAngle * 0.6662F + 0.0F) * 0.4F) * limbDistance;
             float n = Math.abs(MathHelper.sin(limbAngle * 0.6662F + 3.1415927F) * 0.4F) * limbDistance;
             float p = Math.abs(MathHelper.sin(limbAngle * 0.6662F + 4.712389F) * 0.4F) * limbDistance;
-            
-            this.front_left_leg.yaw += -p;
+
+            this.front_left_leg.yaw -= p;
             this.front_right_leg.yaw += p;
-            this.middle_left_leg.yaw += -j;
+            this.middle_left_leg.yaw -= j;
             this.middle_right_leg.yaw += j;
-            this.back_left_leg.yaw += -i;
+            this.back_left_leg.yaw -= i;
             this.back_right_leg.yaw += i;
-            this.front_left_leg.roll += -l;
+            this.front_left_leg.roll -= l;
             this.front_right_leg.roll += l;
-            this.middle_left_leg.roll += -n;
+            this.middle_left_leg.roll -= n;
             this.middle_right_leg.roll += n;
-            this.back_left_leg.roll += -m;
+            this.back_left_leg.roll -= m;
             this.back_right_leg.roll += m;
         }
     }

@@ -32,6 +32,7 @@ import net.minecraft.world.WorldView;
 import net.minecraft.world.event.GameEvent;
 import org.jetbrains.annotations.Nullable;
 
+@SuppressWarnings("deprecation")
 public class ClimbingRopeAnchorBlock extends Block implements Waterloggable {
     public static final DirectionProperty FACING = Properties.HOPPER_FACING;
     public static final BooleanProperty WATERLOGGED = Properties.WATERLOGGED;

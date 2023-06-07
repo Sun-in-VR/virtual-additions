@@ -10,6 +10,7 @@ import net.minecraft.registry.Registries;
 
 import java.util.Locale;
 
+@SuppressWarnings("deprecation")
 public record IoliteRingParticleEffect(boolean inverse, double velocity, ParticleType<IoliteRingParticleEffect> type) implements ParticleEffect {
     public static final Factory<IoliteRingParticleEffect> FACTORY_TETHER = new Factory<>() {
         public IoliteRingParticleEffect read(ParticleType<IoliteRingParticleEffect> particleType, StringReader stringReader) throws CommandSyntaxException {

@@ -34,6 +34,7 @@ import org.jetbrains.annotations.Nullable;
 import java.util.UUID;
 import java.util.concurrent.atomic.AtomicReference;
 
+@SuppressWarnings("unused")
 public class EntanglementDriveScreenHandler extends ScreenHandler {
 
     public static final Identifier ENTANGLEMENT_DRIVE_ACTIVE_SLOT_SYNC_ID = VirtualAdditions.idOf("entanglement_drive_active_slot_sync");
@@ -200,13 +201,13 @@ public class EntanglementDriveScreenHandler extends ScreenHandler {
         if (this.selectedSlot == null) return;
         int slotIndex = this.selectedSlot.getIndex();
 
-        if (this.getEntity() instanceof EntanglementDriveBlockEntity entity && !(entity.getWorld() == null) && !entity.getWorld().isClient() ) {
+        if (this.getEntity() instanceof EntanglementDriveBlockEntity blockEntity && !(blockEntity.getWorld() == null) && !blockEntity.getWorld().isClient() ) {
             this.slotSelected = false;
-            entity.setPlayerSlot(player, slotIndex, this.selectedSlot.id);
+            blockEntity.setPlayerSlot(player, slotIndex, this.selectedSlot.id);
             PacketByteBuf buf = PacketByteBufs.create();
-            entity.writeScreenData(buf);
+            blockEntity.writeScreenData(buf);
             ServerPlayNetworking.send((ServerPlayerEntity) player, ENTANGLEMENT_DRIVE_ACTIVE_SLOT_SYNC_ID, buf);
-            entity.getWorld().playSound(null, entity.getPos(), VASoundEvents.BLOCK_ENTANGLEMENT_DRIVE_USE, SoundCategory.BLOCKS, 1.0F, 1.0F);
+            blockEntity.getWorld().playSound(null, blockEntity.getPos(), VASoundEvents.BLOCK_ENTANGLEMENT_DRIVE_USE, SoundCategory.BLOCKS, 1.0F, 1.0F);
             VAAdvancementCriteria.USE_ENTANGLEMENT_DRIVE.trigger((ServerPlayerEntity) player);
 
             this.inventory.clear();

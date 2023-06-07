@@ -13,6 +13,7 @@ import net.minecraft.resource.featuretoggle.FeatureFlag;
 
 import static com.github.suninvr.virtualadditions.VirtualAdditions.idOf;
 
+@SuppressWarnings({"UnstableApiUsage", "unused"})
 public class RegistryHelper {
 
     public static class BlockRegistryHelper {
@@ -28,7 +29,6 @@ public class RegistryHelper {
         }
 
     }
-
     public static class ItemHelper {
 
         public record ToolSet(Item SWORD, Item SHOVEL, Item PICKAXE, Item AXE, Item HOE, String NAME){}

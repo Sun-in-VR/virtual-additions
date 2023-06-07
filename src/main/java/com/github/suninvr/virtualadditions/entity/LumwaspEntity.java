@@ -27,7 +27,6 @@ import net.minecraft.sound.SoundEvents;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 import net.minecraft.world.WorldView;
-import org.jetbrains.annotations.Nullable;
 
 public class LumwaspEntity extends HostileEntity implements RangedAttackMob, Flutterer {
     public LumwaspEntity(EntityType<? extends HostileEntity> entityType, World world) {
@@ -93,7 +92,8 @@ public class LumwaspEntity extends HostileEntity implements RangedAttackMob, Flu
                 if (this.world.isSkyVisible(BlockPos.ofFloored(this.entity.getX(), this.entity.getY() + 0.5, this.entity.getZ()))) {
                     return;
                 }
-                for(int i = 0; i < this.currentPath.getLength(); ++i) {
+                if (this.currentPath != null) {
+                    for (int i = 0; i < this.currentPath.getLength(); ++i) {
                         PathNode pathNode = this.currentPath.getNode(i);
                         if (this.world.isSkyVisible(new BlockPos(pathNode.x, pathNode.y, pathNode.z))) {
                             this.currentPath.setLength(i);
@@ -101,6 +101,7 @@ public class LumwaspEntity extends HostileEntity implements RangedAttackMob, Flu
                         }
                     }
                 }
+            }
         };
         birdNavigation.setCanPathThroughDoors(false);
         birdNavigation.setCanSwim(false);
@@ -110,12 +111,6 @@ public class LumwaspEntity extends HostileEntity implements RangedAttackMob, Flu
 
     public EntityGroup getGroup() {
         return EntityGroup.ARTHROPOD;
-    }
-
-    @Nullable
-    @Override
-    protected SoundEvent getAmbientSound() {
-        return null;
     }
 
     @Override
@@ -202,7 +197,7 @@ public class LumwaspEntity extends HostileEntity implements RangedAttackMob, Flu
     }
     private static class AlwaysEscapeSunlightGoal extends EscapeSunlightGoal {
 
-        private World world;
+        private final World world;
 
         public AlwaysEscapeSunlightGoal(PathAwareEntity mob, double speed) {
             super(mob, speed);

@@ -17,17 +17,17 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.function.BiFunction;
 
-public abstract class GildType {
+public class GildType {
     private final ArrayList<Modifier> modifiers = new ArrayList<>();
     private final Identifier id;
     private final int color;
-    protected record Modifier(ModifierType type, float modifier, BiFunction<Float, Float, Float> function){
+    protected record Modifier(ModifierType type, float value, BiFunction<Float, Float, Float> function){
         public float apply(float f) {
-            return this.function.apply(f, this.modifier);
+            return this.function.apply(f, this.value);
         }
 
         public int apply(int i) {
-            return Math.round(this.function.apply((float) i, this.modifier));
+            return Math.round(this.function.apply((float) i, this.value));
         }
     }
 
@@ -37,43 +37,91 @@ public abstract class GildType {
         this.modifiers.addAll(Arrays.asList(modifiers));
     }
 
+    /**
+     * Gets whether the gild should play effects or affect the world after breaking a specific block.
+     *
+     * @return <code>true</code> if the gild type is effective, <code>false</code> if it is not effective.
+     *
+     * @param world the world in which the block was broken
+     * @param pos the position of the block that was broken
+     * @param player the player that broke the block
+     * @param state the state of the broken block
+     * @param tool the tool used to break the block
+     *
+     * **/
     public boolean isGildEffective(World world, PlayerEntity player, BlockPos pos, BlockState state, ItemStack tool) {
         return tool.isSuitableFor(state);
     }
 
-    public void emitBlockBreakingEffects(World world, PlayerEntity player, BlockPos pos, BlockState state, ItemStack tool) {}
+    /**
+     * Plays effects in the world after a tool with this gild type breaks a block.
+     *
+     * @param world the world in which the block was broken
+     * @param pos the position of the block that was broken
+     * @param tool the tool used to break the block
+     * **/
+    public void emitBlockBreakingEffects(World world, BlockPos pos, ItemStack tool) {}
 
+    /**
+     * Affects the world after a tool with this gild type breaks a block.
+     *
+     * @return <code>true</code> if the block should still break normally, <code>false</code> if it should not.
+     *
+     * @param world the world in which the block was broken
+     * @param pos the position of the block that was broken
+     * @param player the player that broke the block
+     * @param state the state of the broken block
+     * @param tool the tool used to break the block
+     *
+     * @implNote Returning false will disable <b>all effects</b> of breaking a block, such damaging the tool and increasing the player's relevant stats.
+     *
+     * **/
     public boolean onBlockBroken(World world, PlayerEntity player, BlockPos pos, BlockState state, ItemStack tool) {
         return true;
     }
 
-    public ToolMaterial getModifiedMaterial(ToolMaterial baseMaterial) {
+    /**
+     * Modifies a given tool material with the modifications provided at the gild type's creation.
+     *
+     * @return a new tool material with modifiers applied
+     *
+     * @param baseMaterial the tool material to apply this gild type's modifications to
+     *
+     * **/
+    public final ToolMaterial getModifiedMaterial(ToolMaterial baseMaterial) {
         if (this.modifiers.isEmpty() || !this.shouldModifyBaseMaterial()) return baseMaterial;
         
-        int modifiedDurability = baseMaterial.getDurability();
-        float modifiedMiningSpeedMultiplier = baseMaterial.getMiningSpeedMultiplier();
-        float modifiedAttackDamage = baseMaterial.getAttackDamage();
-        int modifiedMiningLevel = baseMaterial.getMiningLevel();
-        int modifiedEnchantability = baseMaterial.getEnchantability();
+        int durability = baseMaterial.getDurability();
+        float miningSpeed = baseMaterial.getMiningSpeedMultiplier();
+        float attackDamage = baseMaterial.getAttackDamage();
+        int miningLevel = baseMaterial.getMiningLevel();
+        int enchantability = baseMaterial.getEnchantability();
 
         for (Modifier modifier : this.modifiers) {
             switch (modifier.type) {
-                case DURABILITY -> modifiedDurability = modifier.apply(modifiedDurability);
-                case MINING_SPEED -> modifiedMiningSpeedMultiplier = modifier.apply(modifiedMiningSpeedMultiplier);
-                case ATTACK_DAMAGE -> modifiedAttackDamage = modifier.apply(modifiedAttackDamage);
-                case MINING_LEVEL -> modifiedMiningLevel = modifier.apply(modifiedMiningLevel);
-                case ENCHANTABILITY -> modifiedEnchantability = modifier.apply(modifiedEnchantability);
+                case DURABILITY -> durability = modifier.apply(durability);
+                case MINING_SPEED -> miningSpeed = modifier.apply(miningSpeed);
+                case ATTACK_DAMAGE -> attackDamage = modifier.apply(attackDamage);
+                case MINING_LEVEL -> miningLevel = modifier.apply(miningLevel);
+                case ENCHANTABILITY -> enchantability = modifier.apply(enchantability);
             }
         }
 
-        return new ModifiedToolMaterial(modifiedMiningLevel, modifiedDurability, modifiedMiningSpeedMultiplier, modifiedAttackDamage, modifiedEnchantability, baseMaterial.getRepairIngredient());
+        return new ModifiedToolMaterial(miningLevel, durability, miningSpeed, attackDamage, enchantability, baseMaterial.getRepairIngredient());
     }
 
+    /**
+     * Get a value for attack speed from a base item.
+     *
+     * @return the modified attack speed value
+     *
+     * @param baseItem the item from which the base attack speed is obtained
+     *
+     * **/
     public double getModifiedAttackSpeed(ToolItem baseItem) {
         double attackSpeed = baseItem.getAttributeModifiers(EquipmentSlot.MAINHAND).get(EntityAttributes.GENERIC_ATTACK_SPEED).stream().mapToDouble(EntityAttributeModifier::getValue).sum();
         for (Modifier modifier : this.modifiers) {
             if (modifier.type.equals(ModifierType.ATTACK_SPEED)) attackSpeed = modifier.apply((float) attackSpeed);
-            attackSpeed = Math.round(attackSpeed * 10) / 10.0;
         }
         return attackSpeed;
     }
@@ -103,7 +151,7 @@ public abstract class GildType {
 
     @Override
     public final boolean equals(Object obj) {
-        return obj instanceof GildType gildType && gildType.getId().equals(id);
+        return (obj instanceof GildType gildType && gildType.getId().equals(this.id)) || (obj instanceof Identifier identifier && identifier.equals(this.id));
     }
 
     protected enum ModifierType {
@@ -114,7 +162,7 @@ public abstract class GildType {
         ENCHANTABILITY,
         ATTACK_SPEED(false);
 
-        private boolean modifiesBaseMaterial;
+        private final boolean modifiesBaseMaterial;
 
         ModifierType(boolean modifiesBaseMaterial) {
             this.modifiesBaseMaterial = modifiesBaseMaterial;

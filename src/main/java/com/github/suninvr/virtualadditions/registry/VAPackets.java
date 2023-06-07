@@ -10,7 +10,6 @@ public class VAPackets {
     public static Identifier ENTANGLEMENT_DRIVE_ACTIVE_SLOT_SYNC_ID = VirtualAdditions.idOf("entanglement_drive_active_slot_sync");
     public static Identifier ENTANGLEMENT_DRIVE_SELECTED_SLOT_SYNC_ID = VirtualAdditions.idOf("entanglement_drive_selected_slot_sync");
     public static Identifier ENTANGLEMENT_DRIVE_SET_ACTIVE_SLOT_ID = VirtualAdditions.idOf("entanglement_drive_set_active_slot");
-    public static void init(){};
 
     static {
         ServerPlayNetworking.registerGlobalReceiver(ENTANGLEMENT_DRIVE_SET_ACTIVE_SLOT_ID, ((server, player, handler, buf, responseSender) -> {
@@ -19,6 +18,8 @@ public class VAPackets {
             }
         }));
     }
+
+    public static void init(){}
 
 
 }

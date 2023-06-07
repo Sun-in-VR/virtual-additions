@@ -29,6 +29,7 @@ import java.util.Collections;
 import java.util.List;
 import java.util.UUID;
 
+@SuppressWarnings("deprecation")
 public class DestructiveSculkBlock extends BlockWithEntity {
     public static final BooleanProperty SPREADING = BooleanProperty.of("spreading");
     public static final BooleanProperty ORIGIN = BooleanProperty.of("origin");
@@ -55,6 +56,12 @@ public class DestructiveSculkBlock extends BlockWithEntity {
             destructiveSculkBlockEntity.setTool(tool);
             destructiveSculkBlockEntity.setPotency(potency);
         }
+    }
+
+    public static void placeState(World world, BlockPos pos, BlockState replacedState, UUID playerId, ItemStack tool, int potency) {
+        world.setBlockState(pos, VABlocks.DESTRUCTIVE_SCULK.getDefaultState().with(DestructiveSculkBlock.ORIGIN, true));
+        world.scheduleBlockTick(pos, VABlocks.DESTRUCTIVE_SCULK, 2);
+        DestructiveSculkBlock.setData(world, pos, replacedState, playerId, tool, potency);
     }
 
     @Override

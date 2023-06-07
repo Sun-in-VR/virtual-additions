@@ -14,6 +14,7 @@ import net.minecraft.util.shape.VoxelShapes;
 import net.minecraft.world.BlockView;
 import net.minecraft.world.WorldAccess;
 
+@SuppressWarnings("deprecation")
 public class HedgeBlock extends HorizontalConnectingBlock {
     public HedgeBlock(Settings settings) {
         super(4.0F, 4.0F, 16.0F, 16.0F, 24.0F, settings);

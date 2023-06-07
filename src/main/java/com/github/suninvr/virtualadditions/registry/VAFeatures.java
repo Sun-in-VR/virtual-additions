@@ -15,10 +15,10 @@ import net.minecraft.world.gen.feature.PlacedFeatures;
 
 import static com.github.suninvr.virtualadditions.VirtualAdditions.idOf;
 
+@SuppressWarnings("SameParameterValue")
 public class VAFeatures {
     public static final RegistryKey<PlacedFeature> ORE_IOLITE;
     public static final Feature<DefaultFeatureConfig> LUMWASP_NEST;
-
 
     static {
         ORE_IOLITE = register("ore_iolite");

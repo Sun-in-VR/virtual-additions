@@ -10,11 +10,11 @@ import static com.github.suninvr.virtualadditions.VirtualAdditions.idOf;
 public class VAStatusEffects {
     public static final StatusEffect IOLITE_INTERFERENCE;
 
-    public static void init(){};
-
     static {
         IOLITE_INTERFERENCE = Registry.register(Registries.STATUS_EFFECT, idOf("iolite_interference"), new CustomStatusEffect(StatusEffectCategory.HARMFUL, 0x9a5bff));
     }
+
+    public static void init(){}
 
     protected static class CustomStatusEffect extends StatusEffect {
         protected CustomStatusEffect(StatusEffectCategory category, int color) {

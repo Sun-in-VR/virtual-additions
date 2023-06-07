@@ -7,7 +7,6 @@ import net.minecraft.entity.EntityType;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.projectile.ProjectileEntity;
 import net.minecraft.entity.projectile.ProjectileUtil;
-import net.minecraft.nbt.NbtCompound;
 import net.minecraft.util.hit.BlockHitResult;
 import net.minecraft.util.hit.EntityHitResult;
 import net.minecraft.util.hit.HitResult;
@@ -16,8 +15,6 @@ import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.World;
 
 public class AcidSpitEntity extends ProjectileEntity {
-    NbtCompound stackNbt;
-    int fuseLength;
 
     public AcidSpitEntity(EntityType<? extends ProjectileEntity> entityType, World world) {
         super(entityType, world);
@@ -39,15 +36,15 @@ public class AcidSpitEntity extends ProjectileEntity {
         double f = this.getZ() + vec3d.z;
         this.updateRotation();
         float g = 0.99F;
-        float h = 0.06F;
+        float h = -0.06F;
         if (this.getWorld().getStatesInBox(this.getBoundingBox()).noneMatch(AbstractBlock.AbstractBlockState::isAir)) {
             this.discard();
         } else if (this.isInsideWaterOrBubbleColumn()) {
             this.discard();
         } else {
-            this.setVelocity(vec3d.multiply(0.9900000095367432));
+            this.setVelocity(vec3d.multiply(g));
             if (!this.hasNoGravity()) {
-                this.setVelocity(this.getVelocity().add(0.0, -0.05999999865889549, 0.0));
+                this.setVelocity(this.getVelocity().add(0.0, h, 0.0));
             }
 
             this.setPosition(d, e, f);
