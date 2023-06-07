@@ -3,7 +3,17 @@
   "values": [
     "minecraft:stone",
     "minecraft:cobblestone",
+    "minecraft:granite",
+    "minecraft:diorite",
+    "minecraft:andesite",
+    "minecraft:tuff",
     "minecraft:deepslate",
-    "minecraft:cobbled_deepslate"
+    "minecraft:cobbled_deepslate",
+    "virtual_additions:hornfels",
+    "virtual_additions:cobbled_hornfels",
+    "virtual_additions:blueschist",
+    "virtual_additions:cobbled_blueschist",
+    "virtual_additions:syenite",
+    "virtual_additions:cobbled_syenite"
   ]
 }

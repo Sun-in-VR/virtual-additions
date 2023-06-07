@@ -212,8 +212,8 @@
 
     "item.virtual_additions.smithing_template.tool_gild.applies_to": "Tools",
     "item.virtual_additions.smithing_template.tool_gild.ingredients": "Tool Gild Materials",
-    "item.virtual_additions.smithing_template.tool_gild.base_slot_description": "Put any Iron or better tool here",
-    "item.virtual_additions.smithing_template.tool_gild.additions_slot_description": "Put a Gild Material here",
+    "item.virtual_additions.smithing_template.tool_gild.base_slot_description": "Add metal or crystal tool",
+    "item.virtual_additions.smithing_template.tool_gild.additions_slot_description": "Add gild material",
 
     "trim_material.virtual_additions.steel": "Steel Material",
     "trim_material.virtual_additions.iolite": "Iolite Material"
