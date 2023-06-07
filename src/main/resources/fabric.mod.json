@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "id": "virtual_additions",
+  "id": "virtual-additions",
   "version": "${version}",
 
   "name": "Virtual Additions",
