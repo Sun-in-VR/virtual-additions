@@ -7,7 +7,7 @@ import net.minecraft.client.render.entity.ProjectileEntityRenderer;
 import net.minecraft.util.Identifier;
 
 public class ClimbingRopeEntityRenderer extends ProjectileEntityRenderer<ClimbingRopeEntity> {
-    public static final Identifier TEXTURE = new Identifier(VirtualAdditions.MODID, "textures/entity/projectiles/climbing_rope.png");
+    public static final Identifier TEXTURE = new Identifier(VirtualAdditions.NAMESPACE, "textures/entity/projectiles/climbing_rope.png");
 
     public ClimbingRopeEntityRenderer(EntityRendererFactory.Context context) {
         super(context);

@@ -13,7 +13,8 @@ import org.apache.logging.log4j.Logger;
 @SuppressWarnings("unused")
 public class VirtualAdditions implements ModInitializer {
 
-	public static final String MODID = "virtual_additions";
+	public static final String MODID = "virtual-additions";
+	public static final String NAMESPACE = "virtual_additions";
 	public static final String MODNAME = "Virtual Additions";
 	public static FeatureFlag PREVIEW;
 
@@ -51,12 +52,11 @@ public class VirtualAdditions implements ModInitializer {
 
 	/**
 	 * Returns a new ID for this mod.
-	 * This will appear in game as "MODID:id",
-	 * where MODID = the value defined in MODID
+	 * This will appear in game as "{@code NAMESPACE:id}"
 	 *
 	 * @param id The identifier's path.
 	 * **/
 	public static Identifier idOf(String id) {
-		return new Identifier(MODID, id);
+		return new Identifier(NAMESPACE, id);
 	}
 }
