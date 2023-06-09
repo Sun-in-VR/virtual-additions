@@ -121,6 +121,9 @@
     "container.virtual_additions.entanglement_drive.payment_slot_hint": "Put an Iolite gemstone here",
     "container.virtual_additions.entanglement_drive.confirm_button": "Confirm selection",
 
+    "datapack.virtual_additions.preview": "VA Preview",
+    "datapack.virtual_additions.worldgen": "VA Worldgen",
+
     "effect.virtual_additions.iolite_interference": "Interference",
 
     "entity.virtual_additions.climbing_rope": "Climbing Rope",
