@@ -58,4 +58,9 @@ public class GildedSwordItem extends SwordItem implements GildedToolItem {
     public String getTranslationKey() {
         return baseItem.getTranslationKey();
     }
+
+    @Override
+    public Item getBaseItem() {
+        return baseItem;
+    }
 }

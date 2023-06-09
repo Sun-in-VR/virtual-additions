@@ -28,7 +28,6 @@ public abstract class ClientPlayerInteractionManagerMixin {
     private BlockState brokenState;
     private final MinecraftClient client = MinecraftClient.getInstance();
 
-    //Get that block before it breaks!
     @Inject(method = "breakBlock", at = @At("HEAD"))
     private void virtualAdditions$setBrokenBlockState(BlockPos pos, CallbackInfoReturnable<Boolean> cir) {
         if (client.world != null) this.brokenState = client.world.getBlockState(pos);

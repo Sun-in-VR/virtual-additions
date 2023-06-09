@@ -58,4 +58,9 @@ public class GildedPickaxeItem extends PickaxeItem implements GildedToolItem {
     public String getTranslationKey() {
         return baseItem.getTranslationKey();
     }
+
+    @Override
+    public Item getBaseItem() {
+        return baseItem;
+    }
 }
