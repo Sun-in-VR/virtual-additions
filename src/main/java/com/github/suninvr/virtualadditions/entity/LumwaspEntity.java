@@ -2,10 +2,7 @@ package com.github.suninvr.virtualadditions.entity;
 
 import com.github.suninvr.virtualadditions.registry.VASoundEvents;
 import net.minecraft.block.BlockState;
-import net.minecraft.entity.EntityGroup;
-import net.minecraft.entity.EntityType;
-import net.minecraft.entity.Flutterer;
-import net.minecraft.entity.LivingEntity;
+import net.minecraft.entity.*;
 import net.minecraft.entity.ai.RangedAttackMob;
 import net.minecraft.entity.ai.control.FlightMoveControl;
 import net.minecraft.entity.ai.goal.*;
@@ -16,6 +13,8 @@ import net.minecraft.entity.ai.pathing.PathNodeType;
 import net.minecraft.entity.attribute.DefaultAttributeContainer;
 import net.minecraft.entity.attribute.EntityAttributes;
 import net.minecraft.entity.damage.DamageSource;
+import net.minecraft.entity.effect.StatusEffectInstance;
+import net.minecraft.entity.effect.StatusEffects;
 import net.minecraft.entity.mob.HostileEntity;
 import net.minecraft.entity.mob.MobEntity;
 import net.minecraft.entity.mob.PathAwareEntity;
@@ -161,6 +160,24 @@ public class LumwaspEntity extends HostileEntity implements RangedAttackMob, Flu
         if (this.isInsideWaterOrBubbleColumn()) {
             this.damage(this.getDamageSources().drown(), 1.0F);
         }
+    }
+
+    @Override
+    public boolean tryAttack(Entity target) {
+        boolean bl = super.tryAttack(target);
+        if (bl && target instanceof LivingEntity livingEntity) {
+            if (!this.getStatusEffects().isEmpty()) {
+                for (StatusEffectInstance statusEffect : this.getStatusEffects()) {
+                    livingEntity.addStatusEffect(statusEffect, this);
+                }
+            } else {
+                int duration = 100;
+                duration += (this.getWorld().getDifficulty().getId() - 1) * 50;
+                livingEntity.addStatusEffect(new StatusEffectInstance(StatusEffects.WEAKNESS, duration), this);
+            }
+
+        }
+        return bl;
     }
 
     private static class MeleeCloseRangeGoal extends MeleeAttackGoal {
