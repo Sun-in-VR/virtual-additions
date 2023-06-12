@@ -1,9 +1,11 @@
 package com.github.suninvr.virtualadditions.block;
 
+import com.github.suninvr.virtualadditions.registry.VAItems;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.CropBlock;
 import net.minecraft.block.ShapeContext;
+import net.minecraft.item.ItemConvertible;
 import net.minecraft.item.ItemPlacementContext;
 import net.minecraft.server.world.ServerWorld;
 import net.minecraft.state.StateManager;
@@ -55,6 +57,11 @@ public class CornCropBlock extends CropBlock {
                 }
             }
         }
+    }
+
+    @Override
+    protected ItemConvertible getSeedsItem() {
+        return VAItems.CORN;
     }
 
     public void applyGrowth(World world, BlockPos pos, BlockState state) {
