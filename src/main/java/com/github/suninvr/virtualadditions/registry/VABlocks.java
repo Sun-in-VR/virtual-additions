@@ -26,6 +26,7 @@ public class VABlocks {
     public static final Block CUT_STEEL;
     public static final Block CUT_STEEL_STAIRS;
     public static final Block CUT_STEEL_SLAB;
+    public static final Block STEEL_FENCE;
     public static final Block STEEL_DOOR;
     public static final Block STEEL_TRAPDOOR;
     public static final Block HORNFELS;
@@ -124,6 +125,7 @@ public class VABlocks {
         CUT_STEEL = register("cut_steel", new Block(FabricBlockSettings.copyOf(STEEL_BLOCK).strength(3.0F, 300.0F)));
         CUT_STEEL_STAIRS = register("cut_steel_stairs", new StairsBlock(CUT_STEEL.getDefaultState(), FabricBlockSettings.copyOf(CUT_STEEL)));
         CUT_STEEL_SLAB = register("cut_steel_slab", new SlabBlock(FabricBlockSettings.copyOf(CUT_STEEL)));
+        STEEL_FENCE = register("steel_fence", new FenceBlock(FabricBlockSettings.copyOf(CUT_STEEL)));
         STEEL_DOOR = register("steel_door", new SteelDoorBlock(FabricBlockSettings.copyOf(STEEL_BLOCK).nonOpaque().pistonBehavior(PistonBehavior.DESTROY)));
         STEEL_TRAPDOOR = register("steel_trapdoor", new SteelTrapdoorBlock(FabricBlockSettings.copyOf(STEEL_DOOR)));
 
