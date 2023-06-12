@@ -492,7 +492,13 @@ public class VAItems {
                         .with(ItemEntry.builder(Items.AIR).weight(15));
                 tableBuilder.pool(builder);
             }
-        }); // Village Toolsmith Chest
+        }); // Village Toolsmith and Weaponsmith Chests
+        LootTableEvents.MODIFY.register( (resourceManager, lootManager, id, tableBuilder, source) -> {
+            if (!source.isBuiltin()) return;
+            if (LootTables.VILLAGE_SAVANNA_HOUSE_CHEST.equals(id) || LootTables.VILLAGE_DESERT_HOUSE_CHEST.equals(id)) {
+                tableBuilder.modifyPools( builder -> builder.with(ItemEntry.builder(CORN).weight(5).apply(SetCountLootFunction.builder(UniformLootNumberProvider.create(1, 4)))));
+            }
+        }); // Village Savannah and Desert House Chests
         LootTableEvents.MODIFY.register( (resourceManager, lootManager, id, tableBuilder, source) -> {
             if (!source.isBuiltin()) return;
             if (LootTables.JUNGLE_TEMPLE_CHEST.equals(id)) {

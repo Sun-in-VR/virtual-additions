@@ -3,59 +3,22 @@
   "pools": [
     {
       "rolls": 1,
-      "bonus_rolls": 0,
-      "entries": [
-        {
-          "type": "minecraft:alternatives",
-          "children": [
-            {
-              "type": "minecraft:item",
-              "name": "virtual_additions:cotton",
-              "conditions": [
-                {
-                  "condition": "minecraft:block_state_property",
-                  "block": "virtual_additions:cotton",
-                  "properties": {
-                    "age": "7"
-                  }
-                }
-              ]
-            },
-            {
-              "type": "minecraft:item",
-              "name": "virtual_additions:cotton_seeds"
-            }
-          ]
-        }
-      ]
-    },
-    {
-      "rolls": 1,
-      "bonus_rolls": 0,
       "entries": [
         {
           "type": "minecraft:item",
           "name": "virtual_additions:cotton_seeds",
-          "functions": [
+          "conditions": [
             {
-              "function": "minecraft:apply_bonus",
-              "enchantment": "minecraft:fortune",
-              "formula": "minecraft:binomial_with_bonus_count",
-              "parameters": {
-                "extra": 3,
-                "probability": 0.5714286
+              "condition": "minecraft:inverted",
+              "term": {
+                "condition": "minecraft:block_state_property",
+                "block": "virtual_additions:cotton",
+                "properties": {
+                  "age": "7"
+                }
               }
             }
           ]
-        }
-      ],
-      "conditions": [
-        {
-          "condition": "minecraft:block_state_property",
-          "block": "virtual_additions:cotton",
-          "properties": {
-            "age": "7"
-          }
         }
       ]
     },
@@ -71,20 +34,20 @@
               "enchantment": "minecraft:fortune",
               "formula": "minecraft:binomial_with_bonus_count",
               "parameters": {
-                "extra": 2,
+                "extra": 3,
                 "probability": 0.5714286
               }
             }
+          ],
+          "conditions": [
+            {
+              "condition": "minecraft:block_state_property",
+              "block": "virtual_additions:cotton",
+              "properties": {
+                "age": "7"
+              }
+            }
           ]
-        }
-      ],
-      "conditions": [
-        {
-          "condition": "minecraft:block_state_property",
-          "block": "virtual_additions:cotton",
-          "properties": {
-            "age": "7"
-          }
         }
       ]
     }
