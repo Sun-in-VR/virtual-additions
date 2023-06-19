@@ -4,7 +4,6 @@
     "color": "#868697",
     "translate": "trim_material.virtual_additions.steel"
   },
-  "incompatible_armor_material": "steel",
   "ingredient": "virtual_additions:steel_ingot",
   "item_model_index": 0.0
 }

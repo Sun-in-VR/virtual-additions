@@ -15,7 +15,7 @@ import java.util.function.Supplier;
 public class CustomArmorMaterial implements ArmorMaterial {
 
     public static final CustomArmorMaterial STEEL = new CustomArmorMaterial(
-            "steel", 27, Util.make(new EnumMap(ArmorItem.Type.class), (enumMap -> {
+            "virtual_additions_steel", 27, Util.make(new EnumMap(ArmorItem.Type.class), (enumMap -> {
         enumMap.put(ArmorItem.Type.BOOTS, 2);
         enumMap.put(ArmorItem.Type.LEGGINGS, 5);
         enumMap.put(ArmorItem.Type.CHESTPLATE, 6);
