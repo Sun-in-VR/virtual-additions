@@ -1,0 +1,6 @@
+{
+  "parent": "minecraft:item/handheld",
+  "textures": {
+    "layer0": "virtual_additions:item/gilded_tools/amethyst/netherite_sword"
+  }
+}

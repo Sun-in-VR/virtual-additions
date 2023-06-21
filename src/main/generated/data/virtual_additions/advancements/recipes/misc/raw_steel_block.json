@@ -1,0 +1,35 @@
+{
+  "parent": "minecraft:recipes/root",
+  "criteria": {
+    "has_the_recipe": {
+      "conditions": {
+        "recipe": "virtual_additions:raw_steel_block"
+      },
+      "trigger": "minecraft:recipe_unlocked"
+    },
+    "steel_ingot": {
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "virtual_additions:raw_steel"
+            ]
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    }
+  },
+  "requirements": [
+    [
+      "steel_ingot",
+      "has_the_recipe"
+    ]
+  ],
+  "rewards": {
+    "recipes": [
+      "virtual_additions:raw_steel_block"
+    ]
+  },
+  "sends_telemetry_event": false
+}

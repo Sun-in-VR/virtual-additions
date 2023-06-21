@@ -1,0 +1,30 @@
+{
+  "replace": false,
+  "values": [
+    "virtual_additions:amethyst_golden_axe",
+    "virtual_additions:amethyst_golden_hoe",
+    "virtual_additions:amethyst_golden_pickaxe",
+    "virtual_additions:amethyst_golden_shovel",
+    "virtual_additions:amethyst_golden_sword",
+    "virtual_additions:copper_golden_axe",
+    "virtual_additions:copper_golden_hoe",
+    "virtual_additions:copper_golden_pickaxe",
+    "virtual_additions:copper_golden_shovel",
+    "virtual_additions:copper_golden_sword",
+    "virtual_additions:emerald_golden_axe",
+    "virtual_additions:emerald_golden_hoe",
+    "virtual_additions:emerald_golden_pickaxe",
+    "virtual_additions:emerald_golden_shovel",
+    "virtual_additions:emerald_golden_sword",
+    "virtual_additions:quartz_golden_axe",
+    "virtual_additions:quartz_golden_hoe",
+    "virtual_additions:quartz_golden_pickaxe",
+    "virtual_additions:quartz_golden_shovel",
+    "virtual_additions:quartz_golden_sword",
+    "virtual_additions:sculk_golden_axe",
+    "virtual_additions:sculk_golden_hoe",
+    "virtual_additions:sculk_golden_pickaxe",
+    "virtual_additions:sculk_golden_shovel",
+    "virtual_additions:sculk_golden_sword"
+  ]
+}

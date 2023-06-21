@@ -1,0 +1,15 @@
+{
+  "type": "minecraft:smithing_transform",
+  "addition": {
+    "item": "minecraft:emerald"
+  },
+  "base": {
+    "item": "minecraft:diamond_pickaxe"
+  },
+  "result": {
+    "item": "virtual_additions:emerald_diamond_pickaxe"
+  },
+  "template": {
+    "item": "virtual_additions:tool_gild_smithing_template"
+  }
+}

@@ -1,0 +1,24 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "redstone",
+  "key": {
+    "#": {
+      "item": "virtual_additions:iolite"
+    },
+    "N": {
+      "item": "minecraft:nether_star"
+    },
+    "s": {
+      "item": "virtual_additions:steel_ingot"
+    }
+  },
+  "pattern": [
+    "s#s",
+    "sNs",
+    "s#s"
+  ],
+  "result": {
+    "item": "virtual_additions:entanglement_drive"
+  },
+  "show_notification": true
+}

@@ -14,7 +14,7 @@ import org.apache.logging.log4j.Logger;
 @SuppressWarnings("unused")
 public class VirtualAdditions implements ModInitializer {
 
-	public static final String MODID = "virtual-additions";
+	public static final String MODID = "virtual_additions";
 	public static final String NAMESPACE = "virtual_additions";
 	public static final String MODNAME = "Virtual Additions";
 	public static FeatureFlag PREVIEW;

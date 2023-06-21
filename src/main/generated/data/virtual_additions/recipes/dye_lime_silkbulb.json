@@ -1,0 +1,63 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "category": "building",
+  "group": "silkbulbs",
+  "ingredients": [
+    {
+      "item": "minecraft:lime_dye"
+    },
+    [
+      {
+        "item": "virtual_additions:black_silkbulb"
+      },
+      {
+        "item": "virtual_additions:blue_silkbulb"
+      },
+      {
+        "item": "virtual_additions:brown_silkbulb"
+      },
+      {
+        "item": "virtual_additions:cyan_silkbulb"
+      },
+      {
+        "item": "virtual_additions:gray_silkbulb"
+      },
+      {
+        "item": "virtual_additions:green_silkbulb"
+      },
+      {
+        "item": "virtual_additions:light_blue_silkbulb"
+      },
+      {
+        "item": "virtual_additions:light_gray_silkbulb"
+      },
+      {
+        "item": "virtual_additions:magenta_silkbulb"
+      },
+      {
+        "item": "virtual_additions:orange_silkbulb"
+      },
+      {
+        "item": "virtual_additions:pink_silkbulb"
+      },
+      {
+        "item": "virtual_additions:purple_silkbulb"
+      },
+      {
+        "item": "virtual_additions:red_silkbulb"
+      },
+      {
+        "item": "virtual_additions:yellow_silkbulb"
+      },
+      {
+        "item": "virtual_additions:white_silkbulb"
+      },
+      {
+        "item": "virtual_additions:silkbulb"
+      }
+    ]
+  ],
+  "result": {
+    "item": "virtual_additions:lime_silkbulb"
+  }
+}

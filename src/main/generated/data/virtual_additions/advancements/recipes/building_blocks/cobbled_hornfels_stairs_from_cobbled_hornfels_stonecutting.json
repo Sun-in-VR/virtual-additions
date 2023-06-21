@@ -1,0 +1,35 @@
+{
+  "parent": "minecraft:recipes/root",
+  "criteria": {
+    "has_cobbled_hornfels": {
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "virtual_additions:cobbled_hornfels"
+            ]
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    },
+    "has_the_recipe": {
+      "conditions": {
+        "recipe": "minecraft:cobbled_hornfels_stairs_from_cobbled_hornfels_stonecutting"
+      },
+      "trigger": "minecraft:recipe_unlocked"
+    }
+  },
+  "requirements": [
+    [
+      "has_cobbled_hornfels",
+      "has_the_recipe"
+    ]
+  ],
+  "rewards": {
+    "recipes": [
+      "minecraft:cobbled_hornfels_stairs_from_cobbled_hornfels_stonecutting"
+    ]
+  },
+  "sends_telemetry_event": false
+}

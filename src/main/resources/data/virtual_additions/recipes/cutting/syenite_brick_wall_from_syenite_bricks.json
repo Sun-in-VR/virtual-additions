@@ -1,8 +1,0 @@
-{
-  "type": "minecraft:stonecutting",
-  "ingredient": {
-    "item": "virtual_additions:syenite_bricks"
-  },
-  "result": "virtual_additions:syenite_brick_wall",
-  "count": 1
-}

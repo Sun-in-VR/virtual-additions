@@ -1,0 +1,15 @@
+{
+  "type": "minecraft:smithing_transform",
+  "addition": {
+    "item": "minecraft:amethyst_shard"
+  },
+  "base": {
+    "item": "virtual_additions:steel_sword"
+  },
+  "result": {
+    "item": "virtual_additions:amethyst_steel_sword"
+  },
+  "template": {
+    "item": "virtual_additions:tool_gild_smithing_template"
+  }
+}

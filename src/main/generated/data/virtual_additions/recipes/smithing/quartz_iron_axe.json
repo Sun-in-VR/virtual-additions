@@ -1,0 +1,15 @@
+{
+  "type": "minecraft:smithing_transform",
+  "addition": {
+    "item": "minecraft:quartz"
+  },
+  "base": {
+    "item": "minecraft:iron_axe"
+  },
+  "result": {
+    "item": "virtual_additions:quartz_iron_axe"
+  },
+  "template": {
+    "item": "virtual_additions:tool_gild_smithing_template"
+  }
+}

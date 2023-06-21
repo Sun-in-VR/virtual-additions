@@ -1,0 +1,36 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "category": "misc",
+  "ingredients": [
+    {
+      "item": "virtual_additions:iolite"
+    },
+    {
+      "item": "virtual_additions:iolite"
+    },
+    {
+      "item": "virtual_additions:iolite"
+    },
+    {
+      "item": "virtual_additions:iolite"
+    },
+    {
+      "item": "virtual_additions:iolite"
+    },
+    {
+      "item": "virtual_additions:iolite"
+    },
+    {
+      "item": "virtual_additions:iolite"
+    },
+    {
+      "item": "virtual_additions:iolite"
+    },
+    {
+      "item": "virtual_additions:iolite"
+    }
+  ],
+  "result": {
+    "item": "virtual_additions:iolite_block"
+  }
+}

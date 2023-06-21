@@ -1,8 +1,0 @@
-{
-  "type": "minecraft:stonecutting",
-  "ingredient": {
-    "item": "virtual_additions:cobbled_blueschist"
-  },
-  "result": "virtual_additions:cobbled_blueschist_slab",
-  "count": 2
-}

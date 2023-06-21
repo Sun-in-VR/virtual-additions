@@ -1,0 +1,8 @@
+{
+  "type": "minecraft:stonecutting",
+  "count": 1,
+  "ingredient": {
+    "item": "virtual_additions:blueschist_bricks"
+  },
+  "result": "virtual_additions:blueschist_brick_stairs"
+}

@@ -1,0 +1,15 @@
+{
+  "type": "minecraft:smithing_transform",
+  "addition": {
+    "item": "minecraft:copper_ingot"
+  },
+  "base": {
+    "item": "virtual_additions:steel_pickaxe"
+  },
+  "result": {
+    "item": "virtual_additions:copper_steel_pickaxe"
+  },
+  "template": {
+    "item": "virtual_additions:tool_gild_smithing_template"
+  }
+}

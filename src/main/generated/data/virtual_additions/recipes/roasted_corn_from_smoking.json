@@ -1,0 +1,10 @@
+{
+  "type": "minecraft:smoking",
+  "category": "food",
+  "cookingtime": 100,
+  "experience": 0.35,
+  "ingredient": {
+    "item": "virtual_additions:corn"
+  },
+  "result": "virtual_additions:roasted_corn"
+}

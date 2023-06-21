@@ -1,0 +1,36 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "category": "misc",
+  "ingredients": [
+    {
+      "item": "virtual_additions:raw_steel"
+    },
+    {
+      "item": "virtual_additions:raw_steel"
+    },
+    {
+      "item": "virtual_additions:raw_steel"
+    },
+    {
+      "item": "virtual_additions:raw_steel"
+    },
+    {
+      "item": "virtual_additions:raw_steel"
+    },
+    {
+      "item": "virtual_additions:raw_steel"
+    },
+    {
+      "item": "virtual_additions:raw_steel"
+    },
+    {
+      "item": "virtual_additions:raw_steel"
+    },
+    {
+      "item": "virtual_additions:raw_steel"
+    }
+  ],
+  "result": {
+    "item": "virtual_additions:raw_steel_block"
+  }
+}

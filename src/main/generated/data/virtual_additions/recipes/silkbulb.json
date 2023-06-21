@@ -1,0 +1,21 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "building",
+  "key": {
+    "#": {
+      "item": "virtual_additions:silk_thread"
+    },
+    "b": {
+      "item": "virtual_additions:acid_bucket"
+    }
+  },
+  "pattern": [
+    "###",
+    "#b#",
+    "###"
+  ],
+  "result": {
+    "item": "virtual_additions:silkbulb"
+  },
+  "show_notification": true
+}

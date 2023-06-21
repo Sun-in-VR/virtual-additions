@@ -1,9 +1,0 @@
-{
-  "type": "minecraft:smelting",
-  "ingredient": {
-    "item": "virtual_additions:blueschist_bricks"
-  },
-  "result": "virtual_additions:cracked_blueschist_bricks",
-  "experience": 0.1,
-  "cookingtime": 200
-}

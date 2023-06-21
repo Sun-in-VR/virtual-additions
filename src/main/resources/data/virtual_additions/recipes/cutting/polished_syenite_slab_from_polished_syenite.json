@@ -1,8 +1,0 @@
-{
-  "type": "minecraft:stonecutting",
-  "ingredient": {
-    "item": "virtual_additions:polished_syenite"
-  },
-  "result": "virtual_additions:polished_syenite_slab",
-  "count": 2
-}

@@ -1,9 +1,0 @@
-{
-  "type": "minecraft:blasting",
-  "ingredient": {
-    "item": "virtual_additions:raw_steel"
-  },
-  "result": "virtual_additions:steel_ingot",
-  "experience": 1.0,
-  "cookingtime": 100
-}

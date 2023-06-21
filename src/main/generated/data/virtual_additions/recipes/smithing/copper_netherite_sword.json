@@ -1,0 +1,15 @@
+{
+  "type": "minecraft:smithing_transform",
+  "addition": {
+    "item": "minecraft:copper_ingot"
+  },
+  "base": {
+    "item": "minecraft:netherite_sword"
+  },
+  "result": {
+    "item": "virtual_additions:copper_netherite_sword"
+  },
+  "template": {
+    "item": "virtual_additions:tool_gild_smithing_template"
+  }
+}

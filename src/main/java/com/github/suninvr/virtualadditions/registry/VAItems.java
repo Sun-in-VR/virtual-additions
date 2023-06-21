@@ -52,7 +52,7 @@ import net.minecraft.world.World;
 import java.util.List;
 
 import static com.github.suninvr.virtualadditions.VirtualAdditions.idOf;
-import static com.github.suninvr.virtualadditions.registry.RegistryHelper.ItemHelper.*;
+import static com.github.suninvr.virtualadditions.registry.RegistryHelper.ItemRegistryHelper.*;
 
 public class VAItems {
     public static final ToolSet DIAMOND_TOOL_SET;
@@ -210,6 +210,12 @@ public class VAItems {
     public static final ToolSet EMERALD_STEEL_TOOL_SET;
     public static final ToolSet QUARTZ_STEEL_TOOL_SET;
     public static final ToolSet SCULK_STEEL_TOOL_SET;
+    
+    public static final ToolSet[] AMETHYST_TOOL_SETS;
+    public static final ToolSet[] COPPER_TOOL_SETS;
+    public static final ToolSet[] EMERALD_TOOL_SETS;
+    public static final ToolSet[] QUARTZ_TOOL_SETS;
+    public static final ToolSet[] SCULK_TOOL_SETS;
 
     private static final Text TOOL_GILD_APPLIES_TO_TEXT;
     private static final Text TOOL_GILD_INGREDIENTS_TEXT;
@@ -413,6 +419,12 @@ public class VAItems {
         EMERALD_STEEL_TOOL_SET = registerGildedToolSet(STEEL_TOOL_SET, GildTypes.EMERALD);
         QUARTZ_STEEL_TOOL_SET = registerGildedToolSet(STEEL_TOOL_SET, GildTypes.QUARTZ);
         SCULK_STEEL_TOOL_SET = registerGildedToolSet(STEEL_TOOL_SET, GildTypes.SCULK);
+        
+        AMETHYST_TOOL_SETS = new ToolSet[]{AMETHYST_DIAMOND_TOOL_SET, AMETHYST_IRON_TOOL_SET, AMETHYST_GOLDEN_TOOL_SET, AMETHYST_STEEL_TOOL_SET, AMETHYST_NETHERITE_TOOL_SET};
+        COPPER_TOOL_SETS = new ToolSet[]{COPPER_DIAMOND_TOOL_SET, COPPER_IRON_TOOL_SET, COPPER_GOLDEN_TOOL_SET, COPPER_STEEL_TOOL_SET, COPPER_NETHERITE_TOOL_SET};
+        EMERALD_TOOL_SETS = new ToolSet[]{EMERALD_DIAMOND_TOOL_SET, EMERALD_IRON_TOOL_SET, EMERALD_GOLDEN_TOOL_SET, EMERALD_STEEL_TOOL_SET, EMERALD_NETHERITE_TOOL_SET};
+        QUARTZ_TOOL_SETS = new ToolSet[]{QUARTZ_DIAMOND_TOOL_SET, QUARTZ_IRON_TOOL_SET, QUARTZ_GOLDEN_TOOL_SET, QUARTZ_STEEL_TOOL_SET, QUARTZ_NETHERITE_TOOL_SET};
+        SCULK_TOOL_SETS = new ToolSet[]{SCULK_DIAMOND_TOOL_SET, SCULK_IRON_TOOL_SET, SCULK_GOLDEN_TOOL_SET, SCULK_STEEL_TOOL_SET, SCULK_NETHERITE_TOOL_SET};
 
         LUMWASP_SPAWN_EGG = register("lumwasp_spawn_egg", new SpawnEggItem(VAEntityType.LUMWASP, 0x00d67a, 0x214132, new Item.Settings()), ItemGroups.SPAWN_EGGS, Items.LLAMA_SPAWN_EGG);
     }

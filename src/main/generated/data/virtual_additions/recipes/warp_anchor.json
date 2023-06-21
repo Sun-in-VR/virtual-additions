@@ -1,0 +1,26 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "key": {
+    "#": {
+      "item": "virtual_additions:iolite"
+    },
+    "e": {
+      "item": "minecraft:end_stone"
+    },
+    "s": {
+      "item": "virtual_additions:steel_ingot"
+    },
+    "y": {
+      "item": "minecraft:ender_eye"
+    }
+  },
+  "pattern": [
+    "s#s",
+    "eye"
+  ],
+  "result": {
+    "item": "virtual_additions:warp_anchor"
+  },
+  "show_notification": true
+}

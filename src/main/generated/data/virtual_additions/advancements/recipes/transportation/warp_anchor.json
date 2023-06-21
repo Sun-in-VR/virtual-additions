@@ -1,0 +1,35 @@
+{
+  "parent": "minecraft:recipes/root",
+  "criteria": {
+    "has_the_recipe": {
+      "conditions": {
+        "recipe": "virtual_additions:warp_anchor"
+      },
+      "trigger": "minecraft:recipe_unlocked"
+    },
+    "iolite": {
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "virtual_additions:iolite"
+            ]
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    }
+  },
+  "requirements": [
+    [
+      "iolite",
+      "has_the_recipe"
+    ]
+  ],
+  "rewards": {
+    "recipes": [
+      "virtual_additions:warp_anchor"
+    ]
+  },
+  "sends_telemetry_event": false
+}

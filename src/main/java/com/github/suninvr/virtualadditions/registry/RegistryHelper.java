@@ -10,6 +10,9 @@ import net.minecraft.registry.Registries;
 import net.minecraft.registry.Registry;
 import net.minecraft.registry.RegistryKey;
 import net.minecraft.resource.featuretoggle.FeatureFlag;
+import org.jetbrains.annotations.Nullable;
+
+import java.util.ArrayList;
 
 import static com.github.suninvr.virtualadditions.VirtualAdditions.idOf;
 
@@ -29,9 +32,13 @@ public class RegistryHelper {
         }
 
     }
-    public static class ItemHelper {
+    public static class ItemRegistryHelper {
 
-        public record ToolSet(Item SWORD, Item SHOVEL, Item PICKAXE, Item AXE, Item HOE, String NAME){}
+        public record ToolSet(Item SWORD, Item SHOVEL, Item PICKAXE, Item AXE, Item HOE, String NAME){
+            public Item[] getItems() {
+                return new Item[]{AXE, HOE, PICKAXE, SHOVEL, SWORD};
+            }
+        }
         public record ItemGroupLocation(RegistryKey<ItemGroup> GROUP, Item AFTER){}
         public static Item prev;
         

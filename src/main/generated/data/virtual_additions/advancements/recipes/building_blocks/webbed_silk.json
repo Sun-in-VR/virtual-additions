@@ -1,0 +1,35 @@
+{
+  "parent": "minecraft:recipes/root",
+  "criteria": {
+    "has_silk_thread": {
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "virtual_additions:silk_thread"
+            ]
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    },
+    "has_the_recipe": {
+      "conditions": {
+        "recipe": "virtual_additions:webbed_silk"
+      },
+      "trigger": "minecraft:recipe_unlocked"
+    }
+  },
+  "requirements": [
+    [
+      "has_silk_thread",
+      "has_the_recipe"
+    ]
+  ],
+  "rewards": {
+    "recipes": [
+      "virtual_additions:webbed_silk"
+    ]
+  },
+  "sends_telemetry_event": false
+}
