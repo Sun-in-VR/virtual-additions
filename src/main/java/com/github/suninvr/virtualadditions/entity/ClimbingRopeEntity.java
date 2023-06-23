@@ -33,7 +33,7 @@ public class ClimbingRopeEntity extends PersistentProjectileEntity {
         BlockPos placePos = new BlockPos(blockHitResult.getBlockPos().offset(hitSide));
         BlockHalf half = ClimbingRopeAnchorBlock.getPlacementHeight(this.getWorld(), blockHitResult.getBlockPos(), blockHitResult.getSide());
         if(hitSide != Direction.UP) {
-            BlockState state = VABlocks.CLIMBING_ROPE_ANCHOR.getDefaultState().with(ClimbingRopeAnchorBlock.FACING, hitSide).with(ClimbingRopeAnchorBlock.HALF, half);
+            BlockState state = VABlocks.CLIMBING_ROPE_ANCHOR.getDefaultState().with(ClimbingRopeAnchorBlock.FACING, hitSide.getOpposite()).with(ClimbingRopeAnchorBlock.HALF, half);
             if( VABlocks.CLIMBING_ROPE_ANCHOR.canPlaceAt( state, this.getWorld(), placePos ) && this.getWorld().getBlockState( placePos ).isAir() ) {
                 getWorld().setBlockState(placePos, state);
                 this.getWorld().scheduleBlockTick(placePos, state.getBlock(), 1);

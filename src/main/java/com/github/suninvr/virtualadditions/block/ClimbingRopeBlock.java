@@ -25,19 +25,19 @@ import net.minecraft.world.event.GameEvent;
 
 @SuppressWarnings("deprecation")
 public class ClimbingRopeBlock extends Block implements Waterloggable {
-    public static final DirectionProperty FACING = Properties.HOPPER_FACING;
+    public static final DirectionProperty FACING = DirectionProperty.of("facing", Direction.UP, Direction.NORTH, Direction.EAST, Direction.SOUTH, Direction.WEST);
     public static final BooleanProperty WATERLOGGED = Properties.WATERLOGGED;
     public static final BooleanProperty END = BooleanProperty.of("end");
     protected static final VoxelShape EAST_SHAPE;
     protected static final VoxelShape WEST_SHAPE;
     protected static final VoxelShape SOUTH_SHAPE;
     protected static final VoxelShape NORTH_SHAPE;
-    protected static final VoxelShape DOWN_SHAPE;
+    protected static final VoxelShape UP_SHAPE;
 
     public ClimbingRopeBlock(Settings settings) {
         super(settings);
         setDefaultState(getStateManager().getDefaultState()
-                .with(FACING, Direction.DOWN)
+                .with(FACING, Direction.UP)
                 .with(WATERLOGGED, false)
                 .with(END, true)
         );
@@ -49,7 +49,7 @@ public class ClimbingRopeBlock extends Block implements Waterloggable {
             case SOUTH -> SOUTH_SHAPE;
             case WEST -> WEST_SHAPE;
             case EAST -> EAST_SHAPE;
-            default -> DOWN_SHAPE;
+            default -> UP_SHAPE;
         };
     }
 
@@ -97,10 +97,10 @@ public class ClimbingRopeBlock extends Block implements Waterloggable {
     }
 
     static {
-        EAST_SHAPE = Block.createCuboidShape(5.0D, 0.0D, 7.0D, 7.0D, 16.0D, 9.0D);
-        WEST_SHAPE = Block.createCuboidShape(9.0D, 0.0D, 7.0D, 11.0D, 16.0D, 9.0D);
-        SOUTH_SHAPE = Block.createCuboidShape(7.0D, 0.0D, 5.0D, 9.0D, 16.0D, 7.0D);
-        NORTH_SHAPE = Block.createCuboidShape(7.0D, 0.0D, 9.0D, 9.0D, 16.0D, 11.0D);
-        DOWN_SHAPE = Block.createCuboidShape(7.0D, 0.0D, 7.0D, 9.0D, 16.0D, 9.0D);
+        WEST_SHAPE = Block.createCuboidShape(5.0D, 0.0D, 7.0D, 7.0D, 16.0D, 9.0D);
+        EAST_SHAPE = Block.createCuboidShape(9.0D, 0.0D, 7.0D, 11.0D, 16.0D, 9.0D);
+        NORTH_SHAPE = Block.createCuboidShape(7.0D, 0.0D, 5.0D, 9.0D, 16.0D, 7.0D);
+        SOUTH_SHAPE = Block.createCuboidShape(7.0D, 0.0D, 9.0D, 9.0D, 16.0D, 11.0D);
+        UP_SHAPE = Block.createCuboidShape(7.0D, 0.0D, 7.0D, 9.0D, 16.0D, 9.0D);
     }
 }

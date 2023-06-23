@@ -34,7 +34,7 @@ import org.jetbrains.annotations.Nullable;
 
 @SuppressWarnings("deprecation")
 public class ClimbingRopeAnchorBlock extends Block implements Waterloggable {
-    public static final DirectionProperty FACING = Properties.HOPPER_FACING;
+    public static final DirectionProperty FACING = DirectionProperty.of("facing", Direction.UP, Direction.NORTH, Direction.EAST, Direction.SOUTH, Direction.WEST);
     public static final BooleanProperty WATERLOGGED = Properties.WATERLOGGED;
     public static final BooleanProperty END = BooleanProperty.of("end");
     public static final EnumProperty<BlockHalf> HALF = Properties.BLOCK_HALF;
@@ -46,7 +46,7 @@ public class ClimbingRopeAnchorBlock extends Block implements Waterloggable {
     protected static final VoxelShape WEST_BOTTOM_SHAPE;
     protected static final VoxelShape SOUTH_BOTTOM_SHAPE;
     protected static final VoxelShape NORTH_BOTTOM_SHAPE;
-    protected static final VoxelShape DOWN_SHAPE;
+    protected static final VoxelShape UP_SHAPE;
 
     protected static final VoxelShape ATTACHABLE_HIGH;
     protected static final VoxelShape ATTACHABLE_LOW;
@@ -54,7 +54,7 @@ public class ClimbingRopeAnchorBlock extends Block implements Waterloggable {
     public ClimbingRopeAnchorBlock(Settings settings) {
         super(settings);
         setDefaultState(getStateManager().getDefaultState()
-                .with(FACING, Direction.DOWN)
+                .with(FACING, Direction.UP)
                 .with(HALF, BlockHalf.TOP)
                 .with(WATERLOGGED, false)
                 .with(END, true)
@@ -68,7 +68,7 @@ public class ClimbingRopeAnchorBlock extends Block implements Waterloggable {
                 case EAST -> EAST_BOTTOM_SHAPE;
                 case SOUTH -> SOUTH_BOTTOM_SHAPE;
                 case WEST -> WEST_BOTTOM_SHAPE;
-                default -> DOWN_SHAPE;
+                default -> UP_SHAPE;
             };
         }
         return switch (state.get(FACING)) {
@@ -76,7 +76,7 @@ public class ClimbingRopeAnchorBlock extends Block implements Waterloggable {
             case EAST -> EAST_SHAPE;
             case SOUTH -> SOUTH_SHAPE;
             case WEST -> WEST_SHAPE;
-            default -> DOWN_SHAPE;
+            default -> UP_SHAPE;
         };
     }
 
@@ -128,7 +128,7 @@ public class ClimbingRopeAnchorBlock extends Block implements Waterloggable {
     public boolean canPlaceAt(BlockState state, WorldView world, BlockPos pos) {
         Direction direction = state.get(FACING);
         BlockHalf height = state.get(HALF);
-        boolean bl = this.canPlaceOn(world, new BlockPos(pos.offset(direction.getOpposite())), direction, height);
+        boolean bl = this.canPlaceOn(world, new BlockPos(pos.offset(direction)), direction, height);
         return state.get(END) ? bl : bl && world.getBlockState(new BlockPos(pos.down())).isIn(VABlockTags.CLIMBING_ROPES);
     }
 
@@ -153,7 +153,7 @@ public class ClimbingRopeAnchorBlock extends Block implements Waterloggable {
             if (half == null) continue;
 
             if (direction == Direction.DOWN) continue;
-            blockState = blockState.with(FACING, direction.getOpposite()).with(HALF, half);
+            blockState = blockState.with(FACING, direction).with(HALF, half);
             if(blockState.canPlaceAt(world, pos)) {
                 return blockState.with(WATERLOGGED, ctx.getWorld().getFluidState(ctx.getBlockPos()).getFluid() == Fluids.WATER);
             }
@@ -182,39 +182,39 @@ public class ClimbingRopeAnchorBlock extends Block implements Waterloggable {
     }
 
     static {
-        EAST_SHAPE = VoxelShapes.union(
+        WEST_SHAPE = VoxelShapes.union(
                 Block.createCuboidShape(5.0D, 0.0D, 7.0D, 7.0D, 12.0D, 9.0D),
                 Block.createCuboidShape(4.0D, 12.0D, 7.0D, 8.0D, 16.0D, 9.0D)
         );
-        WEST_SHAPE = VoxelShapes.union(
+        EAST_SHAPE = VoxelShapes.union(
                 Block.createCuboidShape(9.0D, 0.0D, 7.0D, 11.0D, 12.0D, 9.0D),
                 Block.createCuboidShape(8.0D, 12.0D, 7.0D, 12.0D, 16.0D, 9.0D)
         );
-        SOUTH_SHAPE = VoxelShapes.union(
+        NORTH_SHAPE = VoxelShapes.union(
                 Block.createCuboidShape(7.0D, 0.0D, 5.0D, 9.0D, 12.0D, 7.0D),
                 Block.createCuboidShape(7.0D, 12.0D, 4.0D, 9.0D, 16.0D, 8.0D)
         );
-        NORTH_SHAPE = VoxelShapes.union(
+        SOUTH_SHAPE = VoxelShapes.union(
                 Block.createCuboidShape(7.0D, 0.0D, 9.0D, 9.0D, 12.0D, 11.0D),
                 Block.createCuboidShape(7.0D, 12.0D, 8.0D, 9.0D, 16.0D, 12.0D)
         );
-        EAST_BOTTOM_SHAPE = VoxelShapes.union(
+        WEST_BOTTOM_SHAPE = VoxelShapes.union(
                 Block.createCuboidShape(5.0D, 0.0D, 7.0D, 7.0D, 4.0D, 9.0D),
                 Block.createCuboidShape(4.0D, 4.0D, 7.0D, 8.0D, 8.0D, 9.0D)
         );
-        WEST_BOTTOM_SHAPE = VoxelShapes.union(
+        EAST_BOTTOM_SHAPE = VoxelShapes.union(
                 Block.createCuboidShape(9.0D, 0.0D, 7.0D, 11.0D, 4.0D, 9.0D),
                 Block.createCuboidShape(8.0D, 4.0D, 7.0D, 12.0D, 8.0D, 9.0D)
         );
-        SOUTH_BOTTOM_SHAPE = VoxelShapes.union(
+        NORTH_BOTTOM_SHAPE = VoxelShapes.union(
                 Block.createCuboidShape(7.0D, 0.0D, 5.0D, 9.0D, 4.0D, 7.0D),
                 Block.createCuboidShape(7.0D, 4.0D, 4.0D, 9.0D, 8.0D, 8.0D)
         );
-        NORTH_BOTTOM_SHAPE = VoxelShapes.union(
+        SOUTH_BOTTOM_SHAPE = VoxelShapes.union(
                 Block.createCuboidShape(7.0D, 0.0D, 9.0D, 9.0D, 4.0D, 11.0D),
                 Block.createCuboidShape(7.0D, 4.0D, 8.0D, 9.0D, 8.0D, 12.0D)
         );
-        DOWN_SHAPE = VoxelShapes.union(
+        UP_SHAPE = VoxelShapes.union(
                 Block.createCuboidShape(7.0D, 0.0D, 7.0D, 9.0D, 8.0D, 9.0D),
                 Block.createCuboidShape(7.0D, 8.0D, 6.0D, 9.0D, 12.0D, 10.0D)
         );

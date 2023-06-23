@@ -2,22 +2,22 @@
 {
     "variants": {
      "facing=north": {
-        "model": "virtual_additions:block/climbing_rope",
-        "y": 180
-     },
-     "facing=south": {
         "model": "virtual_additions:block/climbing_rope"
      },
-     "facing=east": {
+      "facing=east": {
         "model": "virtual_additions:block/climbing_rope",
-        "y": 270
+        "y": 90
+      },
+     "facing=south": {
+        "model": "virtual_additions:block/climbing_rope",
+       "y": 180
      },
      "facing=west": {
         "model": "virtual_additions:block/climbing_rope",
-        "y": 90
+        "y": 270
      },
-     "facing=down": {
-        "model": "virtual_additions:block/climbing_rope_down"
+     "facing=up": {
+        "model": "virtual_additions:block/climbing_rope_up"
      }
 
     }
