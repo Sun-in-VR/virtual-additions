@@ -1,0 +1,9 @@
+{
+  "parent": "virtual_additions:block/redstone_bridge_template",
+  "textures": {
+    "side": "virtual_additions:block/redstone_bridge_side",
+    "top": "virtual_additions:block/redstone_bridge_top",
+    "overlay": "virtual_additions:block/redstone_bridge_side_overlay",
+    "overlay_top": "virtual_additions:block/redstone_bridge_top_overlay"
+  }
+}

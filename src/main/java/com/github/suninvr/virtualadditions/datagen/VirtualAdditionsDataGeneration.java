@@ -210,12 +210,17 @@ public class VirtualAdditionsDataGeneration implements DataGeneratorEntrypoint {
                     .pattern("eye")
                     .input('#', VAItems.IOLITE).input('s', VAItems.STEEL_INGOT).input('e', Blocks.END_STONE).input('y', Items.ENDER_EYE)
                     .criterion( "iolite", conditionsFromItem(VAItems.IOLITE)).offerTo(exporter);
-
             ShapedRecipeJsonBuilder.create(RecipeCategory.COMBAT, VAItems.STEEL_BOMB, 8)
                     .pattern(" s ")
                     .pattern("gag")
                     .pattern(" # ")
                     .input('#', VAItems.STEEL_INGOT).input('s', Items.STRING).input('g', Items.GUNPOWDER).input('a', Items.SAND)
+                    .criterion( "steel_ingot", conditionsFromItem(VAItems.STEEL_INGOT)).offerTo(exporter);
+            ShapedRecipeJsonBuilder.create(RecipeCategory.REDSTONE, VAItems.REDSTONE_BRIDGE, 3)
+                    .pattern("#")
+                    .pattern("r")
+                    .pattern("#")
+                    .input('#', VAItems.STEEL_INGOT).input('r', Items.REDSTONE)
                     .criterion( "steel_ingot", conditionsFromItem(VAItems.STEEL_INGOT)).offerTo(exporter);
 
         }
@@ -330,7 +335,8 @@ public class VirtualAdditionsDataGeneration implements DataGeneratorEntrypoint {
 
             configureMinable(BlockTags.PICKAXE_MINEABLE, 1,
                     VABlocks.STEEL_BLOCK,
-                    VABlocks.RAW_STEEL_BLOCK
+                    VABlocks.RAW_STEEL_BLOCK,
+                    VABlocks.REDSTONE_BRIDGE
             );
 
             configureMinable(BlockTags.PICKAXE_MINEABLE, 3,

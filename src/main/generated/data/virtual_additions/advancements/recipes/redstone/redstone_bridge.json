@@ -1,0 +1,35 @@
+{
+  "parent": "minecraft:recipes/root",
+  "criteria": {
+    "has_the_recipe": {
+      "conditions": {
+        "recipe": "virtual_additions:redstone_bridge"
+      },
+      "trigger": "minecraft:recipe_unlocked"
+    },
+    "steel_ingot": {
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "virtual_additions:steel_ingot"
+            ]
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    }
+  },
+  "requirements": [
+    [
+      "steel_ingot",
+      "has_the_recipe"
+    ]
+  ],
+  "rewards": {
+    "recipes": [
+      "virtual_additions:redstone_bridge"
+    ]
+  },
+  "sends_telemetry_event": false
+}

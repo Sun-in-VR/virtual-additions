@@ -29,6 +29,7 @@ public class VABlocks {
     public static final Block STEEL_FENCE;
     public static final Block STEEL_DOOR;
     public static final Block STEEL_TRAPDOOR;
+    public static final Block REDSTONE_BRIDGE;
     public static final Block HORNFELS;
     public static final Block COBBLED_HORNFELS;
     public static final Block COBBLED_HORNFELS_STAIRS;
@@ -128,6 +129,8 @@ public class VABlocks {
         STEEL_FENCE = register("steel_fence", new FenceBlock(FabricBlockSettings.copyOf(CUT_STEEL)));
         STEEL_DOOR = register("steel_door", new SteelDoorBlock(FabricBlockSettings.copyOf(STEEL_BLOCK).nonOpaque().pistonBehavior(PistonBehavior.DESTROY)));
         STEEL_TRAPDOOR = register("steel_trapdoor", new SteelTrapdoorBlock(FabricBlockSettings.copyOf(STEEL_DOOR)));
+
+        REDSTONE_BRIDGE = register("redstone_bridge", new RedstoneBridgeBlock(FabricBlockSettings.copyOf(CUT_STEEL)));
 
         HORNFELS = register("hornfels", new PillarBlock(AbstractBlock.Settings.copy(Blocks.DEEPSLATE)));
         COBBLED_HORNFELS = register("cobbled_hornfels", new Block(FabricBlockSettings.copyOf(Blocks.COBBLED_DEEPSLATE)));

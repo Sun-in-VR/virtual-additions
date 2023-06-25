@@ -1,0 +1,22 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "redstone",
+  "key": {
+    "#": {
+      "item": "virtual_additions:steel_ingot"
+    },
+    "r": {
+      "item": "minecraft:redstone"
+    }
+  },
+  "pattern": [
+    "#",
+    "r",
+    "#"
+  ],
+  "result": {
+    "count": 3,
+    "item": "virtual_additions:redstone_bridge"
+  },
+  "show_notification": true
+}

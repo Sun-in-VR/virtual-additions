@@ -1,0 +1,30 @@
+ 
+{
+    "variants": {
+     "facing=up":{
+       "model": "virtual_additions:block/redstone_bridge"
+     },
+     "facing=down":{
+       "model": "virtual_additions:block/redstone_bridge",
+       "x": 180
+     },
+      "facing=north":{
+        "model": "virtual_additions:block/redstone_bridge",
+        "x": 90
+      },
+      "facing=south":{
+        "model": "virtual_additions:block/redstone_bridge",
+        "x": 270
+      },
+      "facing=east":{
+        "model": "virtual_additions:block/redstone_bridge",
+        "x": 90,
+        "y": 90
+      },
+      "facing=west":{
+        "model": "virtual_additions:block/redstone_bridge",
+        "x": 90,
+        "y": 270
+      }
+    }
+}

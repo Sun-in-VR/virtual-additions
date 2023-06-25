@@ -1,8 +1,8 @@
-// 1.20.1	2023-06-21T02:30:38.128242528	Virtual Additions/Tags for minecraft:item
-e644220d6f3e3edd15e46f3f215904ced6355968 data/c/tags/items/axes.json
+// 1.20.1	2023-06-25T12:15:34.989006204	Virtual Additions/Tags for minecraft:item
+73a80bb18376d754a680dc62b741e878e2f44f87 data/c/tags/items/pickaxes.json
 409a75c7b8322aa7d62e93dad91f258fd6e7e5aa data/c/tags/items/swords.json
+31d442ed8e1335cc8a5066fa631801620d3a14aa data/c/tags/items/hoes.json
+fadd2d60c09bd6dec825088d8e727d8151741f66 data/minecraft/tags/items/piglin_loved.json
+e644220d6f3e3edd15e46f3f215904ced6355968 data/c/tags/items/axes.json
 788f2db08c6b8b7ecc321b365302a63a60c5bc94 data/virtual_additions/tags/items/gilded_tools.json
 676b97ec85782b7228d76f7a57aa7e7b0945c708 data/c/tags/items/shovels.json
-fadd2d60c09bd6dec825088d8e727d8151741f66 data/minecraft/tags/items/piglin_loved.json
-73a80bb18376d754a680dc62b741e878e2f44f87 data/c/tags/items/pickaxes.json
-31d442ed8e1335cc8a5066fa631801620d3a14aa data/c/tags/items/hoes.json

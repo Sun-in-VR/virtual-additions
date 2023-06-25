@@ -124,6 +124,7 @@ public class VAItems {
     public static final Item STEEL_FENCE;
     public static final Item STEEL_DOOR;
     public static final Item STEEL_TRAPDOOR;
+    public static final Item REDSTONE_BRIDGE;
     public static final Item STEEL_BOMB;
     public static final Item STEEL_SWORD;
     public static final Item STEEL_SHOVEL;
@@ -320,6 +321,7 @@ public class VAItems {
         STEEL_FENCE = registerBlockItem("steel_fence", VABlocks.STEEL_FENCE, ItemGroups.BUILDING_BLOCKS, prev);
         STEEL_DOOR = registerBlockItem("steel_door", VABlocks.STEEL_DOOR, ItemGroups.BUILDING_BLOCKS, prev);
         STEEL_TRAPDOOR = registerBlockItem("steel_trapdoor", VABlocks.STEEL_TRAPDOOR, ItemGroups.BUILDING_BLOCKS, prev);
+        REDSTONE_BRIDGE = registerBlockItem("redstone_bridge", VABlocks.REDSTONE_BRIDGE, ItemGroups.REDSTONE, Items.COMPARATOR);
         RAW_STEEL = register("raw_steel", ItemGroups.INGREDIENTS, Items.RAW_GOLD);
         STEEL_INGOT = register("steel_ingot", ItemGroups.INGREDIENTS, Items.GOLD_INGOT);
         STEEL_BOMB = register("steel_bomb", new SteelBombItem(new FabricItemSettings().maxCount(16)), new ItemGroupLocation(ItemGroups.COMBAT, Items.SNOWBALL), new ItemGroupLocation(ItemGroups.TOOLS, CLIMBING_ROPE));

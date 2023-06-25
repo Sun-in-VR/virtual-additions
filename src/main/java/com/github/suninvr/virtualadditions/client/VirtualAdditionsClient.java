@@ -1,5 +1,6 @@
 package com.github.suninvr.virtualadditions.client;
 
+import com.github.suninvr.virtualadditions.block.RedstoneBridgeBlock;
 import com.github.suninvr.virtualadditions.client.particle.AcidSplashEmitterParticle;
 import com.github.suninvr.virtualadditions.client.particle.GreencapSporeParticle;
 import com.github.suninvr.virtualadditions.client.particle.IoliteRingParticle;
@@ -19,6 +20,7 @@ import net.fabricmc.fabric.api.client.render.fluid.v1.SimpleFluidRenderHandler;
 import net.fabricmc.fabric.api.client.rendering.v1.ColorProviderRegistry;
 import net.fabricmc.fabric.api.client.rendering.v1.EntityModelLayerRegistry;
 import net.fabricmc.fabric.api.client.rendering.v1.EntityRendererRegistry;
+import net.minecraft.block.RedstoneWireBlock;
 import net.minecraft.client.color.world.BiomeColors;
 import net.minecraft.client.color.world.FoliageColors;
 import net.minecraft.client.gui.screen.ingame.HandledScreens;
@@ -57,6 +59,7 @@ public class VirtualAdditionsClient implements ClientModInitializer {
                 VABlocks.CLIMBING_ROPE_ANCHOR,
                 VABlocks.STEEL_DOOR,
                 VABlocks.STEEL_TRAPDOOR,
+                VABlocks.REDSTONE_BRIDGE,
                 VABlocks.RED_GLIMMER_CRYSTAL,
                 VABlocks.GREEN_GLIMMER_CRYSTAL,
                 VABlocks.BLUE_GLIMMER_CRYSTAL,
@@ -95,6 +98,7 @@ public class VirtualAdditionsClient implements ClientModInitializer {
         ColorProviderRegistry.BLOCK.register( ((state, world, pos, tintIndex) -> FoliageColors.getSpruceColor()), VABlocks.SPRUCE_HEDGE);
         ColorProviderRegistry.BLOCK.register( ((state, world, pos, tintIndex) -> FoliageColors.getBirchColor()), VABlocks.BIRCH_HEDGE);
         ColorProviderRegistry.BLOCK.register(((state, world, pos, tintIndex) -> 0x00e076), VABlocks.ACID);
+        ColorProviderRegistry.BLOCK.register( ((state, world, pos, tintIndex) -> tintIndex <= 0 ? -1 : RedstoneWireBlock.getWireColor(state.get(RedstoneBridgeBlock.POWER))), VABlocks.REDSTONE_BRIDGE);
 
         ColorProviderRegistry.ITEM.register( ((stack, tintIndex) -> tintIndex > 0 ? -1 : PotionUtil.getColor(stack)), VAItems.APPLICABLE_POTION);
         ColorProviderRegistry.ITEM.register( ((stack, tintIndex) -> FoliageColors.getDefaultColor()),

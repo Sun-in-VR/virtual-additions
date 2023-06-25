@@ -1,10 +1,10 @@
-// 1.20.1	2023-06-21T02:30:38.123167307	Virtual Additions/Tags for minecraft:block
-8ce003d52b91136ed1da4a80eb41e7a2514a16ba data/minecraft/tags/blocks/walls.json
-bf3b29aad86768362b52de1cc7c686f0b467c683 data/minecraft/tags/blocks/slabs.json
-79b9a299886d9bbd4d746230d3c812c5f605e004 data/minecraft/tags/blocks/overworld_carver_replaceables.json
-3359d2ce71c3f3f9ae890fc437d61901486ac3c1 data/minecraft/tags/blocks/mineable/hoe.json
-55ca93bea1c78fff8b54d752e0253662ebda0a4a data/minecraft/tags/blocks/needs_stone_tool.json
-0c1e057a5f96d446e59585ede5abd5e74b832828 data/minecraft/tags/blocks/stairs.json
-279a5a00a6d4adcbbfd6d69ed54e62fdba1b3165 data/minecraft/tags/blocks/mineable/pickaxe.json
-3b2a2852e48554d08555b9cc7b8e66b12b230c99 data/minecraft/tags/blocks/needs_diamond_tool.json
+// 1.20.1	2023-06-25T12:15:34.983759228	Virtual Additions/Tags for minecraft:block
 79b9a299886d9bbd4d746230d3c812c5f605e004 data/minecraft/tags/blocks/base_stone_overworld.json
+bf3b29aad86768362b52de1cc7c686f0b467c683 data/minecraft/tags/blocks/slabs.json
+8ce003d52b91136ed1da4a80eb41e7a2514a16ba data/minecraft/tags/blocks/walls.json
+3359d2ce71c3f3f9ae890fc437d61901486ac3c1 data/minecraft/tags/blocks/mineable/hoe.json
+87ed31f3b3e59ff58d2179c435cccfc2d090363f data/minecraft/tags/blocks/needs_stone_tool.json
+3b2a2852e48554d08555b9cc7b8e66b12b230c99 data/minecraft/tags/blocks/needs_diamond_tool.json
+c5754cb18e3beb4a4cbec8c47297e1ed6e8880d8 data/minecraft/tags/blocks/mineable/pickaxe.json
+0c1e057a5f96d446e59585ede5abd5e74b832828 data/minecraft/tags/blocks/stairs.json
+79b9a299886d9bbd4d746230d3c812c5f605e004 data/minecraft/tags/blocks/overworld_carver_replaceables.json
