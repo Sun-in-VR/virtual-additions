@@ -14,13 +14,13 @@ import net.minecraft.state.property.IntProperty;
 import net.minecraft.state.property.Properties;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Direction;
-import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.math.random.Random;
 import net.minecraft.util.shape.VoxelShape;
 import net.minecraft.world.BlockView;
 import net.minecraft.world.World;
 import net.minecraft.world.WorldAccess;
 import org.jetbrains.annotations.Nullable;
+import org.joml.Vector3f;
 
 @SuppressWarnings("deprecation")
 public class RedstoneBridgeBlock extends Block implements Waterloggable {
@@ -119,7 +119,6 @@ public class RedstoneBridgeBlock extends Block implements Waterloggable {
     public BlockState getPlacementState(ItemPlacementContext ctx) {
         boolean bl = ctx.getWorld().getFluidState(ctx.getBlockPos()).isOf(Fluids.WATER);
         BlockState state = getDefaultState().with(FACING, ctx.getSide());
-        if (ctx.getPlayer() != null && ctx.getPlayer().isSneaky()) state = state.with(FACING, state.get(FACING).getOpposite());
         return state.with(POWER, getPower(ctx.getWorld(), ctx.getBlockPos(), state)).with(WATERLOGGED, bl);
     }
 
