@@ -6,7 +6,6 @@ import net.minecraft.fluid.FluidState;
 import net.minecraft.fluid.Fluids;
 import net.minecraft.item.ItemPlacementContext;
 import net.minecraft.item.ItemStack;
-import net.minecraft.particle.DustParticleEffect;
 import net.minecraft.state.StateManager;
 import net.minecraft.state.property.BooleanProperty;
 import net.minecraft.state.property.DirectionProperty;
@@ -14,13 +13,11 @@ import net.minecraft.state.property.IntProperty;
 import net.minecraft.state.property.Properties;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Direction;
-import net.minecraft.util.math.random.Random;
 import net.minecraft.util.shape.VoxelShape;
 import net.minecraft.world.BlockView;
 import net.minecraft.world.World;
 import net.minecraft.world.WorldAccess;
 import org.jetbrains.annotations.Nullable;
-import org.joml.Vector3f;
 
 @SuppressWarnings("deprecation")
 public class RedstoneBridgeBlock extends Block implements Waterloggable {
@@ -79,15 +76,21 @@ public class RedstoneBridgeBlock extends Block implements Waterloggable {
     protected int getPower(WorldAccess world, BlockPos pos, BlockState state) {
         Direction direction = state.get(FACING).getOpposite();
         BlockPos blockPos = pos.offset(direction);
-        this.sendsRedstonePower = false;
-        ((RedstoneWireBlock) Blocks.REDSTONE_WIRE).wiresGivePower = false;
+
+        this.setWireFlags(false);
         int i = world.getEmittedRedstonePower(blockPos, direction);
-        this.sendsRedstonePower = true;
-        ((RedstoneWireBlock) Blocks.REDSTONE_WIRE).wiresGivePower = true;
+        this.setWireFlags(true);
+
         this.sendsLessStrongRedstonePower = true;
         int j = Math.max(0, world.getEmittedRedstonePower(blockPos, direction) - 1);
         this.sendsLessStrongRedstonePower = false;
+
         return Math.max(i, j);
+    }
+
+    protected void setWireFlags(boolean bl) {
+        this.sendsRedstonePower = bl;
+        ((RedstoneWireBlock) Blocks.REDSTONE_WIRE).wiresGivePower = bl;
     }
 
     @Override
