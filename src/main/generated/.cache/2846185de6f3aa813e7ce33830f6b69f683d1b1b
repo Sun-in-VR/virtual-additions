@@ -1,4 +1,4 @@
-// 1.20.1	2023-06-27T05:27:33.505775504	Virtual Additions/Block Loot Tables
+// 1.20.1	2023-06-27T06:49:50.598525426	Virtual Additions/Block Loot Tables
 d7aa27ed0b8a6edd7aaff2670ec0469864347896 data/virtual_additions/loot_tables/blocks/cyan_silkbulb.json
 02646cbb4fabbe7ea06163ff46fd4f26867c8fce data/virtual_additions/loot_tables/blocks/green_silkbulb.json
 4114174456c861acca5ae492d3b3e335d6e0e6d9 data/virtual_additions/loot_tables/blocks/polished_blueschist_slab.json
@@ -83,5 +83,5 @@ faf7b4180c57d03fc3d56fc40ffe9c4680cad149 data/virtual_additions/loot_tables/bloc
 fe11e323d67feaa7b8ba01973ee0dff22c83bf99 data/virtual_additions/loot_tables/blocks/orange_silkbulb.json
 49a943368c0d3d950efa50eb1a173d0647dbad65 data/virtual_additions/loot_tables/blocks/syenite_bricks.json
 41925772bab77895bf579a56a1a56e0aed8974b1 data/virtual_additions/loot_tables/blocks/cobbled_syenite_wall.json
-4ed91aedceeb9f7c7d412fa6c020a0dc48d745b8 data/virtual_additions/loot_tables/blocks/cut_steel_slab.json
 d6d209ae9e01c06afd0e8f2289b3ce31545e39dd data/virtual_additions/loot_tables/blocks/silkbulb.json
+4ed91aedceeb9f7c7d412fa6c020a0dc48d745b8 data/virtual_additions/loot_tables/blocks/cut_steel_slab.json

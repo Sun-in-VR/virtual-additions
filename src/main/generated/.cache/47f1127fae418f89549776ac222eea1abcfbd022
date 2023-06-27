@@ -1,10 +1,11 @@
-// 1.20.1	2023-06-27T05:27:33.502227104	Virtual Additions/Tags for minecraft:block
+// 1.20.1	2023-06-27T06:49:50.596274933	Virtual Additions/Tags for minecraft:block
 6dffddb3fa6b651a0b3f2ae766d0baf07f1ea0b8 data/virtual_additions/tags/blocks/silkbulbs.json
 e76425467c7656048767d19838c43685d76ac1f7 data/minecraft/tags/blocks/sword_efficient.json
 dc3dd38d696fc4ca82f024ab6108cb6acc549dde data/minecraft/tags/blocks/combination_step_sound_blocks.json
 268ac7f89703532aa94fbea2184a39cafb365666 data/minecraft/tags/blocks/trapdoors.json
 5312a104fe4c9c88b6a0139ca288d2b9f571e244 data/minecraft/tags/blocks/climbable.json
 7dfa92aa039899d9a5d738c6ab104f9e6b502dfd data/virtual_additions/tags/blocks/hedges.json
+fc3ca2a5f41d5d4afc8af7f869c4fb59463ed151 data/c/tags/blocks/ores.json
 3b2a2852e48554d08555b9cc7b8e66b12b230c99 data/minecraft/tags/blocks/needs_diamond_tool.json
 b967a076ec4fbbc2d8d866a21801496b16e12d82 data/minecraft/tags/blocks/beacon_base_blocks.json
 fa420e03e172c23a07894fb10739e071d45f295b data/virtual_additions/tags/blocks/sculk_gild_strongly_effective.json
@@ -17,8 +18,8 @@ ffb782ad189880fa793e1e3f9a47277be3fd7595 data/minecraft/tags/blocks/doors.json
 79b9a299886d9bbd4d746230d3c812c5f605e004 data/minecraft/tags/blocks/base_stone_overworld.json
 8ce003d52b91136ed1da4a80eb41e7a2514a16ba data/minecraft/tags/blocks/walls.json
 3953adb40c62c8fa7d5d1f24a48fbbcef38a00a5 data/virtual_additions/tags/blocks/climbing_ropes.json
-77a03f98eb773a48771c853d3fd81cb25c347413 data/minecraft/tags/blocks/needs_stone_tool.json
-da5ff6ed0d6ceb51049d9453bac2dc107e6497fc data/minecraft/tags/blocks/mineable/pickaxe.json
+cdf7d91ff0ece1742d81fdb46cc8975471bf8203 data/minecraft/tags/blocks/needs_stone_tool.json
+73381bf7cd47946349d4a0a8977c8ddb1f233f1e data/minecraft/tags/blocks/mineable/pickaxe.json
 9af7403ac59d30b556611e33397c00b2b8ed0cf4 data/minecraft/tags/blocks/crops.json
 79b9a299886d9bbd4d746230d3c812c5f605e004 data/minecraft/tags/blocks/deepslate_ore_replaceables.json
 79b9a299886d9bbd4d746230d3c812c5f605e004 data/minecraft/tags/blocks/overworld_carver_replaceables.json

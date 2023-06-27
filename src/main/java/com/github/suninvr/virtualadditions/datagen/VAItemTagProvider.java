@@ -27,6 +27,15 @@ class VAItemTagProvider extends FabricTagProvider.ItemTagProvider {
     private static final TagKey<Item> PICKAXES = TagKey.of(RegistryKeys.ITEM, new Identifier("c:pickaxes"));
     private static final TagKey<Item> AXES = TagKey.of(RegistryKeys.ITEM, new Identifier("c:axes"));
     private static final TagKey<Item> HOES = TagKey.of(RegistryKeys.ITEM, new Identifier("c:hoes"));
+    private static final TagKey<Item> INGOTS = TagKey.of(RegistryKeys.ITEM, new Identifier("c:ingots"));
+    private static final TagKey<Item> STEEL_INGOTS = TagKey.of(RegistryKeys.ITEM, new Identifier("c:steel_ingots"));
+    private static final TagKey<Item> RAW_ORES = TagKey.of(RegistryKeys.ITEM, new Identifier("c:raw_ores"));
+    private static final TagKey<Item> GEMS = TagKey.of(RegistryKeys.ITEM, new Identifier("c:gems"));
+    private static final TagKey<Item> FOODS = TagKey.of(RegistryKeys.ITEM, new Identifier("c:foods"));
+    private static final TagKey<Item> IOLITE = TagKey.of(RegistryKeys.ITEM, new Identifier("c:iolite"));
+    private static final TagKey<Item> IOLITE_ORES = TagKey.of(RegistryKeys.ITEM, new Identifier("c:iolite_ores"));
+    private static final TagKey<Item> ORES = TagKey.of(RegistryKeys.ITEM, new Identifier("c:ores"));
+    private static final TagKey<Item> POTIONS = TagKey.of(RegistryKeys.ITEM, new Identifier("c:potions"));
 
 
     public VAItemTagProvider(FabricDataOutput output, CompletableFuture<RegistryWrapper.WrapperLookup> completableFuture) {
@@ -45,6 +54,16 @@ class VAItemTagProvider extends FabricTagProvider.ItemTagProvider {
         getOrCreateTagBuilder(ItemTags.FENCES).add(VAItems.STEEL_FENCE);
         getOrCreateTagBuilder(ItemTags.DOORS).add(VAItems.STEEL_DOOR);
         getOrCreateTagBuilder(ItemTags.TRAPDOORS).add(VAItems.STEEL_TRAPDOOR);
+
+        getOrCreateTagBuilder(INGOTS).add(VAItems.STEEL_INGOT);
+        getOrCreateTagBuilder(STEEL_INGOTS).add(VAItems.STEEL_INGOT);
+        getOrCreateTagBuilder(RAW_ORES).add(VAItems.RAW_STEEL);
+        getOrCreateTagBuilder(IOLITE).add(VAItems.IOLITE);
+        getOrCreateTagBuilder(IOLITE_ORES).add(VAItems.IOLITE_ORE);
+        getOrCreateTagBuilder(GEMS).addOptionalTag(IOLITE);
+        getOrCreateTagBuilder(ORES).addOptionalTag(IOLITE_ORES);
+        getOrCreateTagBuilder(FOODS).add(VAItems.FRIED_EGG, VAItems.CORN, VAItems.ROASTED_CORN);
+        getOrCreateTagBuilder(POTIONS).add(VAItems.APPLICABLE_POTION);
 
         getOrCreateTagBuilder(VAItemTags.LUMWASP_LARVAE_FOOD).add(
                 Items.STONE,

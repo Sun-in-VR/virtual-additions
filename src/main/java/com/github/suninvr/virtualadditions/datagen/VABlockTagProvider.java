@@ -45,6 +45,8 @@ class VABlockTagProvider extends FabricTagProvider.BlockTagProvider {
         getOrCreateTagBuilder(BlockTags.SCULK_REPLACEABLE).add(VABlocks.SILK_BLOCK, VABlocks.WEBBED_SILK);
         getOrCreateTagBuilder(BlockTags.TRAPDOORS).add(VABlocks.STEEL_TRAPDOOR);
 
+        getOrCreateTagBuilder(ORES).add(VABlocks.IOLITE_ORE);
+
         getOrCreateTagBuilder(BlockTags.HOE_MINEABLE).add(
                         VABlocks.SILK_BLOCK,
                         VABlocks.WEBBED_SILK,
