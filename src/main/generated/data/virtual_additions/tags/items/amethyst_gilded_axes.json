@@ -1,0 +1,10 @@
+{
+  "replace": false,
+  "values": [
+    "virtual_additions:amethyst_diamond_axe",
+    "virtual_additions:amethyst_iron_axe",
+    "virtual_additions:amethyst_golden_axe",
+    "virtual_additions:amethyst_steel_axe",
+    "virtual_additions:amethyst_netherite_axe"
+  ]
+}

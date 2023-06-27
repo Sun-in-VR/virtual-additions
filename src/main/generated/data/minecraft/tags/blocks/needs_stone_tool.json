@@ -3,9 +3,15 @@
   "values": [
     "virtual_additions:steel_block",
     "virtual_additions:raw_steel_block",
+    "virtual_additions:steel_trapdoor",
+    "virtual_additions:steel_door",
+    "virtual_additions:warp_anchor",
+    "virtual_additions:warp_tether",
+    "virtual_additions:entanglement_drive",
     "virtual_additions:redstone_bridge",
-    "virtual_additions:cut_steel_stairs",
+    "virtual_additions:cut_steel",
     "virtual_additions:cut_steel_slab",
+    "virtual_additions:cut_steel_stairs",
     "virtual_additions:steel_fence"
   ]
 }

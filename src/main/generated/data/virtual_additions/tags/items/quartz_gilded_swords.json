@@ -1,0 +1,10 @@
+{
+  "replace": false,
+  "values": [
+    "virtual_additions:quartz_diamond_sword",
+    "virtual_additions:quartz_iron_sword",
+    "virtual_additions:quartz_golden_sword",
+    "virtual_additions:quartz_steel_sword",
+    "virtual_additions:quartz_netherite_sword"
+  ]
+}

@@ -1,0 +1,10 @@
+{
+  "replace": false,
+  "values": [
+    "virtual_additions:copper_diamond_shovel",
+    "virtual_additions:copper_iron_shovel",
+    "virtual_additions:copper_golden_shovel",
+    "virtual_additions:copper_steel_shovel",
+    "virtual_additions:copper_netherite_shovel"
+  ]
+}

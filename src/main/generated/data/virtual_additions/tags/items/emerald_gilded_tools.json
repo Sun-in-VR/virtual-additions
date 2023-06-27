@@ -1,0 +1,30 @@
+{
+  "replace": false,
+  "values": [
+    "virtual_additions:emerald_diamond_axe",
+    "virtual_additions:emerald_diamond_hoe",
+    "virtual_additions:emerald_diamond_pickaxe",
+    "virtual_additions:emerald_diamond_shovel",
+    "virtual_additions:emerald_diamond_sword",
+    "virtual_additions:emerald_iron_axe",
+    "virtual_additions:emerald_iron_hoe",
+    "virtual_additions:emerald_iron_pickaxe",
+    "virtual_additions:emerald_iron_shovel",
+    "virtual_additions:emerald_iron_sword",
+    "virtual_additions:emerald_golden_axe",
+    "virtual_additions:emerald_golden_hoe",
+    "virtual_additions:emerald_golden_pickaxe",
+    "virtual_additions:emerald_golden_shovel",
+    "virtual_additions:emerald_golden_sword",
+    "virtual_additions:emerald_steel_axe",
+    "virtual_additions:emerald_steel_hoe",
+    "virtual_additions:emerald_steel_pickaxe",
+    "virtual_additions:emerald_steel_shovel",
+    "virtual_additions:emerald_steel_sword",
+    "virtual_additions:emerald_netherite_axe",
+    "virtual_additions:emerald_netherite_hoe",
+    "virtual_additions:emerald_netherite_pickaxe",
+    "virtual_additions:emerald_netherite_shovel",
+    "virtual_additions:emerald_netherite_sword"
+  ]
+}

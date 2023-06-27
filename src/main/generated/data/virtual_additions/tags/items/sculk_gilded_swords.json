@@ -1,0 +1,10 @@
+{
+  "replace": false,
+  "values": [
+    "virtual_additions:sculk_diamond_sword",
+    "virtual_additions:sculk_iron_sword",
+    "virtual_additions:sculk_golden_sword",
+    "virtual_additions:sculk_steel_sword",
+    "virtual_additions:sculk_netherite_sword"
+  ]
+}

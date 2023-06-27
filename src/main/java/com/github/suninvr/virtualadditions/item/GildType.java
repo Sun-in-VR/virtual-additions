@@ -5,10 +5,13 @@ import net.minecraft.entity.EquipmentSlot;
 import net.minecraft.entity.attribute.EntityAttributeModifier;
 import net.minecraft.entity.attribute.EntityAttributes;
 import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.ToolItem;
 import net.minecraft.item.ToolMaterial;
 import net.minecraft.recipe.Ingredient;
+import net.minecraft.registry.RegistryKeys;
+import net.minecraft.registry.tag.TagKey;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
@@ -21,6 +24,12 @@ public class GildType {
     private final ArrayList<Modifier> modifiers = new ArrayList<>();
     private final Identifier id;
     private final int color;
+    private TagKey<Item> tag;
+    private TagKey<Item> axesTag;
+    private TagKey<Item> hoesTag;
+    private TagKey<Item> pickaxesTag;
+    private TagKey<Item> shovelsTag;
+    private TagKey<Item> swordsTag;
     protected record Modifier(ModifierType type, float value, BiFunction<Float, Float, Float> function){
         public float apply(float f) {
             return this.function.apply(f, this.value);
@@ -147,6 +156,54 @@ public class GildType {
             if (modifier.type.modifiesBaseMaterial) return true;
         }
         return false;
+    }
+    
+    public TagKey<Item> getTag() {
+        if (this.tag == null) {
+            Identifier id = this.id.withSuffixedPath("_gilded_tools");
+            this.tag = TagKey.of(RegistryKeys.ITEM, id);
+        }
+        return this.tag;
+    }
+    
+    public TagKey<Item> getAxesTag() {
+        if (this.axesTag == null) {
+            Identifier id = this.id.withSuffixedPath("_gilded_axes");
+            this.axesTag = TagKey.of(RegistryKeys.ITEM, id);
+        }
+        return this.axesTag;
+    }
+    
+    public TagKey<Item> getHoesTag() {
+        if (this.hoesTag == null) {
+            Identifier id = this.id.withSuffixedPath("_gilded_hoes");
+            this.hoesTag = TagKey.of(RegistryKeys.ITEM, id);
+        }
+        return this.hoesTag;
+    }
+    
+    public TagKey<Item> getPickaxesTag() {
+        if (this.pickaxesTag == null) {
+            Identifier id = this.id.withSuffixedPath("_gilded_pickaxes");
+            this.pickaxesTag = TagKey.of(RegistryKeys.ITEM, id);
+        }
+        return this.pickaxesTag;
+    }
+
+    public TagKey<Item> getShovelsTag() {
+        if (this.shovelsTag == null) {
+            Identifier id = this.id.withSuffixedPath("_gilded_shovels");
+            this.shovelsTag = TagKey.of(RegistryKeys.ITEM, id);
+        }
+        return this.shovelsTag;
+    }
+
+    public TagKey<Item> getSwordsTag() {
+        if (this.swordsTag == null) {
+            Identifier id = this.id.withSuffixedPath("_gilded_swords");
+            this.swordsTag = TagKey.of(RegistryKeys.ITEM, id);
+        }
+        return this.swordsTag;
     }
 
     @Override

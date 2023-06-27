@@ -1,0 +1,10 @@
+{
+  "replace": false,
+  "values": [
+    "virtual_additions:copper_diamond_pickaxe",
+    "virtual_additions:copper_iron_pickaxe",
+    "virtual_additions:copper_golden_pickaxe",
+    "virtual_additions:copper_steel_pickaxe",
+    "virtual_additions:copper_netherite_pickaxe"
+  ]
+}

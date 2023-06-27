@@ -1,0 +1,10 @@
+{
+  "replace": false,
+  "values": [
+    "virtual_additions:sculk_diamond_pickaxe",
+    "virtual_additions:sculk_iron_pickaxe",
+    "virtual_additions:sculk_golden_pickaxe",
+    "virtual_additions:sculk_steel_pickaxe",
+    "virtual_additions:sculk_netherite_pickaxe"
+  ]
+}

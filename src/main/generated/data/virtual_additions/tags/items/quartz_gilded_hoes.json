@@ -1,0 +1,10 @@
+{
+  "replace": false,
+  "values": [
+    "virtual_additions:quartz_diamond_hoe",
+    "virtual_additions:quartz_iron_hoe",
+    "virtual_additions:quartz_golden_hoe",
+    "virtual_additions:quartz_steel_hoe",
+    "virtual_additions:quartz_netherite_hoe"
+  ]
+}

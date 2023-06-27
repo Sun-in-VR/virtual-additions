@@ -1,0 +1,10 @@
+{
+  "replace": false,
+  "values": [
+    "virtual_additions:amethyst_diamond_shovel",
+    "virtual_additions:amethyst_iron_shovel",
+    "virtual_additions:amethyst_golden_shovel",
+    "virtual_additions:amethyst_steel_shovel",
+    "virtual_additions:amethyst_netherite_shovel"
+  ]
+}

@@ -1,0 +1,22 @@
+{
+  "replace": false,
+  "values": [
+    "virtual_additions:silkbulb",
+    "virtual_additions:white_silkbulb",
+    "virtual_additions:light_gray_silkbulb",
+    "virtual_additions:gray_silkbulb",
+    "virtual_additions:black_silkbulb",
+    "virtual_additions:brown_silkbulb",
+    "virtual_additions:red_silkbulb",
+    "virtual_additions:orange_silkbulb",
+    "virtual_additions:yellow_silkbulb",
+    "virtual_additions:lime_silkbulb",
+    "virtual_additions:green_silkbulb",
+    "virtual_additions:cyan_silkbulb",
+    "virtual_additions:light_blue_silkbulb",
+    "virtual_additions:blue_silkbulb",
+    "virtual_additions:purple_silkbulb",
+    "virtual_additions:magenta_silkbulb",
+    "virtual_additions:pink_silkbulb"
+  ]
+}
