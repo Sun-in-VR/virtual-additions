@@ -1,21 +1,30 @@
 package com.github.suninvr.virtualadditions.datagen;
 
-import com.github.suninvr.virtualadditions.item.GildType;
-import com.github.suninvr.virtualadditions.item.GildedToolUtil;
+import com.github.suninvr.virtualadditions.block.CornCropBlock;
 import com.github.suninvr.virtualadditions.item.interfaces.GildedToolItem;
 import com.github.suninvr.virtualadditions.registry.*;
 import net.fabricmc.fabric.api.datagen.v1.DataGeneratorEntrypoint;
 import net.fabricmc.fabric.api.datagen.v1.FabricDataGenerator;
 import net.fabricmc.fabric.api.datagen.v1.FabricDataOutput;
-import net.fabricmc.fabric.api.datagen.v1.provider.FabricModelProvider;
-import net.fabricmc.fabric.api.datagen.v1.provider.FabricRecipeProvider;
-import net.fabricmc.fabric.api.datagen.v1.provider.FabricTagProvider;
+import net.fabricmc.fabric.api.datagen.v1.provider.*;
 import net.minecraft.block.Block;
 import net.minecraft.block.Blocks;
+import net.minecraft.block.TallPlantBlock;
+import net.minecraft.block.enums.DoubleBlockHalf;
 import net.minecraft.data.client.*;
 import net.minecraft.data.family.BlockFamily;
+import net.minecraft.data.server.loottable.BlockLootTableGenerator;
 import net.minecraft.data.server.recipe.*;
+import net.minecraft.enchantment.Enchantments;
 import net.minecraft.item.*;
+import net.minecraft.loot.LootPool;
+import net.minecraft.loot.LootTable;
+import net.minecraft.loot.condition.BlockStatePropertyLootCondition;
+import net.minecraft.loot.entry.ItemEntry;
+import net.minecraft.loot.entry.LootPoolEntry;
+import net.minecraft.loot.function.ApplyBonusLootFunction;
+import net.minecraft.loot.provider.number.ConstantLootNumberProvider;
+import net.minecraft.predicate.StatePredicate;
 import net.minecraft.recipe.Ingredient;
 import net.minecraft.recipe.RecipeSerializer;
 import net.minecraft.recipe.book.RecipeCategory;
@@ -23,19 +32,18 @@ import net.minecraft.registry.Registries;
 import net.minecraft.registry.RegistryKeys;
 import net.minecraft.registry.RegistryWrapper;
 import net.minecraft.registry.tag.BlockTags;
-import net.minecraft.registry.tag.ItemTags;
 import net.minecraft.registry.tag.TagKey;
 import net.minecraft.util.Identifier;
 import org.apache.commons.lang3.tuple.Pair;
 
-import java.util.HashMap;
+import java.util.Iterator;
 import java.util.List;
-import java.util.Map;
 import java.util.concurrent.CompletableFuture;
 import java.util.function.Consumer;
 
 import static com.github.suninvr.virtualadditions.VirtualAdditions.idOf;
 
+@SuppressWarnings("SameParameterValue")
 public class VirtualAdditionsDataGeneration implements DataGeneratorEntrypoint {
     @Override
     public void onInitializeDataGenerator(FabricDataGenerator fabricDataGenerator) {
@@ -44,6 +52,7 @@ public class VirtualAdditionsDataGeneration implements DataGeneratorEntrypoint {
         pack.addProvider(VABlockTagProvider::new);
         pack.addProvider(VAModelProvider::new);
         pack.addProvider(VARecipeProvider::new);
+        pack.addProvider(VABlockLootTableProvider::new);
     }
 
     private static class VAModelProvider extends FabricModelProvider {
@@ -313,6 +322,125 @@ public class VirtualAdditionsDataGeneration implements DataGeneratorEntrypoint {
                     .pattern("###")
                     .pattern("###")
                     .input('#', input).criterion("has_leaves", conditionsFromItem(input)).group("hedges").offerTo(exporter);
+        }
+    }
+
+    private static class VABlockLootTableProvider extends FabricBlockLootTableProvider {
+
+        protected VABlockLootTableProvider(FabricDataOutput dataOutput) {
+            super(dataOutput);
+            addFamilyDrops(
+                    VABlockFamilies.CUT_STEEL,
+                    VABlockFamilies.COBBLED_HORNFELS,
+                    VABlockFamilies.COBBLED_BLUESCHIST,
+                    VABlockFamilies.COBBLED_SYENITE,
+                    VABlockFamilies.POLISHED_HORNFELS,
+                    VABlockFamilies.POLISHED_BLUESCHIST,
+                    VABlockFamilies.POLISHED_SYENITE,
+                    VABlockFamilies.HORNFELS_TILES,
+                    VABlockFamilies.BLUESCHIST_BRICKS,
+                    VABlockFamilies.SYENITE_BRICKS
+            );
+
+            addSimpleDrops(
+                    VABlocks.CLIMBING_ROPE_ANCHOR,
+                    VABlocks.RAW_STEEL_BLOCK,
+                    VABlocks.STEEL_BLOCK,
+                    VABlocks.STEEL_FENCE,
+                    VABlocks.STEEL_TRAPDOOR,
+                    VABlocks.REDSTONE_BRIDGE,
+                    VABlocks.OAK_HEDGE,
+                    VABlocks.SPRUCE_HEDGE,
+                    VABlocks.BIRCH_HEDGE,
+                    VABlocks.JUNGLE_HEDGE,
+                    VABlocks.ACACIA_HEDGE,
+                    VABlocks.DARK_OAK_HEDGE,
+                    VABlocks.MANGROVE_HEDGE,
+                    VABlocks.CHERRY_HEDGE,
+                    VABlocks.AZALEA_HEDGE,
+                    VABlocks.FLOWERING_AZALEA_HEDGE,
+                    VABlocks.SILK_BLOCK,
+                    VABlocks.WEBBED_SILK,
+                    VABlocks.FRAYED_SILK,
+                    VABlocks.GREENCAP_MUSHROOM,
+                    VABlocks.SILKBULB,
+                    VABlocks.WHITE_SILKBULB,
+                    VABlocks.LIGHT_GRAY_SILKBULB,
+                    VABlocks.GRAY_SILKBULB,
+                    VABlocks.BLACK_SILKBULB,
+                    VABlocks.BROWN_SILKBULB,
+                    VABlocks.RED_SILKBULB,
+                    VABlocks.ORANGE_SILKBULB,
+                    VABlocks.YELLOW_SILKBULB,
+                    VABlocks.LIME_SILKBULB,
+                    VABlocks.GREEN_SILKBULB,
+                    VABlocks.CYAN_SILKBULB,
+                    VABlocks.LIGHT_BLUE_SILKBULB,
+                    VABlocks.BLUE_SILKBULB,
+                    VABlocks.PURPLE_SILKBULB,
+                    VABlocks.MAGENTA_SILKBULB,
+                    VABlocks.PINK_SILKBULB,
+                    VABlocks.IOLITE_BLOCK,
+                    VABlocks.WARP_ANCHOR,
+                    VABlocks.ENTANGLEMENT_DRIVE
+            );
+
+            this.addDrop(VABlocks.STEEL_DOOR, this::doorDrops);
+            this.addDrop(VABlocks.HORNFELS, block -> this.drops(block, VABlocks.COBBLED_HORNFELS));
+            this.addDrop(VABlocks.BLUESCHIST, block -> this.drops(block, VABlocks.COBBLED_BLUESCHIST));
+            this.addDrop(VABlocks.SYENITE, block -> this.drops(block, VABlocks.COBBLED_SYENITE));
+            this.addDrop(VABlocks.LUMWASP_NEST, block -> this.drops(block, VABlocks.SILK_BLOCK));
+            this.addDrop(VABlocks.GLOWING_SILK, block -> this.drops(block, VAItems.SILK_THREAD));
+            this.addDrop(VABlocks.IOLITE_ORE, block -> this.oreDrops(block, VAItems.IOLITE));
+            this.addDrop(VABlocks.TALL_GREENCAP_MUSHROOMS, (Block block) -> this.dropsWithProperty(block, TallPlantBlock.HALF, DoubleBlockHalf.LOWER));
+        }
+
+        @Override
+        public void generate() {
+            addDrop(VABlocks.REDSTONE_BRIDGE);
+        }
+
+        private void addFamilyDrops(BlockFamily... blockFamilies) {
+            for (BlockFamily family : blockFamilies) {
+                addDrop(family.getBaseBlock());
+                family.getVariants().forEach(this::addDrop);
+            }
+        }
+
+        public void addDrop(BlockFamily.Variant variant, Block block) {
+            switch (variant) {
+                case SLAB -> this.addDrop(block, this::slabDrops);
+                case DOOR -> this.addDrop(block, this::doorDrops);
+                default -> this.addDrop(block);
+            }
+        }
+
+        private void addSimpleDrops(Block... blocks) {
+            for (Block block : blocks) {
+                this.addDrop(block);
+            }
+        }
+
+        @Override
+        public void addDrop(Block block) {
+            this.addDrop(block, block);
+        }
+
+        @Override
+        public void addDrop(Block block, ItemConvertible drop) {
+            this.addDrop(block, this.drops(drop));
+        }
+
+        @Override
+        public void addDrop(Block block, LootTable.Builder lootTable) {
+            this.lootTables.put(block.getLootTableId(), lootTable.randomSequenceId(block.getLootTableId()));
+        }
+
+        @Override
+        public LootTable.Builder oreDrops(Block dropWithSilkTouch, Item drop) {
+            return BlockLootTableGenerator
+                    .dropsWithSilkTouch(dropWithSilkTouch, this.applyExplosionDecay(dropWithSilkTouch, ItemEntry.builder(drop).apply(ApplyBonusLootFunction.oreDrops(Enchantments.FORTUNE))))
+                    .randomSequenceId(dropWithSilkTouch.getLootTableId());
         }
     }
 

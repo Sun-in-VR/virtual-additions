@@ -1,4 +1,4 @@
-// 1.20.1	2023-06-25T12:15:34.984497208	Virtual Additions/Model Definitions
+// 1.20.1	2023-06-27T02:29:31.916854415	Virtual Additions/Model Definitions
 16196d4c40192f0e929418679e8f36c08acf9df5 assets/virtual_additions/models/item/emerald_steel_shovel.json
 f07043553512f934fa660755ae8859fad8607754 assets/virtual_additions/models/item/sculk_iron_sword.json
 1fedfcedc5805728f1255b5b521b091aea62285e assets/virtual_additions/models/item/copper_golden_pickaxe.json
@@ -9,8 +9,8 @@ ddd5030fe6f27bf78a4b730cd96c5fa044a6c752 assets/virtual_additions/models/item/co
 7a9c8d1e065733d058039398a451e722040ecf3c assets/virtual_additions/models/item/copper_steel_shovel.json
 092f1cf8d8aa39c042a6e010281a6ce030886a35 assets/virtual_additions/models/item/amethyst_netherite_pickaxe.json
 e67e8842497df12d68ef26ecb4276f1e39f4e494 assets/virtual_additions/models/item/sculk_golden_shovel.json
-c07c84db0615ecb38418b2bcb6959ab7180fd32b assets/virtual_additions/models/item/emerald_diamond_shovel.json
 a05c57a1f3762a103d460453bf804d98a4ad9277 assets/virtual_additions/models/item/emerald_iron_shovel.json
+c07c84db0615ecb38418b2bcb6959ab7180fd32b assets/virtual_additions/models/item/emerald_diamond_shovel.json
 5091be26149fdddd919be3fe924b863f66301a5d assets/virtual_additions/models/item/sculk_golden_sword.json
 31b7ac8a6377b1cb0d5b5391c3b9bc5d93e9093c assets/virtual_additions/models/item/emerald_golden_pickaxe.json
 947b05e6f03abf397a833da7f15cb161a809af1c assets/virtual_additions/models/item/quartz_netherite_sword.json
