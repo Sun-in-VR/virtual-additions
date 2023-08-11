@@ -61,7 +61,7 @@ public class EntanglementDriveScreen extends HandledScreen<EntanglementDriveScre
         if (this.handler.isSelectingSlot() && this.handler.isSlotSelected()) context.drawTexture(BACKGROUND_TEXTURE, i + selectedSlotX - 1, j + selectedSlotY - 1, 196, 0, 18, 18);
         if (samePlayer) context.drawTexture(BACKGROUND_TEXTURE, i + activeSlotX, j + activeSlotY, 178, 0, 18, 18);
         if (this.client != null && this.client.player != null) {
-            InventoryScreen.drawEntity(context, i + 51, j + 75, 30, (float)(i + 51) - this.mouseX, (float)(j + 75 - 50) - this.mouseY, this.client.player);
+            InventoryScreen.drawEntity(context, i + 26, j + 8, i + 75, j + 78, 30, 0.0625F, this.mouseX, this.mouseY, this.client.player);
         }
     }
 
@@ -92,7 +92,7 @@ public class EntanglementDriveScreen extends HandledScreen<EntanglementDriveScre
 
     @Override
     public void render(DrawContext context, int mouseX, int mouseY, float delta) {
-        this.renderBackground(context);
+        this.renderBackground(context, mouseX, mouseY, delta);
         super.render(context, mouseX, mouseY, delta);
         this.drawMouseoverTooltip(context, mouseX, mouseY);
         this.mouseX = (float)mouseX;
@@ -101,7 +101,6 @@ public class EntanglementDriveScreen extends HandledScreen<EntanglementDriveScre
 
     @Override
     protected void drawMouseoverTooltip(DrawContext context, int x, int y) {
-
         int i = 0;
         boolean bl = this.focusedSlot != null;
         if (bl) i = this.focusedSlot.id;

@@ -177,7 +177,7 @@ public class VABlocks {
         GREEN_GLIMMER_CRYSTAL = register("green_glimmer_crystal", new CrystalBlock(FabricBlockSettings.copyOf(Blocks.AMETHYST_CLUSTER).mapColor(MapColor.WHITE_GRAY).nonOpaque().dynamicBounds().pistonBehavior(PistonBehavior.DESTROY).requires(VirtualAdditions.PREVIEW)));
         BLUE_GLIMMER_CRYSTAL = register("blue_glimmer_crystal", new CrystalBlock(FabricBlockSettings.copyOf(Blocks.AMETHYST_CLUSTER).mapColor(MapColor.WHITE_GRAY).nonOpaque().dynamicBounds().pistonBehavior(PistonBehavior.DESTROY).requires(VirtualAdditions.PREVIEW)));
         SPOTLIGHT = register("spotlight", new SpotlightBlock(FabricBlockSettings.copyOf(Blocks.COPPER_BLOCK).mapColor(MapColor.ORANGE).nonOpaque().luminance((state) -> state.get(SpotlightBlock.POWERED) ? 6 : 0).emissiveLighting((state, world, pos) -> state.get(Properties.POWERED)) .requires(VirtualAdditions.PREVIEW)));
-        SPOTLIGHT_LIGHT = register("spotlight_light", new SpotlightLightBlock(FabricBlockSettings.create().strength(-1.0F, 3600000.8F).sounds(BlockSoundGroup.field_44608).replaceable().dropsNothing().nonOpaque().luminance((state) -> state.get(SpotlightLightBlock.LIT) ? 13 : 0).requires(VirtualAdditions.PREVIEW)));
+        SPOTLIGHT_LIGHT = register("spotlight_light", new SpotlightLightBlock(FabricBlockSettings.create().strength(-1.0F, 3600000.8F).sounds(BlockSoundGroup.INTENTIONALLY_EMPTY).replaceable().dropsNothing().nonOpaque().luminance((state) -> state.get(SpotlightLightBlock.LIT) ? 13 : 0).requires(VirtualAdditions.PREVIEW)));
 
         COTTON = register("cotton", new CottonCropBlock(AbstractBlock.Settings.create().noCollision().ticksRandomly().breakInstantly().sounds(BlockSoundGroup.CROP)));
         CORN_CROP = register("corn_crop", new CornCropBlock(AbstractBlock.Settings.create().noCollision().ticksRandomly().breakInstantly().sounds(BlockSoundGroup.CROP).offset(AbstractBlock.OffsetType.XZ)));
@@ -218,7 +218,7 @@ public class VABlocks {
         MAGENTA_SILKBULB = register("magenta_silkbulb", new Block(AbstractBlock.Settings.copy(SILKBULB).mapColor(MapColor.MAGENTA)));
         PINK_SILKBULB = register("pink_silkbulb", new Block(AbstractBlock.Settings.copy(SILKBULB).mapColor(MapColor.PINK)));
 
-        ACID = register("acid", new AcidFluidBlock(VAFluids.ACID, AbstractBlock.Settings.create().mapColor(MapColor.LIME).luminance(((state) -> 6)).sounds(BlockSoundGroup.field_44608).replaceable().noCollision().strength(100.0F).dropsNothing().allowsSpawning(((state, world, pos, type) -> type == VAEntityType.LUMWASP)).pistonBehavior(PistonBehavior.DESTROY)));
+        ACID = register("acid", new AcidFluidBlock(VAFluids.ACID, AbstractBlock.Settings.create().mapColor(MapColor.LIME).luminance(((state) -> 6)).sounds(BlockSoundGroup.INTENTIONALLY_EMPTY).replaceable().noCollision().strength(100.0F).dropsNothing().allowsSpawning(((state, world, pos, type) -> type == VAEntityType.LUMWASP)).pistonBehavior(PistonBehavior.DESTROY)));
 
         IOLITE_ORE = register("iolite_ore", new ExperienceDroppingBlock(FabricBlockSettings.copyOf(Blocks.END_STONE).strength(4.5F, 4.5F).requiresTool(), UniformIntProvider.create(5, 9)));
         IOLITE_BLOCK = register("iolite_block", new Block(FabricBlockSettings.create().mapColor(MapColor.MAGENTA).sounds(BlockSoundGroup.METAL).requiresTool().hardness(5.0F).resistance(300.0F)));
