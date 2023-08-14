@@ -1,13 +1,17 @@
 package com.github.suninvr.virtualadditions.mixin;
 
+import com.github.suninvr.virtualadditions.item.GildTypes;
+import com.github.suninvr.virtualadditions.item.GildedToolUtil;
 import com.github.suninvr.virtualadditions.registry.VADamageTypes;
 import net.minecraft.block.BlockState;
+import net.minecraft.enchantment.EnchantmentHelper;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.damage.DamageSource;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.PlayerInventory;
+import net.minecraft.item.ItemStack;
 import net.minecraft.world.World;
 import org.spongepowered.asm.mixin.Final;
 import org.spongepowered.asm.mixin.Mixin;
@@ -29,13 +33,20 @@ public abstract class PlayerEntityMixin extends LivingEntity {
 
     @Inject(method = "getBlockBreakingSpeed", at = @At("RETURN"), cancellable = true)
     public void virtualAdditions$getBlockBreakingSpeed(BlockState block, CallbackInfoReturnable<Float> cir) {
+        float r = cir.getReturnValue();
         PlayerEntity player = ((PlayerEntity)(Object)this);
-        Entity entity = player.getRootVehicle();
-        boolean bl = entity.isOnGround();
-        if (entity instanceof LivingEntity livingEntity) {
-            bl = bl || livingEntity.isClimbing();
+
+        ItemStack stack = player.getMainHandStack();
+        if (GildedToolUtil.getGildType(stack).equals(GildTypes.SCULK)) {
+            float e = 0.12F * EnchantmentHelper.getEfficiency(player);
+            r *= 1 - e;
         }
-        if (bl && !player.isOnGround()) cir.setReturnValue(cir.getReturnValue() * 5.0F);
+
+        Entity entity = player.getRootVehicle();
+        boolean bl = entity.isOnGround() || (entity instanceof LivingEntity livingEntity && livingEntity.isClimbing());
+        if (bl && !player.isOnGround()) r *= 5.0F;
+
+        cir.setReturnValue(r);
     }
 
     @Inject(method = "damageArmor", at = @At("HEAD"), cancellable = true)
@@ -45,8 +56,5 @@ public abstract class PlayerEntityMixin extends LivingEntity {
             this.inventory.damageArmor(source, amount, PlayerInventory.ARMOR_SLOTS);
             ci.cancel();
         }
-//
     }
-
-
 }

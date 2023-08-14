@@ -5,10 +5,7 @@ import net.minecraft.entity.EquipmentSlot;
 import net.minecraft.entity.attribute.EntityAttributeModifier;
 import net.minecraft.entity.attribute.EntityAttributes;
 import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.item.Item;
-import net.minecraft.item.ItemStack;
-import net.minecraft.item.ToolItem;
-import net.minecraft.item.ToolMaterial;
+import net.minecraft.item.*;
 import net.minecraft.recipe.Ingredient;
 import net.minecraft.registry.RegistryKeys;
 import net.minecraft.registry.tag.TagKey;
@@ -30,7 +27,7 @@ public class GildType {
     private TagKey<Item> pickaxesTag;
     private TagKey<Item> shovelsTag;
     private TagKey<Item> swordsTag;
-    protected record Modifier(ModifierType type, float value, BiFunction<Float, Float, Float> function){
+    protected record Modifier(ModifierType type, float value, BiFunction<Float, Float, Float> function, ModifierType.ToolType... appliesTo){
         public float apply(float f) {
             return this.function.apply(f, this.value);
         }
@@ -38,8 +35,32 @@ public class GildType {
         public int apply(int i) {
             return Math.round(this.function.apply((float) i, this.value));
         }
+
+        public float apply(float f, Item baseItem) {
+            return this.shouldApplyToTool(baseItem) ? this.apply(f) : f;
+        }
+
+        public int apply(int i, Item baseItem) {
+            return this.shouldApplyToTool(baseItem) ? this.apply(i) : i;
+        }
+
+        public boolean shouldApplyToTool(Item item) {
+            if (this.appliesTo.length == 0) return true;
+            for (ModifierType.ToolType type : this.appliesTo) {
+                if (type.matches(item)) return true;
+            }
+            return false;
+        }
     }
 
+    /**
+     * Constructor for gild types. Each gild type has a set of modifiers to apply to the base tool's attributes.
+     * For extended functionality, some methods are provided for interacting with the world.
+     *
+     * @param id The identifier used by this gild
+     * @param color The color of the gild type's tooltip
+     * @param modifiers The attribute modifiers to apply to tools using this gild
+     */
     public GildType(Identifier id, int color, Modifier... modifiers) {
         this.id = id;
         this.color = color;
@@ -47,7 +68,7 @@ public class GildType {
     }
 
     /**
-     * Gets whether the gild should play effects or affect the world after breaking a specific block.
+     * Gets whether the gild should play effects or interact with the world after breaking a specific block.
      *
      * @return <code>true</code> if the gild type is effective, <code>false</code> if it is not effective.
      *
@@ -82,7 +103,7 @@ public class GildType {
      * @param state the state of the broken block
      * @param tool the tool used to break the block
      *
-     * @implNote Returning false will disable <b>all effects</b> of breaking a block, such damaging the tool and increasing the player's relevant stats.
+     * @implNote Returning false will disable <b><i>all effects</i></b> of breaking a block, such damaging the tool and increasing the player's relevant stats.
      *
      * **/
     public boolean onBlockBroken(World world, PlayerEntity player, BlockPos pos, BlockState state, ItemStack tool) {
@@ -97,9 +118,9 @@ public class GildType {
      * @param baseMaterial the tool material to apply this gild type's modifications to
      *
      * **/
-    public final ToolMaterial getModifiedMaterial(ToolMaterial baseMaterial) {
+    public final ToolMaterial getModifiedMaterial(ToolMaterial baseMaterial, ToolItem baseItem) {
         if (this.modifiers.isEmpty() || !this.shouldModifyBaseMaterial()) return baseMaterial;
-        
+
         int durability = baseMaterial.getDurability();
         float miningSpeed = baseMaterial.getMiningSpeedMultiplier();
         float attackDamage = baseMaterial.getAttackDamage();
@@ -108,11 +129,11 @@ public class GildType {
 
         for (Modifier modifier : this.modifiers) {
             switch (modifier.type) {
-                case DURABILITY -> durability = modifier.apply(durability);
-                case MINING_SPEED -> miningSpeed = modifier.apply(miningSpeed);
-                case ATTACK_DAMAGE -> attackDamage = modifier.apply(attackDamage);
-                case MINING_LEVEL -> miningLevel = modifier.apply(miningLevel);
-                case ENCHANTABILITY -> enchantability = modifier.apply(enchantability);
+                case DURABILITY -> durability = modifier.apply(durability, baseItem);
+                case MINING_SPEED -> miningSpeed = modifier.apply(miningSpeed, baseItem);
+                case ATTACK_DAMAGE -> attackDamage = modifier.apply(attackDamage, baseItem);
+                case MINING_LEVEL -> miningLevel = modifier.apply(miningLevel, baseItem);
+                case ENCHANTABILITY -> enchantability = modifier.apply(enchantability, baseItem);
             }
         }
 
@@ -130,34 +151,53 @@ public class GildType {
     public double getModifiedAttackSpeed(ToolItem baseItem) {
         double attackSpeed = baseItem.getAttributeModifiers(EquipmentSlot.MAINHAND).get(EntityAttributes.GENERIC_ATTACK_SPEED).stream().mapToDouble(EntityAttributeModifier::getValue).sum();
         for (Modifier modifier : this.modifiers) {
-            if (modifier.type.equals(ModifierType.ATTACK_SPEED)) attackSpeed = modifier.apply((float) attackSpeed);
+            if (modifier.shouldApplyToTool(baseItem) && modifier.type.equals(ModifierType.ATTACK_SPEED)) attackSpeed = modifier.apply((float) attackSpeed);
         }
         return attackSpeed;
     }
 
     public ToolMaterial getModifiedMaterial(ToolItem item) {
-        return getModifiedMaterial(item.getMaterial());
+        return getModifiedMaterial(item.getMaterial(), item);
     }
 
     public final String buildTooltipTranslationKey() {
         return "item.virtual_additions.gilded_tool_tooltip." + this.id.getPath();
     }
 
+    /**
+     * Gets the color of the gild type's tooltip text
+     *
+     * @return An integer representing the color
+     */
     public int getColor() {
         return color;
     }
 
+    /**
+     * Gets the gild type's id
+     *
+     * @return the identifier of the gild type
+     */
     public Identifier getId() {
         return this.id;
     }
 
+    /**
+     * Determines if the gild type modifiers will modify the base material
+     *
+     * @return 'true' if the modifiers do modify the base material
+     */
     private boolean shouldModifyBaseMaterial() {
         for (Modifier modifier : this.modifiers) {
             if (modifier.type.modifiesBaseMaterial) return true;
         }
         return false;
     }
-    
+
+
+    /**
+     * Gets or creates a tag associated with this gild type
+     */
     public TagKey<Item> getTag() {
         if (this.tag == null) {
             Identifier id = this.id.withSuffixedPath("_gilded_tools");
@@ -173,7 +213,7 @@ public class GildType {
         }
         return this.axesTag;
     }
-    
+
     public TagKey<Item> getHoesTag() {
         if (this.hoesTag == null) {
             Identifier id = this.id.withSuffixedPath("_gilded_hoes");
@@ -181,7 +221,7 @@ public class GildType {
         }
         return this.hoesTag;
     }
-    
+
     public TagKey<Item> getPickaxesTag() {
         if (this.pickaxesTag == null) {
             Identifier id = this.id.withSuffixedPath("_gilded_pickaxes");
@@ -211,6 +251,11 @@ public class GildType {
         return (obj instanceof GildType gildType && gildType.getId().equals(this.id)) || (obj instanceof Identifier identifier && identifier.equals(this.id));
     }
 
+    @Override
+    public String toString() {
+        return this.id.toString();
+    }
+
     protected enum ModifierType {
         DURABILITY,
         MINING_SPEED,
@@ -218,6 +263,24 @@ public class GildType {
         MINING_LEVEL,
         ENCHANTABILITY,
         ATTACK_SPEED(false);
+
+        protected enum ToolType {
+            SWORD,
+            SHOVEL,
+            PICKAXE,
+            AXE,
+            HOE;
+
+            public boolean matches(Item item) {
+                return switch (this) {
+                    case SWORD -> item instanceof SwordItem;
+                    case SHOVEL -> item instanceof ShovelItem;
+                    case PICKAXE -> item instanceof PickaxeItem;
+                    case AXE -> item instanceof AxeItem;
+                    case HOE -> item instanceof HoeItem;
+                };
+            }
+        }
 
         private final boolean modifiesBaseMaterial;
 

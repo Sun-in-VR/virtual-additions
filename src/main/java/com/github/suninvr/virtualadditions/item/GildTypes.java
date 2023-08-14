@@ -43,7 +43,7 @@ public class GildTypes {
         }
     };
     public static final GildType QUARTZ = new GildType(idOf("quartz"), 0xE3D4C4, attackDamageModifier(2, ADD));
-    public static final GildType SCULK = new GildType(idOf("sculk"), 0x009295, miningSpeedModifier(0.4F, MULTIPLY)) {
+    public static final GildType SCULK = new GildType(idOf("sculk"), 0x009295, miningSpeedModifier(0.4F, MULTIPLY), attackSpeedModifier(1.2F, MULTIPLY_AND_ROUND, GildType.ModifierType.ToolType.SWORD)) {
         @Override
         public boolean isGildEffective(World world, PlayerEntity player, BlockPos pos, BlockState state, ItemStack tool) {
             return !state.isOf(VABlocks.DESTRUCTIVE_SCULK) && state.isIn(VABlockTags.SCULK_GILD_EFFECTIVE) && super.isGildEffective(world, player, pos, state, tool);
@@ -63,7 +63,7 @@ public class GildTypes {
             int potency = (int) Math.floor( Math.max(30 - (state.getHardness(world, pos) * (stronglyEffective ? 3 : 6) + 1), 0) );
             DestructiveSculkBlock.placeState(world, pos, state, player.getUuid(), tool, potency);
             player.incrementStat(Stats.USED.getOrCreateStat(tool.getItem()));
-            tool.damage( stronglyEffective ? 5 : 15, player, player1 -> player1.sendToolBreakStatus(Hand.MAIN_HAND));
+            tool.damage( potency, player, player1 -> player1.sendToolBreakStatus(Hand.MAIN_HAND));
             return false;
         }
     };
@@ -71,23 +71,23 @@ public class GildTypes {
 
 
 
-    public static GildType.Modifier durabilityModifier(float value, BiFunction<Float, Float, Float> function) {
-        return new GildType.Modifier(GildType.ModifierType.DURABILITY, value, function);
+    public static GildType.Modifier durabilityModifier(float value, BiFunction<Float, Float, Float> function, GildType.ModifierType.ToolType... appliesTo) {
+        return new GildType.Modifier(GildType.ModifierType.DURABILITY, value, function, appliesTo);
     }
-    public static GildType.Modifier miningSpeedModifier(float value, BiFunction<Float, Float, Float> function) {
-        return new GildType.Modifier(GildType.ModifierType.MINING_SPEED, value, function);
+    public static GildType.Modifier miningSpeedModifier(float value, BiFunction<Float, Float, Float> function, GildType.ModifierType.ToolType... appliesTo) {
+        return new GildType.Modifier(GildType.ModifierType.MINING_SPEED, value, function, appliesTo);
     }
-    public static GildType.Modifier attackDamageModifier(float value, BiFunction<Float, Float, Float> function) {
-        return new GildType.Modifier(GildType.ModifierType.ATTACK_DAMAGE, value, function);
+    public static GildType.Modifier attackDamageModifier(float value, BiFunction<Float, Float, Float> function, GildType.ModifierType.ToolType... appliesTo) {
+        return new GildType.Modifier(GildType.ModifierType.ATTACK_DAMAGE, value, function, appliesTo);
     }
-    public static GildType.Modifier miningLevelModifier(float value, BiFunction<Float, Float, Float> function) {
-        return new GildType.Modifier(GildType.ModifierType.MINING_LEVEL, value, function);
+    public static GildType.Modifier miningLevelModifier(float value, BiFunction<Float, Float, Float> function, GildType.ModifierType.ToolType... appliesTo) {
+        return new GildType.Modifier(GildType.ModifierType.MINING_LEVEL, value, function, appliesTo);
     }
-    public static GildType.Modifier enchantabilityModifier(float value, BiFunction<Float, Float, Float> function) {
-        return new GildType.Modifier(GildType.ModifierType.ENCHANTABILITY, value, function);
+    public static GildType.Modifier enchantabilityModifier(float value, BiFunction<Float, Float, Float> function, GildType.ModifierType.ToolType... appliesTo) {
+        return new GildType.Modifier(GildType.ModifierType.ENCHANTABILITY, value, function, appliesTo);
     }
-    public static GildType.Modifier attackSpeedModifier(float value, BiFunction<Float, Float, Float> function) {
-        return new GildType.Modifier(GildType.ModifierType.ATTACK_SPEED, value, function);
+    public static GildType.Modifier attackSpeedModifier(float value, BiFunction<Float, Float, Float> function, GildType.ModifierType.ToolType... appliesTo) {
+        return new GildType.Modifier(GildType.ModifierType.ATTACK_SPEED, value, function, appliesTo);
     }
 
 }

@@ -10,9 +10,6 @@ import net.minecraft.registry.Registries;
 import net.minecraft.registry.Registry;
 import net.minecraft.registry.RegistryKey;
 import net.minecraft.resource.featuretoggle.FeatureFlag;
-import org.jetbrains.annotations.Nullable;
-
-import java.util.ArrayList;
 
 import static com.github.suninvr.virtualadditions.VirtualAdditions.idOf;
 
@@ -41,19 +38,41 @@ public class RegistryHelper {
         }
         public record ItemGroupLocation(RegistryKey<ItemGroup> GROUP, Item AFTER){}
         public static Item prev;
-        
-        //Register an Item
+
+        /**
+         * Registers a new item
+         *
+         * @param id The in-game ID. This will be "modid:id"
+         * @param item The item type to register
+         * **/
         public static <T extends net.minecraft.item.Item> net.minecraft.item.Item register(String id, T item) { // Register a given item
             net.minecraft.item.Item item1 = Registry.register(Registries.ITEM, idOf(id), item);
             prev = item1;
             return item1;
         }
+
+        /**
+         * Registers a new item and places it in a creative inventory group
+         *
+         * @param id The in-game ID. This will be "modid:id"
+         * @param item The item type to register.
+         * @param itemGroup The group to place the item into.
+         * **/
         public static <T extends net.minecraft.item.Item> net.minecraft.item.Item register(String id, T item, RegistryKey<ItemGroup> itemGroup) { // Register an item, add to a group
             net.minecraft.item.Item item1 = register(id, item);
             ItemGroupEvents.modifyEntriesEvent(itemGroup).register( (content) -> content.add(item1));
             prev = item1;
             return item1;
         }
+
+        /**
+         * Registers a new item places it after an item in a creative inventory group
+         *
+         * @param id The in-game ID. This will be "modid:id"
+         * @param item The item type to register.
+         * @param itemGroup The group to place the item into.
+         * @param itemAfter The item to place the registered item after
+         * **/
         public static <T extends net.minecraft.item.Item> net.minecraft.item.Item register(String id, T item, RegistryKey<ItemGroup> itemGroup, net.minecraft.item.Item itemAfter) { // Register an item, add to a specific location in a group
             net.minecraft.item.Item item1 = register(id, item);
             ItemGroupEvents.modifyEntriesEvent(itemGroup).register( (content) -> content.addAfter(itemAfter, item1));
@@ -61,6 +80,14 @@ public class RegistryHelper {
             return item1;
         }
 
+        /**
+         * Registers a new item and places after several items in multiple creative inventory groups
+         *
+         * @param id The in-game ID. This will be "modid:id"
+         * @param item The item type to register.
+         * @param locations Location to place the item into.
+         * @see ItemGroupLocation
+         * **/
         public static <T extends net.minecraft.item.Item> net.minecraft.item.Item register(String id, T item, ItemGroupLocation... locations) { // Register an item, add to several locations
             net.minecraft.item.Item item1 = register(id, item);
             for (ItemGroupLocation location : locations) {
@@ -70,31 +97,72 @@ public class RegistryHelper {
             return item1;
         }
 
+
+        /**
+         * Registers an item without applying settings
+         *
+         * @param id The in-game ID. This will be "modid:id"
+         * **/
         public static net.minecraft.item.Item register(String id) { // Create and register an item
             FabricItemSettings settings = new FabricItemSettings();
             return register(id, new net.minecraft.item.Item(settings));
         }
 
+        /**
+         * Registers an item without applying settings
+         *
+         * @param id The in-game ID. This will be "modid:id"
+         * @param itemGroup The group to place the item into
+         * **/
         public static net.minecraft.item.Item register(String id, RegistryKey<ItemGroup> itemGroup) { // Create and register an item, give a group
             FabricItemSettings settings = new FabricItemSettings();
             return register(id, new net.minecraft.item.Item(settings), itemGroup);
         }
 
+        /**
+         * Registers an item without applying settings
+         *
+         * @param id The in-game ID. This will be "modid:id"
+         * @param itemGroup The group to place the item into
+         * @param itemAfter The item to place the registered item after
+         * **/
         public static net.minecraft.item.Item register(String id, RegistryKey<ItemGroup> itemGroup, net.minecraft.item.Item itemAfter) { // Create and register an item, give a location in a group
             FabricItemSettings settings = new FabricItemSettings();
             return register(id, new net.minecraft.item.Item(settings), itemGroup, itemAfter);
         }
 
+        /**
+         * Registers an item without applying settings
+         *
+         * @param id The in-game ID. This will be "modid:id"
+         * @param itemGroup The group to place the item into
+         * @param itemAfter The item to place the registered item after
+         * @param features What feature flags need to be enabled in-game for this item to appear
+         * **/
         public static net.minecraft.item.Item register(String id, RegistryKey<ItemGroup> itemGroup, net.minecraft.item.Item itemAfter, FeatureFlag... features) { // Create and register an item, give a location in a group
             FabricItemSettings settings = new FabricItemSettings().requires(features);
             return register(id, new net.minecraft.item.Item(settings), itemGroup, itemAfter);
         }
 
+
+        /**
+         * Registers an item without applying settings
+         *
+         * @param id The in-game ID. This will be "modid:id"
+         * @param locations A location to place the item into
+         * @see ItemGroupLocation
+         * **/
         public static net.minecraft.item.Item register(String id, ItemGroupLocation... locations) { // Create and register an item, give several locations
             FabricItemSettings settings = new FabricItemSettings();
             return register(id, new net.minecraft.item.Item(settings), locations);
         }
 
+        /**
+         * Registers an item for a block. No settings are applied
+         *
+         * @param id The in-game ID. This will be "modid:id"
+         * @param block The block to create an item for.
+         * **/
         public static net.minecraft.item.Item registerBlockItem(String id, Block block) { // Create and register a block item
             return register(id, new BlockItem(block, new FabricItemSettings()));
         }
