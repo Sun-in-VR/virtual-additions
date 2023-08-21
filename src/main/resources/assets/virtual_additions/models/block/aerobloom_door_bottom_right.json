@@ -1,0 +1,7 @@
+{
+  "parent": "minecraft:block/door_bottom_right",
+  "textures": {
+    "bottom": "virtual_additions:block/aerobloom_door_bottom",
+    "top": "virtual_additions:block/aerobloom_door_top"
+  }
+}

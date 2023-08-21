@@ -3,3 +3,5 @@ accessWidener   v1  named
 accessible class net/minecraft/block/entity/BlockEntityType$BlockEntityFactory
 accessible method net/minecraft/sound/SoundEvent of (Lnet/minecraft/util/Identifier;)Lnet/minecraft/sound/SoundEvent;
 accessible field net/minecraft/block/RedstoneWireBlock wiresGivePower Z
+accessible method net/minecraft/block/WoodType register (Lnet/minecraft/block/WoodType;)Lnet/minecraft/block/WoodType;
+accessible field net/minecraft/data/client/BlockStateModelGenerator texturedModels Ljava/util/Map;

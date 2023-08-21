@@ -4,8 +4,6 @@ import net.minecraft.block.Block;
 import net.minecraft.data.family.BlockFamilies;
 import net.minecraft.data.family.BlockFamily;
 
-import java.util.ArrayList;
-
 public class VABlockFamilies {
 
     public static final BlockFamily CUT_STEEL;
@@ -18,6 +16,10 @@ public class VABlockFamilies {
     public static final BlockFamily COBBLED_SYENITE;
     public static final BlockFamily POLISHED_SYENITE;
     public static final BlockFamily SYENITE_BRICKS;
+    public static final BlockFamily AEROBLOOM;
+    public static final BlockFamily FLOATSTONE;
+
+
 
     static {
         CUT_STEEL = register(VABlocks.CUT_STEEL).stairs(VABlocks.CUT_STEEL_STAIRS).slab(VABlocks.CUT_STEEL_SLAB).customFence(VABlocks.STEEL_FENCE).build();
@@ -30,6 +32,8 @@ public class VABlockFamilies {
         COBBLED_SYENITE = register(VABlocks.COBBLED_SYENITE).stairs(VABlocks.COBBLED_SYENITE_STAIRS).slab(VABlocks.COBBLED_SYENITE_SLAB).wall(VABlocks.COBBLED_SYENITE_WALL).build();
         POLISHED_SYENITE = register(VABlocks.POLISHED_SYENITE).stairs(VABlocks.POLISHED_SYENITE_STAIRS).slab(VABlocks.POLISHED_SYENITE_SLAB).build();
         SYENITE_BRICKS = register(VABlocks.SYENITE_BRICKS).stairs(VABlocks.SYENITE_BRICK_STAIRS).slab(VABlocks.SYENITE_BRICK_SLAB).wall(VABlocks.SYENITE_BRICK_WALL).cracked(VABlocks.CRACKED_SYENITE_BRICKS).build();
+        AEROBLOOM = register(VABlocks.AEROBLOOM_PLANKS).button(VABlocks.AEROBLOOM_BUTTON).fence(VABlocks.AEROBLOOM_FENCE).fenceGate(VABlocks.AEROBLOOM_FENCE_GATE).sign(VABlocks.AEROBLOOM_SIGN, VABlocks.AEROBLOOM_WALL_SIGN).pressurePlate(VABlocks.AEROBLOOM_PRESSURE_PLATE).slab(VABlocks.AEROBLOOM_SLAB).stairs(VABlocks.AEROBLOOM_STAIRS).door(VABlocks.AEROBLOOM_DOOR).trapdoor(VABlocks.AEROBLOOM_TRAPDOOR).group("wooden").unlockCriterionName("has_planks").build();
+        FLOATSTONE = register(VABlocks.FLOATSTONE).stairs(VABlocks.FLOATSTONE_STAIRS).slab(VABlocks.FLOATSTONE_SLAB).wall(VABlocks.FLOATSTONE_WALL).build();
     }
 
     private static BlockFamily.Builder register(Block baseBlock) {

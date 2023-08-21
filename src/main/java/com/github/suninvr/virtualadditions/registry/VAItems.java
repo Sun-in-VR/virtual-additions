@@ -21,6 +21,8 @@ import net.minecraft.block.dispenser.ItemDispenserBehavior;
 import net.minecraft.block.dispenser.ProjectileDispenserBehavior;
 import net.minecraft.enchantment.Enchantments;
 import net.minecraft.entity.EntityType;
+import net.minecraft.entity.effect.StatusEffectInstance;
+import net.minecraft.entity.effect.StatusEffects;
 import net.minecraft.entity.projectile.PersistentProjectileEntity;
 import net.minecraft.entity.projectile.ProjectileEntity;
 import net.minecraft.item.*;
@@ -101,6 +103,29 @@ public class VAItems {
     public static final Item SYENITE_BRICK_STAIRS;
     public static final Item SYENITE_BRICK_SLAB;
     public static final Item SYENITE_BRICK_WALL;
+    public static final Item FLOATSTONE;
+    public static final Item FLOATSTONE_STAIRS;
+    public static final Item FLOATSTONE_SLAB;
+    public static final Item FLOATSTONE_WALL;
+    public static final Item AEROBLOOM_LOG;
+    public static final Item AEROBLOOM_WOOD;
+    public static final Item STRIPPED_AEROBLOOM_LOG;
+    public static final Item STRIPPED_AEROBLOOM_WOOD;
+    public static final Item AEROBLOOM_PLANKS;
+    public static final Item AEROBLOOM_STAIRS;
+    public static final Item AEROBLOOM_SLAB;
+    public static final Item AEROBLOOM_FENCE;
+    public static final Item AEROBLOOM_FENCE_GATE;
+    public static final Item AEROBLOOM_DOOR;
+    public static final Item AEROBLOOM_TRAPDOOR;
+    public static final Item AEROBLOOM_PRESSURE_PLATE;
+    public static final Item AEROBLOOM_BUTTON;
+    public static final Item AEROBLOOM_SIGN;
+    public static final Item AEROBLOOM_HANGING_SIGN;
+    public static final Item AEROBLOOM_LEAVES;
+    public static final Item AEROBLOOM_HEDGE;
+    public static final Item AEROBLOOM_SAPLING;
+    public static final Item BALLOON_FRUIT;
     public static final Item OAK_HEDGE;
     public static final Item SPRUCE_HEDGE;
     public static final Item BIRCH_HEDGE;
@@ -187,6 +212,7 @@ public class VAItems {
     public static final FoodComponent CORN_FOOD = (new FoodComponent.Builder()).hunger(1).saturationModifier(0.3F).build();
     public static final FoodComponent ROASTED_CORN_FOOD = (new FoodComponent.Builder()).hunger(5).saturationModifier(0.6F).build();
     public static final FoodComponent ROCK_CANDY_FOOD = (new FoodComponent.Builder().hunger(2).saturationModifier(0.1F).build());
+    public static final FoodComponent BALLOON_FRUIT_FOOD = (new FoodComponent.Builder().hunger(4).saturationModifier(0.4F).alwaysEdible().statusEffect(new StatusEffectInstance(StatusEffects.LEVITATION, 100, 1), 1.0F).build());
 
     public static final ToolSet AMETHYST_DIAMOND_TOOL_SET;
     public static final ToolSet COPPER_DIAMOND_TOOL_SET;
@@ -298,6 +324,31 @@ public class VAItems {
         SYENITE_BRICK_SLAB = registerBlockItem("syenite_brick_slab", VABlocks.SYENITE_BRICK_SLAB, ItemGroups.BUILDING_BLOCKS, SYENITE_BRICK_STAIRS);
         SYENITE_BRICK_WALL = registerBlockItem("syenite_brick_wall", VABlocks.SYENITE_BRICK_WALL, ItemGroups.BUILDING_BLOCKS, SYENITE_BRICK_SLAB);
 
+        FLOATSTONE = registerBlockItem("floatstone", VABlocks.FLOATSTONE, new ItemGroupLocation(ItemGroups.BUILDING_BLOCKS, Items.DEEPSLATE_TILE_WALL), new ItemGroupLocation(ItemGroups.NATURAL, Items.DEEPSLATE));
+        FLOATSTONE_STAIRS = registerBlockItem("floatstone_stairs", VABlocks.FLOATSTONE_STAIRS, ItemGroups.BUILDING_BLOCKS, prev);
+        FLOATSTONE_SLAB = registerBlockItem("floatstone_slab", VABlocks.FLOATSTONE_SLAB, ItemGroups.BUILDING_BLOCKS, prev);
+        FLOATSTONE_WALL = registerBlockItem("floatstone_wall", VABlocks.FLOATSTONE_WALL, ItemGroups.BUILDING_BLOCKS, prev);
+
+        AEROBLOOM_LOG = registerBlockItem("aerobloom_log", VABlocks.AEROBLOOM_LOG, new ItemGroupLocation(ItemGroups.BUILDING_BLOCKS, Items.CHERRY_BUTTON), new ItemGroupLocation(ItemGroups.NATURAL, Items.CHERRY_LOG));
+        AEROBLOOM_WOOD = registerBlockItem("aerobloom_wood", VABlocks.AEROBLOOM_WOOD, ItemGroups.BUILDING_BLOCKS, prev);
+        STRIPPED_AEROBLOOM_LOG = registerBlockItem("stripped_aerobloom_log", VABlocks.STRIPPED_AEROBLOOM_LOG, ItemGroups.BUILDING_BLOCKS, prev);
+        STRIPPED_AEROBLOOM_WOOD = registerBlockItem("stripped_aerobloom_wood", VABlocks.STRIPPED_AEROBLOOM_WOOD, ItemGroups.BUILDING_BLOCKS, prev);
+        AEROBLOOM_PLANKS = registerBlockItem("aerobloom_planks", VABlocks.AEROBLOOM_PLANKS, ItemGroups.BUILDING_BLOCKS, prev);
+        AEROBLOOM_STAIRS = registerBlockItem("aerobloom_stairs", VABlocks.AEROBLOOM_STAIRS, ItemGroups.BUILDING_BLOCKS, prev);
+        AEROBLOOM_SLAB = registerBlockItem("aerobloom_slab", VABlocks.AEROBLOOM_SLAB, ItemGroups.BUILDING_BLOCKS, prev);
+        AEROBLOOM_FENCE = registerBlockItem("aerobloom_fence", VABlocks.AEROBLOOM_FENCE, ItemGroups.BUILDING_BLOCKS, prev);
+        AEROBLOOM_FENCE_GATE = registerBlockItem("aerobloom_fence_gate", VABlocks.AEROBLOOM_FENCE_GATE, ItemGroups.BUILDING_BLOCKS, prev);
+        AEROBLOOM_DOOR = registerBlockItem("aerobloom_door", VABlocks.AEROBLOOM_DOOR, ItemGroups.BUILDING_BLOCKS, prev);
+        AEROBLOOM_TRAPDOOR = registerBlockItem("aerobloom_trapdoor", VABlocks.AEROBLOOM_TRAPDOOR, ItemGroups.BUILDING_BLOCKS, prev);
+        AEROBLOOM_PRESSURE_PLATE = registerBlockItem("aerobloom_pressure_plate", VABlocks.AEROBLOOM_PRESSURE_PLATE, ItemGroups.BUILDING_BLOCKS, prev);
+        AEROBLOOM_BUTTON = registerBlockItem("aerobloom_button", VABlocks.AEROBLOOM_BUTTON, ItemGroups.BUILDING_BLOCKS, prev);
+        AEROBLOOM_SIGN = register("aerobloom_sign", new SignItem(new FabricItemSettings().maxCount(16), VABlocks.AEROBLOOM_SIGN, VABlocks.AEROBLOOM_WALL_SIGN), ItemGroups.FUNCTIONAL, Items.CHERRY_HANGING_SIGN);
+        AEROBLOOM_HANGING_SIGN = register("aerobloom_hanging_sign", new HangingSignItem(VABlocks.AEROBLOOM_HANGING_SIGN, VABlocks.AEROBLOOM_WALL_HANGING_SIGN, new FabricItemSettings().maxCount(16)), ItemGroups.FUNCTIONAL, prev);
+        AEROBLOOM_LEAVES = registerBlockItem("aerobloom_leaves", VABlocks.AEROBLOOM_LEAVES, ItemGroups.NATURAL, Items.CHERRY_LEAVES);
+        AEROBLOOM_SAPLING = registerBlockItem("aerobloom_sapling", VABlocks.AEROBLOOM_SAPLING, ItemGroups.NATURAL, Items.CHERRY_SAPLING);
+
+        BALLOON_FRUIT = register("balloon_fruit", new Item(new FabricItemSettings().food(BALLOON_FRUIT_FOOD)), ItemGroups.FOOD_AND_DRINK, Items.CHORUS_FRUIT);
+
         OAK_HEDGE = registerBlockItem("oak_hedge", VABlocks.OAK_HEDGE, ItemGroups.BUILDING_BLOCKS, Items.WARPED_BUTTON);
         SPRUCE_HEDGE = registerBlockItem("spruce_hedge", VABlocks.SPRUCE_HEDGE, ItemGroups.BUILDING_BLOCKS, prev);
         BIRCH_HEDGE = registerBlockItem("birch_hedge", VABlocks.BIRCH_HEDGE, ItemGroups.BUILDING_BLOCKS, prev);
@@ -308,6 +359,7 @@ public class VAItems {
         AZALEA_HEDGE = registerBlockItem("azalea_hedge", VABlocks.AZALEA_HEDGE, ItemGroups.BUILDING_BLOCKS, prev);
         FLOWERING_AZALEA_HEDGE = registerBlockItem("flowering_azalea_hedge", VABlocks.FLOWERING_AZALEA_HEDGE, ItemGroups.BUILDING_BLOCKS, prev);
         CHERRY_HEDGE = registerBlockItem("cherry_hedge", VABlocks.CHERRY_HEDGE, ItemGroups.BUILDING_BLOCKS, MANGROVE_HEDGE);
+        AEROBLOOM_HEDGE = registerBlockItem("aerobloom_hedge", VABlocks.AEROBLOOM_HEDGE, ItemGroups.BUILDING_BLOCKS, prev);
 
         RED_GLIMMER_CRYSTAL = registerBlockItem("red_glimmer_crystal", VABlocks.RED_GLIMMER_CRYSTAL, ItemGroups.NATURAL, Items.POINTED_DRIPSTONE, VirtualAdditions.PREVIEW);
         GREEN_GLIMMER_CRYSTAL = registerBlockItem("green_glimmer_crystal", VABlocks.GREEN_GLIMMER_CRYSTAL, ItemGroups.NATURAL, prev, VirtualAdditions.PREVIEW);

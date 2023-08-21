@@ -1,0 +1,7 @@
+{
+  "parent": "minecraft:block/cube_column",
+  "textures": {
+    "end": "virtual_additions:block/stripped_aerobloom_log",
+    "side": "virtual_additions:block/stripped_aerobloom_log"
+  }
+}

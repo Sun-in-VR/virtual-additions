@@ -1,0 +1,19 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "building",
+  "group": "hedges",
+  "key": {
+    "#": {
+      "item": "virtual_additions:aerobloom_leaves"
+    }
+  },
+  "pattern": [
+    "###",
+    "###"
+  ],
+  "result": {
+    "count": 6,
+    "item": "virtual_additions:aerobloom_hedge"
+  },
+  "show_notification": true
+}

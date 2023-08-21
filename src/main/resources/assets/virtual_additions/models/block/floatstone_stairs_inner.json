@@ -1,0 +1,8 @@
+{
+  "parent": "minecraft:block/inner_stairs",
+  "textures": {
+    "bottom": "virtual_additions:block/floatstone",
+    "side": "virtual_additions:block/floatstone",
+    "top": "virtual_additions:block/floatstone"
+  }
+}

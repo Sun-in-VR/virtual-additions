@@ -1,0 +1,13 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "category": "redstone",
+  "group": "wooden_button",
+  "ingredients": [
+    {
+      "item": "virtual_additions:aerobloom_planks"
+    }
+  ],
+  "result": {
+    "item": "virtual_additions:aerobloom_button"
+  }
+}

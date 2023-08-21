@@ -1,0 +1,35 @@
+{
+  "parent": "minecraft:recipes/root",
+  "criteria": {
+    "has_floatstone": {
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "virtual_additions:floatstone"
+            ]
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    },
+    "has_the_recipe": {
+      "conditions": {
+        "recipe": "minecraft:floatstone_stairs_from_floatstone_stonecutting"
+      },
+      "trigger": "minecraft:recipe_unlocked"
+    }
+  },
+  "requirements": [
+    [
+      "has_floatstone",
+      "has_the_recipe"
+    ]
+  ],
+  "rewards": {
+    "recipes": [
+      "minecraft:floatstone_stairs_from_floatstone_stonecutting"
+    ]
+  },
+  "sends_telemetry_event": false
+}

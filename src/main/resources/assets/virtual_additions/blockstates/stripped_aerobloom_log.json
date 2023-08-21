@@ -1,0 +1,13 @@
+{
+  "variants": {
+    "axis=x": {
+      "model": "virtual_additions:block/stripped_aerobloom_log_x"
+    },
+    "axis=y": {
+      "model": "virtual_additions:block/stripped_aerobloom_log_y"
+    },
+    "axis=z": {
+      "model": "virtual_additions:block/stripped_aerobloom_log_z"
+    }
+  }
+}

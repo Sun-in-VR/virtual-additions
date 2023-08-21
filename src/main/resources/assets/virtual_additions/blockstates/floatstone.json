@@ -1,0 +1,20 @@
+{
+  "variants": {
+    "": [
+      {
+        "model": "virtual_additions:block/floatstone"
+      },
+      {
+        "model": "virtual_additions:block/floatstone_mirrored"
+      },
+      {
+        "model": "virtual_additions:block/floatstone",
+        "y": 180
+      },
+      {
+        "model": "virtual_additions:block/floatstone_mirrored",
+        "y": 180
+      }
+    ]
+  }
+}

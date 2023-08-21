@@ -46,14 +46,20 @@ class VAItemTagProvider extends FabricTagProvider.ItemTagProvider {
     protected void configure(RegistryWrapper.WrapperLookup arg) {
         getOrCreateTagBuilder(ItemTags.BEACON_PAYMENT_ITEMS).add(VAItems.STEEL_INGOT, VAItems.IOLITE);
         getOrCreateTagBuilder(ItemTags.CLUSTER_MAX_HARVESTABLES).addOptionalTag(PICKAXES);
-        getOrCreateTagBuilder(ItemTags.STONE_CRAFTING_MATERIALS).add(VAItems.COBBLED_HORNFELS, VAItems.COBBLED_BLUESCHIST, VAItems.COBBLED_SYENITE);
-        getOrCreateTagBuilder(ItemTags.STONE_TOOL_MATERIALS).add(VAItems.COBBLED_HORNFELS, VAItems.COBBLED_BLUESCHIST, VAItems.COBBLED_SYENITE);
+        getOrCreateTagBuilder(ItemTags.STONE_CRAFTING_MATERIALS).add(VAItems.COBBLED_HORNFELS, VAItems.COBBLED_BLUESCHIST, VAItems.COBBLED_SYENITE, VAItems.FLOATSTONE);
+        getOrCreateTagBuilder(ItemTags.STONE_TOOL_MATERIALS).add(VAItems.COBBLED_HORNFELS, VAItems.COBBLED_BLUESCHIST, VAItems.COBBLED_SYENITE, VAItems.FLOATSTONE);
         getOrCreateTagBuilder(ItemTags.TRIM_MATERIALS).add(VAItems.STEEL_INGOT, VAItems.IOLITE);
         getOrCreateTagBuilder(ItemTags.TRIMMABLE_ARMOR).add(VAItems.STEEL_HELMET, VAItems.STEEL_CHESTPLATE, VAItems.STEEL_LEGGINGS, VAItems.STEEL_BOOTS);
         getOrCreateTagBuilder(ItemTags.VILLAGER_PLANTABLE_SEEDS).add(VAItems.CORN, VAItems.COTTON_SEEDS);
-        getOrCreateTagBuilder(ItemTags.FENCES).add(VAItems.STEEL_FENCE);
+        getOrCreateTagBuilder(ItemTags.LOGS_THAT_BURN).add(VAItems.AEROBLOOM_LOG, VAItems.AEROBLOOM_WOOD, VAItems.STRIPPED_AEROBLOOM_LOG, VAItems.STRIPPED_AEROBLOOM_WOOD);
+        getOrCreateTagBuilder(ItemTags.PLANKS).add(VAItems.AEROBLOOM_PLANKS);
+        getOrCreateTagBuilder(ItemTags.SIGNS).add(VAItems.AEROBLOOM_SIGN);
+        getOrCreateTagBuilder(ItemTags.HANGING_SIGNS).add(VAItems.AEROBLOOM_HANGING_SIGN);
+        getOrCreateTagBuilder(ItemTags.FENCES).add(VAItems.STEEL_FENCE).add(VAItems.AEROBLOOM_FENCE);
         getOrCreateTagBuilder(ItemTags.DOORS).add(VAItems.STEEL_DOOR);
         getOrCreateTagBuilder(ItemTags.TRAPDOORS).add(VAItems.STEEL_TRAPDOOR);
+        getOrCreateTagBuilder(ItemTags.LEAVES).add(VAItems.AEROBLOOM_LEAVES);
+        getOrCreateTagBuilder(ItemTags.SAPLINGS).add(VAItems.AEROBLOOM_SAPLING);
 
         getOrCreateTagBuilder(INGOTS).add(VAItems.STEEL_INGOT);
         getOrCreateTagBuilder(STEEL_INGOTS).add(VAItems.STEEL_INGOT);
@@ -62,7 +68,7 @@ class VAItemTagProvider extends FabricTagProvider.ItemTagProvider {
         getOrCreateTagBuilder(IOLITE_ORES).add(VAItems.IOLITE_ORE);
         getOrCreateTagBuilder(GEMS).addOptionalTag(IOLITE);
         getOrCreateTagBuilder(ORES).addOptionalTag(IOLITE_ORES);
-        getOrCreateTagBuilder(FOODS).add(VAItems.FRIED_EGG, VAItems.CORN, VAItems.ROASTED_CORN);
+        getOrCreateTagBuilder(FOODS).add(VAItems.FRIED_EGG, VAItems.CORN, VAItems.ROASTED_CORN, VAItems.BALLOON_FRUIT);
         getOrCreateTagBuilder(POTIONS).add(VAItems.APPLICABLE_POTION);
 
         getOrCreateTagBuilder(VAItemTags.LUMWASP_LARVAE_FOOD).add(
@@ -81,6 +87,16 @@ class VAItemTagProvider extends FabricTagProvider.ItemTagProvider {
                 VAItems.COBBLED_BLUESCHIST,
                 VAItems.COBBLED_SYENITE
         );
+        getOrCreateTagBuilder(VAItemTags.AEROBLOOM_LOGS).add(
+                VAItems.AEROBLOOM_LOG,
+                VAItems.AEROBLOOM_WOOD,
+                VAItems.STRIPPED_AEROBLOOM_LOG,
+                VAItems.STRIPPED_AEROBLOOM_WOOD
+        );
+
+        configureWoodenBlockFamilies(
+                VABlockFamilies.AEROBLOOM
+        );
 
         configureBlockFamilies(
                 VABlockFamilies.CUT_STEEL,
@@ -92,7 +108,8 @@ class VAItemTagProvider extends FabricTagProvider.ItemTagProvider {
                 VABlockFamilies.POLISHED_SYENITE,
                 VABlockFamilies.HORNFELS_TILES,
                 VABlockFamilies.BLUESCHIST_BRICKS,
-                VABlockFamilies.SYENITE_BRICKS
+                VABlockFamilies.SYENITE_BRICKS,
+                VABlockFamilies.FLOATSTONE
         );
 
         configureToolSet(VAItems.STEEL_TOOL_SET);
@@ -111,8 +128,26 @@ class VAItemTagProvider extends FabricTagProvider.ItemTagProvider {
                     case SLAB -> getOrCreateTagBuilder(ItemTags.SLABS).add(block.asItem());
                     case WALL -> getOrCreateTagBuilder(ItemTags.WALLS).add(block.asItem());
                     case FENCE -> getOrCreateTagBuilder(ItemTags.FENCES).add(block.asItem());
+                    case FENCE_GATE -> getOrCreateTagBuilder(ItemTags.FENCE_GATES).add(block.asItem());
                     case DOOR -> getOrCreateTagBuilder(ItemTags.DOORS).add(block.asItem());
                     case TRAPDOOR -> getOrCreateTagBuilder(ItemTags.TRAPDOORS).add(block.asItem());
+                    case BUTTON -> getOrCreateTagBuilder(ItemTags.BUTTONS).add(block.asItem());
+                }
+            });
+        }
+    }
+
+    private void configureWoodenBlockFamilies(BlockFamily... families) {
+        for (BlockFamily family : families) {
+            family.getVariants().forEach((variant, block) -> {
+                switch (variant) {
+                    case STAIRS -> getOrCreateTagBuilder(ItemTags.WOODEN_STAIRS).add(block.asItem());
+                    case SLAB -> getOrCreateTagBuilder(ItemTags.WOODEN_SLABS).add(block.asItem());
+                    case FENCE -> getOrCreateTagBuilder(ItemTags.WOODEN_FENCES).add(block.asItem());
+                    case DOOR -> getOrCreateTagBuilder(ItemTags.WOODEN_DOORS).add(block.asItem());
+                    case TRAPDOOR -> getOrCreateTagBuilder(ItemTags.WOODEN_TRAPDOORS).add(block.asItem());
+                    case BUTTON -> getOrCreateTagBuilder(ItemTags.WOODEN_BUTTONS).add(block.asItem());
+                    case PRESSURE_PLATE -> getOrCreateTagBuilder(ItemTags.WOODEN_PRESSURE_PLATES).add(block.asItem());
                 }
             });
         }

@@ -40,17 +40,25 @@ class VABlockTagProvider extends FabricTagProvider.BlockTagProvider {
         getOrCreateTagBuilder(BlockTags.DEEPSLATE_ORE_REPLACEABLES).add(VABlocks.HORNFELS, VABlocks.BLUESCHIST, VABlocks.SYENITE);
         getOrCreateTagBuilder(BlockTags.DOORS).add(VABlocks.STEEL_DOOR);
         getOrCreateTagBuilder(BlockTags.FENCES).add(VABlocks.STEEL_FENCE);
+        getOrCreateTagBuilder(BlockTags.WOODEN_FENCES).add(VABlocks.AEROBLOOM_FENCE);
+        getOrCreateTagBuilder(BlockTags.OVERWORLD_NATURAL_LOGS).add(VABlocks.AEROBLOOM_LOG);
+        getOrCreateTagBuilder(BlockTags.LOGS_THAT_BURN).add(VABlocks.AEROBLOOM_LOG).add(VABlocks.AEROBLOOM_WOOD).add(VABlocks.STRIPPED_AEROBLOOM_LOG).add(VABlocks.STRIPPED_AEROBLOOM_WOOD);
         getOrCreateTagBuilder(BlockTags.MAINTAINS_FARMLAND).add(VABlocks.CORN_CROP, VABlocks.COTTON);
         getOrCreateTagBuilder(BlockTags.REPLACEABLE).add(VABlocks.ACID, VABlocks.FRAYED_SILK);
         getOrCreateTagBuilder(BlockTags.SCULK_REPLACEABLE).add(VABlocks.SILK_BLOCK, VABlocks.WEBBED_SILK);
         getOrCreateTagBuilder(BlockTags.TRAPDOORS).add(VABlocks.STEEL_TRAPDOOR);
+        getOrCreateTagBuilder(BlockTags.CEILING_HANGING_SIGNS).add(VABlocks.AEROBLOOM_HANGING_SIGN);
+        getOrCreateTagBuilder(BlockTags.WALL_HANGING_SIGNS).add(VABlocks.AEROBLOOM_WALL_HANGING_SIGN);
+        getOrCreateTagBuilder(BlockTags.LEAVES).add(VABlocks.AEROBLOOM_LEAVES);
+        getOrCreateTagBuilder(BlockTags.SAPLINGS).add(VABlocks.AEROBLOOM_SAPLING);
 
         getOrCreateTagBuilder(ORES).add(VABlocks.IOLITE_ORE);
 
         getOrCreateTagBuilder(BlockTags.HOE_MINEABLE).add(
                         VABlocks.SILK_BLOCK,
                         VABlocks.WEBBED_SILK,
-                        VABlocks.LUMWASP_NEST)
+                        VABlocks.LUMWASP_NEST,
+                        VABlocks.AEROBLOOM_LEAVES)
                 .addOptionalTag(SILKBULBS)
                 .addOptionalTag(HEDGES);
 
@@ -70,7 +78,7 @@ class VABlockTagProvider extends FabricTagProvider.BlockTagProvider {
                 VABlocks.IOLITE_BLOCK
         );
 
-        configureOverworldStone(VABlocks.HORNFELS, VABlocks.BLUESCHIST, VABlocks.SYENITE);
+        configureOverworldStone(VABlocks.HORNFELS, VABlocks.BLUESCHIST, VABlocks.SYENITE, VABlocks.FLOATSTONE);
         configureFamily(BlockTags.PICKAXE_MINEABLE, 1, VABlockFamilies.CUT_STEEL);
         configureFamily(BlockTags.PICKAXE_MINEABLE, 0,
                 VABlockFamilies.CUT_STEEL,
@@ -82,8 +90,10 @@ class VABlockTagProvider extends FabricTagProvider.BlockTagProvider {
                 VABlockFamilies.POLISHED_SYENITE,
                 VABlockFamilies.HORNFELS_TILES,
                 VABlockFamilies.BLUESCHIST_BRICKS,
-                VABlockFamilies.SYENITE_BRICKS
+                VABlockFamilies.SYENITE_BRICKS,
+                VABlockFamilies.FLOATSTONE
         );
+        configureWoodenFamily(BlockTags.AXE_MINEABLE, 0, VABlockFamilies.AEROBLOOM);
 
         getOrCreateTagBuilder(VABlockTags.ACID_UNBREAKABLE).add(
                         Blocks.BARRIER,
@@ -109,6 +119,7 @@ class VABlockTagProvider extends FabricTagProvider.BlockTagProvider {
                 VABlocks.DARK_OAK_HEDGE,
                 VABlocks.MANGROVE_HEDGE,
                 VABlocks.CHERRY_HEDGE,
+                VABlocks.AEROBLOOM_HEDGE,
                 VABlocks.AZALEA_HEDGE,
                 VABlocks.FLOWERING_AZALEA_HEDGE
         );
@@ -204,6 +215,14 @@ class VABlockTagProvider extends FabricTagProvider.BlockTagProvider {
         }
     }
 
+    private void configureWoodenFamily(TagKey<Block> minable, int level, BlockFamily... families) {
+        for (BlockFamily family : families) {
+            configureMinable(minable, level, family.getBaseBlock());
+            configureMinable(minable, level, family.getVariants().values().toArray(new Block[]{}));
+            configureWoodenFamily(family);
+        }
+    }
+
     private void configureFamily(BlockFamily family) {
         family.getVariants().forEach((variant, block) -> {
             switch (variant) {
@@ -211,8 +230,29 @@ class VABlockTagProvider extends FabricTagProvider.BlockTagProvider {
                 case SLAB -> getOrCreateTagBuilder(BlockTags.SLABS).add(block);
                 case WALL -> getOrCreateTagBuilder(BlockTags.WALLS).add(block);
                 case FENCE -> getOrCreateTagBuilder(BlockTags.FENCES).add(block);
+                case FENCE_GATE -> getOrCreateTagBuilder(BlockTags.FENCE_GATES).add(block);
                 case DOOR -> getOrCreateTagBuilder(BlockTags.DOORS).add(block);
                 case TRAPDOOR -> getOrCreateTagBuilder(BlockTags.TRAPDOORS).add(block);
+                case BUTTON -> getOrCreateTagBuilder(BlockTags.BUTTONS).add(block);
+                case PRESSURE_PLATE -> getOrCreateTagBuilder(BlockTags.PRESSURE_PLATES).add(block);
+            }
+        });
+    }
+
+    private void configureWoodenFamily(BlockFamily family) {
+        family.getVariants().forEach((variant, block) -> {
+            switch (variant) {
+                case STAIRS -> getOrCreateTagBuilder(BlockTags.WOODEN_STAIRS).add(block);
+                case SLAB -> getOrCreateTagBuilder(BlockTags.WOODEN_SLABS).add(block);
+                case WALL -> getOrCreateTagBuilder(BlockTags.WALLS).add(block);
+                case FENCE -> getOrCreateTagBuilder(BlockTags.WOODEN_FENCES).add(block);
+                case FENCE_GATE -> getOrCreateTagBuilder(BlockTags.FENCE_GATES).add(block);
+                case DOOR -> getOrCreateTagBuilder(BlockTags.WOODEN_DOORS).add(block);
+                case TRAPDOOR -> getOrCreateTagBuilder(BlockTags.WOODEN_TRAPDOORS).add(block);
+                case BUTTON -> getOrCreateTagBuilder(BlockTags.WOODEN_BUTTONS).add(block);
+                case PRESSURE_PLATE -> getOrCreateTagBuilder(BlockTags.WOODEN_PRESSURE_PLATES).add(block);
+                case SIGN -> getOrCreateTagBuilder(BlockTags.STANDING_SIGNS).add(block);
+                case WALL_SIGN -> getOrCreateTagBuilder(BlockTags.WALL_SIGNS).add(block);
             }
         });
     }

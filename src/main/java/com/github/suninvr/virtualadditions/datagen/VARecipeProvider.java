@@ -1,10 +1,7 @@
 package com.github.suninvr.virtualadditions.datagen;
 
 import com.github.suninvr.virtualadditions.item.interfaces.GildedToolItem;
-import com.github.suninvr.virtualadditions.registry.RegistryHelper;
-import com.github.suninvr.virtualadditions.registry.VABlockFamilies;
-import com.github.suninvr.virtualadditions.registry.VABlocks;
-import com.github.suninvr.virtualadditions.registry.VAItems;
+import com.github.suninvr.virtualadditions.registry.*;
 import net.fabricmc.fabric.api.datagen.v1.FabricDataOutput;
 import net.fabricmc.fabric.api.datagen.v1.provider.FabricRecipeProvider;
 import net.minecraft.block.Block;
@@ -47,6 +44,7 @@ class VARecipeProvider extends FabricRecipeProvider {
         offerHedgeRecipe(exporter, VABlocks.DARK_OAK_HEDGE, Blocks.DARK_OAK_LEAVES);
         offerHedgeRecipe(exporter, VABlocks.MANGROVE_HEDGE, Blocks.MANGROVE_LEAVES);
         offerHedgeRecipe(exporter, VABlocks.CHERRY_HEDGE, Blocks.CHERRY_LEAVES);
+        offerHedgeRecipe(exporter, VABlocks.AEROBLOOM_HEDGE, VABlocks.AEROBLOOM_LEAVES);
         offerHedgeRecipe(exporter, VABlocks.AZALEA_HEDGE, Blocks.AZALEA_LEAVES);
         offerHedgeRecipe(exporter, VABlocks.FLOWERING_AZALEA_HEDGE, Blocks.FLOWERING_AZALEA_LEAVES);
 
@@ -92,6 +90,14 @@ class VARecipeProvider extends FabricRecipeProvider {
         generateCuttableFamilyChain(exporter, VABlockFamilies.SYENITE_BRICKS);
         offer2x2CompactingRecipe(exporter, RecipeCategory.BUILDING_BLOCKS, VABlocks.SYENITE, VABlocks.POLISHED_SYENITE);
         offer2x2CompactingRecipe(exporter, RecipeCategory.BUILDING_BLOCKS, VABlocks.POLISHED_SYENITE, VABlocks.SYENITE_BRICKS);
+
+        generateCuttableFamilyChain(exporter, VABlockFamilies.FLOATSTONE);
+
+        generateFamily(exporter, VABlockFamilies.AEROBLOOM);
+        offerBarkBlockRecipe(exporter, VAItems.AEROBLOOM_WOOD, VAItems.AEROBLOOM_LOG);
+        offerBarkBlockRecipe(exporter, VAItems.STRIPPED_AEROBLOOM_WOOD, VAItems.STRIPPED_AEROBLOOM_LOG);
+        offerPlanksRecipe2(exporter, VAItems.AEROBLOOM_PLANKS, VAItemTags.AEROBLOOM_LOGS, 4);
+        offerHangingSignRecipe(exporter, VAItems.AEROBLOOM_HANGING_SIGN, VAItems.STRIPPED_AEROBLOOM_LOG);
 
         offer2x2FullRecipe(exporter, RecipeCategory.MISC, Items.STRING, VAItems.COTTON, 2);
         offerShapelessRecipe(exporter, VAItems.COTTON_SEEDS, VAItems.COTTON, "cotton_seeds", 1);
@@ -266,6 +272,10 @@ class VARecipeProvider extends FabricRecipeProvider {
 
     public static void offer2x2FullRecipe(Consumer<RecipeJsonProvider> exporter, RecipeCategory category, ItemConvertible output, ItemConvertible input, int count) {
         ShapedRecipeJsonBuilder.create(category, output, count).input('#', input).pattern("##").pattern("##").criterion(hasItem(input), conditionsFromItem(input)).offerTo(exporter);
+    }
+
+    public static void offer2x2FullRecipe(Consumer<RecipeJsonProvider> exporter, RecipeCategory category, ItemConvertible output, ItemConvertible input, int count, String group) {
+        ShapedRecipeJsonBuilder.create(category, output, count).input('#', input).pattern("##").pattern("##").group(group).criterion(hasItem(input), conditionsFromItem(input)).offerTo(exporter);
     }
 
     private static void offerHedgeRecipe(Consumer<RecipeJsonProvider> exporter, ItemConvertible output, ItemConvertible input) {

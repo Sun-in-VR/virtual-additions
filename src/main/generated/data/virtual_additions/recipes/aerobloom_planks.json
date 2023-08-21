@@ -1,0 +1,14 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "category": "building",
+  "group": "planks",
+  "ingredients": [
+    {
+      "tag": "virtual_additions:aerobloom_logs"
+    }
+  ],
+  "result": {
+    "count": 4,
+    "item": "virtual_additions:aerobloom_planks"
+  }
+}

@@ -5,14 +5,20 @@ import com.github.suninvr.virtualadditions.block.*;
 import com.github.suninvr.virtualadditions.mixin.FireBlockAccessor;
 import com.github.suninvr.virtualadditions.registry.constructors.block.CustomStairsBlock;
 import net.fabricmc.fabric.api.object.builder.v1.block.FabricBlockSettings;
+import net.fabricmc.fabric.api.object.builder.v1.block.type.BlockSetTypeBuilder;
+import net.fabricmc.fabric.api.object.builder.v1.block.type.WoodTypeBuilder;
 import net.fabricmc.fabric.api.registry.LandPathNodeTypesRegistry;
+import net.fabricmc.fabric.api.registry.StrippableBlockRegistry;
+import net.fabricmc.fabric.impl.content.registry.FlammableBlockRegistryImpl;
 import net.minecraft.block.*;
 import net.minecraft.block.piston.PistonBehavior;
 import net.minecraft.entity.ai.pathing.PathNodeType;
 import net.minecraft.sound.BlockSoundGroup;
+import net.minecraft.sound.SoundEvents;
 import net.minecraft.state.property.Properties;
 import net.minecraft.util.math.intprovider.UniformIntProvider;
 
+import static com.github.suninvr.virtualadditions.VirtualAdditions.idOf;
 import static com.github.suninvr.virtualadditions.registry.RegistryHelper.BlockRegistryHelper.register;
 
 public class VABlocks {
@@ -75,6 +81,29 @@ public class VABlocks {
     public static final Block SPOTLIGHT_LIGHT;
     public static final Block COTTON;
     public static final Block CORN_CROP;
+    public static final Block FLOATSTONE;
+    public static final Block FLOATSTONE_STAIRS;
+    public static final Block FLOATSTONE_SLAB;
+    public static final Block FLOATSTONE_WALL;
+    public static final Block AEROBLOOM_LOG;
+    public static final Block AEROBLOOM_WOOD;
+    public static final Block STRIPPED_AEROBLOOM_LOG;
+    public static final Block STRIPPED_AEROBLOOM_WOOD;
+    public static final Block AEROBLOOM_PLANKS;
+    public static final Block AEROBLOOM_STAIRS;
+    public static final Block AEROBLOOM_SLAB;
+    public static final Block AEROBLOOM_FENCE;
+    public static final Block AEROBLOOM_FENCE_GATE;
+    public static final Block AEROBLOOM_DOOR;
+    public static final Block AEROBLOOM_TRAPDOOR;
+    public static final Block AEROBLOOM_PRESSURE_PLATE;
+    public static final Block AEROBLOOM_BUTTON;
+    public static final Block AEROBLOOM_SIGN;
+    public static final Block AEROBLOOM_WALL_SIGN;
+    public static final Block AEROBLOOM_HANGING_SIGN;
+    public static final Block AEROBLOOM_WALL_HANGING_SIGN;
+    public static final Block AEROBLOOM_LEAVES;
+    public static final Block AEROBLOOM_SAPLING;
     public static final Block OAK_HEDGE;
     public static final Block SPRUCE_HEDGE;
     public static final Block BIRCH_HEDGE;
@@ -83,6 +112,7 @@ public class VABlocks {
     public static final Block DARK_OAK_HEDGE;
     public static final Block MANGROVE_HEDGE;
     public static final Block CHERRY_HEDGE;
+    public static final Block AEROBLOOM_HEDGE;
     public static final Block AZALEA_HEDGE;
     public static final Block FLOWERING_AZALEA_HEDGE;
     public static final Block GLOWING_SILK;
@@ -116,6 +146,10 @@ public class VABlocks {
     public static final Block WARP_TETHER;
     public static final Block ENTANGLEMENT_DRIVE;
     public static final Block DESTRUCTIVE_SCULK;
+
+    public static final BlockSetType AEROBLOOM = BlockSetTypeBuilder.copyOf(BlockSetType.CHERRY).build(idOf("aerobloom"));
+    public static final WoodType AEROBLOOM_WOODTYPE = WoodType.register(WoodTypeBuilder.copyOf(WoodType.CHERRY).build(idOf("aerobloom"), AEROBLOOM));
+
 
     static {
         CLIMBING_ROPE = register("climbing_rope", new ClimbingRopeBlock(FabricBlockSettings.create().sounds(ROPE_SOUND_GROUP).collidable(false).nonOpaque().burnable().hardness(0.5F)));
@@ -182,6 +216,31 @@ public class VABlocks {
         COTTON = register("cotton", new CottonCropBlock(AbstractBlock.Settings.create().noCollision().ticksRandomly().breakInstantly().sounds(BlockSoundGroup.CROP)));
         CORN_CROP = register("corn_crop", new CornCropBlock(AbstractBlock.Settings.create().noCollision().ticksRandomly().breakInstantly().sounds(BlockSoundGroup.CROP).offset(AbstractBlock.OffsetType.XZ)));
 
+        FLOATSTONE = register("floatstone", new Block(AbstractBlock.Settings.copy(Blocks.TUFF)));
+        FLOATSTONE_STAIRS = register("floatstone_stairs", new StairsBlock(FLOATSTONE.getDefaultState(), AbstractBlock.Settings.copy(Blocks.TUFF)));
+        FLOATSTONE_SLAB = register("floatstone_slab", new SlabBlock(AbstractBlock.Settings.copy(Blocks.TUFF)));
+        FLOATSTONE_WALL = register("floatstone_wall", new WallBlock(AbstractBlock.Settings.copy(Blocks.TUFF)));
+
+        AEROBLOOM_LOG = register("aerobloom_log", new PillarBlock(AbstractBlock.Settings.copy(Blocks.CHERRY_LOG)));
+        AEROBLOOM_WOOD = register("aerobloom_wood", new PillarBlock(AbstractBlock.Settings.copy(Blocks.CHERRY_WOOD)));
+        STRIPPED_AEROBLOOM_LOG = register("stripped_aerobloom_log", new PillarBlock(AbstractBlock.Settings.copy(Blocks.STRIPPED_CHERRY_LOG)));
+        STRIPPED_AEROBLOOM_WOOD = register("stripped_aerobloom_wood", new PillarBlock(AbstractBlock.Settings.copy(Blocks.STRIPPED_CHERRY_WOOD)));
+        AEROBLOOM_PLANKS = register("aerobloom_planks", new Block(AbstractBlock.Settings.copy(Blocks.CHERRY_PLANKS)));
+        AEROBLOOM_STAIRS = register("aerobloom_stairs", new StairsBlock(AEROBLOOM_PLANKS.getDefaultState(), AbstractBlock.Settings.copy(Blocks.CHERRY_STAIRS)));
+        AEROBLOOM_SLAB = register("aerobloom_slab", new SlabBlock(AbstractBlock.Settings.copy(Blocks.CHERRY_SLAB)));
+        AEROBLOOM_FENCE = register("aerobloom_fence", new FenceBlock(AbstractBlock.Settings.copy(Blocks.CHERRY_SLAB)));
+        AEROBLOOM_FENCE_GATE = register("aerobloom_fence_gate", new FenceGateBlock(AbstractBlock.Settings.copy(Blocks.CHERRY_SLAB), AEROBLOOM_WOODTYPE));
+        AEROBLOOM_DOOR = register("aerobloom_door", new DoorBlock( AbstractBlock.Settings.copy(Blocks.CHERRY_DOOR), AEROBLOOM));
+        AEROBLOOM_TRAPDOOR = register("aerobloom_trapdoor", new TrapdoorBlock( AbstractBlock.Settings.copy(Blocks.CHERRY_DOOR), AEROBLOOM));
+        AEROBLOOM_PRESSURE_PLATE = register("aerobloom_pressure_plate", new PressurePlateBlock(PressurePlateBlock.ActivationRule.EVERYTHING, AbstractBlock.Settings.copy(Blocks.CHERRY_BUTTON), AEROBLOOM));
+        AEROBLOOM_BUTTON = register("aerobloom_button", new ButtonBlock(AbstractBlock.Settings.copy(Blocks.CHERRY_BUTTON), AEROBLOOM, 30, true));
+        AEROBLOOM_SIGN = register("aerobloom_sign", new CustomSignBlocks.CustomSignBlock(AbstractBlock.Settings.copy(Blocks.CHERRY_SIGN), AEROBLOOM_WOODTYPE));
+        AEROBLOOM_WALL_SIGN = register("aerobloom_wall_sign", new CustomSignBlocks.CustomWallSignBlock(AbstractBlock.Settings.copy(AEROBLOOM_SIGN).dropsLike(AEROBLOOM_SIGN), AEROBLOOM_WOODTYPE));
+        AEROBLOOM_HANGING_SIGN = register("aerobloom_hanging_sign", new CustomSignBlocks.CustomHangingSignBlock(AbstractBlock.Settings.copy(Blocks.CHERRY_HANGING_SIGN), AEROBLOOM_WOODTYPE));
+        AEROBLOOM_WALL_HANGING_SIGN = register("aerobloom_wall_hanging_sign", new CustomSignBlocks.CustomWallHangingSignBlock(AbstractBlock.Settings.copy(Blocks.CHERRY_WALL_HANGING_SIGN).dropsLike(AEROBLOOM_HANGING_SIGN), AEROBLOOM_WOODTYPE));
+        AEROBLOOM_LEAVES = register("aerobloom_leaves", new LeavesBlock(AbstractBlock.Settings.copy(Blocks.CHERRY_LEAVES)));
+        AEROBLOOM_SAPLING = register("aerobloom_sapling", new SaplingBlock(new AerobloomSaplingGenerator(), AbstractBlock.Settings.copy(Blocks.CHERRY_SAPLING)));
+
         OAK_HEDGE = register("oak_hedge", new HedgeBlock(AbstractBlock.Settings.copy(Blocks.OAK_LEAVES)));
         SPRUCE_HEDGE = register("spruce_hedge", new HedgeBlock(AbstractBlock.Settings.copy(Blocks.SPRUCE_LEAVES)));
         BIRCH_HEDGE = register("birch_hedge", new HedgeBlock(AbstractBlock.Settings.copy(Blocks.BIRCH_LEAVES)));
@@ -190,6 +249,7 @@ public class VABlocks {
         DARK_OAK_HEDGE = register("dark_oak_hedge", new HedgeBlock(AbstractBlock.Settings.copy(Blocks.DARK_OAK_LEAVES)));
         MANGROVE_HEDGE = register("mangrove_hedge", new HedgeBlock(AbstractBlock.Settings.copy(Blocks.MANGROVE_LEAVES)));
         CHERRY_HEDGE = register("cherry_hedge", new HedgeBlock(AbstractBlock.Settings.copy(Blocks.CHERRY_LEAVES)));
+        AEROBLOOM_HEDGE = register("aerobloom_hedge", new HedgeBlock(AbstractBlock.Settings.copy(AEROBLOOM_LEAVES)));
         AZALEA_HEDGE = register("azalea_hedge", new HedgeBlock(AbstractBlock.Settings.copy(Blocks.AZALEA_LEAVES)));
         FLOWERING_AZALEA_HEDGE = register("flowering_azalea_hedge", new HedgeBlock(AbstractBlock.Settings.copy(Blocks.FLOWERING_AZALEA_LEAVES)));
 
@@ -231,9 +291,18 @@ public class VABlocks {
 
     public static void init(){
         LandPathNodeTypesRegistry.register(ACID, PathNodeType.LAVA, PathNodeType.DANGER_FIRE);
+
         FireBlockAccessor fire = (FireBlockAccessor)Blocks.FIRE;
         fire.virtualAdditions$registerFlammableBlock(CLIMBING_ROPE_ANCHOR, 5, 20);
         fire.virtualAdditions$registerFlammableBlock(CLIMBING_ROPE, 5, 20);
+        fire.virtualAdditions$registerFlammableBlock(AEROBLOOM_LOG, 5, 20);
+        fire.virtualAdditions$registerFlammableBlock(AEROBLOOM_WOOD, 5, 20);
+        fire.virtualAdditions$registerFlammableBlock(STRIPPED_AEROBLOOM_LOG, 5, 20);
+        fire.virtualAdditions$registerFlammableBlock(STRIPPED_AEROBLOOM_WOOD, 5, 20);
+        fire.virtualAdditions$registerFlammableBlock(AEROBLOOM_PLANKS, 5, 20);
+        fire.virtualAdditions$registerFlammableBlock(AEROBLOOM_STAIRS, 5, 20);
+        fire.virtualAdditions$registerFlammableBlock(AEROBLOOM_SLAB, 5, 20);
+        fire.virtualAdditions$registerFlammableBlock(AEROBLOOM_FENCE, 5, 20);
         fire.virtualAdditions$registerFlammableBlock(OAK_HEDGE, 30, 60);
         fire.virtualAdditions$registerFlammableBlock(SPRUCE_HEDGE, 30, 60);
         fire.virtualAdditions$registerFlammableBlock(BIRCH_HEDGE, 30, 60);
@@ -266,6 +335,8 @@ public class VABlocks {
         fire.virtualAdditions$registerFlammableBlock(PURPLE_SILKBULB, 5, 20);
         fire.virtualAdditions$registerFlammableBlock(MAGENTA_SILKBULB, 5, 20);
         fire.virtualAdditions$registerFlammableBlock(PINK_SILKBULB, 5, 20);
+        StrippableBlockRegistry.register(AEROBLOOM_LOG, STRIPPED_AEROBLOOM_LOG);
+        StrippableBlockRegistry.register(AEROBLOOM_WOOD, STRIPPED_AEROBLOOM_WOOD);
 
     }
 

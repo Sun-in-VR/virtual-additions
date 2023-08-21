@@ -1,14 +1,20 @@
 package com.github.suninvr.virtualadditions.datagen;
 
+import com.github.suninvr.virtualadditions.VirtualAdditions;
 import com.github.suninvr.virtualadditions.item.interfaces.GildedToolItem;
 import com.github.suninvr.virtualadditions.registry.RegistryHelper;
+import com.github.suninvr.virtualadditions.registry.VABlockFamilies;
+import com.github.suninvr.virtualadditions.registry.VABlocks;
 import com.github.suninvr.virtualadditions.registry.VAItems;
 import net.fabricmc.fabric.api.datagen.v1.FabricDataOutput;
 import net.fabricmc.fabric.api.datagen.v1.provider.FabricModelProvider;
 import net.minecraft.data.client.*;
+import net.minecraft.data.family.BlockFamily;
 import net.minecraft.item.Item;
 import net.minecraft.registry.Registries;
 import net.minecraft.util.Identifier;
+
+import static com.github.suninvr.virtualadditions.VirtualAdditions.idOf;
 
 class VAModelProvider extends FabricModelProvider {
 

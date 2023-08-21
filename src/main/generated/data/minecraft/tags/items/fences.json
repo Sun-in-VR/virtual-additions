@@ -1,6 +1,7 @@
 {
   "replace": false,
   "values": [
-    "virtual_additions:steel_fence"
+    "virtual_additions:steel_fence",
+    "virtual_additions:aerobloom_fence"
   ]
 }

@@ -1,0 +1,7 @@
+{
+  "parent": "minecraft:block/cube_column_uv_locked_y",
+  "textures": {
+    "end": "virtual_additions:block/stripped_aerobloom_log_top",
+    "side": "virtual_additions:block/stripped_aerobloom_log"
+  }
+}

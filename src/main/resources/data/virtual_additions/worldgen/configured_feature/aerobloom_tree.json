@@ -1,0 +1,98 @@
+{
+  "type": "minecraft:tree",
+  "config": {
+    "ignore_vines": true,
+    "force_dirt": false,
+    "minimum_size": {
+      "type": "minecraft:three_layers_feature_size",
+      "limit": 1,
+      "upper_limit": 1,
+      "lower_size": 0,
+      "middle_size": 1,
+      "upper_size": 2
+    },
+    "dirt_provider": {
+      "type": "minecraft:simple_state_provider",
+      "state": {
+        "Name": "virtual_additions:aerobloom_log",
+        "Properties": {
+          "axis": "y"
+        }
+      }
+    },
+    "trunk_provider": {
+      "type": "minecraft:simple_state_provider",
+      "state": {
+        "Name": "virtual_additions:aerobloom_log",
+        "Properties": {
+          "axis": "y"
+        }
+      }
+    },
+    "foliage_provider": {
+      "type": "minecraft:simple_state_provider",
+      "state": {
+        "Name": "virtual_additions:aerobloom_leaves",
+        "Properties": {
+          "distance": "7",
+          "persistent": "false",
+          "waterlogged": "false"
+        }
+      }
+    },
+    "root_placer": {
+      "type": "minecraft:mangrove_root_placer",
+      "root_provider": {
+        "type": "minecraft:simple_state_provider",
+        "state": {
+          "Name": "virtual_additions:aerobloom_log",
+          "Properties": {
+            "axis": "y"
+          }
+        }
+      },
+      "trunk_offset_y": {
+        "type": "minecraft:uniform",
+        "value": {
+          "min_inclusive": 4,
+          "max_inclusive": 7
+        }
+      },
+      "mangrove_root_placement": {
+        "max_root_width": 2,
+        "max_root_length": 6,
+        "random_skew_chance": 0,
+        "can_grow_through": "#minecraft:replaceable_by_trees",
+        "muddy_roots_in": "minecraft:air",
+        "muddy_roots_provider": {
+          "type": "minecraft:simple_state_provider",
+          "state": {
+            "Name": "virtual_additions:aerobloom_log"
+          }
+        }
+      }
+    },
+    "trunk_placer": {
+      "type": "minecraft:straight_trunk_placer",
+      "base_height": 7,
+      "height_rand_a": 4,
+      "height_rand_b": 3
+    },
+    "foliage_placer": {
+      "type": "minecraft:cherry_foliage_placer",
+      "radius": 4,
+      "offset": 0,
+      "height": 5,
+      "wide_bottom_layer_hole_chance": 0.5,
+      "corner_hole_chance": 0.5,
+      "hanging_leaves_chance": 0.5,
+      "hanging_leaves_extension_chance": 0.75
+    },
+    "decorators": [
+      {
+        "type": "minecraft:beehive",
+        "probability": 0.004
+      }
+    ]
+  }
+}

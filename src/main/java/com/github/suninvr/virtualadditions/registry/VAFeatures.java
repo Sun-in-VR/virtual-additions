@@ -8,20 +8,19 @@ import net.minecraft.registry.Registry;
 import net.minecraft.registry.RegistryKey;
 import net.minecraft.world.biome.BiomeKeys;
 import net.minecraft.world.gen.GenerationStep;
-import net.minecraft.world.gen.feature.DefaultFeatureConfig;
-import net.minecraft.world.gen.feature.Feature;
-import net.minecraft.world.gen.feature.PlacedFeature;
-import net.minecraft.world.gen.feature.PlacedFeatures;
+import net.minecraft.world.gen.feature.*;
 
 import static com.github.suninvr.virtualadditions.VirtualAdditions.idOf;
 
 @SuppressWarnings("SameParameterValue")
 public class VAFeatures {
     public static final RegistryKey<PlacedFeature> ORE_IOLITE;
+    public static final RegistryKey<ConfiguredFeature<?, ?>> AEROBLOOM_TREE;
     public static final Feature<DefaultFeatureConfig> LUMWASP_NEST;
 
     static {
-        ORE_IOLITE = register("ore_iolite");
+        ORE_IOLITE = registerPlaced("ore_iolite");
+        AEROBLOOM_TREE = registerConfigured("aerobloom_tree");
         LUMWASP_NEST = Registry.register(Registries.FEATURE, idOf("lumwasp_nest"), new LumwaspNestFeature(DefaultFeatureConfig.CODEC));
     }
 
@@ -33,7 +32,11 @@ public class VAFeatures {
         );
     }
 
-    private static RegistryKey<PlacedFeature> register(String id) {
+    private static RegistryKey<PlacedFeature> registerPlaced(String id) {
         return PlacedFeatures.of(idOf(id).toString());
+    }
+
+    private static RegistryKey<ConfiguredFeature<?, ?>> registerConfigured(String id) {
+        return ConfiguredFeatures.of(idOf(id).toString());
     }
 }

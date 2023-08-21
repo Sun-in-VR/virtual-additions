@@ -27,8 +27,13 @@ import net.minecraft.client.gui.screen.ingame.HandledScreens;
 import net.minecraft.client.item.ModelPredicateProviderRegistry;
 import net.minecraft.client.particle.WaterSplashParticle;
 import net.minecraft.client.render.RenderLayer;
+import net.minecraft.client.render.TexturedRenderLayers;
+import net.minecraft.client.render.block.entity.BlockEntityRendererFactories;
+import net.minecraft.client.render.block.entity.HangingSignBlockEntityRenderer;
+import net.minecraft.client.render.block.entity.SignBlockEntityRenderer;
 import net.minecraft.client.render.entity.FlyingItemEntityRenderer;
 import net.minecraft.client.render.entity.model.EntityModelLayer;
+import net.minecraft.client.util.SpriteIdentifier;
 import net.minecraft.item.CrossbowItem;
 import net.minecraft.item.Items;
 import net.minecraft.network.PacketByteBuf;
@@ -57,6 +62,11 @@ public class VirtualAdditionsClient implements ClientModInitializer {
 
         BlockRenderLayerMap.INSTANCE.putBlocks(RenderLayer.getCutout(),
                 VABlocks.CLIMBING_ROPE_ANCHOR,
+                VABlocks.AEROBLOOM_DOOR,
+                VABlocks.AEROBLOOM_TRAPDOOR,
+                VABlocks.AEROBLOOM_LEAVES,
+                VABlocks.AEROBLOOM_HEDGE,
+                VABlocks.AEROBLOOM_SAPLING,
                 VABlocks.STEEL_DOOR,
                 VABlocks.STEEL_TRAPDOOR,
                 VABlocks.REDSTONE_BRIDGE,
@@ -145,6 +155,12 @@ public class VirtualAdditionsClient implements ClientModInitializer {
                 entanglementDriveScreen.setSelectingSlotPos(buf.readInt(), buf.readInt());
             }
         }));
+
+        BlockEntityRendererFactories.register( VABlockEntities.CUSTOM_SIGN_BLOCK_ENTITY, SignBlockEntityRenderer::new );
+        BlockEntityRendererFactories.register( VABlockEntities.CUSTOM_HANGING_SIGN_BLOCK_ENTITY, HangingSignBlockEntityRenderer::new );
+
+        TexturedRenderLayers.SIGN_TYPE_TEXTURES.put(VABlocks.AEROBLOOM_WOODTYPE, new SpriteIdentifier(TexturedRenderLayers.SIGNS_ATLAS_TEXTURE, idOf("entity/signs/aerobloom")));
+        TexturedRenderLayers.HANGING_SIGN_TYPE_TEXTURES.put(VABlocks.AEROBLOOM_WOODTYPE, new SpriteIdentifier(TexturedRenderLayers.SIGNS_ATLAS_TEXTURE, idOf("entity/signs/hanging/aerobloom")));
     }
 
 }

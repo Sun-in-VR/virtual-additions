@@ -1,0 +1,9 @@
+{
+  "replace": false,
+  "values": [
+    "virtual_additions:aerobloom_log",
+    "virtual_additions:aerobloom_wood",
+    "virtual_additions:stripped_aerobloom_log",
+    "virtual_additions:stripped_aerobloom_wood"
+  ]
+}

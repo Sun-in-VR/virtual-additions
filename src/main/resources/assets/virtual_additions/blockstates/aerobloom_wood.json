@@ -1,0 +1,16 @@
+{
+  "variants": {
+    "axis=x": {
+      "model": "virtual_additions:block/aerobloom_wood",
+      "x": 90,
+      "y": 90
+    },
+    "axis=y": {
+      "model": "virtual_additions:block/aerobloom_wood"
+    },
+    "axis=z": {
+      "model": "virtual_additions:block/aerobloom_wood",
+      "x": 90
+    }
+  }
+}

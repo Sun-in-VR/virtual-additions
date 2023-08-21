@@ -1,0 +1,6 @@
+{
+  "parent": "virtual_additions:block/template_hedge_side",
+  "textures": {
+    "hedge": "virtual_additions:block/aerobloom_leaves"
+  }
+}

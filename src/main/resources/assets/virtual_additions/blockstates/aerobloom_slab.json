@@ -1,0 +1,13 @@
+{
+  "variants": {
+    "type=bottom": {
+      "model": "virtual_additions:block/aerobloom_slab"
+    },
+    "type=double": {
+      "model": "virtual_additions:block/aerobloom_planks"
+    },
+    "type=top": {
+      "model": "virtual_additions:block/aerobloom_slab_top"
+    }
+  }
+}
