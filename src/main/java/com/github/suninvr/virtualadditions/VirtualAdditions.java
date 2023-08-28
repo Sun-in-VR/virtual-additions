@@ -8,6 +8,7 @@ import net.fabricmc.loader.api.FabricLoader;
 import net.minecraft.resource.featuretoggle.FeatureFlag;
 import net.minecraft.text.Text;
 import net.minecraft.util.Identifier;
+import org.apache.logging.log4j.Level;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -23,6 +24,7 @@ public class VirtualAdditions implements ModInitializer {
 
 	@Override
 	public void onInitialize() {
+		LOGGER.log(Level.INFO, "Virtual Additions is now loading!");
 
 		FabricLoader.getInstance().getModContainer(MODID).ifPresent(
 				modContainer -> {

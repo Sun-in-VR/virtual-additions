@@ -103,10 +103,20 @@ public class VAItems {
     public static final Item SYENITE_BRICK_STAIRS;
     public static final Item SYENITE_BRICK_SLAB;
     public static final Item SYENITE_BRICK_WALL;
-    public static final Item FLOATSTONE;
-    public static final Item FLOATSTONE_STAIRS;
-    public static final Item FLOATSTONE_SLAB;
-    public static final Item FLOATSTONE_WALL;
+    public static final Item FLOATROCK;
+    public static final Item GRASSY_FLOATROCK;
+    public static final Item FLOATROCK_STAIRS;
+    public static final Item FLOATROCK_SLAB;
+    public static final Item FLOATROCK_WALL;
+    public static final Item FLOATROCK_COAL_ORE;
+    public static final Item FLOATROCK_IRON_ORE;
+    public static final Item FLOATROCK_COPPER_ORE;
+    public static final Item FLOATROCK_GOLD_ORE;
+    public static final Item FLOATROCK_REDSTONE_ORE;
+    public static final Item FLOATROCK_EMERALD_ORE;
+    public static final Item FLOATROCK_LAPIS_ORE;
+    public static final Item FLOATROCK_DIAMOND_ORE;
+    public static final Item SPRINGSOIL;
     public static final Item AEROBLOOM_LOG;
     public static final Item AEROBLOOM_WOOD;
     public static final Item STRIPPED_AEROBLOOM_LOG;
@@ -212,7 +222,7 @@ public class VAItems {
     public static final FoodComponent CORN_FOOD = (new FoodComponent.Builder()).hunger(1).saturationModifier(0.3F).build();
     public static final FoodComponent ROASTED_CORN_FOOD = (new FoodComponent.Builder()).hunger(5).saturationModifier(0.6F).build();
     public static final FoodComponent ROCK_CANDY_FOOD = (new FoodComponent.Builder().hunger(2).saturationModifier(0.1F).build());
-    public static final FoodComponent BALLOON_FRUIT_FOOD = (new FoodComponent.Builder().hunger(4).saturationModifier(0.4F).alwaysEdible().statusEffect(new StatusEffectInstance(StatusEffects.LEVITATION, 100, 1), 1.0F).build());
+    public static final FoodComponent BALLOON_FRUIT_FOOD = (new FoodComponent.Builder().hunger(2).saturationModifier(0.1F).alwaysEdible().statusEffect(new StatusEffectInstance(StatusEffects.LEVITATION, 100, 1), 1.0F).build());
 
     public static final ToolSet AMETHYST_DIAMOND_TOOL_SET;
     public static final ToolSet COPPER_DIAMOND_TOOL_SET;
@@ -324,10 +334,22 @@ public class VAItems {
         SYENITE_BRICK_SLAB = registerBlockItem("syenite_brick_slab", VABlocks.SYENITE_BRICK_SLAB, ItemGroups.BUILDING_BLOCKS, SYENITE_BRICK_STAIRS);
         SYENITE_BRICK_WALL = registerBlockItem("syenite_brick_wall", VABlocks.SYENITE_BRICK_WALL, ItemGroups.BUILDING_BLOCKS, SYENITE_BRICK_SLAB);
 
-        FLOATSTONE = registerBlockItem("floatstone", VABlocks.FLOATSTONE, new ItemGroupLocation(ItemGroups.BUILDING_BLOCKS, Items.DEEPSLATE_TILE_WALL), new ItemGroupLocation(ItemGroups.NATURAL, Items.DEEPSLATE));
-        FLOATSTONE_STAIRS = registerBlockItem("floatstone_stairs", VABlocks.FLOATSTONE_STAIRS, ItemGroups.BUILDING_BLOCKS, prev);
-        FLOATSTONE_SLAB = registerBlockItem("floatstone_slab", VABlocks.FLOATSTONE_SLAB, ItemGroups.BUILDING_BLOCKS, prev);
-        FLOATSTONE_WALL = registerBlockItem("floatstone_wall", VABlocks.FLOATSTONE_WALL, ItemGroups.BUILDING_BLOCKS, prev);
+        FLOATROCK = registerBlockItem("floatrock", VABlocks.FLOATROCK, new ItemGroupLocation(ItemGroups.BUILDING_BLOCKS, Items.DEEPSLATE_TILE_WALL), new ItemGroupLocation(ItemGroups.NATURAL, Items.DEEPSLATE));
+        FLOATROCK_STAIRS = registerBlockItem("floatrock_stairs", VABlocks.FLOATROCK_STAIRS, ItemGroups.BUILDING_BLOCKS, prev);
+        FLOATROCK_SLAB = registerBlockItem("floatrock_slab", VABlocks.FLOATROCK_SLAB, ItemGroups.BUILDING_BLOCKS, prev);
+        FLOATROCK_WALL = registerBlockItem("floatrock_wall", VABlocks.FLOATROCK_WALL, ItemGroups.BUILDING_BLOCKS, prev);
+        GRASSY_FLOATROCK = registerBlockItem("grassy_floatrock", VABlocks.GRASSY_FLOATROCK, ItemGroups.NATURAL, FLOATROCK);
+        
+        FLOATROCK_COAL_ORE = registerBlockItem("floatrock_coal_ore", VABlocks.FLOATROCK_COAL_ORE, ItemGroups.NATURAL, Items.DEEPSLATE_COAL_ORE);
+        FLOATROCK_COPPER_ORE = registerBlockItem("floatrock_copper_ore", VABlocks.FLOATROCK_COPPER_ORE, ItemGroups.NATURAL, Items.DEEPSLATE_COPPER_ORE);
+        FLOATROCK_IRON_ORE = registerBlockItem("floatrock_iron_ore", VABlocks.FLOATROCK_IRON_ORE, ItemGroups.NATURAL, Items.DEEPSLATE_IRON_ORE);
+        FLOATROCK_GOLD_ORE = registerBlockItem("floatrock_gold_ore", VABlocks.FLOATROCK_GOLD_ORE, ItemGroups.NATURAL, Items.DEEPSLATE_GOLD_ORE);
+        FLOATROCK_REDSTONE_ORE = registerBlockItem("floatrock_redstone_ore", VABlocks.FLOATROCK_REDSTONE_ORE, ItemGroups.NATURAL, Items.DEEPSLATE_REDSTONE_ORE);
+        FLOATROCK_EMERALD_ORE = registerBlockItem("floatrock_emerald_ore", VABlocks.FLOATROCK_EMERALD_ORE, ItemGroups.NATURAL, Items.DEEPSLATE_EMERALD_ORE);
+        FLOATROCK_LAPIS_ORE = registerBlockItem("floatrock_lapis_ore", VABlocks.FLOATROCK_LAPIS_ORE, ItemGroups.NATURAL, Items.DEEPSLATE_LAPIS_ORE);
+        FLOATROCK_DIAMOND_ORE = registerBlockItem("floatrock_diamond_ore", VABlocks.FLOATROCK_DIAMOND_ORE, ItemGroups.NATURAL, Items.DEEPSLATE_DIAMOND_ORE);
+
+        SPRINGSOIL = registerBlockItem("springsoil", VABlocks.SPRINGSOIL, ItemGroups.NATURAL, Items.RED_SANDSTONE);
 
         AEROBLOOM_LOG = registerBlockItem("aerobloom_log", VABlocks.AEROBLOOM_LOG, new ItemGroupLocation(ItemGroups.BUILDING_BLOCKS, Items.CHERRY_BUTTON), new ItemGroupLocation(ItemGroups.NATURAL, Items.CHERRY_LOG));
         AEROBLOOM_WOOD = registerBlockItem("aerobloom_wood", VABlocks.AEROBLOOM_WOOD, ItemGroups.BUILDING_BLOCKS, prev);
@@ -347,7 +369,7 @@ public class VAItems {
         AEROBLOOM_LEAVES = registerBlockItem("aerobloom_leaves", VABlocks.AEROBLOOM_LEAVES, ItemGroups.NATURAL, Items.CHERRY_LEAVES);
         AEROBLOOM_SAPLING = registerBlockItem("aerobloom_sapling", VABlocks.AEROBLOOM_SAPLING, ItemGroups.NATURAL, Items.CHERRY_SAPLING);
 
-        BALLOON_FRUIT = register("balloon_fruit", new Item(new FabricItemSettings().food(BALLOON_FRUIT_FOOD)), ItemGroups.FOOD_AND_DRINK, Items.CHORUS_FRUIT);
+        BALLOON_FRUIT = register("balloon_fruit", new AliasedBlockItem(VABlocks.BALLOON_BULB_BUD, new FabricItemSettings().food(BALLOON_FRUIT_FOOD)), ItemGroups.FOOD_AND_DRINK, Items.CHORUS_FRUIT);
 
         OAK_HEDGE = registerBlockItem("oak_hedge", VABlocks.OAK_HEDGE, ItemGroups.BUILDING_BLOCKS, Items.WARPED_BUTTON);
         SPRUCE_HEDGE = registerBlockItem("spruce_hedge", VABlocks.SPRUCE_HEDGE, ItemGroups.BUILDING_BLOCKS, prev);

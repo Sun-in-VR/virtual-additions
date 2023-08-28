@@ -46,8 +46,8 @@ class VAItemTagProvider extends FabricTagProvider.ItemTagProvider {
     protected void configure(RegistryWrapper.WrapperLookup arg) {
         getOrCreateTagBuilder(ItemTags.BEACON_PAYMENT_ITEMS).add(VAItems.STEEL_INGOT, VAItems.IOLITE);
         getOrCreateTagBuilder(ItemTags.CLUSTER_MAX_HARVESTABLES).addOptionalTag(PICKAXES);
-        getOrCreateTagBuilder(ItemTags.STONE_CRAFTING_MATERIALS).add(VAItems.COBBLED_HORNFELS, VAItems.COBBLED_BLUESCHIST, VAItems.COBBLED_SYENITE, VAItems.FLOATSTONE);
-        getOrCreateTagBuilder(ItemTags.STONE_TOOL_MATERIALS).add(VAItems.COBBLED_HORNFELS, VAItems.COBBLED_BLUESCHIST, VAItems.COBBLED_SYENITE, VAItems.FLOATSTONE);
+        getOrCreateTagBuilder(ItemTags.STONE_CRAFTING_MATERIALS).add(VAItems.COBBLED_HORNFELS, VAItems.COBBLED_BLUESCHIST, VAItems.COBBLED_SYENITE, VAItems.FLOATROCK);
+        getOrCreateTagBuilder(ItemTags.STONE_TOOL_MATERIALS).add(VAItems.COBBLED_HORNFELS, VAItems.COBBLED_BLUESCHIST, VAItems.COBBLED_SYENITE, VAItems.FLOATROCK);
         getOrCreateTagBuilder(ItemTags.TRIM_MATERIALS).add(VAItems.STEEL_INGOT, VAItems.IOLITE);
         getOrCreateTagBuilder(ItemTags.TRIMMABLE_ARMOR).add(VAItems.STEEL_HELMET, VAItems.STEEL_CHESTPLATE, VAItems.STEEL_LEGGINGS, VAItems.STEEL_BOOTS);
         getOrCreateTagBuilder(ItemTags.VILLAGER_PLANTABLE_SEEDS).add(VAItems.CORN, VAItems.COTTON_SEEDS);
@@ -109,7 +109,7 @@ class VAItemTagProvider extends FabricTagProvider.ItemTagProvider {
                 VABlockFamilies.HORNFELS_TILES,
                 VABlockFamilies.BLUESCHIST_BRICKS,
                 VABlockFamilies.SYENITE_BRICKS,
-                VABlockFamilies.FLOATSTONE
+                VABlockFamilies.FLOATROCK
         );
 
         configureToolSet(VAItems.STEEL_TOOL_SET);

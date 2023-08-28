@@ -36,6 +36,24 @@ class VARecipeProvider extends FabricRecipeProvider {
         offerBlasting(exporter, List.of(VAItems.IOLITE_ORE), RecipeCategory.MISC, VAItems.IOLITE, 1.0F, 100, "iolite");
         offerSmelting(exporter, List.of(VAItems.IOLITE_ORE), RecipeCategory.MISC, VAItems.IOLITE, 1.0F, 200, "iolite");
 
+        offerSmelting(exporter, List.of(VAItems.FLOATROCK_COAL_ORE), RecipeCategory.MISC, Items.COAL, 0.1F, 200, "coal");
+        offerSmelting(exporter, List.of(VAItems.FLOATROCK_COPPER_ORE), RecipeCategory.MISC, Items.COPPER_INGOT, 0.7F, 200, "copper_ingot");
+        offerSmelting(exporter, List.of(VAItems.FLOATROCK_IRON_ORE), RecipeCategory.MISC, Items.IRON_INGOT, 0.7F, 200, "iron_ingot");
+        offerSmelting(exporter, List.of(VAItems.FLOATROCK_GOLD_ORE), RecipeCategory.MISC, Items.GOLD_INGOT, 1.0F, 200, "gold_ingot");
+        offerSmelting(exporter, List.of(VAItems.FLOATROCK_REDSTONE_ORE), RecipeCategory.MISC, Items.REDSTONE, 0.7F, 200, "redstone");
+        offerSmelting(exporter, List.of(VAItems.FLOATROCK_EMERALD_ORE), RecipeCategory.MISC, Items.EMERALD, 1.0F, 200, "emerald");
+        offerSmelting(exporter, List.of(VAItems.FLOATROCK_LAPIS_ORE), RecipeCategory.MISC, Items.LAPIS_LAZULI, 0.2F, 200, "lapis_lazuli");
+        offerSmelting(exporter, List.of(VAItems.FLOATROCK_DIAMOND_ORE), RecipeCategory.MISC, Items.DIAMOND, 1.0F, 200, "diamond");
+
+        offerBlasting(exporter, List.of(VAItems.FLOATROCK_COAL_ORE), RecipeCategory.MISC, Items.COAL, 0.1F, 100, "coal");
+        offerBlasting(exporter, List.of(VAItems.FLOATROCK_COPPER_ORE), RecipeCategory.MISC, Items.COPPER_INGOT, 0.7F, 100, "copper_ingot");
+        offerBlasting(exporter, List.of(VAItems.FLOATROCK_IRON_ORE), RecipeCategory.MISC, Items.IRON_INGOT, 0.7F, 100, "iron_ingot");
+        offerBlasting(exporter, List.of(VAItems.FLOATROCK_GOLD_ORE), RecipeCategory.MISC, Items.GOLD_INGOT, 1.0F, 100, "gold_ingot");
+        offerBlasting(exporter, List.of(VAItems.FLOATROCK_REDSTONE_ORE), RecipeCategory.MISC, Items.REDSTONE, 0.7F, 100, "redstone");
+        offerBlasting(exporter, List.of(VAItems.FLOATROCK_EMERALD_ORE), RecipeCategory.MISC, Items.EMERALD, 1.0F, 100, "emerald");
+        offerBlasting(exporter, List.of(VAItems.FLOATROCK_LAPIS_ORE), RecipeCategory.MISC, Items.LAPIS_LAZULI, 0.2F, 100, "lapis_lazuli");
+        offerBlasting(exporter, List.of(VAItems.FLOATROCK_DIAMOND_ORE), RecipeCategory.MISC, Items.DIAMOND, 1.0F, 100, "diamond");
+
         offerHedgeRecipe(exporter, VABlocks.OAK_HEDGE, Blocks.OAK_LEAVES);
         offerHedgeRecipe(exporter, VABlocks.SPRUCE_HEDGE, Blocks.SPRUCE_LEAVES);
         offerHedgeRecipe(exporter, VABlocks.BIRCH_HEDGE, Blocks.BIRCH_LEAVES);
@@ -91,7 +109,7 @@ class VARecipeProvider extends FabricRecipeProvider {
         offer2x2CompactingRecipe(exporter, RecipeCategory.BUILDING_BLOCKS, VABlocks.SYENITE, VABlocks.POLISHED_SYENITE);
         offer2x2CompactingRecipe(exporter, RecipeCategory.BUILDING_BLOCKS, VABlocks.POLISHED_SYENITE, VABlocks.SYENITE_BRICKS);
 
-        generateCuttableFamilyChain(exporter, VABlockFamilies.FLOATSTONE);
+        generateCuttableFamilyChain(exporter, VABlockFamilies.FLOATROCK);
 
         generateFamily(exporter, VABlockFamilies.AEROBLOOM);
         offerBarkBlockRecipe(exporter, VAItems.AEROBLOOM_WOOD, VAItems.AEROBLOOM_LOG);

@@ -51,8 +51,26 @@ class VABlockTagProvider extends FabricTagProvider.BlockTagProvider {
         getOrCreateTagBuilder(BlockTags.WALL_HANGING_SIGNS).add(VABlocks.AEROBLOOM_WALL_HANGING_SIGN);
         getOrCreateTagBuilder(BlockTags.LEAVES).add(VABlocks.AEROBLOOM_LEAVES);
         getOrCreateTagBuilder(BlockTags.SAPLINGS).add(VABlocks.AEROBLOOM_SAPLING);
+        getOrCreateTagBuilder(BlockTags.DIRT).add(VABlocks.GRASSY_FLOATROCK, VABlocks.SPRINGSOIL);
+        getOrCreateTagBuilder(BlockTags.GUARDED_BY_PIGLINS).add(VABlocks.FLOATROCK_GOLD_ORE);
+        getOrCreateTagBuilder(BlockTags.COAL_ORES).add(VABlocks.FLOATROCK_COAL_ORE);
+        getOrCreateTagBuilder(BlockTags.COPPER_ORES).add(VABlocks.FLOATROCK_COPPER_ORE);
+        getOrCreateTagBuilder(BlockTags.IRON_ORES).add(VABlocks.FLOATROCK_IRON_ORE);
+        getOrCreateTagBuilder(BlockTags.GOLD_ORES).add(VABlocks.FLOATROCK_GOLD_ORE);
+        getOrCreateTagBuilder(BlockTags.REDSTONE_ORES).add(VABlocks.FLOATROCK_REDSTONE_ORE);
+        getOrCreateTagBuilder(BlockTags.EMERALD_ORES).add(VABlocks.FLOATROCK_EMERALD_ORE);
+        getOrCreateTagBuilder(BlockTags.LAPIS_ORES).add(VABlocks.FLOATROCK_LAPIS_ORE);
+        getOrCreateTagBuilder(BlockTags.DIAMOND_ORES).add(VABlocks.FLOATROCK_DIAMOND_ORE);
+
+        getOrCreateTagBuilder(VABlockTags.FLOATROCK_ORE_REPLACEABLES).add(VABlocks.FLOATROCK);
+        getOrCreateTagBuilder(VABlockTags.SKYLANDS_CARVER_REPLACEABLES).add(VABlocks.FLOATROCK).add(VABlocks.GRASSY_FLOATROCK);
+        getOrCreateTagBuilder(VABlockTags.NO_FOLIAGE_WORLDGEN).add(VABlocks.SPRINGSOIL);
 
         getOrCreateTagBuilder(ORES).add(VABlocks.IOLITE_ORE);
+
+        getOrCreateTagBuilder(BlockTags.SHOVEL_MINEABLE).add(
+                VABlocks.SPRINGSOIL
+        );
 
         getOrCreateTagBuilder(BlockTags.HOE_MINEABLE).add(
                         VABlocks.SILK_BLOCK,
@@ -78,7 +96,11 @@ class VABlockTagProvider extends FabricTagProvider.BlockTagProvider {
                 VABlocks.IOLITE_BLOCK
         );
 
-        configureOverworldStone(VABlocks.HORNFELS, VABlocks.BLUESCHIST, VABlocks.SYENITE, VABlocks.FLOATSTONE);
+        configureMinable(BlockTags.PICKAXE_MINEABLE, 0, VABlocks.GRASSY_FLOATROCK, VABlocks.FLOATROCK_COAL_ORE);
+        configureMinable(BlockTags.PICKAXE_MINEABLE, 1, VABlocks.FLOATROCK_IRON_ORE, VABlocks.FLOATROCK_COPPER_ORE, VABlocks.FLOATROCK_LAPIS_ORE);
+        configureMinable(BlockTags.PICKAXE_MINEABLE, 2, VABlocks.FLOATROCK_DIAMOND_ORE, VABlocks.FLOATROCK_REDSTONE_ORE, VABlocks.FLOATROCK_EMERALD_ORE, VABlocks.FLOATROCK_GOLD_ORE);
+
+        configureOverworldStone(VABlocks.HORNFELS, VABlocks.BLUESCHIST, VABlocks.SYENITE, VABlocks.FLOATROCK);
         configureFamily(BlockTags.PICKAXE_MINEABLE, 1, VABlockFamilies.CUT_STEEL);
         configureFamily(BlockTags.PICKAXE_MINEABLE, 0,
                 VABlockFamilies.CUT_STEEL,
@@ -91,7 +113,7 @@ class VABlockTagProvider extends FabricTagProvider.BlockTagProvider {
                 VABlockFamilies.HORNFELS_TILES,
                 VABlockFamilies.BLUESCHIST_BRICKS,
                 VABlockFamilies.SYENITE_BRICKS,
-                VABlockFamilies.FLOATSTONE
+                VABlockFamilies.FLOATROCK
         );
         configureWoodenFamily(BlockTags.AXE_MINEABLE, 0, VABlockFamilies.AEROBLOOM);
 

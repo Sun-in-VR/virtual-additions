@@ -16,7 +16,10 @@ public class VABlockTags {
     public static final TagKey<Block> LUMWASP_NEST_REPLACEABLE = register("lumwasp_nest_replaceable");
     public static final TagKey<Block> SCULK_GILD_EFFECTIVE = register("sculk_gild_effective");
     public static final TagKey<Block> SCULK_GILD_STRONGLY_EFFECTIVE = register("sculk_gild_strongly_effective");
-    public static final TagKey<Block> SILKBULBS = TagKey.of(RegistryKeys.BLOCK, idOf("silkbulbs") );
+    public static final TagKey<Block> SILKBULBS = TagKey.of(RegistryKeys.BLOCK, idOf("silkbulbs"));
+    public static final TagKey<Block> FLOATROCK_ORE_REPLACEABLES = register("floatrock_ore_replaceables");
+    public static final TagKey<Block> SKYLANDS_CARVER_REPLACEABLES = register("skylands_carver_replaceables");
+    public static final TagKey<Block> NO_FOLIAGE_WORLDGEN = register("no_foliage_worldgen");
 
     private static TagKey<Block> register(String id) {
         return TagKey.of(Registries.BLOCK.getKey(), idOf(id));

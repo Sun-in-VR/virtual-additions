@@ -1,0 +1,6 @@
+{
+  "parent": "minecraft:block/cross",
+  "textures": {
+    "cross": "virtual_additions:block/balloon_bulb_bud"
+  }
+}

@@ -9,8 +9,8 @@ import net.fabricmc.fabric.api.object.builder.v1.block.type.BlockSetTypeBuilder;
 import net.fabricmc.fabric.api.object.builder.v1.block.type.WoodTypeBuilder;
 import net.fabricmc.fabric.api.registry.LandPathNodeTypesRegistry;
 import net.fabricmc.fabric.api.registry.StrippableBlockRegistry;
-import net.fabricmc.fabric.impl.content.registry.FlammableBlockRegistryImpl;
 import net.minecraft.block.*;
+import net.minecraft.block.enums.Instrument;
 import net.minecraft.block.piston.PistonBehavior;
 import net.minecraft.entity.ai.pathing.PathNodeType;
 import net.minecraft.sound.BlockSoundGroup;
@@ -24,6 +24,7 @@ import static com.github.suninvr.virtualadditions.registry.RegistryHelper.BlockR
 public class VABlocks {
 
     public static final BlockSoundGroup ROPE_SOUND_GROUP = new BlockSoundGroup(1.0F, 1.0F, VASoundEvents.BLOCK_ROPE_BREAK, VASoundEvents.BLOCK_ROPE_STEP, VASoundEvents.BLOCK_ROPE_PLACE, VASoundEvents.BLOCK_ROPE_HIT, VASoundEvents.BLOCK_ROPE_FALL);
+    public static final BlockSoundGroup GRASSY_FLOATROCK_SOUNDGROUP = new BlockSoundGroup(1.0F, 1.0F, SoundEvents.BLOCK_TUFF_BREAK, SoundEvents.BLOCK_GRASS_STEP, SoundEvents.BLOCK_TUFF_PLACE, SoundEvents.BLOCK_TUFF_HIT, SoundEvents.BLOCK_GRASS_FALL);
 
     public static final Block CLIMBING_ROPE;
     public static final Block CLIMBING_ROPE_ANCHOR;
@@ -81,10 +82,20 @@ public class VABlocks {
     public static final Block SPOTLIGHT_LIGHT;
     public static final Block COTTON;
     public static final Block CORN_CROP;
-    public static final Block FLOATSTONE;
-    public static final Block FLOATSTONE_STAIRS;
-    public static final Block FLOATSTONE_SLAB;
-    public static final Block FLOATSTONE_WALL;
+    public static final Block FLOATROCK;
+    public static final Block GRASSY_FLOATROCK;
+    public static final Block FLOATROCK_STAIRS;
+    public static final Block FLOATROCK_SLAB;
+    public static final Block FLOATROCK_WALL;
+    public static final Block FLOATROCK_COAL_ORE;
+    public static final Block FLOATROCK_IRON_ORE;
+    public static final Block FLOATROCK_COPPER_ORE;
+    public static final Block FLOATROCK_GOLD_ORE;
+    public static final Block FLOATROCK_REDSTONE_ORE;
+    public static final Block FLOATROCK_EMERALD_ORE;
+    public static final Block FLOATROCK_LAPIS_ORE;
+    public static final Block FLOATROCK_DIAMOND_ORE;
+    public static final Block SPRINGSOIL;
     public static final Block AEROBLOOM_LOG;
     public static final Block AEROBLOOM_WOOD;
     public static final Block STRIPPED_AEROBLOOM_LOG;
@@ -104,6 +115,9 @@ public class VABlocks {
     public static final Block AEROBLOOM_WALL_HANGING_SIGN;
     public static final Block AEROBLOOM_LEAVES;
     public static final Block AEROBLOOM_SAPLING;
+    public static final Block BALLOON_BULB;
+    public static final Block BALLOON_BULB_PLANT;
+    public static final Block BALLOON_BULB_BUD;
     public static final Block OAK_HEDGE;
     public static final Block SPRUCE_HEDGE;
     public static final Block BIRCH_HEDGE;
@@ -149,7 +163,6 @@ public class VABlocks {
 
     public static final BlockSetType AEROBLOOM = BlockSetTypeBuilder.copyOf(BlockSetType.CHERRY).build(idOf("aerobloom"));
     public static final WoodType AEROBLOOM_WOODTYPE = WoodType.register(WoodTypeBuilder.copyOf(WoodType.CHERRY).build(idOf("aerobloom"), AEROBLOOM));
-
 
     static {
         CLIMBING_ROPE = register("climbing_rope", new ClimbingRopeBlock(FabricBlockSettings.create().sounds(ROPE_SOUND_GROUP).collidable(false).nonOpaque().burnable().hardness(0.5F)));
@@ -216,10 +229,28 @@ public class VABlocks {
         COTTON = register("cotton", new CottonCropBlock(AbstractBlock.Settings.create().noCollision().ticksRandomly().breakInstantly().sounds(BlockSoundGroup.CROP)));
         CORN_CROP = register("corn_crop", new CornCropBlock(AbstractBlock.Settings.create().noCollision().ticksRandomly().breakInstantly().sounds(BlockSoundGroup.CROP).offset(AbstractBlock.OffsetType.XZ)));
 
-        FLOATSTONE = register("floatstone", new Block(AbstractBlock.Settings.copy(Blocks.TUFF)));
-        FLOATSTONE_STAIRS = register("floatstone_stairs", new StairsBlock(FLOATSTONE.getDefaultState(), AbstractBlock.Settings.copy(Blocks.TUFF)));
-        FLOATSTONE_SLAB = register("floatstone_slab", new SlabBlock(AbstractBlock.Settings.copy(Blocks.TUFF)));
-        FLOATSTONE_WALL = register("floatstone_wall", new WallBlock(AbstractBlock.Settings.copy(Blocks.TUFF)));
+        FLOATROCK = register("floatrock", new FloatrockBlock(AbstractBlock.Settings.copy(Blocks.TUFF)));
+        GRASSY_FLOATROCK = register("grassy_floatrock", new GrassyFloatrockBlock(AbstractBlock.Settings.copy(Blocks.TUFF).sounds(GRASSY_FLOATROCK_SOUNDGROUP)));
+        FLOATROCK_STAIRS = register("floatrock_stairs", new StairsBlock(FLOATROCK.getDefaultState(), AbstractBlock.Settings.copy(Blocks.TUFF)));
+        FLOATROCK_SLAB = register("floatrock_slab", new SlabBlock(AbstractBlock.Settings.copy(Blocks.TUFF)));
+        FLOATROCK_WALL = register("floatrock_wall", new WallBlock(AbstractBlock.Settings.copy(Blocks.TUFF)));
+
+        BALLOON_BULB = register("balloon_bulb", new BalloonBulbBlock(AbstractBlock.Settings.copy(COTTON).mapColor(MapColor.LIGHT_BLUE).offset(AbstractBlock.OffsetType.XZ)));
+        BALLOON_BULB_PLANT = register("balloon_bulb_plant", new BalloonBulbPlantBlock(AbstractBlock.Settings.copy(BALLOON_BULB)));
+        BALLOON_BULB_BUD = register("balloon_bulb_bud", new BalloonBulbBudBlock(AbstractBlock.Settings.copy(BALLOON_BULB)));
+
+        FabricBlockSettings floatrockOreSettings = FabricBlockSettings.create().mapColor(MapColor.STONE_GRAY).instrument(Instrument.BASEDRUM).requiresTool().strength(2.0F, 1.5F).sounds(BlockSoundGroup.TUFF);
+
+        FLOATROCK_COAL_ORE = register("floatrock_coal_ore", new ExperienceDroppingBlock(floatrockOreSettings, UniformIntProvider.create(0, 2)));
+        FLOATROCK_IRON_ORE = register("floatrock_iron_ore", new ExperienceDroppingBlock(floatrockOreSettings));
+        FLOATROCK_COPPER_ORE = register("floatrock_copper_ore", new ExperienceDroppingBlock(floatrockOreSettings));
+        FLOATROCK_GOLD_ORE = register("floatrock_gold_ore", new ExperienceDroppingBlock(floatrockOreSettings));
+        FLOATROCK_REDSTONE_ORE = register("floatrock_redstone_ore", new RedstoneOreBlock(floatrockOreSettings));
+        FLOATROCK_EMERALD_ORE = register("floatrock_emerald_ore", new ExperienceDroppingBlock(floatrockOreSettings, UniformIntProvider.create(3, 7)));
+        FLOATROCK_LAPIS_ORE = register("floatrock_lapis_ore", new ExperienceDroppingBlock(floatrockOreSettings, UniformIntProvider.create(2, 5)));
+        FLOATROCK_DIAMOND_ORE = register("floatrock_diamond_ore", new ExperienceDroppingBlock(floatrockOreSettings, UniformIntProvider.create(3, 7)));
+
+        SPRINGSOIL = register("springsoil", new SpringSoilBlock(AbstractBlock.Settings.copy(Blocks.ROOTED_DIRT)));
 
         AEROBLOOM_LOG = register("aerobloom_log", new PillarBlock(AbstractBlock.Settings.copy(Blocks.CHERRY_LOG)));
         AEROBLOOM_WOOD = register("aerobloom_wood", new PillarBlock(AbstractBlock.Settings.copy(Blocks.CHERRY_WOOD)));

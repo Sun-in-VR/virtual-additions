@@ -23,6 +23,7 @@ import net.fabricmc.fabric.api.client.rendering.v1.EntityRendererRegistry;
 import net.minecraft.block.RedstoneWireBlock;
 import net.minecraft.client.color.world.BiomeColors;
 import net.minecraft.client.color.world.FoliageColors;
+import net.minecraft.client.color.world.GrassColors;
 import net.minecraft.client.gui.screen.ingame.HandledScreens;
 import net.minecraft.client.item.ModelPredicateProviderRegistry;
 import net.minecraft.client.particle.WaterSplashParticle;
@@ -62,19 +63,28 @@ public class VirtualAdditionsClient implements ClientModInitializer {
 
         BlockRenderLayerMap.INSTANCE.putBlocks(RenderLayer.getCutout(),
                 VABlocks.CLIMBING_ROPE_ANCHOR,
+                VABlocks.CLIMBING_ROPE,
                 VABlocks.AEROBLOOM_DOOR,
                 VABlocks.AEROBLOOM_TRAPDOOR,
-                VABlocks.AEROBLOOM_LEAVES,
-                VABlocks.AEROBLOOM_HEDGE,
                 VABlocks.AEROBLOOM_SAPLING,
-                VABlocks.STEEL_DOOR,
-                VABlocks.STEEL_TRAPDOOR,
-                VABlocks.REDSTONE_BRIDGE,
+                VABlocks.BALLOON_BULB,
+                VABlocks.BALLOON_BULB_PLANT,
+                VABlocks.BALLOON_BULB_BUD,
                 VABlocks.RED_GLIMMER_CRYSTAL,
                 VABlocks.GREEN_GLIMMER_CRYSTAL,
                 VABlocks.BLUE_GLIMMER_CRYSTAL,
                 VABlocks.COTTON,
                 VABlocks.CORN_CROP,
+                VABlocks.GLOWING_SILK,
+                VABlocks.FRAYED_SILK,
+                VABlocks.TALL_GREENCAP_MUSHROOMS,
+                VABlocks.GREENCAP_MUSHROOM
+        );
+
+        BlockRenderLayerMap.INSTANCE.putBlocks(RenderLayer.getCutoutMipped(),
+                VABlocks.GRASSY_FLOATROCK,
+                VABlocks.AEROBLOOM_LEAVES,
+                VABlocks.AEROBLOOM_HEDGE,
                 VABlocks.OAK_HEDGE,
                 VABlocks.SPRUCE_HEDGE,
                 VABlocks.BIRCH_HEDGE,
@@ -85,10 +95,9 @@ public class VirtualAdditionsClient implements ClientModInitializer {
                 VABlocks.CHERRY_HEDGE,
                 VABlocks.AZALEA_HEDGE,
                 VABlocks.FLOWERING_AZALEA_HEDGE,
-                VABlocks.GLOWING_SILK,
-                VABlocks.FRAYED_SILK,
-                VABlocks.TALL_GREENCAP_MUSHROOMS,
-                VABlocks.GREENCAP_MUSHROOM
+                VABlocks.STEEL_DOOR,
+                VABlocks.STEEL_TRAPDOOR,
+                VABlocks.REDSTONE_BRIDGE
         );
 
         EntityRendererRegistry.register(VAEntityType.CLIMBING_ROPE, ClimbingRopeEntityRenderer::new);
@@ -105,21 +114,18 @@ public class VirtualAdditionsClient implements ClientModInitializer {
                 VABlocks.DARK_OAK_HEDGE,
                 VABlocks.MANGROVE_HEDGE
                 );
-        ColorProviderRegistry.BLOCK.register( ((state, world, pos, tintIndex) -> FoliageColors.getSpruceColor()), VABlocks.SPRUCE_HEDGE);
-        ColorProviderRegistry.BLOCK.register( ((state, world, pos, tintIndex) -> FoliageColors.getBirchColor()), VABlocks.BIRCH_HEDGE);
-        ColorProviderRegistry.BLOCK.register(((state, world, pos, tintIndex) -> 0x00e076), VABlocks.ACID);
-        ColorProviderRegistry.BLOCK.register( ((state, world, pos, tintIndex) -> tintIndex <= 0 ? -1 : RedstoneWireBlock.getWireColor(state.get(RedstoneBridgeBlock.POWER))), VABlocks.REDSTONE_BRIDGE);
+        ColorProviderRegistry.BLOCK.register( (state, world, pos, tintIndex) -> FoliageColors.getSpruceColor(), VABlocks.SPRUCE_HEDGE);
+        ColorProviderRegistry.BLOCK.register( (state, world, pos, tintIndex) -> FoliageColors.getBirchColor(), VABlocks.BIRCH_HEDGE);
+        ColorProviderRegistry.BLOCK.register( (state, world, pos, tintIndex) -> 0x00e076, VABlocks.ACID);
+        ColorProviderRegistry.BLOCK.register( (state, world, pos, tintIndex) -> tintIndex <= 0 ? -1 : RedstoneWireBlock.getWireColor(state.get(RedstoneBridgeBlock.POWER)), VABlocks.REDSTONE_BRIDGE);
+        ColorProviderRegistry.BLOCK.register( (state, world, pos, tintIndex) -> tintIndex <= 0 ? -1 : world != null ? BiomeColors.getGrassColor(world, pos) : 5353656, VABlocks.GRASSY_FLOATROCK);
 
-        ColorProviderRegistry.ITEM.register( ((stack, tintIndex) -> tintIndex > 0 ? -1 : PotionUtil.getColor(stack)), VAItems.APPLICABLE_POTION);
-        ColorProviderRegistry.ITEM.register( ((stack, tintIndex) -> FoliageColors.getDefaultColor()),
-                VAItems.OAK_HEDGE,
-                VAItems.JUNGLE_HEDGE,
-                VAItems.ACACIA_HEDGE,
-                VAItems.DARK_OAK_HEDGE
-        );
-        ColorProviderRegistry.ITEM.register( ((stack, tintIndex) -> FoliageColors.getBirchColor()), VAItems.BIRCH_HEDGE );
-        ColorProviderRegistry.ITEM.register( ((stack, tintIndex) -> FoliageColors.getSpruceColor()), VAItems.SPRUCE_HEDGE );
-        ColorProviderRegistry.ITEM.register( ((stack, tintIndex) -> FoliageColors.getMangroveColor()), VAItems.MANGROVE_HEDGE );
+        ColorProviderRegistry.ITEM.register( (stack, tintIndex) -> tintIndex > 0 ? -1 : PotionUtil.getColor(stack), VAItems.APPLICABLE_POTION);
+        ColorProviderRegistry.ITEM.register( (stack, tintIndex) -> FoliageColors.getDefaultColor(), VAItems.OAK_HEDGE, VAItems.JUNGLE_HEDGE, VAItems.ACACIA_HEDGE, VAItems.DARK_OAK_HEDGE);
+        ColorProviderRegistry.ITEM.register( (stack, tintIndex) -> tintIndex <= 0 ? -1 : 5353656, VAItems.GRASSY_FLOATROCK);
+        ColorProviderRegistry.ITEM.register( (stack, tintIndex) -> FoliageColors.getBirchColor(), VAItems.BIRCH_HEDGE);
+        ColorProviderRegistry.ITEM.register( (stack, tintIndex) -> FoliageColors.getSpruceColor(), VAItems.SPRUCE_HEDGE);
+        ColorProviderRegistry.ITEM.register( (stack, tintIndex) -> FoliageColors.getMangroveColor(), VAItems.MANGROVE_HEDGE);
 
         FluidRenderHandlerRegistry.INSTANCE.register(VAFluids.ACID, VAFluids.FLOWING_ACID, new SimpleFluidRenderHandler(
                 new Identifier("minecraft:block/water_still"),

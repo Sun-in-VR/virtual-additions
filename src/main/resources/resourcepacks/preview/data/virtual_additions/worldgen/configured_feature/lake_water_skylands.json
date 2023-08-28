@@ -13,7 +13,7 @@
     "barrier": {
       "type": "minecraft:simple_state_provider",
       "state": {
-        "Name": "virtual_additions:floatstone"
+        "Name": "virtual_additions:floatrock"
       }
     }
   }

@@ -1,5 +1,6 @@
 package com.github.suninvr.virtualadditions.datagen;
 
+import com.github.suninvr.virtualadditions.block.BalloonBulbPlantBlock;
 import com.github.suninvr.virtualadditions.registry.VABlockFamilies;
 import com.github.suninvr.virtualadditions.registry.VABlocks;
 import com.github.suninvr.virtualadditions.registry.VAItems;
@@ -16,12 +17,12 @@ import net.minecraft.item.ItemConvertible;
 import net.minecraft.item.Items;
 import net.minecraft.loot.LootPool;
 import net.minecraft.loot.LootTable;
-import net.minecraft.loot.condition.TableBonusLootCondition;
+import net.minecraft.loot.condition.BlockStatePropertyLootCondition;
 import net.minecraft.loot.entry.ItemEntry;
-import net.minecraft.loot.entry.LeafEntry;
-import net.minecraft.loot.entry.LootPoolEntry;
 import net.minecraft.loot.function.ApplyBonusLootFunction;
-import net.minecraft.loot.provider.number.ConstantLootNumberProvider;
+import net.minecraft.loot.function.SetCountLootFunction;
+import net.minecraft.loot.provider.number.UniformLootNumberProvider;
+import net.minecraft.predicate.StatePredicate;
 
 @SuppressWarnings("SameParameterValue")
 class VABlockLootTableProvider extends FabricBlockLootTableProvider {
@@ -40,7 +41,7 @@ class VABlockLootTableProvider extends FabricBlockLootTableProvider {
                 VABlockFamilies.BLUESCHIST_BRICKS,
                 VABlockFamilies.SYENITE_BRICKS,
                 VABlockFamilies.AEROBLOOM,
-                VABlockFamilies.FLOATSTONE
+                VABlockFamilies.FLOATROCK
         );
 
         addSimpleDrops(
@@ -56,6 +57,7 @@ class VABlockLootTableProvider extends FabricBlockLootTableProvider {
                 VABlocks.STRIPPED_AEROBLOOM_WOOD,
                 VABlocks.AEROBLOOM_HANGING_SIGN,
                 VABlocks.AEROBLOOM_SAPLING,
+                VABlocks.SPRINGSOIL,
                 VABlocks.OAK_HEDGE,
                 VABlocks.SPRUCE_HEDGE,
                 VABlocks.BIRCH_HEDGE,
@@ -92,6 +94,18 @@ class VABlockLootTableProvider extends FabricBlockLootTableProvider {
                 VABlocks.ENTANGLEMENT_DRIVE
         );
 
+        this.addDrop(VABlocks.FLOATROCK_COAL_ORE, block -> this.oreDrops(block, Items.COAL));
+        this.addDrop(VABlocks.FLOATROCK_IRON_ORE, block -> this.oreDrops(block, Items.RAW_IRON));
+        this.addDrop(VABlocks.FLOATROCK_COPPER_ORE, this::copperOreDrops);
+        this.addDrop(VABlocks.FLOATROCK_GOLD_ORE, block -> this.oreDrops(block, Items.RAW_GOLD));
+        this.addDrop(VABlocks.FLOATROCK_REDSTONE_ORE, this::redstoneOreDrops);
+        this.addDrop(VABlocks.FLOATROCK_EMERALD_ORE, block -> this.oreDrops(block, Items.EMERALD));
+        this.addDrop(VABlocks.FLOATROCK_LAPIS_ORE, this::lapisOreDrops);
+        this.addDrop(VABlocks.FLOATROCK_DIAMOND_ORE, block -> this.oreDrops(block, Items.DIAMOND));
+
+        this.addDrop(VABlocks.BALLOON_BULB, block -> this.drops(VAItems.BALLOON_FRUIT));
+        this.addDrop(VABlocks.BALLOON_BULB_PLANT, block -> new LootTable.Builder().pool(LootPool.builder().with(ItemEntry.builder(VAItems.BALLOON_FRUIT).conditionally(BlockStatePropertyLootCondition.builder(VABlocks.BALLOON_BULB_PLANT).properties(StatePredicate.Builder.create().exactMatch(BalloonBulbPlantBlock.AGE, 3))).apply(SetCountLootFunction.builder(UniformLootNumberProvider.create(2, 3))))));
+
         this.addDrop(VABlocks.STEEL_DOOR, this::doorDrops);
         this.addDrop(VABlocks.HORNFELS, block -> this.drops(block, VABlocks.COBBLED_HORNFELS));
         this.addDrop(VABlocks.BLUESCHIST, block -> this.drops(block, VABlocks.COBBLED_BLUESCHIST));
@@ -100,7 +114,8 @@ class VABlockLootTableProvider extends FabricBlockLootTableProvider {
         this.addDrop(VABlocks.GLOWING_SILK, block -> this.drops(block, VAItems.SILK_THREAD));
         this.addDrop(VABlocks.IOLITE_ORE, block -> this.oreDrops(block, VAItems.IOLITE));
         this.addDrop(VABlocks.TALL_GREENCAP_MUSHROOMS, (Block block) -> this.dropsWithProperty(block, TallPlantBlock.HALF, DoubleBlockHalf.LOWER));
-        this.addDrop(VABlocks.AEROBLOOM_LEAVES, block ->  aerobloomLeavesDrops(VABlocks.AEROBLOOM_LEAVES, VABlocks.AEROBLOOM_SAPLING, SAPLING_DROP_CHANCE));
+        this.addDrop(VABlocks.GRASSY_FLOATROCK, block -> this.drops(block, VABlocks.FLOATROCK));
+        this.addDrop(VABlocks.AEROBLOOM_LEAVES, block ->  leavesDrops(VABlocks.AEROBLOOM_LEAVES, VABlocks.AEROBLOOM_SAPLING, SAPLING_DROP_CHANCE));
     }
 
     @Override
@@ -149,9 +164,5 @@ class VABlockLootTableProvider extends FabricBlockLootTableProvider {
         return BlockLootTableGenerator
                 .dropsWithSilkTouch(dropWithSilkTouch, this.applyExplosionDecay(dropWithSilkTouch, ItemEntry.builder(drop).apply(ApplyBonusLootFunction.oreDrops(Enchantments.FORTUNE))))
                 .randomSequenceId(dropWithSilkTouch.getLootTableId());
-    }
-
-    public LootTable.Builder aerobloomLeavesDrops(Block leaves, Block drop, float ... chance) {
-        return this.leavesDrops(leaves, drop, chance).pool(LootPool.builder().rolls(ConstantLootNumberProvider.create(1.0f)).conditionally(WITHOUT_SILK_TOUCH_NOR_SHEARS).with(((LeafEntry.Builder<?>)this.addSurvivesExplosionCondition(leaves, ItemEntry.builder(VAItems.BALLOON_FRUIT))).conditionally(TableBonusLootCondition.builder(Enchantments.FORTUNE, 0.005f, 0.0055555557f, 0.00625f, 0.008333334f, 0.025f))));
     }
 }

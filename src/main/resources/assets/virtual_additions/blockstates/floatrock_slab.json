@@ -1,0 +1,13 @@
+{
+  "variants": {
+    "type=bottom": {
+      "model": "virtual_additions:block/floatrock_slab"
+    },
+    "type=double": {
+      "model": "virtual_additions:block/floatrock"
+    },
+    "type=top": {
+      "model": "virtual_additions:block/floatrock_slab_top"
+    }
+  }
+}

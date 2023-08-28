@@ -404,34 +404,85 @@
           "if_true": {
             "type": "minecraft:not",
             "invert": {
-              "type": "minecraft:stone_depth",
-              "offset": 0,
-              "surface_type": "floor",
-              "add_surface_depth": true,
-              "secondary_depth_range": 0
+              "type": "minecraft:vertical_gradient",
+              "random_name": "virtual_additions:floatrock",
+              "true_at_and_below": {
+                "absolute": 168
+              },
+              "false_at_and_above": {
+                "absolute": 176
+              }
             }
           },
           "then_run": {
-            "type": "minecraft:condition",
-            "if_true": {
-              "type": "minecraft:not",
-              "invert": {
-                "type": "minecraft:vertical_gradient",
-                "random_name": "virtual_additions:floatstone",
-                "true_at_and_below": {
-                  "absolute": 168
+            "type": "minecraft:sequence",
+            "sequence": [
+              {
+                "type": "minecraft:condition",
+                "if_true": {
+                  "type": "minecraft:not",
+                  "invert": {
+                    "type": "minecraft:y_above",
+                    "anchor": {
+                      "absolute": 199
+                    },
+                    "surface_depth_multiplier": 0,
+                    "add_stone_depth": false
+                  }
                 },
-                "false_at_and_above": {
-                  "absolute": 176
+                "then_run": {
+                  "type": "minecraft:condition",
+                  "if_true": {
+                    "type": "minecraft:y_above",
+                    "anchor": {
+                      "absolute": 190
+                    },
+                    "surface_depth_multiplier": 0,
+                    "add_stone_depth": false
+                  },
+                  "then_run": {
+                    "type": "minecraft:condition",
+                    "if_true": {
+                      "type": "minecraft:noise_threshold",
+                      "noise": "virtual_additions:sky_islands",
+                      "min_threshold": -0.044,
+                      "max_threshold": 0.044
+                    },
+                    "then_run": {
+                      "type": "minecraft:block",
+                      "result_state": {
+                        "Name": "virtual_additions:springsoil"
+                      }
+                    }
+                  }
+                }
+              },
+              {
+                "type": "minecraft:condition",
+                "if_true": {
+                  "type": "minecraft:not",
+                  "invert": {
+                    "type": "minecraft:stone_depth",
+                    "offset": 0,
+                    "surface_type": "floor",
+                    "add_surface_depth": false,
+                    "secondary_depth_range": 0
+                  }
+                },
+                "then_run": {
+                  "type": "minecraft:block",
+                  "result_state": {
+                    "Name": "virtual_additions:floatrock"
+                  }
+                }
+              },
+              {
+                "type": "minecraft:block",
+                "result_state": {
+                  "Name": "virtual_additions:grassy_floatrock"
                 }
               }
-            },
-            "then_run": {
-              "type": "minecraft:block",
-              "result_state": {
-                "Name": "virtual_additions:floatstone"
-              }
-            }
+            ]
           }
         }
       },

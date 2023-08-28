@@ -9,6 +9,7 @@ public class VirtualAdditionsDataGeneration implements DataGeneratorEntrypoint {
         FabricDataGenerator.Pack pack = fabricDataGenerator.createPack();
         pack.addProvider(VAItemTagProvider::new);
         pack.addProvider(VABlockTagProvider::new);
+        pack.addProvider(VAEntityTypeTagProvider::new);
         pack.addProvider(VAModelProvider::new);
         pack.addProvider(VARecipeProvider::new);
         pack.addProvider(VABlockLootTableProvider::new);

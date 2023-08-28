@@ -1,0 +1,40 @@
+{
+  "type": "minecraft:mul",
+  "argument1": {
+    "type": "minecraft:clamp",
+    "input": {
+      "type": "minecraft:mul",
+      "argument1": -4,
+      "argument2": {
+        "type": "minecraft:add",
+        "argument1": 0.75,
+        "argument2": {
+          "type": "minecraft:interpolated",
+          "argument": "minecraft:overworld/depth"
+        }
+      }
+    },
+    "min": 0,
+    "max": 1
+  },
+  "argument2": {
+    "type": "minecraft:mul",
+    "argument1": {
+      "type": "minecraft:y_clamped_gradient",
+      "from_y": 172,
+      "to_y": 180,
+      "from_value": 0,
+      "to_value": 1
+    },
+    "argument2": {
+      "type": "minecraft:cube",
+      "argument": {
+        "type": "minecraft:y_clamped_gradient",
+        "from_y": 232,
+        "to_y": 256,
+        "from_value": 1,
+        "to_value": 0
+      }
+    }
+  }
+}

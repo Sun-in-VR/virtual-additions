@@ -1,11 +1,11 @@
-// 23w32a	2023-08-20T23:31:36.030926703	Virtual Additions/Tags for minecraft:item
+// 23w32a	2023-08-27T16:49:51.131802256	Virtual Additions/Tags for minecraft:item
 409a75c7b8322aa7d62e93dad91f258fd6e7e5aa data/c/tags/items/swords.json
 fc3ca2a5f41d5d4afc8af7f869c4fb59463ed151 data/c/tags/items/iolite_ores.json
 e775f0978ed6a5d64fd57a33dff88dfd0d6ec1c2 data/virtual_additions/tags/items/lumwasp_larvae_food.json
 fa00c97baa7b861ef09b59f04a76fa5b57dd4cbd data/virtual_additions/tags/items/amethyst_gilded_swords.json
 fadd2d60c09bd6dec825088d8e727d8151741f66 data/minecraft/tags/items/piglin_loved.json
 268ac7f89703532aa94fbea2184a39cafb365666 data/minecraft/tags/items/trapdoors.json
-c75f225ead3e0e66a8041256ee8127a04881c53c data/minecraft/tags/items/slabs.json
+c043ce578bc17076a1b11a370e3cedecb6d75ebe data/minecraft/tags/items/slabs.json
 e644220d6f3e3edd15e46f3f215904ced6355968 data/c/tags/items/axes.json
 f27d07e400ce92231e4e07b6c3d8f43198981597 data/virtual_additions/tags/items/quartz_gilded_swords.json
 904696147f1ae5d74bc45eb47e3129a87c51acec data/virtual_additions/tags/items/amethyst_gilded_hoes.json
@@ -13,7 +13,7 @@ f27d07e400ce92231e4e07b6c3d8f43198981597 data/virtual_additions/tags/items/quart
 2fd80df75d7aa4d7e27e2431e11607a556e4fa4a data/minecraft/tags/items/signs.json
 55c3fd941f8a8f9e6027b255dd6ed9ece65cbb94 data/virtual_additions/tags/items/copper_gilded_pickaxes.json
 75b51d187c3a857d196bbae7cf7624034b80daae data/virtual_additions/tags/items/amethyst_gilded_tools.json
-5812d9d6ea04406ef2c0a89c58abb1f3d8d38089 data/minecraft/tags/items/stone_crafting_materials.json
+09823d1a988d7076d02dac134ff67de6363fa0d4 data/minecraft/tags/items/stone_crafting_materials.json
 9a6927c5c3f7ff5be4bad631dc6889f744c67287 data/minecraft/tags/items/wooden_doors.json
 4d2c4dd55bb0838f4ec25d9c89ad31954881f2ee data/c/tags/items/iolite.json
 9203e27bd0b197ee9a91729d3ff29850bb6d7954 data/virtual_additions/tags/items/emerald_gilded_pickaxes.json
@@ -44,10 +44,10 @@ c50fe042e24c156e1af808bdc2ed4bf7b311c0eb data/minecraft/tags/items/wooden_fences
 75cd6fe82c3fe960c3b2ba2abfebba2a84c7f3b9 data/virtual_additions/tags/items/copper_gilded_tools.json
 4852b3b1447693db9879fb351ba455dcea732417 data/virtual_additions/tags/items/emerald_gilded_hoes.json
 ffb782ad189880fa793e1e3f9a47277be3fd7595 data/minecraft/tags/items/doors.json
-5812d9d6ea04406ef2c0a89c58abb1f3d8d38089 data/minecraft/tags/items/stone_tool_materials.json
+09823d1a988d7076d02dac134ff67de6363fa0d4 data/minecraft/tags/items/stone_tool_materials.json
 ee9217948d7624a5eb576c5af45c26cc3b71bc97 data/c/tags/items/raw_ores.json
-67fcb363c55621b6006801c98259c8e091179665 data/virtual_additions/tags/items/aerobloom_logs.json
 29f8b54b2ce0db62327acf06c0620e13a318c25d data/minecraft/tags/items/wooden_trapdoors.json
+67fcb363c55621b6006801c98259c8e091179665 data/virtual_additions/tags/items/aerobloom_logs.json
 e8a7f7e13ce5cb7ba8cf119f458ddb92a23c069e data/minecraft/tags/items/beacon_payment_items.json
 83b0defafd38fbff61d9553c26f7951cb2e52939 data/minecraft/tags/items/cluster_max_harvestables.json
 43804278996b61763040f973b1c2b0374e59d69d data/virtual_additions/tags/items/emerald_gilded_shovels.json
@@ -68,8 +68,8 @@ e86053d023b47421f4644947427f45b0f4e51f21 data/virtual_additions/tags/items/quart
 4d01330e1ce3ed2bab7f68b03a3311ad33d66187 data/minecraft/tags/items/wooden_slabs.json
 51bc88f3f8770e7fe7780fd0c209b91ec09b696b data/virtual_additions/tags/items/copper_gilded_hoes.json
 019183bd363fc19a6e76d971e545df9ae802aece data/virtual_additions/tags/items/amethyst_gilded_shovels.json
-e9c3c5efe5262aa9a097236792a73f7741354163 data/minecraft/tags/items/walls.json
+e9a64aa43cc92b4428e192c8f224256a4d8dc034 data/minecraft/tags/items/walls.json
 74c128516b132f2173439f6b410a66bcbc87ca02 data/virtual_additions/tags/items/quartz_gilded_pickaxes.json
 b60341eb8695615dab8202e9d5288092522d873e data/minecraft/tags/items/planks.json
-e928b4980fb335ea8d346566a8f76a62706c2be6 data/minecraft/tags/items/stairs.json
+1764073ab53f990db94cf2fc7c7f9ef37ccedf24 data/minecraft/tags/items/stairs.json
 e37d3199dfccd5914f93905c7fbe280f253a1ab4 data/minecraft/tags/items/fences.json

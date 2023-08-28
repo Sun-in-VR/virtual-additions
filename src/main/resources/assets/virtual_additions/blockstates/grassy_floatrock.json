@@ -1,0 +1,24 @@
+{
+  "variants": {
+    "snowy=false": [
+      {
+        "model": "virtual_additions:block/grassy_floatrock"
+      },
+      {
+        "model": "virtual_additions:block/grassy_floatrock",
+        "y": 90
+      },
+      {
+        "model": "virtual_additions:block/grassy_floatrock",
+        "y": 180
+      },
+      {
+        "model": "virtual_additions:block/grassy_floatrock",
+        "y": 270
+      }
+    ],
+    "snowy=true": {
+      "model": "virtual_additions:block/grassy_floatrock_snow"
+    }
+  }
+}

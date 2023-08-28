@@ -1,0 +1,11 @@
+{
+  "type": "minecraft:blasting",
+  "category": "misc",
+  "cookingtime": 100,
+  "experience": 0.1,
+  "group": "coal",
+  "ingredient": {
+    "item": "virtual_additions:floatrock_coal_ore"
+  },
+  "result": "minecraft:coal"
+}
