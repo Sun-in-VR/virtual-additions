@@ -13,8 +13,8 @@
     "virtual_additions:floatrock_copper_ore",
     "virtual_additions:floatrock_lapis_ore",
     "virtual_additions:cut_steel",
-    "virtual_additions:steel_fence",
     "virtual_additions:cut_steel_stairs",
-    "virtual_additions:cut_steel_slab"
+    "virtual_additions:cut_steel_slab",
+    "virtual_additions:steel_fence"
   ]
 }

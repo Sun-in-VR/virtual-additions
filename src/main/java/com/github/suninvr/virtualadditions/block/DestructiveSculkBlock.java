@@ -170,7 +170,7 @@ public class DestructiveSculkBlock extends BlockWithEntity {
     @Override
     public <T extends BlockEntity> BlockEntityTicker<T> getTicker(World world, BlockState state, BlockEntityType<T> type) {
         if (!state.get(ORIGIN)) return null;
-        return checkType(type, VABlockEntities.DESTRUCTIVE_SCULK_BLOCK_ENTITY, (DestructiveSculkBlockEntity::tick));
+        return validateTicker(type, VABlockEntities.DESTRUCTIVE_SCULK_BLOCK_ENTITY, (DestructiveSculkBlockEntity::tick));
     }
 
     @Override

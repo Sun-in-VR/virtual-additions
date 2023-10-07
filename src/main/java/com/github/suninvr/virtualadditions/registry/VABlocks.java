@@ -49,6 +49,7 @@ public class VABlocks {
     public static final Block CRACKED_HORNFELS_TILES;
     public static final Block HORNFELS_TILE_STAIRS;
     public static final Block HORNFELS_TILE_SLAB;
+    public static final Block CHISELED_HORNFELS;
     public static final Block BLUESCHIST;
     public static final Block COBBLED_BLUESCHIST;
     public static final Block COBBLED_BLUESCHIST_STAIRS;
@@ -62,6 +63,7 @@ public class VABlocks {
     public static final Block BLUESCHIST_BRICK_STAIRS;
     public static final Block BLUESCHIST_BRICK_SLAB;
     public static final Block BLUESCHIST_BRICK_WALL;
+    public static final Block CHISELED_BLUESCHIST;
     public static final Block SYENITE;
     public static final Block COBBLED_SYENITE;
     public static final Block COBBLED_SYENITE_STAIRS;
@@ -75,6 +77,7 @@ public class VABlocks {
     public static final Block SYENITE_BRICK_STAIRS;
     public static final Block SYENITE_BRICK_SLAB;
     public static final Block SYENITE_BRICK_WALL;
+    public static final Block CHISELED_SYENITE;
     public static final Block RED_GLIMMER_CRYSTAL;
     public static final Block GREEN_GLIMMER_CRYSTAL;
     public static final Block BLUE_GLIMMER_CRYSTAL;
@@ -191,6 +194,7 @@ public class VABlocks {
         CRACKED_HORNFELS_TILES = register("cracked_hornfels_tiles", new Block(AbstractBlock.Settings.copy(Blocks.DEEPSLATE_TILES)));
         HORNFELS_TILE_STAIRS = register("hornfels_tile_stairs", new CustomStairsBlock(HORNFELS_TILES.getDefaultState(), AbstractBlock.Settings.copy(Blocks.DEEPSLATE_TILE_STAIRS)));
         HORNFELS_TILE_SLAB = register("hornfels_tile_slab", new SlabBlock(AbstractBlock.Settings.copy(Blocks.DEEPSLATE_TILE_SLAB)));
+        CHISELED_HORNFELS = register("chiseled_hornfels", new Block(FabricBlockSettings.copyOf(HORNFELS_TILES)));
 
         BLUESCHIST = register("blueschist", new Block(FabricBlockSettings.copyOf(Blocks.DEEPSLATE).mapColor(MapColor.LIGHT_BLUE_GRAY)));
         COBBLED_BLUESCHIST = register("cobbled_blueschist", new Block(FabricBlockSettings.copyOf(Blocks.COBBLED_DEEPSLATE)));
@@ -205,6 +209,7 @@ public class VABlocks {
         BLUESCHIST_BRICK_STAIRS = register("blueschist_brick_stairs", new CustomStairsBlock(BLUESCHIST_BRICKS.getDefaultState(), AbstractBlock.Settings.copy(Blocks.DEEPSLATE_BRICK_STAIRS)));
         BLUESCHIST_BRICK_SLAB = register("blueschist_brick_slab", new SlabBlock(AbstractBlock.Settings.copy(Blocks.DEEPSLATE_BRICK_SLAB)));
         BLUESCHIST_BRICK_WALL = register("blueschist_brick_wall", new WallBlock(FabricBlockSettings.copyOf(Blocks.DEEPSLATE_BRICK_WALL)));
+        CHISELED_BLUESCHIST = register("chiseled_blueschist", new Block(FabricBlockSettings.copyOf(BLUESCHIST_BRICKS)));
 
         SYENITE = register("syenite", new Block(FabricBlockSettings.copyOf(Blocks.DEEPSLATE).mapColor(MapColor.BROWN)));
         COBBLED_SYENITE = register("cobbled_syenite", new Block(FabricBlockSettings.copyOf(Blocks.COBBLED_DEEPSLATE).mapColor(MapColor.BROWN)));
@@ -219,6 +224,7 @@ public class VABlocks {
         SYENITE_BRICK_STAIRS = register("syenite_brick_stairs", new CustomStairsBlock(SYENITE_BRICKS.getDefaultState(), AbstractBlock.Settings.copy(Blocks.DEEPSLATE_BRICK_STAIRS)));
         SYENITE_BRICK_SLAB = register("syenite_brick_slab", new SlabBlock(AbstractBlock.Settings.copy(Blocks.DEEPSLATE_BRICK_SLAB)));
         SYENITE_BRICK_WALL = register("syenite_brick_wall", new WallBlock(FabricBlockSettings.copyOf(Blocks.DEEPSLATE_BRICK_WALL)));
+        CHISELED_SYENITE = register("chiseled_syenite", new Block(FabricBlockSettings.copyOf(SYENITE_BRICKS)));
 
         RED_GLIMMER_CRYSTAL = register("red_glimmer_crystal", new CrystalBlock(FabricBlockSettings.copyOf(Blocks.AMETHYST_CLUSTER).mapColor(MapColor.WHITE_GRAY).nonOpaque().dynamicBounds().pistonBehavior(PistonBehavior.DESTROY).requires(VirtualAdditions.PREVIEW)));
         GREEN_GLIMMER_CRYSTAL = register("green_glimmer_crystal", new CrystalBlock(FabricBlockSettings.copyOf(Blocks.AMETHYST_CLUSTER).mapColor(MapColor.WHITE_GRAY).nonOpaque().dynamicBounds().pistonBehavior(PistonBehavior.DESTROY).requires(VirtualAdditions.PREVIEW)));
@@ -229,17 +235,17 @@ public class VABlocks {
         COTTON = register("cotton", new CottonCropBlock(AbstractBlock.Settings.create().noCollision().ticksRandomly().breakInstantly().sounds(BlockSoundGroup.CROP)));
         CORN_CROP = register("corn_crop", new CornCropBlock(AbstractBlock.Settings.create().noCollision().ticksRandomly().breakInstantly().sounds(BlockSoundGroup.CROP).offset(AbstractBlock.OffsetType.XZ)));
 
-        FLOATROCK = register("floatrock", new FloatrockBlock(AbstractBlock.Settings.copy(Blocks.TUFF)));
-        GRASSY_FLOATROCK = register("grassy_floatrock", new GrassyFloatrockBlock(AbstractBlock.Settings.copy(Blocks.TUFF).sounds(GRASSY_FLOATROCK_SOUNDGROUP)));
-        FLOATROCK_STAIRS = register("floatrock_stairs", new StairsBlock(FLOATROCK.getDefaultState(), AbstractBlock.Settings.copy(Blocks.TUFF)));
-        FLOATROCK_SLAB = register("floatrock_slab", new SlabBlock(AbstractBlock.Settings.copy(Blocks.TUFF)));
-        FLOATROCK_WALL = register("floatrock_wall", new WallBlock(AbstractBlock.Settings.copy(Blocks.TUFF)));
+        FLOATROCK = register("floatrock", new FloatrockBlock(AbstractBlock.Settings.copy(Blocks.TUFF).requires(VirtualAdditions.PREVIEW)));
+        GRASSY_FLOATROCK = register("grassy_floatrock", new GrassyFloatrockBlock(AbstractBlock.Settings.copy(Blocks.TUFF).sounds(GRASSY_FLOATROCK_SOUNDGROUP).requires(VirtualAdditions.PREVIEW)));
+        FLOATROCK_STAIRS = register("floatrock_stairs", new StairsBlock(FLOATROCK.getDefaultState(), AbstractBlock.Settings.copy(Blocks.TUFF).requires(VirtualAdditions.PREVIEW)));
+        FLOATROCK_SLAB = register("floatrock_slab", new SlabBlock(AbstractBlock.Settings.copy(Blocks.TUFF).requires(VirtualAdditions.PREVIEW)));
+        FLOATROCK_WALL = register("floatrock_wall", new WallBlock(AbstractBlock.Settings.copy(Blocks.TUFF).requires(VirtualAdditions.PREVIEW)));
 
-        BALLOON_BULB = register("balloon_bulb", new BalloonBulbBlock(AbstractBlock.Settings.copy(COTTON).mapColor(MapColor.LIGHT_BLUE).offset(AbstractBlock.OffsetType.XZ)));
-        BALLOON_BULB_PLANT = register("balloon_bulb_plant", new BalloonBulbPlantBlock(AbstractBlock.Settings.copy(BALLOON_BULB)));
-        BALLOON_BULB_BUD = register("balloon_bulb_bud", new BalloonBulbBudBlock(AbstractBlock.Settings.copy(BALLOON_BULB)));
+        BALLOON_BULB = register("balloon_bulb", new BalloonBulbBlock(AbstractBlock.Settings.copy(COTTON).mapColor(MapColor.LIGHT_BLUE).offset(AbstractBlock.OffsetType.XZ).requires(VirtualAdditions.PREVIEW)));
+        BALLOON_BULB_PLANT = register("balloon_bulb_plant", new BalloonBulbPlantBlock(AbstractBlock.Settings.copy(BALLOON_BULB).requires(VirtualAdditions.PREVIEW)));
+        BALLOON_BULB_BUD = register("balloon_bulb_bud", new BalloonBulbBudBlock(AbstractBlock.Settings.copy(BALLOON_BULB).requires(VirtualAdditions.PREVIEW)));
 
-        FabricBlockSettings floatrockOreSettings = FabricBlockSettings.create().mapColor(MapColor.STONE_GRAY).instrument(Instrument.BASEDRUM).requiresTool().strength(2.0F, 1.5F).sounds(BlockSoundGroup.TUFF);
+        FabricBlockSettings floatrockOreSettings = FabricBlockSettings.create().mapColor(MapColor.TERRACOTTA_BROWN).instrument(Instrument.BASEDRUM).requiresTool().strength(2.0F, 1.5F).sounds(BlockSoundGroup.TUFF).requires(VirtualAdditions.PREVIEW);
 
         FLOATROCK_COAL_ORE = register("floatrock_coal_ore", new ExperienceDroppingBlock(floatrockOreSettings, UniformIntProvider.create(0, 2)));
         FLOATROCK_IRON_ORE = register("floatrock_iron_ore", new ExperienceDroppingBlock(floatrockOreSettings));
@@ -250,27 +256,27 @@ public class VABlocks {
         FLOATROCK_LAPIS_ORE = register("floatrock_lapis_ore", new ExperienceDroppingBlock(floatrockOreSettings, UniformIntProvider.create(2, 5)));
         FLOATROCK_DIAMOND_ORE = register("floatrock_diamond_ore", new ExperienceDroppingBlock(floatrockOreSettings, UniformIntProvider.create(3, 7)));
 
-        SPRINGSOIL = register("springsoil", new SpringSoilBlock(AbstractBlock.Settings.copy(Blocks.ROOTED_DIRT)));
+        SPRINGSOIL = register("springsoil", new SpringSoilBlock(AbstractBlock.Settings.copy(Blocks.ROOTED_DIRT).requires(VirtualAdditions.PREVIEW)));
 
-        AEROBLOOM_LOG = register("aerobloom_log", new PillarBlock(AbstractBlock.Settings.copy(Blocks.CHERRY_LOG)));
-        AEROBLOOM_WOOD = register("aerobloom_wood", new PillarBlock(AbstractBlock.Settings.copy(Blocks.CHERRY_WOOD)));
-        STRIPPED_AEROBLOOM_LOG = register("stripped_aerobloom_log", new PillarBlock(AbstractBlock.Settings.copy(Blocks.STRIPPED_CHERRY_LOG)));
-        STRIPPED_AEROBLOOM_WOOD = register("stripped_aerobloom_wood", new PillarBlock(AbstractBlock.Settings.copy(Blocks.STRIPPED_CHERRY_WOOD)));
-        AEROBLOOM_PLANKS = register("aerobloom_planks", new Block(AbstractBlock.Settings.copy(Blocks.CHERRY_PLANKS)));
-        AEROBLOOM_STAIRS = register("aerobloom_stairs", new StairsBlock(AEROBLOOM_PLANKS.getDefaultState(), AbstractBlock.Settings.copy(Blocks.CHERRY_STAIRS)));
-        AEROBLOOM_SLAB = register("aerobloom_slab", new SlabBlock(AbstractBlock.Settings.copy(Blocks.CHERRY_SLAB)));
-        AEROBLOOM_FENCE = register("aerobloom_fence", new FenceBlock(AbstractBlock.Settings.copy(Blocks.CHERRY_SLAB)));
-        AEROBLOOM_FENCE_GATE = register("aerobloom_fence_gate", new FenceGateBlock(AbstractBlock.Settings.copy(Blocks.CHERRY_SLAB), AEROBLOOM_WOODTYPE));
-        AEROBLOOM_DOOR = register("aerobloom_door", new DoorBlock( AbstractBlock.Settings.copy(Blocks.CHERRY_DOOR), AEROBLOOM));
-        AEROBLOOM_TRAPDOOR = register("aerobloom_trapdoor", new TrapdoorBlock( AbstractBlock.Settings.copy(Blocks.CHERRY_DOOR), AEROBLOOM));
-        AEROBLOOM_PRESSURE_PLATE = register("aerobloom_pressure_plate", new PressurePlateBlock(PressurePlateBlock.ActivationRule.EVERYTHING, AbstractBlock.Settings.copy(Blocks.CHERRY_BUTTON), AEROBLOOM));
-        AEROBLOOM_BUTTON = register("aerobloom_button", new ButtonBlock(AbstractBlock.Settings.copy(Blocks.CHERRY_BUTTON), AEROBLOOM, 30, true));
-        AEROBLOOM_SIGN = register("aerobloom_sign", new CustomSignBlocks.CustomSignBlock(AbstractBlock.Settings.copy(Blocks.CHERRY_SIGN), AEROBLOOM_WOODTYPE));
-        AEROBLOOM_WALL_SIGN = register("aerobloom_wall_sign", new CustomSignBlocks.CustomWallSignBlock(AbstractBlock.Settings.copy(AEROBLOOM_SIGN).dropsLike(AEROBLOOM_SIGN), AEROBLOOM_WOODTYPE));
-        AEROBLOOM_HANGING_SIGN = register("aerobloom_hanging_sign", new CustomSignBlocks.CustomHangingSignBlock(AbstractBlock.Settings.copy(Blocks.CHERRY_HANGING_SIGN), AEROBLOOM_WOODTYPE));
-        AEROBLOOM_WALL_HANGING_SIGN = register("aerobloom_wall_hanging_sign", new CustomSignBlocks.CustomWallHangingSignBlock(AbstractBlock.Settings.copy(Blocks.CHERRY_WALL_HANGING_SIGN).dropsLike(AEROBLOOM_HANGING_SIGN), AEROBLOOM_WOODTYPE));
-        AEROBLOOM_LEAVES = register("aerobloom_leaves", new LeavesBlock(AbstractBlock.Settings.copy(Blocks.CHERRY_LEAVES)));
-        AEROBLOOM_SAPLING = register("aerobloom_sapling", new SaplingBlock(new AerobloomSaplingGenerator(), AbstractBlock.Settings.copy(Blocks.CHERRY_SAPLING)));
+        AEROBLOOM_LOG = register("aerobloom_log", new PillarBlock(AbstractBlock.Settings.copy(Blocks.CHERRY_LOG).requires(VirtualAdditions.PREVIEW)));
+        AEROBLOOM_WOOD = register("aerobloom_wood", new PillarBlock(AbstractBlock.Settings.copy(Blocks.CHERRY_WOOD).requires(VirtualAdditions.PREVIEW)));
+        STRIPPED_AEROBLOOM_LOG = register("stripped_aerobloom_log", new PillarBlock(AbstractBlock.Settings.copy(Blocks.STRIPPED_CHERRY_LOG).requires(VirtualAdditions.PREVIEW)));
+        STRIPPED_AEROBLOOM_WOOD = register("stripped_aerobloom_wood", new PillarBlock(AbstractBlock.Settings.copy(Blocks.STRIPPED_CHERRY_WOOD).requires(VirtualAdditions.PREVIEW)));
+        AEROBLOOM_PLANKS = register("aerobloom_planks", new Block(AbstractBlock.Settings.copy(Blocks.CHERRY_PLANKS).requires(VirtualAdditions.PREVIEW)));
+        AEROBLOOM_STAIRS = register("aerobloom_stairs", new StairsBlock(AEROBLOOM_PLANKS.getDefaultState(), AbstractBlock.Settings.copy(Blocks.CHERRY_STAIRS).requires(VirtualAdditions.PREVIEW)));
+        AEROBLOOM_SLAB = register("aerobloom_slab", new SlabBlock(AbstractBlock.Settings.copy(Blocks.CHERRY_SLAB).requires(VirtualAdditions.PREVIEW)));
+        AEROBLOOM_FENCE = register("aerobloom_fence", new FenceBlock(AbstractBlock.Settings.copy(Blocks.CHERRY_SLAB).requires(VirtualAdditions.PREVIEW)));
+        AEROBLOOM_FENCE_GATE = register("aerobloom_fence_gate", new FenceGateBlock(AbstractBlock.Settings.copy(Blocks.CHERRY_SLAB).requires(VirtualAdditions.PREVIEW), AEROBLOOM_WOODTYPE));
+        AEROBLOOM_DOOR = register("aerobloom_door", new DoorBlock( AbstractBlock.Settings.copy(Blocks.CHERRY_DOOR).requires(VirtualAdditions.PREVIEW), AEROBLOOM));
+        AEROBLOOM_TRAPDOOR = register("aerobloom_trapdoor", new TrapdoorBlock( AbstractBlock.Settings.copy(Blocks.CHERRY_DOOR).requires(VirtualAdditions.PREVIEW), AEROBLOOM));
+        AEROBLOOM_PRESSURE_PLATE = register("aerobloom_pressure_plate", new PressurePlateBlock(PressurePlateBlock.ActivationRule.EVERYTHING, AbstractBlock.Settings.copy(Blocks.CHERRY_BUTTON).requires(VirtualAdditions.PREVIEW), AEROBLOOM));
+        AEROBLOOM_BUTTON = register("aerobloom_button", new ButtonBlock(AbstractBlock.Settings.copy(Blocks.CHERRY_BUTTON).requires(VirtualAdditions.PREVIEW), AEROBLOOM, 30, true));
+        AEROBLOOM_SIGN = register("aerobloom_sign", new CustomSignBlocks.CustomSignBlock(AbstractBlock.Settings.copy(Blocks.CHERRY_SIGN).requires(VirtualAdditions.PREVIEW), AEROBLOOM_WOODTYPE));
+        AEROBLOOM_WALL_SIGN = register("aerobloom_wall_sign", new CustomSignBlocks.CustomWallSignBlock(AbstractBlock.Settings.copy(AEROBLOOM_SIGN).dropsLike(AEROBLOOM_SIGN).requires(VirtualAdditions.PREVIEW), AEROBLOOM_WOODTYPE));
+        AEROBLOOM_HANGING_SIGN = register("aerobloom_hanging_sign", new CustomSignBlocks.CustomHangingSignBlock(AbstractBlock.Settings.copy(Blocks.CHERRY_HANGING_SIGN).requires(VirtualAdditions.PREVIEW), AEROBLOOM_WOODTYPE));
+        AEROBLOOM_WALL_HANGING_SIGN = register("aerobloom_wall_hanging_sign", new CustomSignBlocks.CustomWallHangingSignBlock(AbstractBlock.Settings.copy(Blocks.CHERRY_WALL_HANGING_SIGN).requires(VirtualAdditions.PREVIEW).dropsLike(AEROBLOOM_HANGING_SIGN), AEROBLOOM_WOODTYPE));
+        AEROBLOOM_LEAVES = register("aerobloom_leaves", new LeavesBlock(AbstractBlock.Settings.copy(Blocks.CHERRY_LEAVES).requires(VirtualAdditions.PREVIEW)));
+        AEROBLOOM_SAPLING = register("aerobloom_sapling", new SaplingBlock(new AerobloomSaplingGenerator(), AbstractBlock.Settings.copy(Blocks.CHERRY_SAPLING).requires(VirtualAdditions.PREVIEW)));
 
         OAK_HEDGE = register("oak_hedge", new HedgeBlock(AbstractBlock.Settings.copy(Blocks.OAK_LEAVES)));
         SPRUCE_HEDGE = register("spruce_hedge", new HedgeBlock(AbstractBlock.Settings.copy(Blocks.SPRUCE_LEAVES)));

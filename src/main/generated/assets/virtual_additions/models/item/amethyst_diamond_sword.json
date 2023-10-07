@@ -1,6 +1,7 @@
 {
   "parent": "minecraft:item/handheld",
   "textures": {
-    "layer0": "virtual_additions:item/gilded_tools/amethyst/diamond_sword"
+    "layer0": "minecraft:item/diamond_sword",
+    "layer1": "virtual_additions:item/gilded_tools/amethyst_sword"
   }
 }

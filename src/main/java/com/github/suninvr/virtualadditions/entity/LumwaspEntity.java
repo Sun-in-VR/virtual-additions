@@ -49,7 +49,7 @@ public class LumwaspEntity extends HostileEntity implements RangedAttackMob, Flu
     }
 
     @Override
-    public void attack(LivingEntity target, float pullProgress) {
+    public void shootAt(LivingEntity target, float pullProgress) {
         int i = 0;
         this.playSound(SoundEvents.ENTITY_LLAMA_SPIT, 1.0F, 1.0F);
         while (i <= 2) {

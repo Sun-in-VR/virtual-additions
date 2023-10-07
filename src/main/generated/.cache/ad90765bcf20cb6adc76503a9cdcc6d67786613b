@@ -1,4 +1,4 @@
-// 23w32a	2023-08-27T16:49:51.131802256	Virtual Additions/Tags for minecraft:item
+// 1.20.2 Release Candidate 2	2023-10-05T19:08:37.596623119	Virtual Additions/Tags for minecraft:item
 409a75c7b8322aa7d62e93dad91f258fd6e7e5aa data/c/tags/items/swords.json
 fc3ca2a5f41d5d4afc8af7f869c4fb59463ed151 data/c/tags/items/iolite_ores.json
 e775f0978ed6a5d64fd57a33dff88dfd0d6ec1c2 data/virtual_additions/tags/items/lumwasp_larvae_food.json
@@ -29,8 +29,8 @@ db81758f7f9c4f49e2d96715120d7c00eb749003 data/virtual_additions/tags/items/sculk
 d6a5a4ff5a46b3339d51154ee805495c3c2c5021 data/minecraft/tags/items/wooden_buttons.json
 8998ed3d1e78b03a5505518d16e5153fdd17b83d data/c/tags/items/potions.json
 d0cb1b9bfd1adad5f700a9d61f5fa5c0984cbb24 data/minecraft/tags/items/saplings.json
-e8a7f7e13ce5cb7ba8cf119f458ddb92a23c069e data/minecraft/tags/items/trim_materials.json
 788f2db08c6b8b7ecc321b365302a63a60c5bc94 data/virtual_additions/tags/items/gilded_tools.json
+e8a7f7e13ce5cb7ba8cf119f458ddb92a23c069e data/minecraft/tags/items/trim_materials.json
 6bcbf3fb4699ba83f5051c93208e58bc8a8a0469 data/c/tags/items/ingots.json
 931c52a809a5eaad9a755dfcfe938dbe3f1a3ff1 data/virtual_additions/tags/items/copper_gilded_swords.json
 73a80bb18376d754a680dc62b741e878e2f44f87 data/c/tags/items/pickaxes.json
@@ -38,16 +38,16 @@ e8a7f7e13ce5cb7ba8cf119f458ddb92a23c069e data/minecraft/tags/items/trim_material
 12b6c48b8caf07d2b56463be13ef0c167dea443e data/virtual_additions/tags/items/sculk_gilded_axes.json
 28479ba8465b9e6f85f456287be8dca458ee0c54 data/virtual_additions/tags/items/emerald_gilded_tools.json
 31d442ed8e1335cc8a5066fa631801620d3a14aa data/c/tags/items/hoes.json
-69cab88fc005980919d8112d1ef23562fe77185b data/virtual_additions/tags/items/amethyst_gilded_axes.json
 67fcb363c55621b6006801c98259c8e091179665 data/minecraft/tags/items/logs_that_burn.json
+69cab88fc005980919d8112d1ef23562fe77185b data/virtual_additions/tags/items/amethyst_gilded_axes.json
 c50fe042e24c156e1af808bdc2ed4bf7b311c0eb data/minecraft/tags/items/wooden_fences.json
 75cd6fe82c3fe960c3b2ba2abfebba2a84c7f3b9 data/virtual_additions/tags/items/copper_gilded_tools.json
 4852b3b1447693db9879fb351ba455dcea732417 data/virtual_additions/tags/items/emerald_gilded_hoes.json
 ffb782ad189880fa793e1e3f9a47277be3fd7595 data/minecraft/tags/items/doors.json
 09823d1a988d7076d02dac134ff67de6363fa0d4 data/minecraft/tags/items/stone_tool_materials.json
 ee9217948d7624a5eb576c5af45c26cc3b71bc97 data/c/tags/items/raw_ores.json
-29f8b54b2ce0db62327acf06c0620e13a318c25d data/minecraft/tags/items/wooden_trapdoors.json
 67fcb363c55621b6006801c98259c8e091179665 data/virtual_additions/tags/items/aerobloom_logs.json
+29f8b54b2ce0db62327acf06c0620e13a318c25d data/minecraft/tags/items/wooden_trapdoors.json
 e8a7f7e13ce5cb7ba8cf119f458ddb92a23c069e data/minecraft/tags/items/beacon_payment_items.json
 83b0defafd38fbff61d9553c26f7951cb2e52939 data/minecraft/tags/items/cluster_max_harvestables.json
 43804278996b61763040f973b1c2b0374e59d69d data/virtual_additions/tags/items/emerald_gilded_shovels.json

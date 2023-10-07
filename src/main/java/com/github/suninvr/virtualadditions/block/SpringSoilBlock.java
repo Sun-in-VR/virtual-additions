@@ -14,7 +14,7 @@ public class SpringSoilBlock extends Block {
 
     @Override
     public float getJumpVelocityMultiplier() {
-        return 1.75F;
+        return 2.2F;
     }
 
     @Override
@@ -24,10 +24,6 @@ public class SpringSoilBlock extends Block {
 
     @Override
     public void onEntityLand(BlockView world, Entity entity) {
-        if (!entity.bypassesLandingEffects() && entity.getVelocity().y < -0.75) {
-            entity.setVelocity(entity.getVelocity().multiply(1.0, -1, 1.0));
-        } else {
-            super.onEntityLand(world, entity);
-        }
+        super.onEntityLand(world, entity);
     }
 }

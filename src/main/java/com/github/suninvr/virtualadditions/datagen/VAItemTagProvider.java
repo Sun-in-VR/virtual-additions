@@ -22,6 +22,7 @@ import java.util.concurrent.CompletableFuture;
 
 @SuppressWarnings("SameParameterValue")
 class VAItemTagProvider extends FabricTagProvider.ItemTagProvider {
+    private boolean preview = false;
     private static final TagKey<Item> SWORDS = TagKey.of(RegistryKeys.ITEM, new Identifier("c:swords"));
     private static final TagKey<Item> SHOVELS = TagKey.of(RegistryKeys.ITEM, new Identifier("c:shovels"));
     private static final TagKey<Item> PICKAXES = TagKey.of(RegistryKeys.ITEM, new Identifier("c:pickaxes"));
@@ -41,6 +42,7 @@ class VAItemTagProvider extends FabricTagProvider.ItemTagProvider {
     public VAItemTagProvider(FabricDataOutput output, CompletableFuture<RegistryWrapper.WrapperLookup> completableFuture) {
         super(output, completableFuture);
     }
+
 
     @Override
     protected void configure(RegistryWrapper.WrapperLookup arg) {

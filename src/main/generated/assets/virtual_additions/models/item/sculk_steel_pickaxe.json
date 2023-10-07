@@ -1,6 +1,7 @@
 {
   "parent": "minecraft:item/handheld",
   "textures": {
-    "layer0": "virtual_additions:item/gilded_tools/sculk/steel_pickaxe"
+    "layer0": "virtual_additions:item/steel_pickaxe",
+    "layer1": "virtual_additions:item/gilded_tools/sculk_pickaxe"
   }
 }

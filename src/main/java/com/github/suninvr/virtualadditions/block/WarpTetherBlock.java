@@ -80,7 +80,7 @@ public class WarpTetherBlock extends BlockWithEntity implements Waterloggable {
             double destZ = (destPos.getZ() + (entity.getZ() - pos.getZ()));
             boolean bl = entity instanceof LivingEntity livingEntity && livingEntity.getStatusEffect(VAStatusEffects.IOLITE_INTERFERENCE) != null;
             if (!bl && destState.getBlock() == VABlocks.WARP_ANCHOR && !destState.get(WarpAnchorBlock.POWERED)) {
-                destY += destState.get(WarpAnchorBlock.FACING).equals(Direction.DOWN) ? (entity.getBoundingBox().getYLength()) * -1 : 0;
+                destY += destState.get(WarpAnchorBlock.FACING).equals(Direction.DOWN) ? (entity.getBoundingBox().getLengthY()) * -1 : 0;
                 entity.teleport(destX, destY, destZ);
                 world.emitGameEvent(entity, GameEvent.TELEPORT, pos);
                 world.emitGameEvent(entity, GameEvent.TELEPORT, destPos);
@@ -146,7 +146,7 @@ public class WarpTetherBlock extends BlockWithEntity implements Waterloggable {
 
     @Nullable
     public <T extends BlockEntity> BlockEntityTicker<T> getTicker(World world, BlockState state, BlockEntityType<T> type) {
-        return checkType(type, VABlockEntities.IOLITE_TETHER_BLOCK_ENTITY, WarpTetherBlockEntity::tick);
+        return validateTicker(type, VABlockEntities.IOLITE_TETHER_BLOCK_ENTITY, WarpTetherBlockEntity::tick);
     }
 
     @Nullable

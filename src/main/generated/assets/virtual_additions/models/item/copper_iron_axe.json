@@ -1,6 +1,7 @@
 {
   "parent": "minecraft:item/handheld",
   "textures": {
-    "layer0": "virtual_additions:item/gilded_tools/copper/iron_axe"
+    "layer0": "minecraft:item/iron_axe",
+    "layer1": "virtual_additions:item/gilded_tools/copper_axe"
   }
 }

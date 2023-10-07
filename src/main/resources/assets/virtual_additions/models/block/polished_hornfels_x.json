@@ -1,0 +1,12 @@
+{
+  "parent": "minecraft:block/cube",
+  "textures": {
+    "down": "virtual_additions:block/polished_hornfels_vertical",
+    "east": "virtual_additions:block/polished_hornfels_top",
+    "north": "virtual_additions:block/polished_hornfels_vertical",
+    "particle": "virtual_additions:block/polished_hornfels",
+    "south": "virtual_additions:block/polished_hornfels_vertical",
+    "up": "virtual_additions:block/polished_hornfels_vertical",
+    "west": "virtual_additions:block/polished_hornfels_top"
+  }
+}

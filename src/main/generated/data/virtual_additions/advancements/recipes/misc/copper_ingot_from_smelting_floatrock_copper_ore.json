@@ -22,8 +22,8 @@
   },
   "requirements": [
     [
-      "has_floatrock_copper_ore",
-      "has_the_recipe"
+      "has_the_recipe",
+      "has_floatrock_copper_ore"
     ]
   ],
   "rewards": {

@@ -22,8 +22,8 @@
   },
   "requirements": [
     [
-      "has_silk_thread",
-      "has_the_recipe"
+      "has_the_recipe",
+      "has_silk_thread"
     ]
   ],
   "rewards": {

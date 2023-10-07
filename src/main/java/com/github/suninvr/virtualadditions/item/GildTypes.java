@@ -35,7 +35,7 @@ public class GildTypes {
         }
 
         @Override
-        public void emitBlockBreakingEffects(World world, BlockPos pos, ItemStack tool) {
+        public void emitBlockBreakingEffects(World world, PlayerEntity player, BlockPos pos, ItemStack tool) {
             world.playSound(null, pos, SoundEvents.ENTITY_PLAYER_LEVELUP, SoundCategory.BLOCKS, 0.02F, world.getRandom().nextFloat() * 0.5F + 1.5F);
             if (world instanceof ServerWorld serverWorld) {
                 serverWorld.spawnParticles(ParticleTypes.HAPPY_VILLAGER, pos.getX() + 0.5, pos.getY() + 0.5, pos.getZ() + 0.5, 10, 0.25, 0.25, 0.25, 0.02);
@@ -50,7 +50,8 @@ public class GildTypes {
         }
 
         @Override
-        public void emitBlockBreakingEffects(World world, BlockPos pos, ItemStack tool) {
+        public void emitBlockBreakingEffects(World world, PlayerEntity player, BlockPos pos, ItemStack tool) {
+            if (player.getItemCooldownManager().isCoolingDown(tool.getItem())) return;
             world.playSound(null, pos, SoundEvents.BLOCK_SCULK_SPREAD, SoundCategory.BLOCKS, 1.0F, 1.0F);
             if (world instanceof ServerWorld serverWorld) {
                 serverWorld.spawnParticles(ParticleTypes.SCULK_CHARGE_POP, pos.getX() + 0.5, pos.getY() + 0.5, pos.getZ() + 0.5, 50, 0.4, 0.4, 0.4, 0.02);
@@ -59,8 +60,10 @@ public class GildTypes {
 
         @Override
         public boolean onBlockBroken(World world, PlayerEntity player, BlockPos pos, BlockState state, ItemStack tool) {
+            if (player.getItemCooldownManager().isCoolingDown(tool.getItem())) return true;
             boolean stronglyEffective = state.isIn(VABlockTags.SCULK_GILD_STRONGLY_EFFECTIVE);
             int potency = (int) Math.floor( Math.max(30 - (state.getHardness(world, pos) * (stronglyEffective ? 3 : 6) + 1), 0) );
+            player.getItemCooldownManager().set(tool.getItem(), potency * 2 + 5);
             DestructiveSculkBlock.placeState(world, pos, state, player.getUuid(), tool, potency);
             player.incrementStat(Stats.USED.getOrCreateStat(tool.getItem()));
             tool.damage( potency, player, player1 -> player1.sendToolBreakStatus(Hand.MAIN_HAND));

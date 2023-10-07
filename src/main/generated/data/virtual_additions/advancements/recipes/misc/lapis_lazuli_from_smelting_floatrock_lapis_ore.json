@@ -22,8 +22,8 @@
   },
   "requirements": [
     [
-      "has_floatrock_lapis_ore",
-      "has_the_recipe"
+      "has_the_recipe",
+      "has_floatrock_lapis_ore"
     ]
   ],
   "rewards": {

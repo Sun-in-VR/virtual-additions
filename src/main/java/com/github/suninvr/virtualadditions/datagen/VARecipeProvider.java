@@ -7,7 +7,7 @@ import net.fabricmc.fabric.api.datagen.v1.provider.FabricRecipeProvider;
 import net.minecraft.block.Block;
 import net.minecraft.block.Blocks;
 import net.minecraft.data.family.BlockFamily;
-import net.minecraft.data.server.recipe.RecipeJsonProvider;
+import net.minecraft.data.server.recipe.RecipeExporter;
 import net.minecraft.data.server.recipe.ShapedRecipeJsonBuilder;
 import net.minecraft.data.server.recipe.ShapelessRecipeJsonBuilder;
 import net.minecraft.data.server.recipe.SmithingTransformRecipeJsonBuilder;
@@ -20,7 +20,6 @@ import net.minecraft.recipe.book.RecipeCategory;
 import org.apache.commons.lang3.tuple.Pair;
 
 import java.util.List;
-import java.util.function.Consumer;
 
 import static com.github.suninvr.virtualadditions.VirtualAdditions.idOf;
 
@@ -30,7 +29,7 @@ class VARecipeProvider extends FabricRecipeProvider {
     }
 
     @Override
-    public void generate(Consumer<RecipeJsonProvider> exporter) {
+    public void generate(RecipeExporter exporter) {
 
         offerBlasting(exporter, List.of(VAItems.RAW_STEEL), RecipeCategory.MISC, VAItems.STEEL_INGOT, 1.0F, 100, "steel_ingot");
         offerBlasting(exporter, List.of(VAItems.IOLITE_ORE), RecipeCategory.MISC, VAItems.IOLITE, 1.0F, 100, "iolite");
@@ -200,13 +199,13 @@ class VARecipeProvider extends FabricRecipeProvider {
 
     }
 
-    public static void offerCookingRecipes(Consumer<RecipeJsonProvider> exporter, ItemConvertible output, ItemConvertible input, float experience, String group) {
+    public static void offerCookingRecipes(RecipeExporter exporter, ItemConvertible output, ItemConvertible input, float experience, String group) {
         offerSmelting(exporter, List.of(input), RecipeCategory.FOOD, output, experience, 200, group);
         offerFoodCookingRecipe(exporter, "smoking", RecipeSerializer.SMOKING, 100, input, output, experience);
         offerFoodCookingRecipe(exporter, "campfire_cooking", RecipeSerializer.CAMPFIRE_COOKING, 600, input, output, experience);
     }
 
-    public static void generateCuttableFamilyChain(Consumer<RecipeJsonProvider> exporter, BlockFamily baseFamily, BlockFamily... subFamilies) {
+    public static void generateCuttableFamilyChain(RecipeExporter exporter, BlockFamily baseFamily, BlockFamily... subFamilies) {
         generateFamily(exporter, baseFamily);
         offerStonecuttingRecipes(exporter, baseFamily, baseFamily);
         for (BlockFamily subFamily : subFamilies) {
@@ -214,7 +213,7 @@ class VARecipeProvider extends FabricRecipeProvider {
         }
     }
 
-    public static void offerStonecuttingRecipes(Consumer<RecipeJsonProvider> exporter, BlockFamily baseFamily, BlockFamily... resultFamilies) {
+    public static void offerStonecuttingRecipes(RecipeExporter exporter, BlockFamily baseFamily, BlockFamily... resultFamilies) {
         Block block;
         for (BlockFamily resultFamily : resultFamilies) {
             if (!baseFamily.getBaseBlock().equals(resultFamily.getBaseBlock()))
@@ -225,10 +224,12 @@ class VARecipeProvider extends FabricRecipeProvider {
                 offerStonecuttingRecipe(exporter, RecipeCategory.BUILDING_BLOCKS, block, baseFamily.getBaseBlock(), 2);
             if ((block = resultFamily.getVariant(BlockFamily.Variant.WALL)) != null)
                 offerStonecuttingRecipe(exporter, RecipeCategory.BUILDING_BLOCKS, block, baseFamily.getBaseBlock());
+            if ((block = resultFamily.getVariant(BlockFamily.Variant.CHISELED)) != null)
+                offerStonecuttingRecipe(exporter, RecipeCategory.BUILDING_BLOCKS, block, baseFamily.getBaseBlock());
         }
     }
 
-    public static void offerStonecuttingRecipes(Consumer<RecipeJsonProvider> exporter, Block baseBlock, BlockFamily... resultFamilies) {
+    public static void offerStonecuttingRecipes(RecipeExporter exporter, Block baseBlock, BlockFamily... resultFamilies) {
         Block block;
         for (BlockFamily resultFamily : resultFamilies) {
             offerStonecuttingRecipe(exporter, RecipeCategory.BUILDING_BLOCKS, resultFamily.getBaseBlock(), baseBlock);
@@ -238,10 +239,12 @@ class VARecipeProvider extends FabricRecipeProvider {
                 offerStonecuttingRecipe(exporter, RecipeCategory.BUILDING_BLOCKS, block, baseBlock, 2);
             if ((block = resultFamily.getVariant(BlockFamily.Variant.WALL)) != null)
                 offerStonecuttingRecipe(exporter, RecipeCategory.BUILDING_BLOCKS, block, baseBlock);
+            if ((block = resultFamily.getVariant(BlockFamily.Variant.CHISELED)) != null)
+                offerStonecuttingRecipe(exporter, RecipeCategory.BUILDING_BLOCKS, block, baseBlock);
         }
     }
 
-    public static void offerToolGildRecipe(Consumer<RecipeJsonProvider> exporter, GildedToolItem result, Item addition) {
+    public static void offerToolGildRecipe(RecipeExporter exporter, GildedToolItem result, Item addition) {
         SmithingTransformRecipeJsonBuilder.create(
                 Ingredient.ofItems(VAItems.TOOL_GILD_SMITHING_TEMPLATE),
                 Ingredient.ofItems(result.getBaseItem()),
@@ -251,7 +254,7 @@ class VARecipeProvider extends FabricRecipeProvider {
         ).criterion("has_smithing_template", conditionsFromItem(VAItems.TOOL_GILD_SMITHING_TEMPLATE)).offerTo(exporter, idOf("smithing/" + getItemPath(result)));
     }
 
-    public static void offerToolGildRecipes(Consumer<RecipeJsonProvider> exporter, Item addition, RegistryHelper.ItemRegistryHelper.ToolSet... sets) {
+    public static void offerToolGildRecipes(RecipeExporter exporter, Item addition, RegistryHelper.ItemRegistryHelper.ToolSet... sets) {
         for (RegistryHelper.ItemRegistryHelper.ToolSet set : sets) {
             for (Item item : set.getItems())
                 if (item instanceof GildedToolItem gildedToolItem)
@@ -259,7 +262,7 @@ class VARecipeProvider extends FabricRecipeProvider {
         }
     }
 
-    private static void offerToolUpgradeRecipes(Consumer<RecipeJsonProvider> exporter, RegistryHelper.ItemRegistryHelper.ToolSet input, RegistryHelper.ItemRegistryHelper.ToolSet output) {
+    private static void offerToolUpgradeRecipes(RecipeExporter exporter, RegistryHelper.ItemRegistryHelper.ToolSet input, RegistryHelper.ItemRegistryHelper.ToolSet output) {
         offerNetheriteUpgradeRecipe(exporter, input.AXE(), output.AXE());
         offerNetheriteUpgradeRecipe(exporter, input.HOE(), output.HOE());
         offerNetheriteUpgradeRecipe(exporter, input.PICKAXE(), output.PICKAXE());
@@ -267,7 +270,7 @@ class VARecipeProvider extends FabricRecipeProvider {
         offerNetheriteUpgradeRecipe(exporter, input.SWORD(), output.SWORD());
     }
 
-    private static void offerNetheriteUpgradeRecipe(Consumer<RecipeJsonProvider> exporter, Item input, Item result) {
+    private static void offerNetheriteUpgradeRecipe(RecipeExporter exporter, Item input, Item result) {
         SmithingTransformRecipeJsonBuilder.create(
                         Ingredient.ofItems(Items.NETHERITE_UPGRADE_SMITHING_TEMPLATE),
                         Ingredient.ofItems(input),
@@ -279,7 +282,7 @@ class VARecipeProvider extends FabricRecipeProvider {
     }
 
     @SafeVarargs
-    public static void offerShapelessRecipe(Consumer<RecipeJsonProvider> exporter, RecipeCategory category, ItemConvertible output, int count, Pair<ItemConvertible, Integer>... input) {
+    public static void offerShapelessRecipe(RecipeExporter exporter, RecipeCategory category, ItemConvertible output, int count, Pair<ItemConvertible, Integer>... input) {
         ShapelessRecipeJsonBuilder builder = ShapelessRecipeJsonBuilder.create(category, output, count);
         builder.criterion(hasItem(input[0].getLeft()), conditionsFromItem(input[0].getLeft()));
         for (Pair<ItemConvertible, Integer> itemProvider : input) {
@@ -288,15 +291,15 @@ class VARecipeProvider extends FabricRecipeProvider {
         builder.offerTo(exporter);
     }
 
-    public static void offer2x2FullRecipe(Consumer<RecipeJsonProvider> exporter, RecipeCategory category, ItemConvertible output, ItemConvertible input, int count) {
+    public static void offer2x2FullRecipe(RecipeExporter exporter, RecipeCategory category, ItemConvertible output, ItemConvertible input, int count) {
         ShapedRecipeJsonBuilder.create(category, output, count).input('#', input).pattern("##").pattern("##").criterion(hasItem(input), conditionsFromItem(input)).offerTo(exporter);
     }
 
-    public static void offer2x2FullRecipe(Consumer<RecipeJsonProvider> exporter, RecipeCategory category, ItemConvertible output, ItemConvertible input, int count, String group) {
+    public static void offer2x2FullRecipe(RecipeExporter exporter, RecipeCategory category, ItemConvertible output, ItemConvertible input, int count, String group) {
         ShapedRecipeJsonBuilder.create(category, output, count).input('#', input).pattern("##").pattern("##").group(group).criterion(hasItem(input), conditionsFromItem(input)).offerTo(exporter);
     }
 
-    private static void offerHedgeRecipe(Consumer<RecipeJsonProvider> exporter, ItemConvertible output, ItemConvertible input) {
+    private static void offerHedgeRecipe(RecipeExporter exporter, ItemConvertible output, ItemConvertible input) {
         ShapedRecipeJsonBuilder.create(RecipeCategory.BUILDING_BLOCKS, output, 6)
                 .pattern("###")
                 .pattern("###")

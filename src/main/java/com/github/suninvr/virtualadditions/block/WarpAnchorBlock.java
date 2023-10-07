@@ -120,7 +120,7 @@ public class WarpAnchorBlock extends BlockWithEntity implements Waterloggable {
 
     @Nullable
     @Override
-    public <T extends BlockEntity> BlockEntityTicker<T> getTicker(World world, BlockState state, BlockEntityType<T> type) {return checkType(type, VABlockEntities.IOLITE_ANCHOR_BLOCK_ENTITY, WarpAnchorBlockEntity::tick);}
+    public <T extends BlockEntity> BlockEntityTicker<T> getTicker(World world, BlockState state, BlockEntityType<T> type) {return validateTicker(type, VABlockEntities.IOLITE_ANCHOR_BLOCK_ENTITY, WarpAnchorBlockEntity::tick);}
 
     static {
         HITBOX = VoxelShapes.cuboid(0f, 0f, 0f, 1f, 0.375, 1f);

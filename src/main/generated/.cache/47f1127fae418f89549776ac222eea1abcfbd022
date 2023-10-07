@@ -1,4 +1,4 @@
-// 23w32a	2023-08-27T16:49:51.125684005	Virtual Additions/Tags for minecraft:block
+// 1.20.2 Release Candidate 2	2023-10-05T19:08:37.587521102	Virtual Additions/Tags for minecraft:block
 bdd05b5417db9d0c0e6e2cabcb4114bceaf4cec4 data/minecraft/tags/blocks/emerald_ores.json
 e76425467c7656048767d19838c43685d76ac1f7 data/minecraft/tags/blocks/sword_efficient.json
 fb38522e3af0cee9a883152dd94a2615b5b27af2 data/minecraft/tags/blocks/lapis_ores.json
@@ -16,13 +16,13 @@ e3fdfa9bfaefd2951fd17b677fc1ed812e2c3686 data/minecraft/tags/blocks/leaves.json
 c7e58e563ece87bd548707c089c781d47ee59eb9 data/minecraft/tags/blocks/iron_ores.json
 9af7403ac59d30b556611e33397c00b2b8ed0cf4 data/minecraft/tags/blocks/maintains_farmland.json
 00a9b1cb016a1e5d3f50c8a4ba5d3a43e02ffe2c data/minecraft/tags/blocks/redstone_ores.json
-1867f72963c1b9b7d57f1359828da9edc262e13b data/minecraft/tags/blocks/base_stone_overworld.json
-73e32d033070876f471e61b267e0457bba18fecd data/minecraft/tags/blocks/fence_gates.json
 91f6f459f00e974c6d0b8cab29b65de352e64011 data/minecraft/tags/blocks/wooden_stairs.json
+73e32d033070876f471e61b267e0457bba18fecd data/minecraft/tags/blocks/fence_gates.json
+1867f72963c1b9b7d57f1359828da9edc262e13b data/minecraft/tags/blocks/base_stone_overworld.json
 2fd80df75d7aa4d7e27e2431e11607a556e4fa4a data/minecraft/tags/blocks/standing_signs.json
 3953adb40c62c8fa7d5d1f24a48fbbcef38a00a5 data/virtual_additions/tags/blocks/climbing_ropes.json
-102ce23ca64cd68042521fbfab3facb7164139b8 data/minecraft/tags/blocks/needs_stone_tool.json
-1ccf8ec1414ac59ea144b8c91eb352bdaf6e6f9c data/minecraft/tags/blocks/mineable/pickaxe.json
+f70376335206e8bb8cd14659ddda300c23280e82 data/minecraft/tags/blocks/needs_stone_tool.json
+6a9a05eee822615aa918f1f4fa359660b4723e66 data/minecraft/tags/blocks/mineable/pickaxe.json
 9af7403ac59d30b556611e33397c00b2b8ed0cf4 data/minecraft/tags/blocks/crops.json
 29a7fc2871ad4bd57f875a54fac9791672671972 data/virtual_additions/tags/blocks/skylands_carver_replaceables.json
 79b9a299886d9bbd4d746230d3c812c5f605e004 data/minecraft/tags/blocks/deepslate_ore_replaceables.json
@@ -46,8 +46,8 @@ fa420e03e172c23a07894fb10739e071d45f295b data/virtual_additions/tags/blocks/scul
 4d01330e1ce3ed2bab7f68b03a3311ad33d66187 data/minecraft/tags/blocks/wooden_slabs.json
 7f1a68dfb997f378a5e9d156d1dea8a70829beaf data/virtual_additions/tags/blocks/acid_unbreakable.json
 4e3479e354654d5f2774aed8bf41f615d80d9025 data/virtual_additions/tags/blocks/sculk_gild_effective.json
-36d41b2adb9d91fb448f4a1d9f4a3a6279e5b9fb data/minecraft/tags/blocks/mineable/axe.json
 d6a5a4ff5a46b3339d51154ee805495c3c2c5021 data/minecraft/tags/blocks/wooden_buttons.json
+77ca73eb66b36c13a14333e6d68e67236ff90497 data/minecraft/tags/blocks/mineable/axe.json
 7fed98c9838f9f50edea6f8ab11e0f348eb3dff5 data/minecraft/tags/blocks/dirt.json
 13c593f6697465dc5ee01c8ca08e5ecab1e2bba1 data/virtual_additions/tags/blocks/lumwasp_nest_replaceable.json
 e9a64aa43cc92b4428e192c8f224256a4d8dc034 data/minecraft/tags/blocks/walls.json

@@ -77,6 +77,7 @@ public class VAItems {
     public static final Item CRACKED_HORNFELS_TILES;
     public static final Item HORNFELS_TILE_STAIRS;
     public static final Item HORNFELS_TILE_SLAB;
+    public static final Item CHISELED_HORNFELS;
     public static final Item BLUESCHIST;
     public static final Item COBBLED_BLUESCHIST;
     public static final Item COBBLED_BLUESCHIST_STAIRS;
@@ -90,6 +91,7 @@ public class VAItems {
     public static final Item BLUESCHIST_BRICK_STAIRS;
     public static final Item BLUESCHIST_BRICK_SLAB;
     public static final Item BLUESCHIST_BRICK_WALL;
+    public static final Item CHISELED_BLUESCHIST;
     public static final Item SYENITE;
     public static final Item COBBLED_SYENITE;
     public static final Item COBBLED_SYENITE_STAIRS;
@@ -103,6 +105,7 @@ public class VAItems {
     public static final Item SYENITE_BRICK_STAIRS;
     public static final Item SYENITE_BRICK_SLAB;
     public static final Item SYENITE_BRICK_WALL;
+    public static final Item CHISELED_SYENITE;
     public static final Item FLOATROCK;
     public static final Item GRASSY_FLOATROCK;
     public static final Item FLOATROCK_STAIRS;
@@ -305,8 +308,9 @@ public class VAItems {
         CRACKED_HORNFELS_TILES = registerBlockItem("cracked_hornfels_tiles", VABlocks.CRACKED_HORNFELS_TILES, ItemGroups.BUILDING_BLOCKS, HORNFELS_TILES);
         HORNFELS_TILE_STAIRS = registerBlockItem("hornfels_tile_stairs", VABlocks.HORNFELS_TILE_STAIRS, ItemGroups.BUILDING_BLOCKS, CRACKED_HORNFELS_TILES);
         HORNFELS_TILE_SLAB = registerBlockItem("hornfels_tile_slab", VABlocks.HORNFELS_TILE_SLAB, ItemGroups.BUILDING_BLOCKS, HORNFELS_TILE_STAIRS);
+        CHISELED_HORNFELS = registerBlockItem("chiseled_hornfels", VABlocks.CHISELED_HORNFELS, ItemGroups.BUILDING_BLOCKS, prev);
 
-        BLUESCHIST = registerBlockItem("blueschist", VABlocks.BLUESCHIST, new ItemGroupLocation(ItemGroups.NATURAL, HORNFELS), new ItemGroupLocation(ItemGroups.BUILDING_BLOCKS, HORNFELS_TILE_SLAB));
+        BLUESCHIST = registerBlockItem("blueschist", VABlocks.BLUESCHIST, new ItemGroupLocation(ItemGroups.NATURAL, HORNFELS), new ItemGroupLocation(ItemGroups.BUILDING_BLOCKS, prev));
         COBBLED_BLUESCHIST = registerBlockItem("cobbled_blueschist", VABlocks.COBBLED_BLUESCHIST, ItemGroups.BUILDING_BLOCKS, BLUESCHIST);
         COBBLED_BLUESCHIST_STAIRS = registerBlockItem("cobbled_blueschist_stairs", VABlocks.COBBLED_BLUESCHIST_STAIRS, ItemGroups.BUILDING_BLOCKS, COBBLED_BLUESCHIST);
         COBBLED_BLUESCHIST_SLAB = registerBlockItem("cobbled_blueschist_slab", VABlocks.COBBLED_BLUESCHIST_SLAB, ItemGroups.BUILDING_BLOCKS, COBBLED_BLUESCHIST_STAIRS);
@@ -319,8 +323,9 @@ public class VAItems {
         BLUESCHIST_BRICK_STAIRS = registerBlockItem("blueschist_brick_stairs", VABlocks.BLUESCHIST_BRICK_STAIRS, ItemGroups.BUILDING_BLOCKS, CRACKED_BLUESCHIST_BRICKS);
         BLUESCHIST_BRICK_SLAB = registerBlockItem("blueschist_brick_slab", VABlocks.BLUESCHIST_BRICK_SLAB, ItemGroups.BUILDING_BLOCKS, BLUESCHIST_BRICK_STAIRS);
         BLUESCHIST_BRICK_WALL = registerBlockItem("blueschist_brick_wall", VABlocks.BLUESCHIST_BRICK_WALL, ItemGroups.BUILDING_BLOCKS, BLUESCHIST_BRICK_SLAB);
+        CHISELED_BLUESCHIST = registerBlockItem("chiseled_blueschist", VABlocks.CHISELED_BLUESCHIST, ItemGroups.BUILDING_BLOCKS, prev);
 
-        SYENITE = registerBlockItem("syenite", VABlocks.SYENITE, new ItemGroupLocation(ItemGroups.NATURAL, BLUESCHIST), new ItemGroupLocation(ItemGroups.BUILDING_BLOCKS, BLUESCHIST_BRICK_WALL));
+        SYENITE = registerBlockItem("syenite", VABlocks.SYENITE, new ItemGroupLocation(ItemGroups.NATURAL, BLUESCHIST), new ItemGroupLocation(ItemGroups.BUILDING_BLOCKS, prev));
         COBBLED_SYENITE = registerBlockItem("cobbled_syenite", VABlocks.COBBLED_SYENITE, ItemGroups.BUILDING_BLOCKS, SYENITE);
         COBBLED_SYENITE_STAIRS = registerBlockItem("cobbled_syenite_stairs", VABlocks.COBBLED_SYENITE_STAIRS, ItemGroups.BUILDING_BLOCKS, COBBLED_SYENITE);
         COBBLED_SYENITE_SLAB = registerBlockItem("cobbled_syenite_slab", VABlocks.COBBLED_SYENITE_SLAB, ItemGroups.BUILDING_BLOCKS, COBBLED_SYENITE_STAIRS);
@@ -333,6 +338,7 @@ public class VAItems {
         SYENITE_BRICK_STAIRS = registerBlockItem("syenite_brick_stairs", VABlocks.SYENITE_BRICK_STAIRS, ItemGroups.BUILDING_BLOCKS, CRACKED_SYENITE_BRICKS);
         SYENITE_BRICK_SLAB = registerBlockItem("syenite_brick_slab", VABlocks.SYENITE_BRICK_SLAB, ItemGroups.BUILDING_BLOCKS, SYENITE_BRICK_STAIRS);
         SYENITE_BRICK_WALL = registerBlockItem("syenite_brick_wall", VABlocks.SYENITE_BRICK_WALL, ItemGroups.BUILDING_BLOCKS, SYENITE_BRICK_SLAB);
+        CHISELED_SYENITE = registerBlockItem("chiseled_syenite", VABlocks.CHISELED_SYENITE, ItemGroups.BUILDING_BLOCKS, prev);
 
         FLOATROCK = registerBlockItem("floatrock", VABlocks.FLOATROCK, new ItemGroupLocation(ItemGroups.BUILDING_BLOCKS, Items.DEEPSLATE_TILE_WALL), new ItemGroupLocation(ItemGroups.NATURAL, Items.DEEPSLATE));
         FLOATROCK_STAIRS = registerBlockItem("floatrock_stairs", VABlocks.FLOATROCK_STAIRS, ItemGroups.BUILDING_BLOCKS, prev);
@@ -344,7 +350,7 @@ public class VAItems {
         FLOATROCK_COPPER_ORE = registerBlockItem("floatrock_copper_ore", VABlocks.FLOATROCK_COPPER_ORE, ItemGroups.NATURAL, Items.DEEPSLATE_COPPER_ORE);
         FLOATROCK_IRON_ORE = registerBlockItem("floatrock_iron_ore", VABlocks.FLOATROCK_IRON_ORE, ItemGroups.NATURAL, Items.DEEPSLATE_IRON_ORE);
         FLOATROCK_GOLD_ORE = registerBlockItem("floatrock_gold_ore", VABlocks.FLOATROCK_GOLD_ORE, ItemGroups.NATURAL, Items.DEEPSLATE_GOLD_ORE);
-        FLOATROCK_REDSTONE_ORE = registerBlockItem("floatrock_redstone_ore", VABlocks.FLOATROCK_REDSTONE_ORE, ItemGroups.NATURAL, Items.DEEPSLATE_REDSTONE_ORE);
+        FLOATROCK_REDSTONE_ORE = registerBlockItem("floatrock_redstone_ore", VABlocks.FLOATROCK_REDSTONE_ORE,   ItemGroups.NATURAL, Items.DEEPSLATE_REDSTONE_ORE);
         FLOATROCK_EMERALD_ORE = registerBlockItem("floatrock_emerald_ore", VABlocks.FLOATROCK_EMERALD_ORE, ItemGroups.NATURAL, Items.DEEPSLATE_EMERALD_ORE);
         FLOATROCK_LAPIS_ORE = registerBlockItem("floatrock_lapis_ore", VABlocks.FLOATROCK_LAPIS_ORE, ItemGroups.NATURAL, Items.DEEPSLATE_LAPIS_ORE);
         FLOATROCK_DIAMOND_ORE = registerBlockItem("floatrock_diamond_ore", VABlocks.FLOATROCK_DIAMOND_ORE, ItemGroups.NATURAL, Items.DEEPSLATE_DIAMOND_ORE);
@@ -369,7 +375,7 @@ public class VAItems {
         AEROBLOOM_LEAVES = registerBlockItem("aerobloom_leaves", VABlocks.AEROBLOOM_LEAVES, ItemGroups.NATURAL, Items.CHERRY_LEAVES);
         AEROBLOOM_SAPLING = registerBlockItem("aerobloom_sapling", VABlocks.AEROBLOOM_SAPLING, ItemGroups.NATURAL, Items.CHERRY_SAPLING);
 
-        BALLOON_FRUIT = register("balloon_fruit", new AliasedBlockItem(VABlocks.BALLOON_BULB_BUD, new FabricItemSettings().food(BALLOON_FRUIT_FOOD)), ItemGroups.FOOD_AND_DRINK, Items.CHORUS_FRUIT);
+        BALLOON_FRUIT = register("balloon_fruit", new BalloonFruitItem(VABlocks.BALLOON_BULB_BUD, new FabricItemSettings().food(BALLOON_FRUIT_FOOD)), ItemGroups.FOOD_AND_DRINK, Items.CHORUS_FRUIT);
 
         OAK_HEDGE = registerBlockItem("oak_hedge", VABlocks.OAK_HEDGE, ItemGroups.BUILDING_BLOCKS, Items.WARPED_BUTTON);
         SPRUCE_HEDGE = registerBlockItem("spruce_hedge", VABlocks.SPRUCE_HEDGE, ItemGroups.BUILDING_BLOCKS, prev);
@@ -540,8 +546,8 @@ public class VAItems {
 
             public ItemStack dispenseSilently(BlockPointer pointer, ItemStack stack) {
                 FluidModificationItem fluidModificationItem = (FluidModificationItem)stack.getItem();
-                BlockPos blockPos = pointer.getPos().offset(pointer.getBlockState().get(DispenserBlock.FACING));
-                World world = pointer.getWorld();
+                BlockPos blockPos = pointer.pos().offset(pointer.state().get(DispenserBlock.FACING));
+                World world = pointer.world();
                 if (fluidModificationItem.placeFluid(null, world, blockPos, null)) {
                     fluidModificationItem.onEmptied(null, world, stack, blockPos);
                     return new ItemStack(Items.BUCKET);

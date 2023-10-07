@@ -22,8 +22,8 @@
   },
   "requirements": [
     [
-      "has_hornfels",
-      "has_the_recipe"
+      "has_the_recipe",
+      "has_hornfels"
     ]
   ],
   "rewards": {

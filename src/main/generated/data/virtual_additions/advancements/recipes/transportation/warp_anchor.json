@@ -22,8 +22,8 @@
   },
   "requirements": [
     [
-      "iolite",
-      "has_the_recipe"
+      "has_the_recipe",
+      "iolite"
     ]
   ],
   "rewards": {

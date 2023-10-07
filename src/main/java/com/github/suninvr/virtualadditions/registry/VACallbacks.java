@@ -88,7 +88,7 @@ public class VACallbacks{
             GildType gild = GildedToolItem.getGildType(tool);
             if (gild.equals(GildTypes.NONE)) return true;
             if (gild.isGildEffective(world, player, pos, state, tool)) {
-                gild.emitBlockBreakingEffects(world, pos, tool);
+                gild.emitBlockBreakingEffects(world, player, pos, tool);
                 return gild.onBlockBroken(world, player, pos, state, tool);
             }
             return true;

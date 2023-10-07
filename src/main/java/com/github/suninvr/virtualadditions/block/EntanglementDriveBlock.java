@@ -103,7 +103,7 @@ public class EntanglementDriveBlock extends BlockWithEntity implements Inventory
     @Nullable
     @Override
     public <T extends BlockEntity> BlockEntityTicker<T> getTicker(World world, BlockState state, BlockEntityType<T> type) {
-        return checkType(type, VABlockEntities.ENTANGLEMENT_DRIVE_BLOCK_ENTITY, (EntanglementDriveBlockEntity::tick));
+        return validateTicker(type, VABlockEntities.ENTANGLEMENT_DRIVE_BLOCK_ENTITY, (EntanglementDriveBlockEntity::tick));
     }
 
     @Nullable

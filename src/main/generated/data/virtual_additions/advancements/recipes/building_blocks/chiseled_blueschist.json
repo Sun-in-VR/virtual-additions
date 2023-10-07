@@ -1,0 +1,35 @@
+{
+  "parent": "minecraft:recipes/root",
+  "criteria": {
+    "has_blueschist_brick_slab": {
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "virtual_additions:blueschist_brick_slab"
+            ]
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    },
+    "has_the_recipe": {
+      "conditions": {
+        "recipe": "virtual_additions:chiseled_blueschist"
+      },
+      "trigger": "minecraft:recipe_unlocked"
+    }
+  },
+  "requirements": [
+    [
+      "has_the_recipe",
+      "has_blueschist_brick_slab"
+    ]
+  ],
+  "rewards": {
+    "recipes": [
+      "virtual_additions:chiseled_blueschist"
+    ]
+  },
+  "sends_telemetry_event": false
+}

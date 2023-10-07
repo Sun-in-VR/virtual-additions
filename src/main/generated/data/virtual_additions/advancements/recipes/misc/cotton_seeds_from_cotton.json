@@ -22,8 +22,8 @@
   },
   "requirements": [
     [
-      "has_cotton",
-      "has_the_recipe"
+      "has_the_recipe",
+      "has_cotton"
     ]
   ],
   "rewards": {

@@ -6,13 +6,17 @@ import com.github.suninvr.virtualadditions.registry.RegistryHelper;
 import com.github.suninvr.virtualadditions.registry.VABlockFamilies;
 import com.github.suninvr.virtualadditions.registry.VABlocks;
 import com.github.suninvr.virtualadditions.registry.VAItems;
+import com.google.gson.JsonObject;
 import net.fabricmc.fabric.api.datagen.v1.FabricDataOutput;
 import net.fabricmc.fabric.api.datagen.v1.provider.FabricModelProvider;
 import net.minecraft.data.client.*;
 import net.minecraft.data.family.BlockFamily;
-import net.minecraft.item.Item;
+import net.minecraft.item.*;
 import net.minecraft.registry.Registries;
 import net.minecraft.util.Identifier;
+
+import java.util.Map;
+import java.util.Optional;
 
 import static com.github.suninvr.virtualadditions.VirtualAdditions.idOf;
 
@@ -34,16 +38,33 @@ class VAModelProvider extends FabricModelProvider {
         generateGildedToolItemModels(itemModelGenerator, VAItems.EMERALD_TOOL_SETS);
         generateGildedToolItemModels(itemModelGenerator, VAItems.QUARTZ_TOOL_SETS);
         generateGildedToolItemModels(itemModelGenerator, VAItems.SCULK_TOOL_SETS);
+
     }
 
     private void generateGildedToolItemModels(ItemModelGenerator itemModelGenerator, RegistryHelper.ItemRegistryHelper.ToolSet... toolSets) {
         for (RegistryHelper.ItemRegistryHelper.ToolSet set : toolSets) {
             for (Item item : set.getItems()) {
                 if (item instanceof GildedToolItem gildedToolItem) {
-                    Identifier texture = gildedToolItem.getGildType().getId().withPrefixedPath("item/gilded_tools/").withSuffixedPath("/" + Registries.ITEM.getId(gildedToolItem.getBaseItem()).getPath());
-                    Models.HANDHELD.upload(ModelIds.getItemModelId(item), TextureMap.layer0(texture), itemModelGenerator.writer);
+                    uploadGildedToolModel(itemModelGenerator, item, gildedToolItem);
                 }
             }
         }
+    }
+
+    public static void uploadGildedToolModel(ItemModelGenerator itemModelGenerator, Item item, GildedToolItem gildedToolItem) {
+        Identifier base = ModelIds.getItemModelId(gildedToolItem.getBaseItem());
+        String TOOL_TYPE_SUFFIX = "";
+        if (item instanceof AxeItem) TOOL_TYPE_SUFFIX = "_axe";
+        else if (item instanceof HoeItem) TOOL_TYPE_SUFFIX = "_hoe";
+        else if (item instanceof PickaxeItem) TOOL_TYPE_SUFFIX = "_pickaxe";
+        else if (item instanceof ShovelItem) TOOL_TYPE_SUFFIX = "_shovel";
+        else if (item instanceof SwordItem) TOOL_TYPE_SUFFIX = "_sword";
+        Identifier gild = gildedToolItem.getGildType().getId().withSuffixedPath(TOOL_TYPE_SUFFIX).withPrefixedPath("item/gilded_tools/");
+        Models.HANDHELD.upload(ModelIds.getItemModelId(item), TextureMap.layered(base, base), itemModelGenerator.writer, new Model.JsonFactory() {
+            @Override
+            public JsonObject create(Identifier id, Map<TextureKey, Identifier> textures) {
+                return Models.HANDHELD.createJson(ModelIds.getItemModelId(item), Map.of(TextureKey.LAYER0, base, TextureKey.LAYER1, gild));
+            }
+        });
     }
 }

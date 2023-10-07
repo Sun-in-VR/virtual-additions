@@ -90,7 +90,7 @@ public class GildType {
      * @param pos the position of the block that was broken
      * @param tool the tool used to break the block
      * **/
-    public void emitBlockBreakingEffects(World world, BlockPos pos, ItemStack tool) {}
+    public void emitBlockBreakingEffects(World world, PlayerEntity player, BlockPos pos, ItemStack tool) {}
 
     /**
      * Affects the world after a tool with this gild type breaks a block.

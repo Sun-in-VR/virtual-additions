@@ -2,6 +2,7 @@
   "replace": false,
   "values": [
     "virtual_additions:steel_bomb",
-    "virtual_additions:climbing_rope"
+    "virtual_additions:climbing_rope",
+    "virtual_additions:acid_spit"
   ]
 }

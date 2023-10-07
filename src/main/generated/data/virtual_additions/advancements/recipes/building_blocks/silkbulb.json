@@ -22,8 +22,8 @@
   },
   "requirements": [
     [
-      "acid_bucket",
-      "has_the_recipe"
+      "has_the_recipe",
+      "acid_bucket"
     ]
   ],
   "rewards": {

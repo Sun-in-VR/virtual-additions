@@ -1,7 +1,7 @@
 {
   "replace": "false",
   "values": [
-    "virtual_additions:aerobloom_plains",
+    "virtual_additions:sparse_aerobloom_forest",
     "virtual_additions:aerobloom_forest"
   ]
 }
