@@ -1,0 +1,19 @@
+{
+  "replace": false,
+  "values": [
+    "virtual_additions:grassy_floatrock",
+    "virtual_additions:floatrock_coal_ore",
+    "virtual_additions:floatrock_iron_ore",
+    "virtual_additions:floatrock_copper_ore",
+    "virtual_additions:floatrock_lapis_ore",
+    "virtual_additions:floatrock_diamond_ore",
+    "virtual_additions:floatrock_redstone_ore",
+    "virtual_additions:floatrock_emerald_ore",
+    "virtual_additions:floatrock_gold_ore",
+    "virtual_additions:floatrock",
+    "virtual_additions:floatrock",
+    "virtual_additions:floatrock_stairs",
+    "virtual_additions:floatrock_slab",
+    "virtual_additions:floatrock_wall"
+  ]
+}

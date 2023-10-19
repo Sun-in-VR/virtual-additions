@@ -1,0 +1,27 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "redstone",
+  "key": {
+    "#": {
+      "item": "virtual_additions:crystal_dust"
+    },
+    "c": {
+      "item": "minecraft:copper_ingot"
+    },
+    "r": {
+      "item": "minecraft:redstone"
+    },
+    "s": {
+      "item": "virtual_additions:steel_ingot"
+    }
+  },
+  "pattern": [
+    "###",
+    "csc",
+    "crc"
+  ],
+  "result": {
+    "item": "virtual_additions:spotlight"
+  },
+  "show_notification": true
+}

@@ -1,25 +1,18 @@
 package com.github.suninvr.virtualadditions.datagen;
 
-import com.github.suninvr.virtualadditions.VirtualAdditions;
 import com.github.suninvr.virtualadditions.item.interfaces.GildedToolItem;
 import com.github.suninvr.virtualadditions.registry.RegistryHelper;
-import com.github.suninvr.virtualadditions.registry.VABlockFamilies;
-import com.github.suninvr.virtualadditions.registry.VABlocks;
 import com.github.suninvr.virtualadditions.registry.VAItems;
 import com.google.gson.JsonObject;
 import net.fabricmc.fabric.api.datagen.v1.FabricDataOutput;
 import net.fabricmc.fabric.api.datagen.v1.provider.FabricModelProvider;
 import net.minecraft.data.client.*;
-import net.minecraft.data.family.BlockFamily;
 import net.minecraft.item.*;
-import net.minecraft.registry.Registries;
 import net.minecraft.util.Identifier;
 
 import java.util.Map;
-import java.util.Optional;
 
-import static com.github.suninvr.virtualadditions.VirtualAdditions.idOf;
-
+@SuppressWarnings("SameParameterValue")
 class VAModelProvider extends FabricModelProvider {
 
     public VAModelProvider(FabricDataOutput output) {

@@ -4,7 +4,6 @@
     "virtual_additions:silk_block",
     "virtual_additions:webbed_silk",
     "virtual_additions:lumwasp_nest",
-    "virtual_additions:aerobloom_leaves",
     {
       "id": "#virtual_additions:silkbulbs",
       "required": false

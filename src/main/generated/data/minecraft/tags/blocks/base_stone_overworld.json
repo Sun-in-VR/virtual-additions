@@ -3,7 +3,6 @@
   "values": [
     "virtual_additions:hornfels",
     "virtual_additions:blueschist",
-    "virtual_additions:syenite",
-    "virtual_additions:floatrock"
+    "virtual_additions:syenite"
   ]
 }

@@ -27,7 +27,7 @@ public class GildType {
     private TagKey<Item> pickaxesTag;
     private TagKey<Item> shovelsTag;
     private TagKey<Item> swordsTag;
-    protected record Modifier(ModifierType type, float value, BiFunction<Float, Float, Float> function, ModifierType.ToolType... appliesTo){
+    public record Modifier(ModifierType type, float value, BiFunction<Float, Float, Float> function, ModifierType.ToolType... appliesTo){
         public float apply(float f) {
             return this.function.apply(f, this.value);
         }

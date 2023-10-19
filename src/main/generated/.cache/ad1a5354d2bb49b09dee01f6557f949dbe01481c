@@ -1,4 +1,4 @@
-// 1.20.2 Release Candidate 2	2023-10-05T19:08:37.589002365	Virtual Additions/Model Definitions
+// 1.20.2	2023-10-07T13:12:49.928417622	Virtual Additions/Model Definitions
 8bd55a303dd16ebba26142aba964b8aee3819331 assets/virtual_additions/models/item/emerald_steel_shovel.json
 a4aa992a7de5bc409f1a6b279a3668979cf626b5 assets/virtual_additions/models/item/sculk_iron_sword.json
 6f1c0a5b763427d1b9eeb1766cffd9d63f976ed1 assets/virtual_additions/models/item/copper_golden_pickaxe.json
@@ -14,8 +14,8 @@ b92822334bb2c6cfa9e124b335a2cb57726088a2 assets/virtual_additions/models/item/em
 e933ecf9344dd62ab08d6b8e254451b5eb020149 assets/virtual_additions/models/item/sculk_golden_sword.json
 54457e37fa5aa289daed9828b963cacb57d1c966 assets/virtual_additions/models/item/emerald_golden_pickaxe.json
 7156b7ec2e4d583f1cdcf2443d255fb8b6687861 assets/virtual_additions/models/item/quartz_netherite_sword.json
-22a70b71b3d381a7a7f0a6bf3f06c636af58cea1 assets/virtual_additions/models/item/emerald_steel_axe.json
 a1a66057fe4d2747b850b5bb7280047b1adb1b9e assets/virtual_additions/models/item/sculk_diamond_pickaxe.json
+22a70b71b3d381a7a7f0a6bf3f06c636af58cea1 assets/virtual_additions/models/item/emerald_steel_axe.json
 63d2eb19f6e57071f3ab41fdbb5fbbbc6fca0a85 assets/virtual_additions/models/item/quartz_netherite_axe.json
 9dfcb43e4d4f1145b02409ebe52c88db6291a433 assets/virtual_additions/models/item/sculk_netherite_shovel.json
 e0b9d4584cc75f3ae97c9244306ae2f218797853 assets/virtual_additions/models/item/amethyst_golden_pickaxe.json
