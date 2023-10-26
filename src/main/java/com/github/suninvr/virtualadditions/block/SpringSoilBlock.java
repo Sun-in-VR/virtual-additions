@@ -1,5 +1,6 @@
 package com.github.suninvr.virtualadditions.block;
 
+import com.mojang.serialization.MapCodec;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.entity.Entity;
@@ -8,8 +9,15 @@ import net.minecraft.world.BlockView;
 import net.minecraft.world.World;
 
 public class SpringSoilBlock extends Block {
+    public static final MapCodec<SpringSoilBlock> CODEC = createCodec(SpringSoilBlock::new);
+
     public SpringSoilBlock(Settings settings) {
         super(settings);
+    }
+
+    @Override
+    protected MapCodec<? extends Block> getCodec() {
+        return CODEC;
     }
 
     @Override

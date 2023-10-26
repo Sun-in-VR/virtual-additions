@@ -3,6 +3,7 @@ package com.github.suninvr.virtualadditions.block;
 import com.github.suninvr.virtualadditions.block.entity.EntanglementDriveBlockEntity;
 import com.github.suninvr.virtualadditions.registry.VABlockEntities;
 import com.github.suninvr.virtualadditions.screen.EntanglementDriveScreenHandler;
+import com.mojang.serialization.MapCodec;
 import net.minecraft.block.*;
 import net.minecraft.block.entity.BlockEntity;
 import net.minecraft.block.entity.BlockEntityTicker;
@@ -31,15 +32,21 @@ import org.jetbrains.annotations.Nullable;
 
 @SuppressWarnings("deprecation")
 public class EntanglementDriveBlock extends BlockWithEntity implements InventoryProvider {
+    public static final MapCodec<EntanglementDriveBlock> CODEC = createCodec(EntanglementDriveBlock::new);
     public static final BooleanProperty POWERED = Properties.POWERED;
     private static final Text TITLE;
     private static final VoxelShape SHAPE;
 
     public EntanglementDriveBlock(Settings settings) {
         super(settings);
-        setDefaultState(getStateManager().getDefaultState()
+        this.setDefaultState(getStateManager().getDefaultState()
                 .with(POWERED, false)
         );
+    }
+
+    @Override
+    protected MapCodec<? extends BlockWithEntity> getCodec() {
+        return CODEC;
     }
 
     @Override

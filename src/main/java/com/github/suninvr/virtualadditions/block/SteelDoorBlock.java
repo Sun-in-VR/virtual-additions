@@ -1,6 +1,7 @@
 package com.github.suninvr.virtualadditions.block;
 
 import com.github.suninvr.virtualadditions.registry.VASoundEvents;
+import com.mojang.serialization.MapCodec;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockSetType;
 import net.minecraft.block.BlockState;
@@ -20,11 +21,17 @@ import net.minecraft.world.event.GameEvent;
 import org.jetbrains.annotations.Nullable;
 
 public class SteelDoorBlock extends DoorBlock {
+    public static final MapCodec<SteelDoorBlock> CODEC = createCodec(SteelDoorBlock::new);
     public static final BooleanProperty SHUTTER_OPEN = BooleanProperty.of("shutter_open");
 
     public SteelDoorBlock(Settings settings) {
-        super(settings, BlockSetType.IRON);
-        setDefaultState(getStateManager().getDefaultState().with(SHUTTER_OPEN, false));
+        super(BlockSetType.IRON, settings);
+        this.setDefaultState(getStateManager().getDefaultState().with(SHUTTER_OPEN, false));
+    }
+
+    @Override
+    public MapCodec<DoorBlock> getCodec() {
+        return super.getCodec();
     }
 
     @Override

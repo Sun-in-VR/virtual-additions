@@ -16,6 +16,7 @@ import net.minecraft.entity.ai.pathing.PathNodeType;
 import net.minecraft.sound.BlockSoundGroup;
 import net.minecraft.sound.SoundEvents;
 import net.minecraft.state.property.Properties;
+import net.minecraft.util.math.intprovider.ConstantIntProvider;
 import net.minecraft.util.math.intprovider.UniformIntProvider;
 
 import static com.github.suninvr.virtualadditions.VirtualAdditions.idOf;
@@ -247,14 +248,14 @@ public class VABlocks {
 
         FabricBlockSettings floatrockOreSettings = FabricBlockSettings.create().mapColor(MapColor.TERRACOTTA_BROWN).instrument(Instrument.BASEDRUM).requiresTool().strength(2.0F, 1.5F).sounds(BlockSoundGroup.TUFF).requires(VirtualAdditions.PREVIEW);
 
-        FLOATROCK_COAL_ORE = register("floatrock_coal_ore", new ExperienceDroppingBlock(floatrockOreSettings, UniformIntProvider.create(0, 2)));
-        FLOATROCK_IRON_ORE = register("floatrock_iron_ore", new ExperienceDroppingBlock(floatrockOreSettings));
-        FLOATROCK_COPPER_ORE = register("floatrock_copper_ore", new ExperienceDroppingBlock(floatrockOreSettings));
-        FLOATROCK_GOLD_ORE = register("floatrock_gold_ore", new ExperienceDroppingBlock(floatrockOreSettings));
+        FLOATROCK_COAL_ORE = register("floatrock_coal_ore", new ExperienceDroppingBlock(UniformIntProvider.create(0, 2), floatrockOreSettings));
+        FLOATROCK_IRON_ORE = register("floatrock_iron_ore", new ExperienceDroppingBlock(ConstantIntProvider.create(0), floatrockOreSettings));
+        FLOATROCK_COPPER_ORE = register("floatrock_copper_ore", new ExperienceDroppingBlock(ConstantIntProvider.create(0), floatrockOreSettings));
+        FLOATROCK_GOLD_ORE = register("floatrock_gold_ore", new ExperienceDroppingBlock(ConstantIntProvider.create(0), floatrockOreSettings));
         FLOATROCK_REDSTONE_ORE = register("floatrock_redstone_ore", new RedstoneOreBlock(floatrockOreSettings));
-        FLOATROCK_EMERALD_ORE = register("floatrock_emerald_ore", new ExperienceDroppingBlock(floatrockOreSettings, UniformIntProvider.create(3, 7)));
-        FLOATROCK_LAPIS_ORE = register("floatrock_lapis_ore", new ExperienceDroppingBlock(floatrockOreSettings, UniformIntProvider.create(2, 5)));
-        FLOATROCK_DIAMOND_ORE = register("floatrock_diamond_ore", new ExperienceDroppingBlock(floatrockOreSettings, UniformIntProvider.create(3, 7)));
+        FLOATROCK_EMERALD_ORE = register("floatrock_emerald_ore", new ExperienceDroppingBlock(UniformIntProvider.create(3, 7), floatrockOreSettings));
+        FLOATROCK_LAPIS_ORE = register("floatrock_lapis_ore", new ExperienceDroppingBlock(UniformIntProvider.create(2, 5), floatrockOreSettings));
+        FLOATROCK_DIAMOND_ORE = register("floatrock_diamond_ore", new ExperienceDroppingBlock(UniformIntProvider.create(3, 7), floatrockOreSettings));
 
         SPRINGSOIL = register("springsoil", new SpringSoilBlock(AbstractBlock.Settings.copy(Blocks.ROOTED_DIRT).requires(VirtualAdditions.PREVIEW)));
 
@@ -266,17 +267,17 @@ public class VABlocks {
         AEROBLOOM_STAIRS = register("aerobloom_stairs", new StairsBlock(AEROBLOOM_PLANKS.getDefaultState(), AbstractBlock.Settings.copy(Blocks.CHERRY_STAIRS).requires(VirtualAdditions.PREVIEW)));
         AEROBLOOM_SLAB = register("aerobloom_slab", new SlabBlock(AbstractBlock.Settings.copy(Blocks.CHERRY_SLAB).requires(VirtualAdditions.PREVIEW)));
         AEROBLOOM_FENCE = register("aerobloom_fence", new FenceBlock(AbstractBlock.Settings.copy(Blocks.CHERRY_SLAB).requires(VirtualAdditions.PREVIEW)));
-        AEROBLOOM_FENCE_GATE = register("aerobloom_fence_gate", new FenceGateBlock(AbstractBlock.Settings.copy(Blocks.CHERRY_SLAB).requires(VirtualAdditions.PREVIEW), AEROBLOOM_WOODTYPE));
-        AEROBLOOM_DOOR = register("aerobloom_door", new DoorBlock( AbstractBlock.Settings.copy(Blocks.CHERRY_DOOR).requires(VirtualAdditions.PREVIEW), AEROBLOOM));
-        AEROBLOOM_TRAPDOOR = register("aerobloom_trapdoor", new TrapdoorBlock( AbstractBlock.Settings.copy(Blocks.CHERRY_DOOR).requires(VirtualAdditions.PREVIEW), AEROBLOOM));
-        AEROBLOOM_PRESSURE_PLATE = register("aerobloom_pressure_plate", new PressurePlateBlock(PressurePlateBlock.ActivationRule.EVERYTHING, AbstractBlock.Settings.copy(Blocks.CHERRY_BUTTON).requires(VirtualAdditions.PREVIEW), AEROBLOOM));
-        AEROBLOOM_BUTTON = register("aerobloom_button", new ButtonBlock(AbstractBlock.Settings.copy(Blocks.CHERRY_BUTTON).requires(VirtualAdditions.PREVIEW), AEROBLOOM, 30, true));
+        AEROBLOOM_FENCE_GATE = register("aerobloom_fence_gate", new FenceGateBlock(AEROBLOOM_WOODTYPE, AbstractBlock.Settings.copy(Blocks.CHERRY_SLAB).requires(VirtualAdditions.PREVIEW)));
+        AEROBLOOM_DOOR = register("aerobloom_door", new DoorBlock( AEROBLOOM, AbstractBlock.Settings.copy(Blocks.CHERRY_DOOR).requires(VirtualAdditions.PREVIEW)));
+        AEROBLOOM_TRAPDOOR = register("aerobloom_trapdoor", new TrapdoorBlock( AEROBLOOM, AbstractBlock.Settings.copy(Blocks.CHERRY_DOOR).requires(VirtualAdditions.PREVIEW)));
+        AEROBLOOM_PRESSURE_PLATE = register("aerobloom_pressure_plate", new PressurePlateBlock(AEROBLOOM, AbstractBlock.Settings.copy(Blocks.CHERRY_BUTTON).requires(VirtualAdditions.PREVIEW)));
+        AEROBLOOM_BUTTON = register("aerobloom_button", new ButtonBlock(AEROBLOOM, 30, AbstractBlock.Settings.copy(Blocks.CHERRY_BUTTON).requires(VirtualAdditions.PREVIEW)));
         AEROBLOOM_SIGN = register("aerobloom_sign", new CustomSignBlocks.CustomSignBlock(AbstractBlock.Settings.copy(Blocks.CHERRY_SIGN).requires(VirtualAdditions.PREVIEW), AEROBLOOM_WOODTYPE));
         AEROBLOOM_WALL_SIGN = register("aerobloom_wall_sign", new CustomSignBlocks.CustomWallSignBlock(AbstractBlock.Settings.copy(AEROBLOOM_SIGN).dropsLike(AEROBLOOM_SIGN).requires(VirtualAdditions.PREVIEW), AEROBLOOM_WOODTYPE));
         AEROBLOOM_HANGING_SIGN = register("aerobloom_hanging_sign", new CustomSignBlocks.CustomHangingSignBlock(AbstractBlock.Settings.copy(Blocks.CHERRY_HANGING_SIGN).requires(VirtualAdditions.PREVIEW), AEROBLOOM_WOODTYPE));
         AEROBLOOM_WALL_HANGING_SIGN = register("aerobloom_wall_hanging_sign", new CustomSignBlocks.CustomWallHangingSignBlock(AbstractBlock.Settings.copy(Blocks.CHERRY_WALL_HANGING_SIGN).requires(VirtualAdditions.PREVIEW).dropsLike(AEROBLOOM_HANGING_SIGN), AEROBLOOM_WOODTYPE));
         AEROBLOOM_LEAVES = register("aerobloom_leaves", new LeavesBlock(AbstractBlock.Settings.copy(Blocks.CHERRY_LEAVES).requires(VirtualAdditions.PREVIEW)));
-        AEROBLOOM_SAPLING = register("aerobloom_sapling", new SaplingBlock(new AerobloomSaplingGenerator(), AbstractBlock.Settings.copy(Blocks.CHERRY_SAPLING).requires(VirtualAdditions.PREVIEW)));
+        AEROBLOOM_SAPLING = register("aerobloom_sapling", new SaplingBlock(CustomSaplingGenerator.AEROBLOOM, AbstractBlock.Settings.copy(Blocks.CHERRY_SAPLING).requires(VirtualAdditions.PREVIEW)));
 
         OAK_HEDGE = register("oak_hedge", new HedgeBlock(AbstractBlock.Settings.copy(Blocks.OAK_LEAVES)));
         SPRUCE_HEDGE = register("spruce_hedge", new HedgeBlock(AbstractBlock.Settings.copy(Blocks.SPRUCE_LEAVES)));
@@ -317,7 +318,7 @@ public class VABlocks {
 
         ACID = register("acid", new AcidFluidBlock(VAFluids.ACID, AbstractBlock.Settings.create().mapColor(MapColor.LIME).luminance(((state) -> 6)).sounds(BlockSoundGroup.INTENTIONALLY_EMPTY).replaceable().noCollision().strength(100.0F).dropsNothing().allowsSpawning(((state, world, pos, type) -> type == VAEntityType.LUMWASP)).pistonBehavior(PistonBehavior.DESTROY)));
 
-        IOLITE_ORE = register("iolite_ore", new ExperienceDroppingBlock(FabricBlockSettings.copyOf(Blocks.END_STONE).strength(4.5F, 4.5F).requiresTool(), UniformIntProvider.create(5, 9)));
+        IOLITE_ORE = register("iolite_ore", new ExperienceDroppingBlock(UniformIntProvider.create(5, 9), FabricBlockSettings.copyOf(Blocks.END_STONE).strength(4.5F, 4.5F).requiresTool()));
         IOLITE_BLOCK = register("iolite_block", new Block(FabricBlockSettings.create().mapColor(MapColor.MAGENTA).sounds(BlockSoundGroup.METAL).requiresTool().hardness(5.0F).resistance(300.0F)));
         WARP_ANCHOR = register("warp_anchor", new WarpAnchorBlock(FabricBlockSettings.create().nonOpaque().sounds(BlockSoundGroup.NETHERITE).luminance(3).emissiveLighting( (state, world, pos) -> !state.get(WarpAnchorBlock.POWERED) ).hardness(22.5F).requiresTool().resistance(600.0F)));
         WARP_TETHER = register("warp_tether", new WarpTetherBlock(FabricBlockSettings.create().nonOpaque().sounds(BlockSoundGroup.NETHERITE).luminance(3).emissiveLighting( (state, world, pos) -> !state.get(WarpTetherBlock.COOLDOWN) ).hardness(22.5F).requiresTool().resistance(600.0F)));

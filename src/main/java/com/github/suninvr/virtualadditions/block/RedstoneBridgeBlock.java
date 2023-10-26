@@ -1,5 +1,6 @@
 package com.github.suninvr.virtualadditions.block;
 
+import com.mojang.serialization.MapCodec;
 import net.minecraft.block.*;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.fluid.FluidState;
@@ -21,6 +22,7 @@ import org.jetbrains.annotations.Nullable;
 
 @SuppressWarnings("deprecation")
 public class RedstoneBridgeBlock extends Block implements Waterloggable {
+    public static final MapCodec<RedstoneBridgeBlock> CODEC = createCodec(RedstoneBridgeBlock::new);
     public static final IntProperty POWER = Properties.POWER;
     public static final DirectionProperty FACING = Properties.FACING;
     public static final BooleanProperty WATERLOGGED = Properties.WATERLOGGED;
@@ -32,7 +34,12 @@ public class RedstoneBridgeBlock extends Block implements Waterloggable {
 
     public RedstoneBridgeBlock(Settings settings) {
         super(settings);
-        setDefaultState(getStateManager().getDefaultState().with(FACING, Direction.DOWN).with(POWER, 0).with(WATERLOGGED, false));
+        this.setDefaultState(getStateManager().getDefaultState().with(FACING, Direction.DOWN).with(POWER, 0).with(WATERLOGGED, false));
+    }
+
+    @Override
+    protected MapCodec<? extends Block> getCodec() {
+        return CODEC;
     }
 
     @Override

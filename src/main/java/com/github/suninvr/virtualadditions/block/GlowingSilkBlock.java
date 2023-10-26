@@ -2,6 +2,7 @@ package com.github.suninvr.virtualadditions.block;
 
 import com.github.suninvr.virtualadditions.block.enums.GlowingSilkShape;
 import com.github.suninvr.virtualadditions.registry.VABlocks;
+import com.mojang.serialization.MapCodec;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.ShapeContext;
@@ -26,16 +27,22 @@ import org.jetbrains.annotations.Nullable;
 
 @SuppressWarnings("deprecation")
 public class GlowingSilkBlock extends Block implements Waterloggable {
+    public static final MapCodec<GlowingSilkBlock> CODEC = createCodec(GlowingSilkBlock::new);
     private static final BooleanProperty WATERLOGGED;
     public static final EnumProperty<GlowingSilkShape> SHAPE;
     protected static final VoxelShape BOX;
 
     public GlowingSilkBlock(Settings settings) {
         super(settings);
-        setDefaultState(getStateManager().getDefaultState()
+        this.setDefaultState(getStateManager().getDefaultState()
                 .with(WATERLOGGED, false)
                 .with(SHAPE, GlowingSilkShape.SINGLE)
         );
+    }
+
+    @Override
+    protected MapCodec<? extends Block> getCodec() {
+        return CODEC;
     }
 
     @Override

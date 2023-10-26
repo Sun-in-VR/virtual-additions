@@ -1,6 +1,7 @@
 package com.github.suninvr.virtualadditions.block;
 
 import com.github.suninvr.virtualadditions.registry.VABlocks;
+import com.mojang.serialization.MapCodec;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.entity.player.PlayerEntity;
@@ -16,8 +17,14 @@ import net.minecraft.world.World;
 
 @SuppressWarnings("deprecation")
 public class SilkBlock extends Block {
+    public static final MapCodec<SilkBlock> CODEC = createCodec(SilkBlock::new);
     public SilkBlock(Settings settings) {
         super(settings);
+    }
+
+    @Override
+    protected MapCodec<? extends Block> getCodec() {
+        return CODEC;
     }
 
     @Override

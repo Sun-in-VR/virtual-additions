@@ -1,6 +1,7 @@
 package com.github.suninvr.virtualadditions.block;
 
 import com.github.suninvr.virtualadditions.registry.VASoundEvents;
+import com.mojang.serialization.MapCodec;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockSetType;
 import net.minecraft.block.BlockState;
@@ -19,11 +20,17 @@ import net.minecraft.world.event.GameEvent;
 import org.jetbrains.annotations.Nullable;
 
 public class SteelTrapdoorBlock extends TrapdoorBlock {
+    public static final MapCodec<SteelTrapdoorBlock> CODEC = createCodec(SteelTrapdoorBlock::new);
     public static final BooleanProperty SHUTTER_OPEN = BooleanProperty.of("shutter_open");
 
     public SteelTrapdoorBlock(Settings settings) {
-        super(settings, BlockSetType.IRON);
-        setDefaultState(getStateManager().getDefaultState().with(OPEN, false).with(POWERED, false).with(SHUTTER_OPEN, false));
+        super(BlockSetType.IRON, settings);
+        this.setDefaultState(getStateManager().getDefaultState().with(OPEN, false).with(POWERED, false).with(SHUTTER_OPEN, false));
+    }
+
+    @Override
+    public MapCodec<TrapdoorBlock> getCodec() {
+        return super.getCodec();
     }
 
     @Override

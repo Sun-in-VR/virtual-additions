@@ -4,6 +4,7 @@ import com.github.suninvr.virtualadditions.block.entity.DestructiveSculkBlockEnt
 import com.github.suninvr.virtualadditions.interfaces.ExperienceDroppingBlockInterface;
 import com.github.suninvr.virtualadditions.registry.VABlockEntities;
 import com.github.suninvr.virtualadditions.registry.VABlocks;
+import com.mojang.serialization.MapCodec;
 import net.minecraft.block.*;
 import net.minecraft.block.entity.BlockEntity;
 import net.minecraft.block.entity.BlockEntityTicker;
@@ -31,11 +32,17 @@ import java.util.UUID;
 
 @SuppressWarnings("deprecation")
 public class DestructiveSculkBlock extends BlockWithEntity {
+    public static final MapCodec<DestructiveSculkBlock> CODEC = createCodec(DestructiveSculkBlock::new);
     public static final BooleanProperty SPREADING = BooleanProperty.of("spreading");
     public static final BooleanProperty ORIGIN = BooleanProperty.of("origin");
     public DestructiveSculkBlock(Settings settings) {
         super(settings);
-        setDefaultState(stateManager.getDefaultState().with(SPREADING, true).with(ORIGIN, false));
+        this.setDefaultState(stateManager.getDefaultState().with(SPREADING, true).with(ORIGIN, false));
+    }
+
+    @Override
+    protected MapCodec<? extends BlockWithEntity> getCodec() {
+        return CODEC;
     }
 
     @Override
@@ -126,8 +133,8 @@ public class DestructiveSculkBlock extends BlockWithEntity {
     }
 
     @Override
-    public void onBreak(World world, BlockPos pos, BlockState state, PlayerEntity player) {
-        super.onBreak(world, pos, state, player);
+    public BlockState onBreak(World world, BlockPos pos, BlockState state, PlayerEntity player) {
+        return super.onBreak(world, pos, state, player);
     }
 
     @Override

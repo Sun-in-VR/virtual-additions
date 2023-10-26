@@ -2,6 +2,7 @@ package com.github.suninvr.virtualadditions.block;
 
 import com.github.suninvr.virtualadditions.block.enums.CrystalShape;
 import com.github.suninvr.virtualadditions.registry.VABlockTags;
+import com.mojang.serialization.MapCodec;
 import net.minecraft.block.*;
 import net.minecraft.entity.Entity;
 import net.minecraft.fluid.FluidState;
@@ -23,6 +24,7 @@ import org.jetbrains.annotations.Nullable;
 
 @SuppressWarnings("deprecation")
 public class CrystalBlock extends Block implements Waterloggable {
+    public static final MapCodec<CrystalBlock> CODEC = createCodec(CrystalBlock::new);
     public static final EnumProperty<CrystalShape> SHAPE = EnumProperty.of("shape", CrystalShape.class);
     public static final DirectionProperty POINTING = Properties.FACING;
     public static final BooleanProperty WATERLOGGED = Properties.WATERLOGGED;
@@ -38,11 +40,16 @@ public class CrystalBlock extends Block implements Waterloggable {
 
     public CrystalBlock(Settings settings) {
         super(settings);
-        setDefaultState(getStateManager().getDefaultState()
+        this.setDefaultState(getStateManager().getDefaultState()
                 .with(SHAPE, CrystalShape.TIP)
                 .with(POINTING, Direction.UP)
                 .with(WATERLOGGED, false)
         );
+    }
+
+    @Override
+    protected MapCodec<? extends Block> getCodec() {
+        return CODEC;
     }
 
     @Override

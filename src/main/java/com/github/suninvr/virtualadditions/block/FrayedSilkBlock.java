@@ -1,6 +1,7 @@
 package com.github.suninvr.virtualadditions.block;
 
 import com.github.suninvr.virtualadditions.registry.VABlocks;
+import com.mojang.serialization.MapCodec;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.PlantBlock;
@@ -18,13 +19,19 @@ import org.jetbrains.annotations.Nullable;
 
 @SuppressWarnings("deprecation")
 public class FrayedSilkBlock extends PlantBlock {
+    public static final MapCodec<FrayedSilkBlock> CODEC = createCodec(FrayedSilkBlock::new);
     protected static final VoxelShape SHAPE = Block.createCuboidShape(2.0, 0.0, 2.0, 14.0, 13.0, 14.0);
     public static final DirectionProperty VERTICAL_DIRECTION = Properties.VERTICAL_DIRECTION;
     public FrayedSilkBlock(Settings settings) {
         super(settings);
-        setDefaultState(getStateManager().getDefaultState()
+        this.setDefaultState(getStateManager().getDefaultState()
                 .with(VERTICAL_DIRECTION, Direction.UP)
         );
+    }
+
+    @Override
+    protected MapCodec<? extends PlantBlock> getCodec() {
+        return CODEC;
     }
 
     @Override

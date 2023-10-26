@@ -1,6 +1,7 @@
 package com.github.suninvr.virtualadditions.block;
 
 import com.github.suninvr.virtualadditions.registry.VABlocks;
+import com.mojang.serialization.MapCodec;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.Fertilizable;
@@ -11,9 +12,15 @@ import net.minecraft.world.World;
 import net.minecraft.world.WorldView;
 
 public class FloatrockBlock extends Block implements Fertilizable {
+    public static final MapCodec<FloatrockBlock> CODEC = createCodec(FloatrockBlock::new);
 
     public FloatrockBlock(Settings settings) {
         super(settings);
+    }
+
+    @Override
+    protected MapCodec<? extends Block> getCodec() {
+        return CODEC;
     }
 
     @Override

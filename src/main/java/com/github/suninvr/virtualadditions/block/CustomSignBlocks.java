@@ -9,7 +9,7 @@ import net.minecraft.util.math.BlockPos;
 public class CustomSignBlocks {
     public static class CustomSignBlock extends SignBlock {
         public CustomSignBlock(Settings settings, WoodType woodType) {
-            super(settings, woodType);
+            super(woodType, settings);
         }
 
         @Override
@@ -20,7 +20,7 @@ public class CustomSignBlocks {
 
     public static class CustomWallSignBlock extends WallSignBlock {
         public CustomWallSignBlock(Settings settings, WoodType woodType) {
-            super(settings, woodType);
+            super(woodType, settings);
         }
 
         @Override
@@ -31,7 +31,7 @@ public class CustomSignBlocks {
 
     public static class CustomHangingSignBlock extends HangingSignBlock {
         public CustomHangingSignBlock(Settings settings, WoodType woodType) {
-            super(settings, woodType);
+            super(woodType, settings);
         }
 
         @Override
@@ -42,7 +42,7 @@ public class CustomSignBlocks {
 
     public static class CustomWallHangingSignBlock extends WallHangingSignBlock {
         public CustomWallHangingSignBlock(Settings settings, WoodType woodType) {
-            super(settings, woodType);
+            super(woodType, settings);
         }
 
         @Override

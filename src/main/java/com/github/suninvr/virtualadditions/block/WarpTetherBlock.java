@@ -2,6 +2,7 @@ package com.github.suninvr.virtualadditions.block;
 
 import com.github.suninvr.virtualadditions.block.entity.WarpTetherBlockEntity;
 import com.github.suninvr.virtualadditions.registry.*;
+import com.mojang.serialization.MapCodec;
 import net.minecraft.block.*;
 import net.minecraft.block.entity.BlockEntity;
 import net.minecraft.block.entity.BlockEntityTicker;
@@ -33,13 +34,19 @@ import org.jetbrains.annotations.Nullable;
 
 @SuppressWarnings("deprecation")
 public class WarpTetherBlock extends BlockWithEntity implements Waterloggable {
+    public static final MapCodec<WarpTetherBlock> CODEC = createCodec(WarpTetherBlock::new);
     public static BooleanProperty COOLDOWN = BooleanProperty.of("cooldown");
     public static BooleanProperty WATERLOGGED = BooleanProperty.of("waterlogged");
     private static final VoxelShape SHAPE;
 
     public WarpTetherBlock(Settings settings) {
         super(settings);
-        setDefaultState(getStateManager().getDefaultState().with(COOLDOWN, false).with(WATERLOGGED, false));
+        this.setDefaultState(getStateManager().getDefaultState().with(COOLDOWN, false).with(WATERLOGGED, false));
+    }
+
+    @Override
+    protected MapCodec<? extends BlockWithEntity> getCodec() {
+        return CODEC;
     }
 
     @Override
@@ -111,7 +118,7 @@ public class WarpTetherBlock extends BlockWithEntity implements Waterloggable {
     }
 
     @Override
-    public void onBreak(World world, BlockPos pos, BlockState state, PlayerEntity playerEntity) {
+    public BlockState onBreak(World world, BlockPos pos, BlockState state, PlayerEntity playerEntity) {
         if (!world.isClient) {
             NbtCompound blockEntityTag = getBlockEntityNbt(world, pos);
             if (blockEntityTag != null) {
@@ -120,7 +127,7 @@ public class WarpTetherBlock extends BlockWithEntity implements Waterloggable {
                 dropStack(world, pos, itemStack);
             }
         }
-        super.onBreak(world, pos, state, playerEntity);
+        return super.onBreak(world, pos, state, playerEntity);
     }
 
     @Nullable

@@ -1,6 +1,7 @@
 package com.github.suninvr.virtualadditions.block;
 
 import com.github.suninvr.virtualadditions.registry.VABlocks;
+import com.mojang.serialization.MapCodec;
 import net.minecraft.block.*;
 import net.minecraft.server.world.ServerWorld;
 import net.minecraft.util.math.BlockPos;
@@ -12,9 +13,15 @@ import net.minecraft.world.World;
 import net.minecraft.world.WorldView;
 
 public class BalloonBulbBudBlock extends PlantBlock implements Fertilizable {
+    public static final MapCodec<BalloonBulbBudBlock> CODEC = createCodec(BalloonBulbBudBlock::new);
     private static final VoxelShape SHAPE = Block.createCuboidShape(6.0F, 0.0F, 6.0F, 10.0F, 6.0F, 10.0F);
     public BalloonBulbBudBlock(Settings settings) {
         super(settings);
+    }
+
+    @Override
+    protected MapCodec<? extends PlantBlock> getCodec() {
+        return CODEC;
     }
 
     @Override

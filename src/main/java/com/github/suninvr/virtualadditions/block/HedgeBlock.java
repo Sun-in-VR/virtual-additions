@@ -1,6 +1,7 @@
 package com.github.suninvr.virtualadditions.block;
 
 import com.github.suninvr.virtualadditions.registry.VABlockTags;
+import com.mojang.serialization.MapCodec;
 import net.minecraft.block.*;
 import net.minecraft.fluid.FluidState;
 import net.minecraft.fluid.Fluids;
@@ -16,6 +17,7 @@ import net.minecraft.world.WorldAccess;
 
 @SuppressWarnings("deprecation")
 public class HedgeBlock extends HorizontalConnectingBlock {
+    public static final MapCodec<HedgeBlock> CODEC = createCodec(HedgeBlock::new);
     public HedgeBlock(Settings settings) {
         super(4.0F, 4.0F, 16.0F, 16.0F, 24.0F, settings);
         this.setDefaultState(this.stateManager.getDefaultState().with(NORTH, false).with(EAST, false).with(SOUTH, false).with(WEST, false).with(WATERLOGGED, false));
@@ -72,5 +74,10 @@ public class HedgeBlock extends HorizontalConnectingBlock {
 
     protected void appendProperties(StateManager.Builder<Block, BlockState> builder) {
         builder.add(NORTH, EAST, WEST, SOUTH, WATERLOGGED);
+    }
+
+    @Override
+    protected MapCodec<? extends HorizontalConnectingBlock> getCodec() {
+        return CODEC;
     }
 }

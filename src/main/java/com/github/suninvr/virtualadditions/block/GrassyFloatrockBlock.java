@@ -1,5 +1,6 @@
 package com.github.suninvr.virtualadditions.block;
 
+import com.mojang.serialization.MapCodec;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.Fertilizable;
 import net.minecraft.block.SnowyBlock;
@@ -10,6 +11,7 @@ import net.minecraft.world.World;
 import net.minecraft.world.WorldView;
 
 public class GrassyFloatrockBlock extends SnowyBlock implements Fertilizable {
+    public static final MapCodec<GrassyFloatrockBlock> CODEC = createCodec(GrassyFloatrockBlock::new);
 
     public GrassyFloatrockBlock(Settings settings) {
         super(settings);
@@ -18,6 +20,11 @@ public class GrassyFloatrockBlock extends SnowyBlock implements Fertilizable {
     @Override
     public boolean isFertilizable(WorldView world, BlockPos pos, BlockState state) {
         return world.getBlockState(pos.up()).isAir();
+    }
+
+    @Override
+    protected MapCodec<? extends SnowyBlock> getCodec() {
+        return CODEC;
     }
 
     @Override

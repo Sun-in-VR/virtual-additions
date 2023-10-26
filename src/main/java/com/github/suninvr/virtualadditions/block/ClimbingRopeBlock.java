@@ -4,6 +4,7 @@ import com.github.suninvr.virtualadditions.registry.VABlockTags;
 import com.github.suninvr.virtualadditions.registry.VABlocks;
 import com.github.suninvr.virtualadditions.registry.VAItems;
 import com.github.suninvr.virtualadditions.registry.VASoundEvents;
+import com.mojang.serialization.MapCodec;
 import net.minecraft.block.*;
 import net.minecraft.fluid.FluidState;
 import net.minecraft.fluid.Fluids;
@@ -25,6 +26,7 @@ import net.minecraft.world.event.GameEvent;
 
 @SuppressWarnings("deprecation")
 public class ClimbingRopeBlock extends Block implements Waterloggable {
+    public static final MapCodec<ClimbingRopeBlock> CODEC = createCodec(ClimbingRopeBlock::new);
     public static final DirectionProperty FACING = DirectionProperty.of("facing", Direction.UP, Direction.NORTH, Direction.EAST, Direction.SOUTH, Direction.WEST);
     public static final BooleanProperty WATERLOGGED = Properties.WATERLOGGED;
     public static final BooleanProperty END = BooleanProperty.of("end");
@@ -36,11 +38,16 @@ public class ClimbingRopeBlock extends Block implements Waterloggable {
 
     public ClimbingRopeBlock(Settings settings) {
         super(settings);
-        setDefaultState(getStateManager().getDefaultState()
+        this.setDefaultState(getStateManager().getDefaultState()
                 .with(FACING, Direction.UP)
                 .with(WATERLOGGED, false)
                 .with(END, true)
         );
+    }
+
+    @Override
+    protected MapCodec<? extends Block> getCodec() {
+        return CODEC;
     }
 
     public VoxelShape getOutlineShape(BlockState state, BlockView world, BlockPos pos, ShapeContext context) {
@@ -87,7 +94,7 @@ public class ClimbingRopeBlock extends Block implements Waterloggable {
     }
 
     @Override
-    public ItemStack getPickStack(BlockView world, BlockPos pos, BlockState state) {
+    public ItemStack getPickStack(WorldView world, BlockPos pos, BlockState state) {
         return new ItemStack(VAItems.CLIMBING_ROPE);
     }
 

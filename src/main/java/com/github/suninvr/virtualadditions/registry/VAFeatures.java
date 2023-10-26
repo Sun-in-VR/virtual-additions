@@ -19,14 +19,12 @@ import static com.github.suninvr.virtualadditions.VirtualAdditions.idOf;
 public class VAFeatures {
     public static final RegistryKey<PlacedFeature> ORE_IOLITE;
     public static final RegistryKey<ConfiguredFeature<?, ?>> AEROBLOOM_TREE;
-    public static final Feature<DefaultFeatureConfig> LUMWASP_NEST;
-    public static final Feature<DefaultFeatureConfig> BALLOON_BULB;
+    public static Feature<DefaultFeatureConfig> LUMWASP_NEST;
+    public static Feature<DefaultFeatureConfig> BALLOON_BULB;
 
     static {
         ORE_IOLITE = registerPlaced("ore_iolite");
         AEROBLOOM_TREE = registerConfigured("aerobloom_tree");
-        BALLOON_BULB = Registry.register(Registries.FEATURE, idOf("balloon_bulb"), new BalloonBulbFeature(DefaultFeatureConfig.CODEC));
-        LUMWASP_NEST = Registry.register(Registries.FEATURE, idOf("lumwasp_nest"), new LumwaspNestFeature(DefaultFeatureConfig.CODEC));
     }
 
     public static void init(){
@@ -36,6 +34,8 @@ public class VAFeatures {
                 ORE_IOLITE
         );
         TrunkPlacerTypes.init();
+        BALLOON_BULB = Registry.register(Registries.FEATURE, idOf("balloon_bulb"), new BalloonBulbFeature(DefaultFeatureConfig.CODEC));
+        LUMWASP_NEST = Registry.register(Registries.FEATURE, idOf("lumwasp_nest"), new LumwaspNestFeature(DefaultFeatureConfig.CODEC));
     }
 
     private static RegistryKey<PlacedFeature> registerPlaced(String id) {

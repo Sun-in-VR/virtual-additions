@@ -4,6 +4,7 @@ import com.github.suninvr.virtualadditions.block.entity.SpotlightBlockEntity;
 import com.github.suninvr.virtualadditions.block.enums.LightStatus;
 import com.github.suninvr.virtualadditions.registry.VABlockEntities;
 import com.github.suninvr.virtualadditions.registry.VABlocks;
+import com.mojang.serialization.MapCodec;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockRenderType;
 import net.minecraft.block.BlockState;
@@ -26,15 +27,21 @@ import org.jetbrains.annotations.Nullable;
 
 @SuppressWarnings("deprecation")
 public class SpotlightBlock extends BlockWithEntity {
+    public static final MapCodec<SpotlightBlock> CODEC = createCodec(SpotlightBlock::new);
     public static final DirectionProperty FACING = Properties.FACING;
     public static final BooleanProperty POWERED = Properties.POWERED;
 
     public SpotlightBlock(Settings settings) {
         super(settings);
-        setDefaultState(getStateManager().getDefaultState()
+        this.setDefaultState(getStateManager().getDefaultState()
                 .with(FACING, Direction.EAST)
                 .with(POWERED, false)
         );
+    }
+
+    @Override
+    protected MapCodec<? extends BlockWithEntity> getCodec() {
+        return CODEC;
     }
 
     @Override
@@ -51,14 +58,15 @@ public class SpotlightBlock extends BlockWithEntity {
     }
 
     @Override
-    public void onBreak(World world, BlockPos pos, BlockState state, PlayerEntity player) {
-        super.onBreak(world, pos, state, player);
+    public BlockState onBreak(World world, BlockPos pos, BlockState state, PlayerEntity player) {
+        BlockState state1 = super.onBreak(world, pos, state, player);
         BlockEntity blockEntity = world.getBlockEntity(pos);
         if (!world.isClient() && blockEntity instanceof SpotlightBlockEntity spotlightBlockEntity) {
             BlockPos lightPos = spotlightBlockEntity.getLightLocation();
             BlockState lightState = world.getBlockState(lightPos);
             if (lightState.isOf(VABlocks.SPOTLIGHT_LIGHT)) SpotlightLightBlock.setStatus(world, lightState, lightPos, state.get(FACING), LightStatus.NONE);
         }
+        return state1;
     }
 
     @Override

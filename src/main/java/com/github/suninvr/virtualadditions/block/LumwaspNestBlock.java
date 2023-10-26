@@ -3,6 +3,7 @@ package com.github.suninvr.virtualadditions.block;
 import com.github.suninvr.virtualadditions.registry.VABlocks;
 import com.github.suninvr.virtualadditions.registry.VAFluids;
 import com.github.suninvr.virtualadditions.registry.VAItemTags;
+import com.mojang.serialization.MapCodec;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.TransparentBlock;
@@ -18,10 +19,16 @@ import net.minecraft.world.World;
 
 @SuppressWarnings("deprecation")
 public class LumwaspNestBlock extends TransparentBlock {
+    public static final MapCodec<LumwaspNestBlock> CODEC = createCodec(LumwaspNestBlock::new);
     public static final BooleanProperty LARVAE = BooleanProperty.of("larvae");
     public LumwaspNestBlock(Settings settings) {
         super(settings);
-        setDefaultState(getStateManager().getDefaultState().with(LARVAE, false));
+        this.setDefaultState(getStateManager().getDefaultState().with(LARVAE, false));
+    }
+
+    @Override
+    protected MapCodec<? extends TransparentBlock> getCodec() {
+        return CODEC;
     }
 
     @Override

@@ -4,6 +4,7 @@ import com.github.suninvr.virtualadditions.block.entity.WarpAnchorBlockEntity;
 import com.github.suninvr.virtualadditions.registry.VABlockEntities;
 import com.github.suninvr.virtualadditions.registry.VAItems;
 import com.github.suninvr.virtualadditions.registry.VASoundEvents;
+import com.mojang.serialization.MapCodec;
 import net.minecraft.block.*;
 import net.minecraft.block.entity.BlockEntity;
 import net.minecraft.block.entity.BlockEntityTicker;
@@ -38,6 +39,7 @@ import java.util.List;
 
 @SuppressWarnings("deprecation")
 public class WarpAnchorBlock extends BlockWithEntity implements Waterloggable {
+    public static final MapCodec<WarpAnchorBlock> CODEC = createCodec(WarpAnchorBlock::new);
     public static final BooleanProperty POWERED = Properties.POWERED;
     public static final BooleanProperty WATERLOGGED = Properties.WATERLOGGED;
     public static final DirectionProperty FACING = Properties.VERTICAL_DIRECTION;
@@ -46,11 +48,16 @@ public class WarpAnchorBlock extends BlockWithEntity implements Waterloggable {
 
     public WarpAnchorBlock(Settings settings) {
         super(settings);
-        setDefaultState(getStateManager().getDefaultState()
+        this.setDefaultState(getStateManager().getDefaultState()
                 .with(POWERED, false)
                 .with(WATERLOGGED, false)
                 .with(FACING, Direction.UP)
         );
+    }
+
+    @Override
+    protected MapCodec<? extends BlockWithEntity> getCodec() {
+        return CODEC;
     }
 
 

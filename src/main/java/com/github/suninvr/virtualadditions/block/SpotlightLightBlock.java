@@ -2,6 +2,7 @@ package com.github.suninvr.virtualadditions.block;
 
 import com.github.suninvr.virtualadditions.block.enums.LightStatus;
 import com.github.suninvr.virtualadditions.registry.VABlocks;
+import com.mojang.serialization.MapCodec;
 import net.minecraft.block.*;
 import net.minecraft.fluid.FluidState;
 import net.minecraft.fluid.Fluids;
@@ -21,6 +22,7 @@ import org.jetbrains.annotations.Nullable;
 
 @SuppressWarnings("deprecation")
 public class SpotlightLightBlock extends Block implements Waterloggable {
+    public static final MapCodec<SpotlightLightBlock> CODEC = createCodec(SpotlightLightBlock::new);
     public static BooleanProperty WATERLOGGED = Properties.WATERLOGGED;
     public static BooleanProperty LIT = Properties.LIT;
     public static EnumProperty<LightStatus> NORTH = EnumProperty.of("north", LightStatus.class);
@@ -33,7 +35,7 @@ public class SpotlightLightBlock extends Block implements Waterloggable {
 
     public SpotlightLightBlock(Settings settings) {
         super(settings);
-        setDefaultState(getStateManager().getDefaultState()
+        this.setDefaultState(getStateManager().getDefaultState()
                 .with(WATERLOGGED, false)
                 .with(LIT, false)
                 .with(NORTH, LightStatus.NONE)
@@ -43,6 +45,11 @@ public class SpotlightLightBlock extends Block implements Waterloggable {
                 .with(UP, LightStatus.NONE)
                 .with(DOWN, LightStatus.NONE)
         );
+    }
+
+    @Override
+    protected MapCodec<? extends Block> getCodec() {
+        return CODEC;
     }
 
     @Override

@@ -1,6 +1,7 @@
 package com.github.suninvr.virtualadditions.block;
 
 import com.github.suninvr.virtualadditions.registry.VABlocks;
+import com.mojang.serialization.MapCodec;
 import net.minecraft.block.*;
 import net.minecraft.entity.projectile.ProjectileEntity;
 import net.minecraft.registry.tag.EntityTypeTags;
@@ -18,11 +19,17 @@ import net.minecraft.world.World;
 import net.minecraft.world.WorldView;
 
 public class BalloonBulbBlock extends Block implements Fertilizable {
+    public static final MapCodec<BalloonBulbBlock> CODEC = createCodec(BalloonBulbBlock::new);
     public static final IntProperty HEIGHT = IntProperty.of("height", 0, 25);
     private static final VoxelShape SHAPE = Block.createCuboidShape(3.0F, 0.0F, 3.0F, 13.0F, 14.0F, 13.0F);
     public BalloonBulbBlock(Settings settings) {
         super(settings);
-        setDefaultState(getStateManager().getDefaultState().with(HEIGHT, 0));
+        this.setDefaultState(getStateManager().getDefaultState().with(HEIGHT, 0));
+    }
+
+    @Override
+    protected MapCodec<? extends Block> getCodec() {
+        return CODEC;
     }
 
     @Override

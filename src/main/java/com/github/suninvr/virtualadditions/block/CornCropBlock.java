@@ -1,6 +1,7 @@
 package com.github.suninvr.virtualadditions.block;
 
 import com.github.suninvr.virtualadditions.registry.VAItems;
+import com.mojang.serialization.MapCodec;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.CropBlock;
@@ -24,6 +25,7 @@ import org.jetbrains.annotations.Nullable;
 import java.util.Locale;
 
 public class CornCropBlock extends CropBlock {
+    public static final MapCodec<CornCropBlock> CODEC = createCodec(CornCropBlock::new);
     public static final EnumProperty<CornCropSegment> SEGMENT = EnumProperty.of("segment", CornCropSegment.class);
     private static final VoxelShape SHAPE_AGE_1;
     private static final VoxelShape SHAPE_AGE_2;
@@ -31,7 +33,12 @@ public class CornCropBlock extends CropBlock {
 
     public CornCropBlock(Settings settings) {
         super(settings);
-        setDefaultState(getStateManager().getDefaultState().with(SEGMENT, CornCropSegment.BOTTOM));
+        this.setDefaultState(getStateManager().getDefaultState().with(SEGMENT, CornCropSegment.BOTTOM));
+    }
+
+    @Override
+    public MapCodec<? extends CropBlock> getCodec() {
+        return CODEC;
     }
 
     @Override

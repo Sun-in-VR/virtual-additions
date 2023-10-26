@@ -2,6 +2,7 @@ package com.github.suninvr.virtualadditions.block;
 
 import com.github.suninvr.virtualadditions.registry.VABlocks;
 import com.github.suninvr.virtualadditions.registry.VAParticleTypes;
+import com.mojang.serialization.MapCodec;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.Blocks;
 import net.minecraft.block.Fertilizable;
@@ -18,8 +19,15 @@ import net.minecraft.world.World;
 import net.minecraft.world.WorldView;
 
 public class TallGreencapMushroomBlock extends TallPlantBlock implements Fertilizable {
+    public static final MapCodec<TallGreencapMushroomBlock> CODEC = createCodec(TallGreencapMushroomBlock::new);
+
     public TallGreencapMushroomBlock(Settings settings) {
         super(settings);
+    }
+
+    @Override
+    public MapCodec<? extends TallPlantBlock> getCodec() {
+        return CODEC;
     }
 
     @Override
