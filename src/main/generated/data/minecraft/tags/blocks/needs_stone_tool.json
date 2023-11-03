@@ -11,7 +11,7 @@
     "virtual_additions:redstone_bridge",
     "virtual_additions:cut_steel",
     "virtual_additions:cut_steel_stairs",
-    "virtual_additions:steel_fence",
-    "virtual_additions:cut_steel_slab"
+    "virtual_additions:cut_steel_slab",
+    "virtual_additions:steel_fence"
   ]
 }

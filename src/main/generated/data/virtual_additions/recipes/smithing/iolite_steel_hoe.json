@@ -1,0 +1,15 @@
+{
+  "type": "minecraft:smithing_transform",
+  "addition": {
+    "item": "virtual_additions:iolite"
+  },
+  "base": {
+    "item": "virtual_additions:steel_hoe"
+  },
+  "result": {
+    "item": "virtual_additions:iolite_steel_hoe"
+  },
+  "template": {
+    "item": "virtual_additions:tool_gild_smithing_template"
+  }
+}

@@ -20,7 +20,7 @@ import java.util.function.BiFunction;
 
 import static com.github.suninvr.virtualadditions.VirtualAdditions.idOf;
 
-@SuppressWarnings("unused")
+@SuppressWarnings({"unused", "ClassEscapesDefinedScope"})
 public class GildTypes {
     private static final BiFunction<Float, Float, Float> ADD = Float::sum;
     private static final BiFunction<Float, Float, Float> MULTIPLY = (attribute, modifier) -> attribute * modifier;
@@ -42,6 +42,7 @@ public class GildTypes {
             }
         }
     };
+    public static final GildType IOLITE = new GildType(idOf("iolite"), 0x702bff);
     public static final GildType QUARTZ = new GildType(idOf("quartz"), 0xE3D4C4, attackDamageModifier(2, ADD));
     public static final GildType SCULK = new GildType(idOf("sculk"), 0x009295, miningSpeedModifier(0.4F, MULTIPLY), attackSpeedModifier(1.2F, MULTIPLY_AND_ROUND, GildType.ModifierType.ToolType.SWORD)) {
         @Override

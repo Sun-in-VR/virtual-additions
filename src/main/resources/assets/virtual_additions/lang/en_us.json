@@ -177,15 +177,17 @@
 
     "generator.virtual_additions.virtual_world": "VA Preview",
 
+    "gild_type.virtual_additions.amethyst": "Amethyst Gild",
+    "gild_type.virtual_additions.copper": "Copper Gild",
+    "gild_type.virtual_additions.emerald": "Emerald Gild",
+    "gild_type.virtual_additions.iolite": "Iolite Gild",
+    "gild_type.virtual_additions.quartz": "Quartz Gild",
+    "gild_type.virtual_additions.sculk": "Sculk Gild",
+
     "item.virtual_additions.climbing_rope": "Climbing Rope",
     "item.virtual_additions.raw_steel": "Raw Steel",
     "item.virtual_additions.steel_ingot": "Steel Ingot",
     "item.virtual_additions.crystal_dust": "Mixed Crystal Dust",
-    "item.virtual_additions.gilded_tool_tooltip.amethyst": "Amethyst Gild",
-    "item.virtual_additions.gilded_tool_tooltip.copper": "Copper Gild",
-    "item.virtual_additions.gilded_tool_tooltip.emerald": "Emerald Gild",
-    "item.virtual_additions.gilded_tool_tooltip.quartz": "Quartz Gild",
-    "item.virtual_additions.gilded_tool_tooltip.sculk": "Sculk Gild",
     "item.virtual_additions.steel_sword": "Steel Sword",
     "item.virtual_additions.steel_shovel": "Steel Shovel",
     "item.virtual_additions.steel_pickaxe": "Steel Pickaxe",

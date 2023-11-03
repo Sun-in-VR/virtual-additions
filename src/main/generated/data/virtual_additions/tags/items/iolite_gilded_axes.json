@@ -1,0 +1,10 @@
+{
+  "replace": false,
+  "values": [
+    "virtual_additions:iolite_diamond_axe",
+    "virtual_additions:iolite_iron_axe",
+    "virtual_additions:iolite_golden_axe",
+    "virtual_additions:iolite_steel_axe",
+    "virtual_additions:iolite_netherite_axe"
+  ]
+}

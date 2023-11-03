@@ -115,6 +115,7 @@ public final class VAItemTagProvider {
             configureGildedToolSet(VAItems.AMETHYST_TOOL_SETS);
             configureGildedToolSet(VAItems.COPPER_TOOL_SETS);
             configureGildedToolSet(VAItems.EMERALD_TOOL_SETS);
+            configureGildedToolSet(VAItems.IOLITE_TOOL_SETS);
             configureGildedToolSet(VAItems.QUARTZ_TOOL_SETS);
             configureGildedToolSet(VAItems.SCULK_TOOL_SETS);
         }

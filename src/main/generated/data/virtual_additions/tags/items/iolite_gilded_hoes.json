@@ -1,0 +1,10 @@
+{
+  "replace": false,
+  "values": [
+    "virtual_additions:iolite_diamond_hoe",
+    "virtual_additions:iolite_iron_hoe",
+    "virtual_additions:iolite_golden_hoe",
+    "virtual_additions:iolite_steel_hoe",
+    "virtual_additions:iolite_netherite_hoe"
+  ]
+}

@@ -5,7 +5,6 @@ import com.github.suninvr.virtualadditions.registry.RegistryHelper;
 import com.github.suninvr.virtualadditions.registry.VABlockFamilies;
 import com.github.suninvr.virtualadditions.registry.VABlocks;
 import com.github.suninvr.virtualadditions.registry.VAItems;
-import com.google.gson.JsonObject;
 import net.fabricmc.fabric.api.datagen.v1.FabricDataOutput;
 import net.fabricmc.fabric.api.datagen.v1.provider.FabricModelProvider;
 import net.minecraft.data.client.*;
@@ -32,6 +31,7 @@ class VAModelProvider extends FabricModelProvider {
         generateGildedToolItemModels(itemModelGenerator, VAItems.AMETHYST_TOOL_SETS);
         generateGildedToolItemModels(itemModelGenerator, VAItems.COPPER_TOOL_SETS);
         generateGildedToolItemModels(itemModelGenerator, VAItems.EMERALD_TOOL_SETS);
+        generateGildedToolItemModels(itemModelGenerator, VAItems.IOLITE_TOOL_SETS);
         generateGildedToolItemModels(itemModelGenerator, VAItems.QUARTZ_TOOL_SETS);
         generateGildedToolItemModels(itemModelGenerator, VAItems.SCULK_TOOL_SETS);
 

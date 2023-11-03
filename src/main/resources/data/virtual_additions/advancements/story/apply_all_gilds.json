@@ -27,6 +27,10 @@
       "trigger": "minecraft:inventory_changed",
       "conditions": {"items": [{"tag": "virtual_additions:emerald_gilded_swords"}]}
     },
+    "iolite_sword": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {"items": [{"tag": "virtual_additions:iolite_gilded_swords"}]}
+    },
     "quartz_sword": {
       "trigger": "minecraft:inventory_changed",
       "conditions": {"items": [{"tag": "virtual_additions:quartz_gilded_swords"}]}
@@ -46,6 +50,10 @@
     "emerald_shovel": {
       "trigger": "minecraft:inventory_changed",
       "conditions": {"items": [{"tag": "virtual_additions:emerald_gilded_shovels"}]}
+    },
+    "iolite_shovel": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {"items": [{"tag": "virtual_additions:iolite_gilded_shovels"}]}
     },
     "quartz_shovel": {
       "trigger": "minecraft:inventory_changed",
@@ -67,6 +75,10 @@
       "trigger": "minecraft:inventory_changed",
       "conditions": {"items": [{"tag": "virtual_additions:emerald_gilded_pickaxes"}]}
     },
+    "iolite_pickaxe": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {"items": [{"tag": "virtual_additions:iolite_gilded_pickaxes"}]}
+    },
     "quartz_pickaxe": {
       "trigger": "minecraft:inventory_changed",
       "conditions": {"items": [{"tag": "virtual_additions:quartz_gilded_pickaxes"}]}
@@ -87,6 +99,10 @@
       "trigger": "minecraft:inventory_changed",
       "conditions": {"items": [{"tag": "virtual_additions:emerald_gilded_axes"}]}
     },
+    "iolite_axe": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {"items": [{"tag": "virtual_additions:iolite_gilded_axes"}]}
+    },
     "quartz_axe": {
       "trigger": "minecraft:inventory_changed",
       "conditions": {"items": [{"tag": "virtual_additions:quartz_gilded_axes"}]}
@@ -106,6 +122,10 @@
     "emerald_hoe": {
       "trigger": "minecraft:inventory_changed",
       "conditions": {"items": [{"tag": "virtual_additions:emerald_gilded_hoes"}]}
+    },
+    "iolite_hoe": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {"items": [{"tag": "virtual_additions:iolite_gilded_hoes"}]}
     },
     "quartz_hoe": {
       "trigger": "minecraft:inventory_changed",

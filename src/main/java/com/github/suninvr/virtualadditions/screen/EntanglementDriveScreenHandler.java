@@ -39,7 +39,7 @@ public class EntanglementDriveScreenHandler extends ScreenHandler {
 
     public static final Identifier ENTANGLEMENT_DRIVE_ACTIVE_SLOT_SYNC_ID = VirtualAdditions.idOf("entanglement_drive_active_slot_sync");
     public static final Identifier ENTANGLEMENT_DRIVE_SELECTED_SLOT_SYNC_ID = VirtualAdditions.idOf("entanglement_drive_selected_slot_sync");
-    public static final Identifier EMPTY_IOLITE_SLOT = VirtualAdditions.idOf("item/empty_iolite_slot");
+    public static final Identifier EMPTY_IOLITE_SLOT = VirtualAdditions.idOf("item/empty_slot_iolite_dark");
     static final Identifier[] EMPTY_ARMOR_SLOT_TEXTURES;
     private static final EquipmentSlot[] EQUIPMENT_SLOT_ORDER;
     private final EntanglementDriveBlockEntity entity;
@@ -186,6 +186,7 @@ public class EntanglementDriveScreenHandler extends ScreenHandler {
             super.onSlotClick(slotIndex, button, actionType, player);
             return;
         }
+        if (button != 0) return;
         this.selectedSlot = slots.get(slotIndex);
         this.slotSelected = true;
         if (player instanceof ServerPlayerEntity serverPlayerEntity) {

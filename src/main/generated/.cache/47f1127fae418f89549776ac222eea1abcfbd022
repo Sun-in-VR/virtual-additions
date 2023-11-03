@@ -1,4 +1,4 @@
-// 23w44a	2023-11-02T18:59:15.827928479	Virtual Additions/Tags for minecraft:block
+// 23w44a	2023-11-02T19:59:40.734295197	Virtual Additions/Tags for minecraft:block
 6dffddb3fa6b651a0b3f2ae766d0baf07f1ea0b8 data/virtual_additions/tags/blocks/silkbulbs.json
 e76425467c7656048767d19838c43685d76ac1f7 data/minecraft/tags/blocks/sword_efficient.json
 dc3dd38d696fc4ca82f024ab6108cb6acc549dde data/minecraft/tags/blocks/combination_step_sound_blocks.json
@@ -18,8 +18,8 @@ ffb782ad189880fa793e1e3f9a47277be3fd7595 data/minecraft/tags/blocks/doors.json
 79b9a299886d9bbd4d746230d3c812c5f605e004 data/minecraft/tags/blocks/base_stone_overworld.json
 8ce003d52b91136ed1da4a80eb41e7a2514a16ba data/minecraft/tags/blocks/walls.json
 3953adb40c62c8fa7d5d1f24a48fbbcef38a00a5 data/virtual_additions/tags/blocks/climbing_ropes.json
-72a5ec3263ead65782584dd8318a33d0dde7d629 data/minecraft/tags/blocks/needs_stone_tool.json
-52ed306958b52d1ff4c1de65027c63d93fa7f6e8 data/minecraft/tags/blocks/mineable/pickaxe.json
+cdf7d91ff0ece1742d81fdb46cc8975471bf8203 data/minecraft/tags/blocks/needs_stone_tool.json
+7b730854feba1c36c03cdcf3bd649777a1357958 data/minecraft/tags/blocks/mineable/pickaxe.json
 9af7403ac59d30b556611e33397c00b2b8ed0cf4 data/minecraft/tags/blocks/crops.json
 79b9a299886d9bbd4d746230d3c812c5f605e004 data/minecraft/tags/blocks/deepslate_ore_replaceables.json
 79b9a299886d9bbd4d746230d3c812c5f605e004 data/minecraft/tags/blocks/overworld_carver_replaceables.json

@@ -101,7 +101,7 @@ public class EntanglementDriveBlockEntity extends BlockEntity implements Extende
 
     public static <E extends BlockEntity> void tick(World world, BlockPos pos, BlockState state, EntanglementDriveBlockEntity blockEntity) {
         ItemStack stack = blockEntity.getStack();
-        if (blockEntity.cachedStack != stack) {
+        if (!blockEntity.cachedStack.equals(stack)) {
             world.updateComparators(pos, VABlocks.ENTANGLEMENT_DRIVE);
             blockEntity.cachedStack = stack;
         }

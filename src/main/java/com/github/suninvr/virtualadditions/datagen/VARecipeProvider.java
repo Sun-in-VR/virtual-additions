@@ -130,11 +130,13 @@ public final class VARecipeProvider {
             offerToolGildRecipes(exporter, Items.AMETHYST_SHARD, VAItems.AMETHYST_TOOL_SETS);
             offerToolGildRecipes(exporter, Items.COPPER_INGOT, VAItems.COPPER_TOOL_SETS);
             offerToolGildRecipes(exporter, Items.EMERALD, VAItems.EMERALD_TOOL_SETS);
+            offerToolGildRecipes(exporter, VAItems.IOLITE, VAItems.IOLITE_TOOL_SETS);
             offerToolGildRecipes(exporter, Items.QUARTZ, VAItems.QUARTZ_TOOL_SETS);
             offerToolGildRecipes(exporter, Items.ECHO_SHARD, VAItems.SCULK_TOOL_SETS);
             offerToolUpgradeRecipes(exporter, VAItems.AMETHYST_DIAMOND_TOOL_SET, VAItems.AMETHYST_NETHERITE_TOOL_SET);
             offerToolUpgradeRecipes(exporter, VAItems.COPPER_DIAMOND_TOOL_SET, VAItems.COPPER_NETHERITE_TOOL_SET);
             offerToolUpgradeRecipes(exporter, VAItems.EMERALD_DIAMOND_TOOL_SET, VAItems.EMERALD_NETHERITE_TOOL_SET);
+            offerToolUpgradeRecipes(exporter, VAItems.IOLITE_DIAMOND_TOOL_SET, VAItems.IOLITE_NETHERITE_TOOL_SET);
             offerToolUpgradeRecipes(exporter, VAItems.QUARTZ_DIAMOND_TOOL_SET, VAItems.QUARTZ_NETHERITE_TOOL_SET);
             offerToolUpgradeRecipes(exporter, VAItems.SCULK_DIAMOND_TOOL_SET, VAItems.SCULK_NETHERITE_TOOL_SET);
 

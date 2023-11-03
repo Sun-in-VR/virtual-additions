@@ -1,0 +1,7 @@
+{
+  "parent": "minecraft:item/handheld",
+  "textures": {
+    "layer0": "virtual_additions:item/steel_shovel",
+    "layer1": "virtual_additions:item/gilded_tools/iolite_shovel"
+  }
+}

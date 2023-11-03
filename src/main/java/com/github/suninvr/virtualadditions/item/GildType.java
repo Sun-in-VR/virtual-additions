@@ -161,7 +161,7 @@ public class GildType {
     }
 
     public final String buildTooltipTranslationKey() {
-        return "item.virtual_additions.gilded_tool_tooltip." + this.id.getPath();
+        return "gild_type." + this.id.getNamespace() + "." + this.id.getPath();
     }
 
     /**

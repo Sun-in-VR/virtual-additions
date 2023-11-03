@@ -22,6 +22,8 @@
     "PlayerEntityMixin",
     "PlayerInventoryMixin",
     "RangedWeaponItemMixin",
+    "ServerPlayerInteractionManagerMixin",
+    "ServerPlayNetworkHandlerMixin",
     "WallBlockMixin",
     "WaterFluidMixin"
   ],

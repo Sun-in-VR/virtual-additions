@@ -238,32 +238,38 @@ public class VAItems {
     public static final ToolSet AMETHYST_DIAMOND_TOOL_SET;
     public static final ToolSet COPPER_DIAMOND_TOOL_SET;
     public static final ToolSet EMERALD_DIAMOND_TOOL_SET;
+    public static final ToolSet IOLITE_DIAMOND_TOOL_SET;
     public static final ToolSet QUARTZ_DIAMOND_TOOL_SET;
     public static final ToolSet SCULK_DIAMOND_TOOL_SET;
     public static final ToolSet AMETHYST_IRON_TOOL_SET;
-    public static final ToolSet COPPER_IRON_TOOL_SET;
-    public static final ToolSet EMERALD_IRON_TOOL_SET ;
+    public static final ToolSet COPPER_IRON_TOOL_SET ;
+    public static final ToolSet EMERALD_IRON_TOOL_SET;
+    public static final ToolSet IOLITE_IRON_TOOL_SET;
     public static final ToolSet QUARTZ_IRON_TOOL_SET;
     public static final ToolSet SCULK_IRON_TOOL_SET;
     public static final ToolSet AMETHYST_GOLDEN_TOOL_SET;
     public static final ToolSet COPPER_GOLDEN_TOOL_SET;
     public static final ToolSet EMERALD_GOLDEN_TOOL_SET;
+    public static final ToolSet IOLITE_GOLDEN_TOOL_SET;
     public static final ToolSet QUARTZ_GOLDEN_TOOL_SET;
     public static final ToolSet SCULK_GOLDEN_TOOL_SET;
     public static final ToolSet AMETHYST_NETHERITE_TOOL_SET;
     public static final ToolSet COPPER_NETHERITE_TOOL_SET;
     public static final ToolSet EMERALD_NETHERITE_TOOL_SET;
+    public static final ToolSet IOLITE_NETHERITE_TOOL_SET;
     public static final ToolSet QUARTZ_NETHERITE_TOOL_SET;
     public static final ToolSet SCULK_NETHERITE_TOOL_SET;
     public static final ToolSet AMETHYST_STEEL_TOOL_SET;
     public static final ToolSet COPPER_STEEL_TOOL_SET;
     public static final ToolSet EMERALD_STEEL_TOOL_SET;
+    public static final ToolSet IOLITE_STEEL_TOOL_SET;
     public static final ToolSet QUARTZ_STEEL_TOOL_SET;
     public static final ToolSet SCULK_STEEL_TOOL_SET;
     
     public static final ToolSet[] AMETHYST_TOOL_SETS;
     public static final ToolSet[] COPPER_TOOL_SETS;
     public static final ToolSet[] EMERALD_TOOL_SETS;
+    public static final ToolSet[] IOLITE_TOOL_SETS;
     public static final ToolSet[] QUARTZ_TOOL_SETS;
     public static final ToolSet[] SCULK_TOOL_SETS;
 
@@ -282,6 +288,7 @@ public class VAItems {
     private static final Identifier EMPTY_SLOT_EMERALD_TEXTURE;
     private static final Identifier EMPTY_SLOT_AMETHYST_TEXTURE;
     private static final Identifier EMPTY_SLOT_ECHO_SHARD_TEXTURE;
+    private static final Identifier EMPTY_SLOT_IOLITE_TEXTURE;
 
     static {
 
@@ -301,6 +308,7 @@ public class VAItems {
         EMPTY_SLOT_EMERALD_TEXTURE = new Identifier("item/empty_slot_emerald");
         EMPTY_SLOT_AMETHYST_TEXTURE = new Identifier("item/empty_slot_amethyst_shard");
         EMPTY_SLOT_ECHO_SHARD_TEXTURE = new Identifier("virtual_additions:item/empty_slot_echo_shard");
+        EMPTY_SLOT_IOLITE_TEXTURE = new Identifier("virtual_additions:item/empty_slot_iolite");
 
         CLIMBING_ROPE = register("climbing_rope", new AliasedBlockItem(VABlocks.CLIMBING_ROPE_ANCHOR, new FabricItemSettings().maxCount(16)), ItemGroups.TOOLS, Items.LEAD);
 
@@ -484,7 +492,7 @@ public class VAItems {
 
         TOOL_GILD_SMITHING_TEMPLATE = register("tool_gild_smithing_template", new SmithingTemplateItem(TOOL_GILD_APPLIES_TO_TEXT, TOOL_GILD_INGREDIENTS_TEXT, TOOL_GILD_TEXT, TOOL_GILD_BASE_SLOT_DESCRIPTION_TEXT, TOOL_GILD_ADDITIONS_SLOT_DESCRIPTION_TEXT,
                 List.of(EMPTY_SLOT_SWORD_TEXTURE, EMPTY_SLOT_SHOVEL_TEXTURE, EMPTY_SLOT_PICKAXE_TEXTURE, EMPTY_SLOT_AXE_TEXTURE, EMPTY_SLOT_HOE_TEXTURE),
-                List.of(EMPTY_SLOT_AMETHYST_TEXTURE, EMPTY_SLOT_INGOT_TEXTURE, EMPTY_SLOT_EMERALD_TEXTURE, EMPTY_SLOT_QUARTZ_TEXTURE, EMPTY_SLOT_ECHO_SHARD_TEXTURE)
+                List.of(EMPTY_SLOT_AMETHYST_TEXTURE, EMPTY_SLOT_INGOT_TEXTURE, EMPTY_SLOT_EMERALD_TEXTURE, EMPTY_SLOT_IOLITE_TEXTURE, EMPTY_SLOT_QUARTZ_TEXTURE, EMPTY_SLOT_ECHO_SHARD_TEXTURE)
         ), ItemGroups.INGREDIENTS, Items.NETHERITE_UPGRADE_SMITHING_TEMPLATE);
 
         IOLITE = register("iolite", ItemGroups.INGREDIENTS, Items.ANCIENT_DEBRIS);
@@ -497,32 +505,38 @@ public class VAItems {
         AMETHYST_DIAMOND_TOOL_SET = registerGildedToolSet(DIAMOND_TOOL_SET, GildTypes.AMETHYST);
         COPPER_DIAMOND_TOOL_SET = registerGildedToolSet(DIAMOND_TOOL_SET, GildTypes.COPPER);
         EMERALD_DIAMOND_TOOL_SET = registerGildedToolSet(DIAMOND_TOOL_SET, GildTypes.EMERALD);
+        IOLITE_DIAMOND_TOOL_SET = registerGildedToolSet(DIAMOND_TOOL_SET, GildTypes.IOLITE);
         QUARTZ_DIAMOND_TOOL_SET = registerGildedToolSet(DIAMOND_TOOL_SET, GildTypes.QUARTZ);
         SCULK_DIAMOND_TOOL_SET = registerGildedToolSet(DIAMOND_TOOL_SET, GildTypes.SCULK);
         AMETHYST_IRON_TOOL_SET = registerGildedToolSet(IRON_TOOL_SET, GildTypes.AMETHYST);
         COPPER_IRON_TOOL_SET = registerGildedToolSet(IRON_TOOL_SET, GildTypes.COPPER);
         EMERALD_IRON_TOOL_SET = registerGildedToolSet(IRON_TOOL_SET, GildTypes.EMERALD);
+        IOLITE_IRON_TOOL_SET = registerGildedToolSet(IRON_TOOL_SET, GildTypes.IOLITE);
         QUARTZ_IRON_TOOL_SET = registerGildedToolSet(IRON_TOOL_SET, GildTypes.QUARTZ);
         SCULK_IRON_TOOL_SET = registerGildedToolSet(IRON_TOOL_SET, GildTypes.SCULK);
         AMETHYST_GOLDEN_TOOL_SET = registerGildedToolSet(GOLDEN_TOOL_SET, GildTypes.AMETHYST);
         COPPER_GOLDEN_TOOL_SET = registerGildedToolSet(GOLDEN_TOOL_SET, GildTypes.COPPER);
         EMERALD_GOLDEN_TOOL_SET = registerGildedToolSet(GOLDEN_TOOL_SET, GildTypes.EMERALD);
+        IOLITE_GOLDEN_TOOL_SET = registerGildedToolSet(GOLDEN_TOOL_SET, GildTypes.IOLITE);
         QUARTZ_GOLDEN_TOOL_SET = registerGildedToolSet(GOLDEN_TOOL_SET, GildTypes.QUARTZ);
         SCULK_GOLDEN_TOOL_SET = registerGildedToolSet(GOLDEN_TOOL_SET, GildTypes.SCULK);
         AMETHYST_NETHERITE_TOOL_SET = registerGildedToolSet(NETHERITE_TOOL_SET, GildTypes.AMETHYST);
         COPPER_NETHERITE_TOOL_SET = registerGildedToolSet(NETHERITE_TOOL_SET, GildTypes.COPPER);
         EMERALD_NETHERITE_TOOL_SET = registerGildedToolSet(NETHERITE_TOOL_SET, GildTypes.EMERALD);
+        IOLITE_NETHERITE_TOOL_SET = registerGildedToolSet(NETHERITE_TOOL_SET, GildTypes.IOLITE);
         QUARTZ_NETHERITE_TOOL_SET = registerGildedToolSet(NETHERITE_TOOL_SET, GildTypes.QUARTZ);
         SCULK_NETHERITE_TOOL_SET = registerGildedToolSet(NETHERITE_TOOL_SET, GildTypes.SCULK);
         AMETHYST_STEEL_TOOL_SET = registerGildedToolSet(STEEL_TOOL_SET, GildTypes.AMETHYST);
         COPPER_STEEL_TOOL_SET = registerGildedToolSet(STEEL_TOOL_SET, GildTypes.COPPER);
         EMERALD_STEEL_TOOL_SET = registerGildedToolSet(STEEL_TOOL_SET, GildTypes.EMERALD);
+        IOLITE_STEEL_TOOL_SET = registerGildedToolSet(STEEL_TOOL_SET, GildTypes.IOLITE);
         QUARTZ_STEEL_TOOL_SET = registerGildedToolSet(STEEL_TOOL_SET, GildTypes.QUARTZ);
         SCULK_STEEL_TOOL_SET = registerGildedToolSet(STEEL_TOOL_SET, GildTypes.SCULK);
         
         AMETHYST_TOOL_SETS = new ToolSet[]{AMETHYST_DIAMOND_TOOL_SET, AMETHYST_IRON_TOOL_SET, AMETHYST_GOLDEN_TOOL_SET, AMETHYST_STEEL_TOOL_SET, AMETHYST_NETHERITE_TOOL_SET};
         COPPER_TOOL_SETS = new ToolSet[]{COPPER_DIAMOND_TOOL_SET, COPPER_IRON_TOOL_SET, COPPER_GOLDEN_TOOL_SET, COPPER_STEEL_TOOL_SET, COPPER_NETHERITE_TOOL_SET};
         EMERALD_TOOL_SETS = new ToolSet[]{EMERALD_DIAMOND_TOOL_SET, EMERALD_IRON_TOOL_SET, EMERALD_GOLDEN_TOOL_SET, EMERALD_STEEL_TOOL_SET, EMERALD_NETHERITE_TOOL_SET};
+        IOLITE_TOOL_SETS = new ToolSet[]{IOLITE_DIAMOND_TOOL_SET, IOLITE_IRON_TOOL_SET, IOLITE_GOLDEN_TOOL_SET, IOLITE_STEEL_TOOL_SET, IOLITE_NETHERITE_TOOL_SET};
         QUARTZ_TOOL_SETS = new ToolSet[]{QUARTZ_DIAMOND_TOOL_SET, QUARTZ_IRON_TOOL_SET, QUARTZ_GOLDEN_TOOL_SET, QUARTZ_STEEL_TOOL_SET, QUARTZ_NETHERITE_TOOL_SET};
         SCULK_TOOL_SETS = new ToolSet[]{SCULK_DIAMOND_TOOL_SET, SCULK_IRON_TOOL_SET, SCULK_GOLDEN_TOOL_SET, SCULK_STEEL_TOOL_SET, SCULK_NETHERITE_TOOL_SET};
 
