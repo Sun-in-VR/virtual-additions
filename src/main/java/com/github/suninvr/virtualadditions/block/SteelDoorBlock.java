@@ -30,8 +30,8 @@ public class SteelDoorBlock extends DoorBlock {
     }
 
     @Override
-    public MapCodec<DoorBlock> getCodec() {
-        return super.getCodec();
+    public MapCodec<? extends DoorBlock> getCodec() {
+        return CODEC;
     }
 
     @Override

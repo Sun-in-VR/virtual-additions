@@ -222,7 +222,9 @@ public final class VAItemTagProvider {
                     VABlockFamilies.AEROBLOOM
             );
             configureBlockFamilies(
-                    VABlockFamilies.FLOATROCK
+                    VABlockFamilies.FLOATROCK,
+                    VABlockFamilies.POLISHED_FLOATROCK,
+                    VABlockFamilies.FLOATROCK_BRICKS
             );
 
             getOrCreateTagBuilder(CRYSTALS).add(VAItems.RED_GLIMMER_CRYSTAL, VAItems.GREEN_GLIMMER_CRYSTAL, VAItems.BLUE_GLIMMER_CRYSTAL);

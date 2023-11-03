@@ -345,7 +345,7 @@ public final class VABlockTagProvider {
             configureMinable(BlockTags.PICKAXE_MINEABLE, 2, VABlocks.FLOATROCK_DIAMOND_ORE, VABlocks.FLOATROCK_REDSTONE_ORE, VABlocks.FLOATROCK_EMERALD_ORE, VABlocks.FLOATROCK_GOLD_ORE);
 
             configureOverworldStone(VABlocks.FLOATROCK);
-            configureFamily(BlockTags.PICKAXE_MINEABLE, 0, VABlockFamilies.FLOATROCK);
+            configureFamily(BlockTags.PICKAXE_MINEABLE, 0, VABlockFamilies.FLOATROCK, VABlockFamilies.POLISHED_FLOATROCK, VABlockFamilies.FLOATROCK_BRICKS);
             configureWoodenFamily(BlockTags.AXE_MINEABLE, 0, VABlockFamilies.AEROBLOOM);
 
             getOrCreateTagBuilder(VABlockTags.HEDGES).add(

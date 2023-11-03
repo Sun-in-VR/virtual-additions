@@ -35,7 +35,7 @@ public abstract class CrossbowItemMixin {
             if (bl) {
                 //Code reused from CrossbowItem::shoot
                 ProjectileEntity projectileEntity;
-                projectileEntity = new ClimbingRopeEntity(shooter.getX(), shooter.getEyeY(), shooter.getZ(), world);
+                projectileEntity = new ClimbingRopeEntity(shooter.getX(), shooter.getEyeY(), shooter.getZ(), world, projectile);
                 projectileEntity.setOwner(shooter);
 
                 if (shooter instanceof CrossbowUser crossbowUser) {

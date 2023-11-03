@@ -2,6 +2,8 @@ package com.github.suninvr.virtualadditions.datagen;
 
 import com.github.suninvr.virtualadditions.item.interfaces.GildedToolItem;
 import com.github.suninvr.virtualadditions.registry.RegistryHelper;
+import com.github.suninvr.virtualadditions.registry.VABlockFamilies;
+import com.github.suninvr.virtualadditions.registry.VABlocks;
 import com.github.suninvr.virtualadditions.registry.VAItems;
 import com.google.gson.JsonObject;
 import net.fabricmc.fabric.api.datagen.v1.FabricDataOutput;
@@ -21,7 +23,8 @@ class VAModelProvider extends FabricModelProvider {
 
     @Override
     public void generateBlockStateModels(BlockStateModelGenerator blockStateModelGenerator) {
-
+        blockStateModelGenerator.registerCubeAllModelTexturePool(VABlocks.POLISHED_FLOATROCK).family(VABlockFamilies.POLISHED_FLOATROCK);
+        blockStateModelGenerator.registerCubeAllModelTexturePool(VABlocks.FLOATROCK_BRICKS).family(VABlockFamilies.FLOATROCK_BRICKS);
     }
 
     @Override
@@ -53,11 +56,6 @@ class VAModelProvider extends FabricModelProvider {
         else if (item instanceof ShovelItem) TOOL_TYPE_SUFFIX = "_shovel";
         else if (item instanceof SwordItem) TOOL_TYPE_SUFFIX = "_sword";
         Identifier gild = gildedToolItem.getGildType().getId().withSuffixedPath(TOOL_TYPE_SUFFIX).withPrefixedPath("item/gilded_tools/");
-        Models.HANDHELD.upload(ModelIds.getItemModelId(item), TextureMap.layered(base, base), itemModelGenerator.writer, new Model.JsonFactory() {
-            @Override
-            public JsonObject create(Identifier id, Map<TextureKey, Identifier> textures) {
-                return Models.HANDHELD.createJson(ModelIds.getItemModelId(item), Map.of(TextureKey.LAYER0, base, TextureKey.LAYER1, gild));
-            }
-        });
+        Models.HANDHELD.upload(ModelIds.getItemModelId(item), TextureMap.layered(base, base), itemModelGenerator.writer, (id, textures) -> Models.HANDHELD.createJson(ModelIds.getItemModelId(item), Map.of(TextureKey.LAYER0, base, TextureKey.LAYER1, gild)));
     }
 }

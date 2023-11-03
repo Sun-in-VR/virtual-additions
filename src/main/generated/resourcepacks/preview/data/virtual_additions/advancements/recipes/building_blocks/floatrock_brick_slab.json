@@ -1,0 +1,35 @@
+{
+  "parent": "minecraft:recipes/root",
+  "criteria": {
+    "has_floatrock_bricks": {
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "virtual_additions:floatrock_bricks"
+            ]
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    },
+    "has_the_recipe": {
+      "conditions": {
+        "recipe": "virtual_additions:floatrock_brick_slab"
+      },
+      "trigger": "minecraft:recipe_unlocked"
+    }
+  },
+  "requirements": [
+    [
+      "has_the_recipe",
+      "has_floatrock_bricks"
+    ]
+  ],
+  "rewards": {
+    "recipes": [
+      "virtual_additions:floatrock_brick_slab"
+    ]
+  },
+  "sends_telemetry_event": false
+}

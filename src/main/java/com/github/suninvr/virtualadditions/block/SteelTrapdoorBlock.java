@@ -29,8 +29,8 @@ public class SteelTrapdoorBlock extends TrapdoorBlock {
     }
 
     @Override
-    public MapCodec<TrapdoorBlock> getCodec() {
-        return super.getCodec();
+    public MapCodec<? extends TrapdoorBlock> getCodec() {
+        return CODEC;
     }
 
     @Override

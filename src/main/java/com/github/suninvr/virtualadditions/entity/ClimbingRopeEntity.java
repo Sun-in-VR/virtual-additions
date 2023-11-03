@@ -19,11 +19,11 @@ import net.minecraft.world.World;
 public class ClimbingRopeEntity extends PersistentProjectileEntity {
 
     public ClimbingRopeEntity(EntityType<? extends PersistentProjectileEntity> entityType, World world) {
-        super(entityType, world);
+        super(entityType, world, VAItems.CLIMBING_ROPE.getDefaultStack());
     }
 
-    public ClimbingRopeEntity(double x, double y, double z, World world) {
-        super(VAEntityType.CLIMBING_ROPE, x, y, z, world);
+    public ClimbingRopeEntity(double x, double y, double z, World world, ItemStack stack) {
+        super(VAEntityType.CLIMBING_ROPE, x, y, z, world, stack);
     }
 
     @Override
@@ -46,10 +46,5 @@ public class ClimbingRopeEntity extends PersistentProjectileEntity {
     @Override
     protected boolean canHit(Entity entity) {
         return false;
-    }
-
-    @Override
-    protected ItemStack asItemStack() {
-        return new ItemStack(VAItems.CLIMBING_ROPE);
     }
 }

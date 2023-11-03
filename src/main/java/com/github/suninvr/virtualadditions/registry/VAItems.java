@@ -111,6 +111,14 @@ public class VAItems {
     public static final Item FLOATROCK_STAIRS;
     public static final Item FLOATROCK_SLAB;
     public static final Item FLOATROCK_WALL;
+    public static final Item FLOATROCK_BRICKS;
+    public static final Item FLOATROCK_BRICK_STAIRS;
+    public static final Item FLOATROCK_BRICK_SLAB;
+    public static final Item FLOATROCK_BRICK_WALL;
+    public static final Item POLISHED_FLOATROCK;
+    public static final Item POLISHED_FLOATROCK_STAIRS;
+    public static final Item POLISHED_FLOATROCK_SLAB;
+    public static final Item POLISHED_FLOATROCK_WALL;
     public static final Item FLOATROCK_COAL_ORE;
     public static final Item FLOATROCK_IRON_ORE;
     public static final Item FLOATROCK_COPPER_ORE;
@@ -344,6 +352,14 @@ public class VAItems {
         FLOATROCK_STAIRS = registerBlockItem("floatrock_stairs", VABlocks.FLOATROCK_STAIRS, ItemGroups.BUILDING_BLOCKS, prev);
         FLOATROCK_SLAB = registerBlockItem("floatrock_slab", VABlocks.FLOATROCK_SLAB, ItemGroups.BUILDING_BLOCKS, prev);
         FLOATROCK_WALL = registerBlockItem("floatrock_wall", VABlocks.FLOATROCK_WALL, ItemGroups.BUILDING_BLOCKS, prev);
+        FLOATROCK_BRICKS = registerBlockItem("floatrock_bricks", VABlocks.FLOATROCK_BRICKS, ItemGroups.BUILDING_BLOCKS, prev);
+        FLOATROCK_BRICK_STAIRS = registerBlockItem("floatrock_brick_stairs", VABlocks.FLOATROCK_BRICK_STAIRS, ItemGroups.BUILDING_BLOCKS, prev);
+        FLOATROCK_BRICK_SLAB = registerBlockItem("floatrock_brick_slab", VABlocks.FLOATROCK_BRICK_SLAB, ItemGroups.BUILDING_BLOCKS, prev);
+        FLOATROCK_BRICK_WALL = registerBlockItem("floatrock_brick_wall", VABlocks.FLOATROCK_BRICK_WALL, ItemGroups.BUILDING_BLOCKS, prev);
+        POLISHED_FLOATROCK = registerBlockItem("polished_floatrock", VABlocks.POLISHED_FLOATROCK, ItemGroups.BUILDING_BLOCKS, prev);
+        POLISHED_FLOATROCK_STAIRS = registerBlockItem("polished_floatrock_stairs", VABlocks.POLISHED_FLOATROCK_STAIRS, ItemGroups.BUILDING_BLOCKS, prev);
+        POLISHED_FLOATROCK_SLAB = registerBlockItem("polished_floatrock_slab", VABlocks.POLISHED_FLOATROCK_SLAB, ItemGroups.BUILDING_BLOCKS, prev);
+        POLISHED_FLOATROCK_WALL = registerBlockItem("polished_floatrock_wall", VABlocks.POLISHED_FLOATROCK_WALL, ItemGroups.BUILDING_BLOCKS, prev);
         GRASSY_FLOATROCK = registerBlockItem("grassy_floatrock", VABlocks.GRASSY_FLOATROCK, ItemGroups.NATURAL, FLOATROCK);
         
         FLOATROCK_COAL_ORE = registerBlockItem("floatrock_coal_ore", VABlocks.FLOATROCK_COAL_ORE, ItemGroups.NATURAL, Items.DEEPSLATE_COAL_ORE);
@@ -535,7 +551,7 @@ public class VAItems {
 
         DispenserBlock.registerBehavior(CLIMBING_ROPE, new ProjectileDispenserBehavior() {
             protected ProjectileEntity createProjectile(World world, Position position, ItemStack stack) {
-                ClimbingRopeEntity climbingRopeEntity = new ClimbingRopeEntity( position.getX(), position.getY(), position.getZ(), world);
+                ClimbingRopeEntity climbingRopeEntity = new ClimbingRopeEntity( position.getX(), position.getY(), position.getZ(), world, stack);
                 climbingRopeEntity.pickupType = PersistentProjectileEntity.PickupPermission.ALLOWED;
                 return climbingRopeEntity;
             }

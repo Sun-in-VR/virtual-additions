@@ -323,7 +323,12 @@ public final class VARecipeProvider {
 
             offerHedgeRecipe(exporter, VABlocks.AEROBLOOM_HEDGE, VABlocks.AEROBLOOM_LEAVES);
 
+            offerStonecuttingRecipes(exporter, VABlocks.FLOATROCK, VABlockFamilies.POLISHED_FLOATROCK, VABlockFamilies.FLOATROCK_BRICKS);
             generateCuttableFamilyChain(exporter, VABlockFamilies.FLOATROCK);
+            generateCuttableFamilyChain(exporter, VABlockFamilies.POLISHED_FLOATROCK);
+            generateCuttableFamilyChain(exporter, VABlockFamilies.FLOATROCK_BRICKS);
+            offer2x2FullRecipe(exporter, RecipeCategory.MISC, VAItems.POLISHED_FLOATROCK, VAItems.FLOATROCK, 4);
+            offer2x2FullRecipe(exporter, RecipeCategory.MISC, VAItems.FLOATROCK_BRICKS, VAItems.POLISHED_FLOATROCK, 4);
 
             generateFamily(exporter, VABlockFamilies.AEROBLOOM);
             offerBarkBlockRecipe(exporter, VAItems.AEROBLOOM_WOOD, VAItems.AEROBLOOM_LOG);

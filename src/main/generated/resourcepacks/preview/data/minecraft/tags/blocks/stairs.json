@@ -1,6 +1,8 @@
 {
   "replace": false,
   "values": [
-    "virtual_additions:floatrock_stairs"
+    "virtual_additions:floatrock_stairs",
+    "virtual_additions:polished_floatrock_stairs",
+    "virtual_additions:floatrock_brick_stairs"
   ]
 }

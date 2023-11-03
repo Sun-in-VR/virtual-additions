@@ -167,7 +167,9 @@ public final class VABlockLootTableProvider {
         public void generate() {
             addFamilyDrops(
                     VABlockFamilies.AEROBLOOM,
-                    VABlockFamilies.FLOATROCK
+                    VABlockFamilies.FLOATROCK,
+                    VABlockFamilies.POLISHED_FLOATROCK,
+                    VABlockFamilies.FLOATROCK_BRICKS
             );
             addSimpleDrops(
                     VABlocks.AEROBLOOM_LOG,

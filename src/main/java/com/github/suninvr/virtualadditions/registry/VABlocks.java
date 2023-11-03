@@ -91,6 +91,14 @@ public class VABlocks {
     public static final Block FLOATROCK_STAIRS;
     public static final Block FLOATROCK_SLAB;
     public static final Block FLOATROCK_WALL;
+    public static final Block FLOATROCK_BRICKS;
+    public static final Block FLOATROCK_BRICK_STAIRS;
+    public static final Block FLOATROCK_BRICK_SLAB;
+    public static final Block FLOATROCK_BRICK_WALL;
+    public static final Block POLISHED_FLOATROCK;
+    public static final Block POLISHED_FLOATROCK_STAIRS;
+    public static final Block POLISHED_FLOATROCK_SLAB;
+    public static final Block POLISHED_FLOATROCK_WALL;
     public static final Block FLOATROCK_COAL_ORE;
     public static final Block FLOATROCK_IRON_ORE;
     public static final Block FLOATROCK_COPPER_ORE;
@@ -241,6 +249,14 @@ public class VABlocks {
         FLOATROCK_STAIRS = register("floatrock_stairs", new StairsBlock(FLOATROCK.getDefaultState(), AbstractBlock.Settings.copy(Blocks.TUFF).requires(VirtualAdditions.PREVIEW)));
         FLOATROCK_SLAB = register("floatrock_slab", new SlabBlock(AbstractBlock.Settings.copy(Blocks.TUFF).requires(VirtualAdditions.PREVIEW)));
         FLOATROCK_WALL = register("floatrock_wall", new WallBlock(AbstractBlock.Settings.copy(Blocks.TUFF).requires(VirtualAdditions.PREVIEW)));
+        FLOATROCK_BRICKS = register("floatrock_bricks", new Block(AbstractBlock.Settings.copy(Blocks.TUFF_BRICKS).requires(VirtualAdditions.PREVIEW)));
+        FLOATROCK_BRICK_STAIRS = register("floatrock_brick_stairs", new StairsBlock(FLOATROCK_BRICKS.getDefaultState(), AbstractBlock.Settings.copy(Blocks.TUFF_BRICKS).requires(VirtualAdditions.PREVIEW)));
+        FLOATROCK_BRICK_SLAB = register("floatrock_brick_slab", new SlabBlock(AbstractBlock.Settings.copy(Blocks.TUFF_BRICKS).requires(VirtualAdditions.PREVIEW)));
+        FLOATROCK_BRICK_WALL = register("floatrock_brick_wall", new WallBlock(AbstractBlock.Settings.copy(Blocks.TUFF_BRICKS).requires(VirtualAdditions.PREVIEW)));
+        POLISHED_FLOATROCK = register("polished_floatrock", new Block(AbstractBlock.Settings.copy(Blocks.POLISHED_TUFF).requires(VirtualAdditions.PREVIEW)));
+        POLISHED_FLOATROCK_STAIRS = register("polished_floatrock_stairs", new StairsBlock(POLISHED_FLOATROCK.getDefaultState(), AbstractBlock.Settings.copy(Blocks.POLISHED_TUFF).requires(VirtualAdditions.PREVIEW)));
+        POLISHED_FLOATROCK_SLAB = register("polished_floatrock_slab", new SlabBlock(AbstractBlock.Settings.copy(Blocks.POLISHED_TUFF).requires(VirtualAdditions.PREVIEW)));
+        POLISHED_FLOATROCK_WALL = register("polished_floatrock_wall", new WallBlock(AbstractBlock.Settings.copy(Blocks.POLISHED_TUFF).requires(VirtualAdditions.PREVIEW)));
 
         BALLOON_BULB = register("balloon_bulb", new BalloonBulbBlock(AbstractBlock.Settings.copy(COTTON).mapColor(MapColor.LIGHT_BLUE).offset(AbstractBlock.OffsetType.XZ).requires(VirtualAdditions.PREVIEW)));
         BALLOON_BULB_PLANT = register("balloon_bulb_plant", new BalloonBulbPlantBlock(AbstractBlock.Settings.copy(BALLOON_BULB).requires(VirtualAdditions.PREVIEW)));
