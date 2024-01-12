@@ -30,6 +30,5 @@
     "recipes": [
       "virtual_additions:smithing/iolite_netherite_hoe_upgrade"
     ]
-  },
-  "sends_telemetry_event": false
+  }
 }

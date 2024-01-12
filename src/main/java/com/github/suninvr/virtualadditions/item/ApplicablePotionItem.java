@@ -37,7 +37,7 @@ public class ApplicablePotionItem extends PotionItem {
                 NbtCompound clickedStacknbt = clickedStack.getOrCreateNbt();
                 NbtCompound stackNbt = stack.getOrCreateNbt();
                 NbtCompound appliedPotionNbt = new NbtCompound();
-                Potion potion = PotionUtil.getPotion(stack);
+                Potion potion = PotionUtil.getPotion(stack).value();
                 player.playSound(SoundEvents.ITEM_BOTTLE_EMPTY, SoundCategory.PLAYERS, 0.3F, 1.4F);
 
                 if (stackNbt.contains("Potion")) appliedPotionNbt.putString("Potion", stackNbt.getString("Potion"));
@@ -73,6 +73,6 @@ public class ApplicablePotionItem extends PotionItem {
 
     @Override
     public void appendTooltip(ItemStack stack, @Nullable World world, List<Text> tooltip, TooltipContext context) {
-        PotionUtil.buildTooltip(stack, tooltip, 0.125F);
+        PotionUtil.buildTooltip(stack, tooltip, 0.125F, world == null ? 1.0F : world.getTickManager().getTickRate());
     }
 }

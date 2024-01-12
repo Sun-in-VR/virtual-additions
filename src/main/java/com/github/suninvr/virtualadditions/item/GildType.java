@@ -1,20 +1,25 @@
 package com.github.suninvr.virtualadditions.item;
 
+import com.google.common.collect.ImmutableMultimap;
 import net.minecraft.block.BlockState;
 import net.minecraft.entity.EquipmentSlot;
+import net.minecraft.entity.attribute.EntityAttribute;
 import net.minecraft.entity.attribute.EntityAttributeModifier;
 import net.minecraft.entity.attribute.EntityAttributes;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.*;
 import net.minecraft.recipe.Ingredient;
 import net.minecraft.registry.RegistryKeys;
+import net.minecraft.registry.entry.RegistryEntry;
 import net.minecraft.registry.tag.TagKey;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
+import org.jetbrains.annotations.Nullable;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.UUID;
 import java.util.function.BiFunction;
 
 public class GildType {
@@ -28,6 +33,7 @@ public class GildType {
     private TagKey<Item> shovelsTag;
     private TagKey<Item> swordsTag;
     public record Modifier(ModifierType type, float value, BiFunction<Float, Float, Float> function, ModifierType.ToolType... appliesTo){
+
         public float apply(float f) {
             return this.function.apply(f, this.value);
         }
@@ -246,6 +252,15 @@ public class GildType {
         return this.swordsTag;
     }
 
+    public final void appendAttributeModifiers(ImmutableMultimap.Builder<RegistryEntry<EntityAttribute>, EntityAttributeModifier> builder) {
+        this.modifiers.forEach( modifier -> {
+            RegistryEntry<EntityAttribute> attribute = modifier.type.getAttributeType();
+            if (attribute != null) {
+                builder.put(attribute, new EntityAttributeModifier(modifier.type.getAttributeId(), "Tool Modifier", modifier.value, EntityAttributeModifier.Operation.ADDITION));
+            }
+        } );
+    }
+
     @Override
     public final boolean equals(Object obj) {
         return (obj instanceof GildType gildType && gildType.getId().equals(this.id)) || (obj instanceof Identifier identifier && identifier.equals(this.id));
@@ -262,7 +277,9 @@ public class GildType {
         ATTACK_DAMAGE,
         MINING_LEVEL,
         ENCHANTABILITY,
-        ATTACK_SPEED(false);
+        ATTACK_SPEED(false),
+        BLOCK_INTERACTION_RANGE(false),
+        ENTITY_INTERACTION_RANGE(false);
 
         protected enum ToolType {
             SWORD,
@@ -286,6 +303,23 @@ public class GildType {
 
         ModifierType(boolean modifiesBaseMaterial) {
             this.modifiesBaseMaterial = modifiesBaseMaterial;
+        }
+
+        @Nullable
+        public RegistryEntry<EntityAttribute> getAttributeType() {
+            return switch (this) {
+                case BLOCK_INTERACTION_RANGE -> EntityAttributes.GENERIC_BLOCK_INTERACTION_RANGE;
+                case ENTITY_INTERACTION_RANGE -> EntityAttributes.GENERIC_ENTITY_INTERACTION_RANGE;
+                default -> null;
+            };
+        }
+
+        public UUID getAttributeId() {
+            return switch (this) {
+                case BLOCK_INTERACTION_RANGE -> UUID.fromString("C39B0D39-EB64-45E9-A58E-52DA390DD1A2");
+                case ENTITY_INTERACTION_RANGE -> UUID.fromString("D4786B0F-DF61-45D8-B77C-E5B55C4F4066");
+                default -> UUID.fromString("0-0-0-0-0");
+            };
         }
 
         ModifierType() {

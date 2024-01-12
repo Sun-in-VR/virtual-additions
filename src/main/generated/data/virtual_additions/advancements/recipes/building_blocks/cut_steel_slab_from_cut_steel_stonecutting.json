@@ -30,6 +30,5 @@
     "recipes": [
       "minecraft:cut_steel_slab_from_cut_steel_stonecutting"
     ]
-  },
-  "sends_telemetry_event": false
+  }
 }

@@ -30,6 +30,5 @@
     "recipes": [
       "virtual_additions:smithing/sculk_netherite_pickaxe_upgrade"
     ]
-  },
-  "sends_telemetry_event": false
+  }
 }

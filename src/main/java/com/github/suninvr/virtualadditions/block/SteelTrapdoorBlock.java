@@ -34,7 +34,7 @@ public class SteelTrapdoorBlock extends TrapdoorBlock {
     }
 
     @Override
-    public ActionResult onUse(BlockState state, World world, BlockPos pos, PlayerEntity player, Hand hand, BlockHitResult hit) {
+    public ActionResult onUse(BlockState state, World world, BlockPos pos, PlayerEntity player, BlockHitResult hit) {
         state = state.cycle(SHUTTER_OPEN);
         world.setBlockState(pos, state, Block.NOTIFY_LISTENERS | Block.REDRAW_ON_MAIN_THREAD);
         this.playOpenCloseShutterSound(player, world, pos, state.get(SHUTTER_OPEN));

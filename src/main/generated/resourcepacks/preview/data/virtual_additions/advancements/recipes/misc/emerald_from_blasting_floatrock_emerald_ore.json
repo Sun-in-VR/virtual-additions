@@ -30,6 +30,5 @@
     "recipes": [
       "minecraft:emerald_from_blasting_floatrock_emerald_ore"
     ]
-  },
-  "sends_telemetry_event": false
+  }
 }

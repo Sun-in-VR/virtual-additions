@@ -30,6 +30,5 @@
     "recipes": [
       "virtual_additions:webbed_silk"
     ]
-  },
-  "sends_telemetry_event": false
+  }
 }

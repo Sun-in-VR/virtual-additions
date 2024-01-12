@@ -30,6 +30,5 @@
     "recipes": [
       "virtual_additions:cobbled_blueschist_wall"
     ]
-  },
-  "sends_telemetry_event": false
+  }
 }

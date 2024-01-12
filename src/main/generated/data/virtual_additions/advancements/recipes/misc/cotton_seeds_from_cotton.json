@@ -30,6 +30,5 @@
     "recipes": [
       "minecraft:cotton_seeds_from_cotton"
     ]
-  },
-  "sends_telemetry_event": false
+  }
 }

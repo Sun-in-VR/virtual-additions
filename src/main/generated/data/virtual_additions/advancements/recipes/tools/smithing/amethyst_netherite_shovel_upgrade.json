@@ -30,6 +30,5 @@
     "recipes": [
       "virtual_additions:smithing/amethyst_netherite_shovel_upgrade"
     ]
-  },
-  "sends_telemetry_event": false
+  }
 }

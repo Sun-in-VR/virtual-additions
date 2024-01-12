@@ -22,8 +22,7 @@
     "PlayerEntityMixin",
     "PlayerInventoryMixin",
     "RangedWeaponItemMixin",
-    "ServerPlayerInteractionManagerMixin",
-    "ServerPlayNetworkHandlerMixin",
+    "RedstoneWireBlockMixin",
     "WallBlockMixin",
     "WaterFluidMixin"
   ],

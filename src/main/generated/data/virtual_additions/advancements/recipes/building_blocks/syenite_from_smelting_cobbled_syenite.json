@@ -30,6 +30,5 @@
     "recipes": [
       "minecraft:syenite_from_smelting_cobbled_syenite"
     ]
-  },
-  "sends_telemetry_event": false
+  }
 }

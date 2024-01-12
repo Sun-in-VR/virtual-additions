@@ -30,6 +30,5 @@
     "recipes": [
       "minecraft:floatrock_brick_stairs_from_floatrock_bricks_stonecutting"
     ]
-  },
-  "sends_telemetry_event": false
+  }
 }

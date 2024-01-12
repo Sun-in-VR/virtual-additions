@@ -30,6 +30,5 @@
     "recipes": [
       "virtual_additions:steel_trapdoor"
     ]
-  },
-  "sends_telemetry_event": false
+  }
 }

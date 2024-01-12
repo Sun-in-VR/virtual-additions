@@ -30,6 +30,5 @@
     "recipes": [
       "virtual_additions:smithing/emerald_golden_pickaxe"
     ]
-  },
-  "sends_telemetry_event": false
+  }
 }

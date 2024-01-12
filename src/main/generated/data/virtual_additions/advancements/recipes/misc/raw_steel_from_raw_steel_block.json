@@ -30,6 +30,5 @@
     "recipes": [
       "minecraft:raw_steel_from_raw_steel_block"
     ]
-  },
-  "sends_telemetry_event": false
+  }
 }

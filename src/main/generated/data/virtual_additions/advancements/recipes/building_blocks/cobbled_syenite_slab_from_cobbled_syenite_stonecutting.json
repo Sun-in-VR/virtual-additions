@@ -30,6 +30,5 @@
     "recipes": [
       "minecraft:cobbled_syenite_slab_from_cobbled_syenite_stonecutting"
     ]
-  },
-  "sends_telemetry_event": false
+  }
 }

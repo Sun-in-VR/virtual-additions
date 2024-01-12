@@ -95,6 +95,7 @@ public final class VABlockLootTableProvider {
                     VABlocks.PURPLE_SILKBULB,
                     VABlocks.MAGENTA_SILKBULB,
                     VABlocks.PINK_SILKBULB,
+                    VABlocks.ACID_BLOCK,
                     VABlocks.IOLITE_BLOCK,
                     VABlocks.WARP_ANCHOR,
                     VABlocks.ENTANGLEMENT_DRIVE
@@ -109,7 +110,6 @@ public final class VABlockLootTableProvider {
             this.addDrop(VABlocks.GLOWING_SILK, block -> this.drops(block, VAItems.SILK_THREAD));
             this.addDrop(VABlocks.IOLITE_ORE, block -> this.oreDrops(block, VAItems.IOLITE));
             this.addDrop(VABlocks.TALL_GREENCAP_MUSHROOMS, (Block block) -> this.dropsWithProperty(block, TallPlantBlock.HALF, DoubleBlockHalf.LOWER));
-            this.addDrop(VABlocks.GRASSY_FLOATROCK, block -> this.drops(block, VABlocks.FLOATROCK));
 
             this.addDrop(VABlocks.REDSTONE_BRIDGE);
         }
@@ -185,6 +185,8 @@ public final class VABlockLootTableProvider {
                     VABlocks.BLUE_GLIMMER_CRYSTAL,
                     VABlocks.SPOTLIGHT
             );
+
+            this.addDrop(VABlocks.GRASSY_FLOATROCK, block -> this.drops(block, VABlocks.FLOATROCK));
 
             this.addDrop(VABlocks.FLOATROCK_COAL_ORE, block -> this.oreDrops(block, Items.COAL));
             this.addDrop(VABlocks.FLOATROCK_IRON_ORE, block -> this.oreDrops(block, Items.RAW_IRON));

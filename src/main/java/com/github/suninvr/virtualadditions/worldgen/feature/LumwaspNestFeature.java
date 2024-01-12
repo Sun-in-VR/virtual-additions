@@ -18,6 +18,7 @@ public class LumwaspNestFeature extends Feature<DefaultFeatureConfig> {
     private static final BlockState NEST = VABlocks.LUMWASP_NEST.getDefaultState();
     private static final BlockState NEST_LARVAE = VABlocks.LUMWASP_NEST.getDefaultState().with(LumwaspNestBlock.LARVAE, true);
     private static final BlockState ACID = VABlocks.ACID.getDefaultState();
+    private static final BlockState ACID_BLOCK = VABlocks.ACID_BLOCK.getDefaultState();
     private static final BlockState GLOWING_SILK = VABlocks.GLOWING_SILK.getDefaultState();
     private static final BlockState AIR = Blocks.AIR.getDefaultState();
 
@@ -57,7 +58,7 @@ public class LumwaspNestFeature extends Feature<DefaultFeatureConfig> {
 
         for (int i = 0; i < 5; ++i) {
             for (int j = 0; j < 5; ++j) {
-                setBlockStateIfReplaceable(world, origin.add(i - 2, -2, j - 2), ACID);
+                setAcidState(world, origin.add(i - 2, -2, j - 2));
             }
         }
 
@@ -163,15 +164,15 @@ public class LumwaspNestFeature extends Feature<DefaultFeatureConfig> {
         // Layer 4
         for (int i = 0; i < 5; ++i) {
             for (int j = 0; j < 5; ++j) {
-                setBlockStateIfReplaceable(world, origin.add(i - 2, -4, j - 2), ACID);
+                setAcidState(world, origin.add(i - 2, -4, j - 2));
             }
         }
         for (int i = 0; i < 3; ++i) {
             int j = i - 1;
-            setBlockStateIfReplaceable(world, origin.add(3, -4, j), ACID);
-            setBlockStateIfReplaceable(world, origin.add(-3, -4, j), ACID);
-            setBlockStateIfReplaceable(world, origin.add(j, -4, 3), ACID);
-            setBlockStateIfReplaceable(world, origin.add(j, -4, -3), ACID);
+            setAcidState(world, origin.add(3, -4, j));
+            setAcidState(world, origin.add(-3, -4, j));
+            setAcidState(world, origin.add(j, -4, 3));
+            setAcidState(world, origin.add(j, -4, -3));
             setBlockStateIfReplaceable(world, origin.add(4, -4, j), SILK_BLOCK);
             setBlockStateIfReplaceable(world, origin.add(-4, -4, j), SILK_BLOCK);
             setBlockStateIfReplaceable(world, origin.add(j, -4, 4), SILK_BLOCK);
@@ -203,7 +204,7 @@ public class LumwaspNestFeature extends Feature<DefaultFeatureConfig> {
 
         for (int i = 0; i < 7; ++i) {
             for (int j = 0; j < 7; ++j) {
-                setBlockStateIfReplaceable(world, origin.add(i - 3, -5, j - 3), ACID);
+                setAcidState(world, origin.add(i - 3, -5, j - 3));
             }
         }
 
@@ -222,7 +223,7 @@ public class LumwaspNestFeature extends Feature<DefaultFeatureConfig> {
         }
         for (int i = 0; i < 5; ++i) {
             for (int j = 0; j < 5; ++j) {
-                setBlockStateIfReplaceable(world, origin.add(i - 2, -6, j - 2), ACID);
+                setAcidState(world, origin.add(i - 2, -6, j - 2));
             }
         }
 
@@ -247,7 +248,6 @@ public class LumwaspNestFeature extends Feature<DefaultFeatureConfig> {
         boolean bl = random.nextInt(3) == 1;
         BlockState state = bl ? NEST_LARVAE : NEST;
         setBlockStateIfReplaceable(world, pos, state);
-        //if (bl) setBlockStateIfReplaceable(world, pos.up(), SILKBULB);
         if (bl && random.nextInt(2) == 1) setBlockStateIfReplaceable(world, pos.down(), GLOWING_SILK);
     }
 
@@ -265,12 +265,14 @@ public class LumwaspNestFeature extends Feature<DefaultFeatureConfig> {
     private boolean canReplace(BlockState state) {
         return state.isIn(VABlockTags.LUMWASP_NEST_REPLACEABLE) || state.isReplaceable();
     }
+
+    protected void setAcidState(StructureWorldAccess world, BlockPos pos) {
+        boolean bl = world.getRandom().nextInt(3) == 0;
+        BlockState state = bl ? ACID_BLOCK : ACID;
+        if (world.getBlockState(pos).isAir()) setBlockState(world, pos, state);
+    }
     
     protected void setBlockStateIfReplaceable(StructureWorldAccess world, BlockPos pos, BlockState state) {
-        if (state == ACID) {
-            if (world.getBlockState(pos).isAir()) setBlockState(world, pos, state);
-            return;
-        }
         if (canReplace(world.getBlockState(pos))) setBlockState(world, pos, state);
     }
 }

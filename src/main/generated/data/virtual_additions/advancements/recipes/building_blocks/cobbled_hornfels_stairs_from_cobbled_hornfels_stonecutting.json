@@ -30,6 +30,5 @@
     "recipes": [
       "minecraft:cobbled_hornfels_stairs_from_cobbled_hornfels_stonecutting"
     ]
-  },
-  "sends_telemetry_event": false
+  }
 }

@@ -68,8 +68,8 @@ public class WarpAnchorBlock extends BlockWithEntity implements Waterloggable {
 
 
     @Override
-    public ActionResult onUse(BlockState state, World world, BlockPos pos, PlayerEntity player, Hand hand, BlockHitResult hit) {
-        ItemStack stack = player.getStackInHand(hand);
+    public ActionResult onUse(BlockState state, World world, BlockPos pos, PlayerEntity player, BlockHitResult hit) {
+        ItemStack stack = player.getStackInHand(player.preferredHand);
         if (stack.isOf(VAItems.WARP_TETHER)) {
             stack.getOrCreateNbt().put("destination", NbtHelper.fromBlockPos(pos));
             world.playSound(null, pos, VASoundEvents.BLOCK_WARP_ANCHOR_USE, SoundCategory.BLOCKS, 1.0F, 0.6F);

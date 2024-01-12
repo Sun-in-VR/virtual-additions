@@ -30,6 +30,5 @@
     "recipes": [
       "virtual_additions:redstone_bridge"
     ]
-  },
-  "sends_telemetry_event": false
+  }
 }

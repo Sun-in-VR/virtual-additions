@@ -19,6 +19,7 @@ import net.minecraft.registry.tag.ItemTags;
 import net.minecraft.registry.tag.TagKey;
 import net.minecraft.util.Identifier;
 
+import java.util.Arrays;
 import java.util.concurrent.CompletableFuture;
 
 import static com.github.suninvr.virtualadditions.VirtualAdditions.idOf;
@@ -96,6 +97,32 @@ public final class VAItemTagProvider {
                     VAItems.COBBLED_BLUESCHIST,
                     VAItems.COBBLED_SYENITE
             );
+
+            getOrCreateTagBuilder(VAItemTags.ACID_RESISTANT).add(
+                    VAItems.ACID_BLOCK,
+                    Items.ANCIENT_DEBRIS,
+                    Items.NETHERITE_SCRAP,
+                    Items.NETHERITE_INGOT,
+                    Items.NETHERITE_BLOCK,
+                    Items.NETHERITE_SWORD,
+                    Items.NETHERITE_SHOVEL,
+                    Items.NETHERITE_PICKAXE,
+                    Items.NETHERITE_AXE,
+                    Items.NETHERITE_HOE,
+                    Items.NETHERITE_HELMET,
+                    Items.NETHERITE_CHESTPLATE,
+                    Items.NETHERITE_LEGGINGS,
+                    Items.NETHERITE_BOOTS,
+                    Items.NETHER_STAR
+            );
+            configureToolSets(VAItemTags.ACID_RESISTANT,
+                    VAItems.AMETHYST_NETHERITE_TOOL_SET,
+                    VAItems.COPPER_NETHERITE_TOOL_SET,
+                    VAItems.EMERALD_NETHERITE_TOOL_SET,
+                    VAItems.QUARTZ_NETHERITE_TOOL_SET,
+                    VAItems.SCULK_NETHERITE_TOOL_SET,
+                    VAItems.IOLITE_NETHERITE_TOOL_SET
+                    );
 
 
             configureBlockFamilies(
@@ -179,6 +206,11 @@ public final class VAItemTagProvider {
             getOrCreateTagBuilder(PICKAXES).add(set.PICKAXE());
             getOrCreateTagBuilder(SHOVELS).add(set.SHOVEL());
             getOrCreateTagBuilder(SWORDS).add(set.SWORD());
+        }
+
+        private void configureToolSets(TagKey<Item> tag, RegistryHelper.ItemRegistryHelper.ToolSet... sets) {
+            FabricTagBuilder builder = getOrCreateTagBuilder(tag);
+            Arrays.stream(sets).iterator().forEachRemaining(set -> set.forEach(builder::add));
         }
 
 

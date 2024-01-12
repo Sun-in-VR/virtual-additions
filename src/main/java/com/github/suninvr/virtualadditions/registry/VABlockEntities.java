@@ -17,6 +17,7 @@ public class VABlockEntities {
     public static final BlockEntityType<WarpAnchorBlockEntity> IOLITE_ANCHOR_BLOCK_ENTITY;
     public static final BlockEntityType<EntanglementDriveBlockEntity> ENTANGLEMENT_DRIVE_BLOCK_ENTITY;
     public static final BlockEntityType<DestructiveSculkBlockEntity> DESTRUCTIVE_SCULK_BLOCK_ENTITY;
+    public static final BlockEntityType<WindBlockEntity> WIND_BLOCK_ENTITY;
     public static final BlockEntityType<SignBlockEntity> CUSTOM_SIGN_BLOCK_ENTITY;
     public static final BlockEntityType<SignBlockEntity> CUSTOM_HANGING_SIGN_BLOCK_ENTITY;
 
@@ -26,6 +27,7 @@ public class VABlockEntities {
         IOLITE_ANCHOR_BLOCK_ENTITY = register("iolite_anchor", WarpAnchorBlockEntity::new, VABlocks.WARP_ANCHOR);
         ENTANGLEMENT_DRIVE_BLOCK_ENTITY = register("entanglement_drive", EntanglementDriveBlockEntity::new, VABlocks.ENTANGLEMENT_DRIVE);
         DESTRUCTIVE_SCULK_BLOCK_ENTITY = register("destructive_sculk", DestructiveSculkBlockEntity::new, VABlocks.DESTRUCTIVE_SCULK);
+        WIND_BLOCK_ENTITY = register("wind", WindBlockEntity::new, VABlocks.WIND);
         CUSTOM_SIGN_BLOCK_ENTITY = register("custom_sign", CustomSignBlockEntity::new, VABlocks.AEROBLOOM_SIGN, VABlocks.AEROBLOOM_WALL_SIGN);
         CUSTOM_HANGING_SIGN_BLOCK_ENTITY = register("custom_hanging_sign", CustomHangingSignBlockEntity::new, VABlocks.AEROBLOOM_HANGING_SIGN, VABlocks.AEROBLOOM_WALL_HANGING_SIGN);
     }

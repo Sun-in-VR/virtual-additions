@@ -12,22 +12,20 @@
   },
   "parent": "minecraft:adventure/root",
   "criteria": {
-    "requirement": {
-      "trigger": "minecraft:location",
+    "stand_in_spotlight": {
+      "trigger": "minecraft:enter_block",
       "conditions": {
-        "player": {
-          "location": {
-            "block": {
-              "blocks": [
-                "virtual_additions:spotlight_light"
-              ],
-              "state": {
-                "lit": true
-              }
-            }
-          }
-        }
-      }
+       "block": "virtual_additions:spotlight_light",
+       "state": {
+          "lit": "true"
+       }
     }
-  }
+   }
+  },
+  "requirements": [
+    [
+      "stand_in_spotlight"
+    ]
+  ],
+  "sends_telemetry_event": false
 }

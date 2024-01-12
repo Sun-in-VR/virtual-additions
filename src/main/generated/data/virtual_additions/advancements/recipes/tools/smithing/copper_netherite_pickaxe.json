@@ -30,6 +30,5 @@
     "recipes": [
       "virtual_additions:smithing/copper_netherite_pickaxe"
     ]
-  },
-  "sends_telemetry_event": false
+  }
 }

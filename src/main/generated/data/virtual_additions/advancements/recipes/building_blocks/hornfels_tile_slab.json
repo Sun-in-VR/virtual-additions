@@ -30,6 +30,5 @@
     "recipes": [
       "virtual_additions:hornfels_tile_slab"
     ]
-  },
-  "sends_telemetry_event": false
+  }
 }

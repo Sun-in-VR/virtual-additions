@@ -30,6 +30,5 @@
     "recipes": [
       "virtual_additions:climbing_rope"
     ]
-  },
-  "sends_telemetry_event": false
+  }
 }

@@ -30,6 +30,5 @@
     "recipes": [
       "virtual_additions:mixed_rock_candy"
     ]
-  },
-  "sends_telemetry_event": false
+  }
 }

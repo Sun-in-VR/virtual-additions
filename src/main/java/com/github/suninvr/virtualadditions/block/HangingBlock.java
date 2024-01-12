@@ -1,6 +1,6 @@
 package com.github.suninvr.virtualadditions.block;
 
-import com.github.suninvr.virtualadditions.block.enums.GlowingSilkShape;
+import com.github.suninvr.virtualadditions.block.enums.HangingBlockShape;
 import com.github.suninvr.virtualadditions.registry.VABlocks;
 import com.mojang.serialization.MapCodec;
 import net.minecraft.block.Block;
@@ -26,17 +26,17 @@ import net.minecraft.world.WorldView;
 import org.jetbrains.annotations.Nullable;
 
 @SuppressWarnings("deprecation")
-public class GlowingSilkBlock extends Block implements Waterloggable {
-    public static final MapCodec<GlowingSilkBlock> CODEC = createCodec(GlowingSilkBlock::new);
+public class HangingBlock extends Block implements Waterloggable {
+    public static final MapCodec<HangingBlock> CODEC = createCodec(HangingBlock::new);
     private static final BooleanProperty WATERLOGGED;
-    public static final EnumProperty<GlowingSilkShape> SHAPE;
+    public static final EnumProperty<HangingBlockShape> SHAPE;
     protected static final VoxelShape BOX;
 
-    public GlowingSilkBlock(Settings settings) {
+    public HangingBlock(Settings settings) {
         super(settings);
         this.setDefaultState(getStateManager().getDefaultState()
                 .with(WATERLOGGED, false)
-                .with(SHAPE, GlowingSilkShape.SINGLE)
+                .with(SHAPE, HangingBlockShape.SINGLE)
         );
     }
 
@@ -64,7 +64,7 @@ public class GlowingSilkBlock extends Block implements Waterloggable {
     public BlockState getStateForNeighborUpdate(BlockState state, Direction direction, BlockState neighborState, WorldAccess world, BlockPos pos, BlockPos neighborPos) {
         if (direction == Direction.UP){
             if (!this.canPlaceAt(state, world, pos)) {
-                world.scheduleBlockTick(pos, VABlocks.GLOWING_SILK, 1);
+                world.scheduleBlockTick(pos, this, 1);
                 return state;
             }
         }
@@ -74,12 +74,12 @@ public class GlowingSilkBlock extends Block implements Waterloggable {
 
     private BlockState updateState(BlockState state, WorldAccess world, BlockPos pos) {
         BlockState downState = world.getBlockState(pos.down());
-        if (world.getBlockState(pos.up()).isOf(VABlocks.GLOWING_SILK)) {
-            if (downState.isOf(VABlocks.GLOWING_SILK)) state = state.with(SHAPE, GlowingSilkShape.STRAIGHT);
-            else state = state.with(SHAPE, GlowingSilkShape.END);
+        if (world.getBlockState(pos.up()).isOf(this)) {
+            if (downState.isOf(this)) state = state.with(SHAPE, HangingBlockShape.STRAIGHT);
+            else state = state.with(SHAPE, HangingBlockShape.END);
         }  else {
-            if (downState.isOf(VABlocks.GLOWING_SILK)) state = state.with(SHAPE, GlowingSilkShape.BASE);
-            else state = state.with(SHAPE, GlowingSilkShape.SINGLE);}
+            if (downState.isOf(this)) state = state.with(SHAPE, HangingBlockShape.BASE);
+            else state = state.with(SHAPE, HangingBlockShape.SINGLE);}
         return state;
     }
 
@@ -102,7 +102,7 @@ public class GlowingSilkBlock extends Block implements Waterloggable {
 
     static {
         WATERLOGGED = Properties.WATERLOGGED;
-        SHAPE = EnumProperty.of("shape", GlowingSilkShape.class);
+        SHAPE = EnumProperty.of("shape", HangingBlockShape.class);
         BOX = Block.createCuboidShape(2.0, 0.0, 2.0, 14.0, 16.0, 14.0);
     }
 
@@ -110,7 +110,7 @@ public class GlowingSilkBlock extends Block implements Waterloggable {
     public boolean canPlaceAt(BlockState state, WorldView world, BlockPos pos) {
         BlockPos up = pos.up();
         BlockState upState = world.getBlockState(up);
-        return upState.isOf(VABlocks.GLOWING_SILK) || upState.isSideSolidFullSquare(world, up, Direction.DOWN);
+        return upState.isOf(this) || upState.isSideSolidFullSquare(world, up, Direction.DOWN);
     }
 
     @Override

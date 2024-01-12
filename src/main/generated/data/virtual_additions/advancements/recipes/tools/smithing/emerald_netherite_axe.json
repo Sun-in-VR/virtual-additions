@@ -30,6 +30,5 @@
     "recipes": [
       "virtual_additions:smithing/emerald_netherite_axe"
     ]
-  },
-  "sends_telemetry_event": false
+  }
 }

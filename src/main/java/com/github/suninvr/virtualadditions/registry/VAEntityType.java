@@ -1,17 +1,12 @@
 package com.github.suninvr.virtualadditions.registry;
 
 import com.github.suninvr.virtualadditions.VirtualAdditions;
-import com.github.suninvr.virtualadditions.entity.AcidSpitEntity;
-import com.github.suninvr.virtualadditions.entity.ClimbingRopeEntity;
-import com.github.suninvr.virtualadditions.entity.LumwaspEntity;
-import com.github.suninvr.virtualadditions.entity.SteelBombEntity;
+import com.github.suninvr.virtualadditions.entity.*;
 import net.fabricmc.fabric.api.object.builder.v1.entity.FabricDefaultAttributeRegistry;
 import net.fabricmc.fabric.api.object.builder.v1.entity.FabricEntityTypeBuilder;
-import net.minecraft.entity.EntityDimensions;
-import net.minecraft.entity.EntityType;
-import net.minecraft.entity.SpawnGroup;
-import net.minecraft.entity.SpawnRestriction;
+import net.minecraft.entity.*;
 import net.minecraft.entity.mob.HostileEntity;
+import net.minecraft.entity.passive.AnimalEntity;
 import net.minecraft.registry.Registries;
 import net.minecraft.registry.Registry;
 import net.minecraft.world.Heightmap;
@@ -24,6 +19,7 @@ public class VAEntityType {
     public static final EntityType<SteelBombEntity> STEEL_BOMB;
     public static final EntityType<AcidSpitEntity> ACID_SPIT;
     public static final EntityType<LumwaspEntity> LUMWASP;
+    public static final EntityType<LyftEntity> LYFT;
 
     static {
         CLIMBING_ROPE = Registry.register(Registries.ENTITY_TYPE, VirtualAdditions.idOf("climbing_rope"), FabricEntityTypeBuilder.<ClimbingRopeEntity>create(SpawnGroup.MISC, ClimbingRopeEntity::new)
@@ -44,10 +40,17 @@ public class VAEntityType {
         LUMWASP = Registry.register(Registries.ENTITY_TYPE, idOf("lumwasp"), FabricEntityTypeBuilder.create(SpawnGroup.MONSTER, LumwaspEntity::new)
                 .dimensions(EntityDimensions.fixed(1.5F, 0.75F))
                 .build());
+
+        LYFT = Registry.register(Registries.ENTITY_TYPE, idOf("lyft"), FabricEntityTypeBuilder.create(SpawnGroup.CREATURE, LyftEntity::new)
+                .dimensions(EntityDimensions.fixed(1.0F, 0.7F).scaled(0.68F))
+                .requires(VirtualAdditions.PREVIEW)
+                .build());
     }
 
     public static void init(){
         FabricDefaultAttributeRegistry.register(LUMWASP, LumwaspEntity.createLumwaspAttributes());
+        FabricDefaultAttributeRegistry.register(LYFT, LyftEntity.createLyftAttributes());
         SpawnRestriction.register(LUMWASP, SpawnRestriction.Location.ON_GROUND, Heightmap.Type.MOTION_BLOCKING, HostileEntity::canSpawnInDark);
+        SpawnRestriction.register(LYFT, SpawnRestriction.Location.ON_GROUND, Heightmap.Type.MOTION_BLOCKING, ((type, world, spawnReason, pos, random) -> SpawnReason.isTrialSpawner(spawnReason)||world.getBlockState(pos.down()).isOf(VABlocks.GRASSY_FLOATROCK)  ));
     }
 }

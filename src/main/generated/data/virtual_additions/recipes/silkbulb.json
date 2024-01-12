@@ -6,7 +6,7 @@
       "item": "virtual_additions:silk_thread"
     },
     "b": {
-      "item": "virtual_additions:acid_bucket"
+      "item": "virtual_additions:acid_block"
     }
   },
   "pattern": [
@@ -16,6 +16,5 @@
   ],
   "result": {
     "item": "virtual_additions:silkbulb"
-  },
-  "show_notification": true
+  }
 }

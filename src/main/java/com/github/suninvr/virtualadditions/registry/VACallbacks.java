@@ -33,7 +33,7 @@ public class VACallbacks{
             if (entity instanceof LivingEntity livingEntity && (getAppliedPotion(stack) != Potions.EMPTY || appliedPotionData.contains("CustomPotionEffects"))) {
                 int remainingUses = getAppliedPotionUses(stack);
 
-                List<StatusEffectInstance> potionEffects = getAppliedPotion(stack).getEffects();
+                List<StatusEffectInstance> potionEffects = getAppliedPotion(stack).value().getEffects();
                 for (StatusEffectInstance effect: potionEffects) {
                     livingEntity.addStatusEffect(new StatusEffectInstance(effect.getEffectType(), Math.max(effect.getDuration() / 8, 1), effect.getAmplifier(), effect.isAmbient(), effect.shouldShowParticles(), effect.shouldShowIcon()), player);
                 }

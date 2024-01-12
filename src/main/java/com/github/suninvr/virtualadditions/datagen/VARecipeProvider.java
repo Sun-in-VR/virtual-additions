@@ -15,10 +15,13 @@ import net.minecraft.data.server.recipe.SmithingTransformRecipeJsonBuilder;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemConvertible;
 import net.minecraft.item.Items;
+import net.minecraft.recipe.CampfireCookingRecipe;
 import net.minecraft.recipe.Ingredient;
 import net.minecraft.recipe.RecipeSerializer;
+import net.minecraft.recipe.SmokingRecipe;
 import net.minecraft.recipe.book.RecipeCategory;
 import net.minecraft.registry.RegistryWrapper;
+import net.minecraft.resource.featuretoggle.FeatureFlags;
 import org.apache.commons.lang3.tuple.Pair;
 
 import java.util.List;
@@ -151,8 +154,8 @@ public final class VARecipeProvider {
                     .pattern("###")
                     .pattern("#b#")
                     .pattern("###")
-                    .input('#', VAItems.SILK_THREAD).input('b', VAItems.ACID_BUCKET)
-                    .criterion("acid_bucket", conditionsFromItem(VAItems.ACID_BUCKET)).offerTo(exporter);
+                    .input('#', VAItems.SILK_THREAD).input('b', VAItems.ACID_BLOCK)
+                    .criterion("acid_block", conditionsFromItem(VAItems.ACID_BLOCK)).offerTo(exporter);
 
             ShapedRecipeJsonBuilder.create(RecipeCategory.REDSTONE, VABlocks.ENTANGLEMENT_DRIVE, 1)
                     .pattern("s#s")
@@ -191,12 +194,12 @@ public final class VARecipeProvider {
 
         protected static void offerCookingRecipes(RecipeExporter exporter, ItemConvertible output, ItemConvertible input, float experience, String group) {
             offerSmelting(exporter, List.of(input), RecipeCategory.FOOD, output, experience, 200, group);
-            offerFoodCookingRecipe(exporter, "smoking", RecipeSerializer.SMOKING, 100, input, output, experience);
-            offerFoodCookingRecipe(exporter, "campfire_cooking", RecipeSerializer.CAMPFIRE_COOKING, 600, input, output, experience);
+            offerFoodCookingRecipe(exporter, "smoking", RecipeSerializer.SMOKING, SmokingRecipe::new, 100, input, output, experience);
+            offerFoodCookingRecipe(exporter, "campfire_cooking", RecipeSerializer.CAMPFIRE_COOKING, CampfireCookingRecipe::new, 600, input, output, experience);
         }
 
         protected static void generateCuttableFamilyChain(RecipeExporter exporter, BlockFamily baseFamily, BlockFamily... subFamilies) {
-            generateFamily(exporter, baseFamily);
+            generateFamily(exporter, baseFamily, FeatureFlags.VANILLA_FEATURES);
             offerStonecuttingRecipes(exporter, baseFamily, baseFamily);
             for (BlockFamily subFamily : subFamilies) {
                 offerStonecuttingRecipes(exporter, baseFamily, subFamily);
@@ -332,7 +335,7 @@ public final class VARecipeProvider {
             offer2x2FullRecipe(exporter, RecipeCategory.MISC, VAItems.POLISHED_FLOATROCK, VAItems.FLOATROCK, 4);
             offer2x2FullRecipe(exporter, RecipeCategory.MISC, VAItems.FLOATROCK_BRICKS, VAItems.POLISHED_FLOATROCK, 4);
 
-            generateFamily(exporter, VABlockFamilies.AEROBLOOM);
+            generateFamily(exporter, VABlockFamilies.AEROBLOOM, FeatureFlags.VANILLA_FEATURES);
             offerBarkBlockRecipe(exporter, VAItems.AEROBLOOM_WOOD, VAItems.AEROBLOOM_LOG);
             offerBarkBlockRecipe(exporter, VAItems.STRIPPED_AEROBLOOM_WOOD, VAItems.STRIPPED_AEROBLOOM_LOG);
             offerPlanksRecipe2(exporter, VAItems.AEROBLOOM_PLANKS, VAItemTags.AEROBLOOM_LOGS, 4);

@@ -7,6 +7,7 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NbtCompound;
 import net.minecraft.potion.Potion;
 import net.minecraft.potion.PotionUtil;
+import net.minecraft.registry.entry.RegistryEntry;
 import net.minecraft.text.Text;
 import net.minecraft.util.Formatting;
 import net.minecraft.world.World;
@@ -32,13 +33,13 @@ public class ItemMixin {
         if (hasAppliedPotionEffects(stack)) {
             tooltip.add(Text.translatable("item.virtual_additions.applied_effect_tooltip", Text.of(((context.isAdvanced() && getMaxAppliedPotionUses(stack) > 0) ? (" (" + getAppliedPotionUses(stack) + "/" + getMaxAppliedPotionUses(stack) + ")") : ""))).formatted(Formatting.DARK_PURPLE));
 
-            List<StatusEffectInstance> potionEffects = getAppliedPotion(stack).getEffects();
+            List<StatusEffectInstance> potionEffects = getAppliedPotion(stack).value().getEffects();
             List<StatusEffectInstance> customPotionEffects = PotionUtil.getCustomPotionEffects(appliedPotionData);
             List<StatusEffectInstance> allEffects = new java.util.ArrayList<>(List.of());
             allEffects.addAll(potionEffects);
             allEffects.addAll(customPotionEffects);
 
-            PotionUtil.buildTooltip(allEffects, tooltip, 0.125F);
+            PotionUtil.buildTooltip(allEffects, tooltip, 0.125F, world.getTickManager().getTickRate());
         }
     }
 
@@ -51,8 +52,8 @@ public class ItemMixin {
                 cir.setReturnValue( appliedPotionData.getInt("CustomPotionColor") );
             }
 
-            Potion potion = PotionUtil.getPotion(appliedPotionData);
-            if (!potion.getEffects().isEmpty()) {
+            RegistryEntry<Potion> potion = PotionUtil.getPotion(appliedPotionData);
+            if (!potion.value().getEffects().isEmpty()) {
                 cir.setReturnValue( PotionUtil.getColor(potion) );
             }
 

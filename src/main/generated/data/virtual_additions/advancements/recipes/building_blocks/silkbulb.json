@@ -1,12 +1,12 @@
 {
   "parent": "minecraft:recipes/root",
   "criteria": {
-    "acid_bucket": {
+    "acid_block": {
       "conditions": {
         "items": [
           {
             "items": [
-              "virtual_additions:acid_bucket"
+              "virtual_additions:acid_block"
             ]
           }
         ]
@@ -23,13 +23,12 @@
   "requirements": [
     [
       "has_the_recipe",
-      "acid_bucket"
+      "acid_block"
     ]
   ],
   "rewards": {
     "recipes": [
       "virtual_additions:silkbulb"
     ]
-  },
-  "sends_telemetry_event": false
+  }
 }

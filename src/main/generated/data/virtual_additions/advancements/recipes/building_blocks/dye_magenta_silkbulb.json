@@ -30,6 +30,5 @@
     "recipes": [
       "minecraft:dye_magenta_silkbulb"
     ]
-  },
-  "sends_telemetry_event": false
+  }
 }

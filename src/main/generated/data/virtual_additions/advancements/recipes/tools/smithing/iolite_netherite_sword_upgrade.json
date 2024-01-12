@@ -30,6 +30,5 @@
     "recipes": [
       "virtual_additions:smithing/iolite_netherite_sword_upgrade"
     ]
-  },
-  "sends_telemetry_event": false
+  }
 }

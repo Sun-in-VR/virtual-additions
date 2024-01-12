@@ -20,7 +20,6 @@ import net.minecraft.state.property.BooleanProperty;
 import net.minecraft.state.property.Properties;
 import net.minecraft.text.Text;
 import net.minecraft.util.ActionResult;
-import net.minecraft.util.Hand;
 import net.minecraft.util.hit.BlockHitResult;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.shape.VoxelShape;
@@ -82,7 +81,7 @@ public class EntanglementDriveBlock extends BlockWithEntity implements Inventory
     }
 
     @Override
-    public ActionResult onUse(BlockState state, World world, BlockPos pos, PlayerEntity player, Hand hand, BlockHitResult hit) {
+    public ActionResult onUse(BlockState state, World world, BlockPos pos, PlayerEntity player, BlockHitResult hit) {
         if (!world.isClient()) {
             EntanglementDriveBlockEntity entity = world.getBlockEntity(pos) instanceof EntanglementDriveBlockEntity entanglementDriveBlockEntity ? entanglementDriveBlockEntity : null;
             if (entity == null) return ActionResult.SUCCESS;

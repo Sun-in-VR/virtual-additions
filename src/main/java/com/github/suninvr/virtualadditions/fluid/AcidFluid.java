@@ -3,6 +3,7 @@ package com.github.suninvr.virtualadditions.fluid;
 import com.github.suninvr.virtualadditions.registry.*;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
+import net.minecraft.block.Blocks;
 import net.minecraft.block.entity.BlockEntity;
 import net.minecraft.fluid.FlowableFluid;
 import net.minecraft.fluid.Fluid;
@@ -42,13 +43,25 @@ public abstract class AcidFluid extends FlowableFluid {
 
     @Override
     protected boolean isInfinite(World world) {
-        return true;
+        return false;
     }
 
     @Override
     protected void beforeBreakingBlock(WorldAccess world, BlockPos pos, BlockState state) {
         BlockEntity blockEntity = state.hasBlockEntity() ? world.getBlockEntity(pos) : null;
         Block.dropStacks(state, world, pos, blockEntity);
+    }
+
+    @Override
+    protected boolean hasRandomTicks() {
+        return true;
+    }
+
+    @Override
+    protected void onRandomTick(World world, BlockPos pos, FluidState state, Random random) {
+        if (state.getLevel() > 6 && world.getBlockState(pos.down()).isOf(Blocks.MAGMA_BLOCK) && random.nextInt(6) == 0) {
+            world.setBlockState(pos, VABlocks.ACID_BLOCK.getDefaultState());
+        }
     }
 
     public void randomDisplayTick(World world, BlockPos pos, FluidState state, Random random) {

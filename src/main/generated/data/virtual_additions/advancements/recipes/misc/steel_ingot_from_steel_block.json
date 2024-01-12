@@ -30,6 +30,5 @@
     "recipes": [
       "minecraft:steel_ingot_from_steel_block"
     ]
-  },
-  "sends_telemetry_event": false
+  }
 }

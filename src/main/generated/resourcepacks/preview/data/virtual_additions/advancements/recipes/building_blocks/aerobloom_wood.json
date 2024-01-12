@@ -30,6 +30,5 @@
     "recipes": [
       "virtual_additions:aerobloom_wood"
     ]
-  },
-  "sends_telemetry_event": false
+  }
 }

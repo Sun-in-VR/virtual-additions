@@ -5,3 +5,5 @@ accessible method net/minecraft/sound/SoundEvent of (Lnet/minecraft/util/Identif
 accessible field net/minecraft/block/RedstoneWireBlock wiresGivePower Z
 accessible method net/minecraft/block/WoodType register (Lnet/minecraft/block/WoodType;)Lnet/minecraft/block/WoodType;
 accessible field net/minecraft/data/client/BlockStateModelGenerator texturedModels Ljava/util/Map;
+accessible method net/minecraft/item/ItemGroups addPotions (Lnet/minecraft/item/ItemGroup$Entries;Lnet/minecraft/registry/RegistryWrapper;Lnet/minecraft/item/Item;Lnet/minecraft/item/ItemGroup$StackVisibility;)V
+accessible field net/minecraft/item/ItemGroups displayContext Lnet/minecraft/item/ItemGroup$DisplayContext;

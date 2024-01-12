@@ -30,6 +30,5 @@
     "recipes": [
       "virtual_additions:polished_hornfels_stairs"
     ]
-  },
-  "sends_telemetry_event": false
+  }
 }

@@ -30,6 +30,5 @@
     "recipes": [
       "minecraft:chiseled_hornfels_from_hornfels_stonecutting"
     ]
-  },
-  "sends_telemetry_event": false
+  }
 }

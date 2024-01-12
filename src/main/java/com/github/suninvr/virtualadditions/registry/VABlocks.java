@@ -166,12 +166,14 @@ public class VABlocks {
     public static final Block MAGENTA_SILKBULB;
     public static final Block PINK_SILKBULB;
     public static final Block ACID;
+    public static final Block ACID_BLOCK;
     public static final Block IOLITE_ORE;
     public static final Block IOLITE_BLOCK;
     public static final Block WARP_ANCHOR;
     public static final Block WARP_TETHER;
     public static final Block ENTANGLEMENT_DRIVE;
     public static final Block DESTRUCTIVE_SCULK;
+    public static final Block WIND;
 
     public static final BlockSetType AEROBLOOM = BlockSetTypeBuilder.copyOf(BlockSetType.CHERRY).build(idOf("aerobloom"));
     public static final WoodType AEROBLOOM_WOODTYPE = WoodType.register(WoodTypeBuilder.copyOf(WoodType.CHERRY).build(idOf("aerobloom"), AEROBLOOM));
@@ -307,7 +309,7 @@ public class VABlocks {
         AZALEA_HEDGE = register("azalea_hedge", new HedgeBlock(AbstractBlock.Settings.copy(Blocks.AZALEA_LEAVES)));
         FLOWERING_AZALEA_HEDGE = register("flowering_azalea_hedge", new HedgeBlock(AbstractBlock.Settings.copy(Blocks.FLOWERING_AZALEA_LEAVES)));
 
-        GLOWING_SILK = register("glowing_silk", new GlowingSilkBlock(AbstractBlock.Settings.create().mapColor(MapColor.LIGHT_BLUE).sounds(BlockSoundGroup.WART_BLOCK).luminance((state) -> 6).noCollision().nonOpaque().breakInstantly().offset(AbstractBlock.OffsetType.XZ).burnable().pistonBehavior(PistonBehavior.DESTROY)));
+        GLOWING_SILK = register("glowing_silk", new HangingBlock(AbstractBlock.Settings.create().mapColor(MapColor.LIGHT_BLUE).sounds(BlockSoundGroup.WART_BLOCK).luminance((state) -> 6).noCollision().nonOpaque().breakInstantly().offset(AbstractBlock.OffsetType.XZ).burnable().pistonBehavior(PistonBehavior.DESTROY)));
         FRAYED_SILK = register("frayed_silk", new FrayedSilkBlock(AbstractBlock.Settings.create().mapColor(MapColor.DARK_AQUA).sounds(BlockSoundGroup.WART_BLOCK).noCollision().nonOpaque().breakInstantly().replaceable().offset(AbstractBlock.OffsetType.XZ).burnable().pistonBehavior(PistonBehavior.DESTROY)));
         LUMWASP_NEST = register("lumwasp_nest", new LumwaspNestBlock(AbstractBlock.Settings.copy(Blocks.HONEYCOMB_BLOCK).sounds(BlockSoundGroup.WART_BLOCK).mapColor(MapColor.DARK_AQUA).burnable()));
         SILK_BLOCK = register("silk_block", new SilkBlock(AbstractBlock.Settings.copy(Blocks.HONEYCOMB_BLOCK).sounds(BlockSoundGroup.WART_BLOCK).mapColor(MapColor.DARK_AQUA).burnable()));
@@ -333,6 +335,7 @@ public class VABlocks {
         PINK_SILKBULB = register("pink_silkbulb", new Block(AbstractBlock.Settings.copy(SILKBULB).mapColor(MapColor.PINK)));
 
         ACID = register("acid", new AcidFluidBlock(VAFluids.ACID, AbstractBlock.Settings.create().mapColor(MapColor.LIME).luminance(((state) -> 6)).sounds(BlockSoundGroup.INTENTIONALLY_EMPTY).replaceable().noCollision().strength(100.0F).dropsNothing().allowsSpawning(((state, world, pos, type) -> type == VAEntityType.LUMWASP)).pistonBehavior(PistonBehavior.DESTROY)));
+        ACID_BLOCK = register("acid_block", new AcidBlock(AbstractBlock.Settings.create().mapColor(MapColor.LIME).breakInstantly().sounds(BlockSoundGroup.HONEY).nonOpaque().solidBlock((state, world, pos) -> false)));
 
         IOLITE_ORE = register("iolite_ore", new ExperienceDroppingBlock(UniformIntProvider.create(5, 9), FabricBlockSettings.copyOf(Blocks.END_STONE).strength(4.5F, 4.5F).requiresTool()));
         IOLITE_BLOCK = register("iolite_block", new Block(FabricBlockSettings.create().mapColor(MapColor.MAGENTA).sounds(BlockSoundGroup.METAL).requiresTool().hardness(5.0F).resistance(300.0F)));
@@ -341,6 +344,7 @@ public class VABlocks {
         ENTANGLEMENT_DRIVE = register("entanglement_drive", new EntanglementDriveBlock(FabricBlockSettings.create().nonOpaque().sounds(BlockSoundGroup.NETHERITE).luminance(3).emissiveLighting( (state, world, pos) -> !state.get(Properties.POWERED) ).hardness(22.5F).requiresTool().resistance(600.0F)));
 
         DESTRUCTIVE_SCULK = register("destructive_sculk", new DestructiveSculkBlock(FabricBlockSettings.copyOf(Blocks.SCULK)));
+        WIND = register("wind", new WindBlock(FabricBlockSettings.copyOf(Blocks.AIR)));
     }
 
     public static void init(){

@@ -30,6 +30,5 @@
     "recipes": [
       "virtual_additions:hornfels"
     ]
-  },
-  "sends_telemetry_event": false
+  }
 }

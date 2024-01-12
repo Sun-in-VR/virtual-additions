@@ -30,6 +30,5 @@
     "recipes": [
       "minecraft:roasted_corn_from_smelting_corn"
     ]
-  },
-  "sends_telemetry_event": false
+  }
 }

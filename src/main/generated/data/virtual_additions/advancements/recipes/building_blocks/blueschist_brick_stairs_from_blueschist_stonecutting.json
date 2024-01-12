@@ -30,6 +30,5 @@
     "recipes": [
       "minecraft:blueschist_brick_stairs_from_blueschist_stonecutting"
     ]
-  },
-  "sends_telemetry_event": false
+  }
 }

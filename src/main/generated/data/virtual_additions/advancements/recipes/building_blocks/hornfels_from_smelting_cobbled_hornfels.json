@@ -30,6 +30,5 @@
     "recipes": [
       "minecraft:hornfels_from_smelting_cobbled_hornfels"
     ]
-  },
-  "sends_telemetry_event": false
+  }
 }

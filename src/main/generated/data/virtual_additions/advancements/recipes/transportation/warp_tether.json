@@ -30,6 +30,5 @@
     "recipes": [
       "virtual_additions:warp_tether"
     ]
-  },
-  "sends_telemetry_event": false
+  }
 }

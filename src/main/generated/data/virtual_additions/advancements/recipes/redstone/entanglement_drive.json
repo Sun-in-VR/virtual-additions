@@ -30,6 +30,5 @@
     "recipes": [
       "virtual_additions:entanglement_drive"
     ]
-  },
-  "sends_telemetry_event": false
+  }
 }

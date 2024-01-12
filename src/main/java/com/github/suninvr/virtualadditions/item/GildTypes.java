@@ -24,9 +24,9 @@ import static com.github.suninvr.virtualadditions.VirtualAdditions.idOf;
 public class GildTypes {
     private static final BiFunction<Float, Float, Float> ADD = Float::sum;
     private static final BiFunction<Float, Float, Float> MULTIPLY = (attribute, modifier) -> attribute * modifier;
-    private static final BiFunction<Float, Float, Float> MULTIPLY_AND_ROUND = (attribute, modifier) -> Math.round(10 * (attribute * modifier)) / 10.0F;
+    private static final BiFunction<Float, Float, Float> MULTIPLY_ROUNDED_TENTHS = (attribute, modifier) -> Math.round(10 * (attribute * modifier)) / 10.0F;
 
-    public static final GildType AMETHYST = new GildType(idOf("amethyst"), 0x9A5CC6, miningSpeedModifier(1, ADD), attackSpeedModifier(0.8F, MULTIPLY_AND_ROUND));
+    public static final GildType AMETHYST = new GildType(idOf("amethyst"), 0x9A5CC6, miningSpeedModifier(1, ADD), attackSpeedModifier(0.8F, MULTIPLY_ROUNDED_TENTHS));
     public static final GildType COPPER = new GildType(idOf("copper"), 0xB4684D, durabilityModifier(1.5F, MULTIPLY));
     public static final GildType EMERALD = new GildType(idOf("emerald"), 0x11A036, enchantabilityModifier(1.5F, MULTIPLY)){
         @Override
@@ -42,9 +42,9 @@ public class GildTypes {
             }
         }
     };
-    public static final GildType IOLITE = new GildType(idOf("iolite"), 0x702bff);
+    public static final GildType IOLITE = new GildType(idOf("iolite"), 0x702bff, blockInteractionRangeModifier(4, ADD), entityInteractionRangeModifier(2, ADD));
     public static final GildType QUARTZ = new GildType(idOf("quartz"), 0xE3D4C4, attackDamageModifier(2, ADD));
-    public static final GildType SCULK = new GildType(idOf("sculk"), 0x009295, miningSpeedModifier(0.4F, MULTIPLY), attackSpeedModifier(1.2F, MULTIPLY_AND_ROUND, GildType.ModifierType.ToolType.SWORD)) {
+    public static final GildType SCULK = new GildType(idOf("sculk"), 0x009295, miningSpeedModifier(0.4F, MULTIPLY), attackSpeedModifier(1.2F, MULTIPLY_ROUNDED_TENTHS, GildType.ModifierType.ToolType.SWORD)) {
         @Override
         public boolean isGildEffective(World world, PlayerEntity player, BlockPos pos, BlockState state, ItemStack tool) {
             return !state.isOf(VABlocks.DESTRUCTIVE_SCULK) && state.isIn(VABlockTags.SCULK_GILD_EFFECTIVE) && super.isGildEffective(world, player, pos, state, tool);
@@ -64,7 +64,7 @@ public class GildTypes {
             if (player.getItemCooldownManager().isCoolingDown(tool.getItem())) return true;
             boolean stronglyEffective = state.isIn(VABlockTags.SCULK_GILD_STRONGLY_EFFECTIVE);
             int potency = (int) Math.floor( Math.max(30 - (state.getHardness(world, pos) * (stronglyEffective ? 3 : 6) + 1), 0) );
-            player.getItemCooldownManager().set(tool.getItem(), potency * 2 + 5);
+            player.getItemCooldownManager().set(tool.getItem(), potency);
             DestructiveSculkBlock.placeState(world, pos, state, player.getUuid(), tool, potency);
             player.incrementStat(Stats.USED.getOrCreateStat(tool.getItem()));
             tool.damage( potency, player, player1 -> player1.sendToolBreakStatus(Hand.MAIN_HAND));
@@ -72,8 +72,6 @@ public class GildTypes {
         }
     };
     public static final GildType NONE = new GildType(idOf("none"), 0xFFFFFF);
-
-
 
     public static GildType.Modifier durabilityModifier(float value, BiFunction<Float, Float, Float> function, GildType.ModifierType.ToolType... appliesTo) {
         return new GildType.Modifier(GildType.ModifierType.DURABILITY, value, function, appliesTo);
@@ -92,6 +90,12 @@ public class GildTypes {
     }
     public static GildType.Modifier attackSpeedModifier(float value, BiFunction<Float, Float, Float> function, GildType.ModifierType.ToolType... appliesTo) {
         return new GildType.Modifier(GildType.ModifierType.ATTACK_SPEED, value, function, appliesTo);
+    }
+    public static GildType.Modifier blockInteractionRangeModifier(float value, BiFunction<Float, Float, Float> function, GildType.ModifierType.ToolType... appliesTo) {
+        return new GildType.Modifier(GildType.ModifierType.BLOCK_INTERACTION_RANGE, value, function, appliesTo);
+    }
+    public static GildType.Modifier entityInteractionRangeModifier(float value, BiFunction<Float, Float, Float> function, GildType.ModifierType.ToolType... appliesTo) {
+        return new GildType.Modifier(GildType.ModifierType.ENTITY_INTERACTION_RANGE, value, function, appliesTo);
     }
 
 }

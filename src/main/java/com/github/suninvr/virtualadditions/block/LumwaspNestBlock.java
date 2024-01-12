@@ -43,7 +43,7 @@ public class LumwaspNestBlock extends TransparentBlock {
 
     @Override
     public void randomTick(BlockState state, ServerWorld world, BlockPos pos, Random random) {
-        if (!world.getFluidState(pos.up()).isOf(VAFluids.ACID)) {
+        if (!world.getFluidState(pos.up()).isOf(VAFluids.ACID) && !world.getBlockState(pos.up()).isOf(VABlocks.ACID_BLOCK)) {
             world.setBlockState(pos, state.with(LARVAE, false));
         }
     }
@@ -53,7 +53,6 @@ public class LumwaspNestBlock extends TransparentBlock {
             if (world.isClient()) return;
             if (world.getFluidState(pos.up()).isOf(VAFluids.ACID) && world.getBlockState(pos.down()).isAir() && entity instanceof ItemEntity itemEntity) {
             ItemStack stack = itemEntity.getStack();
-            System.out.println(stack);
             int i = 0;
             if (stack.isIn(VAItemTags.LUMWASP_LARVAE_FOOD)) i += stack.getCount();
             else return;
@@ -61,13 +60,11 @@ public class LumwaspNestBlock extends TransparentBlock {
             boolean larvae = state.get(LARVAE);
             while (i > 0) {
                 stack.decrement(1);
-                if (world.getRandom().nextInt(6) == 1) {
-                    if (larvae) {
-                        world.setBlockState(pos.down(), VABlocks.GLOWING_SILK.getDefaultState());
-                        return;
-                    } else {
-                        world.setBlockState(pos, state.with(LARVAE, true));
-                    }
+                if (larvae) {
+                    world.setBlockState(pos.down(), VABlocks.GLOWING_SILK.getDefaultState());
+                    return;
+                } else {
+                    world.setBlockState(pos, state.with(LARVAE, true));
                 }
                 i--;
             }

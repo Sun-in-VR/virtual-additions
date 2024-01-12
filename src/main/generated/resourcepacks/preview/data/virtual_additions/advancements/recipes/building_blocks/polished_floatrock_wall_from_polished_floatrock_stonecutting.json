@@ -30,6 +30,5 @@
     "recipes": [
       "minecraft:polished_floatrock_wall_from_polished_floatrock_stonecutting"
     ]
-  },
-  "sends_telemetry_event": false
+  }
 }

@@ -5,6 +5,7 @@ import net.minecraft.nbt.NbtCompound;
 import net.minecraft.potion.Potion;
 import net.minecraft.potion.PotionUtil;
 import net.minecraft.potion.Potions;
+import net.minecraft.registry.entry.RegistryEntry;
 
 @SuppressWarnings("DataFlowIssue")
 public class AppliedPotionHelper {
@@ -15,7 +16,7 @@ public class AppliedPotionHelper {
         return nbt.contains("AppliedPotion");
     }
 
-    public static Potion getAppliedPotion (ItemStack stack) {
+    public static RegistryEntry<Potion> getAppliedPotion (ItemStack stack) {
         if (hasAppliedPotionEffects(stack)) {
             NbtCompound nbt = stack.getNbt().getCompound("AppliedPotion");
             return PotionUtil.getPotion(nbt);

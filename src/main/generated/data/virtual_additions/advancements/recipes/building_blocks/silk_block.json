@@ -30,6 +30,5 @@
     "recipes": [
       "virtual_additions:silk_block"
     ]
-  },
-  "sends_telemetry_event": false
+  }
 }

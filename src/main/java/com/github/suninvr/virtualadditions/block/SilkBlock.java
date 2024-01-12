@@ -28,12 +28,12 @@ public class SilkBlock extends Block {
     }
 
     @Override
-    public ActionResult onUse(BlockState state, World world, BlockPos pos, PlayerEntity player, Hand hand, BlockHitResult hit) {
-        ItemStack stack = player.getStackInHand(hand);
+    public ActionResult onUse(BlockState state, World world, BlockPos pos, PlayerEntity player, BlockHitResult hit) {
+        ItemStack stack = player.getStackInHand(player.preferredHand);
         if (stack.isOf(Items.SHEARS) && world.getBlockState(pos.up()).isAir()) {
             world.playSound(player, pos, SoundEvents.ENTITY_SHEEP_SHEAR, SoundCategory.BLOCKS, 1.0F, 1.0F);
             world.setBlockState(pos.up(), VABlocks.FRAYED_SILK.getDefaultState());
-            stack.damage(1, player, playerEntity -> playerEntity.sendToolBreakStatus(hand));
+            stack.damage(1, player, playerEntity -> playerEntity.sendToolBreakStatus(player.preferredHand));
             return ActionResult.SUCCESS;
         }
         return ActionResult.PASS;

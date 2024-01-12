@@ -30,6 +30,5 @@
     "recipes": [
       "minecraft:steel_ingot_from_blasting_raw_steel"
     ]
-  },
-  "sends_telemetry_event": false
+  }
 }

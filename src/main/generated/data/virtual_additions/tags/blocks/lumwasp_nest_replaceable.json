@@ -3,6 +3,7 @@
   "values": [
     "virtual_additions:silk_block",
     "virtual_additions:webbed_silk",
+    "virtual_additions:acid_block",
     {
       "id": "#minecraft:base_stone_overworld",
       "required": false

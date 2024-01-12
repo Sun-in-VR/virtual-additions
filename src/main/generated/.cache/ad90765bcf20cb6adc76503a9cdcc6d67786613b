@@ -1,4 +1,5 @@
-// 23w44a	2023-11-02T19:59:40.741798264	Virtual Additions/Tags for minecraft:item
+// 23w51b	2024-01-11T13:52:02.901890341	Virtual Additions/Tags for minecraft:item
+1cdc0888362c93aec1d6928c91d9a45b8f21835f data/virtual_additions/tags/items/acid_resistant.json
 16f9a85b9f47196c1b9a229047eed5f3eb27a463 data/c/tags/items/swords.json
 fc3ca2a5f41d5d4afc8af7f869c4fb59463ed151 data/c/tags/items/iolite_ores.json
 e775f0978ed6a5d64fd57a33dff88dfd0d6ec1c2 data/virtual_additions/tags/items/lumwasp_larvae_food.json
@@ -25,8 +26,8 @@ db81758f7f9c4f49e2d96715120d7c00eb749003 data/virtual_additions/tags/items/sculk
 6d2bd395e420420e36030071ca7590b66e594fec data/virtual_additions/tags/items/quartz_gilded_axes.json
 8998ed3d1e78b03a5505518d16e5153fdd17b83d data/c/tags/items/potions.json
 d6b05a015160f0906a57b254c434ffd28dec71bd data/virtual_additions/tags/items/iolite_gilded_pickaxes.json
-544f56093b5b6709a9d38364b5d457d7c2094c06 data/virtual_additions/tags/items/gilded_tools.json
 e8a7f7e13ce5cb7ba8cf119f458ddb92a23c069e data/minecraft/tags/items/trim_materials.json
+544f56093b5b6709a9d38364b5d457d7c2094c06 data/virtual_additions/tags/items/gilded_tools.json
 6bcbf3fb4699ba83f5051c93208e58bc8a8a0469 data/c/tags/items/ingots.json
 931c52a809a5eaad9a755dfcfe938dbe3f1a3ff1 data/virtual_additions/tags/items/copper_gilded_swords.json
 b49bffb6a6d0a750fc78842ec0c4463ec9b2ef52 data/c/tags/items/pickaxes.json
@@ -57,8 +58,8 @@ e86053d023b47421f4644947427f45b0f4e51f21 data/virtual_additions/tags/items/quart
 a0a79532a1b8d1bf429f31391b5b82b1f948aa0c data/c/tags/items/foods.json
 79317a02222bd548c697fe20d1e28104d5a27210 data/virtual_additions/tags/items/copper_gilded_shovels.json
 34fe499687844696c104a53e7958e64d9572bc19 data/virtual_additions/tags/items/amethyst_gilded_pickaxes.json
-0759e5104e66c40664d320c38e0b66e8a7b0eb8d data/c/tags/items/gems.json
 1ad581a385254e17d114bda62498953367f3538f data/minecraft/tags/items/villager_plantable_seeds.json
+0759e5104e66c40664d320c38e0b66e8a7b0eb8d data/c/tags/items/gems.json
 51bc88f3f8770e7fe7780fd0c209b91ec09b696b data/virtual_additions/tags/items/copper_gilded_hoes.json
 019183bd363fc19a6e76d971e545df9ae802aece data/virtual_additions/tags/items/amethyst_gilded_shovels.json
 8ce003d52b91136ed1da4a80eb41e7a2514a16ba data/minecraft/tags/items/walls.json

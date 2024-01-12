@@ -52,7 +52,7 @@ public abstract class LivingEntityMixin extends Entity implements LivingEntityIn
     @Inject(method = "isClimbing", at = @At("HEAD"), cancellable = true)
     void virtualAdditions$isClimbingRope(CallbackInfoReturnable<Boolean> cir) {
         if (!this.isSpectator() && !(this.getWorld() == null)) {
-            if (this.getBlockStateAtPos().getCollisionShape(this.getWorld(), this.getBlockPos()).equals(VoxelShapes.empty())) {
+            if (this.getWorld().getBlockState(this.getBlockPos()).getCollisionShape(this.getWorld(), this.getBlockPos()).equals(VoxelShapes.empty())) {
                 BlockPos blockPos = this.getBlockPos().down();
                 BlockState state = this.getWorld().getBlockState(blockPos);
                 if (state.isOf(VABlocks.CLIMBING_ROPE_ANCHOR)) cir.setReturnValue(true);

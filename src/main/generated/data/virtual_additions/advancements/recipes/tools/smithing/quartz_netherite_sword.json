@@ -30,6 +30,5 @@
     "recipes": [
       "virtual_additions:smithing/quartz_netherite_sword"
     ]
-  },
-  "sends_telemetry_event": false
+  }
 }

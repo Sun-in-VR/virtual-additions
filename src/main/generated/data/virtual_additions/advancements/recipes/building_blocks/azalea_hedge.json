@@ -30,6 +30,5 @@
     "recipes": [
       "virtual_additions:azalea_hedge"
     ]
-  },
-  "sends_telemetry_event": false
+  }
 }

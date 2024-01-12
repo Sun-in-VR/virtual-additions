@@ -30,6 +30,5 @@
     "recipes": [
       "minecraft:blueschist_from_smelting_cobbled_blueschist"
     ]
-  },
-  "sends_telemetry_event": false
+  }
 }

@@ -4,7 +4,7 @@ import net.minecraft.util.StringIdentifiable;
 
 import java.util.Locale;
 
-public enum GlowingSilkShape implements StringIdentifiable {
+public enum HangingBlockShape implements StringIdentifiable {
     SINGLE(true),
     BASE(false),
     STRAIGHT(false),
@@ -19,7 +19,7 @@ public enum GlowingSilkShape implements StringIdentifiable {
         return this.name;
     }
 
-    GlowingSilkShape(boolean b) {
+    HangingBlockShape(boolean b) {
         this.name = this.name().toLowerCase(Locale.ROOT);
         this.end = b;
     }

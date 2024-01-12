@@ -28,6 +28,5 @@
     "recipes": [
       "virtual_additions:aerobloom_planks"
     ]
-  },
-  "sends_telemetry_event": false
+  }
 }

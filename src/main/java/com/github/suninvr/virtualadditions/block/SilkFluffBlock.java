@@ -3,10 +3,7 @@ package com.github.suninvr.virtualadditions.block;
 import com.github.suninvr.virtualadditions.registry.VAEntityType;
 import com.github.suninvr.virtualadditions.registry.VAEntityTypeTags;
 import com.mojang.serialization.MapCodec;
-import net.minecraft.block.BlockState;
-import net.minecraft.block.EntityShapeContext;
-import net.minecraft.block.ShapeContext;
-import net.minecraft.block.TransparentBlock;
+import net.minecraft.block.*;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.ai.pathing.NavigationType;
 import net.minecraft.util.math.BlockPos;
@@ -17,7 +14,7 @@ import net.minecraft.world.BlockView;
 import net.minecraft.world.World;
 
 @SuppressWarnings("deprecation")
-public class SilkFluffBlock extends TransparentBlock {
+public class SilkFluffBlock extends Block {
     public static final MapCodec<SilkFluffBlock> CODEC = createCodec(SilkFluffBlock::new);
     private static final Vec3d movement = new Vec3d(0.85, 1.0, 0.85);
 
@@ -26,7 +23,7 @@ public class SilkFluffBlock extends TransparentBlock {
     }
 
     @Override
-    protected MapCodec<? extends TransparentBlock> getCodec() {
+    protected MapCodec<? extends Block> getCodec() {
         return CODEC;
     }
 

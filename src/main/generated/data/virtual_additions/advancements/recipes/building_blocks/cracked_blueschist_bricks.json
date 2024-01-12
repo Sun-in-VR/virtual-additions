@@ -30,6 +30,5 @@
     "recipes": [
       "virtual_additions:cracked_blueschist_bricks"
     ]
-  },
-  "sends_telemetry_event": false
+  }
 }

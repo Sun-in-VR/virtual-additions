@@ -30,6 +30,5 @@
     "recipes": [
       "minecraft:dye_yellow_silkbulb"
     ]
-  },
-  "sends_telemetry_event": false
+  }
 }

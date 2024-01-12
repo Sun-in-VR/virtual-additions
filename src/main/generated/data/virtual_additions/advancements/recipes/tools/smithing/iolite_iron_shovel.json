@@ -30,6 +30,5 @@
     "recipes": [
       "virtual_additions:smithing/iolite_iron_shovel"
     ]
-  },
-  "sends_telemetry_event": false
+  }
 }

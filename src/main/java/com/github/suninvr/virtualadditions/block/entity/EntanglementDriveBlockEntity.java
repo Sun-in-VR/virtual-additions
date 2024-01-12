@@ -100,11 +100,10 @@ public class EntanglementDriveBlockEntity extends BlockEntity implements Extende
     }
 
     public static <E extends BlockEntity> void tick(World world, BlockPos pos, BlockState state, EntanglementDriveBlockEntity blockEntity) {
-        ItemStack stack = blockEntity.getStack();
-        if (!blockEntity.cachedStack.equals(stack)) {
-            world.updateComparators(pos, VABlocks.ENTANGLEMENT_DRIVE);
-            blockEntity.cachedStack = stack;
+        if (world.isClient) {
+            return;
         }
+        world.updateComparators(pos, VABlocks.ENTANGLEMENT_DRIVE);
     }
 
     public SidedInventory getInventory() {
@@ -171,7 +170,6 @@ public class EntanglementDriveBlockEntity extends BlockEntity implements Extende
     public ItemStack removeStack(int slot, int amount) {
         if (!this.canModifyPlayerInventory()) return dummyInventory.removeStack(slot, amount);
         ItemStack stack = this.getPlayerInventory().removeStack(this.getSlotIndex(), amount);
-        this.cachedStack = stack;
         this.markDirty();
         return stack;
     }
@@ -180,7 +178,6 @@ public class EntanglementDriveBlockEntity extends BlockEntity implements Extende
     public ItemStack removeStack(int slot) {
         if (!this.canModifyPlayerInventory()) return ItemStack.EMPTY;
         ItemStack stack = this.getPlayerInventory().removeStack(this.getSlotIndex());
-        this.cachedStack = stack;
         this.markDirty();
         return stack;
     }
@@ -189,7 +186,6 @@ public class EntanglementDriveBlockEntity extends BlockEntity implements Extende
     public void setStack(int slot, ItemStack stack) {
         if (!this.canModifyPlayerInventory()) return;
         this.getPlayerInventory().setStack(this.getSlotIndex(), stack);
-        this.cachedStack = stack;
         this.markDirty();
     }
 
@@ -203,7 +199,6 @@ public class EntanglementDriveBlockEntity extends BlockEntity implements Extende
     public void clear() {
         if (!this.canModifyPlayerInventory()) return;
         this.getPlayerInventory().removeStack(this.getSlotIndex());
-        this.cachedStack = getStack();
         this.markDirty();
     }
 

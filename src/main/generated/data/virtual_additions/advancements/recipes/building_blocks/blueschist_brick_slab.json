@@ -30,6 +30,5 @@
     "recipes": [
       "virtual_additions:blueschist_brick_slab"
     ]
-  },
-  "sends_telemetry_event": false
+  }
 }

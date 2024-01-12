@@ -66,6 +66,10 @@ public final class VABlockTagProvider {
                     .addOptionalTag(SILKBULBS)
                     .addOptionalTag(HEDGES);
 
+            getOrCreateTagBuilder(BlockTags.PICKAXE_MINEABLE).add(
+                    VABlocks.CLIMBING_ROPE_ANCHOR
+            );
+
             configureMinable(BlockTags.PICKAXE_MINEABLE, 1,
                     VABlocks.STEEL_BLOCK,
                     VABlocks.RAW_STEEL_BLOCK,
@@ -127,7 +131,8 @@ public final class VABlockTagProvider {
 
             getOrCreateTagBuilder(VABlockTags.LUMWASP_NEST_REPLACEABLE).add(
                             VABlocks.SILK_BLOCK,
-                            VABlocks.WEBBED_SILK)
+                            VABlocks.WEBBED_SILK,
+                            VABlocks.ACID_BLOCK)
                     .addOptionalTag(BlockTags.BASE_STONE_OVERWORLD);
 
             getOrCreateTagBuilder(VABlockTags.SCULK_GILD_EFFECTIVE).add(

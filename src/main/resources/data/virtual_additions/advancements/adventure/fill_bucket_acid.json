@@ -33,5 +33,6 @@
     [
       "acid_bucket"
     ]
-  ]
+  ],
+  "sends_telemetry_event": false
 }

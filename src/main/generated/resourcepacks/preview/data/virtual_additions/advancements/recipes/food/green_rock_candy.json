@@ -30,6 +30,5 @@
     "recipes": [
       "virtual_additions:green_rock_candy"
     ]
-  },
-  "sends_telemetry_event": false
+  }
 }

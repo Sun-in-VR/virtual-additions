@@ -30,6 +30,5 @@
     "recipes": [
       "virtual_additions:polished_floatrock"
     ]
-  },
-  "sends_telemetry_event": false
+  }
 }

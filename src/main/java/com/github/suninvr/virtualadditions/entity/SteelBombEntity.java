@@ -42,7 +42,7 @@ public class SteelBombEntity extends ThrownItemEntity {
 
     protected void explode() {
         if (!this.getWorld().isClient) {
-            this.getWorld().createExplosion(this, null, null, this.getX(), this.getY(), this.getZ(), this.getExplosivePower(), this.isOnFire(), World.ExplosionSourceType.TNT);
+            this.getWorld().createExplosion(this, this.getX(), this.getY(), this.getZ(), this.getExplosivePower(), this.isOnFire(), World.ExplosionSourceType.TNT);
             this.getWorld().sendEntityStatus(this, (byte)3);
             this.discard();
         }

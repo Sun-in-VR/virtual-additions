@@ -1,4 +1,4 @@
-// 23w44a	2023-11-02T19:59:40.73691652	virtual_additions:preview/Block Loot Tables
+// 23w51b	2024-01-11T13:52:02.89666616	virtual_additions:preview/Block Loot Tables
 454dd101e1592b22fb75adbdd0d1471f5cf75ca1 resourcepacks/preview/data/virtual_additions/loot_tables/blocks/aerobloom_log.json
 cba4452dc67504290d1264eeb3962b88f2fdc156 resourcepacks/preview/data/virtual_additions/loot_tables/blocks/aerobloom_trapdoor.json
 37deda053085e75a3d11d9619f8e3ba47711035f resourcepacks/preview/data/virtual_additions/loot_tables/blocks/aerobloom_fence_gate.json
@@ -36,6 +36,7 @@ e293da809005494171908ecf4bb4344dba790506 resourcepacks/preview/data/virtual_addi
 59199d37a3ea4847b7228835a1a6834ab08cde47 resourcepacks/preview/data/virtual_additions/loot_tables/blocks/stripped_aerobloom_wood.json
 74085000899a742f2fc7124279c37a46e72341b6 resourcepacks/preview/data/virtual_additions/loot_tables/blocks/aerobloom_pressure_plate.json
 1e723e990d139a762d4e509dc43e5fd94536ddff resourcepacks/preview/data/virtual_additions/loot_tables/blocks/aerobloom_stairs.json
+972bd36661d3bee8d733d832a2681ba4b7e7d8ba resourcepacks/preview/data/virtual_additions/loot_tables/blocks/grassy_floatrock.json
 b2cd184c3a1883cca9061c2164b648865592203e resourcepacks/preview/data/virtual_additions/loot_tables/blocks/floatrock_brick_stairs.json
 5f004471df51d0aaec4dbdcb403a7405ebd35e96 resourcepacks/preview/data/virtual_additions/loot_tables/blocks/floatrock_gold_ore.json
 bb1176e997574a4f9450e54a82c3a5fc47f21ca6 resourcepacks/preview/data/virtual_additions/loot_tables/blocks/floatrock_iron_ore.json

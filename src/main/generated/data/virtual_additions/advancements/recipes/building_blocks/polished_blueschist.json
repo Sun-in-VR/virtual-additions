@@ -30,6 +30,5 @@
     "recipes": [
       "virtual_additions:polished_blueschist"
     ]
-  },
-  "sends_telemetry_event": false
+  }
 }

@@ -4,10 +4,7 @@ import com.github.suninvr.virtualadditions.block.RedstoneBridgeBlock;
 import com.github.suninvr.virtualadditions.client.particle.AcidSplashEmitterParticle;
 import com.github.suninvr.virtualadditions.client.particle.GreencapSporeParticle;
 import com.github.suninvr.virtualadditions.client.particle.IoliteRingParticle;
-import com.github.suninvr.virtualadditions.client.render.entity.AcidSpitEntityRenderer;
-import com.github.suninvr.virtualadditions.client.render.entity.ClimbingRopeEntityRenderer;
-import com.github.suninvr.virtualadditions.client.render.entity.LumwaspEntityModel;
-import com.github.suninvr.virtualadditions.client.render.entity.LumwaspEntityRenderer;
+import com.github.suninvr.virtualadditions.client.render.entity.*;
 import com.github.suninvr.virtualadditions.client.screen.EntanglementDriveScreen;
 import com.github.suninvr.virtualadditions.registry.*;
 import com.github.suninvr.virtualadditions.screen.EntanglementDriveScreenHandler;
@@ -23,7 +20,6 @@ import net.fabricmc.fabric.api.client.rendering.v1.EntityRendererRegistry;
 import net.minecraft.block.RedstoneWireBlock;
 import net.minecraft.client.color.world.BiomeColors;
 import net.minecraft.client.color.world.FoliageColors;
-import net.minecraft.client.color.world.GrassColors;
 import net.minecraft.client.gui.screen.ingame.HandledScreens;
 import net.minecraft.client.item.ModelPredicateProviderRegistry;
 import net.minecraft.client.particle.WaterSplashParticle;
@@ -35,6 +31,7 @@ import net.minecraft.client.render.block.entity.SignBlockEntityRenderer;
 import net.minecraft.client.render.entity.FlyingItemEntityRenderer;
 import net.minecraft.client.render.entity.model.EntityModelLayer;
 import net.minecraft.client.util.SpriteIdentifier;
+import net.minecraft.entity.Entity;
 import net.minecraft.item.CrossbowItem;
 import net.minecraft.item.Items;
 import net.minecraft.network.PacketByteBuf;
@@ -49,7 +46,8 @@ public class VirtualAdditionsClient implements ClientModInitializer {
 
     private static final UUID nullId = UUID.fromString("0-0-0-0-0");
 
-    public static EntityModelLayer LUMWASP_LAYER = new EntityModelLayer(new Identifier("virtual_additions", "lumwasp"), "main");
+    public static EntityModelLayer LUMWASP_ENTITY_LAYER = new EntityModelLayer(new Identifier("virtual_additions", "lumwasp"), "main");
+    public static EntityModelLayer LYFT_ENTITY_LAYER = new EntityModelLayer(new Identifier("virtual_additions", "lyft"), "main");
     @Override
     public void onInitializeClient() {
         BlockRenderLayerMap.INSTANCE.putFluids(RenderLayer.getTranslucent(),
@@ -58,7 +56,8 @@ public class VirtualAdditionsClient implements ClientModInitializer {
         );
 
         BlockRenderLayerMap.INSTANCE.putBlocks(RenderLayer.getTranslucent(),
-                VABlocks.WEBBED_SILK
+                VABlocks.WEBBED_SILK,
+                VABlocks.ACID_BLOCK
         );
 
         BlockRenderLayerMap.INSTANCE.putBlocks(RenderLayer.getCutout(),
@@ -104,8 +103,10 @@ public class VirtualAdditionsClient implements ClientModInitializer {
         EntityRendererRegistry.register(VAEntityType.STEEL_BOMB, FlyingItemEntityRenderer::new);
         EntityRendererRegistry.register(VAEntityType.ACID_SPIT, AcidSpitEntityRenderer::new);
         EntityRendererRegistry.register(VAEntityType.LUMWASP, LumwaspEntityRenderer::new);
+        EntityRendererRegistry.register(VAEntityType.LYFT, LyftEntityRenderer::new);
 
-        EntityModelLayerRegistry.registerModelLayer(LUMWASP_LAYER, LumwaspEntityModel::getTexturedModelData);
+        EntityModelLayerRegistry.registerModelLayer(LUMWASP_ENTITY_LAYER, LumwaspEntityModel::getTexturedModelData);
+        EntityModelLayerRegistry.registerModelLayer(LYFT_ENTITY_LAYER, LyftEntityModel::getTexturedModelData);
 
         ColorProviderRegistry.BLOCK.register( ((state, world, pos, tintIndex) -> world != null ? BiomeColors.getFoliageColor(world, pos) : FoliageColors.getDefaultColor()),
                 VABlocks.OAK_HEDGE,
@@ -159,6 +160,19 @@ public class VirtualAdditionsClient implements ClientModInitializer {
         ClientPlayNetworking.registerGlobalReceiver(VAPackets.ENTANGLEMENT_DRIVE_SELECTED_SLOT_SYNC_ID, ((client, handler, buf, responseSender) -> {
             if (client.currentScreen instanceof EntanglementDriveScreen entanglementDriveScreen) {
                 entanglementDriveScreen.setSelectingSlotPos(buf.readInt(), buf.readInt());
+            }
+        }));
+
+        ClientPlayNetworking.registerGlobalReceiver(VAPackets.WIND_UPDATE_VELOCITY,  ((client, handler, buf, responseSender) -> {
+            if (client.world != null) {
+                int id = buf.readInt();
+                Entity entity = client.world.getEntityById(id);
+                if (entity != null) {
+                    double x = buf.readDouble() + entity.getVelocity().x;
+                    double y = buf.readDouble() + entity.getVelocity().y;
+                    double z = buf.readDouble() + entity.getVelocity().z;
+                    entity.setVelocityClient(x, y, z);
+                }
             }
         }));
 

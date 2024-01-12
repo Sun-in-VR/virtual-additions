@@ -43,6 +43,8 @@ import net.minecraft.potion.Potions;
 import net.minecraft.predicate.item.ItemPredicate;
 import net.minecraft.recipe.BrewingRecipeRegistry;
 import net.minecraft.registry.Registries;
+import net.minecraft.registry.RegistryKeys;
+import net.minecraft.registry.entry.RegistryEntry;
 import net.minecraft.text.Text;
 import net.minecraft.util.Formatting;
 import net.minecraft.util.Identifier;
@@ -218,6 +220,7 @@ public class VAItems {
     public static final Item PURPLE_SILKBULB;
     public static final Item MAGENTA_SILKBULB;
     public static final Item ACID_BUCKET;
+    public static final Item ACID_BLOCK;
     public static final Item PINK_SILKBULB;
     public static final Item APPLICABLE_POTION;
     public static final Item TOOL_GILD_SMITHING_TEMPLATE;
@@ -228,6 +231,7 @@ public class VAItems {
     public static final Item WARP_TETHER;
     public static final Item ENTANGLEMENT_DRIVE;
     public static final Item LUMWASP_SPAWN_EGG;
+    public static final Item LYFT_SPAWN_EGG;
 
     public static final FoodComponent FRIED_EGG_FOOD = (new FoodComponent.Builder().hunger(4).saturationModifier(0.4F).build());
     public static final FoodComponent CORN_FOOD = (new FoodComponent.Builder()).hunger(1).saturationModifier(0.3F).build();
@@ -462,6 +466,7 @@ public class VAItems {
         SILK_THREAD = register("silk_thread", ItemGroups.INGREDIENTS, Items.STRING);
         LUMWASP_MANDIBLE = register("lumwasp_mandible", ItemGroups.INGREDIENTS, Items.FERMENTED_SPIDER_EYE);
         SILKBULB = registerBlockItem("silkbulb", VABlocks.SILKBULB, new ItemGroupLocation(ItemGroups.FUNCTIONAL, Items.GLOWSTONE), new ItemGroupLocation(ItemGroups.COLORED_BLOCKS, Items.PINK_BANNER), new ItemGroupLocation(ItemGroups.NATURAL, WEBBED_SILK));
+        ACID_BLOCK = registerBlockItem("acid_block", VABlocks.ACID_BLOCK, ItemGroups.NATURAL, prev);
 
         WHITE_SILKBULB = registerBlockItem("white_silkbulb", VABlocks.WHITE_SILKBULB, ItemGroups.COLORED_BLOCKS, prev);
         LIGHT_GRAY_SILKBULB = registerBlockItem("light_gray_silkbulb", VABlocks.LIGHT_GRAY_SILKBULB, ItemGroups.COLORED_BLOCKS, prev);
@@ -541,6 +546,7 @@ public class VAItems {
         SCULK_TOOL_SETS = new ToolSet[]{SCULK_DIAMOND_TOOL_SET, SCULK_IRON_TOOL_SET, SCULK_GOLDEN_TOOL_SET, SCULK_STEEL_TOOL_SET, SCULK_NETHERITE_TOOL_SET};
 
         LUMWASP_SPAWN_EGG = register("lumwasp_spawn_egg", new SpawnEggItem(VAEntityType.LUMWASP, 0x00d67a, 0x214132, new Item.Settings()), ItemGroups.SPAWN_EGGS, Items.LLAMA_SPAWN_EGG);
+        LYFT_SPAWN_EGG = register("lyft_spawn_egg", new SpawnEggItem(VAEntityType.LYFT, 0xB1C1DC, 0x88A1C0, new Item.Settings()), ItemGroups.SPAWN_EGGS, prev);
     }
 
     public static void init(){
@@ -550,9 +556,8 @@ public class VAItems {
         initBrewingRecipes();
 
         ItemGroupEvents.modifyEntriesEvent(ItemGroups.FOOD_AND_DRINK).register( (content) -> {
-            for (Potion potion : Registries.POTION) {
-                if (!(potion.equals(Potions.EMPTY))) content.add(PotionUtil.setPotion(new ItemStack(APPLICABLE_POTION), potion));
-            }
+            if (ItemGroups.displayContext == null) return;
+            ItemGroups.displayContext.lookup().getOptionalWrapper(RegistryKeys.POTION).ifPresent((wrapper) -> ItemGroups.addPotions(content, wrapper, VAItems.APPLICABLE_POTION, ItemGroup.StackVisibility.PARENT_AND_SEARCH_TABS));
         } );
     }
 
@@ -592,7 +597,7 @@ public class VAItems {
     }
     protected static void initLootTableModifiers() {
         LootTableEvents.MODIFY.register( (resourceManager, lootManager, id, tableBuilder, source) -> {
-            if (source.isBuiltin() && Blocks.GRASS.getLootTableId().equals(id)) {
+            if (source.isBuiltin() && Blocks.SHORT_GRASS.getLootTableId().equals(id)) {
                 LootPool.Builder builder = LootPool.builder()
                         .with(ItemEntry.builder(COTTON_SEEDS)
                                 .apply(ApplyBonusLootFunction.uniformBonusCount(Enchantments.FORTUNE, 2))

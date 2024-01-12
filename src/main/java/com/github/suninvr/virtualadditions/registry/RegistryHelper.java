@@ -11,6 +11,8 @@ import net.minecraft.registry.Registry;
 import net.minecraft.registry.RegistryKey;
 import net.minecraft.resource.featuretoggle.FeatureFlag;
 
+import java.util.function.Consumer;
+
 import static com.github.suninvr.virtualadditions.VirtualAdditions.idOf;
 
 @SuppressWarnings({"UnstableApiUsage", "unused"})
@@ -34,6 +36,14 @@ public class RegistryHelper {
         public record ToolSet(Item SWORD, Item SHOVEL, Item PICKAXE, Item AXE, Item HOE, String NAME){
             public Item[] getItems() {
                 return new Item[]{AXE, HOE, PICKAXE, SHOVEL, SWORD};
+            }
+
+            public void forEach(Consumer<Item> consumer) {
+                consumer.accept(AXE);
+                consumer.accept(HOE);
+                consumer.accept(PICKAXE);
+                consumer.accept(SHOVEL);
+                consumer.accept(SWORD);
             }
         }
         public record ItemGroupLocation(RegistryKey<ItemGroup> GROUP, Item AFTER){}

@@ -30,6 +30,5 @@
     "recipes": [
       "virtual_additions:smithing/amethyst_golden_sword"
     ]
-  },
-  "sends_telemetry_event": false
+  }
 }

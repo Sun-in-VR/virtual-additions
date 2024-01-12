@@ -26,21 +26,12 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
 @Mixin(PlayerEntity.class)
 public abstract class PlayerEntityMixin extends LivingEntity {
-    @Unique
-    private static boolean ioliteGildExtendedReach;
-
     @Shadow public abstract boolean isSwimming();
 
     @Shadow @Final private PlayerInventory inventory;
 
     protected PlayerEntityMixin(EntityType<? extends LivingEntity> entityType, World world) {
         super(entityType, world);
-    }
-
-    @Inject(method = "tickMovement", at = @At(value = "INVOKE", target = "Lnet/minecraft/entity/player/PlayerInventory;updateItems()V"))
-    private void virtualAdditions$updateIoliteGildType(CallbackInfo ci) {
-        TagKey<Item> tag = GildTypes.IOLITE.getTag();
-        ioliteGildExtendedReach = this.getMainHandStack().isIn(tag) || this.getOffHandStack().isIn(tag);
     }
 
     @Inject(method = "getBlockBreakingSpeed", at = @At("RETURN"), cancellable = true)
@@ -68,10 +59,5 @@ public abstract class PlayerEntityMixin extends LivingEntity {
             this.inventory.damageArmor(source, amount, PlayerInventory.ARMOR_SLOTS);
             ci.cancel();
         }
-    }
-
-    @Inject(method = "getReachDistance", at = @At("RETURN"), cancellable = true)
-    private static void virtualAdditions$getExtendedReachDistance(boolean creative, CallbackInfoReturnable<Float> cir) {
-        if (ioliteGildExtendedReach) cir.setReturnValue(cir.getReturnValue() + 3.5F);
     }
 }
