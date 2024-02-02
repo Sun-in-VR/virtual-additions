@@ -1,7 +1,7 @@
 package com.github.suninvr.virtualadditions.block;
 
 import com.github.suninvr.virtualadditions.block.entity.WarpAnchorBlockEntity;
-import com.github.suninvr.virtualadditions.registry.VABlockEntities;
+import com.github.suninvr.virtualadditions.registry.VABlockEntityType;
 import com.github.suninvr.virtualadditions.registry.VAItems;
 import com.github.suninvr.virtualadditions.registry.VASoundEvents;
 import com.mojang.serialization.MapCodec;
@@ -25,7 +25,6 @@ import net.minecraft.state.property.Properties;
 import net.minecraft.text.Text;
 import net.minecraft.util.ActionResult;
 import net.minecraft.util.Formatting;
-import net.minecraft.util.Hand;
 import net.minecraft.util.hit.BlockHitResult;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Direction;
@@ -127,7 +126,9 @@ public class WarpAnchorBlock extends BlockWithEntity implements Waterloggable {
 
     @Nullable
     @Override
-    public <T extends BlockEntity> BlockEntityTicker<T> getTicker(World world, BlockState state, BlockEntityType<T> type) {return validateTicker(type, VABlockEntities.IOLITE_ANCHOR_BLOCK_ENTITY, WarpAnchorBlockEntity::tick);}
+    public <T extends BlockEntity> BlockEntityTicker<T> getTicker(World world, BlockState state, BlockEntityType<T> type) {
+        return validateTicker(type, VABlockEntityType.WARP_ANCHOR, WarpAnchorBlockEntity::tick);
+    }
 
     static {
         HITBOX = VoxelShapes.cuboid(0f, 0f, 0f, 1f, 0.375, 1f);

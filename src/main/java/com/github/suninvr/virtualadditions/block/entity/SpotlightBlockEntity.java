@@ -3,7 +3,7 @@ package com.github.suninvr.virtualadditions.block.entity;
 import com.github.suninvr.virtualadditions.block.SpotlightBlock;
 import com.github.suninvr.virtualadditions.block.SpotlightLightBlock;
 import com.github.suninvr.virtualadditions.block.enums.LightStatus;
-import com.github.suninvr.virtualadditions.registry.VABlockEntities;
+import com.github.suninvr.virtualadditions.registry.VABlockEntityType;
 import com.github.suninvr.virtualadditions.registry.VABlockTags;
 import com.github.suninvr.virtualadditions.registry.VABlocks;
 import net.minecraft.block.BlockState;
@@ -21,7 +21,7 @@ public class SpotlightBlockEntity extends BlockEntity {
     private NbtElement lightPos;
 
     public SpotlightBlockEntity(BlockPos pos, BlockState state) {
-        super(VABlockEntities.SPOTLIGHT_BLOCK_ENTITY, pos, state);
+        super(VABlockEntityType.SPOTLIGHT, pos, state);
         NbtCompound defaultNbt = new NbtCompound();
         defaultNbt.put("LightPos", NbtHelper.fromBlockPos(pos));
         readNbt(defaultNbt);

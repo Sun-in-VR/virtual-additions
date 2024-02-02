@@ -1,7 +1,7 @@
 package com.github.suninvr.virtualadditions.block.entity;
 
 import com.github.suninvr.virtualadditions.block.DestructiveSculkBlock;
-import com.github.suninvr.virtualadditions.registry.VABlockEntities;
+import com.github.suninvr.virtualadditions.registry.VABlockEntityType;
 import com.github.suninvr.virtualadditions.registry.VABlocks;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
@@ -36,7 +36,7 @@ public class DestructiveSculkBlockEntity extends BlockEntity {
     private int activePosIndex;
 
     public DestructiveSculkBlockEntity(BlockPos pos, BlockState state) {
-        super(VABlockEntities.DESTRUCTIVE_SCULK_BLOCK_ENTITY, pos, state);
+        super(VABlockEntityType.DESTRUCTIVE_SCULK, pos, state);
         this.replacedState = Blocks.AIR.getDefaultState();
         this.playerId = UUID.fromString("0-0-0-0-0");
         this.tool = ItemStack.EMPTY;

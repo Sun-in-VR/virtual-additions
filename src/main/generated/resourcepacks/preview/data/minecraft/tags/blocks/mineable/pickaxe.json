@@ -12,16 +12,16 @@
     "virtual_additions:floatrock_gold_ore",
     "virtual_additions:floatrock",
     "virtual_additions:floatrock",
+    "virtual_additions:floatrock_wall",
     "virtual_additions:floatrock_stairs",
     "virtual_additions:floatrock_slab",
-    "virtual_additions:floatrock_wall",
     "virtual_additions:polished_floatrock",
+    "virtual_additions:polished_floatrock_wall",
     "virtual_additions:polished_floatrock_stairs",
     "virtual_additions:polished_floatrock_slab",
-    "virtual_additions:polished_floatrock_wall",
     "virtual_additions:floatrock_bricks",
+    "virtual_additions:floatrock_brick_wall",
     "virtual_additions:floatrock_brick_stairs",
-    "virtual_additions:floatrock_brick_slab",
-    "virtual_additions:floatrock_brick_wall"
+    "virtual_additions:floatrock_brick_slab"
   ]
 }

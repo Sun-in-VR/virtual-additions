@@ -1,0 +1,17 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "category": "misc",
+  "group": "plum_dye",
+  "ingredients": [
+    {
+      "item": "minecraft:purple_dye"
+    },
+    {
+      "item": "virtual_additions:maroon_dye"
+    }
+  ],
+  "result": {
+    "count": 2,
+    "item": "virtual_additions:plum_dye"
+  }
+}

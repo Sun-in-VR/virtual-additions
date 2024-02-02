@@ -13,6 +13,10 @@ public class VAItemTags {
     public static final TagKey<Item> ACID_RESISTANT = register("acid_resistant");
     public static final TagKey<Item> GILDED_TOOLS = TagKey.of(RegistryKeys.ITEM, idOf("gilded_tools"));
     public static final TagKey<Item> AEROBLOOM_LOGS = TagKey.of(RegistryKeys.ITEM, idOf("aerobloom_logs"));
+    public static final TagKey<Item> SILKBULBS = TagKey.of(RegistryKeys.ITEM, idOf("silkbulbs"));
+    public static final TagKey<Item> BASE_DYE = TagKey.of(RegistryKeys.ITEM, idOf("base_dye"));
+    public static final TagKey<Item> COLORABLE_GLASS = TagKey.of(RegistryKeys.ITEM, idOf("colorable_glass"));
+    public static final TagKey<Item> COLORABLE_GLASS_PANE = TagKey.of(RegistryKeys.ITEM, idOf("colorable_glass_pane"));
 
     private static TagKey<Item> register(String id) {
         return TagKey.of(Registries.ITEM.getKey(), idOf(id));

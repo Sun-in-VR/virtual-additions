@@ -1,0 +1,9 @@
+{
+  "type": "virtual_additions:coloring",
+  "count": 1,
+  "ingredient": {
+    "tag": "virtual_additions:colorable_glass"
+  },
+  "result": "minecraft:white_stained_glass",
+  "white_cost": 4
+}

@@ -1,6 +1,7 @@
-// 23w51b	2024-01-11T13:52:02.89311072	Virtual Additions/Tags for minecraft:block
-6dffddb3fa6b651a0b3f2ae766d0baf07f1ea0b8 data/virtual_additions/tags/blocks/silkbulbs.json
+// 23w51b	2024-02-01T16:20:45.562141909	Virtual Additions/Tags for minecraft:block
+2f0568bdc965a39f41a1bf9510d9d8f67f0f2609 data/virtual_additions/tags/blocks/silkbulbs.json
 e76425467c7656048767d19838c43685d76ac1f7 data/minecraft/tags/blocks/sword_efficient.json
+f16972eabac450af9e15c4f2c49cbc1b0a85e611 data/minecraft/tags/blocks/mineable/shovel.json
 dc3dd38d696fc4ca82f024ab6108cb6acc549dde data/minecraft/tags/blocks/combination_step_sound_blocks.json
 268ac7f89703532aa94fbea2184a39cafb365666 data/minecraft/tags/blocks/trapdoors.json
 5312a104fe4c9c88b6a0139ca288d2b9f571e244 data/minecraft/tags/blocks/climbable.json
@@ -12,20 +13,28 @@ fa420e03e172c23a07894fb10739e071d45f295b data/virtual_additions/tags/blocks/scul
 7f1a68dfb997f378a5e9d156d1dea8a70829beaf data/virtual_additions/tags/blocks/acid_unbreakable.json
 ffb782ad189880fa793e1e3f9a47277be3fd7595 data/minecraft/tags/blocks/doors.json
 4e3479e354654d5f2774aed8bf41f615d80d9025 data/virtual_additions/tags/blocks/sculk_gild_effective.json
+dddce04dae0dbf3f5fd3b772eef33df3108e5566 data/minecraft/tags/blocks/mineable/axe.json
 79fb4b8fe7da2332fe61d877c847c20e28235094 data/minecraft/tags/blocks/replaceable.json
 5b4da6bc571ca3a3c4ba594e2c5773380fb039b4 data/virtual_additions/tags/blocks/lumwasp_nest_replaceable.json
 9af7403ac59d30b556611e33397c00b2b8ed0cf4 data/minecraft/tags/blocks/maintains_farmland.json
 79b9a299886d9bbd4d746230d3c812c5f605e004 data/minecraft/tags/blocks/base_stone_overworld.json
 8ce003d52b91136ed1da4a80eb41e7a2514a16ba data/minecraft/tags/blocks/walls.json
+d3ced539bae0e1db588031de88e6aa3d5189ce3a data/minecraft/tags/blocks/candles.json
 3953adb40c62c8fa7d5d1f24a48fbbcef38a00a5 data/virtual_additions/tags/blocks/climbing_ropes.json
-72a5ec3263ead65782584dd8318a33d0dde7d629 data/minecraft/tags/blocks/needs_stone_tool.json
-979483587d97fdbfc25e80cc7e02a57b7c8ec905 data/minecraft/tags/blocks/mineable/pickaxe.json
+f51512e762c5cb1e60532d1a901cd825c2c9a140 data/minecraft/tags/blocks/wool.json
+f16972eabac450af9e15c4f2c49cbc1b0a85e611 data/minecraft/tags/blocks/concrete_powder.json
+cdf7d91ff0ece1742d81fdb46cc8975471bf8203 data/minecraft/tags/blocks/needs_stone_tool.json
+6ca70c1d27ca1941275cdda8026cdd9d34416be5 data/minecraft/tags/blocks/mineable/pickaxe.json
 9af7403ac59d30b556611e33397c00b2b8ed0cf4 data/minecraft/tags/blocks/crops.json
+c962cd8144cf02f1ece9b589ed5f86afa5f0a5fc data/minecraft/tags/blocks/terracotta.json
 79b9a299886d9bbd4d746230d3c812c5f605e004 data/minecraft/tags/blocks/deepslate_ore_replaceables.json
 79b9a299886d9bbd4d746230d3c812c5f605e004 data/minecraft/tags/blocks/overworld_carver_replaceables.json
 bf3b29aad86768362b52de1cc7c686f0b467c683 data/minecraft/tags/blocks/slabs.json
 0ebfeac75194a0ecff44c7fdaddf542be49d80fd data/minecraft/tags/blocks/sculk_replaceable.json
+761d02ec8390b1ab06a796148106d2f422fdc912 data/minecraft/tags/blocks/candle_cakes.json
 3359d2ce71c3f3f9ae890fc437d61901486ac3c1 data/minecraft/tags/blocks/mineable/hoe.json
+dda0340c435bf726804341909e41ced198c71b88 data/minecraft/tags/blocks/impermeable.json
 11ef7381471c30f3c487c434463bc5d35e53e364 data/minecraft/tags/blocks/fences.json
+e9ee9edc8304c26fa767cb95fd042b8deafadc77 data/minecraft/tags/blocks/wool_carpets.json
 0c1e057a5f96d446e59585ede5abd5e74b832828 data/minecraft/tags/blocks/stairs.json
 f2771ffee847a9fc10d350c21f8a60af33a91359 data/minecraft/tags/blocks/flowers.json

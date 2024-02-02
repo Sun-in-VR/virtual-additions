@@ -1,0 +1,11 @@
+{
+  "type": "virtual_additions:coloring",
+  "black_cost": 2,
+  "count": 1,
+  "index": 5,
+  "ingredient": {
+    "tag": "virtual_additions:colorable_glass"
+  },
+  "red_cost": 2,
+  "result": "virtual_additions:maroon_stained_glass"
+}

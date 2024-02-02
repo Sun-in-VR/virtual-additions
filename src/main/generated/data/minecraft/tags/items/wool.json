@@ -1,0 +1,11 @@
+{
+  "replace": false,
+  "values": [
+    "virtual_additions:chartreuse_wool",
+    "virtual_additions:maroon_wool",
+    "virtual_additions:indigo_wool",
+    "virtual_additions:plum_wool",
+    "virtual_additions:cold_green_wool",
+    "virtual_additions:tan_wool"
+  ]
+}

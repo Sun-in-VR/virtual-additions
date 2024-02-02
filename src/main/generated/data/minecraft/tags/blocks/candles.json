@@ -1,0 +1,11 @@
+{
+  "replace": false,
+  "values": [
+    "virtual_additions:chartreuse_candle",
+    "virtual_additions:maroon_candle",
+    "virtual_additions:indigo_candle",
+    "virtual_additions:plum_candle",
+    "virtual_additions:cold_green_candle",
+    "virtual_additions:tan_candle"
+  ]
+}

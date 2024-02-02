@@ -1,0 +1,9 @@
+{
+  "type": "virtual_additions:coloring",
+  "count": 1,
+  "index": 11,
+  "ingredient": [],
+  "result": "minecraft:lime_dye",
+  "white_cost": 8,
+  "yellow_cost": 8
+}

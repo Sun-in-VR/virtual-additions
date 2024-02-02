@@ -1,4 +1,4 @@
-// 23w51b	2024-01-11T13:52:02.901890341	Virtual Additions/Tags for minecraft:item
+// 23w51b	2024-02-01T16:20:45.576709221	Virtual Additions/Tags for minecraft:item
 1cdc0888362c93aec1d6928c91d9a45b8f21835f data/virtual_additions/tags/items/acid_resistant.json
 16f9a85b9f47196c1b9a229047eed5f3eb27a463 data/c/tags/items/swords.json
 fc3ca2a5f41d5d4afc8af7f869c4fb59463ed151 data/c/tags/items/iolite_ores.json
@@ -23,6 +23,8 @@ f94db4210524110cb43896b625ecb4cb684ef918 data/minecraft/tags/items/stone_craftin
 a2f71e59a3a181bfbf08e97a9016588708e34e52 data/virtual_additions/tags/items/sculk_gilded_swords.json
 db81758f7f9c4f49e2d96715120d7c00eb749003 data/virtual_additions/tags/items/sculk_gilded_tools.json
 4f623dc68dc7abb33ccecb1a385db7f52c028c40 data/c/tags/items/ores.json
+e9ee9edc8304c26fa767cb95fd042b8deafadc77 data/minecraft/tags/items/wool_carpets.json
+f4e955b4d802d5ed90ffd596ae9ed87cb512132d data/virtual_additions/tags/items/colorable_glass.json
 6d2bd395e420420e36030071ca7590b66e594fec data/virtual_additions/tags/items/quartz_gilded_axes.json
 8998ed3d1e78b03a5505518d16e5153fdd17b83d data/c/tags/items/potions.json
 d6b05a015160f0906a57b254c434ffd28dec71bd data/virtual_additions/tags/items/iolite_gilded_pickaxes.json
@@ -36,6 +38,7 @@ b49bffb6a6d0a750fc78842ec0c4463ec9b2ef52 data/c/tags/items/pickaxes.json
 28479ba8465b9e6f85f456287be8dca458ee0c54 data/virtual_additions/tags/items/emerald_gilded_tools.json
 60897b44e03c28ef1d80de18c06a26768569541b data/c/tags/items/hoes.json
 69cab88fc005980919d8112d1ef23562fe77185b data/virtual_additions/tags/items/amethyst_gilded_axes.json
+2f0568bdc965a39f41a1bf9510d9d8f67f0f2609 data/virtual_additions/tags/items/silkbulbs.json
 75cd6fe82c3fe960c3b2ba2abfebba2a84c7f3b9 data/virtual_additions/tags/items/copper_gilded_tools.json
 4852b3b1447693db9879fb351ba455dcea732417 data/virtual_additions/tags/items/emerald_gilded_hoes.json
 ffb782ad189880fa793e1e3f9a47277be3fd7595 data/minecraft/tags/items/doors.json
@@ -43,6 +46,7 @@ f94db4210524110cb43896b625ecb4cb684ef918 data/minecraft/tags/items/stone_tool_ma
 ee9217948d7624a5eb576c5af45c26cc3b71bc97 data/c/tags/items/raw_ores.json
 858bb2462d5836a9a6fd6023f722cb30de1c54c5 data/virtual_additions/tags/items/iolite_gilded_shovels.json
 e8a7f7e13ce5cb7ba8cf119f458ddb92a23c069e data/minecraft/tags/items/beacon_payment_items.json
+f51512e762c5cb1e60532d1a901cd825c2c9a140 data/minecraft/tags/items/wool.json
 19e8531324841652c6b7572c625cc23e43769f2f data/virtual_additions/tags/items/iolite_gilded_axes.json
 83b0defafd38fbff61d9553c26f7951cb2e52939 data/minecraft/tags/items/cluster_max_harvestables.json
 43804278996b61763040f973b1c2b0374e59d69d data/virtual_additions/tags/items/emerald_gilded_shovels.json
@@ -56,11 +60,15 @@ e86053d023b47421f4644947427f45b0f4e51f21 data/virtual_additions/tags/items/quart
 3e295b09abf59be0c2c36c607de240701f8a1aa6 data/virtual_additions/tags/items/iolite_gilded_tools.json
 8a93b7085d6b892e59de93d791ec472bd59930be data/virtual_additions/tags/items/sculk_gilded_shovels.json
 a0a79532a1b8d1bf429f31391b5b82b1f948aa0c data/c/tags/items/foods.json
+c962cd8144cf02f1ece9b589ed5f86afa5f0a5fc data/minecraft/tags/items/terracotta.json
+33b74849433a9c22a541cef5151dbfe3201d06bb data/virtual_additions/tags/items/base_dye.json
 79317a02222bd548c697fe20d1e28104d5a27210 data/virtual_additions/tags/items/copper_gilded_shovels.json
 34fe499687844696c104a53e7958e64d9572bc19 data/virtual_additions/tags/items/amethyst_gilded_pickaxes.json
-1ad581a385254e17d114bda62498953367f3538f data/minecraft/tags/items/villager_plantable_seeds.json
+d3ced539bae0e1db588031de88e6aa3d5189ce3a data/minecraft/tags/items/candles.json
 0759e5104e66c40664d320c38e0b66e8a7b0eb8d data/c/tags/items/gems.json
+1ad581a385254e17d114bda62498953367f3538f data/minecraft/tags/items/villager_plantable_seeds.json
 51bc88f3f8770e7fe7780fd0c209b91ec09b696b data/virtual_additions/tags/items/copper_gilded_hoes.json
+ebf4efc51a852aed1a62579b1d171ea9e457b774 data/virtual_additions/tags/items/colorable_glass_pane.json
 019183bd363fc19a6e76d971e545df9ae802aece data/virtual_additions/tags/items/amethyst_gilded_shovels.json
 8ce003d52b91136ed1da4a80eb41e7a2514a16ba data/minecraft/tags/items/walls.json
 74c128516b132f2173439f6b410a66bcbc87ca02 data/virtual_additions/tags/items/quartz_gilded_pickaxes.json

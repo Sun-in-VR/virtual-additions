@@ -1,0 +1,11 @@
+{
+  "replace": false,
+  "values": [
+    "virtual_additions:chartreuse_concrete_powder",
+    "virtual_additions:maroon_concrete_powder",
+    "virtual_additions:indigo_concrete_powder",
+    "virtual_additions:plum_concrete_powder",
+    "virtual_additions:cold_green_concrete_powder",
+    "virtual_additions:tan_concrete_powder"
+  ]
+}

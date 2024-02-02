@@ -1,7 +1,7 @@
 package com.github.suninvr.virtualadditions.block;
 
 import com.github.suninvr.virtualadditions.block.entity.WindBlockEntity;
-import com.github.suninvr.virtualadditions.registry.VABlockEntities;
+import com.github.suninvr.virtualadditions.registry.VABlockEntityType;
 import com.mojang.serialization.MapCodec;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.BlockWithEntity;
@@ -25,7 +25,7 @@ public class WindBlock extends BlockWithEntity {
     @Nullable
     @Override
     public <T extends BlockEntity> BlockEntityTicker<T> getTicker(World world, BlockState state, BlockEntityType<T> type) {
-        return validateTicker(type, VABlockEntities.WIND_BLOCK_ENTITY, WindBlockEntity::tick) ;
+        return validateTicker(type, VABlockEntityType.WIND, WindBlockEntity::tick) ;
     }
 
     @Override

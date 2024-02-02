@@ -1,0 +1,11 @@
+{
+  "type": "virtual_additions:coloring",
+  "count": 1,
+  "index": 11,
+  "ingredient": {
+    "tag": "virtual_additions:colorable_glass_pane"
+  },
+  "result": "minecraft:lime_stained_glass_pane",
+  "white_cost": 2,
+  "yellow_cost": 2
+}

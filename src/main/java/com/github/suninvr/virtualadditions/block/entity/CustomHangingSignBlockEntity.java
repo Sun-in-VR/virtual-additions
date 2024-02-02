@@ -1,6 +1,6 @@
 package com.github.suninvr.virtualadditions.block.entity;
 
-import com.github.suninvr.virtualadditions.registry.VABlockEntities;
+import com.github.suninvr.virtualadditions.registry.VABlockEntityType;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.entity.BlockEntityType;
 import net.minecraft.block.entity.HangingSignBlockEntity;
@@ -13,6 +13,6 @@ public class CustomHangingSignBlockEntity extends HangingSignBlockEntity {
 
     @Override
     public BlockEntityType<?> getType() {
-        return VABlockEntities.CUSTOM_HANGING_SIGN_BLOCK_ENTITY;
+        return VABlockEntityType.CUSTOM_HANGING_SIGN;
     }
 }

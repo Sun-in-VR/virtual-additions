@@ -1,0 +1,6 @@
+{
+  "parent": "minecraft:item/generated",
+  "textures": {
+    "layer0": "virtual_additions:block/plum_stained_glass"
+  }
+}

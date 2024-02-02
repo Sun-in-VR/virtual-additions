@@ -1,7 +1,7 @@
 package com.github.suninvr.virtualadditions.block;
 
 import com.github.suninvr.virtualadditions.block.entity.EntanglementDriveBlockEntity;
-import com.github.suninvr.virtualadditions.registry.VABlockEntities;
+import com.github.suninvr.virtualadditions.registry.VABlockEntityType;
 import com.github.suninvr.virtualadditions.screen.EntanglementDriveScreenHandler;
 import com.mojang.serialization.MapCodec;
 import net.minecraft.block.*;
@@ -109,7 +109,7 @@ public class EntanglementDriveBlock extends BlockWithEntity implements Inventory
     @Nullable
     @Override
     public <T extends BlockEntity> BlockEntityTicker<T> getTicker(World world, BlockState state, BlockEntityType<T> type) {
-        return validateTicker(type, VABlockEntities.ENTANGLEMENT_DRIVE_BLOCK_ENTITY, (EntanglementDriveBlockEntity::tick));
+        return validateTicker(type, VABlockEntityType.ENTANGLEMENT_DRIVE, (EntanglementDriveBlockEntity::tick));
     }
 
     @Nullable

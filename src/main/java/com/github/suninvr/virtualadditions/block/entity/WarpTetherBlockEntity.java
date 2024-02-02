@@ -2,7 +2,7 @@ package com.github.suninvr.virtualadditions.block.entity;
 
 import com.github.suninvr.virtualadditions.block.WarpTetherBlock;
 import com.github.suninvr.virtualadditions.particle.IoliteRingParticleEffect;
-import com.github.suninvr.virtualadditions.registry.VABlockEntities;
+import com.github.suninvr.virtualadditions.registry.VABlockEntityType;
 import com.github.suninvr.virtualadditions.registry.VAParticleTypes;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.entity.BlockEntity;
@@ -18,7 +18,7 @@ public class WarpTetherBlockEntity extends BlockEntity {
     private static final ParticleEffect particle;
 
     public WarpTetherBlockEntity(BlockPos blockPos, BlockState blockState) {
-        super(VABlockEntities.IOLITE_TETHER_BLOCK_ENTITY, blockPos, blockState);
+        super(VABlockEntityType.WARP_TETHER, blockPos, blockState);
 
         NbtCompound defaultTag = new NbtCompound();
         defaultTag.put("destination", NbtHelper.fromBlockPos(blockPos));

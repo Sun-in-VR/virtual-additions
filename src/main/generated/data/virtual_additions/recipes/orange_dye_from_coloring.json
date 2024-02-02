@@ -1,0 +1,9 @@
+{
+  "type": "virtual_additions:coloring",
+  "count": 1,
+  "index": 7,
+  "ingredient": [],
+  "red_cost": 8,
+  "result": "minecraft:orange_dye",
+  "yellow_cost": 8
+}

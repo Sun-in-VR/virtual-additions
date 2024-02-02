@@ -1,0 +1,13 @@
+{
+  "type": "virtual_additions:coloring",
+  "black_cost": 1,
+  "count": 1,
+  "index": 8,
+  "ingredient": {
+    "tag": "virtual_additions:colorable_glass_pane"
+  },
+  "red_cost": 1,
+  "result": "virtual_additions:tan_stained_glass_pane",
+  "white_cost": 1,
+  "yellow_cost": 1
+}

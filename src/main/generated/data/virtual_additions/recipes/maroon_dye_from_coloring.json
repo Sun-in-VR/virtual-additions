@@ -1,0 +1,9 @@
+{
+  "type": "virtual_additions:coloring",
+  "black_cost": 8,
+  "count": 1,
+  "index": 5,
+  "ingredient": [],
+  "red_cost": 8,
+  "result": "virtual_additions:maroon_dye"
+}

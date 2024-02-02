@@ -2,7 +2,7 @@ package com.github.suninvr.virtualadditions.block;
 
 import com.github.suninvr.virtualadditions.block.entity.DestructiveSculkBlockEntity;
 import com.github.suninvr.virtualadditions.interfaces.ExperienceDroppingBlockInterface;
-import com.github.suninvr.virtualadditions.registry.VABlockEntities;
+import com.github.suninvr.virtualadditions.registry.VABlockEntityType;
 import com.github.suninvr.virtualadditions.registry.VABlocks;
 import com.mojang.serialization.MapCodec;
 import net.minecraft.block.*;
@@ -177,7 +177,7 @@ public class DestructiveSculkBlock extends BlockWithEntity {
     @Override
     public <T extends BlockEntity> BlockEntityTicker<T> getTicker(World world, BlockState state, BlockEntityType<T> type) {
         if (!state.get(ORIGIN)) return null;
-        return validateTicker(type, VABlockEntities.DESTRUCTIVE_SCULK_BLOCK_ENTITY, (DestructiveSculkBlockEntity::tick));
+        return validateTicker(type, VABlockEntityType.DESTRUCTIVE_SCULK, (DestructiveSculkBlockEntity::tick));
     }
 
     @Override

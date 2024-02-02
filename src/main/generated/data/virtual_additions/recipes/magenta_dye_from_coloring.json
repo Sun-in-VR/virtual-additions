@@ -1,0 +1,10 @@
+{
+  "type": "virtual_additions:coloring",
+  "blue_cost": 4,
+  "count": 1,
+  "index": 20,
+  "ingredient": [],
+  "red_cost": 8,
+  "result": "minecraft:magenta_dye",
+  "white_cost": 4
+}

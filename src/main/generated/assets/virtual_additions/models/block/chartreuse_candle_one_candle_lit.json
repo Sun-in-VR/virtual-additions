@@ -1,0 +1,7 @@
+{
+  "parent": "minecraft:block/template_candle",
+  "textures": {
+    "all": "virtual_additions:block/chartreuse_candle_lit",
+    "particle": "virtual_additions:block/chartreuse_candle_lit"
+  }
+}

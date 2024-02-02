@@ -1,0 +1,15 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "category": "building",
+  "ingredients": [
+    {
+      "tag": "minecraft:wool_carpets"
+    },
+    {
+      "item": "virtual_additions:chartreuse_dye"
+    }
+  ],
+  "result": {
+    "item": "virtual_additions:chartreuse_carpet"
+  }
+}

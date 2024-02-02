@@ -61,7 +61,7 @@ public class EntanglementDriveScreenHandler extends ScreenHandler {
         this.playerId = buf.readOptional((buf1 -> buf.readUuid())).orElse( nullId );
     }
     public EntanglementDriveScreenHandler(int syncid, PlayerInventory inventory, ScreenHandlerContext context) {
-        super(VAScreenHandler.ENTANGLEMENT_DRIVE_SCREEN_HANDLER, syncid);
+        super(VAScreenHandler.ENTANGLEMENT_DRIVE, syncid);
         this.context = context;
         this.activeSlotId = 0;
         this.activeSlotIndex = 0;

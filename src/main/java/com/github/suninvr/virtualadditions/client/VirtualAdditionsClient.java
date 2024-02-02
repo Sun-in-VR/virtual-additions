@@ -1,10 +1,12 @@
 package com.github.suninvr.virtualadditions.client;
 
 import com.github.suninvr.virtualadditions.block.RedstoneBridgeBlock;
+import com.github.suninvr.virtualadditions.block.entity.ColoringStationBlockEntity;
 import com.github.suninvr.virtualadditions.client.particle.AcidSplashEmitterParticle;
 import com.github.suninvr.virtualadditions.client.particle.GreencapSporeParticle;
 import com.github.suninvr.virtualadditions.client.particle.IoliteRingParticle;
 import com.github.suninvr.virtualadditions.client.render.entity.*;
+import com.github.suninvr.virtualadditions.client.screen.ColoringStationScreen;
 import com.github.suninvr.virtualadditions.client.screen.EntanglementDriveScreen;
 import com.github.suninvr.virtualadditions.registry.*;
 import com.github.suninvr.virtualadditions.screen.EntanglementDriveScreenHandler;
@@ -57,7 +59,19 @@ public class VirtualAdditionsClient implements ClientModInitializer {
 
         BlockRenderLayerMap.INSTANCE.putBlocks(RenderLayer.getTranslucent(),
                 VABlocks.WEBBED_SILK,
-                VABlocks.ACID_BLOCK
+                VABlocks.ACID_BLOCK,
+                VABlocks.CHARTREUSE_STAINED_GLASS,
+                VABlocks.CHARTREUSE_STAINED_GLASS_PANE,
+                VABlocks.MAROON_STAINED_GLASS,
+                VABlocks.MAROON_STAINED_GLASS_PANE,
+                VABlocks.INDIGO_STAINED_GLASS,
+                VABlocks.INDIGO_STAINED_GLASS_PANE,
+                VABlocks.PLUM_STAINED_GLASS,
+                VABlocks.PLUM_STAINED_GLASS_PANE,
+                VABlocks.COLD_GREEN_STAINED_GLASS,
+                VABlocks.COLD_GREEN_STAINED_GLASS_PANE,
+                VABlocks.TAN_STAINED_GLASS,
+                VABlocks.TAN_STAINED_GLASS_PANE
         );
 
         BlockRenderLayerMap.INSTANCE.putBlocks(RenderLayer.getCutout(),
@@ -145,7 +159,8 @@ public class VirtualAdditionsClient implements ClientModInitializer {
         ParticleFactoryRegistry.getInstance().register(VAParticleTypes.IOLITE_ANCHOR_RING, IoliteRingParticle.Factory::new);
         ParticleFactoryRegistry.getInstance().register(VAParticleTypes.IOLITE_TETHER_RING, IoliteRingParticle.Factory::new);
 
-        HandledScreens.register(VAScreenHandler.ENTANGLEMENT_DRIVE_SCREEN_HANDLER, EntanglementDriveScreen::new);
+        HandledScreens.register(VAScreenHandler.ENTANGLEMENT_DRIVE, EntanglementDriveScreen::new);
+        HandledScreens.register(VAScreenHandler.COLORING_STATION, ColoringStationScreen::new);
 
         ClientPlayNetworking.registerGlobalReceiver(VAPackets.ENTANGLEMENT_DRIVE_ACTIVE_SLOT_SYNC_ID, ((client, handler, buf, responseSender) -> {
             if (client.currentScreen instanceof EntanglementDriveScreen entanglementDriveScreen) {
@@ -176,8 +191,8 @@ public class VirtualAdditionsClient implements ClientModInitializer {
             }
         }));
 
-        BlockEntityRendererFactories.register( VABlockEntities.CUSTOM_SIGN_BLOCK_ENTITY, SignBlockEntityRenderer::new );
-        BlockEntityRendererFactories.register( VABlockEntities.CUSTOM_HANGING_SIGN_BLOCK_ENTITY, HangingSignBlockEntityRenderer::new );
+        BlockEntityRendererFactories.register( VABlockEntityType.CUSTOM_SIGN, SignBlockEntityRenderer::new );
+        BlockEntityRendererFactories.register( VABlockEntityType.CUSTOM_HANGING_SIGN, HangingSignBlockEntityRenderer::new );
 
         TexturedRenderLayers.SIGN_TYPE_TEXTURES.put(VABlocks.AEROBLOOM_WOODTYPE, new SpriteIdentifier(TexturedRenderLayers.SIGNS_ATLAS_TEXTURE, idOf("entity/signs/aerobloom")));
         TexturedRenderLayers.HANGING_SIGN_TYPE_TEXTURES.put(VABlocks.AEROBLOOM_WOODTYPE, new SpriteIdentifier(TexturedRenderLayers.SIGNS_ATLAS_TEXTURE, idOf("entity/signs/hanging/aerobloom")));

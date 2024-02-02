@@ -1,0 +1,10 @@
+{
+  "type": "virtual_additions:coloring",
+  "blue_cost": 4,
+  "count": 1,
+  "index": 16,
+  "ingredient": {
+    "tag": "minecraft:terracotta"
+  },
+  "result": "minecraft:blue_terracotta"
+}

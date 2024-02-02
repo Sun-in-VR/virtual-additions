@@ -1,0 +1,9 @@
+{
+  "type": "virtual_additions:coloring",
+  "blue_cost": 8,
+  "count": 1,
+  "green_cost": 8,
+  "index": 14,
+  "ingredient": [],
+  "result": "minecraft:cyan_dye"
+}

@@ -1,0 +1,12 @@
+{
+  "type": "virtual_additions:coloring",
+  "black_cost": 2,
+  "count": 1,
+  "index": 4,
+  "ingredient": {
+    "tag": "minecraft:wool"
+  },
+  "red_cost": 1,
+  "result": "minecraft:brown_wool",
+  "yellow_cost": 1
+}

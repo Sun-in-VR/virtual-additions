@@ -1,7 +1,10 @@
 package com.github.suninvr.virtualadditions.datagen;
 
+import com.github.suninvr.virtualadditions.block.entity.ColoringStationBlockEntity;
+import com.github.suninvr.virtualadditions.datagen.recipe.ColoringRecipeJsonBuilder;
 import com.github.suninvr.virtualadditions.item.interfaces.GildedToolItem;
 import com.github.suninvr.virtualadditions.registry.*;
+import com.github.suninvr.virtualadditions.registry.collection.ColorfulBlockSet;
 import net.fabricmc.fabric.api.datagen.v1.FabricDataGenerator;
 import net.fabricmc.fabric.api.datagen.v1.FabricDataOutput;
 import net.fabricmc.fabric.api.datagen.v1.provider.FabricRecipeProvider;
@@ -21,6 +24,8 @@ import net.minecraft.recipe.RecipeSerializer;
 import net.minecraft.recipe.SmokingRecipe;
 import net.minecraft.recipe.book.RecipeCategory;
 import net.minecraft.registry.RegistryWrapper;
+import net.minecraft.registry.tag.ItemTags;
+import net.minecraft.registry.tag.TagKey;
 import net.minecraft.resource.featuretoggle.FeatureFlags;
 import org.apache.commons.lang3.tuple.Pair;
 
@@ -42,6 +47,28 @@ public final class VARecipeProvider {
     }
 
     private static class Base extends FabricRecipeProvider {
+        protected static final ColoringStationBlockEntity.DyeContents WHITE_COST = new ColoringStationBlockEntity.DyeContents(0, 0, 0, 0, 0, 4);
+        protected static final ColoringStationBlockEntity.DyeContents LIGHT_GRAY_COST = new ColoringStationBlockEntity.DyeContents(0, 0, 0, 0, 1, 3);
+        protected static final ColoringStationBlockEntity.DyeContents GRAY_COST = new ColoringStationBlockEntity.DyeContents(0, 0, 0, 0, 2, 2);
+        protected static final ColoringStationBlockEntity.DyeContents BLACK_COST = new ColoringStationBlockEntity.DyeContents(0, 0, 0, 0, 4, 0);
+        protected static final ColoringStationBlockEntity.DyeContents BROWN_COST = new ColoringStationBlockEntity.DyeContents(1, 0, 0, 1, 2, 0);
+        protected static final ColoringStationBlockEntity.DyeContents MAROON_COST = new ColoringStationBlockEntity.DyeContents(2, 0, 0, 0, 2, 0);
+        protected static final ColoringStationBlockEntity.DyeContents RED_COST = new ColoringStationBlockEntity.DyeContents(4, 0, 0, 0, 0, 0);
+        protected static final ColoringStationBlockEntity.DyeContents ORANGE_COST = new ColoringStationBlockEntity.DyeContents(2, 0, 0, 2, 0, 0);
+        protected static final ColoringStationBlockEntity.DyeContents TAN_COST = new ColoringStationBlockEntity.DyeContents(1, 0, 0, 1, 1, 1);
+        protected static final ColoringStationBlockEntity.DyeContents YELLOW_COST = new ColoringStationBlockEntity.DyeContents(0, 0, 0, 4, 0, 0);
+        protected static final ColoringStationBlockEntity.DyeContents CHARTREUSE_COST = new ColoringStationBlockEntity.DyeContents(0, 2, 0, 1, 0, 1);
+        protected static final ColoringStationBlockEntity.DyeContents LIME_COST = new ColoringStationBlockEntity.DyeContents(0, 0, 0, 2, 0, 2);
+        protected static final ColoringStationBlockEntity.DyeContents GREEN_COST = new ColoringStationBlockEntity.DyeContents(0, 4, 0, 0, 0, 0);
+        protected static final ColoringStationBlockEntity.DyeContents COLD_GREEN_COST = new ColoringStationBlockEntity.DyeContents(0, 3, 1, 0, 0, 0);
+        protected static final ColoringStationBlockEntity.DyeContents CYAN_COST = new ColoringStationBlockEntity.DyeContents(0, 2, 2, 0, 0, 0);
+        protected static final ColoringStationBlockEntity.DyeContents LIGHT_BLUE_COST = new ColoringStationBlockEntity.DyeContents(0, 0, 2, 0, 0, 2);
+        protected static final ColoringStationBlockEntity.DyeContents BLUE_COST = new ColoringStationBlockEntity.DyeContents(0, 0, 4, 0, 0, 0);
+        protected static final ColoringStationBlockEntity.DyeContents INDIGO_COST = new ColoringStationBlockEntity.DyeContents(1, 0, 3, 0, 0, 0);
+        protected static final ColoringStationBlockEntity.DyeContents PURPLE_COST = new ColoringStationBlockEntity.DyeContents(2, 0, 2, 0, 0, 0);
+        protected static final ColoringStationBlockEntity.DyeContents PLUM_COST = new ColoringStationBlockEntity.DyeContents(2, 0, 1, 0, 1, 0);
+        protected static final ColoringStationBlockEntity.DyeContents MAGENTA_COST = new ColoringStationBlockEntity.DyeContents(2, 0, 1, 0, 0, 1);
+        protected static final ColoringStationBlockEntity.DyeContents PINK_COST = new ColoringStationBlockEntity.DyeContents(2, 0, 0, 0, 0, 2);
         public Base(FabricDataOutput fabricDataOutput, CompletableFuture<RegistryWrapper.WrapperLookup> wrapperLookupCompletableFuture) {
             super(fabricDataOutput);
         }
@@ -84,26 +111,26 @@ public final class VARecipeProvider {
             createTrapdoorRecipe(VABlocks.STEEL_TRAPDOOR, Ingredient.ofItems(VAItems.STEEL_INGOT)).criterion("steel_ingot", conditionsFromItem(VAItems.STEEL_INGOT)).offerTo(exporter);
 
             offerSmelting(exporter, List.of(VABlocks.COBBLED_HORNFELS), RecipeCategory.BUILDING_BLOCKS, VABlocks.HORNFELS, 0.1F, 200, "hornfels");
-            offerStonecuttingRecipes(exporter, VABlocks.HORNFELS, VABlockFamilies.POLISHED_HORNFELS, VABlockFamilies.HORNFELS_TILES);
-            generateCuttableFamilyChain(exporter, VABlockFamilies.COBBLED_HORNFELS);
-            generateCuttableFamilyChain(exporter, VABlockFamilies.POLISHED_HORNFELS, VABlockFamilies.HORNFELS_TILES);
-            generateCuttableFamilyChain(exporter, VABlockFamilies.HORNFELS_TILES);
+            offerStonecuttingRecipes(exporter, VABlocks.HORNFELS, VACollections.POLISHED_HORNFELS, VACollections.HORNFELS_TILES);
+            generateCuttableFamilyChain(exporter, VACollections.COBBLED_HORNFELS);
+            generateCuttableFamilyChain(exporter, VACollections.POLISHED_HORNFELS, VACollections.HORNFELS_TILES);
+            generateCuttableFamilyChain(exporter, VACollections.HORNFELS_TILES);
             offer2x2CompactingRecipe(exporter, RecipeCategory.BUILDING_BLOCKS, VABlocks.HORNFELS, VABlocks.POLISHED_HORNFELS);
             offer2x2CompactingRecipe(exporter, RecipeCategory.BUILDING_BLOCKS, VABlocks.POLISHED_HORNFELS, VABlocks.HORNFELS_TILES);
 
             offerSmelting(exporter, List.of(VABlocks.COBBLED_BLUESCHIST), RecipeCategory.BUILDING_BLOCKS, VABlocks.BLUESCHIST, 0.1F, 200, "blueschist");
-            offerStonecuttingRecipes(exporter, VABlocks.BLUESCHIST, VABlockFamilies.POLISHED_BLUESCHIST, VABlockFamilies.BLUESCHIST_BRICKS);
-            generateCuttableFamilyChain(exporter, VABlockFamilies.COBBLED_BLUESCHIST);
-            generateCuttableFamilyChain(exporter, VABlockFamilies.POLISHED_BLUESCHIST, VABlockFamilies.BLUESCHIST_BRICKS);
-            generateCuttableFamilyChain(exporter, VABlockFamilies.BLUESCHIST_BRICKS);
+            offerStonecuttingRecipes(exporter, VABlocks.BLUESCHIST, VACollections.POLISHED_BLUESCHIST, VACollections.BLUESCHIST_BRICKS);
+            generateCuttableFamilyChain(exporter, VACollections.COBBLED_BLUESCHIST);
+            generateCuttableFamilyChain(exporter, VACollections.POLISHED_BLUESCHIST, VACollections.BLUESCHIST_BRICKS);
+            generateCuttableFamilyChain(exporter, VACollections.BLUESCHIST_BRICKS);
             offer2x2CompactingRecipe(exporter, RecipeCategory.BUILDING_BLOCKS, VABlocks.BLUESCHIST, VABlocks.POLISHED_BLUESCHIST);
             offer2x2CompactingRecipe(exporter, RecipeCategory.BUILDING_BLOCKS, VABlocks.POLISHED_BLUESCHIST, VABlocks.BLUESCHIST_BRICKS);
 
             offerSmelting(exporter, List.of(VABlocks.COBBLED_SYENITE), RecipeCategory.BUILDING_BLOCKS, VABlocks.SYENITE, 0.1F, 200, "syenite");
-            offerStonecuttingRecipes(exporter, VABlocks.SYENITE, VABlockFamilies.POLISHED_SYENITE, VABlockFamilies.SYENITE_BRICKS);
-            generateCuttableFamilyChain(exporter, VABlockFamilies.COBBLED_SYENITE);
-            generateCuttableFamilyChain(exporter, VABlockFamilies.POLISHED_SYENITE, VABlockFamilies.SYENITE_BRICKS);
-            generateCuttableFamilyChain(exporter, VABlockFamilies.SYENITE_BRICKS);
+            offerStonecuttingRecipes(exporter, VABlocks.SYENITE, VACollections.POLISHED_SYENITE, VACollections.SYENITE_BRICKS);
+            generateCuttableFamilyChain(exporter, VACollections.COBBLED_SYENITE);
+            generateCuttableFamilyChain(exporter, VACollections.POLISHED_SYENITE, VACollections.SYENITE_BRICKS);
+            generateCuttableFamilyChain(exporter, VACollections.SYENITE_BRICKS);
             offer2x2CompactingRecipe(exporter, RecipeCategory.BUILDING_BLOCKS, VABlocks.SYENITE, VABlocks.POLISHED_SYENITE);
             offer2x2CompactingRecipe(exporter, RecipeCategory.BUILDING_BLOCKS, VABlocks.POLISHED_SYENITE, VABlocks.SYENITE_BRICKS);
 
@@ -142,6 +169,116 @@ public final class VARecipeProvider {
             offerToolUpgradeRecipes(exporter, VAItems.IOLITE_DIAMOND_TOOL_SET, VAItems.IOLITE_NETHERITE_TOOL_SET);
             offerToolUpgradeRecipes(exporter, VAItems.QUARTZ_DIAMOND_TOOL_SET, VAItems.QUARTZ_NETHERITE_TOOL_SET);
             offerToolUpgradeRecipes(exporter, VAItems.SCULK_DIAMOND_TOOL_SET, VAItems.SCULK_NETHERITE_TOOL_SET);
+
+            generateColorfulBlockSetRecipes(exporter, VACollections.CHARTREUSE, VAItems.CHARTREUSE_DYE);
+            generateColorfulBlockSetRecipes(exporter, VACollections.MAROON, VAItems.MAROON_DYE);
+            generateColorfulBlockSetRecipes(exporter, VACollections.INDIGO, VAItems.INDIGO_DYE);
+            generateColorfulBlockSetRecipes(exporter, VACollections.PLUM, VAItems.PLUM_DYE);
+            generateColorfulBlockSetRecipes(exporter, VACollections.COLD_GREEN, VAItems.COLD_GREEN_DYE);
+            generateColorfulBlockSetRecipes(exporter, VACollections.TAN, VAItems.TAN_DYE);
+
+            offerColoringStationRecipes(exporter,
+                    Pair.of(VACollections.WHITE, WHITE_COST),
+                    Pair.of(VACollections.LIGHT_GRAY, LIGHT_GRAY_COST),
+                    Pair.of(VACollections.GRAY, GRAY_COST),
+                    Pair.of(VACollections.BLACK, BLACK_COST),
+                    Pair.of(VACollections.BROWN, BROWN_COST),
+                    Pair.of(VACollections.MAROON, MAROON_COST),
+                    Pair.of(VACollections.RED, RED_COST),
+                    Pair.of(VACollections.ORANGE, ORANGE_COST),
+                    Pair.of(VACollections.TAN, TAN_COST),
+                    Pair.of(VACollections.YELLOW, YELLOW_COST),
+                    Pair.of(VACollections.CHARTREUSE, CHARTREUSE_COST),
+                    Pair.of(VACollections.LIME, LIME_COST),
+                    Pair.of(VACollections.GREEN, GREEN_COST),
+                    Pair.of(VACollections.COLD_GREEN, COLD_GREEN_COST),
+                    Pair.of(VACollections.CYAN, CYAN_COST),
+                    Pair.of(VACollections.LIGHT_BLUE, LIGHT_BLUE_COST),
+                    Pair.of(VACollections.BLUE, BLUE_COST),
+                    Pair.of(VACollections.INDIGO, INDIGO_COST),
+                    Pair.of(VACollections.PURPLE, PURPLE_COST),
+                    Pair.of(VACollections.PLUM, PLUM_COST),
+                    Pair.of(VACollections.MAGENTA, MAGENTA_COST),
+                    Pair.of(VACollections.PINK, PINK_COST)
+            );
+
+            ShapelessRecipeJsonBuilder.create(RecipeCategory.MISC, VAItems.MAROON_DYE, 2)
+                    .input(Ingredient.ofItems(Items.RED_DYE), 1)
+                    .input(Ingredient.ofItems(Items.BLACK_DYE), 1)
+                    .criterion("has_dye", conditionsFromItem(Items.RED_DYE)).offerTo(exporter);
+
+            
+            ShapelessRecipeJsonBuilder.create(RecipeCategory.MISC, VAItems.CHARTREUSE_DYE, 2).group("chartreuse_dye")
+                    .input(Ingredient.ofItems(Items.LIME_DYE), 1)
+                    .input(Ingredient.ofItems(Items.YELLOW_DYE), 1)
+                    .criterion("has_dye", conditionsFromItem(Items.LIME_DYE)).offerTo(exporter);
+
+            ShapelessRecipeJsonBuilder.create(RecipeCategory.MISC, VAItems.CHARTREUSE_DYE, 3).group("chartreuse_dye")
+                    .input(Ingredient.ofItems(Items.GREEN_DYE), 1)
+                    .input(Ingredient.ofItems(Items.WHITE_DYE), 1)
+                    .input(Ingredient.ofItems(Items.YELLOW_DYE), 1)
+                    .criterion("has_dye", conditionsFromItem(Items.YELLOW_DYE)).offerTo(exporter, idOf("chartreuse_dye_from_green_white_yellow_dye"));
+
+
+            ShapelessRecipeJsonBuilder.create(RecipeCategory.MISC, VAItems.INDIGO_DYE, 2).group("indigo_dye")
+                    .input(Ingredient.ofItems(Items.BLUE_DYE), 1)
+                    .input(Ingredient.ofItems(Items.PURPLE_DYE), 1)
+                    .criterion("has_dye", conditionsFromItem(Items.PURPLE_DYE)).offerTo(exporter);
+
+            ShapelessRecipeJsonBuilder.create(RecipeCategory.MISC, VAItems.INDIGO_DYE, 3).group("indigo_dye")
+                    .input(Ingredient.ofItems(Items.BLUE_DYE), 2)
+                    .input(Ingredient.ofItems(Items.RED_DYE), 1)
+                    .criterion("has_dye", conditionsFromItem(Items.BLUE_DYE)).offerTo(exporter, idOf("indigo_dye_from_blue_blue_red_dye"));
+
+
+            ShapelessRecipeJsonBuilder.create(RecipeCategory.MISC, VAItems.PLUM_DYE, 2).group("plum_dye")
+                    .input(Ingredient.ofItems(Items.PURPLE_DYE), 1)
+                    .input(Ingredient.ofItems(VAItems.MAROON_DYE), 1)
+                    .criterion("has_dye", conditionsFromItem(Items.PURPLE_DYE)).offerTo(exporter);
+
+            ShapelessRecipeJsonBuilder.create(RecipeCategory.MISC, VAItems.PLUM_DYE, 3).group("plum_dye")
+                    .input(Ingredient.ofItems(Items.BLUE_DYE), 1)
+                    .input(Ingredient.ofItems(Items.RED_DYE), 1)
+                    .input(Ingredient.ofItems(VAItems.MAROON_DYE), 1)
+                    .criterion("has_dye", conditionsFromItem(VAItems.MAROON_DYE)).offerTo(exporter, idOf("plum_from_blue_red_maroon_dye"));
+
+            ShapelessRecipeJsonBuilder.create(RecipeCategory.MISC, VAItems.PLUM_DYE, 4).group("plum_dye")
+                    .input(Ingredient.ofItems(Items.BLUE_DYE), 1)
+                    .input(Ingredient.ofItems(Items.RED_DYE), 2)
+                    .input(Ingredient.ofItems(Items.BLACK_DYE), 1)
+                    .criterion("has_dye", conditionsFromItem(Items.RED_DYE)).offerTo(exporter, idOf("plum_from_blue_red_red_black_dye"));
+
+
+            ShapelessRecipeJsonBuilder.create(RecipeCategory.MISC, VAItems.COLD_GREEN_DYE, 2).group("cold_green_dye")
+                    .input(Ingredient.ofItems(Items.GREEN_DYE), 1)
+                    .input(Ingredient.ofItems(Items.CYAN_DYE), 1)
+                    .criterion("has_dye", conditionsFromItem(Items.CYAN_DYE)).offerTo(exporter);
+
+            ShapelessRecipeJsonBuilder.create(RecipeCategory.MISC, VAItems.COLD_GREEN_DYE, 3).group("cold_green_dye")
+                    .input(Ingredient.ofItems(Items.GREEN_DYE), 2)
+                    .input(Ingredient.ofItems(Items.BLUE_DYE), 1)
+                    .criterion("has_dye", conditionsFromItem(Items.GREEN_DYE)).offerTo(exporter, idOf("cold_green_from_green_green_blue_dye"));
+
+            
+            ShapelessRecipeJsonBuilder.create(RecipeCategory.MISC, VAItems.TAN_DYE, 2).group("tan_dye")
+                    .input(Ingredient.ofItems(Items.ORANGE_DYE), 1)
+                    .input(Ingredient.ofItems(Items.GRAY_DYE), 1)
+                    .criterion("has_dye", conditionsFromItem(Items.ORANGE_DYE)).offerTo(exporter);
+
+            ShapelessRecipeJsonBuilder.create(RecipeCategory.MISC, VAItems.TAN_DYE, 3).group("tan_dye")
+                    .input(Ingredient.ofItems(Items.RED_DYE), 1)
+                    .input(Ingredient.ofItems(Items.YELLOW_DYE), 1)
+                    .input(Ingredient.ofItems(Items.GRAY_DYE), 1)
+                    .criterion("has_dye", conditionsFromItem(Items.GRAY_DYE)).offerTo(exporter, idOf("tan_from_red_yellow_gray_dye"));
+
+            ShapelessRecipeJsonBuilder.create(RecipeCategory.MISC, VAItems.TAN_DYE, 4).group("tan_dye")
+                    .input(Ingredient.ofItems(Items.RED_DYE), 1)
+                    .input(Ingredient.ofItems(Items.YELLOW_DYE), 1)
+                    .input(Ingredient.ofItems(Items.WHITE_DYE), 1)
+                    .input(Ingredient.ofItems(Items.BLACK_DYE), 1)
+                    .criterion("has_dye", conditionsFromItem(Items.RED_DYE)).offerTo(exporter, idOf("tan_from_red_yellow_black_white_dye"));
+
+
 
             ShapedRecipeJsonBuilder.create(RecipeCategory.TOOLS, VAItems.CLIMBING_ROPE, 4)
                     .pattern("#  ")
@@ -190,6 +327,13 @@ public final class VARecipeProvider {
                     .input('#', VAItems.STEEL_INGOT).input('r', Items.REDSTONE)
                     .criterion("steel_ingot", conditionsFromItem(VAItems.STEEL_INGOT)).offerTo(exporter);
 
+            ShapedRecipeJsonBuilder.create(RecipeCategory.MISC, VAItems.COLORING_STATION, 1)
+                    .pattern("BB")
+                    .pattern("##")
+                    .pattern("##")
+                    .input('#', Ingredient.fromTag(ItemTags.PLANKS)).input('B', Ingredient.fromTag(ItemTags.WOOL))
+                    .criterion("wool", conditionsFromTag(ItemTags.WOOL)).offerTo(exporter);
+
         }
 
         protected static void offerCookingRecipes(RecipeExporter exporter, ItemConvertible output, ItemConvertible input, float experience, String group) {
@@ -198,12 +342,61 @@ public final class VARecipeProvider {
             offerFoodCookingRecipe(exporter, "campfire_cooking", RecipeSerializer.CAMPFIRE_COOKING, CampfireCookingRecipe::new, 600, input, output, experience);
         }
 
+        protected static void offerColoringRecipe(RecipeExporter exporter, ItemConvertible input, ItemConvertible output, ColoringStationBlockEntity.DyeContents cost, int index) {
+            ColoringRecipeJsonBuilder.create(Ingredient.ofItems(input), cost, output, index).offerTo(exporter);
+        }
+
+        protected static void offerColoringRecipe(RecipeExporter exporter, ItemConvertible output, ColoringStationBlockEntity.DyeContents cost, int index) {
+            ColoringRecipeJsonBuilder.create(null, cost, output, index).offerTo(exporter);
+        }
+
+        protected static void offerColoringRecipe(RecipeExporter exporter, TagKey<Item> input, ItemConvertible output, ColoringStationBlockEntity.DyeContents cost, int index) {
+            ColoringRecipeJsonBuilder.create(Ingredient.fromTag(input), cost, output, index).offerTo(exporter);
+        }
+
+        protected static void offerColoringRecipes(RecipeExporter exporter, ColorfulBlockSet set, ColoringStationBlockEntity.DyeContents cost, int index) {
+            offerColoringRecipe(exporter, set.dye(), cost.copyAndMultiply(4), index);
+            set.ifWool(block -> offerColoringRecipe(exporter, ItemTags.WOOL, block, cost, index));
+            set.ifCarpet(block -> offerColoringRecipe(exporter, ItemTags.WOOL_CARPETS, block, cost, index));
+            set.ifStainedGlass(block -> offerColoringRecipe(exporter, VAItemTags.COLORABLE_GLASS, block, cost, index));
+            set.ifStainedGlassPane(block -> offerColoringRecipe(exporter, VAItemTags.COLORABLE_GLASS_PANE, block, cost, index));
+            set.ifTerracotta(block -> offerColoringRecipe(exporter, ItemTags.TERRACOTTA, block, cost, index));
+            set.ifCandle(block -> offerColoringRecipe(exporter, ItemTags.CANDLES, block, cost, index));
+            set.ifSilkbulb(block -> offerColoringRecipe(exporter, VAItemTags.SILKBULBS, block, cost, index));
+        }
+
+        protected static void offerColoringStationRecipes(RecipeExporter exporter, Pair<ColorfulBlockSet, ColoringStationBlockEntity.DyeContents>... sets) {
+            int i = 0;
+            for (Pair<ColorfulBlockSet, ColoringStationBlockEntity.DyeContents> setAndCost : sets) {
+                ColorfulBlockSet set = setAndCost.getLeft();
+                ColoringStationBlockEntity.DyeContents cost = setAndCost.getRight();
+                offerColoringRecipes(exporter, set, cost, i);
+                i += 1;
+            }
+        }
+
         protected static void generateCuttableFamilyChain(RecipeExporter exporter, BlockFamily baseFamily, BlockFamily... subFamilies) {
             generateFamily(exporter, baseFamily, FeatureFlags.VANILLA_FEATURES);
             offerStonecuttingRecipes(exporter, baseFamily, baseFamily);
             for (BlockFamily subFamily : subFamilies) {
                 offerStonecuttingRecipes(exporter, baseFamily, subFamily);
             }
+        }
+
+        protected static void generateColorfulBlockSetRecipes(RecipeExporter exporter, ColorfulBlockSet set, Item dye) {
+            set.ifWool(block -> ShapelessRecipeJsonBuilder.create(RecipeCategory.BUILDING_BLOCKS, block).input(ItemTags.WOOL).input(dye).criterion("has_block", conditionsFromItem(block)).offerTo(exporter));
+            set.ifCarpet(block -> ShapelessRecipeJsonBuilder.create(RecipeCategory.BUILDING_BLOCKS, block).input(ItemTags.WOOL_CARPETS).input(dye).criterion("has_block", conditionsFromItem(block)).offerTo(exporter));
+            set.ifConcretePowder( block -> offerConcretePowderDyeingRecipe(exporter, block, dye));
+            set.ifTerracotta(block -> offerTerracottaDyeingRecipe(exporter, block, dye));
+            set.ifStainedGlass(block -> {
+                offerStainedGlassDyeingRecipe(exporter, block, dye);
+                set.ifStainedGlassPane(pane -> {
+                    offerStainedGlassPaneRecipe(exporter, pane, block);
+                    offerStainedGlassPaneDyeingRecipe(exporter, pane, dye);
+                });
+            });
+            set.ifCandle(block -> offerCandleDyeingRecipe(exporter, block, dye));
+            set.ifSilkbulb(block -> ShapelessRecipeJsonBuilder.create(RecipeCategory.BUILDING_BLOCKS, block).input(VAItemTags.SILKBULBS).input(dye).criterion("has_block", conditionsFromItem(block)).offerTo(exporter));
         }
 
         protected static void offerStonecuttingRecipes(RecipeExporter exporter, BlockFamily baseFamily, BlockFamily... resultFamilies) {
@@ -328,14 +521,14 @@ public final class VARecipeProvider {
 
             offerHedgeRecipe(exporter, VABlocks.AEROBLOOM_HEDGE, VABlocks.AEROBLOOM_LEAVES);
 
-            offerStonecuttingRecipes(exporter, VABlocks.FLOATROCK, VABlockFamilies.POLISHED_FLOATROCK, VABlockFamilies.FLOATROCK_BRICKS);
-            generateCuttableFamilyChain(exporter, VABlockFamilies.FLOATROCK);
-            generateCuttableFamilyChain(exporter, VABlockFamilies.POLISHED_FLOATROCK);
-            generateCuttableFamilyChain(exporter, VABlockFamilies.FLOATROCK_BRICKS);
+            offerStonecuttingRecipes(exporter, VABlocks.FLOATROCK, VACollections.POLISHED_FLOATROCK, VACollections.FLOATROCK_BRICKS);
+            generateCuttableFamilyChain(exporter, VACollections.FLOATROCK);
+            generateCuttableFamilyChain(exporter, VACollections.POLISHED_FLOATROCK);
+            generateCuttableFamilyChain(exporter, VACollections.FLOATROCK_BRICKS);
             offer2x2FullRecipe(exporter, RecipeCategory.MISC, VAItems.POLISHED_FLOATROCK, VAItems.FLOATROCK, 4);
             offer2x2FullRecipe(exporter, RecipeCategory.MISC, VAItems.FLOATROCK_BRICKS, VAItems.POLISHED_FLOATROCK, 4);
 
-            generateFamily(exporter, VABlockFamilies.AEROBLOOM, FeatureFlags.VANILLA_FEATURES);
+            generateFamily(exporter, VACollections.AEROBLOOM, FeatureFlags.VANILLA_FEATURES);
             offerBarkBlockRecipe(exporter, VAItems.AEROBLOOM_WOOD, VAItems.AEROBLOOM_LOG);
             offerBarkBlockRecipe(exporter, VAItems.STRIPPED_AEROBLOOM_WOOD, VAItems.STRIPPED_AEROBLOOM_LOG);
             offerPlanksRecipe2(exporter, VAItems.AEROBLOOM_PLANKS, VAItemTags.AEROBLOOM_LOGS, 4);

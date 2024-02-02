@@ -1,0 +1,11 @@
+{
+  "type": "virtual_additions:coloring",
+  "blue_cost": 2,
+  "count": 1,
+  "index": 15,
+  "ingredient": {
+    "tag": "virtual_additions:colorable_glass"
+  },
+  "result": "minecraft:light_blue_stained_glass",
+  "white_cost": 2
+}

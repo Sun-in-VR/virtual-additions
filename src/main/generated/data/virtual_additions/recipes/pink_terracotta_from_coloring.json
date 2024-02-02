@@ -1,0 +1,11 @@
+{
+  "type": "virtual_additions:coloring",
+  "count": 1,
+  "index": 21,
+  "ingredient": {
+    "tag": "minecraft:terracotta"
+  },
+  "red_cost": 2,
+  "result": "minecraft:pink_terracotta",
+  "white_cost": 2
+}

@@ -1,7 +1,7 @@
 package com.github.suninvr.virtualadditions.block.entity;
 
 import com.github.suninvr.virtualadditions.block.EntanglementDriveBlock;
-import com.github.suninvr.virtualadditions.registry.VABlockEntities;
+import com.github.suninvr.virtualadditions.registry.VABlockEntityType;
 import com.github.suninvr.virtualadditions.registry.VABlocks;
 import com.github.suninvr.virtualadditions.registry.VAStatusEffects;
 import com.github.suninvr.virtualadditions.screen.EntanglementDriveScreenHandler;
@@ -41,7 +41,7 @@ public class EntanglementDriveBlockEntity extends BlockEntity implements Extende
     private static final UUID nullId = UUID.fromString("0-0-0-0-0");
 
     public EntanglementDriveBlockEntity(BlockPos pos, BlockState state) {
-        super(VABlockEntities.ENTANGLEMENT_DRIVE_BLOCK_ENTITY, pos, state);
+        super(VABlockEntityType.ENTANGLEMENT_DRIVE, pos, state);
         NbtCompound defaultTag = new NbtCompound();
         defaultTag.putInt("SlotId", 0);
         defaultTag.putInt("SlotIndex", 0);

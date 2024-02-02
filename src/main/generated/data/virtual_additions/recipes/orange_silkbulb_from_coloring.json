@@ -1,0 +1,11 @@
+{
+  "type": "virtual_additions:coloring",
+  "count": 1,
+  "index": 7,
+  "ingredient": {
+    "tag": "virtual_additions:silkbulbs"
+  },
+  "red_cost": 2,
+  "result": "virtual_additions:orange_silkbulb",
+  "yellow_cost": 2
+}

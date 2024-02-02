@@ -1,0 +1,11 @@
+{
+  "type": "virtual_additions:coloring",
+  "count": 1,
+  "index": 7,
+  "ingredient": {
+    "tag": "virtual_additions:colorable_glass"
+  },
+  "red_cost": 2,
+  "result": "minecraft:orange_stained_glass",
+  "yellow_cost": 2
+}

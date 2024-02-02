@@ -1,8 +1,9 @@
 package com.github.suninvr.virtualadditions.datagen;
 
-import com.github.suninvr.virtualadditions.registry.VABlockFamilies;
+import com.github.suninvr.virtualadditions.registry.VACollections;
 import com.github.suninvr.virtualadditions.registry.VABlockTags;
 import com.github.suninvr.virtualadditions.registry.VABlocks;
+import com.github.suninvr.virtualadditions.registry.collection.ColorfulBlockSet;
 import net.fabricmc.fabric.api.datagen.v1.FabricDataGenerator;
 import net.fabricmc.fabric.api.datagen.v1.FabricDataOutput;
 import net.fabricmc.fabric.api.datagen.v1.provider.FabricTagProvider;
@@ -57,6 +58,13 @@ public final class VABlockTagProvider {
             getOrCreateTagBuilder(BlockTags.SCULK_REPLACEABLE).add(VABlocks.SILK_BLOCK, VABlocks.WEBBED_SILK);
             getOrCreateTagBuilder(BlockTags.TRAPDOORS).add(VABlocks.STEEL_TRAPDOOR);
 
+            configureColorfulBlockSet(VACollections.CHARTREUSE);
+            configureColorfulBlockSet(VACollections.MAROON);
+            configureColorfulBlockSet(VACollections.INDIGO);
+            configureColorfulBlockSet(VACollections.PLUM);
+            configureColorfulBlockSet(VACollections.COLD_GREEN);
+            configureColorfulBlockSet(VACollections.TAN);
+
             getOrCreateTagBuilder(ORES).add(VABlocks.IOLITE_ORE);
 
             getOrCreateTagBuilder(BlockTags.HOE_MINEABLE).add(
@@ -86,19 +94,23 @@ public final class VABlockTagProvider {
                     VABlocks.IOLITE_BLOCK
             );
 
+            configureMinable(BlockTags.AXE_MINEABLE, 0,
+                    VABlocks.COLORING_STATION
+                    );
+
             configureOverworldStone(VABlocks.HORNFELS, VABlocks.BLUESCHIST, VABlocks.SYENITE);
-            configureFamily(BlockTags.PICKAXE_MINEABLE, 1, VABlockFamilies.CUT_STEEL);
+            configureFamily(BlockTags.PICKAXE_MINEABLE, 1, VACollections.CUT_STEEL);
             configureFamily(BlockTags.PICKAXE_MINEABLE, 0,
-                    VABlockFamilies.CUT_STEEL,
-                    VABlockFamilies.COBBLED_HORNFELS,
-                    VABlockFamilies.COBBLED_BLUESCHIST,
-                    VABlockFamilies.COBBLED_SYENITE,
-                    VABlockFamilies.POLISHED_HORNFELS,
-                    VABlockFamilies.POLISHED_BLUESCHIST,
-                    VABlockFamilies.POLISHED_SYENITE,
-                    VABlockFamilies.HORNFELS_TILES,
-                    VABlockFamilies.BLUESCHIST_BRICKS,
-                    VABlockFamilies.SYENITE_BRICKS
+                    VACollections.CUT_STEEL,
+                    VACollections.COBBLED_HORNFELS,
+                    VACollections.COBBLED_BLUESCHIST,
+                    VACollections.COBBLED_SYENITE,
+                    VACollections.POLISHED_HORNFELS,
+                    VACollections.POLISHED_BLUESCHIST,
+                    VACollections.POLISHED_SYENITE,
+                    VACollections.HORNFELS_TILES,
+                    VACollections.BLUESCHIST_BRICKS,
+                    VACollections.SYENITE_BRICKS
             );
 
             getOrCreateTagBuilder(VABlockTags.ACID_UNBREAKABLE).add(
@@ -262,6 +274,24 @@ public final class VABlockTagProvider {
                 }
             });
         }
+
+        protected void configureColorfulBlockSet(ColorfulBlockSet s) {
+            s.ifWool(block -> getOrCreateTagBuilder(BlockTags.WOOL).add(block));
+            s.ifCarpet(block -> getOrCreateTagBuilder(BlockTags.WOOL_CARPETS).add(block));
+            s.ifTerracotta(block -> {
+                getOrCreateTagBuilder(BlockTags.TERRACOTTA).add(block);
+                configureMinable(BlockTags.PICKAXE_MINEABLE, 0, block);
+            });
+            s.ifConcrete(block -> configureMinable(BlockTags.PICKAXE_MINEABLE, 0, block));
+            s.ifConcretePowder(block -> {
+                getOrCreateTagBuilder(BlockTags.CONCRETE_POWDER).add(block);
+                configureMinable(BlockTags.SHOVEL_MINEABLE, 0, block);
+            });
+            s.ifStainedGlass(block -> getOrCreateTagBuilder(BlockTags.IMPERMEABLE).add(block));
+            s.ifCandle(block -> getOrCreateTagBuilder(BlockTags.CANDLES).add(block));
+            s.ifCandleCake(block -> getOrCreateTagBuilder(BlockTags.CANDLE_CAKES).add(block));
+            s.ifSilkbulb(block -> getOrCreateTagBuilder(VABlockTags.SILKBULBS).add(block));
+        }
     }
 
     static class Preview extends Base {
@@ -350,8 +380,8 @@ public final class VABlockTagProvider {
             configureMinable(BlockTags.PICKAXE_MINEABLE, 2, VABlocks.FLOATROCK_DIAMOND_ORE, VABlocks.FLOATROCK_REDSTONE_ORE, VABlocks.FLOATROCK_EMERALD_ORE, VABlocks.FLOATROCK_GOLD_ORE);
 
             configureOverworldStone(VABlocks.FLOATROCK);
-            configureFamily(BlockTags.PICKAXE_MINEABLE, 0, VABlockFamilies.FLOATROCK, VABlockFamilies.POLISHED_FLOATROCK, VABlockFamilies.FLOATROCK_BRICKS);
-            configureWoodenFamily(BlockTags.AXE_MINEABLE, 0, VABlockFamilies.AEROBLOOM);
+            configureFamily(BlockTags.PICKAXE_MINEABLE, 0, VACollections.FLOATROCK, VACollections.POLISHED_FLOATROCK, VACollections.FLOATROCK_BRICKS);
+            configureWoodenFamily(BlockTags.AXE_MINEABLE, 0, VACollections.AEROBLOOM);
 
             getOrCreateTagBuilder(VABlockTags.HEDGES).add(
                     VABlocks.AEROBLOOM_HEDGE

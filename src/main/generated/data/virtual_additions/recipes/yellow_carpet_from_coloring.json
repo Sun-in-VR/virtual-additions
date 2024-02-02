@@ -1,0 +1,10 @@
+{
+  "type": "virtual_additions:coloring",
+  "count": 1,
+  "index": 9,
+  "ingredient": {
+    "tag": "minecraft:wool_carpets"
+  },
+  "result": "minecraft:yellow_carpet",
+  "yellow_cost": 4
+}

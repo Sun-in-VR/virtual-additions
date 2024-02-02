@@ -153,7 +153,7 @@ public class WarpTetherBlock extends BlockWithEntity implements Waterloggable {
 
     @Nullable
     public <T extends BlockEntity> BlockEntityTicker<T> getTicker(World world, BlockState state, BlockEntityType<T> type) {
-        return validateTicker(type, VABlockEntities.IOLITE_TETHER_BLOCK_ENTITY, WarpTetherBlockEntity::tick);
+        return validateTicker(type, VABlockEntityType.WARP_TETHER, WarpTetherBlockEntity::tick);
     }
 
     @Nullable

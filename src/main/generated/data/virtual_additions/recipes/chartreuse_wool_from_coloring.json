@@ -1,0 +1,12 @@
+{
+  "type": "virtual_additions:coloring",
+  "count": 1,
+  "green_cost": 2,
+  "index": 10,
+  "ingredient": {
+    "tag": "minecraft:wool"
+  },
+  "result": "virtual_additions:chartreuse_wool",
+  "white_cost": 1,
+  "yellow_cost": 1
+}

@@ -2,7 +2,7 @@ package com.github.suninvr.virtualadditions.block.entity;
 
 import com.github.suninvr.virtualadditions.block.WarpAnchorBlock;
 import com.github.suninvr.virtualadditions.particle.IoliteRingParticleEffect;
-import com.github.suninvr.virtualadditions.registry.VABlockEntities;
+import com.github.suninvr.virtualadditions.registry.VABlockEntityType;
 import com.github.suninvr.virtualadditions.registry.VAParticleTypes;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.entity.BlockEntity;
@@ -16,7 +16,7 @@ public class WarpAnchorBlockEntity extends BlockEntity {
     private static final ParticleEffect particleCeiling;
 
     public WarpAnchorBlockEntity(BlockPos pos, BlockState state) {
-        super(VABlockEntities.IOLITE_ANCHOR_BLOCK_ENTITY, pos, state);
+        super(VABlockEntityType.WARP_ANCHOR, pos, state);
     }
 
     @SuppressWarnings("unused")

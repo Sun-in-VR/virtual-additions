@@ -1,0 +1,11 @@
+{
+  "type": "virtual_additions:coloring",
+  "count": 1,
+  "index": 21,
+  "ingredient": {
+    "tag": "virtual_additions:colorable_glass"
+  },
+  "red_cost": 2,
+  "result": "minecraft:pink_stained_glass",
+  "white_cost": 2
+}

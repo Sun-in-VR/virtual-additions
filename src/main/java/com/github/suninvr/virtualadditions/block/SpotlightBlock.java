@@ -2,7 +2,7 @@ package com.github.suninvr.virtualadditions.block;
 
 import com.github.suninvr.virtualadditions.block.entity.SpotlightBlockEntity;
 import com.github.suninvr.virtualadditions.block.enums.LightStatus;
-import com.github.suninvr.virtualadditions.registry.VABlockEntities;
+import com.github.suninvr.virtualadditions.registry.VABlockEntityType;
 import com.github.suninvr.virtualadditions.registry.VABlocks;
 import com.mojang.serialization.MapCodec;
 import net.minecraft.block.Block;
@@ -108,7 +108,7 @@ public class SpotlightBlock extends BlockWithEntity {
     @Override
     public <T extends BlockEntity> BlockEntityTicker<T> getTicker(World world, BlockState state, BlockEntityType<T> type) {
         if (!state.get(POWERED)) return null;
-        return validateTicker(type, VABlockEntities.SPOTLIGHT_BLOCK_ENTITY, (SpotlightBlockEntity::tick));
+        return validateTicker(type, VABlockEntityType.SPOTLIGHT, (SpotlightBlockEntity::tick));
     }
 
     @Nullable

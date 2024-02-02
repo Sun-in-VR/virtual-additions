@@ -2,11 +2,13 @@ package com.github.suninvr.virtualadditions.datagen;
 
 import com.github.suninvr.virtualadditions.item.interfaces.GildedToolItem;
 import com.github.suninvr.virtualadditions.registry.RegistryHelper;
-import com.github.suninvr.virtualadditions.registry.VABlockFamilies;
+import com.github.suninvr.virtualadditions.registry.VACollections;
 import com.github.suninvr.virtualadditions.registry.VABlocks;
 import com.github.suninvr.virtualadditions.registry.VAItems;
+import com.github.suninvr.virtualadditions.registry.collection.ColorfulBlockSet;
 import net.fabricmc.fabric.api.datagen.v1.FabricDataOutput;
 import net.fabricmc.fabric.api.datagen.v1.provider.FabricModelProvider;
+import net.minecraft.block.Blocks;
 import net.minecraft.data.client.*;
 import net.minecraft.item.*;
 import net.minecraft.util.Identifier;
@@ -22,8 +24,28 @@ class VAModelProvider extends FabricModelProvider {
 
     @Override
     public void generateBlockStateModels(BlockStateModelGenerator blockStateModelGenerator) {
-        blockStateModelGenerator.registerCubeAllModelTexturePool(VABlocks.POLISHED_FLOATROCK).family(VABlockFamilies.POLISHED_FLOATROCK);
-        blockStateModelGenerator.registerCubeAllModelTexturePool(VABlocks.FLOATROCK_BRICKS).family(VABlockFamilies.FLOATROCK_BRICKS);
+        blockStateModelGenerator.registerCubeAllModelTexturePool(VABlocks.POLISHED_FLOATROCK).family(VACollections.POLISHED_FLOATROCK);
+        blockStateModelGenerator.registerCubeAllModelTexturePool(VABlocks.FLOATROCK_BRICKS).family(VACollections.FLOATROCK_BRICKS);
+
+        registerColorfulBlockSetModels( blockStateModelGenerator,VACollections.CHARTREUSE);
+        registerColorfulBlockSetModels( blockStateModelGenerator,VACollections.MAROON);
+        registerColorfulBlockSetModels( blockStateModelGenerator,VACollections.INDIGO);
+        registerColorfulBlockSetModels( blockStateModelGenerator,VACollections.PLUM);
+        registerColorfulBlockSetModels( blockStateModelGenerator,VACollections.COLD_GREEN);
+        registerColorfulBlockSetModels( blockStateModelGenerator,VACollections.TAN);
+        registerColoringStation(blockStateModelGenerator);
+    }
+
+    private void registerColoringStation(BlockStateModelGenerator blockStateModelGenerator) {
+        TextureMap textureMap = new TextureMap()
+                .put(TextureKey.PARTICLE, TextureMap.getSubId(VABlocks.COLORING_STATION, "_front"))
+                .put(TextureKey.DOWN, TextureMap.getSubId(VABlocks.COLORING_STATION, "_bottom"))
+                .put(TextureKey.UP, TextureMap.getSubId(VABlocks.COLORING_STATION, "_top"))
+                .put(TextureKey.NORTH, TextureMap.getSubId(VABlocks.COLORING_STATION, "_front"))
+                .put(TextureKey.SOUTH, TextureMap.getSubId(VABlocks.COLORING_STATION, "_front"))
+                .put(TextureKey.EAST, TextureMap.getSubId(VABlocks.COLORING_STATION, "_side"))
+                .put(TextureKey.WEST, TextureMap.getSubId(VABlocks.COLORING_STATION, "_side"));
+        blockStateModelGenerator.blockStateCollector.accept(BlockStateModelGenerator.createSingletonBlockState(VABlocks.COLORING_STATION, Models.CUBE.upload(VABlocks.COLORING_STATION, textureMap, blockStateModelGenerator.modelCollector)));
     }
 
     @Override
@@ -35,6 +57,29 @@ class VAModelProvider extends FabricModelProvider {
         generateGildedToolItemModels(itemModelGenerator, VAItems.QUARTZ_TOOL_SETS);
         generateGildedToolItemModels(itemModelGenerator, VAItems.SCULK_TOOL_SETS);
 
+        itemModelGenerator.register(VAItems.CHARTREUSE_DYE, Models.GENERATED);
+        itemModelGenerator.register(VAItems.MAROON_DYE, Models.GENERATED);
+        itemModelGenerator.register(VAItems.INDIGO_DYE, Models.GENERATED);
+        itemModelGenerator.register(VAItems.PLUM_DYE, Models.GENERATED);
+        itemModelGenerator.register(VAItems.COLD_GREEN_DYE, Models.GENERATED);
+        itemModelGenerator.register(VAItems.TAN_DYE, Models.GENERATED);
+
+    }
+
+    private void registerColorfulBlockSetModels(BlockStateModelGenerator g, ColorfulBlockSet s) {
+        if (s.wool() != null) {
+            if (s.carpet() != null) g.registerWoolAndCarpet(s.wool(), s.carpet());
+            else g.registerSimpleCubeAll(s.wool());
+        }
+        if (s.terracotta() != null) g.registerSimpleCubeAll(s.terracotta());
+        if (s.concrete() != null) g.registerSimpleCubeAll(s.concrete());
+        if (s.concretePowder() != null) g.registerSimpleCubeAll(s.concretePowder());
+        if (s.stainedGlass() != null) {
+            if (s.stainedGlassPane() != null) g.registerGlassPane(s.stainedGlass(), s.stainedGlassPane());
+            else g.registerSimpleCubeAll(s.stainedGlass());
+        }
+        if (s.silkbulb() != null) g.registerSimpleCubeAll(s.silkbulb());
+        if (s.candle() != null && s.candleCake() != null) g.registerCandle(s.candle(), s.candleCake());
     }
 
     private void generateGildedToolItemModels(ItemModelGenerator itemModelGenerator, RegistryHelper.ItemRegistryHelper.ToolSet... toolSets) {

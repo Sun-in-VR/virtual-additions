@@ -4,17 +4,20 @@ import com.github.suninvr.virtualadditions.item.GildType;
 import com.github.suninvr.virtualadditions.item.GildTypes;
 import com.github.suninvr.virtualadditions.item.GildedToolUtil;
 import com.github.suninvr.virtualadditions.registry.RegistryHelper;
-import com.github.suninvr.virtualadditions.registry.VABlockFamilies;
+import com.github.suninvr.virtualadditions.registry.VACollections;
 import com.github.suninvr.virtualadditions.registry.VAItemTags;
 import com.github.suninvr.virtualadditions.registry.VAItems;
+import com.github.suninvr.virtualadditions.registry.collection.ColorfulBlockSet;
 import net.fabricmc.fabric.api.datagen.v1.FabricDataGenerator;
 import net.fabricmc.fabric.api.datagen.v1.FabricDataOutput;
 import net.fabricmc.fabric.api.datagen.v1.provider.FabricTagProvider;
 import net.minecraft.data.family.BlockFamily;
 import net.minecraft.item.Item;
+import net.minecraft.item.ItemConvertible;
 import net.minecraft.item.Items;
 import net.minecraft.registry.RegistryKeys;
 import net.minecraft.registry.RegistryWrapper;
+import net.minecraft.registry.tag.BlockTags;
 import net.minecraft.registry.tag.ItemTags;
 import net.minecraft.registry.tag.TagKey;
 import net.minecraft.util.Identifier;
@@ -81,6 +84,35 @@ public final class VAItemTagProvider {
             getOrCreateTagBuilder(FOODS).add(VAItems.FRIED_EGG, VAItems.CORN, VAItems.ROASTED_CORN);
             getOrCreateTagBuilder(POTIONS).add(VAItems.APPLICABLE_POTION);
 
+            configureColorfulBlockSet(
+                    VACollections.CHARTREUSE,
+                    VACollections.MAROON,
+                    VACollections.INDIGO,
+                    VACollections.PLUM,
+                    VACollections.COLD_GREEN,
+                    VACollections.TAN
+            );
+
+            getOrCreateTagBuilder(VAItemTags.SILKBULBS).add(
+                    VAItems.SILKBULB,
+                    VAItems.WHITE_SILKBULB,
+                    VAItems.LIGHT_GRAY_SILKBULB,
+                    VAItems.GRAY_SILKBULB,
+                    VAItems.BLACK_SILKBULB,
+                    VAItems.BROWN_SILKBULB,
+                    VAItems.RED_SILKBULB,
+                    VAItems.ORANGE_SILKBULB,
+                    VAItems.YELLOW_SILKBULB,
+                    VAItems.LIME_SILKBULB,
+                    VAItems.GREEN_SILKBULB,
+                    VAItems.CYAN_SILKBULB,
+                    VAItems.LIGHT_BLUE_SILKBULB,
+                    VAItems.BLUE_SILKBULB,
+                    VAItems.PURPLE_SILKBULB,
+                    VAItems.MAGENTA_SILKBULB,
+                    VAItems.PINK_SILKBULB
+            );
+
             getOrCreateTagBuilder(VAItemTags.LUMWASP_LARVAE_FOOD).add(
                     Items.STONE,
                     Items.COBBLESTONE,
@@ -124,18 +156,79 @@ public final class VAItemTagProvider {
                     VAItems.IOLITE_NETHERITE_TOOL_SET
                     );
 
+            getOrCreateTagBuilder(VAItemTags.BASE_DYE).add(
+                    Items.RED_DYE,
+                    Items.GREEN_DYE,
+                    Items.BLUE_DYE,
+                    Items.YELLOW_DYE,
+                    Items.BLACK_DYE,
+                    Items.WHITE_DYE
+            );
+
+            getOrCreateTagBuilder(VAItemTags.COLORABLE_GLASS).add(
+                    Items.GLASS,
+                    Items.WHITE_STAINED_GLASS,
+                    Items.LIGHT_GRAY_STAINED_GLASS,
+                    Items.GRAY_STAINED_GLASS,
+                    Items.BLACK_STAINED_GLASS,
+                    Items.BROWN_STAINED_GLASS,
+                    VAItems.MAROON_STAINED_GLASS,
+                    Items.RED_STAINED_GLASS,
+                    Items.ORANGE_STAINED_GLASS,
+                    VAItems.TAN_STAINED_GLASS,
+                    Items.YELLOW_STAINED_GLASS,
+                    VAItems.CHARTREUSE_STAINED_GLASS,
+                    Items.LIME_STAINED_GLASS,
+                    Items.GREEN_STAINED_GLASS,
+                    VAItems.COLD_GREEN_STAINED_GLASS,
+                    Items.CYAN_STAINED_GLASS,
+                    Items.LIGHT_BLUE_STAINED_GLASS,
+                    Items.BLUE_STAINED_GLASS,
+                    VAItems.INDIGO_STAINED_GLASS,
+                    Items.PURPLE_STAINED_GLASS,
+                    VAItems.PLUM_STAINED_GLASS,
+                    Items.MAGENTA_STAINED_GLASS,
+                    Items.PINK_STAINED_GLASS
+            );
+
+            getOrCreateTagBuilder(VAItemTags.COLORABLE_GLASS_PANE).add(
+                    Items.GLASS_PANE,
+                    Items.WHITE_STAINED_GLASS_PANE,
+                    Items.LIGHT_GRAY_STAINED_GLASS_PANE,
+                    Items.GRAY_STAINED_GLASS_PANE,
+                    Items.BLACK_STAINED_GLASS_PANE,
+                    Items.BROWN_STAINED_GLASS_PANE,
+                    VAItems.MAROON_STAINED_GLASS_PANE,
+                    Items.RED_STAINED_GLASS_PANE,
+                    Items.ORANGE_STAINED_GLASS_PANE,
+                    VAItems.TAN_STAINED_GLASS_PANE,
+                    Items.YELLOW_STAINED_GLASS_PANE,
+                    VAItems.CHARTREUSE_STAINED_GLASS_PANE,
+                    Items.LIME_STAINED_GLASS_PANE,
+                    Items.GREEN_STAINED_GLASS_PANE,
+                    VAItems.COLD_GREEN_STAINED_GLASS_PANE,
+                    Items.CYAN_STAINED_GLASS_PANE,
+                    Items.LIGHT_BLUE_STAINED_GLASS_PANE,
+                    Items.BLUE_STAINED_GLASS_PANE,
+                    VAItems.INDIGO_STAINED_GLASS_PANE,
+                    Items.PURPLE_STAINED_GLASS_PANE,
+                    VAItems.PLUM_STAINED_GLASS_PANE,
+                    Items.MAGENTA_STAINED_GLASS_PANE,
+                    Items.PINK_STAINED_GLASS_PANE
+            );
+
 
             configureBlockFamilies(
-                    VABlockFamilies.CUT_STEEL,
-                    VABlockFamilies.COBBLED_HORNFELS,
-                    VABlockFamilies.COBBLED_BLUESCHIST,
-                    VABlockFamilies.COBBLED_SYENITE,
-                    VABlockFamilies.POLISHED_HORNFELS,
-                    VABlockFamilies.POLISHED_BLUESCHIST,
-                    VABlockFamilies.POLISHED_SYENITE,
-                    VABlockFamilies.HORNFELS_TILES,
-                    VABlockFamilies.BLUESCHIST_BRICKS,
-                    VABlockFamilies.SYENITE_BRICKS
+                    VACollections.CUT_STEEL,
+                    VACollections.COBBLED_HORNFELS,
+                    VACollections.COBBLED_BLUESCHIST,
+                    VACollections.COBBLED_SYENITE,
+                    VACollections.POLISHED_HORNFELS,
+                    VACollections.POLISHED_BLUESCHIST,
+                    VACollections.POLISHED_SYENITE,
+                    VACollections.HORNFELS_TILES,
+                    VACollections.BLUESCHIST_BRICKS,
+                    VACollections.SYENITE_BRICKS
             );
 
             configureToolSet(VAItems.STEEL_TOOL_SET);
@@ -164,6 +257,16 @@ public final class VAItemTagProvider {
             }
         }
 
+        protected void configureColorfulBlockSet(ColorfulBlockSet... sets) {
+            for (ColorfulBlockSet set : sets) {
+                set.ifWool(block -> addTo(ItemTags.WOOL, block));
+                set.ifCarpet(block -> addTo(ItemTags.WOOL_CARPETS, block));
+                set.ifTerracotta(block -> addTo(ItemTags.TERRACOTTA, block));
+                set.ifCandle(block -> addTo(ItemTags.CANDLES, block));
+                set.ifSilkbulb(block -> addTo(VAItemTags.SILKBULBS, block));
+            }
+        }
+
         protected void configureWoodenBlockFamilies(BlockFamily... families) {
             for (BlockFamily family : families) {
                 family.getVariants().forEach((variant, block) -> {
@@ -178,6 +281,10 @@ public final class VAItemTagProvider {
                     }
                 });
             }
+        }
+
+        protected void addTo(TagKey<Item> tag, ItemConvertible item) {
+            getOrCreateTagBuilder(tag).add(item.asItem());
         }
 
         private void configureGildedToolSet(RegistryHelper.ItemRegistryHelper.ToolSet... sets) {
@@ -252,12 +359,12 @@ public final class VAItemTagProvider {
                     VAItems.STRIPPED_AEROBLOOM_WOOD
             );
             configureWoodenBlockFamilies(
-                    VABlockFamilies.AEROBLOOM
+                    VACollections.AEROBLOOM
             );
             configureBlockFamilies(
-                    VABlockFamilies.FLOATROCK,
-                    VABlockFamilies.POLISHED_FLOATROCK,
-                    VABlockFamilies.FLOATROCK_BRICKS
+                    VACollections.FLOATROCK,
+                    VACollections.POLISHED_FLOATROCK,
+                    VACollections.FLOATROCK_BRICKS
             );
 
             getOrCreateTagBuilder(CRYSTALS).add(VAItems.RED_GLIMMER_CRYSTAL, VAItems.GREEN_GLIMMER_CRYSTAL, VAItems.BLUE_GLIMMER_CRYSTAL);

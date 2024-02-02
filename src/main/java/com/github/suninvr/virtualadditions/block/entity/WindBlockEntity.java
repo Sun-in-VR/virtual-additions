@@ -1,18 +1,15 @@
 package com.github.suninvr.virtualadditions.block.entity;
 
 import com.github.suninvr.virtualadditions.interfaces.EntityInterface;
-import com.github.suninvr.virtualadditions.registry.VABlockEntities;
+import com.github.suninvr.virtualadditions.registry.VABlockEntityType;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.entity.BlockEntity;
 import net.minecraft.entity.Entity;
 import net.minecraft.nbt.NbtCompound;
-import net.minecraft.particle.ParticleTypes;
-import net.minecraft.server.world.ServerWorld;
 import net.minecraft.util.TypeFilter;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Box;
 import net.minecraft.util.math.Vec3d;
-import net.minecraft.util.math.random.Random;
 import net.minecraft.world.World;
 
 import java.util.List;
@@ -21,13 +18,13 @@ public class WindBlockEntity extends BlockEntity {
     Vec3d windVector;
 
     public WindBlockEntity(BlockPos pos, BlockState state) {
-        super(VABlockEntities.WIND_BLOCK_ENTITY, pos, state);
+        super(VABlockEntityType.WIND, pos, state);
         this.windVector = new Vec3d(0, 0, 0);
         this.markDirty();
     }
 
     public WindBlockEntity(BlockPos pos, BlockState state, Vec3d vec) {
-        super(VABlockEntities.WIND_BLOCK_ENTITY, pos, state);
+        super(VABlockEntityType.WIND, pos, state);
         this.windVector = vec;
         this.markDirty();
     }

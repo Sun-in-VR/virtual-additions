@@ -1,0 +1,10 @@
+{
+  "type": "virtual_additions:coloring",
+  "black_cost": 4,
+  "count": 1,
+  "index": 3,
+  "ingredient": {
+    "tag": "minecraft:candles"
+  },
+  "result": "minecraft:black_candle"
+}

@@ -1,0 +1,10 @@
+{
+  "type": "virtual_additions:coloring",
+  "count": 1,
+  "green_cost": 8,
+  "index": 10,
+  "ingredient": [],
+  "result": "virtual_additions:chartreuse_dye",
+  "white_cost": 4,
+  "yellow_cost": 4
+}

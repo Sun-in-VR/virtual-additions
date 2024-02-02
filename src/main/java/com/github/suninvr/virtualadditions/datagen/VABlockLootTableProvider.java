@@ -1,9 +1,10 @@
 package com.github.suninvr.virtualadditions.datagen;
 
 import com.github.suninvr.virtualadditions.block.BalloonBulbPlantBlock;
-import com.github.suninvr.virtualadditions.registry.VABlockFamilies;
+import com.github.suninvr.virtualadditions.registry.VACollections;
 import com.github.suninvr.virtualadditions.registry.VABlocks;
 import com.github.suninvr.virtualadditions.registry.VAItems;
+import com.github.suninvr.virtualadditions.registry.collection.ColorfulBlockSet;
 import net.fabricmc.fabric.api.datagen.v1.FabricDataGenerator;
 import net.fabricmc.fabric.api.datagen.v1.FabricDataOutput;
 import net.fabricmc.fabric.api.datagen.v1.provider.FabricBlockLootTableProvider;
@@ -45,16 +46,16 @@ public final class VABlockLootTableProvider {
         @Override
         public void generate() {
             addFamilyDrops(
-                    VABlockFamilies.CUT_STEEL,
-                    VABlockFamilies.COBBLED_HORNFELS,
-                    VABlockFamilies.COBBLED_BLUESCHIST,
-                    VABlockFamilies.COBBLED_SYENITE,
-                    VABlockFamilies.POLISHED_HORNFELS,
-                    VABlockFamilies.POLISHED_BLUESCHIST,
-                    VABlockFamilies.POLISHED_SYENITE,
-                    VABlockFamilies.HORNFELS_TILES,
-                    VABlockFamilies.BLUESCHIST_BRICKS,
-                    VABlockFamilies.SYENITE_BRICKS
+                    VACollections.CUT_STEEL,
+                    VACollections.COBBLED_HORNFELS,
+                    VACollections.COBBLED_BLUESCHIST,
+                    VACollections.COBBLED_SYENITE,
+                    VACollections.POLISHED_HORNFELS,
+                    VACollections.POLISHED_BLUESCHIST,
+                    VACollections.POLISHED_SYENITE,
+                    VACollections.HORNFELS_TILES,
+                    VACollections.BLUESCHIST_BRICKS,
+                    VACollections.SYENITE_BRICKS
             );
 
             addSimpleDrops(
@@ -95,11 +96,19 @@ public final class VABlockLootTableProvider {
                     VABlocks.PURPLE_SILKBULB,
                     VABlocks.MAGENTA_SILKBULB,
                     VABlocks.PINK_SILKBULB,
+                    VABlocks.COLORING_STATION,
                     VABlocks.ACID_BLOCK,
                     VABlocks.IOLITE_BLOCK,
                     VABlocks.WARP_ANCHOR,
                     VABlocks.ENTANGLEMENT_DRIVE
             );
+
+            addColorfulBlockSetDrops(VACollections.CHARTREUSE);
+            addColorfulBlockSetDrops(VACollections.MAROON);
+            addColorfulBlockSetDrops(VACollections.INDIGO);
+            addColorfulBlockSetDrops(VACollections.PLUM);
+            addColorfulBlockSetDrops(VACollections.COLD_GREEN);
+            addColorfulBlockSetDrops(VACollections.TAN);
 
 
             this.addDrop(VABlocks.STEEL_DOOR, this::doorDrops);
@@ -119,6 +128,19 @@ public final class VABlockLootTableProvider {
                 addDrop(family.getBaseBlock());
                 family.getVariants().forEach(this::addDrop);
             }
+        }
+
+        protected void addColorfulBlockSetDrops(ColorfulBlockSet s) {
+            s.ifWool(this::addDrop);
+            s.ifCarpet(this::addDrop);
+            s.ifTerracotta(this::addDrop);
+            s.ifConcrete(this::addDrop);
+            s.ifConcretePowder(this::addDrop);
+            s.ifStainedGlass(this::addDropWithSilkTouch);
+            s.ifStainedGlassPane(this::addDropWithSilkTouch);
+            s.ifSilkbulb(this::addDrop);
+            s.ifCandle(block -> this.lootTables.put(block.getLootTableId(), this.candleDrops(block)));
+            s.ifCandleCake(block -> this.lootTables.put(block.getLootTableId(), BlockLootTableGenerator.candleCakeDrops(block)));
         }
 
         protected void addDrop(BlockFamily.Variant variant, Block block) {
@@ -166,10 +188,10 @@ public final class VABlockLootTableProvider {
         @Override
         public void generate() {
             addFamilyDrops(
-                    VABlockFamilies.AEROBLOOM,
-                    VABlockFamilies.FLOATROCK,
-                    VABlockFamilies.POLISHED_FLOATROCK,
-                    VABlockFamilies.FLOATROCK_BRICKS
+                    VACollections.AEROBLOOM,
+                    VACollections.FLOATROCK,
+                    VACollections.POLISHED_FLOATROCK,
+                    VACollections.FLOATROCK_BRICKS
             );
             addSimpleDrops(
                     VABlocks.AEROBLOOM_LOG,

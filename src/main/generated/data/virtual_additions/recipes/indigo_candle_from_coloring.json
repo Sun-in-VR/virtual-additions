@@ -1,0 +1,11 @@
+{
+  "type": "virtual_additions:coloring",
+  "blue_cost": 3,
+  "count": 1,
+  "index": 17,
+  "ingredient": {
+    "tag": "minecraft:candles"
+  },
+  "red_cost": 1,
+  "result": "virtual_additions:indigo_candle"
+}
