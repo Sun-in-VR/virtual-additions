@@ -17,11 +17,13 @@ import net.minecraft.inventory.SidedInventory;
 import net.minecraft.inventory.SimpleInventory;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NbtCompound;
+import net.minecraft.nbt.NbtHelper;
 import net.minecraft.network.PacketByteBuf;
-import net.minecraft.screen.ScreenHandler;
-import net.minecraft.screen.ScreenHandlerContext;
+import net.minecraft.registry.RegistryWrapper;
+import net.minecraft.screen.*;
 import net.minecraft.server.network.ServerPlayerEntity;
 import net.minecraft.text.Text;
+import net.minecraft.util.Uuids;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Direction;
 import net.minecraft.world.World;
@@ -31,36 +33,68 @@ import java.util.Optional;
 import java.util.UUID;
 
 @SuppressWarnings({"unused", "DataFlowIssue"})
-public class EntanglementDriveBlockEntity extends BlockEntity implements ExtendedScreenHandlerFactory, SidedInventory {
+public class EntanglementDriveBlockEntity extends BlockEntity implements NamedScreenHandlerFactory, SidedInventory {
     private static final Text TITLE = Text.translatable("container.virtual_additions.entanglement_drive");
-    private int slotId;
     private int slotIndex;
     private UUID playerId;
     private ItemStack cachedStack;
+    private final PropertyDelegate properties = new PropertyDelegate() {
+        @Override
+        public int get(int index) {
+            int[] playerIdInts = Uuids.toIntArray(EntanglementDriveBlockEntity.this.playerId);
+            return switch (index) {
+                case 0 -> EntanglementDriveBlockEntity.this.slotIndex;
+                case 1 -> playerIdInts[0];
+                case 2 -> playerIdInts[1];
+                case 3 -> playerIdInts[2];
+                case 4 -> playerIdInts[3];
+                default -> throw new IllegalStateException("Unexpected value: " + index);
+            };
+        }
+
+        @Override
+        public void set(int index, int value) {
+            int[] playerIdInts = Uuids.toIntArray(EntanglementDriveBlockEntity.this.playerId);
+            switch (index) {
+                case 0 -> EntanglementDriveBlockEntity.this.slotIndex = value;
+                case 1 -> playerIdInts[0] = value;
+                case 2 -> playerIdInts[1] = value;
+                case 3 -> playerIdInts[2] = value;
+                case 4 -> playerIdInts[3] = value;
+                default -> throw new IllegalStateException("Unexpected value: " + index);
+            }
+            UUID uuid;
+            if (!(uuid = Uuids.toUuid(playerIdInts)).equals(EntanglementDriveBlockEntity.this.playerId)) {
+                EntanglementDriveBlockEntity.this.playerId = uuid;
+            }
+            EntanglementDriveBlockEntity.this.markDirty();
+        }
+
+        @Override
+        public int size() {
+            return 5;
+        }
+    };
     private static final Inventory dummyInventory = new DummyInventory();
     private static final UUID nullId = UUID.fromString("0-0-0-0-0");
 
     public EntanglementDriveBlockEntity(BlockPos pos, BlockState state) {
         super(VABlockEntityType.ENTANGLEMENT_DRIVE, pos, state);
-        NbtCompound defaultTag = new NbtCompound();
-        defaultTag.putInt("SlotId", 0);
-        defaultTag.putInt("SlotIndex", 0);
-        defaultTag.putUuid("UUID", nullId);
-        this.readNbt(defaultTag);
+        System.out.println(this.properties);
+        this.slotIndex = -1;
+        this.playerId = nullId;
     }
 
     @Override
-    public void readNbt(NbtCompound nbt) {
-        super.readNbt(nbt);
-        if (nbt.contains("SlotId")) this.slotId = nbt.getInt("SlotId");
+    public void readNbt(NbtCompound nbt, RegistryWrapper.WrapperLookup lookup) {
+        super.readNbt(nbt, lookup);
         if (nbt.contains("SlotIndex")) this.slotIndex = nbt.getInt("SlotIndex");
         if (nbt.contains("UUID")) this.playerId = nbt.getUuid("UUID"); else this.playerId = null;
     }
 
     @Override
-    protected void writeNbt(NbtCompound nbt) {
-        super.writeNbt(nbt);
-        nbt.putInt("SlotId", this.slotId);
+    protected void writeNbt(NbtCompound nbt, RegistryWrapper.WrapperLookup lookup) {
+        super.writeNbt(nbt, lookup);
         nbt.putInt("SlotIndex", this.slotIndex);
         nbt.putUuid("UUID", this.playerId);
     }
@@ -78,23 +112,15 @@ public class EntanglementDriveBlockEntity extends BlockEntity implements Extende
         return this.getPlayer().getInventory();
     }
 
-    public int getSlotId() {
-        return this.slotId;
-    }
-
     public int getSlotIndex() {
         return this.slotIndex;
     }
 
     public void setPlayerSlot(@Nullable PlayerEntity player, int slotIndex, int slotId) {
         if (player != null) {
-            if (this.world != null && this.world.isClient()) return;
-            NbtCompound nbt = new NbtCompound();
-            UUID uuid = player.getUuid();
-            nbt.putUuid("UUID", uuid);
-            nbt.putInt("SlotId", slotId);
-            nbt.putInt("SlotIndex", slotIndex);
-            this.readNbt(nbt);
+            if (this.world != null || this.world.isClient()) return;
+            this.playerId = player.getUuid();
+            this.slotIndex = slotIndex;
             this.markDirty();
         }
     }
@@ -113,18 +139,7 @@ public class EntanglementDriveBlockEntity extends BlockEntity implements Extende
     @Nullable
     @Override
     public ScreenHandler createMenu(int syncId, PlayerInventory inv, PlayerEntity player) {
-        return new EntanglementDriveScreenHandler(syncId, inv, ScreenHandlerContext.create(this.world, this.pos));
-    }
-
-    public void writeScreenData(PacketByteBuf buf) {
-        buf.writeInt(this.slotId);
-        buf.writeInt(this.slotIndex);
-        buf.writeOptional(Optional.ofNullable(this.playerId), PacketByteBuf::writeUuid);
-    }
-
-    @Override
-    public void writeScreenOpeningData(ServerPlayerEntity player, PacketByteBuf buf) {
-        writeScreenData(buf);
+        return new EntanglementDriveScreenHandler(syncId, inv, ScreenHandlerContext.create(this.world, this.pos), this.properties);
     }
 
     @Override
@@ -211,6 +226,7 @@ public class EntanglementDriveBlockEntity extends BlockEntity implements Extende
 
     @SuppressWarnings("BooleanMethodIsAlwaysInverted")
     private boolean canAccessPlayerInventory() {
+        if (this.slotIndex < 0) return false;
         BlockState state = this.getWorld() != null ? this.getWorld().getBlockState(this.getPos()) : Blocks.AIR.getDefaultState();
         return this.getPlayerInventory() != null && state.isOf(VABlocks.ENTANGLEMENT_DRIVE) && !state.get(EntanglementDriveBlock.POWERED);
     }

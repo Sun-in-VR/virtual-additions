@@ -5,6 +5,7 @@ import com.github.suninvr.virtualadditions.registry.VABlockTags;
 import com.github.suninvr.virtualadditions.registry.VABlocks;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.ExperienceDroppingBlock;
+import net.minecraft.entity.EquipmentSlot;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.particle.ParticleTypes;
@@ -67,7 +68,7 @@ public class GildTypes {
             player.getItemCooldownManager().set(tool.getItem(), potency);
             DestructiveSculkBlock.placeState(world, pos, state, player.getUuid(), tool, potency);
             player.incrementStat(Stats.USED.getOrCreateStat(tool.getItem()));
-            tool.damage( potency, player, player1 -> player1.sendToolBreakStatus(Hand.MAIN_HAND));
+            tool.damage( potency, player, EquipmentSlot.MAINHAND);
             return false;
         }
     };

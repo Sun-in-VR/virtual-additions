@@ -28,8 +28,6 @@ public class ColoringStationScreenHandler extends ScreenHandler {
     private ColoringStationBlockEntity.DyeContents dyeContents;
     private ColoringStationBlockEntity.DyeContents dyeContentsAdder;
     private final World world;
-    private PlayerEntity player;
-    private final ColoringStationBlockEntity entity;
     private List<RecipeEntry<ColoringRecipe>> availableRecipes = Lists.newArrayList();
     private ItemStack inputStack = ItemStack.EMPTY;
     private final Property selectedRecipe = Property.create();
@@ -51,19 +49,12 @@ public class ColoringStationScreenHandler extends ScreenHandler {
     };
     final CraftingResultInventory output = new CraftingResultInventory();
 
-    public ColoringStationScreenHandler(int syncId, PlayerInventory playerInventory, PacketByteBuf buf) {
+    public ColoringStationScreenHandler(int syncId, PlayerInventory playerInventory) {
         this(syncId, playerInventory, ScreenHandlerContext.EMPTY, new ArrayPropertyDelegate(6));
-        this.player = playerInventory.player;
-        this.dyeContents = ColoringStationBlockEntity.DyeContents.from(buf);
     }
 
     public ColoringStationScreenHandler(int syncId, PlayerInventory playerInventory, final ScreenHandlerContext context, PropertyDelegate propertyDelegate) {
         super(VAScreenHandler.COLORING_STATION, syncId);
-        int i;
-        this.world = playerInventory.player.getWorld();
-        if (!(context.equals(ScreenHandlerContext.EMPTY))) this.entity = context.get(World::getBlockEntity, null) instanceof ColoringStationBlockEntity blockEntity ? blockEntity : null;
-        else this.entity = null;
-
         this.propertyDelegate = propertyDelegate;
         this.addProperties(propertyDelegate);
         this.dyeContents = new ColoringStationBlockEntity.DyeContents(propertyDelegate){
@@ -123,7 +114,10 @@ public class ColoringStationScreenHandler extends ScreenHandler {
             }
         };
         this.dyeContentsAdder = new ColoringStationBlockEntity.DyeContents();
+        this.world = playerInventory.player.getWorld();
+        this.context = context;
 
+        int i;
         this.dyeSlot = this.addSlot(new Slot(this.input, 0,10, 15));
         this.inputSlot = this.addSlot(new Slot(this.input, 1,28, 15));
         this.outputSlot = this.addSlot(new Slot(this.output, 2,143, 33){
@@ -149,7 +143,6 @@ public class ColoringStationScreenHandler extends ScreenHandler {
             }
 
         });
-
         for (i = 0; i < 3; ++i) {
             for (int j = 0; j < 9; ++j) {
                 this.addSlot(new Slot(playerInventory, j + i * 9 + 9, 8 + j * 18, 84 + i * 18));
@@ -158,11 +151,8 @@ public class ColoringStationScreenHandler extends ScreenHandler {
         for (i = 0; i < 9; ++i) {
             this.addSlot(new Slot(playerInventory, i, 8 + i * 18, 142));
         }
-
         this.updateInput(input, inputStack);
         this.populateResult();
-
-        this.context = context;
     }
 
     private void addDyeContents() {

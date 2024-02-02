@@ -16,6 +16,7 @@ import net.minecraft.fluid.Fluids;
 import net.minecraft.item.ItemPlacementContext;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NbtHelper;
+import net.minecraft.registry.DynamicRegistryManager;
 import net.minecraft.screen.ScreenTexts;
 import net.minecraft.sound.SoundCategory;
 import net.minecraft.state.StateManager;
@@ -108,11 +109,12 @@ public class WarpAnchorBlock extends BlockWithEntity implements Waterloggable {
     }
 
     @Override
-    public void appendTooltip(ItemStack stack, @Nullable BlockView world, List<Text> tooltip, TooltipContext options) {
-        super.appendTooltip(stack, world, tooltip, options);
+    public void appendTooltip(ItemStack stack, @Nullable BlockView world, List<Text> tooltip, TooltipContext options, @Nullable DynamicRegistryManager registryManager) {
+        super.appendTooltip(stack, world, tooltip, options, registryManager);
         tooltip.add(ScreenTexts.EMPTY);
         tooltip.add(Text.translatable("block.virtual_additions.warp_anchor.desc1").formatted(Formatting.GRAY));
         tooltip.add(ScreenTexts.space().append(Text.translatable("block.virtual_additions.warp_anchor.desc2").formatted(Formatting.BLUE)));
+        super.appendTooltip(stack, world, tooltip, options, registryManager);
     }
 
     @Nullable

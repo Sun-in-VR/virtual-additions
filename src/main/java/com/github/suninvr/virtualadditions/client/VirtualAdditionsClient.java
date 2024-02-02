@@ -162,34 +162,18 @@ public class VirtualAdditionsClient implements ClientModInitializer {
         HandledScreens.register(VAScreenHandler.ENTANGLEMENT_DRIVE, EntanglementDriveScreen::new);
         HandledScreens.register(VAScreenHandler.COLORING_STATION, ColoringStationScreen::new);
 
-        ClientPlayNetworking.registerGlobalReceiver(VAPackets.ENTANGLEMENT_DRIVE_ACTIVE_SLOT_SYNC_ID, ((client, handler, buf, responseSender) -> {
-            if (client.currentScreen instanceof EntanglementDriveScreen entanglementDriveScreen) {
-                EntanglementDriveScreenHandler screenHandler = entanglementDriveScreen.getScreenHandler();
-                screenHandler.setActiveSlotId(buf.readInt());
-                screenHandler.setActiveSlotIndex(buf.readInt());
-                screenHandler.setPlayerId( buf.readOptional((PacketByteBuf::readUuid)).orElse(nullId) );
-                entanglementDriveScreen.updateActiveSlot();
-            }
-        }));
-
-        ClientPlayNetworking.registerGlobalReceiver(VAPackets.ENTANGLEMENT_DRIVE_SELECTED_SLOT_SYNC_ID, ((client, handler, buf, responseSender) -> {
-            if (client.currentScreen instanceof EntanglementDriveScreen entanglementDriveScreen) {
-                entanglementDriveScreen.setSelectingSlotPos(buf.readInt(), buf.readInt());
-            }
-        }));
-
-        ClientPlayNetworking.registerGlobalReceiver(VAPackets.WIND_UPDATE_VELOCITY,  ((client, handler, buf, responseSender) -> {
-            if (client.world != null) {
-                int id = buf.readInt();
-                Entity entity = client.world.getEntityById(id);
-                if (entity != null) {
-                    double x = buf.readDouble() + entity.getVelocity().x;
-                    double y = buf.readDouble() + entity.getVelocity().y;
-                    double z = buf.readDouble() + entity.getVelocity().z;
-                    entity.setVelocityClient(x, y, z);
-                }
-            }
-        }));
+        //ClientPlayNetworking.registerGlobalReceiver(VAPackets.WIND_UPDATE_VELOCITY,  ((client, handler, buf, responseSender) -> {
+        //    if (client.world != null) {
+        //        int id = buf.readInt();
+        //        Entity entity = client.world.getEntityById(id);
+        //        if (entity != null) {
+        //            double x = buf.readDouble() + entity.getVelocity().x;
+        //            double y = buf.readDouble() + entity.getVelocity().y;
+        //            double z = buf.readDouble() + entity.getVelocity().z;
+        //            entity.setVelocityClient(x, y, z);
+        //        }
+        //    }
+        //}));
 
         BlockEntityRendererFactories.register( VABlockEntityType.CUSTOM_SIGN, SignBlockEntityRenderer::new );
         BlockEntityRendererFactories.register( VABlockEntityType.CUSTOM_HANGING_SIGN, HangingSignBlockEntityRenderer::new );

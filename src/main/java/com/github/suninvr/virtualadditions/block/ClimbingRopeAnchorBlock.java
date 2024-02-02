@@ -139,6 +139,10 @@ public class ClimbingRopeAnchorBlock extends Block implements Waterloggable {
         return state.get(END) ? bl : bl && world.getBlockState(new BlockPos(pos.down())).isIn(VABlockTags.CLIMBING_ROPES);
     }
 
+    public static boolean canPlaceAt(Block block, BlockState state, WorldView world, BlockPos pos) {
+        return block instanceof ClimbingRopeAnchorBlock climbingRopeAnchorBlock && climbingRopeAnchorBlock.canPlaceAt(state, world, pos);
+    }
+
     private boolean canPlaceOn(WorldView world, BlockPos pos, Direction direction, BlockHalf height) {
         if (direction == Direction.DOWN) return Block.sideCoversSmallSquare(world, pos, direction);
 

@@ -38,7 +38,7 @@ public class ApplicablePotionItem extends PotionItem {
                 NbtCompound stackNbt = stack.getOrCreateNbt();
                 NbtCompound appliedPotionNbt = new NbtCompound();
                 Potion potion = PotionUtil.getPotion(stack).value();
-                player.playSound(SoundEvents.ITEM_BOTTLE_EMPTY, SoundCategory.PLAYERS, 0.3F, 1.4F);
+                player.playSound(SoundEvents.ITEM_BOTTLE_EMPTY, 0.3F, 1.4F);
 
                 if (stackNbt.contains("Potion")) appliedPotionNbt.putString("Potion", stackNbt.getString("Potion"));
                 if (stackNbt.contains("CustomPotionEffects")) appliedPotionNbt.put("CustomPotionEffects", stackNbt.get("CustomPotionEffects"));
@@ -54,7 +54,7 @@ public class ApplicablePotionItem extends PotionItem {
 
             } else if (clickedStack.isOf(Items.ARROW)) {
                 ItemStack tippedArrowStack = Items.TIPPED_ARROW.getDefaultStack();
-                player.playSound(SoundEvents.ITEM_BOTTLE_EMPTY, SoundCategory.PLAYERS, 0.3F, 1.4F);
+                player.playSound(SoundEvents.ITEM_BOTTLE_EMPTY, 0.3F, 1.4F);
                 PotionUtil.setPotion(tippedArrowStack, PotionUtil.getPotion(stack));
                 if(clickedStack.getCount() <= 10) {
                     tippedArrowStack.setCount(clickedStack.getCount());

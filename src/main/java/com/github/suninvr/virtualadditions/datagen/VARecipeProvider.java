@@ -70,7 +70,7 @@ public final class VARecipeProvider {
         protected static final ColoringStationBlockEntity.DyeContents MAGENTA_COST = new ColoringStationBlockEntity.DyeContents(2, 0, 1, 0, 0, 1);
         protected static final ColoringStationBlockEntity.DyeContents PINK_COST = new ColoringStationBlockEntity.DyeContents(2, 0, 0, 0, 0, 2);
         public Base(FabricDataOutput fabricDataOutput, CompletableFuture<RegistryWrapper.WrapperLookup> wrapperLookupCompletableFuture) {
-            super(fabricDataOutput);
+            super(fabricDataOutput, wrapperLookupCompletableFuture);
         }
 
         @Override

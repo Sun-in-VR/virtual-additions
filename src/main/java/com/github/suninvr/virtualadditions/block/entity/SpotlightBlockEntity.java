@@ -13,30 +13,29 @@ import net.minecraft.fluid.Fluids;
 import net.minecraft.nbt.NbtCompound;
 import net.minecraft.nbt.NbtElement;
 import net.minecraft.nbt.NbtHelper;
+import net.minecraft.registry.RegistryWrapper;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Direction;
 import net.minecraft.world.World;
 
 public class SpotlightBlockEntity extends BlockEntity {
-    private NbtElement lightPos;
+    private BlockPos lightPos;
 
     public SpotlightBlockEntity(BlockPos pos, BlockState state) {
         super(VABlockEntityType.SPOTLIGHT, pos, state);
-        NbtCompound defaultNbt = new NbtCompound();
-        defaultNbt.put("LightPos", NbtHelper.fromBlockPos(pos));
-        readNbt(defaultNbt);
+        this.lightPos = pos;
     }
 
     @Override
-    protected void writeNbt(NbtCompound nbt) {
-        super.writeNbt(nbt);
-        if (this.lightPos != null) nbt.put("LightPos", this.lightPos);
+    protected void writeNbt(NbtCompound nbt, RegistryWrapper.WrapperLookup lookup) {
+        super.writeNbt(nbt, lookup);
+        if (this.lightPos != null) nbt.put("light_pos", NbtHelper.fromBlockPos(pos));
     }
 
     @Override
-    public void readNbt(NbtCompound nbt) {
-        super.readNbt(nbt);
-        if (nbt.contains("LightPos")) this.lightPos = nbt.get("LightPos");
+    public void readNbt(NbtCompound nbt, RegistryWrapper.WrapperLookup lookup) {
+        super.readNbt(nbt, lookup);
+        if (nbt.contains("light_pos")) this.lightPos = NbtHelper.toBlockPos(nbt.getCompound("light_pos"));
     }
 
     public static void tick(World world, BlockPos pos, BlockState state, SpotlightBlockEntity blockEntity) {
@@ -96,11 +95,11 @@ public class SpotlightBlockEntity extends BlockEntity {
     }
 
     public BlockPos getLightLocation() {
-        return NbtHelper.toBlockPos( (NbtCompound) this.lightPos );
+        return this.lightPos;
     }
 
     private void setLightLocation(BlockPos pos) {
-        this.lightPos = NbtHelper.fromBlockPos(pos);
+        this.lightPos = pos;
         this.markDirty();
     }
 }

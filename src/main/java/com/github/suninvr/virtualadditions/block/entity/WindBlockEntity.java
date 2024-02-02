@@ -6,6 +6,7 @@ import net.minecraft.block.BlockState;
 import net.minecraft.block.entity.BlockEntity;
 import net.minecraft.entity.Entity;
 import net.minecraft.nbt.NbtCompound;
+import net.minecraft.registry.RegistryWrapper;
 import net.minecraft.util.TypeFilter;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Box;
@@ -31,8 +32,8 @@ public class WindBlockEntity extends BlockEntity {
 
 
     @Override
-    public void readNbt(NbtCompound nbt) {
-        super.readNbt(nbt);
+    public void readNbt(NbtCompound nbt, RegistryWrapper.WrapperLookup lookup) {
+        super.readNbt(nbt, lookup);
         if (nbt.contains("wind_vector")) {
             NbtCompound vecNbt = nbt.getCompound("wind_vector");
             this.windVector = new Vec3d(vecNbt.getDouble("x"), vecNbt.getDouble("y") ,vecNbt.getDouble("z"));
@@ -40,8 +41,8 @@ public class WindBlockEntity extends BlockEntity {
     }
 
     @Override
-    protected void writeNbt(NbtCompound nbt) {
-        super.writeNbt(nbt);
+    protected void writeNbt(NbtCompound nbt, RegistryWrapper.WrapperLookup lookup) {
+        super.writeNbt(nbt, lookup);
         if (this.windVector != null) {
             NbtCompound vecNbt = new NbtCompound();
             vecNbt.putDouble("x", this.windVector.x);

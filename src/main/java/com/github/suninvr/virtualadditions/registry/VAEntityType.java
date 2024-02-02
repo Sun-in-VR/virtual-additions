@@ -50,7 +50,7 @@ public class VAEntityType {
     public static void init(){
         FabricDefaultAttributeRegistry.register(LUMWASP, LumwaspEntity.createLumwaspAttributes());
         FabricDefaultAttributeRegistry.register(LYFT, LyftEntity.createLyftAttributes());
-        SpawnRestriction.register(LUMWASP, SpawnRestriction.Location.ON_GROUND, Heightmap.Type.MOTION_BLOCKING, HostileEntity::canSpawnInDark);
-        SpawnRestriction.register(LYFT, SpawnRestriction.Location.ON_GROUND, Heightmap.Type.MOTION_BLOCKING, ((type, world, spawnReason, pos, random) -> SpawnReason.isTrialSpawner(spawnReason)||world.getBlockState(pos.down()).isOf(VABlocks.GRASSY_FLOATROCK)  ));
+        SpawnRestriction.register(LUMWASP, SpawnRestriction.getLocation(LUMWASP), Heightmap.Type.MOTION_BLOCKING, HostileEntity::canSpawnInDark);
+        SpawnRestriction.register(LYFT, SpawnRestriction.getLocation(LYFT), Heightmap.Type.MOTION_BLOCKING, ((type, world, spawnReason, pos, random) -> SpawnReason.isTrialSpawner(spawnReason)||world.getBlockState(pos.down()).isOf(VABlocks.GRASSY_FLOATROCK)  ));
     }
 }

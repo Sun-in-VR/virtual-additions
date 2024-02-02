@@ -1,11 +1,10 @@
 package com.github.suninvr.virtualadditions.client.screen;
 
 import com.github.suninvr.virtualadditions.VirtualAdditions;
-import com.github.suninvr.virtualadditions.registry.VAPackets;
+import com.github.suninvr.virtualadditions.network.EntanglementDriveC2SPayload;
 import com.github.suninvr.virtualadditions.screen.EntanglementDriveScreenHandler;
 import com.mojang.blaze3d.systems.RenderSystem;
 import net.fabricmc.fabric.api.client.networking.v1.ClientPlayNetworking;
-import net.fabricmc.fabric.api.networking.v1.PacketByteBufs;
 import net.minecraft.client.gui.DrawContext;
 import net.minecraft.client.gui.screen.ingame.HandledScreen;
 import net.minecraft.client.gui.screen.ingame.InventoryScreen;
@@ -13,7 +12,6 @@ import net.minecraft.client.gui.screen.narration.NarrationMessageBuilder;
 import net.minecraft.client.gui.tooltip.Tooltip;
 import net.minecraft.client.gui.widget.PressableWidget;
 import net.minecraft.client.render.GameRenderer;
-import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.PlayerInventory;
 import net.minecraft.screen.slot.Slot;
 import net.minecraft.screen.slot.SlotActionType;
@@ -26,19 +24,12 @@ public class EntanglementDriveScreen extends HandledScreen<EntanglementDriveScre
     public static final Identifier BACKGROUND_TEXTURE = VirtualAdditions.idOf("textures/gui/container/entanglement_drive.png");
     private static final Text SLOT_HINT = Text.translatable("container.virtual_additions.entanglement_drive.select_slot_hint");
     private static final Text PAYMENT_SLOT_HINT = Text.translatable("container.virtual_additions.entanglement_drive.payment_slot_hint");
-    private float mouseX;
-    private float mouseY;
-    private boolean samePlayer;
+    private float mouseX, mouseY;
     private final UUID playerId;
-    int activeSlotX;
-    int activeSlotY;
-    int selectedSlotX;
-    int selectedSlotY;
 
     public EntanglementDriveScreen(EntanglementDriveScreenHandler handler, PlayerInventory inventory, Text title) {
         super(handler, inventory, title);
-        PlayerEntity player = inventory.player;
-        this.playerId = player.getUuid();
+        this.playerId = inventory.player.getUuid();
     }
 
     @Override
@@ -46,9 +37,7 @@ public class EntanglementDriveScreen extends HandledScreen<EntanglementDriveScre
         super.init();
         ConfirmButtonWidget confirm = new ConfirmButtonWidget(this.x + 141, this.y + 29);
         this.addDrawableChild(confirm);
-
         this.titleX = 80;
-        this.updateActiveSlot();
     }
 
     @Override
@@ -58,8 +47,14 @@ public class EntanglementDriveScreen extends HandledScreen<EntanglementDriveScre
         int i = this.x;
         int j = this.y;
         context.drawTexture(BACKGROUND_TEXTURE, i, j, 0, 0, this.backgroundWidth, this.backgroundHeight);
-        if (this.handler.isSelectingSlot() && this.handler.isSlotSelected()) context.drawTexture(BACKGROUND_TEXTURE, i + selectedSlotX - 1, j + selectedSlotY - 1, 196, 0, 18, 18);
-        if (samePlayer) context.drawTexture(BACKGROUND_TEXTURE, i + activeSlotX, j + activeSlotY, 178, 0, 18, 18);
+        if (this.handler.isSelectingSlot() && this.handler.isSlotSelected()) {
+            Slot slot = this.handler.getSelectedSlot();
+            context.drawTexture(BACKGROUND_TEXTURE, i + slot.x - 1, j + slot.y - 1, 196, 0, 18, 18);
+        }
+        if (this.handler.isActive() && this.handler.isSamePlayer()) {
+            Slot slot = this.handler.getActiveSlot();
+            context.drawTexture(BACKGROUND_TEXTURE, i + slot.x - 1, j + slot.y - 1, 178, 0, 18, 18);
+        }
         if (this.client != null && this.client.player != null) {
             InventoryScreen.drawEntity(context, i + 26, j + 8, i + 75, j + 78, 30, 0.0625F, this.mouseX, this.mouseY, this.client.player);
         }
@@ -72,22 +67,6 @@ public class EntanglementDriveScreen extends HandledScreen<EntanglementDriveScre
     @Override
     protected void onMouseClick(Slot slot, int slotId, int button, SlotActionType actionType) {
         super.onMouseClick(slot, slotId, button, actionType);
-    }
-
-    protected void setActiveSlotPos(Slot slot) {
-        this.activeSlotX = slot.x - 1;
-        this.activeSlotY = slot.y - 1;
-    }
-
-    public void setSelectingSlotPos(int x, int y) {
-        this.selectedSlotX = x;
-        this.selectedSlotY = y;
-    }
-
-    public void updateActiveSlot() {
-        this.samePlayer = this.playerId.equals(this.handler.getPlayerId());
-        Slot slot = this.handler.getActiveSlot();
-        this.setActiveSlotPos(slot);
     }
 
     @Override
@@ -141,7 +120,8 @@ public class EntanglementDriveScreen extends HandledScreen<EntanglementDriveScre
 
         @Override
         public void onPress() {
-            if (!this.isDisabled()) ClientPlayNetworking.send(VAPackets.ENTANGLEMENT_DRIVE_SET_ACTIVE_SLOT_ID, PacketByteBufs.empty());
+            ClientPlayNetworking.send(new EntanglementDriveC2SPayload(EntanglementDriveScreen.this.handler.getSelectedSlotIndex(), EntanglementDriveScreen.this.playerId));
+            EntanglementDriveScreen.this.handler.decrementPaymentSlot();
         }
 
         @Override

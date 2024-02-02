@@ -108,10 +108,6 @@ public class LumwaspEntity extends HostileEntity implements RangedAttackMob, Flu
         return birdNavigation;
     }
 
-    public EntityGroup getGroup() {
-        return EntityGroup.ARTHROPOD;
-    }
-
     @Override
     protected SoundEvent getHurtSound(DamageSource source) {
         return VASoundEvents.ENTITY_LUMWASP_HURT;

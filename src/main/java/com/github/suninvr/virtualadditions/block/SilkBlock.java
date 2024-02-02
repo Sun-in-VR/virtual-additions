@@ -4,6 +4,7 @@ import com.github.suninvr.virtualadditions.registry.VABlocks;
 import com.mojang.serialization.MapCodec;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
+import net.minecraft.entity.EquipmentSlot;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.Items;
@@ -33,7 +34,7 @@ public class SilkBlock extends Block {
         if (stack.isOf(Items.SHEARS) && world.getBlockState(pos.up()).isAir()) {
             world.playSound(player, pos, SoundEvents.ENTITY_SHEEP_SHEAR, SoundCategory.BLOCKS, 1.0F, 1.0F);
             world.setBlockState(pos.up(), VABlocks.FRAYED_SILK.getDefaultState());
-            stack.damage(1, player, playerEntity -> playerEntity.sendToolBreakStatus(player.preferredHand));
+            stack.damage(1, player, EquipmentSlot.MAINHAND);
             return ActionResult.SUCCESS;
         }
         return ActionResult.PASS;

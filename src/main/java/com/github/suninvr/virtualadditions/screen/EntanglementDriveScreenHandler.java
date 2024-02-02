@@ -2,14 +2,9 @@ package com.github.suninvr.virtualadditions.screen;
 
 import com.github.suninvr.virtualadditions.VirtualAdditions;
 import com.github.suninvr.virtualadditions.block.entity.EntanglementDriveBlockEntity;
-import com.github.suninvr.virtualadditions.registry.VAAdvancementCriteria;
 import com.github.suninvr.virtualadditions.registry.VAItems;
 import com.github.suninvr.virtualadditions.registry.VAScreenHandler;
-import com.github.suninvr.virtualadditions.registry.VASoundEvents;
 import com.mojang.datafixers.util.Pair;
-import net.fabricmc.fabric.api.networking.v1.PacketByteBufs;
-import net.fabricmc.fabric.api.networking.v1.ServerPlayNetworking;
-import net.minecraft.block.entity.BlockEntity;
 import net.minecraft.enchantment.EnchantmentHelper;
 import net.minecraft.entity.EquipmentSlot;
 import net.minecraft.entity.mob.MobEntity;
@@ -18,21 +13,17 @@ import net.minecraft.entity.player.PlayerInventory;
 import net.minecraft.inventory.Inventory;
 import net.minecraft.inventory.SimpleInventory;
 import net.minecraft.item.ItemStack;
-import net.minecraft.network.PacketByteBuf;
-import net.minecraft.screen.PlayerScreenHandler;
-import net.minecraft.screen.ScreenHandler;
-import net.minecraft.screen.ScreenHandlerContext;
+import net.minecraft.screen.*;
 import net.minecraft.screen.slot.Slot;
 import net.minecraft.screen.slot.SlotActionType;
-import net.minecraft.server.network.ServerPlayerEntity;
-import net.minecraft.sound.SoundCategory;
 import net.minecraft.util.Identifier;
+import net.minecraft.util.Uuids;
+import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.world.World;
-import org.jetbrains.annotations.Nullable;
 
+import java.util.Optional;
 import java.util.UUID;
-import java.util.concurrent.atomic.AtomicReference;
 
 @SuppressWarnings("unused")
 public class EntanglementDriveScreenHandler extends ScreenHandler {
@@ -42,33 +33,28 @@ public class EntanglementDriveScreenHandler extends ScreenHandler {
     public static final Identifier EMPTY_IOLITE_SLOT = VirtualAdditions.idOf("item/empty_slot_iolite_dark");
     static final Identifier[] EMPTY_ARMOR_SLOT_TEXTURES;
     private static final EquipmentSlot[] EQUIPMENT_SLOT_ORDER;
-    private final EntanglementDriveBlockEntity entity;
     private final Inventory inventory;
     private final Slot paymentSlot;
-    private boolean selectingSlot;
-    private boolean slotSelected;
+    private int selectedSlotIndex;
     private final ScreenHandlerContext context;
-    private Slot selectedSlot;
-    private int activeSlotId;
-    private int activeSlotIndex;
-    private UUID playerId;
+    private final PropertyDelegate propertyDelegate;
+    private final Property isSamePlayer;
+    private final UUID playerId;
     private static final UUID nullId = UUID.fromString("0-0-0-0-0");
 
-    public EntanglementDriveScreenHandler(int syncId, PlayerInventory playerInventory, PacketByteBuf buf) {
-        this(syncId, playerInventory, ScreenHandlerContext.EMPTY);
-        this.activeSlotId = buf.readInt();
-        this.activeSlotIndex = buf.readInt();
-        this.playerId = buf.readOptional((buf1 -> buf.readUuid())).orElse( nullId );
+    public EntanglementDriveScreenHandler(int syncId, PlayerInventory playerInventory) {
+        this(syncId, playerInventory, ScreenHandlerContext.EMPTY, new ArrayPropertyDelegate(5));
     }
-    public EntanglementDriveScreenHandler(int syncid, PlayerInventory inventory, ScreenHandlerContext context) {
+    public EntanglementDriveScreenHandler(int syncid, PlayerInventory inventory, ScreenHandlerContext context, PropertyDelegate delegate) {
         super(VAScreenHandler.ENTANGLEMENT_DRIVE, syncid);
         this.context = context;
-        this.activeSlotId = 0;
-        this.activeSlotIndex = 0;
-        this.playerId = nullId;
-        this.slotSelected = false;
-        if (!(context.equals(ScreenHandlerContext.EMPTY))) this.entity = context.get(World::getBlockEntity, null) instanceof EntanglementDriveBlockEntity blockEntity ? blockEntity : null;
-        else entity = null;
+        this.selectedSlotIndex = -1;
+        this.propertyDelegate = delegate;
+        this.addProperties(propertyDelegate);
+        this.isSamePlayer = Property.create();
+        this.addProperty(this.isSamePlayer);
+        this.playerId = inventory.player.getUuid();
+        this.isSamePlayer.set( getActivePlayerId().equals(this.playerId) ? 1 : 0 );
         this.inventory = new SimpleInventory(1) {
             @Override
             public void markDirty() {
@@ -89,9 +75,19 @@ public class EntanglementDriveScreenHandler extends ScreenHandler {
         int i;
         int j;
 
+        for(i = 0; i < 9; ++i) {
+            this.addSlot(new Slot(inventory, i, 8 + i * 18, 142));
+        } // Hotbar Slots ( 0 - 8 )
+
+        for(i = 0; i < 3; ++i) {
+            for(j = 0; j < 9; ++j) {
+                this.addSlot(new Slot(inventory, j + (i + 1) * 9, 8 + j * 18, 84 + i * 18));
+            }
+        } // Inventory Slots ( 9 - 35 )
+
         for(i = 0; i < 4; ++i) {
-            final EquipmentSlot equipmentSlot = EQUIPMENT_SLOT_ORDER[i];
-            this.addSlot(new Slot(inventory, 39 - i, 8, 8 + i * 18) {
+            final EquipmentSlot equipmentSlot = EQUIPMENT_SLOT_ORDER[3 - i];
+            this.addSlot(new Slot(inventory, 36 + i, 8, 62 - i * 18) {
 
                 public int getMaxItemCount() {
                     return 1;
@@ -110,23 +106,13 @@ public class EntanglementDriveScreenHandler extends ScreenHandler {
                     return Pair.of(PlayerScreenHandler.BLOCK_ATLAS_TEXTURE, EMPTY_ARMOR_SLOT_TEXTURES[equipmentSlot.getEntitySlotId()]);
                 }
             });
-        } // Equipment slots ( 0 - 3 )
-
-        for(i = 0; i < 3; ++i) {
-            for(j = 0; j < 9; ++j) {
-                this.addSlot(new Slot(inventory, j + (i + 1) * 9, 8 + j * 18, 84 + i * 18));
-            }
-        } // Inventory Slots ( 4 - 31 )
-
-        for(i = 0; i < 9; ++i) {
-            this.addSlot(new Slot(inventory, i, 8 + i * 18, 142));
-        } // Hotbar Slots ( 32 - 40 )
+        } // Equipment slots ( 36 - 39 )
 
         this.addSlot(new Slot(inventory, 40, 77, 62) {
             public Pair<Identifier, Identifier> getBackgroundSprite() {
                 return Pair.of(PlayerScreenHandler.BLOCK_ATLAS_TEXTURE, PlayerScreenHandler.EMPTY_OFFHAND_ARMOR_SLOT);
             }
-        }); // Offhand Slot ( 41 )
+        }); // Offhand Slot ( 40 )
 
         this.paymentSlot = this.addSlot(new Slot(this.inventory, 0, 91, 30) {
             @Override
@@ -140,79 +126,59 @@ public class EntanglementDriveScreenHandler extends ScreenHandler {
         }); // Payment Slot ( 42 )
     }
 
+    public Optional<EntanglementDriveBlockEntity> getEntity() {
+        return this.context.get((world, pos) -> world.getBlockEntity(pos) instanceof EntanglementDriveBlockEntity e ? e : null);
+    }
+
     public Slot getActiveSlot() {
-        AtomicReference<Slot> slot = new AtomicReference<>(this.slots.get(0));
-        this.slots.forEach( (slot1 -> {if (slot1.id == this.activeSlotId) slot.set(slot1);}) );
-        return slot.get();
+        return this.slots.get(this.getActiveSlotIndex());
     }
 
     public Slot getSelectedSlot() {
-        return this.selectedSlot;
+        return this.slots.get(this.getSelectedSlotIndex());
     }
 
-    public UUID getPlayerId() {
-        return playerId;
+    public void setSelectedSlotIndex(int index) {
+        this.selectedSlotIndex = index;
     }
 
-    @Nullable
-    BlockEntity getEntity() {
-        return this.entity;
+    public int getSelectedSlotIndex() {
+        return this.selectedSlotIndex;
     }
 
-    public void setActiveSlotId(int readInt) {
-        this.activeSlotId = readInt;
+    public void setActiveSlotIndex(int index) {
+        this.propertyDelegate.set(0, index);
     }
 
-    public void setActiveSlotIndex(int readInt) {
-        this.activeSlotIndex = readInt;
+    public int getActiveSlotIndex() {
+        return this.propertyDelegate.get(0);
     }
 
-    public void setPlayerId(UUID readId) {
-        this.playerId = readId;
+    public boolean isSelectingSlot() {
+        return this.paymentSlot.getStack().isOf(VAItems.IOLITE);
     }
 
-    @Override
-    public void onContentChanged(Inventory inventory) {
-        super.onContentChanged(inventory);
-        if (inventory.equals(this.inventory)) {
-            this.selectingSlot = this.inventory.getStack(0).isOf(VAItems.IOLITE);
-        }
+    public boolean isSlotSelected() {
+        return this.selectedSlotIndex > -1;
+    }
+
+    public boolean isActive() {
+        return this.propertyDelegate.get(0) > -1;
+    }
+
+    public boolean isSamePlayer() {
+        return this.isSamePlayer.get() == 1;
     }
 
     @Override
     public void onSlotClick(int slotIndex, int button, SlotActionType actionType, PlayerEntity player) {
         int i = MathHelper.clamp(slotIndex, 0, 40);
-        if (!this.selectingSlot || !this.getCursorStack().isEmpty() || i != slotIndex) {
+        if (!this.isSelectingSlot() || !this.getCursorStack().isEmpty() || i != slotIndex) {
             super.onSlotClick(slotIndex, button, actionType, player);
             return;
         }
         if (button != 0) return;
-        this.selectedSlot = slots.get(slotIndex);
-        this.slotSelected = true;
-        if (player instanceof ServerPlayerEntity serverPlayerEntity) {
-            PacketByteBuf buf = PacketByteBufs.create();
-            buf.writeInt(selectedSlot.x);
-            buf.writeInt(selectedSlot.y);
-            ServerPlayNetworking.send(serverPlayerEntity, ENTANGLEMENT_DRIVE_SELECTED_SLOT_SYNC_ID, buf);
-        }
-    }
-
-    public void setPlayerSlot(PlayerEntity player) {
-
-        if (this.selectedSlot == null) return;
-        int slotIndex = this.selectedSlot.getIndex();
-
-        if (this.getEntity() instanceof EntanglementDriveBlockEntity blockEntity && !(blockEntity.getWorld() == null) && !blockEntity.getWorld().isClient() ) {
-            this.slotSelected = false;
-            blockEntity.setPlayerSlot(player, slotIndex, this.selectedSlot.id);
-            PacketByteBuf buf = PacketByteBufs.create();
-            blockEntity.writeScreenData(buf);
-            ServerPlayNetworking.send((ServerPlayerEntity) player, ENTANGLEMENT_DRIVE_ACTIVE_SLOT_SYNC_ID, buf);
-            blockEntity.getWorld().playSound(null, blockEntity.getPos(), VASoundEvents.BLOCK_ENTANGLEMENT_DRIVE_USE, SoundCategory.BLOCKS, 1.0F, 1.0F);
-            VAAdvancementCriteria.USE_ENTANGLEMENT_DRIVE.trigger((ServerPlayerEntity) player);
-
-            this.inventory.clear();
-        }
+        this.setSelectedSlotIndex(slotIndex);
     }
 
     @Override
@@ -279,11 +245,20 @@ public class EntanglementDriveScreenHandler extends ScreenHandler {
         EQUIPMENT_SLOT_ORDER = new EquipmentSlot[]{EquipmentSlot.HEAD, EquipmentSlot.CHEST, EquipmentSlot.LEGS, EquipmentSlot.FEET};
     }
 
-    public boolean isSelectingSlot() {
-        return selectingSlot;
+    public UUID getActivePlayerId() {
+        return Uuids.toUuid(new int[]{this.propertyDelegate.get(1), this.propertyDelegate.get(2), this.propertyDelegate.get(3), this.propertyDelegate.get(4)});
     }
 
-    public boolean isSlotSelected() {
-        return this.slotSelected;
+    public void setActivePlayerId(UUID uuid) {
+        int[] idArray = Uuids.toIntArray(uuid);
+        this.propertyDelegate.set(1, idArray[0]);
+        this.propertyDelegate.set(2, idArray[1]);
+        this.propertyDelegate.set(3, idArray[2]);
+        this.propertyDelegate.set(4, idArray[3]);
+        this.isSamePlayer.set( uuid.equals(this.playerId) ? 1 : 0 );
+    }
+
+    public void decrementPaymentSlot() {
+        this.paymentSlot.getStack().decrement(1);
     }
 }

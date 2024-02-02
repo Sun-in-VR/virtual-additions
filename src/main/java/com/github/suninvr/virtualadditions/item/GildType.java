@@ -308,8 +308,8 @@ public class GildType {
         @Nullable
         public RegistryEntry<EntityAttribute> getAttributeType() {
             return switch (this) {
-                case BLOCK_INTERACTION_RANGE -> EntityAttributes.GENERIC_BLOCK_INTERACTION_RANGE;
-                case ENTITY_INTERACTION_RANGE -> EntityAttributes.GENERIC_ENTITY_INTERACTION_RANGE;
+                case BLOCK_INTERACTION_RANGE -> EntityAttributes.PLAYER_BLOCK_INTERACTION_RANGE;
+                case ENTITY_INTERACTION_RANGE -> EntityAttributes.PLAYER_ENTITY_INTERACTION_RANGE;
                 default -> null;
             };
         }

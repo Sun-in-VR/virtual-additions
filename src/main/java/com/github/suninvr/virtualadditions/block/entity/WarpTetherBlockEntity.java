@@ -10,35 +10,29 @@ import net.minecraft.nbt.NbtCompound;
 import net.minecraft.nbt.NbtElement;
 import net.minecraft.nbt.NbtHelper;
 import net.minecraft.particle.ParticleEffect;
+import net.minecraft.registry.RegistryWrapper;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 
 public class WarpTetherBlockEntity extends BlockEntity {
-    private NbtElement destination;
+    private BlockPos destination;
     private static final ParticleEffect particle;
 
     public WarpTetherBlockEntity(BlockPos blockPos, BlockState blockState) {
         super(VABlockEntityType.WARP_TETHER, blockPos, blockState);
-
-        NbtCompound defaultTag = new NbtCompound();
-        defaultTag.put("destination", NbtHelper.fromBlockPos(blockPos));
-        readNbt(defaultTag);
+        this.destination = blockPos;
     }
 
     @Override
-    public void writeNbt(NbtCompound tag) {
-        super.writeNbt(tag);
-        if (this.destination != null) {
-            tag.put("destination", destination);
-        }
+    public void writeNbt(NbtCompound tag, RegistryWrapper.WrapperLookup lookup) {
+        super.writeNbt(tag, lookup);
+        if (this.destination != null) tag.put("destination", NbtHelper.fromBlockPos(this.destination));
     }
 
     @Override
-    public void readNbt(NbtCompound tag) {
-        super.readNbt(tag);
-        if (tag.contains("destination")) {
-            destination = tag.get("destination");
-        }
+    public void readNbt(NbtCompound tag, RegistryWrapper.WrapperLookup lookup) {
+        super.readNbt(tag, lookup);
+        if (tag.contains("destination")) this.destination = NbtHelper.toBlockPos(tag.getCompound("destination"));
     }
 
     public static void tick(World world, BlockPos pos, BlockState state, WarpTetherBlockEntity blockEntity) {
@@ -51,8 +45,16 @@ public class WarpTetherBlockEntity extends BlockEntity {
         }
     }
 
+    public BlockPos getDestination() {
+        return this.destination;
+    }
+
+    public void setDestination(BlockPos destination) {
+        this.destination = destination;
+        this.markDirty();
+    }
+
     static {
         particle = new IoliteRingParticleEffect(true, -0.025, VAParticleTypes.IOLITE_TETHER_RING);
     }
-
 }

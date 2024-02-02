@@ -2,6 +2,7 @@ package com.github.suninvr.virtualadditions.block.entity;
 
 import com.github.suninvr.virtualadditions.registry.VABlockEntityType;
 import com.github.suninvr.virtualadditions.screen.ColoringStationScreenHandler;
+import com.mojang.serialization.Codec;
 import net.fabricmc.fabric.api.screenhandler.v1.ExtendedScreenHandlerFactory;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.entity.BlockEntity;
@@ -11,6 +12,10 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.item.Items;
 import net.minecraft.nbt.NbtCompound;
 import net.minecraft.network.PacketByteBuf;
+import net.minecraft.network.RegistryByteBuf;
+import net.minecraft.network.codec.PacketCodec;
+import net.minecraft.registry.RegistryWrapper;
+import net.minecraft.screen.NamedScreenHandlerFactory;
 import net.minecraft.screen.PropertyDelegate;
 import net.minecraft.screen.ScreenHandler;
 import net.minecraft.screen.ScreenHandlerContext;
@@ -19,7 +24,7 @@ import net.minecraft.text.Text;
 import net.minecraft.util.math.BlockPos;
 import org.jetbrains.annotations.Nullable;
 
-public class ColoringStationBlockEntity extends BlockEntity implements ExtendedScreenHandlerFactory {
+public class ColoringStationBlockEntity extends BlockEntity implements NamedScreenHandlerFactory {
     private static final Text displayName = Text.translatable("container.virtual_additions.coloring_station");
     public DyeContents dyeContents;
     protected final PropertyDelegate propertyDelegate = new PropertyDelegate() {
@@ -61,25 +66,20 @@ public class ColoringStationBlockEntity extends BlockEntity implements ExtendedS
     }
 
     @Override
-    public void readNbt(NbtCompound nbt) {
-        super.readNbt(nbt);
+    public void readNbt(NbtCompound nbt, RegistryWrapper.WrapperLookup lookup) {
+        super.readNbt(nbt, lookup);
         this.dyeContents = DyeContents.from(nbt);
     }
 
     @Override
-    protected void writeNbt(NbtCompound nbt) {
-        super.writeNbt(nbt);
+    protected void writeNbt(NbtCompound nbt, RegistryWrapper.WrapperLookup lookup) {
+        super.writeNbt(nbt, lookup);
         this.dyeContents.to(nbt);
     }
 
     public void setDyeContent(DyeContents contents) {
         this.dyeContents = contents;
         this.markDirty();
-    }
-
-    @Override
-    public void writeScreenOpeningData(ServerPlayerEntity player, PacketByteBuf buf) {
-        this.dyeContents.to(buf);
     }
 
     @Override
@@ -94,6 +94,22 @@ public class ColoringStationBlockEntity extends BlockEntity implements ExtendedS
     }
 
     public static class DyeContents {
+        public static final PacketCodec<RegistryByteBuf, DyeContents> PACKET_CODEC = new PacketCodec<>() {
+            @Override
+            public DyeContents decode(RegistryByteBuf buf) {
+                return new DyeContents(buf.readInt(), buf.readInt(), buf.readInt(), buf.readInt(), buf.readInt(), buf.readInt());
+            }
+
+            @Override
+            public void encode(RegistryByteBuf buf, DyeContents contents) {
+                buf.writeInt(contents.getR());
+                buf.writeInt(contents.getG());
+                buf.writeInt(contents.getB());
+                buf.writeInt(contents.getY());
+                buf.writeInt(contents.getK());
+                buf.writeInt(contents.getW());
+            }
+        };
         private int r;
         private int g;
         private int b;

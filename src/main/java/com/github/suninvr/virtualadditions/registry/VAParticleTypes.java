@@ -2,12 +2,17 @@ package com.github.suninvr.virtualadditions.registry;
 
 import com.github.suninvr.virtualadditions.VirtualAdditions;
 import com.github.suninvr.virtualadditions.particle.IoliteRingParticleEffect;
+import com.mojang.serialization.Codec;
 import net.fabricmc.fabric.api.particle.v1.FabricParticleTypes;
+import net.minecraft.network.RegistryByteBuf;
+import net.minecraft.network.codec.PacketCodec;
 import net.minecraft.particle.DefaultParticleType;
 import net.minecraft.particle.ParticleEffect;
 import net.minecraft.particle.ParticleType;
 import net.minecraft.registry.Registries;
 import net.minecraft.registry.Registry;
+
+import java.util.function.Function;
 
 @SuppressWarnings({"SameParameterValue", "deprecation", "unused"})
 public class VAParticleTypes {
@@ -21,14 +26,14 @@ public class VAParticleTypes {
         ACID_SPLASH_EMITTER = register("acid_splash_emitter");
         ACID_SPLASH = register("acid_splash");
         GREENCAP_SPORE = register("greencap_spore");
-        IOLITE_TETHER_RING = register("warp_tether_ring", false, IoliteRingParticleEffect.FACTORY_TETHER);
-        IOLITE_ANCHOR_RING = register("warp_anchor_ring", false, IoliteRingParticleEffect.FACTORY_ANCHOR);
+        IOLITE_TETHER_RING = register("warp_tether_ring", false, IoliteRingParticleEffect.FACTORY_TETHER, type -> IoliteRingParticleEffect.TETHER_CODEC, type -> IoliteRingParticleEffect.TETHER_PACKET_CODEC);
+        IOLITE_ANCHOR_RING = register("warp_anchor_ring", false, IoliteRingParticleEffect.FACTORY_ANCHOR, type -> IoliteRingParticleEffect.ANCHOR_CODEC, type -> IoliteRingParticleEffect.ANCHOR_PACKET_CODEC);
     }
 
     public static void init() {}
 
-    private static <T extends ParticleEffect> ParticleType<T> register(String name, boolean alwaysShow, ParticleEffect.Factory<T> factory) {
-        return Registry.register(Registries.PARTICLE_TYPE, VirtualAdditions.idOf(name), FabricParticleTypes.complex(alwaysShow, factory));
+    private static <T extends ParticleEffect> ParticleType<T> register(String name, boolean alwaysShow, ParticleEffect.Factory<T> factory, Function<ParticleType<T>, Codec<T>> codecGetter, Function<ParticleType<T>, PacketCodec<? super RegistryByteBuf, T>> packetCodecGetter) {
+        return Registry.register(Registries.PARTICLE_TYPE, VirtualAdditions.idOf(name), FabricParticleTypes.complex(alwaysShow, factory, codecGetter, packetCodecGetter));
     }
 
     private static DefaultParticleType register(String name, boolean alwaysShow) {

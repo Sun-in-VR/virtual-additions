@@ -38,5 +38,11 @@
     "fabric": "*",
     "minecraft": "1.20.x",
     "java": ">=17"
+  },
+
+  "custom": {
+    "loom:injected_interfaces": {
+      "net/minecraft/network/listener/ServerPlayPacketListener": ["com/github/suninvr/virtualadditions/interfaces/ServerPlayNetworkHandlerInterface"]
+    }
   }
 }

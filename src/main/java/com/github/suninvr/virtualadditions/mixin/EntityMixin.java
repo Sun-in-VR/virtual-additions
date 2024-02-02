@@ -84,15 +84,15 @@ public abstract class EntityMixin implements Nameable, EntityLike, CommandOutput
         }
         
         if (this.isInWindCurrent) {
-            this.addVelocity(this.windVelocity);
-            if ((Entity)(Object)(this) instanceof ServerPlayerEntity player) {
-                PacketByteBuf buf = PacketByteBufs.create();
-                buf.writeInt(player.getId());
-                buf.writeDouble(this.windVelocity.x);
-                buf.writeDouble(this.windVelocity.y);
-                buf.writeDouble(this.windVelocity.z);
-                ServerPlayNetworking.send(player, VAPackets.WIND_UPDATE_VELOCITY, buf);
-            }
+            //this.addVelocity(this.windVelocity);
+            //if ((Entity)(Object)(this) instanceof ServerPlayerEntity player) {
+            //    PacketByteBuf buf = PacketByteBufs.create();
+            //    buf.writeInt(player.getId());
+            //    buf.writeDouble(this.windVelocity.x);
+            //    buf.writeDouble(this.windVelocity.y);
+            //    buf.writeDouble(this.windVelocity.z);
+            //    ServerPlayNetworking.send(player, VAPackets.WIND_UPDATE_VELOCITY, buf);
+            //}
             this.isInWindCurrent = false;
         }
     }

@@ -3,6 +3,7 @@ package com.github.suninvr.virtualadditions.mixin;
 import com.github.suninvr.virtualadditions.entity.ClimbingRopeEntity;
 import com.github.suninvr.virtualadditions.registry.VAItems;
 import net.minecraft.entity.CrossbowUser;
+import net.minecraft.entity.EquipmentSlot;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.projectile.ProjectileEntity;
@@ -48,7 +49,7 @@ public abstract class CrossbowItemMixin {
                     projectileEntity.setVelocity(vector3f.x(), vector3f.y(), vector3f.z(), speed * 0.8F, 0.0F);
                 }
 
-                crossbow.damage(2, shooter, (e) -> e.sendToolBreakStatus(hand));
+                crossbow.damage(2, shooter, EquipmentSlot.MAINHAND);
                 world.spawnEntity(projectileEntity);
                 world.playSound(null, shooter.getX(), shooter.getY(), shooter.getZ(), SoundEvents.ITEM_CROSSBOW_SHOOT, SoundCategory.PLAYERS, 1.0F, soundPitch);
                 ci.cancel();

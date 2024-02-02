@@ -63,7 +63,10 @@ public class WarpTetherBlock extends BlockWithEntity implements Waterloggable {
     public void onPlaced(World world, BlockPos pos, BlockState state, @Nullable LivingEntity placer, ItemStack itemStack) {
         WarpTetherBlockEntity blockEntity = (WarpTetherBlockEntity) world.getBlockEntity(pos);
         if (blockEntity == null) return;
-        blockEntity.readNbt(itemStack.getOrCreateNbt());
+        if (itemStack.hasNbt() && itemStack.getNbt().contains("destination")) {
+            BlockPos destination = NbtHelper.toBlockPos(itemStack.getNbt().getCompound("destination"));
+            blockEntity.setDestination(destination);
+        }
         blockEntity.markDirty();
 
     }
@@ -77,9 +80,8 @@ public class WarpTetherBlock extends BlockWithEntity implements Waterloggable {
 
     public void teleportEntity(World world, BlockState state, BlockPos pos, Entity entity) {
         if (!world.isClient()){
-            NbtCompound blockEntityTag = getBlockEntityNbt(world, pos);
-            if (blockEntityTag == null) return;
-            BlockPos destPos = NbtHelper.toBlockPos(blockEntityTag.getCompound("destination"));
+            BlockPos destPos = getBlockDestination(world, pos);
+            if (destPos == null) return;
             BlockState destState = world.getBlockState(destPos);
             double squaredDistance = pos.getSquaredDistance(destPos);
             double destX = (destPos.getX() + (entity.getX() - pos.getX()));
@@ -120,29 +122,22 @@ public class WarpTetherBlock extends BlockWithEntity implements Waterloggable {
     @Override
     public BlockState onBreak(World world, BlockPos pos, BlockState state, PlayerEntity playerEntity) {
         if (!world.isClient) {
-            NbtCompound blockEntityTag = getBlockEntityNbt(world, pos);
-            if (blockEntityTag != null) {
-                ItemStack itemStack = VAItems.WARP_TETHER.getDefaultStack();
-                itemStack.getOrCreateNbt().put("destination", blockEntityTag.get("destination"));
-                dropStack(world, pos, itemStack);
+            BlockPos destination = getBlockDestination(world, pos);
+            if (destination != null) {
+                ItemStack stack = VAItems.WARP_TETHER.getDefaultStack();
+                NbtCompound destinationNbt = new NbtCompound();
+                NbtHelper.toBlockPos(destinationNbt);
+                stack.getOrCreateNbt().put("destination", destinationNbt);
+                dropStack(world, pos, stack);
             }
         }
         return super.onBreak(world, pos, state, playerEntity);
     }
 
     @Nullable
-    protected NbtCompound getBlockEntityNbt(World world, BlockPos pos) {
+    protected BlockPos getBlockDestination(World world, BlockPos pos) {
         BlockEntity blockEntity = world.getBlockEntity(pos);
-        if (blockEntity != null) return getBlockEntityNbt(blockEntity);
-        return null;
-    }
-    @Nullable
-    protected NbtCompound getBlockEntityNbt(BlockEntity blockEntity) {
-        if (blockEntity instanceof WarpTetherBlockEntity warpTetherBlockEntity) {
-            NbtCompound blockEntityTag = new NbtCompound();
-            warpTetherBlockEntity.writeNbt(blockEntityTag);
-            return blockEntityTag;
-        }
+        if (blockEntity instanceof WarpTetherBlockEntity tetherBlockEntity) return tetherBlockEntity.getDestination();
         return null;
     }
 
