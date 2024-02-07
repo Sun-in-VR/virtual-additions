@@ -1,0 +1,34 @@
+{
+  "parent": "minecraft:recipes/root",
+  "criteria": {
+    "has_lilac_wool": {
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "virtual_additions:lilac_wool"
+            ]
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    },
+    "has_the_recipe": {
+      "conditions": {
+        "recipe": "virtual_additions:lilac_bed"
+      },
+      "trigger": "minecraft:recipe_unlocked"
+    }
+  },
+  "requirements": [
+    [
+      "has_the_recipe",
+      "has_lilac_wool"
+    ]
+  ],
+  "rewards": {
+    "recipes": [
+      "virtual_additions:lilac_bed"
+    ]
+  }
+}

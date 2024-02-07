@@ -1,0 +1,10 @@
+{
+  "type": "virtual_additions:coloring",
+  "count": 1,
+  "index": 10,
+  "ingredient": {
+    "tag": "minecraft:beds"
+  },
+  "result": "minecraft:yellow_bed",
+  "yellow_cost": 4
+}

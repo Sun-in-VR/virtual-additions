@@ -1,0 +1,11 @@
+{
+  "type": "virtual_additions:coloring",
+  "count": 1,
+  "index": 8,
+  "ingredient": {
+    "tag": "minecraft:wool_carpets"
+  },
+  "red_cost": 3,
+  "result": "virtual_additions:sinopia_carpet",
+  "yellow_cost": 1
+}

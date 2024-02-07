@@ -1,0 +1,10 @@
+{
+  "type": "virtual_additions:coloring",
+  "blue_cost": 4,
+  "count": 1,
+  "index": 17,
+  "ingredient": {
+    "tag": "minecraft:beds"
+  },
+  "result": "minecraft:blue_bed"
+}

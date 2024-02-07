@@ -1,0 +1,11 @@
+{
+  "type": "virtual_additions:coloring",
+  "count": 1,
+  "index": 22,
+  "ingredient": {
+    "tag": "minecraft:beds"
+  },
+  "red_cost": 2,
+  "result": "minecraft:pink_bed",
+  "white_cost": 2
+}

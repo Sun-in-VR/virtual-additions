@@ -11,12 +11,14 @@ import net.fabricmc.fabric.api.datagen.v1.provider.FabricModelProvider;
 import net.minecraft.block.Blocks;
 import net.minecraft.data.client.*;
 import net.minecraft.item.*;
+import net.minecraft.registry.Registries;
 import net.minecraft.util.Identifier;
 
 import java.util.Map;
 
 @SuppressWarnings("SameParameterValue")
 class VAModelProvider extends FabricModelProvider {
+    private static final Identifier OAK_PLANKS_TEXTURE = new Identifier("block/oak_planks");
 
     public VAModelProvider(FabricDataOutput output) {
         super(output);
@@ -31,8 +33,10 @@ class VAModelProvider extends FabricModelProvider {
         registerColorfulBlockSetModels( blockStateModelGenerator,VACollections.MAROON);
         registerColorfulBlockSetModels( blockStateModelGenerator,VACollections.INDIGO);
         registerColorfulBlockSetModels( blockStateModelGenerator,VACollections.PLUM);
-        registerColorfulBlockSetModels( blockStateModelGenerator,VACollections.COLD_GREEN);
+        registerColorfulBlockSetModels( blockStateModelGenerator,VACollections.VIRIDIAN);
         registerColorfulBlockSetModels( blockStateModelGenerator,VACollections.TAN);
+        registerColorfulBlockSetModels( blockStateModelGenerator,VACollections.SINOPIA);
+        registerColorfulBlockSetModels( blockStateModelGenerator,VACollections.LILAC);
         registerColoringStation(blockStateModelGenerator);
     }
 
@@ -61,16 +65,19 @@ class VAModelProvider extends FabricModelProvider {
         itemModelGenerator.register(VAItems.MAROON_DYE, Models.GENERATED);
         itemModelGenerator.register(VAItems.INDIGO_DYE, Models.GENERATED);
         itemModelGenerator.register(VAItems.PLUM_DYE, Models.GENERATED);
-        itemModelGenerator.register(VAItems.COLD_GREEN_DYE, Models.GENERATED);
+        itemModelGenerator.register(VAItems.VIRIDIAN_DYE, Models.GENERATED);
         itemModelGenerator.register(VAItems.TAN_DYE, Models.GENERATED);
+        itemModelGenerator.register(VAItems.SINOPIA_DYE, Models.GENERATED);
+        itemModelGenerator.register(VAItems.LILAC_DYE, Models.GENERATED);
 
     }
 
     private void registerColorfulBlockSetModels(BlockStateModelGenerator g, ColorfulBlockSet s) {
-        if (s.wool() != null) {
-            if (s.carpet() != null) g.registerWoolAndCarpet(s.wool(), s.carpet());
+        s.ifWool(wool -> {
+            if (s.carpet() != null) g.registerWoolAndCarpet(wool, s.carpet());
             else g.registerSimpleCubeAll(s.wool());
-        }
+            s.ifBed(bed -> g.registerBed(bed, wool));
+        });
         if (s.terracotta() != null) g.registerSimpleCubeAll(s.terracotta());
         if (s.concrete() != null) g.registerSimpleCubeAll(s.concrete());
         if (s.concretePowder() != null) g.registerSimpleCubeAll(s.concretePowder());
@@ -80,6 +87,8 @@ class VAModelProvider extends FabricModelProvider {
         }
         if (s.silkbulb() != null) g.registerSimpleCubeAll(s.silkbulb());
         if (s.candle() != null && s.candleCake() != null) g.registerCandle(s.candle(), s.candleCake());
+        s.ifBed(bed -> g.registerBuiltinWithParticle(bed, OAK_PLANKS_TEXTURE));
+        s.ifShulkerBox(g::registerShulkerBox);
     }
 
     private void generateGildedToolItemModels(ItemModelGenerator itemModelGenerator, RegistryHelper.ItemRegistryHelper.ToolSet... toolSets) {

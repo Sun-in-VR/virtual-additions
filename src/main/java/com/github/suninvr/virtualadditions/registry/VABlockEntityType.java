@@ -20,6 +20,8 @@ public class VABlockEntityType {
     public static final BlockEntityType<ColoringStationBlockEntity> COLORING_STATION;
     public static final BlockEntityType<SignBlockEntity> CUSTOM_SIGN;
     public static final BlockEntityType<SignBlockEntity> CUSTOM_HANGING_SIGN;
+    public static final BlockEntityType<CustomBedBlockEntity> CUSTOM_BED;
+    public static final BlockEntityType<CustomShulkerBoxBlockEntity> CUSTOM_SHULKER_BOX;
 
     static {
         SPOTLIGHT = register("spotlight", SpotlightBlockEntity::new, VABlocks.SPOTLIGHT);
@@ -31,6 +33,8 @@ public class VABlockEntityType {
         COLORING_STATION = register("coloring_station", ColoringStationBlockEntity::new);
         CUSTOM_SIGN = register("custom_sign", CustomSignBlockEntity::new, VABlocks.AEROBLOOM_SIGN, VABlocks.AEROBLOOM_WALL_SIGN);
         CUSTOM_HANGING_SIGN = register("custom_hanging_sign", CustomHangingSignBlockEntity::new, VABlocks.AEROBLOOM_HANGING_SIGN, VABlocks.AEROBLOOM_WALL_HANGING_SIGN);
+        CUSTOM_BED = register("custom_bed", CustomBedBlockEntity::new, VABlocks.CHARTREUSE_BED, VABlocks.MAROON_BED, VABlocks.INDIGO_BED, VABlocks.PLUM_BED, VABlocks.VIRIDIAN_BED, VABlocks.TAN_BED, VABlocks.SINOPIA_BED, VABlocks.LILAC_BED);
+        CUSTOM_SHULKER_BOX = register("custom_shulker_box", CustomShulkerBoxBlockEntity::new, VABlocks.CHARTREUSE_SHULKER_BOX, VABlocks.MAROON_SHULKER_BOX, VABlocks.INDIGO_SHULKER_BOX, VABlocks.PLUM_SHULKER_BOX, VABlocks.VIRIDIAN_SHULKER_BOX, VABlocks.TAN_SHULKER_BOX, VABlocks.SINOPIA_SHULKER_BOX, VABlocks.LILAC_SHULKER_BOX);
     }
 
     public static void init(){}

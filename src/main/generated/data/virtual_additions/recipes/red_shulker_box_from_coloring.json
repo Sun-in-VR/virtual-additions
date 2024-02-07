@@ -1,0 +1,10 @@
+{
+  "type": "virtual_additions:coloring",
+  "count": 1,
+  "index": 7,
+  "ingredient": {
+    "tag": "virtual_additions:shulker_box"
+  },
+  "red_cost": 4,
+  "result": "minecraft:red_shulker_box"
+}

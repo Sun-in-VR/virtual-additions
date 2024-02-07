@@ -1,11 +1,12 @@
 {
-  "replace": false,
   "values": [
     "virtual_additions:chartreuse_terracotta",
     "virtual_additions:maroon_terracotta",
     "virtual_additions:indigo_terracotta",
     "virtual_additions:plum_terracotta",
-    "virtual_additions:cold_green_terracotta",
-    "virtual_additions:tan_terracotta"
+    "virtual_additions:viridian_terracotta",
+    "virtual_additions:tan_terracotta",
+    "virtual_additions:sinopia_terracotta",
+    "virtual_additions:lilac_terracotta"
   ]
 }

@@ -1,0 +1,9 @@
+{
+  "type": "virtual_additions:coloring",
+  "count": 1,
+  "index": 8,
+  "ingredient": [],
+  "red_cost": 12,
+  "result": "virtual_additions:sinopia_dye",
+  "yellow_cost": 4
+}

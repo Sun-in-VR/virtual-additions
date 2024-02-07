@@ -1,0 +1,7 @@
+{
+  "parent": "minecraft:block/template_candle",
+  "textures": {
+    "all": "virtual_additions:block/sinopia_candle",
+    "particle": "virtual_additions:block/sinopia_candle"
+  }
+}

@@ -1,0 +1,10 @@
+{
+  "type": "virtual_additions:coloring",
+  "blue_cost": 4,
+  "count": 1,
+  "index": 23,
+  "ingredient": [],
+  "red_cost": 4,
+  "result": "virtual_additions:lilac_dye",
+  "white_cost": 8
+}

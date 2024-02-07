@@ -2,7 +2,7 @@
   "type": "virtual_additions:coloring",
   "blue_cost": 1,
   "count": 1,
-  "index": 20,
+  "index": 21,
   "ingredient": {
     "tag": "virtual_additions:colorable_glass"
   },

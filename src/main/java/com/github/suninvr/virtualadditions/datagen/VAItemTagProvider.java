@@ -17,7 +17,6 @@ import net.minecraft.item.ItemConvertible;
 import net.minecraft.item.Items;
 import net.minecraft.registry.RegistryKeys;
 import net.minecraft.registry.RegistryWrapper;
-import net.minecraft.registry.tag.BlockTags;
 import net.minecraft.registry.tag.ItemTags;
 import net.minecraft.registry.tag.TagKey;
 import net.minecraft.util.Identifier;
@@ -89,8 +88,10 @@ public final class VAItemTagProvider {
                     VACollections.MAROON,
                     VACollections.INDIGO,
                     VACollections.PLUM,
-                    VACollections.COLD_GREEN,
-                    VACollections.TAN
+                    VACollections.VIRIDIAN,
+                    VACollections.TAN,
+                    VACollections.SINOPIA,
+                    VACollections.LILAC
             );
 
             getOrCreateTagBuilder(VAItemTags.SILKBULBS).add(
@@ -172,15 +173,17 @@ public final class VAItemTagProvider {
                     Items.GRAY_STAINED_GLASS,
                     Items.BLACK_STAINED_GLASS,
                     Items.BROWN_STAINED_GLASS,
+                    VAItems.LILAC_STAINED_GLASS,
                     VAItems.MAROON_STAINED_GLASS,
                     Items.RED_STAINED_GLASS,
+                    VAItems.SINOPIA_STAINED_GLASS,
                     Items.ORANGE_STAINED_GLASS,
                     VAItems.TAN_STAINED_GLASS,
                     Items.YELLOW_STAINED_GLASS,
                     VAItems.CHARTREUSE_STAINED_GLASS,
                     Items.LIME_STAINED_GLASS,
                     Items.GREEN_STAINED_GLASS,
-                    VAItems.COLD_GREEN_STAINED_GLASS,
+                    VAItems.VIRIDIAN_STAINED_GLASS,
                     Items.CYAN_STAINED_GLASS,
                     Items.LIGHT_BLUE_STAINED_GLASS,
                     Items.BLUE_STAINED_GLASS,
@@ -198,15 +201,17 @@ public final class VAItemTagProvider {
                     Items.GRAY_STAINED_GLASS_PANE,
                     Items.BLACK_STAINED_GLASS_PANE,
                     Items.BROWN_STAINED_GLASS_PANE,
+                    VAItems.LILAC_STAINED_GLASS_PANE,
                     VAItems.MAROON_STAINED_GLASS_PANE,
                     Items.RED_STAINED_GLASS_PANE,
+                    VAItems.SINOPIA_STAINED_GLASS_PANE,
                     Items.ORANGE_STAINED_GLASS_PANE,
                     VAItems.TAN_STAINED_GLASS_PANE,
                     Items.YELLOW_STAINED_GLASS_PANE,
                     VAItems.CHARTREUSE_STAINED_GLASS_PANE,
                     Items.LIME_STAINED_GLASS_PANE,
                     Items.GREEN_STAINED_GLASS_PANE,
-                    VAItems.COLD_GREEN_STAINED_GLASS_PANE,
+                    VAItems.VIRIDIAN_STAINED_GLASS_PANE,
                     Items.CYAN_STAINED_GLASS_PANE,
                     Items.LIGHT_BLUE_STAINED_GLASS_PANE,
                     Items.BLUE_STAINED_GLASS_PANE,
@@ -215,6 +220,34 @@ public final class VAItemTagProvider {
                     VAItems.PLUM_STAINED_GLASS_PANE,
                     Items.MAGENTA_STAINED_GLASS_PANE,
                     Items.PINK_STAINED_GLASS_PANE
+            );
+
+            getOrCreateTagBuilder(VAItemTags.SHULKER_BOXES).add(
+                    Items.SHULKER_BOX,
+                    Items.WHITE_SHULKER_BOX,
+                    Items.LIGHT_GRAY_SHULKER_BOX,
+                    Items.GRAY_SHULKER_BOX,
+                    Items.BLACK_SHULKER_BOX,
+                    Items.BROWN_SHULKER_BOX,
+                    VAItems.LILAC_SHULKER_BOX,
+                    VAItems.MAROON_SHULKER_BOX,
+                    Items.RED_SHULKER_BOX,
+                    VAItems.SINOPIA_SHULKER_BOX,
+                    Items.ORANGE_SHULKER_BOX,
+                    VAItems.TAN_SHULKER_BOX,
+                    Items.YELLOW_SHULKER_BOX,
+                    VAItems.CHARTREUSE_SHULKER_BOX,
+                    Items.LIME_SHULKER_BOX,
+                    Items.GREEN_SHULKER_BOX,
+                    VAItems.VIRIDIAN_SHULKER_BOX,
+                    Items.CYAN_SHULKER_BOX,
+                    Items.LIGHT_BLUE_SHULKER_BOX,
+                    Items.BLUE_SHULKER_BOX,
+                    VAItems.INDIGO_SHULKER_BOX,
+                    Items.PURPLE_SHULKER_BOX,
+                    VAItems.PLUM_SHULKER_BOX,
+                    Items.MAGENTA_SHULKER_BOX,
+                    Items.PINK_SHULKER_BOX
             );
 
 
@@ -264,6 +297,7 @@ public final class VAItemTagProvider {
                 set.ifTerracotta(block -> addTo(ItemTags.TERRACOTTA, block));
                 set.ifCandle(block -> addTo(ItemTags.CANDLES, block));
                 set.ifSilkbulb(block -> addTo(VAItemTags.SILKBULBS, block));
+                set.ifBed(block -> addTo(ItemTags.BEDS, block));
             }
         }
 

@@ -1,7 +1,7 @@
 {
   "type": "virtual_additions:coloring",
   "count": 1,
-  "index": 6,
+  "index": 7,
   "ingredient": {
     "tag": "virtual_additions:colorable_glass"
   },

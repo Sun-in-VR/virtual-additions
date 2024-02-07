@@ -2,10 +2,15 @@ package com.github.suninvr.virtualadditions.client;
 
 import com.github.suninvr.virtualadditions.block.RedstoneBridgeBlock;
 import com.github.suninvr.virtualadditions.block.entity.ColoringStationBlockEntity;
+import com.github.suninvr.virtualadditions.block.entity.CustomBedBlockEntity;
 import com.github.suninvr.virtualadditions.client.particle.AcidSplashEmitterParticle;
 import com.github.suninvr.virtualadditions.client.particle.GreencapSporeParticle;
 import com.github.suninvr.virtualadditions.client.particle.IoliteRingParticle;
+import com.github.suninvr.virtualadditions.client.render.block.CustomBedBlockEntityRenderer;
+import com.github.suninvr.virtualadditions.client.render.block.CustomShulkerBoxBlockEntityRenderer;
 import com.github.suninvr.virtualadditions.client.render.entity.*;
+import com.github.suninvr.virtualadditions.client.render.item.CustomBedItemRenderer;
+import com.github.suninvr.virtualadditions.client.render.item.CustomShulkerBoxItemRenderer;
 import com.github.suninvr.virtualadditions.client.screen.ColoringStationScreen;
 import com.github.suninvr.virtualadditions.client.screen.EntanglementDriveScreen;
 import com.github.suninvr.virtualadditions.registry.*;
@@ -16,6 +21,7 @@ import net.fabricmc.fabric.api.client.networking.v1.ClientPlayNetworking;
 import net.fabricmc.fabric.api.client.particle.v1.ParticleFactoryRegistry;
 import net.fabricmc.fabric.api.client.render.fluid.v1.FluidRenderHandlerRegistry;
 import net.fabricmc.fabric.api.client.render.fluid.v1.SimpleFluidRenderHandler;
+import net.fabricmc.fabric.api.client.rendering.v1.BuiltinItemRendererRegistry;
 import net.fabricmc.fabric.api.client.rendering.v1.ColorProviderRegistry;
 import net.fabricmc.fabric.api.client.rendering.v1.EntityModelLayerRegistry;
 import net.fabricmc.fabric.api.client.rendering.v1.EntityRendererRegistry;
@@ -32,6 +38,7 @@ import net.minecraft.client.render.block.entity.HangingSignBlockEntityRenderer;
 import net.minecraft.client.render.block.entity.SignBlockEntityRenderer;
 import net.minecraft.client.render.entity.FlyingItemEntityRenderer;
 import net.minecraft.client.render.entity.model.EntityModelLayer;
+import net.minecraft.client.render.entity.model.EntityModelLayers;
 import net.minecraft.client.util.SpriteIdentifier;
 import net.minecraft.entity.Entity;
 import net.minecraft.item.CrossbowItem;
@@ -47,9 +54,13 @@ import static com.github.suninvr.virtualadditions.VirtualAdditions.idOf;
 public class VirtualAdditionsClient implements ClientModInitializer {
 
     private static final UUID nullId = UUID.fromString("0-0-0-0-0");
+    private static final CustomBedItemRenderer bedItemRenderer = new CustomBedItemRenderer();
+    private static final CustomShulkerBoxItemRenderer shulkerBoxItemRenderer = new CustomShulkerBoxItemRenderer();
 
     public static EntityModelLayer LUMWASP_ENTITY_LAYER = new EntityModelLayer(new Identifier("virtual_additions", "lumwasp"), "main");
     public static EntityModelLayer LYFT_ENTITY_LAYER = new EntityModelLayer(new Identifier("virtual_additions", "lyft"), "main");
+    public static EntityModelLayer CUSTOM_BED_FOOT_LAYER = new EntityModelLayer(idOf("bed_foot"), "main");
+    public static EntityModelLayer CUSTOM_BED_HEAD_LAYER = new EntityModelLayer(idOf("bed_head"), "main");
     @Override
     public void onInitializeClient() {
         BlockRenderLayerMap.INSTANCE.putFluids(RenderLayer.getTranslucent(),
@@ -68,10 +79,14 @@ public class VirtualAdditionsClient implements ClientModInitializer {
                 VABlocks.INDIGO_STAINED_GLASS_PANE,
                 VABlocks.PLUM_STAINED_GLASS,
                 VABlocks.PLUM_STAINED_GLASS_PANE,
-                VABlocks.COLD_GREEN_STAINED_GLASS,
-                VABlocks.COLD_GREEN_STAINED_GLASS_PANE,
+                VABlocks.VIRIDIAN_STAINED_GLASS,
+                VABlocks.VIRIDIAN_STAINED_GLASS_PANE,
                 VABlocks.TAN_STAINED_GLASS,
-                VABlocks.TAN_STAINED_GLASS_PANE
+                VABlocks.TAN_STAINED_GLASS_PANE,
+                VABlocks.SINOPIA_STAINED_GLASS,
+                VABlocks.SINOPIA_STAINED_GLASS_PANE,
+                VABlocks.LILAC_STAINED_GLASS,
+                VABlocks.LILAC_STAINED_GLASS_PANE
         );
 
         BlockRenderLayerMap.INSTANCE.putBlocks(RenderLayer.getCutout(),
@@ -113,14 +128,40 @@ public class VirtualAdditionsClient implements ClientModInitializer {
                 VABlocks.REDSTONE_BRIDGE
         );
 
+        EntityModelLayerRegistry.registerModelLayer(LUMWASP_ENTITY_LAYER, LumwaspEntityModel::getTexturedModelData);
+        EntityModelLayerRegistry.registerModelLayer(LYFT_ENTITY_LAYER, LyftEntityModel::getTexturedModelData);
+
         EntityRendererRegistry.register(VAEntityType.CLIMBING_ROPE, ClimbingRopeEntityRenderer::new);
         EntityRendererRegistry.register(VAEntityType.STEEL_BOMB, FlyingItemEntityRenderer::new);
         EntityRendererRegistry.register(VAEntityType.ACID_SPIT, AcidSpitEntityRenderer::new);
         EntityRendererRegistry.register(VAEntityType.LUMWASP, LumwaspEntityRenderer::new);
         EntityRendererRegistry.register(VAEntityType.LYFT, LyftEntityRenderer::new);
 
-        EntityModelLayerRegistry.registerModelLayer(LUMWASP_ENTITY_LAYER, LumwaspEntityModel::getTexturedModelData);
-        EntityModelLayerRegistry.registerModelLayer(LYFT_ENTITY_LAYER, LyftEntityModel::getTexturedModelData);
+        EntityModelLayerRegistry.registerModelLayer(CUSTOM_BED_FOOT_LAYER, CustomBedBlockEntityRenderer.FOOT_MODEL_PROVIDER);
+        EntityModelLayerRegistry.registerModelLayer(CUSTOM_BED_HEAD_LAYER, CustomBedBlockEntityRenderer.HEAD_MODEL_PROVIDER);
+
+        BlockEntityRendererFactories.register( VABlockEntityType.CUSTOM_SIGN, SignBlockEntityRenderer::new );
+        BlockEntityRendererFactories.register( VABlockEntityType.CUSTOM_HANGING_SIGN, HangingSignBlockEntityRenderer::new );
+        BlockEntityRendererFactories.register( VABlockEntityType.CUSTOM_BED, CustomBedBlockEntityRenderer::new );
+        BlockEntityRendererFactories.register( VABlockEntityType.CUSTOM_SHULKER_BOX, CustomShulkerBoxBlockEntityRenderer::new );
+
+        BuiltinItemRendererRegistry.INSTANCE.register(VAItems.CHARTREUSE_BED, bedItemRenderer);
+        BuiltinItemRendererRegistry.INSTANCE.register(VAItems.MAROON_BED, bedItemRenderer);
+        BuiltinItemRendererRegistry.INSTANCE.register(VAItems.INDIGO_BED, bedItemRenderer);
+        BuiltinItemRendererRegistry.INSTANCE.register(VAItems.PLUM_BED, bedItemRenderer);
+        BuiltinItemRendererRegistry.INSTANCE.register(VAItems.VIRIDIAN_BED, bedItemRenderer);
+        BuiltinItemRendererRegistry.INSTANCE.register(VAItems.TAN_BED, bedItemRenderer);
+        BuiltinItemRendererRegistry.INSTANCE.register(VAItems.SINOPIA_BED, bedItemRenderer);
+        BuiltinItemRendererRegistry.INSTANCE.register(VAItems.LILAC_BED, bedItemRenderer);
+
+        BuiltinItemRendererRegistry.INSTANCE.register(VAItems.CHARTREUSE_SHULKER_BOX, shulkerBoxItemRenderer);
+        BuiltinItemRendererRegistry.INSTANCE.register(VAItems.MAROON_SHULKER_BOX, shulkerBoxItemRenderer);
+        BuiltinItemRendererRegistry.INSTANCE.register(VAItems.INDIGO_SHULKER_BOX, shulkerBoxItemRenderer);
+        BuiltinItemRendererRegistry.INSTANCE.register(VAItems.PLUM_SHULKER_BOX, shulkerBoxItemRenderer);
+        BuiltinItemRendererRegistry.INSTANCE.register(VAItems.VIRIDIAN_SHULKER_BOX, shulkerBoxItemRenderer);
+        BuiltinItemRendererRegistry.INSTANCE.register(VAItems.TAN_SHULKER_BOX, shulkerBoxItemRenderer);
+        BuiltinItemRendererRegistry.INSTANCE.register(VAItems.SINOPIA_SHULKER_BOX, shulkerBoxItemRenderer);
+        BuiltinItemRendererRegistry.INSTANCE.register(VAItems.LILAC_SHULKER_BOX, shulkerBoxItemRenderer);
 
         ColorProviderRegistry.BLOCK.register( ((state, world, pos, tintIndex) -> world != null ? BiomeColors.getFoliageColor(world, pos) : FoliageColors.getDefaultColor()),
                 VABlocks.OAK_HEDGE,
@@ -174,9 +215,6 @@ public class VirtualAdditionsClient implements ClientModInitializer {
         //        }
         //    }
         //}));
-
-        BlockEntityRendererFactories.register( VABlockEntityType.CUSTOM_SIGN, SignBlockEntityRenderer::new );
-        BlockEntityRendererFactories.register( VABlockEntityType.CUSTOM_HANGING_SIGN, HangingSignBlockEntityRenderer::new );
 
         TexturedRenderLayers.SIGN_TYPE_TEXTURES.put(VABlocks.AEROBLOOM_WOODTYPE, new SpriteIdentifier(TexturedRenderLayers.SIGNS_ATLAS_TEXTURE, idOf("entity/signs/aerobloom")));
         TexturedRenderLayers.HANGING_SIGN_TYPE_TEXTURES.put(VABlocks.AEROBLOOM_WOODTYPE, new SpriteIdentifier(TexturedRenderLayers.SIGNS_ATLAS_TEXTURE, idOf("entity/signs/hanging/aerobloom")));

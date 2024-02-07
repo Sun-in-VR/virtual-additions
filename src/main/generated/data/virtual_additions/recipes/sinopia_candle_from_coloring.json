@@ -1,0 +1,11 @@
+{
+  "type": "virtual_additions:coloring",
+  "count": 1,
+  "index": 8,
+  "ingredient": {
+    "tag": "minecraft:candles"
+  },
+  "red_cost": 3,
+  "result": "virtual_additions:sinopia_candle",
+  "yellow_cost": 1
+}

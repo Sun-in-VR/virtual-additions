@@ -87,7 +87,9 @@ public class ColoringStationScreen extends HandledScreen<ColoringStationScreenHa
     @Override
     protected void drawMouseoverTooltip(DrawContext context, int x, int y) {
         super.drawMouseoverTooltip(context, x, y);
-        if (this.canCraft && this.client != null && this.client.world != null) {
+        if (this.client == null) return;
+        boolean advanced = this.client.options.advancedItemTooltips;
+        if (this.canCraft && this.client.world != null) {
             int i = this.x + 52;
             int j = this.y + 14;
             int k = this.scrollOffset + 12;
@@ -100,40 +102,42 @@ public class ColoringStationScreen extends HandledScreen<ColoringStationScreenHa
                 ItemStack stack = list.get(l).value().getResult(this.client.world.getRegistryManager());
                 ColoringStationBlockEntity.DyeContents cost = list.get(l).value().getDyeCost(true);
                 ArrayList<Text> tooltip = new ArrayList<>(Screen.getTooltipFromItem(this.client, stack));
-                int K = cost.getK();
-                int W = cost.getW();
-                int R = cost.getR();
-                int G = cost.getG();
-                int B = cost.getB();
-                int Y = cost.getY();
-                if (K > 0) tooltip.add(Text.of("Black Cost: " +K / 16.0F).copy().formatted(K > this.dyeContents.getK() ? Formatting.RED : Formatting.GRAY));
-                if (W > 0) tooltip.add(Text.of("White Cost: " +W / 16.0F).copy().formatted(W > this.dyeContents.getW() ? Formatting.RED : Formatting.GRAY));
-                if (R > 0) tooltip.add(Text.of("Red Cost: " +R / 16.0F).copy().formatted(R > this.dyeContents.getR() ? Formatting.RED : Formatting.GRAY));
-                if (G > 0) tooltip.add(Text.of("Green Cost: " +G / 16.0F).copy().formatted(G > this.dyeContents.getG() ? Formatting.RED : Formatting.GRAY));
-                if (B > 0) tooltip.add(Text.of("Blue Cost: " +B / 16.0F).copy().formatted(B > this.dyeContents.getB() ? Formatting.RED : Formatting.GRAY));
-                if (Y > 0) tooltip.add(Text.of("Yellow Cost: " +Y / 16.0F).copy().formatted(Y > this.dyeContents.getY() ? Formatting.RED : Formatting.GRAY));
+                if (advanced) {
+                    int K = cost.getK();
+                    int W = cost.getW();
+                    int R = cost.getR();
+                    int G = cost.getG();
+                    int B = cost.getB();
+                    int Y = cost.getY();
+                    if (K > 0) tooltip.add(Text.of("Black Cost: " + K / 16.0F).copy().formatted(K > this.dyeContents.getK() ? Formatting.RED : Formatting.GRAY));
+                    if (W > 0) tooltip.add(Text.of("White Cost: " + W / 16.0F).copy().formatted(W > this.dyeContents.getW() ? Formatting.RED : Formatting.GRAY));
+                    if (R > 0) tooltip.add(Text.of("Red Cost: " + R / 16.0F).copy().formatted(R > this.dyeContents.getR() ? Formatting.RED : Formatting.GRAY));
+                    if (G > 0) tooltip.add(Text.of("Green Cost: " + G / 16.0F).copy().formatted(G > this.dyeContents.getG() ? Formatting.RED : Formatting.GRAY));
+                    if (B > 0) tooltip.add(Text.of("Blue Cost: " + B / 16.0F).copy().formatted(B > this.dyeContents.getB() ? Formatting.RED : Formatting.GRAY));
+                    if (Y > 0) tooltip.add(Text.of("Yellow Cost: " + Y / 16.0F).copy().formatted(Y > this.dyeContents.getY() ? Formatting.RED : Formatting.GRAY));
+                }
                 context.drawTooltip(textRenderer, tooltip, stack.getTooltipData(), x, y);
             }
         }
         int i = this.x;
         int j = this.y;
         if (x < i + 45 && x >= i + 9 && y < j + 40 && y >= j + 34) {
-            context.drawTooltip(textRenderer, Text.of("Black Dye: " + this.dyeContents.getK() / 16.0F + " / 64"), x, y);
+            context.drawTooltip(textRenderer, Text.of("Black Dye: " + (advanced ? this.dyeContents.getK() / 16.0F : Math.round(this.dyeContents.getK() / 16.0F)) + " / 64"), x, y);
         }
         if (x < i + 45 && x >= i + 9 && y < j + 46 && y >= j + 40) {
-            context.drawTooltip(textRenderer, Text.of("White Dye: " + this.dyeContents.getW() / 16.0F + " / 64"), x, y);
+            context.drawTooltip(textRenderer, Text.of("White Dye: " + (advanced ? this.dyeContents.getW() / 16.0F : Math.round(this.dyeContents.getW() / 16.0F)) + " / 64"), x, y);
         }
         if (x < i + 45 && x >= i + 9 && y < j + 52 && y >= j + 46) {
-            context.drawTooltip(textRenderer, Text.of("Red Dye: " + this.dyeContents.getR() / 16.0F + " / 64"), x, y);
+            context.drawTooltip(textRenderer, Text.of("Red Dye: " + (advanced ? this.dyeContents.getR() / 16.0F : Math.round(this.dyeContents.getR() / 16.0F)) + " / 64"), x, y);
         }
         if (x < i + 45 && x >= i + 9 && y < j + 58 && y >= j + 52) {
-            context.drawTooltip(textRenderer, Text.of("Green Dye: " + this.dyeContents.getG() / 16.0F + " / 64"), x, y);
+            context.drawTooltip(textRenderer, Text.of("Green Dye: " + (advanced ? this.dyeContents.getG() / 16.0F : Math.round(this.dyeContents.getG() / 16.0F)) + " / 64"), x, y);
         }
         if (x < i + 45 && x >= i + 9 && y < j + 64 && y >= j + 58) {
-            context.drawTooltip(textRenderer, Text.of("Blue Dye: " + this.dyeContents.getB() / 16.0F + " / 64"), x, y);
+            context.drawTooltip(textRenderer, Text.of("Blue Dye: " + (advanced ? this.dyeContents.getB() / 16.0F : Math.round(this.dyeContents.getB() / 16.0F)) + " / 64"), x, y);
         }
         if (x < i + 45 && x >= i + 9 && y < j + 70 && y >= j + 64) {
-            context.drawTooltip(textRenderer, Text.of("Yellow Dye: " + this.dyeContents.getY() / 16.0F + " / 64"), x, y);
+            context.drawTooltip(textRenderer, Text.of("Yellow Dye: " + (advanced ? this.dyeContents.getY() / 16.0F : Math.round(this.dyeContents.getY() / 16.0F)) + " / 64"), x, y);
         }
     }
 

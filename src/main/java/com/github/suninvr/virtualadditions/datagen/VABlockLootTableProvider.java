@@ -8,8 +8,10 @@ import com.github.suninvr.virtualadditions.registry.collection.ColorfulBlockSet;
 import net.fabricmc.fabric.api.datagen.v1.FabricDataGenerator;
 import net.fabricmc.fabric.api.datagen.v1.FabricDataOutput;
 import net.fabricmc.fabric.api.datagen.v1.provider.FabricBlockLootTableProvider;
+import net.minecraft.block.BedBlock;
 import net.minecraft.block.Block;
 import net.minecraft.block.TallPlantBlock;
+import net.minecraft.block.enums.BedPart;
 import net.minecraft.block.enums.DoubleBlockHalf;
 import net.minecraft.data.family.BlockFamily;
 import net.minecraft.data.server.loottable.BlockLootTableGenerator;
@@ -25,6 +27,7 @@ import net.minecraft.loot.function.ApplyBonusLootFunction;
 import net.minecraft.loot.function.SetCountLootFunction;
 import net.minecraft.loot.provider.number.UniformLootNumberProvider;
 import net.minecraft.predicate.StatePredicate;
+import net.minecraft.state.property.Properties;
 
 @SuppressWarnings("SameParameterValue")
 public final class VABlockLootTableProvider {
@@ -107,8 +110,10 @@ public final class VABlockLootTableProvider {
             addColorfulBlockSetDrops(VACollections.MAROON);
             addColorfulBlockSetDrops(VACollections.INDIGO);
             addColorfulBlockSetDrops(VACollections.PLUM);
-            addColorfulBlockSetDrops(VACollections.COLD_GREEN);
+            addColorfulBlockSetDrops(VACollections.VIRIDIAN);
             addColorfulBlockSetDrops(VACollections.TAN);
+            addColorfulBlockSetDrops(VACollections.SINOPIA);
+            addColorfulBlockSetDrops(VACollections.LILAC);
 
 
             this.addDrop(VABlocks.STEEL_DOOR, this::doorDrops);
@@ -130,17 +135,19 @@ public final class VABlockLootTableProvider {
             }
         }
 
-        protected void addColorfulBlockSetDrops(ColorfulBlockSet s) {
-            s.ifWool(this::addDrop);
-            s.ifCarpet(this::addDrop);
-            s.ifTerracotta(this::addDrop);
-            s.ifConcrete(this::addDrop);
-            s.ifConcretePowder(this::addDrop);
-            s.ifStainedGlass(this::addDropWithSilkTouch);
-            s.ifStainedGlassPane(this::addDropWithSilkTouch);
-            s.ifSilkbulb(this::addDrop);
-            s.ifCandle(block -> this.lootTables.put(block.getLootTableId(), this.candleDrops(block)));
-            s.ifCandleCake(block -> this.lootTables.put(block.getLootTableId(), BlockLootTableGenerator.candleCakeDrops(block)));
+        protected void addColorfulBlockSetDrops(ColorfulBlockSet set) {
+            set.ifWool(this::addDrop);
+            set.ifCarpet(this::addDrop);
+            set.ifTerracotta(this::addDrop);
+            set.ifConcrete(this::addDrop);
+            set.ifConcretePowder(this::addDrop);
+            set.ifStainedGlass(this::addDropWithSilkTouch);
+            set.ifStainedGlassPane(this::addDropWithSilkTouch);
+            set.ifSilkbulb(this::addDrop);
+            set.ifCandle(block -> this.lootTables.put(block.getLootTableId(), this.candleDrops(block)));
+            set.ifCandleCake(block -> this.lootTables.put(block.getLootTableId(), BlockLootTableGenerator.candleCakeDrops(block)));
+            set.ifBed(block -> this.lootTables.put(block.getLootTableId(), this.dropsWithProperty(block, BedBlock.PART, BedPart.HEAD)));
+            set.ifShulkerBox(block -> this.lootTables.put(block.getLootTableId(), this.shulkerBoxDrops(block)));
         }
 
         protected void addDrop(BlockFamily.Variant variant, Block block) {

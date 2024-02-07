@@ -1,12 +1,13 @@
 {
-  "replace": false,
   "values": [
     "virtual_additions:chartreuse_silkbulb",
     "virtual_additions:maroon_silkbulb",
     "virtual_additions:indigo_silkbulb",
     "virtual_additions:plum_silkbulb",
-    "virtual_additions:cold_green_silkbulb",
+    "virtual_additions:viridian_silkbulb",
     "virtual_additions:tan_silkbulb",
+    "virtual_additions:sinopia_silkbulb",
+    "virtual_additions:lilac_silkbulb",
     "virtual_additions:silkbulb",
     "virtual_additions:white_silkbulb",
     "virtual_additions:light_gray_silkbulb",

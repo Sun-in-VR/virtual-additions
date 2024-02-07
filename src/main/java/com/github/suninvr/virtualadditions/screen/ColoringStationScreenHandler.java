@@ -131,6 +131,7 @@ public class ColoringStationScreenHandler extends ScreenHandler {
                 stack.onCraftByPlayer(player.getWorld(), player, stack.getCount());
                 ColoringStationScreenHandler.this.inputSlot.takeStack(1);
                 ColoringStationScreenHandler.this.addDyeContents();
+                ColoringStationScreenHandler.this.updateDyeInput();
                 ColoringStationScreenHandler.this.populateResult();
                 context.run((world, pos) -> {
                     long l = world.getTime();
@@ -151,7 +152,7 @@ public class ColoringStationScreenHandler extends ScreenHandler {
         for (i = 0; i < 9; ++i) {
             this.addSlot(new Slot(playerInventory, i, 8 + i * 18, 142));
         }
-        this.updateInput(input, inputStack);
+        this.updateInput();
         this.populateResult();
     }
 
@@ -245,15 +246,19 @@ public class ColoringStationScreenHandler extends ScreenHandler {
         ItemStack itemStack = this.inputSlot.getStack();
         if (!itemStack.isOf(this.inputStack.getItem())) {
             this.inputStack = itemStack.copy();
-            this.updateInput(inventory, itemStack);
+            this.updateInput();
         }
+        this.updateDyeInput();
+    }
+
+    private void updateDyeInput() {
         ItemStack dyeStack = this.dyeSlot.getStack();
         if (this.dyeSlot.hasStack()) {
             this.dyeContents.addDye(dyeStack, 1024);
         }
     }
 
-    private void updateInput(Inventory input, ItemStack stack) {
+    private void updateInput() {
         this.availableRecipes.clear();
         this.selectedRecipe.set(-1);
         this.outputSlot.setStackNoCallbacks(ItemStack.EMPTY);

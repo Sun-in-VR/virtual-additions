@@ -1,0 +1,10 @@
+{
+  "type": "virtual_additions:coloring",
+  "black_cost": 4,
+  "count": 1,
+  "index": 3,
+  "ingredient": {
+    "tag": "minecraft:beds"
+  },
+  "result": "minecraft:black_bed"
+}

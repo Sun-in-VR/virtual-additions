@@ -4,7 +4,9 @@ import com.github.suninvr.virtualadditions.block.entity.ColoringStationBlockEnti
 import com.github.suninvr.virtualadditions.registry.VARecipeType;
 import com.mojang.serialization.Codec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
+import net.minecraft.block.ShulkerBoxBlock;
 import net.minecraft.inventory.Inventory;
+import net.minecraft.item.BlockItem;
 import net.minecraft.item.ItemStack;
 import net.minecraft.network.RegistryByteBuf;
 import net.minecraft.network.codec.PacketCodec;
@@ -40,6 +42,10 @@ public class ColoringRecipe implements Recipe<Inventory> {
 
     @Override
     public ItemStack craft(Inventory inventory, DynamicRegistryManager registryManager) {
+        ItemStack stack = inventory.getStack(1);
+        if (stack.getItem() instanceof BlockItem blockItem && blockItem.getBlock() instanceof ShulkerBoxBlock) {
+            return stack.copyNbtToNewStack(this.result.getItem(), this.result.getCount());
+        }
         return this.result.copy();
     }
 

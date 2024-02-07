@@ -1,11 +1,12 @@
 {
-  "replace": false,
   "values": [
     "virtual_additions:chartreuse_stained_glass",
     "virtual_additions:maroon_stained_glass",
     "virtual_additions:indigo_stained_glass",
     "virtual_additions:plum_stained_glass",
-    "virtual_additions:cold_green_stained_glass",
-    "virtual_additions:tan_stained_glass"
+    "virtual_additions:viridian_stained_glass",
+    "virtual_additions:tan_stained_glass",
+    "virtual_additions:sinopia_stained_glass",
+    "virtual_additions:lilac_stained_glass"
   ]
 }

@@ -1,11 +1,12 @@
 {
-  "replace": false,
   "values": [
     "virtual_additions:chartreuse_carpet",
     "virtual_additions:maroon_carpet",
     "virtual_additions:indigo_carpet",
     "virtual_additions:plum_carpet",
-    "virtual_additions:cold_green_carpet",
-    "virtual_additions:tan_carpet"
+    "virtual_additions:viridian_carpet",
+    "virtual_additions:tan_carpet",
+    "virtual_additions:sinopia_carpet",
+    "virtual_additions:lilac_carpet"
   ]
 }

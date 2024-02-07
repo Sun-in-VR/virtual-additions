@@ -1,0 +1,6 @@
+{
+  "parent": "minecraft:item/template_shulker_box",
+  "textures": {
+    "particle": "virtual_additions:block/plum_shulker_box"
+  }
+}

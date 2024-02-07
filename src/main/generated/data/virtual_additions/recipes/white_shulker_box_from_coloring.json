@@ -1,0 +1,9 @@
+{
+  "type": "virtual_additions:coloring",
+  "count": 1,
+  "ingredient": {
+    "tag": "virtual_additions:shulker_box"
+  },
+  "result": "minecraft:white_shulker_box",
+  "white_cost": 4
+}

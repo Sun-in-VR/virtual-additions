@@ -48,6 +48,15 @@ public class ColorfulBlockSet {
         if (block != null) consumer.accept(block);
     }
 
+    public Block glazedTerracotta() {
+        return this.blockMap.get(Tile.GLAZED_TERRACOTTA);
+    }
+
+    public void ifGlazedTerracotta(Consumer<Block> consumer) {
+        Block block = this.glazedTerracotta();
+        if (block != null) consumer.accept(block);
+    }
+
     public Block concrete() {
         return this.blockMap.get(Tile.CONCRETE);
     }
@@ -108,6 +117,24 @@ public class ColorfulBlockSet {
 
     public void ifSilkbulb(Consumer<Block> consumer) {
         Block block = this.silkbulb();
+        if (block != null) consumer.accept(block);
+    }
+
+    public Block bed() {
+        return this.blockMap.get(Tile.BED);
+    }
+
+    public void ifBed(Consumer<Block> consumer) {
+        Block block = this.bed();
+        if (block != null) consumer.accept(block);
+    }
+
+    public Block shulkerBox() {
+        return this.blockMap.get(Tile.SHULKER_BOX);
+    }
+
+    public void ifShulkerBox(Consumer<Block> consumer) {
+        Block block = this.shulkerBox();
         if (block != null) consumer.accept(block);
     }
 
@@ -177,6 +204,16 @@ public class ColorfulBlockSet {
             this.entries.add(TileBlockPair.of(Tile.SILKBULB, block));
             return this;
         }
+
+        public Builder bed(Block block) {
+            this.entries.add(TileBlockPair.of(Tile.BED, block));
+            return this;
+        }
+
+        public Builder shulkerBox(Block block) {
+            this.entries.add(TileBlockPair.of(Tile.SHULKER_BOX, block));
+            return this;
+        }
     }
 
     private static class TileBlockPair extends Pair<Tile, Block> implements Map.Entry<Tile, Block> {
@@ -208,12 +245,15 @@ public class ColorfulBlockSet {
         WOOL,
         CARPET,
         TERRACOTTA,
+        GLAZED_TERRACOTTA,
         CONCRETE,
         CONCRETE_POWDER,
         STAINED_GLASS,
         STAINED_GLASS_PANE,
         CANDLE,
         CANDLE_CAKE,
-        SILKBULB
+        SILKBULB,
+        BED,
+        SHULKER_BOX
     }
 }

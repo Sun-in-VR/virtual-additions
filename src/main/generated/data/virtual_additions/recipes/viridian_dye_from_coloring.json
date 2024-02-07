@@ -1,0 +1,9 @@
+{
+  "type": "virtual_additions:coloring",
+  "blue_cost": 4,
+  "count": 1,
+  "green_cost": 12,
+  "index": 14,
+  "ingredient": [],
+  "result": "virtual_additions:viridian_dye"
+}

@@ -62,8 +62,10 @@ public final class VABlockTagProvider {
             configureColorfulBlockSet(VACollections.MAROON);
             configureColorfulBlockSet(VACollections.INDIGO);
             configureColorfulBlockSet(VACollections.PLUM);
-            configureColorfulBlockSet(VACollections.COLD_GREEN);
+            configureColorfulBlockSet(VACollections.VIRIDIAN);
             configureColorfulBlockSet(VACollections.TAN);
+            configureColorfulBlockSet(VACollections.SINOPIA);
+            configureColorfulBlockSet(VACollections.LILAC);
 
             getOrCreateTagBuilder(ORES).add(VABlocks.IOLITE_ORE);
 
@@ -291,6 +293,8 @@ public final class VABlockTagProvider {
             s.ifCandle(block -> getOrCreateTagBuilder(BlockTags.CANDLES).add(block));
             s.ifCandleCake(block -> getOrCreateTagBuilder(BlockTags.CANDLE_CAKES).add(block));
             s.ifSilkbulb(block -> getOrCreateTagBuilder(VABlockTags.SILKBULBS).add(block));
+            s.ifBed(block -> getOrCreateTagBuilder(BlockTags.BEDS).add(block));
+            s.ifShulkerBox(block -> getOrCreateTagBuilder(BlockTags.SHULKER_BOXES).add(block));
         }
     }
 

@@ -2,7 +2,7 @@
   "type": "virtual_additions:coloring",
   "count": 1,
   "green_cost": 2,
-  "index": 10,
+  "index": 11,
   "ingredient": {
     "tag": "minecraft:wool"
   },

@@ -1,0 +1,10 @@
+{
+  "variants": {
+    "lit=false": {
+      "model": "virtual_additions:block/viridian_candle_cake"
+    },
+    "lit=true": {
+      "model": "virtual_additions:block/viridian_candle_cake_lit"
+    }
+  }
+}

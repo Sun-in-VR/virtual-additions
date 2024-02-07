@@ -19,7 +19,7 @@ import java.util.function.Supplier;
 import static com.github.suninvr.virtualadditions.VirtualAdditions.idOf;
 
 public class VAArmorMaterial {
-    public static final RegistryEntry<ArmorMaterial> STEEL = register("steel", Util.make(new EnumMap<>(ArmorItem.Type.class), map -> {
+    public static final RegistryEntry<ArmorMaterial> STEEL = register("virtual_additions_steel", Util.make(new EnumMap<>(ArmorItem.Type.class), map -> {
         map.put(ArmorItem.Type.BOOTS, 2);
         map.put(ArmorItem.Type.LEGGINGS, 5);
         map.put(ArmorItem.Type.CHESTPLATE, 6);

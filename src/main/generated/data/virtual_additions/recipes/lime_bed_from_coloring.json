@@ -1,0 +1,11 @@
+{
+  "type": "virtual_additions:coloring",
+  "count": 1,
+  "index": 12,
+  "ingredient": {
+    "tag": "minecraft:beds"
+  },
+  "result": "minecraft:lime_bed",
+  "white_cost": 2,
+  "yellow_cost": 2
+}

@@ -1,6 +1,0 @@
-{
-  "parent": "minecraft:block/carpet",
-  "textures": {
-    "wool": "virtual_additions:block/cold_green_wool"
-  }
-}

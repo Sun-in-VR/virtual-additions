@@ -24,6 +24,9 @@ import net.minecraft.text.Text;
 import net.minecraft.util.math.BlockPos;
 import org.jetbrains.annotations.Nullable;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class ColoringStationBlockEntity extends BlockEntity implements NamedScreenHandlerFactory {
     private static final Text displayName = Text.translatable("container.virtual_additions.coloring_station");
     public DyeContents dyeContents;
@@ -77,9 +80,8 @@ public class ColoringStationBlockEntity extends BlockEntity implements NamedScre
         this.dyeContents.to(nbt);
     }
 
-    public void setDyeContent(DyeContents contents) {
-        this.dyeContents = contents;
-        this.markDirty();
+    public List<ItemStack> getDroppedStacks() {
+        return this.dyeContents.getDyeStacks();
     }
 
     @Override
@@ -257,6 +259,17 @@ public class ColoringStationBlockEntity extends BlockEntity implements NamedScre
             this.w = w;
         }
 
+        public List<ItemStack> getDyeStacks() {
+            ArrayList<ItemStack> stacks = new ArrayList<>();
+            stacks.add(new ItemStack(Items.RED_DYE, Math.floorDiv(this.getR(), 16)));
+            stacks.add(new ItemStack(Items.GREEN_DYE, Math.floorDiv(this.getG(), 16)));
+            stacks.add(new ItemStack(Items.BLUE_DYE, Math.floorDiv(this.getB(), 16)));
+            stacks.add(new ItemStack(Items.YELLOW_DYE, Math.floorDiv(this.getY(), 16)));
+            stacks.add(new ItemStack(Items.BLACK_DYE, Math.floorDiv(this.getK(), 16)));
+            stacks.add(new ItemStack(Items.WHITE_DYE, Math.floorDiv(this.getW(), 16)));
+            return stacks;
+        }
+
         public DyeContents copy() {
             return new DyeContents(this.getR(), this.getG(), this.getB(), this.getY(), this.getK(), this.getW());
         }
@@ -271,6 +284,7 @@ public class ColoringStationBlockEntity extends BlockEntity implements NamedScre
             boolean bl = false;
             if (itemStack.isOf(Items.RED_DYE)) {
                 int diff = max - this.getR();
+                diff = diff - (diff % 16);
                 while (diff > 0 && itemStack.getCount() > 0) {
                     diff -= 16;
                     this.setR(Math.min(max, this.getR() + 16));
@@ -280,6 +294,7 @@ public class ColoringStationBlockEntity extends BlockEntity implements NamedScre
             }
             if (itemStack.isOf(Items.GREEN_DYE)) {
                 int diff = max - this.getG();
+                diff = diff - (diff % 16);
                 while (diff > 0 && itemStack.getCount() > 0) {
                     diff -= 16;
                     this.setG(Math.min(max, this.getG() + 16));
@@ -289,6 +304,7 @@ public class ColoringStationBlockEntity extends BlockEntity implements NamedScre
             }
             if (itemStack.isOf(Items.BLUE_DYE)) {
                 int diff = max - this.getB();
+                diff = diff - (diff % 16);
                 while (diff > 0 && itemStack.getCount() > 0) {
                     diff -= 16;
                     this.setB(Math.min(max, this.getB() + 16));
@@ -298,6 +314,7 @@ public class ColoringStationBlockEntity extends BlockEntity implements NamedScre
             }
             if (itemStack.isOf(Items.YELLOW_DYE)) {
                 int diff = max - this.getY();
+                diff = diff - (diff % 16);
                 while (diff > 0 && itemStack.getCount() > 0) {
                     diff -= 16;
                     this.setY(Math.min(max, this.getY() + 16));
@@ -307,6 +324,7 @@ public class ColoringStationBlockEntity extends BlockEntity implements NamedScre
             }
             if (itemStack.isOf(Items.BLACK_DYE)) {
                 int diff = max - this.getK();
+                diff = diff - (diff % 16);
                 while (diff > 0 && itemStack.getCount() > 0) {
                     diff -= 16;
                     this.setK(Math.min(max, this.getK() + 16));
@@ -316,6 +334,7 @@ public class ColoringStationBlockEntity extends BlockEntity implements NamedScre
             }
             if (itemStack.isOf(Items.WHITE_DYE)) {
                 int diff = max - this.getW();
+                diff = diff - (diff % 16);
                 while (diff > 0 && itemStack.getCount() > 0) {
                     diff -= 16;
                     this.setW(Math.min(max, this.getW() + 16));

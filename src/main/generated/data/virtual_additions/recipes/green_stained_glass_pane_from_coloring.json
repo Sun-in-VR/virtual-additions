@@ -2,7 +2,7 @@
   "type": "virtual_additions:coloring",
   "count": 1,
   "green_cost": 4,
-  "index": 12,
+  "index": 13,
   "ingredient": {
     "tag": "virtual_additions:colorable_glass_pane"
   },
