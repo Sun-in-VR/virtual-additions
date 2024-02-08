@@ -5,6 +5,7 @@ import com.github.suninvr.virtualadditions.registry.VAEntityType;
 import net.minecraft.block.AbstractBlock;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.LivingEntity;
+import net.minecraft.entity.data.DataTracker;
 import net.minecraft.entity.projectile.ProjectileEntity;
 import net.minecraft.entity.projectile.ProjectileUtil;
 import net.minecraft.util.hit.BlockHitResult;
@@ -24,6 +25,11 @@ public class AcidSpitEntity extends ProjectileEntity {
         super(VAEntityType.ACID_SPIT, world);
         this.setOwner(owner);
         this.setPosition(owner.getX() - (double)(owner.getWidth() + 1.0F) * 0.5 * (double) MathHelper.sin(owner.bodyYaw * 0.017453292F), owner.getEyeY() - 0.10000000149011612, owner.getZ() + (double)(owner.getWidth() + 1.0F) * 0.5 * (double)MathHelper.cos(owner.bodyYaw * 0.017453292F));
+    }
+
+    @Override
+    protected void initDataTracker(DataTracker.Builder builder) {
+
     }
 
     public void tick() {
@@ -69,9 +75,5 @@ public class AcidSpitEntity extends ProjectileEntity {
             this.discard();
         }
 
-    }
-
-    @Override
-    protected void initDataTracker() {
     }
 }

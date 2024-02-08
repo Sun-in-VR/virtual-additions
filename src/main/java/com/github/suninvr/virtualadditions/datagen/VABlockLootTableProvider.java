@@ -27,23 +27,26 @@ import net.minecraft.loot.function.ApplyBonusLootFunction;
 import net.minecraft.loot.function.SetCountLootFunction;
 import net.minecraft.loot.provider.number.UniformLootNumberProvider;
 import net.minecraft.predicate.StatePredicate;
+import net.minecraft.registry.RegistryWrapper;
 import net.minecraft.state.property.Properties;
+
+import java.util.concurrent.CompletableFuture;
 
 @SuppressWarnings("SameParameterValue")
 public final class VABlockLootTableProvider {
     public static final VABlockLootTableProvider INSTANCE = new VABlockLootTableProvider();
 
-    public FabricDataGenerator.Pack.Factory<?> base() {
+    public FabricDataGenerator.Pack.RegistryDependentFactory<?> base() {
         return Base::new;
     }
-    public FabricDataGenerator.Pack.Factory<?> preview() {
+    public FabricDataGenerator.Pack.RegistryDependentFactory<?> preview() {
         return Preview::new;
     }
 
     private static class Base extends FabricBlockLootTableProvider {
 
-        protected Base(FabricDataOutput dataOutput) {
-            super(dataOutput);
+        protected Base(FabricDataOutput dataOutput, CompletableFuture<RegistryWrapper.WrapperLookup> registryLookup) {
+            super(dataOutput, registryLookup);
         }
 
         @Override
@@ -188,8 +191,8 @@ public final class VABlockLootTableProvider {
     }
 
     private static class Preview extends Base {
-        public Preview(FabricDataOutput output) {
-            super(output);
+        public Preview(FabricDataOutput output, CompletableFuture<RegistryWrapper.WrapperLookup> registryLookup) {
+            super(output, registryLookup);
         }
 
         @Override

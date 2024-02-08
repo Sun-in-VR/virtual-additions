@@ -35,7 +35,7 @@ public class SpotlightBlockEntity extends BlockEntity {
     @Override
     public void readNbt(NbtCompound nbt, RegistryWrapper.WrapperLookup lookup) {
         super.readNbt(nbt, lookup);
-        if (nbt.contains("light_pos")) this.lightPos = NbtHelper.toBlockPos(nbt.getCompound("light_pos"));
+        NbtHelper.toBlockPos(nbt, "light_pos").ifPresent(pos -> this.lightPos = pos);
     }
 
     public static void tick(World world, BlockPos pos, BlockState state, SpotlightBlockEntity blockEntity) {

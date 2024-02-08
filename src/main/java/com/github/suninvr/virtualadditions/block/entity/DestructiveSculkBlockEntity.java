@@ -164,7 +164,7 @@ public class DestructiveSculkBlockEntity extends BlockEntity {
         this.activePosIndex = nbt.getInt("activePosIndex");
         NbtList affectedPos = nbt.getList("affectedPos", NbtElement.COMPOUND_TYPE);
         this.affectedPos.clear();
-        affectedPos.forEach( (nbtElement -> this.affectedPos.add(NbtHelper.toBlockPos((NbtCompound)nbtElement))));
+        affectedPos.forEach( (nbtElement -> NbtHelper.toBlockPos((NbtCompound)nbtElement, "pos").ifPresent(this.affectedPos::add)));
     }
 
     @Override
@@ -180,7 +180,9 @@ public class DestructiveSculkBlockEntity extends BlockEntity {
         nbt.putInt("activePosIndex", this.activePosIndex);
         NbtList affectedPos = new NbtList();
         for (BlockPos pos : this.affectedPos) {
-            affectedPos.add(NbtHelper.fromBlockPos(pos));
+            NbtCompound posNbt = new NbtCompound();
+            posNbt.put("pos", NbtHelper.fromBlockPos(pos));
+            affectedPos.add(posNbt);
         }
         nbt.put("affectedPos", affectedPos);
     }

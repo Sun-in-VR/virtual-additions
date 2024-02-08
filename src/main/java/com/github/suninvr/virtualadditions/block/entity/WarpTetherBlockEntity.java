@@ -32,7 +32,7 @@ public class WarpTetherBlockEntity extends BlockEntity {
     @Override
     public void readNbt(NbtCompound tag, RegistryWrapper.WrapperLookup lookup) {
         super.readNbt(tag, lookup);
-        if (tag.contains("destination")) this.destination = NbtHelper.toBlockPos(tag.getCompound("destination"));
+        NbtHelper.toBlockPos(tag, "destination").ifPresent(pos -> this.destination = pos);
     }
 
     public static void tick(World world, BlockPos pos, BlockState state, WarpTetherBlockEntity blockEntity) {

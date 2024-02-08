@@ -64,8 +64,7 @@ public class WarpTetherBlock extends BlockWithEntity implements Waterloggable {
         WarpTetherBlockEntity blockEntity = (WarpTetherBlockEntity) world.getBlockEntity(pos);
         if (blockEntity == null) return;
         if (itemStack.hasNbt() && itemStack.getNbt().contains("destination")) {
-            BlockPos destination = NbtHelper.toBlockPos(itemStack.getNbt().getCompound("destination"));
-            blockEntity.setDestination(destination);
+            NbtHelper.toBlockPos(itemStack.getNbt(), "destination").ifPresent(blockEntity::setDestination);
         }
         blockEntity.markDirty();
 
@@ -125,9 +124,7 @@ public class WarpTetherBlock extends BlockWithEntity implements Waterloggable {
             BlockPos destination = getBlockDestination(world, pos);
             if (destination != null) {
                 ItemStack stack = VAItems.WARP_TETHER.getDefaultStack();
-                NbtCompound destinationNbt = new NbtCompound();
-                NbtHelper.toBlockPos(destinationNbt);
-                stack.getOrCreateNbt().put("destination", destinationNbt);
+                stack.getOrCreateNbt().put("destination", NbtHelper.fromBlockPos(destination));
                 dropStack(world, pos, stack);
             }
         }
