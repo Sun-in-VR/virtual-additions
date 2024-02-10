@@ -12,6 +12,7 @@ import net.minecraft.registry.Registry;
 
 public class VABlockEntityType {
     public static final BlockEntityType<SpotlightBlockEntity> SPOTLIGHT;
+    public static final BlockEntityType<SpotlightLightBlockEntity> SPOTLIGHT_LIGHT;
     public static final BlockEntityType<WarpTetherBlockEntity> WARP_TETHER;
     public static final BlockEntityType<WarpAnchorBlockEntity> WARP_ANCHOR;
     public static final BlockEntityType<EntanglementDriveBlockEntity> ENTANGLEMENT_DRIVE;
@@ -25,6 +26,7 @@ public class VABlockEntityType {
 
     static {
         SPOTLIGHT = register("spotlight", SpotlightBlockEntity::new, VABlocks.SPOTLIGHT);
+        SPOTLIGHT_LIGHT = register("spotlight_light", SpotlightLightBlockEntity::new, VABlocks.SPOTLIGHT_LIGHT);
         WARP_TETHER = register("iolite_tether", WarpTetherBlockEntity::new, VABlocks.WARP_TETHER);
         WARP_ANCHOR = register("iolite_anchor", WarpAnchorBlockEntity::new, VABlocks.WARP_ANCHOR);
         ENTANGLEMENT_DRIVE = register("entanglement_drive", EntanglementDriveBlockEntity::new, VABlocks.ENTANGLEMENT_DRIVE);

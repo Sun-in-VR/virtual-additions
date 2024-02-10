@@ -14,4 +14,8 @@ public enum LightStatus implements StringIdentifiable {
     public String asString() {
         return this.name().toLowerCase(Locale.ROOT);
     }
+
+    public boolean hasLight() {
+        return !this.equals(NONE);
+    }
 }

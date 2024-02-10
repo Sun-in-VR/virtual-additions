@@ -25,19 +25,16 @@ public final class VABlockTagProvider {
     public static final VABlockTagProvider INSTANCE = new VABlockTagProvider();
 
     public FabricDataGenerator.Pack.RegistryDependentFactory<?> base() {
-        return Base::new;
+        return BaseProvider::new;
     }
 
     public FabricDataGenerator.Pack.RegistryDependentFactory<?> preview() {
-        return Preview::new;
+        return PreviewProvider::new;
     }
 
-    static class Base extends FabricTagProvider.BlockTagProvider {
-        protected static final TagKey<Block> SILKBULBS = TagKey.of(RegistryKeys.BLOCK, idOf("silkbulbs"));
-        protected static final TagKey<Block> HEDGES = TagKey.of(RegistryKeys.BLOCK, idOf("hedges"));
-        protected static final TagKey<Block> ORES = TagKey.of(RegistryKeys.BLOCK, new Identifier("c:ores"));
+    static class BaseProvider extends Provider {
 
-        public Base(FabricDataOutput output, CompletableFuture<RegistryWrapper.WrapperLookup> registriesFuture) {
+        public BaseProvider(FabricDataOutput output, CompletableFuture<RegistryWrapper.WrapperLookup> registriesFuture) {
             super(output, registriesFuture);
         }
 
@@ -57,6 +54,7 @@ public final class VABlockTagProvider {
             getOrCreateTagBuilder(BlockTags.REPLACEABLE).add(VABlocks.ACID, VABlocks.FRAYED_SILK);
             getOrCreateTagBuilder(BlockTags.SCULK_REPLACEABLE).add(VABlocks.SILK_BLOCK, VABlocks.WEBBED_SILK);
             getOrCreateTagBuilder(BlockTags.TRAPDOORS).add(VABlocks.STEEL_TRAPDOOR);
+            getOrCreateTagBuilder(BlockTags.REPLACEABLE).add(VABlocks.SPOTLIGHT_LIGHT);
 
             configureColorfulBlockSet(VACollections.CHARTREUSE);
             configureColorfulBlockSet(VACollections.MAROON);
@@ -76,9 +74,12 @@ public final class VABlockTagProvider {
                     .addOptionalTag(SILKBULBS)
                     .addOptionalTag(HEDGES);
 
-            getOrCreateTagBuilder(BlockTags.PICKAXE_MINEABLE).add(
-                    VABlocks.CLIMBING_ROPE_ANCHOR
-            );
+            getOrCreateTagBuilder(BlockTags.PICKAXE_MINEABLE)
+                    .add(VABlocks.CLIMBING_ROPE_ANCHOR)
+                    .add(VABlocks.SPOTLIGHT)
+                    .add(VABlocks.RED_GLIMMER_CRYSTAL)
+                    .add(VABlocks.GREEN_GLIMMER_CRYSTAL)
+                    .add(VABlocks.BLUE_GLIMMER_CRYSTAL);
 
             configureMinable(BlockTags.PICKAXE_MINEABLE, 1,
                     VABlocks.STEEL_BLOCK,
@@ -206,6 +207,128 @@ public final class VABlockTagProvider {
                     VABlocks.MAGENTA_SILKBULB,
                     VABlocks.PINK_SILKBULB
             );
+
+            getOrCreateTagBuilder(VABlockTags.SPOTLIGHT_PERMEABLE).add(
+                            Blocks.GLASS,
+                            Blocks.TINTED_GLASS,
+                            Blocks.WHITE_STAINED_GLASS,
+                            Blocks.LIGHT_GRAY_STAINED_GLASS,
+                            Blocks.GRAY_STAINED_GLASS,
+                            Blocks.BLACK_STAINED_GLASS,
+                            VABlocks.TAN_STAINED_GLASS,
+                            Blocks.BROWN_STAINED_GLASS,
+                            VABlocks.MAROON_STAINED_GLASS,
+                            Blocks.RED_STAINED_GLASS,
+                            VABlocks.SINOPIA_STAINED_GLASS,
+                            Blocks.ORANGE_STAINED_GLASS,
+                            Blocks.YELLOW_STAINED_GLASS,
+                            VABlocks.CHARTREUSE_STAINED_GLASS,
+                            Blocks.LIME_STAINED_GLASS,
+                            Blocks.GREEN_STAINED_GLASS,
+                            VABlocks.VIRIDIAN_STAINED_GLASS,
+                            Blocks.CYAN_STAINED_GLASS,
+                            Blocks.LIGHT_BLUE_STAINED_GLASS,
+                            Blocks.BLUE_STAINED_GLASS,
+                            VABlocks.INDIGO_STAINED_GLASS,
+                            Blocks.PURPLE_STAINED_GLASS,
+                            VABlocks.PLUM_STAINED_GLASS,
+                            Blocks.MAGENTA_STAINED_GLASS,
+                            Blocks.PINK_STAINED_GLASS,
+                            VABlocks.LILAC_STAINED_GLASS,
+                            Blocks.GLASS_PANE,
+                            Blocks.WHITE_STAINED_GLASS_PANE,
+                            Blocks.LIGHT_GRAY_STAINED_GLASS_PANE,
+                            Blocks.GRAY_STAINED_GLASS_PANE,
+                            Blocks.BLACK_STAINED_GLASS_PANE,
+                            VABlocks.TAN_STAINED_GLASS_PANE,
+                            Blocks.BROWN_STAINED_GLASS_PANE,
+                            VABlocks.MAROON_STAINED_GLASS_PANE,
+                            Blocks.RED_STAINED_GLASS_PANE,
+                            VABlocks.SINOPIA_STAINED_GLASS_PANE,
+                            Blocks.ORANGE_STAINED_GLASS_PANE,
+                            Blocks.YELLOW_STAINED_GLASS_PANE,
+                            VABlocks.CHARTREUSE_STAINED_GLASS_PANE,
+                            Blocks.LIME_STAINED_GLASS_PANE,
+                            Blocks.GREEN_STAINED_GLASS_PANE,
+                            VABlocks.VIRIDIAN_STAINED_GLASS_PANE,
+                            Blocks.CYAN_STAINED_GLASS_PANE,
+                            Blocks.LIGHT_BLUE_STAINED_GLASS_PANE,
+                            Blocks.BLUE_STAINED_GLASS_PANE,
+                            VABlocks.INDIGO_STAINED_GLASS_PANE,
+                            Blocks.PURPLE_STAINED_GLASS_PANE,
+                            VABlocks.PLUM_STAINED_GLASS_PANE,
+                            Blocks.MAGENTA_STAINED_GLASS_PANE,
+                            Blocks.PINK_STAINED_GLASS_PANE,
+                            VABlocks.LILAC_STAINED_GLASS_PANE
+                    )
+                    .addOptionalTag(BlockTags.LEAVES)
+                    .addOptionalTag(VABlockTags.HEDGES)
+                    .addOptionalTag(BlockTags.REPLACEABLE);
+        }
+    }
+
+    static class PreviewProvider extends Provider {
+        public PreviewProvider(FabricDataOutput output, CompletableFuture<RegistryWrapper.WrapperLookup> registriesFuture) {
+            super(output, registriesFuture);
+        }
+
+        @Override
+        protected void configure(RegistryWrapper.WrapperLookup arg) {
+            getOrCreateTagBuilder(BlockTags.WOODEN_FENCES).add(VABlocks.AEROBLOOM_FENCE);
+            getOrCreateTagBuilder(BlockTags.OVERWORLD_NATURAL_LOGS).add(VABlocks.AEROBLOOM_LOG);
+            getOrCreateTagBuilder(BlockTags.LOGS_THAT_BURN).add(VABlocks.AEROBLOOM_LOG).add(VABlocks.AEROBLOOM_WOOD).add(VABlocks.STRIPPED_AEROBLOOM_LOG).add(VABlocks.STRIPPED_AEROBLOOM_WOOD);
+            getOrCreateTagBuilder(BlockTags.CEILING_HANGING_SIGNS).add(VABlocks.AEROBLOOM_HANGING_SIGN);
+            getOrCreateTagBuilder(BlockTags.WALL_HANGING_SIGNS).add(VABlocks.AEROBLOOM_WALL_HANGING_SIGN);
+            getOrCreateTagBuilder(BlockTags.LEAVES).add(VABlocks.AEROBLOOM_LEAVES);
+            getOrCreateTagBuilder(BlockTags.SAPLINGS).add(VABlocks.AEROBLOOM_SAPLING);
+            getOrCreateTagBuilder(BlockTags.DIRT).add(VABlocks.GRASSY_FLOATROCK, VABlocks.SPRINGSOIL);
+            getOrCreateTagBuilder(BlockTags.GUARDED_BY_PIGLINS).add(VABlocks.FLOATROCK_GOLD_ORE);
+            getOrCreateTagBuilder(BlockTags.COAL_ORES).add(VABlocks.FLOATROCK_COAL_ORE);
+            getOrCreateTagBuilder(BlockTags.COPPER_ORES).add(VABlocks.FLOATROCK_COPPER_ORE);
+            getOrCreateTagBuilder(BlockTags.IRON_ORES).add(VABlocks.FLOATROCK_IRON_ORE);
+            getOrCreateTagBuilder(BlockTags.GOLD_ORES).add(VABlocks.FLOATROCK_GOLD_ORE);
+            getOrCreateTagBuilder(BlockTags.REDSTONE_ORES).add(VABlocks.FLOATROCK_REDSTONE_ORE);
+            getOrCreateTagBuilder(BlockTags.EMERALD_ORES).add(VABlocks.FLOATROCK_EMERALD_ORE);
+            getOrCreateTagBuilder(BlockTags.LAPIS_ORES).add(VABlocks.FLOATROCK_LAPIS_ORE);
+            getOrCreateTagBuilder(BlockTags.DIAMOND_ORES).add(VABlocks.FLOATROCK_DIAMOND_ORE);
+
+            getOrCreateTagBuilder(VABlockTags.FLOATROCK_ORE_REPLACEABLES).add(VABlocks.FLOATROCK);
+            getOrCreateTagBuilder(VABlockTags.SKYLANDS_CARVER_REPLACEABLES).add(VABlocks.FLOATROCK).add(VABlocks.GRASSY_FLOATROCK);
+            getOrCreateTagBuilder(VABlockTags.NO_FOLIAGE_WORLDGEN).add(VABlocks.SPRINGSOIL);
+
+            getOrCreateTagBuilder(BlockTags.SHOVEL_MINEABLE).add(
+                    VABlocks.SPRINGSOIL
+            );
+
+            getOrCreateTagBuilder(BlockTags.HOE_MINEABLE).add(VABlocks.AEROBLOOM_LEAVES);
+
+            configureMinable(BlockTags.PICKAXE_MINEABLE, 0, VABlocks.GRASSY_FLOATROCK, VABlocks.FLOATROCK_COAL_ORE);
+            configureMinable(BlockTags.PICKAXE_MINEABLE, 1, VABlocks.FLOATROCK_IRON_ORE, VABlocks.FLOATROCK_COPPER_ORE, VABlocks.FLOATROCK_LAPIS_ORE);
+            configureMinable(BlockTags.PICKAXE_MINEABLE, 2, VABlocks.FLOATROCK_DIAMOND_ORE, VABlocks.FLOATROCK_REDSTONE_ORE, VABlocks.FLOATROCK_EMERALD_ORE, VABlocks.FLOATROCK_GOLD_ORE);
+
+            configureOverworldStone(VABlocks.FLOATROCK);
+            configureFamily(BlockTags.PICKAXE_MINEABLE, 0, VACollections.FLOATROCK, VACollections.POLISHED_FLOATROCK, VACollections.FLOATROCK_BRICKS);
+            configureWoodenFamily(BlockTags.AXE_MINEABLE, 0, VACollections.AEROBLOOM);
+
+            getOrCreateTagBuilder(VABlockTags.HEDGES).add(
+                    VABlocks.AEROBLOOM_HEDGE
+            );
+
+            getOrCreateTagBuilder(VABlockTags.CRYSTALS).add(
+                    VABlocks.RED_GLIMMER_CRYSTAL,
+                    VABlocks.GREEN_GLIMMER_CRYSTAL,
+                    VABlocks.BLUE_GLIMMER_CRYSTAL
+            );
+        }
+    }
+
+    private abstract static class Provider extends FabricTagProvider.BlockTagProvider {
+        protected static final TagKey<Block> SILKBULBS = TagKey.of(RegistryKeys.BLOCK, idOf("silkbulbs"));
+        protected static final TagKey<Block> HEDGES = TagKey.of(RegistryKeys.BLOCK, idOf("hedges"));
+        protected static final TagKey<Block> ORES = TagKey.of(RegistryKeys.BLOCK, new Identifier("c:ores"));
+
+        public Provider(FabricDataOutput output, CompletableFuture<RegistryWrapper.WrapperLookup> registriesFuture) {
+            super(output, registriesFuture);
         }
 
         protected void configureOverworldStone(Block... blocks) {
@@ -295,101 +418,6 @@ public final class VABlockTagProvider {
             s.ifSilkbulb(block -> getOrCreateTagBuilder(VABlockTags.SILKBULBS).add(block));
             s.ifBed(block -> getOrCreateTagBuilder(BlockTags.BEDS).add(block));
             s.ifShulkerBox(block -> getOrCreateTagBuilder(BlockTags.SHULKER_BOXES).add(block));
-        }
-    }
-
-    static class Preview extends Base {
-        public Preview(FabricDataOutput output, CompletableFuture<RegistryWrapper.WrapperLookup> registriesFuture) {
-            super(output, registriesFuture);
-        }
-
-        @Override
-        protected void configure(RegistryWrapper.WrapperLookup arg) {
-            getOrCreateTagBuilder(BlockTags.WOODEN_FENCES).add(VABlocks.AEROBLOOM_FENCE);
-            getOrCreateTagBuilder(BlockTags.OVERWORLD_NATURAL_LOGS).add(VABlocks.AEROBLOOM_LOG);
-            getOrCreateTagBuilder(BlockTags.LOGS_THAT_BURN).add(VABlocks.AEROBLOOM_LOG).add(VABlocks.AEROBLOOM_WOOD).add(VABlocks.STRIPPED_AEROBLOOM_LOG).add(VABlocks.STRIPPED_AEROBLOOM_WOOD);
-            getOrCreateTagBuilder(BlockTags.CEILING_HANGING_SIGNS).add(VABlocks.AEROBLOOM_HANGING_SIGN);
-            getOrCreateTagBuilder(BlockTags.WALL_HANGING_SIGNS).add(VABlocks.AEROBLOOM_WALL_HANGING_SIGN);
-            getOrCreateTagBuilder(BlockTags.LEAVES).add(VABlocks.AEROBLOOM_LEAVES);
-            getOrCreateTagBuilder(BlockTags.SAPLINGS).add(VABlocks.AEROBLOOM_SAPLING);
-            getOrCreateTagBuilder(BlockTags.DIRT).add(VABlocks.GRASSY_FLOATROCK, VABlocks.SPRINGSOIL);
-            getOrCreateTagBuilder(BlockTags.GUARDED_BY_PIGLINS).add(VABlocks.FLOATROCK_GOLD_ORE);
-            getOrCreateTagBuilder(BlockTags.COAL_ORES).add(VABlocks.FLOATROCK_COAL_ORE);
-            getOrCreateTagBuilder(BlockTags.COPPER_ORES).add(VABlocks.FLOATROCK_COPPER_ORE);
-            getOrCreateTagBuilder(BlockTags.IRON_ORES).add(VABlocks.FLOATROCK_IRON_ORE);
-            getOrCreateTagBuilder(BlockTags.GOLD_ORES).add(VABlocks.FLOATROCK_GOLD_ORE);
-            getOrCreateTagBuilder(BlockTags.REDSTONE_ORES).add(VABlocks.FLOATROCK_REDSTONE_ORE);
-            getOrCreateTagBuilder(BlockTags.EMERALD_ORES).add(VABlocks.FLOATROCK_EMERALD_ORE);
-            getOrCreateTagBuilder(BlockTags.LAPIS_ORES).add(VABlocks.FLOATROCK_LAPIS_ORE);
-            getOrCreateTagBuilder(BlockTags.DIAMOND_ORES).add(VABlocks.FLOATROCK_DIAMOND_ORE);
-            getOrCreateTagBuilder(BlockTags.REPLACEABLE).add(VABlocks.SPOTLIGHT_LIGHT);
-
-            getOrCreateTagBuilder(VABlockTags.FLOATROCK_ORE_REPLACEABLES).add(VABlocks.FLOATROCK);
-            getOrCreateTagBuilder(VABlockTags.SKYLANDS_CARVER_REPLACEABLES).add(VABlocks.FLOATROCK).add(VABlocks.GRASSY_FLOATROCK);
-            getOrCreateTagBuilder(VABlockTags.NO_FOLIAGE_WORLDGEN).add(VABlocks.SPRINGSOIL);
-
-            getOrCreateTagBuilder(VABlockTags.CRYSTALS).add(
-                    VABlocks.RED_GLIMMER_CRYSTAL,
-                    VABlocks.GREEN_GLIMMER_CRYSTAL,
-                    VABlocks.BLUE_GLIMMER_CRYSTAL
-            );
-            getOrCreateTagBuilder(VABlockTags.SPOTLIGHT_PERMEABLE).add(
-                    VABlocks.SPOTLIGHT_LIGHT,
-                    Blocks.GLASS,
-                    Blocks.TINTED_GLASS,
-                    Blocks.WHITE_STAINED_GLASS,
-                    Blocks.LIGHT_GRAY_STAINED_GLASS,
-                    Blocks.GRAY_STAINED_GLASS,
-                    Blocks.BLACK_STAINED_GLASS,
-                    Blocks.BROWN_STAINED_GLASS,
-                    Blocks.RED_STAINED_GLASS,
-                    Blocks.ORANGE_STAINED_GLASS,
-                    Blocks.YELLOW_STAINED_GLASS,
-                    Blocks.LIME_STAINED_GLASS,
-                    Blocks.GREEN_STAINED_GLASS,
-                    Blocks.CYAN_STAINED_GLASS,
-                    Blocks.LIGHT_BLUE_STAINED_GLASS,
-                    Blocks.BLUE_STAINED_GLASS,
-                    Blocks.PURPLE_STAINED_GLASS,
-                    Blocks.MAGENTA_STAINED_GLASS,
-                    Blocks.PINK_STAINED_GLASS,
-                    Blocks.GLASS_PANE,
-                    Blocks.WHITE_STAINED_GLASS_PANE,
-                    Blocks.LIGHT_GRAY_STAINED_GLASS_PANE,
-                    Blocks.GRAY_STAINED_GLASS_PANE,
-                    Blocks.BLACK_STAINED_GLASS_PANE,
-                    Blocks.BROWN_STAINED_GLASS_PANE,
-                    Blocks.RED_STAINED_GLASS_PANE,
-                    Blocks.ORANGE_STAINED_GLASS_PANE,
-                    Blocks.YELLOW_STAINED_GLASS_PANE,
-                    Blocks.LIME_STAINED_GLASS_PANE,
-                    Blocks.GREEN_STAINED_GLASS_PANE,
-                    Blocks.CYAN_STAINED_GLASS_PANE,
-                    Blocks.LIGHT_BLUE_STAINED_GLASS_PANE,
-                    Blocks.BLUE_STAINED_GLASS_PANE,
-                    Blocks.PURPLE_STAINED_GLASS_PANE,
-                    Blocks.MAGENTA_STAINED_GLASS_PANE,
-                    Blocks.PINK_STAINED_GLASS_PANE,
-                    Blocks.WATER)
-                    .addOptionalTag(BlockTags.LEAVES);
-
-            getOrCreateTagBuilder(BlockTags.SHOVEL_MINEABLE).add(
-                    VABlocks.SPRINGSOIL
-            );
-
-            getOrCreateTagBuilder(BlockTags.HOE_MINEABLE).add(VABlocks.AEROBLOOM_LEAVES);
-
-            configureMinable(BlockTags.PICKAXE_MINEABLE, 0, VABlocks.GRASSY_FLOATROCK, VABlocks.FLOATROCK_COAL_ORE);
-            configureMinable(BlockTags.PICKAXE_MINEABLE, 1, VABlocks.FLOATROCK_IRON_ORE, VABlocks.FLOATROCK_COPPER_ORE, VABlocks.FLOATROCK_LAPIS_ORE);
-            configureMinable(BlockTags.PICKAXE_MINEABLE, 2, VABlocks.FLOATROCK_DIAMOND_ORE, VABlocks.FLOATROCK_REDSTONE_ORE, VABlocks.FLOATROCK_EMERALD_ORE, VABlocks.FLOATROCK_GOLD_ORE);
-
-            configureOverworldStone(VABlocks.FLOATROCK);
-            configureFamily(BlockTags.PICKAXE_MINEABLE, 0, VACollections.FLOATROCK, VACollections.POLISHED_FLOATROCK, VACollections.FLOATROCK_BRICKS);
-            configureWoodenFamily(BlockTags.AXE_MINEABLE, 0, VACollections.AEROBLOOM);
-
-            getOrCreateTagBuilder(VABlockTags.HEDGES).add(
-                    VABlocks.AEROBLOOM_HEDGE
-            );
         }
     }
 }

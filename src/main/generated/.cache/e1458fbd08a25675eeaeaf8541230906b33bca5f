@@ -1,4 +1,4 @@
-// 24w05b	2024-02-06T23:39:52.286201036	virtual_additions:preview/Tags for minecraft:block
+// 24w06a	2024-02-09T06:54:45.233786657	virtual_additions:preview/Tags for minecraft:block
 369a0572b1473f82b1c33d0c119c8a6d5794e402 resourcepacks/preview/data/minecraft/tags/blocks/wooden_buttons.json
 9d3246842c605fb7be8a0dc9a082dd5b9327d8fb resourcepacks/preview/data/minecraft/tags/blocks/emerald_ores.json
 8a5893600bf34dd78061ac0c3a00c919df20be27 resourcepacks/preview/data/virtual_additions/tags/blocks/hedges.json
@@ -15,7 +15,6 @@ a4e3e18fecf3c400f664852d86c63875c09466e8 resourcepacks/preview/data/minecraft/ta
 b628d1c2ae2d11315cb0047a440f6c81c4c0df94 resourcepacks/preview/data/minecraft/tags/blocks/diamond_ores.json
 1c5cb57467c9f76712e7a15d51f68ddeef4861ef resourcepacks/preview/data/minecraft/tags/blocks/leaves.json
 1c5cb57467c9f76712e7a15d51f68ddeef4861ef resourcepacks/preview/data/minecraft/tags/blocks/mineable/hoe.json
-9ef612ec9937e29ee634bdaae12c534cd9765e42 resourcepacks/preview/data/minecraft/tags/blocks/replaceable.json
 0c9fba4ecc85779af42e0f9d9bef18f02aa7487a resourcepacks/preview/data/minecraft/tags/blocks/needs_stone_tool.json
 c65b4546b65e3dddbef28fd869f56f1dfa7e80d9 resourcepacks/preview/data/minecraft/tags/blocks/base_stone_overworld.json
 3376c66f74c2952e496150ba7778c87e48364aa0 resourcepacks/preview/data/minecraft/tags/blocks/needs_iron_tool.json
@@ -24,7 +23,6 @@ c65b4546b65e3dddbef28fd869f56f1dfa7e80d9 resourcepacks/preview/data/minecraft/ta
 7d88d4e8535662575cc9ad036ebc6bed31010fb7 resourcepacks/preview/data/minecraft/tags/blocks/wooden_slabs.json
 942cc8c825124c72c19445c573e0b9f047e7a37b resourcepacks/preview/data/virtual_additions/tags/blocks/skylands_carver_replaceables.json
 fd15fdabcec0930ec925b7b19b1c6f4e705e188f resourcepacks/preview/data/minecraft/tags/blocks/dirt.json
-9185f3bf766c6a61b45cfa2373b5e80424d9ce2f resourcepacks/preview/data/virtual_additions/tags/blocks/spotlight_permeable.json
 f5f0eaad8ebf99962ffac356673b4ec4ead4e247 resourcepacks/preview/data/minecraft/tags/blocks/gold_ores.json
 b6ede3cb495e988a0e8cd7a5a43c81b4add7ffa3 resourcepacks/preview/data/minecraft/tags/blocks/walls.json
 41016ae04a15e4538687d0c5e20aa54ed592146d resourcepacks/preview/data/minecraft/tags/blocks/wooden_trapdoors.json
@@ -40,6 +38,6 @@ c65b4546b65e3dddbef28fd869f56f1dfa7e80d9 resourcepacks/preview/data/minecraft/ta
 84830aeef084a04d954721d66c9b8b9e036fc59a resourcepacks/preview/data/minecraft/tags/blocks/stairs.json
 c5c4c77c64cbb5060a27841b654219b59177c3dd resourcepacks/preview/data/minecraft/tags/blocks/wooden_fences.json
 afcfe8bcbbb6c1ae3ad4a400f1d760b42c80cd0d resourcepacks/preview/data/minecraft/tags/blocks/wall_signs.json
-2a0d146fa008a1c036d5debfc18d03408372560b resourcepacks/preview/data/minecraft/tags/blocks/wooden_stairs.json
 76409102a4ed43af7fc45b949f93b357f482fd3b resourcepacks/preview/data/minecraft/tags/blocks/wooden_doors.json
-f21843ca446e8b49908daf8083a3ef697ef41677 resourcepacks/preview/data/minecraft/tags/blocks/mineable/axe.json
+2a0d146fa008a1c036d5debfc18d03408372560b resourcepacks/preview/data/minecraft/tags/blocks/wooden_stairs.json
+023b0686dc9a7710d90d276667501da92a12dca2 resourcepacks/preview/data/minecraft/tags/blocks/mineable/axe.json

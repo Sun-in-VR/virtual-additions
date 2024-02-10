@@ -1,4 +1,4 @@
-// 24w05b	2024-02-06T23:39:52.279021477	Virtual Additions/Block Loot Tables
+// 24w06a	2024-02-09T06:54:45.227584394	Virtual Additions/Block Loot Tables
 ea8e64a5deb86ad9aac331af2a507916a7340b3c data/virtual_additions/loot_tables/blocks/lilac_concrete.json
 d7aa27ed0b8a6edd7aaff2670ec0469864347896 data/virtual_additions/loot_tables/blocks/cyan_silkbulb.json
 931202cd4ba57bdc65b968d43d0fa629a32e29aa data/virtual_additions/loot_tables/blocks/lilac_candle_cake.json
@@ -56,6 +56,7 @@ e602fb27d21e807b83788f4eb4d1f54c04752f32 data/virtual_additions/loot_tables/bloc
 d399f2bbee23e03b45004b4c5a24b5d43164697c data/virtual_additions/loot_tables/blocks/indigo_stained_glass.json
 f4c9c5c840042bd328095280e725881fab0e9bf5 data/virtual_additions/loot_tables/blocks/birch_hedge.json
 518407e9480d4b7173da661b3739e78df24b8250 data/virtual_additions/loot_tables/blocks/dark_oak_hedge.json
+f3ec3409d43ef6d6c9d5d61292b38c1c98703c03 data/virtual_additions/loot_tables/blocks/spotlight.json
 edfa01e993bc6fc49717a7aca8e8c4d09b900c5f data/virtual_additions/loot_tables/blocks/steel_block.json
 b5656abf2219209eded3acdacbae64ef9ccd81fb data/virtual_additions/loot_tables/blocks/indigo_silkbulb.json
 f40c2d0064f382a1e84f5c5141236464b8050ed0 data/virtual_additions/loot_tables/blocks/tan_shulker_box.json

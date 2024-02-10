@@ -32,32 +32,16 @@ public final class VAItemTagProvider {
     public static final VAItemTagProvider INSTANCE = new VAItemTagProvider();
 
     public FabricDataGenerator.Pack.RegistryDependentFactory<?> base() {
-        return Base::new;
+        return BaseProvider::new;
     }
 
     public FabricDataGenerator.Pack.RegistryDependentFactory<?> preview() {
-        return Preview::new;
+        return PreviewProvider::new;
     }
 
-    private static class Base extends FabricTagProvider.ItemTagProvider {
-        protected static final TagKey<Item> SWORDS = TagKey.of(RegistryKeys.ITEM, new Identifier("c:swords"));
-        protected static final TagKey<Item> SHOVELS = TagKey.of(RegistryKeys.ITEM, new Identifier("c:shovels"));
-        protected static final TagKey<Item> PICKAXES = TagKey.of(RegistryKeys.ITEM, new Identifier("c:pickaxes"));
-        protected static final TagKey<Item> AXES = TagKey.of(RegistryKeys.ITEM, new Identifier("c:axes"));
-        protected static final TagKey<Item> HOES = TagKey.of(RegistryKeys.ITEM, new Identifier("c:hoes"));
-        protected static final TagKey<Item> INGOTS = TagKey.of(RegistryKeys.ITEM, new Identifier("c:ingots"));
-        protected static final TagKey<Item> STEEL_INGOTS = TagKey.of(RegistryKeys.ITEM, new Identifier("c:steel_ingots"));
-        protected static final TagKey<Item> RAW_ORES = TagKey.of(RegistryKeys.ITEM, new Identifier("c:raw_ores"));
-        protected static final TagKey<Item> GEMS = TagKey.of(RegistryKeys.ITEM, new Identifier("c:gems"));
-        protected static final TagKey<Item> FOODS = TagKey.of(RegistryKeys.ITEM, new Identifier("c:foods"));
-        protected static final TagKey<Item> IOLITE = TagKey.of(RegistryKeys.ITEM, new Identifier("c:iolite"));
-        protected static final TagKey<Item> IOLITE_ORES = TagKey.of(RegistryKeys.ITEM, new Identifier("c:iolite_ores"));
-        protected static final TagKey<Item> ORES = TagKey.of(RegistryKeys.ITEM, new Identifier("c:ores"));
-        protected static final TagKey<Item> POTIONS = TagKey.of(RegistryKeys.ITEM, new Identifier("c:potions"));
+    private static class BaseProvider extends Provider {
 
-        protected static final TagKey<Item> CRYSTALS = TagKey.of(RegistryKeys.ITEM, idOf("crystals"));
-
-        public Base(FabricDataOutput output, CompletableFuture<RegistryWrapper.WrapperLookup> completableFuture) {
+        public BaseProvider(FabricDataOutput output, CompletableFuture<RegistryWrapper.WrapperLookup> completableFuture) {
             super(output, completableFuture);
         }
 
@@ -148,6 +132,7 @@ public final class VAItemTagProvider {
                     Items.NETHERITE_BOOTS,
                     Items.NETHER_STAR
             );
+
             configureToolSets(VAItemTags.ACID_RESISTANT,
                     VAItems.AMETHYST_NETHERITE_TOOL_SET,
                     VAItems.COPPER_NETHERITE_TOOL_SET,
@@ -250,7 +235,6 @@ public final class VAItemTagProvider {
                     Items.PINK_SHULKER_BOX
             );
 
-
             configureBlockFamilies(
                     VACollections.CUT_STEEL,
                     VACollections.COBBLED_HORNFELS,
@@ -271,6 +255,76 @@ public final class VAItemTagProvider {
             configureGildedToolSet(VAItems.IOLITE_TOOL_SETS);
             configureGildedToolSet(VAItems.QUARTZ_TOOL_SETS);
             configureGildedToolSet(VAItems.SCULK_TOOL_SETS);
+        }
+    }
+
+    private static class PreviewProvider extends Provider {
+        public PreviewProvider(FabricDataOutput output, CompletableFuture<RegistryWrapper.WrapperLookup> completableFuture) {
+            super(output, completableFuture);
+        }
+
+        @Override
+        protected void configure(RegistryWrapper.WrapperLookup arg) {
+            getOrCreateTagBuilder(ItemTags.STONE_CRAFTING_MATERIALS).add(VAItems.FLOATROCK);
+            getOrCreateTagBuilder(ItemTags.STONE_TOOL_MATERIALS).add(VAItems.FLOATROCK);
+            getOrCreateTagBuilder(ItemTags.LOGS_THAT_BURN).add(VAItems.AEROBLOOM_LOG, VAItems.AEROBLOOM_WOOD, VAItems.STRIPPED_AEROBLOOM_LOG, VAItems.STRIPPED_AEROBLOOM_WOOD);
+            getOrCreateTagBuilder(ItemTags.PLANKS).add(VAItems.AEROBLOOM_PLANKS);
+            getOrCreateTagBuilder(ItemTags.SIGNS).add(VAItems.AEROBLOOM_SIGN);
+            getOrCreateTagBuilder(ItemTags.HANGING_SIGNS).add(VAItems.AEROBLOOM_HANGING_SIGN);
+            getOrCreateTagBuilder(ItemTags.FENCES).add(VAItems.AEROBLOOM_FENCE);
+            getOrCreateTagBuilder(ItemTags.DOORS).add(VAItems.AEROBLOOM_DOOR);
+            getOrCreateTagBuilder(ItemTags.TRAPDOORS).add(VAItems.AEROBLOOM_TRAPDOOR);
+            getOrCreateTagBuilder(ItemTags.LEAVES).add(VAItems.AEROBLOOM_LEAVES);
+            getOrCreateTagBuilder(ItemTags.SAPLINGS).add(VAItems.AEROBLOOM_SAPLING);
+
+            getOrCreateTagBuilder(FOODS).add(VAItems.BALLOON_FRUIT);
+
+
+            getOrCreateTagBuilder(VAItemTags.LUMWASP_LARVAE_FOOD).add(
+                    VAItems.FLOATROCK,
+                    VAItems.GRASSY_FLOATROCK,
+                    VAItems.RED_GLIMMER_CRYSTAL,
+                    VAItems.GREEN_GLIMMER_CRYSTAL,
+                    VAItems.BLUE_GLIMMER_CRYSTAL
+            );
+            getOrCreateTagBuilder(VAItemTags.AEROBLOOM_LOGS).add(
+                    VAItems.AEROBLOOM_LOG,
+                    VAItems.AEROBLOOM_WOOD,
+                    VAItems.STRIPPED_AEROBLOOM_LOG,
+                    VAItems.STRIPPED_AEROBLOOM_WOOD
+            );
+            configureWoodenBlockFamilies(
+                    VACollections.AEROBLOOM
+            );
+            configureBlockFamilies(
+                    VACollections.FLOATROCK,
+                    VACollections.POLISHED_FLOATROCK,
+                    VACollections.FLOATROCK_BRICKS
+            );
+
+            getOrCreateTagBuilder(CRYSTALS).add(VAItems.RED_GLIMMER_CRYSTAL, VAItems.GREEN_GLIMMER_CRYSTAL, VAItems.BLUE_GLIMMER_CRYSTAL);
+        }
+    }
+
+    private abstract static class Provider extends FabricTagProvider.ItemTagProvider {
+        protected static final TagKey<Item> SWORDS = TagKey.of(RegistryKeys.ITEM, new Identifier("c:swords"));
+        protected static final TagKey<Item> SHOVELS = TagKey.of(RegistryKeys.ITEM, new Identifier("c:shovels"));
+        protected static final TagKey<Item> PICKAXES = TagKey.of(RegistryKeys.ITEM, new Identifier("c:pickaxes"));
+        protected static final TagKey<Item> AXES = TagKey.of(RegistryKeys.ITEM, new Identifier("c:axes"));
+        protected static final TagKey<Item> HOES = TagKey.of(RegistryKeys.ITEM, new Identifier("c:hoes"));
+        protected static final TagKey<Item> INGOTS = TagKey.of(RegistryKeys.ITEM, new Identifier("c:ingots"));
+        protected static final TagKey<Item> STEEL_INGOTS = TagKey.of(RegistryKeys.ITEM, new Identifier("c:steel_ingots"));
+        protected static final TagKey<Item> RAW_ORES = TagKey.of(RegistryKeys.ITEM, new Identifier("c:raw_ores"));
+        protected static final TagKey<Item> GEMS = TagKey.of(RegistryKeys.ITEM, new Identifier("c:gems"));
+        protected static final TagKey<Item> FOODS = TagKey.of(RegistryKeys.ITEM, new Identifier("c:foods"));
+        protected static final TagKey<Item> IOLITE = TagKey.of(RegistryKeys.ITEM, new Identifier("c:iolite"));
+        protected static final TagKey<Item> IOLITE_ORES = TagKey.of(RegistryKeys.ITEM, new Identifier("c:iolite_ores"));
+        protected static final TagKey<Item> ORES = TagKey.of(RegistryKeys.ITEM, new Identifier("c:ores"));
+        protected static final TagKey<Item> POTIONS = TagKey.of(RegistryKeys.ITEM, new Identifier("c:potions"));
+        protected static final TagKey<Item> CRYSTALS = TagKey.of(RegistryKeys.ITEM, idOf("crystals"));
+
+        public Provider(FabricDataOutput output, CompletableFuture<RegistryWrapper.WrapperLookup> completableFuture) {
+            super(output, completableFuture);
         }
 
         protected void configureBlockFamilies(BlockFamily... families) {
@@ -321,7 +375,7 @@ public final class VAItemTagProvider {
             getOrCreateTagBuilder(tag).add(item.asItem());
         }
 
-        private void configureGildedToolSet(RegistryHelper.ItemRegistryHelper.ToolSet... sets) {
+        protected void configureGildedToolSet(RegistryHelper.ItemRegistryHelper.ToolSet... sets) {
             for (RegistryHelper.ItemRegistryHelper.ToolSet set : sets) {
                 configureToolSet(set);
                 Item[] items = set.getItems();
@@ -341,7 +395,7 @@ public final class VAItemTagProvider {
             }
         }
 
-        private void configureToolSet(RegistryHelper.ItemRegistryHelper.ToolSet set) {
+        protected void configureToolSet(RegistryHelper.ItemRegistryHelper.ToolSet set) {
             getOrCreateTagBuilder(AXES).add(set.AXE());
             getOrCreateTagBuilder(HOES).add(set.HOE());
             getOrCreateTagBuilder(PICKAXES).add(set.PICKAXE());
@@ -349,59 +403,9 @@ public final class VAItemTagProvider {
             getOrCreateTagBuilder(SWORDS).add(set.SWORD());
         }
 
-        private void configureToolSets(TagKey<Item> tag, RegistryHelper.ItemRegistryHelper.ToolSet... sets) {
+        protected void configureToolSets(TagKey<Item> tag, RegistryHelper.ItemRegistryHelper.ToolSet... sets) {
             FabricTagBuilder builder = getOrCreateTagBuilder(tag);
             Arrays.stream(sets).iterator().forEachRemaining(set -> set.forEach(builder::add));
-        }
-
-
-    }
-
-    private static class Preview extends Base {
-        public Preview(FabricDataOutput output, CompletableFuture<RegistryWrapper.WrapperLookup> completableFuture) {
-            super(output, completableFuture);
-        }
-
-        @Override
-        protected void configure(RegistryWrapper.WrapperLookup arg) {
-            getOrCreateTagBuilder(ItemTags.STONE_CRAFTING_MATERIALS).add(VAItems.FLOATROCK);
-            getOrCreateTagBuilder(ItemTags.STONE_TOOL_MATERIALS).add(VAItems.FLOATROCK);
-            getOrCreateTagBuilder(ItemTags.LOGS_THAT_BURN).add(VAItems.AEROBLOOM_LOG, VAItems.AEROBLOOM_WOOD, VAItems.STRIPPED_AEROBLOOM_LOG, VAItems.STRIPPED_AEROBLOOM_WOOD);
-            getOrCreateTagBuilder(ItemTags.PLANKS).add(VAItems.AEROBLOOM_PLANKS);
-            getOrCreateTagBuilder(ItemTags.SIGNS).add(VAItems.AEROBLOOM_SIGN);
-            getOrCreateTagBuilder(ItemTags.HANGING_SIGNS).add(VAItems.AEROBLOOM_HANGING_SIGN);
-            getOrCreateTagBuilder(ItemTags.FENCES).add(VAItems.STEEL_FENCE).add(VAItems.AEROBLOOM_FENCE);
-            getOrCreateTagBuilder(ItemTags.DOORS).add(VAItems.AEROBLOOM_DOOR);
-            getOrCreateTagBuilder(ItemTags.TRAPDOORS).add(VAItems.AEROBLOOM_TRAPDOOR);
-            getOrCreateTagBuilder(ItemTags.LEAVES).add(VAItems.AEROBLOOM_LEAVES);
-            getOrCreateTagBuilder(ItemTags.SAPLINGS).add(VAItems.AEROBLOOM_SAPLING);
-
-            getOrCreateTagBuilder(FOODS).add(VAItems.BALLOON_FRUIT);
-
-
-            getOrCreateTagBuilder(VAItemTags.LUMWASP_LARVAE_FOOD).add(
-                    VAItems.FLOATROCK,
-                    VAItems.GRASSY_FLOATROCK,
-                    VAItems.RED_GLIMMER_CRYSTAL,
-                    VAItems.GREEN_GLIMMER_CRYSTAL,
-                    VAItems.BLUE_GLIMMER_CRYSTAL
-            );
-            getOrCreateTagBuilder(VAItemTags.AEROBLOOM_LOGS).add(
-                    VAItems.AEROBLOOM_LOG,
-                    VAItems.AEROBLOOM_WOOD,
-                    VAItems.STRIPPED_AEROBLOOM_LOG,
-                    VAItems.STRIPPED_AEROBLOOM_WOOD
-            );
-            configureWoodenBlockFamilies(
-                    VACollections.AEROBLOOM
-            );
-            configureBlockFamilies(
-                    VACollections.FLOATROCK,
-                    VACollections.POLISHED_FLOATROCK,
-                    VACollections.FLOATROCK_BRICKS
-            );
-
-            getOrCreateTagBuilder(CRYSTALS).add(VAItems.RED_GLIMMER_CRYSTAL, VAItems.GREEN_GLIMMER_CRYSTAL, VAItems.BLUE_GLIMMER_CRYSTAL);
         }
     }
 }

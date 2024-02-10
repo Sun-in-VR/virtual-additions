@@ -36,39 +36,16 @@ public final class VARecipeProvider {
     public static final VARecipeProvider INSTANCE = new VARecipeProvider();
 
     public FabricDataGenerator.Pack.RegistryDependentFactory<?> base() {
-        return Base::new;
+        return BaseProvider::new;
     }
 
     public FabricDataGenerator.Pack.RegistryDependentFactory<?> preview() {
-        return Preview::new;
+        return PreviewProvider::new;
     }
 
-    private static class Base extends FabricRecipeProvider {
-        protected static final ColoringStationBlockEntity.DyeContents WHITE_COST = new ColoringStationBlockEntity.DyeContents(0, 0, 0, 0, 0, 4);
-        protected static final ColoringStationBlockEntity.DyeContents LIGHT_GRAY_COST = new ColoringStationBlockEntity.DyeContents(0, 0, 0, 0, 1, 3);
-        protected static final ColoringStationBlockEntity.DyeContents GRAY_COST = new ColoringStationBlockEntity.DyeContents(0, 0, 0, 0, 2, 2);
-        protected static final ColoringStationBlockEntity.DyeContents BLACK_COST = new ColoringStationBlockEntity.DyeContents(0, 0, 0, 0, 4, 0);
-        protected static final ColoringStationBlockEntity.DyeContents TAN_COST = new ColoringStationBlockEntity.DyeContents(1, 0, 0, 1, 1, 1);
-        protected static final ColoringStationBlockEntity.DyeContents BROWN_COST = new ColoringStationBlockEntity.DyeContents(1, 0, 0, 1, 2, 0);
-        protected static final ColoringStationBlockEntity.DyeContents MAROON_COST = new ColoringStationBlockEntity.DyeContents(2, 0, 0, 0, 2, 0);
-        protected static final ColoringStationBlockEntity.DyeContents RED_COST = new ColoringStationBlockEntity.DyeContents(4, 0, 0, 0, 0, 0);
-        protected static final ColoringStationBlockEntity.DyeContents SINOPIA_COST = new ColoringStationBlockEntity.DyeContents(3, 0, 0, 1, 0, 0);
-        protected static final ColoringStationBlockEntity.DyeContents ORANGE_COST = new ColoringStationBlockEntity.DyeContents(2, 0, 0, 2, 0, 0);
-        protected static final ColoringStationBlockEntity.DyeContents YELLOW_COST = new ColoringStationBlockEntity.DyeContents(0, 0, 0, 4, 0, 0);
-        protected static final ColoringStationBlockEntity.DyeContents CHARTREUSE_COST = new ColoringStationBlockEntity.DyeContents(0, 2, 0, 1, 0, 1);
-        protected static final ColoringStationBlockEntity.DyeContents LIME_COST = new ColoringStationBlockEntity.DyeContents(0, 0, 0, 2, 0, 2);
-        protected static final ColoringStationBlockEntity.DyeContents GREEN_COST = new ColoringStationBlockEntity.DyeContents(0, 4, 0, 0, 0, 0);
-        protected static final ColoringStationBlockEntity.DyeContents VIRIDIAN_COST = new ColoringStationBlockEntity.DyeContents(0, 3, 1, 0, 0, 0);
-        protected static final ColoringStationBlockEntity.DyeContents CYAN_COST = new ColoringStationBlockEntity.DyeContents(0, 2, 2, 0, 0, 0);
-        protected static final ColoringStationBlockEntity.DyeContents LIGHT_BLUE_COST = new ColoringStationBlockEntity.DyeContents(0, 0, 2, 0, 0, 2);
-        protected static final ColoringStationBlockEntity.DyeContents BLUE_COST = new ColoringStationBlockEntity.DyeContents(0, 0, 4, 0, 0, 0);
-        protected static final ColoringStationBlockEntity.DyeContents INDIGO_COST = new ColoringStationBlockEntity.DyeContents(1, 0, 3, 0, 0, 0);
-        protected static final ColoringStationBlockEntity.DyeContents PURPLE_COST = new ColoringStationBlockEntity.DyeContents(2, 0, 2, 0, 0, 0);
-        protected static final ColoringStationBlockEntity.DyeContents PLUM_COST = new ColoringStationBlockEntity.DyeContents(2, 0, 1, 0, 1, 0);
-        protected static final ColoringStationBlockEntity.DyeContents MAGENTA_COST = new ColoringStationBlockEntity.DyeContents(2, 0, 1, 0, 0, 1);
-        protected static final ColoringStationBlockEntity.DyeContents PINK_COST = new ColoringStationBlockEntity.DyeContents(2, 0, 0, 0, 0, 2);
-        protected static final ColoringStationBlockEntity.DyeContents LILAC_COST = new ColoringStationBlockEntity.DyeContents(1, 0, 1, 0, 0, 2);
-        public Base(FabricDataOutput fabricDataOutput, CompletableFuture<RegistryWrapper.WrapperLookup> wrapperLookupCompletableFuture) {
+    private static class BaseProvider extends Provider {
+
+        public BaseProvider(FabricDataOutput fabricDataOutput, CompletableFuture<RegistryWrapper.WrapperLookup> wrapperLookupCompletableFuture) {
             super(fabricDataOutput, wrapperLookupCompletableFuture);
         }
 
@@ -361,6 +338,121 @@ public final class VARecipeProvider {
                     .input('#', Ingredient.fromTag(ItemTags.PLANKS)).input('B', Ingredient.fromTag(ItemTags.WOOL))
                     .criterion("wool", conditionsFromTag(ItemTags.WOOL)).offerTo(exporter);
 
+            ShapedRecipeJsonBuilder.create(RecipeCategory.REDSTONE, VAItems.SPOTLIGHT, 1)
+                    .pattern("ssa")
+                    .pattern("rga")
+                    .pattern("ssa")
+                    .input('a', Items.AMETHYST_SHARD).input('g', Items.GLOWSTONE).input('s', VAItems.STEEL_INGOT).input('r', Items.REDSTONE)
+                    .criterion("glowstone", conditionsFromItem(Items.GLOWSTONE)).offerTo(exporter);
+
+        }
+    }
+
+    private static class PreviewProvider extends Provider {
+        public PreviewProvider(FabricDataOutput fabricDataOutput, CompletableFuture<RegistryWrapper.WrapperLookup> wrapperLookupCompletableFuture) {
+            super(fabricDataOutput, wrapperLookupCompletableFuture);
+        }
+
+        @Override
+        public void generate(RecipeExporter exporter) {
+
+            offerSmelting(exporter, List.of(VAItems.FLOATROCK_COAL_ORE), RecipeCategory.MISC, Items.COAL, 0.1F, 200, "coal");
+            offerSmelting(exporter, List.of(VAItems.FLOATROCK_COPPER_ORE), RecipeCategory.MISC, Items.COPPER_INGOT, 0.7F, 200, "copper_ingot");
+            offerSmelting(exporter, List.of(VAItems.FLOATROCK_IRON_ORE), RecipeCategory.MISC, Items.IRON_INGOT, 0.7F, 200, "iron_ingot");
+            offerSmelting(exporter, List.of(VAItems.FLOATROCK_GOLD_ORE), RecipeCategory.MISC, Items.GOLD_INGOT, 1.0F, 200, "gold_ingot");
+            offerSmelting(exporter, List.of(VAItems.FLOATROCK_REDSTONE_ORE), RecipeCategory.MISC, Items.REDSTONE, 0.7F, 200, "redstone");
+            offerSmelting(exporter, List.of(VAItems.FLOATROCK_EMERALD_ORE), RecipeCategory.MISC, Items.EMERALD, 1.0F, 200, "emerald");
+            offerSmelting(exporter, List.of(VAItems.FLOATROCK_LAPIS_ORE), RecipeCategory.MISC, Items.LAPIS_LAZULI, 0.2F, 200, "lapis_lazuli");
+            offerSmelting(exporter, List.of(VAItems.FLOATROCK_DIAMOND_ORE), RecipeCategory.MISC, Items.DIAMOND, 1.0F, 200, "diamond");
+
+            offerBlasting(exporter, List.of(VAItems.FLOATROCK_COAL_ORE), RecipeCategory.MISC, Items.COAL, 0.1F, 100, "coal");
+            offerBlasting(exporter, List.of(VAItems.FLOATROCK_COPPER_ORE), RecipeCategory.MISC, Items.COPPER_INGOT, 0.7F, 100, "copper_ingot");
+            offerBlasting(exporter, List.of(VAItems.FLOATROCK_IRON_ORE), RecipeCategory.MISC, Items.IRON_INGOT, 0.7F, 100, "iron_ingot");
+            offerBlasting(exporter, List.of(VAItems.FLOATROCK_GOLD_ORE), RecipeCategory.MISC, Items.GOLD_INGOT, 1.0F, 100, "gold_ingot");
+            offerBlasting(exporter, List.of(VAItems.FLOATROCK_REDSTONE_ORE), RecipeCategory.MISC, Items.REDSTONE, 0.7F, 100, "redstone");
+            offerBlasting(exporter, List.of(VAItems.FLOATROCK_EMERALD_ORE), RecipeCategory.MISC, Items.EMERALD, 1.0F, 100, "emerald");
+            offerBlasting(exporter, List.of(VAItems.FLOATROCK_LAPIS_ORE), RecipeCategory.MISC, Items.LAPIS_LAZULI, 0.2F, 100, "lapis_lazuli");
+            offerBlasting(exporter, List.of(VAItems.FLOATROCK_DIAMOND_ORE), RecipeCategory.MISC, Items.DIAMOND, 1.0F, 100, "diamond");
+
+            offerHedgeRecipe(exporter, VABlocks.AEROBLOOM_HEDGE, VABlocks.AEROBLOOM_LEAVES);
+
+            offerStonecuttingRecipes(exporter, VABlocks.FLOATROCK, VACollections.POLISHED_FLOATROCK, VACollections.FLOATROCK_BRICKS);
+            generateCuttableFamilyChain(exporter, VACollections.FLOATROCK);
+            generateCuttableFamilyChain(exporter, VACollections.POLISHED_FLOATROCK);
+            generateCuttableFamilyChain(exporter, VACollections.FLOATROCK_BRICKS);
+            offer2x2FullRecipe(exporter, RecipeCategory.MISC, VAItems.POLISHED_FLOATROCK, VAItems.FLOATROCK, 4);
+            offer2x2FullRecipe(exporter, RecipeCategory.MISC, VAItems.FLOATROCK_BRICKS, VAItems.POLISHED_FLOATROCK, 4);
+
+            generateFamily(exporter, VACollections.AEROBLOOM, FeatureFlags.VANILLA_FEATURES);
+            offerBarkBlockRecipe(exporter, VAItems.AEROBLOOM_WOOD, VAItems.AEROBLOOM_LOG);
+            offerBarkBlockRecipe(exporter, VAItems.STRIPPED_AEROBLOOM_WOOD, VAItems.STRIPPED_AEROBLOOM_LOG);
+            offerPlanksRecipe2(exporter, VAItems.AEROBLOOM_PLANKS, VAItemTags.AEROBLOOM_LOGS, 4);
+            offerHangingSignRecipe(exporter, VAItems.AEROBLOOM_HANGING_SIGN, VAItems.STRIPPED_AEROBLOOM_LOG);
+
+            offerShapelessRecipe(exporter, RecipeCategory.MISC, VAItems.CRYSTAL_DUST, 3,
+                    Pair.of(VAItems.RED_GLIMMER_CRYSTAL, 1),
+                    Pair.of(VAItems.GREEN_GLIMMER_CRYSTAL, 1),
+                    Pair.of(VAItems.BLUE_GLIMMER_CRYSTAL, 1)
+            );
+
+            ShapedRecipeJsonBuilder.create(RecipeCategory.FOOD, VAItems.RED_ROCK_CANDY, 1)
+                    .pattern("#")
+                    .pattern("s")
+                    .pattern("/")
+                    .input('#', VAItems.RED_GLIMMER_CRYSTAL).input('s', Items.SUGAR).input('/', Items.STICK)
+                    .criterion("crystal", conditionsFromItem(VAItems.RED_GLIMMER_CRYSTAL)).offerTo(exporter);
+
+            ShapedRecipeJsonBuilder.create(RecipeCategory.FOOD, VAItems.GREEN_ROCK_CANDY, 1)
+                    .pattern("#")
+                    .pattern("s")
+                    .pattern("/")
+                    .input('#', VAItems.GREEN_GLIMMER_CRYSTAL).input('s', Items.SUGAR).input('/', Items.STICK)
+                    .criterion("crystal", conditionsFromItem(VAItems.GREEN_GLIMMER_CRYSTAL)).offerTo(exporter);
+
+            ShapedRecipeJsonBuilder.create(RecipeCategory.FOOD, VAItems.BLUE_ROCK_CANDY, 1)
+                    .pattern("#")
+                    .pattern("s")
+                    .pattern("/")
+                    .input('#', VAItems.BLUE_GLIMMER_CRYSTAL).input('s', Items.SUGAR).input('/', Items.STICK)
+                    .criterion("crystal", conditionsFromItem(VAItems.BLUE_GLIMMER_CRYSTAL)).offerTo(exporter);
+
+            ShapedRecipeJsonBuilder.create(RecipeCategory.FOOD, VAItems.MIXED_ROCK_CANDY, 1)
+                    .pattern("#")
+                    .pattern("s")
+                    .pattern("/")
+                    .input('#', VAItems.CRYSTAL_DUST).input('s', Items.SUGAR).input('/', Items.STICK)
+                    .criterion("crystal", conditionsFromItem(VAItems.CRYSTAL_DUST)).offerTo(exporter);
+        }
+    }
+
+    private abstract static class Provider extends FabricRecipeProvider {
+        protected static final ColoringStationBlockEntity.DyeContents WHITE_COST = new ColoringStationBlockEntity.DyeContents(0, 0, 0, 0, 0, 4);
+        protected static final ColoringStationBlockEntity.DyeContents LIGHT_GRAY_COST = new ColoringStationBlockEntity.DyeContents(0, 0, 0, 0, 1, 3);
+        protected static final ColoringStationBlockEntity.DyeContents GRAY_COST = new ColoringStationBlockEntity.DyeContents(0, 0, 0, 0, 2, 2);
+        protected static final ColoringStationBlockEntity.DyeContents BLACK_COST = new ColoringStationBlockEntity.DyeContents(0, 0, 0, 0, 4, 0);
+        protected static final ColoringStationBlockEntity.DyeContents TAN_COST = new ColoringStationBlockEntity.DyeContents(1, 0, 0, 1, 1, 1);
+        protected static final ColoringStationBlockEntity.DyeContents BROWN_COST = new ColoringStationBlockEntity.DyeContents(1, 0, 0, 1, 2, 0);
+        protected static final ColoringStationBlockEntity.DyeContents MAROON_COST = new ColoringStationBlockEntity.DyeContents(2, 0, 0, 0, 2, 0);
+        protected static final ColoringStationBlockEntity.DyeContents RED_COST = new ColoringStationBlockEntity.DyeContents(4, 0, 0, 0, 0, 0);
+        protected static final ColoringStationBlockEntity.DyeContents SINOPIA_COST = new ColoringStationBlockEntity.DyeContents(3, 0, 0, 1, 0, 0);
+        protected static final ColoringStationBlockEntity.DyeContents ORANGE_COST = new ColoringStationBlockEntity.DyeContents(2, 0, 0, 2, 0, 0);
+        protected static final ColoringStationBlockEntity.DyeContents YELLOW_COST = new ColoringStationBlockEntity.DyeContents(0, 0, 0, 4, 0, 0);
+        protected static final ColoringStationBlockEntity.DyeContents CHARTREUSE_COST = new ColoringStationBlockEntity.DyeContents(0, 2, 0, 1, 0, 1);
+        protected static final ColoringStationBlockEntity.DyeContents LIME_COST = new ColoringStationBlockEntity.DyeContents(0, 0, 0, 2, 0, 2);
+        protected static final ColoringStationBlockEntity.DyeContents GREEN_COST = new ColoringStationBlockEntity.DyeContents(0, 4, 0, 0, 0, 0);
+        protected static final ColoringStationBlockEntity.DyeContents VIRIDIAN_COST = new ColoringStationBlockEntity.DyeContents(0, 3, 1, 0, 0, 0);
+        protected static final ColoringStationBlockEntity.DyeContents CYAN_COST = new ColoringStationBlockEntity.DyeContents(0, 2, 2, 0, 0, 0);
+        protected static final ColoringStationBlockEntity.DyeContents LIGHT_BLUE_COST = new ColoringStationBlockEntity.DyeContents(0, 0, 2, 0, 0, 2);
+        protected static final ColoringStationBlockEntity.DyeContents BLUE_COST = new ColoringStationBlockEntity.DyeContents(0, 0, 4, 0, 0, 0);
+        protected static final ColoringStationBlockEntity.DyeContents INDIGO_COST = new ColoringStationBlockEntity.DyeContents(1, 0, 3, 0, 0, 0);
+        protected static final ColoringStationBlockEntity.DyeContents PURPLE_COST = new ColoringStationBlockEntity.DyeContents(2, 0, 2, 0, 0, 0);
+        protected static final ColoringStationBlockEntity.DyeContents PLUM_COST = new ColoringStationBlockEntity.DyeContents(2, 0, 1, 0, 1, 0);
+        protected static final ColoringStationBlockEntity.DyeContents MAGENTA_COST = new ColoringStationBlockEntity.DyeContents(2, 0, 1, 0, 0, 1);
+        protected static final ColoringStationBlockEntity.DyeContents PINK_COST = new ColoringStationBlockEntity.DyeContents(2, 0, 0, 0, 0, 2);
+        protected static final ColoringStationBlockEntity.DyeContents LILAC_COST = new ColoringStationBlockEntity.DyeContents(1, 0, 1, 0, 0, 2);
+
+        public Provider(FabricDataOutput output, CompletableFuture<RegistryWrapper.WrapperLookup> registriesFuture) {
+            super(output, registriesFuture);
         }
 
         protected static void offerCookingRecipes(RecipeExporter exporter, ItemConvertible output, ItemConvertible input, float experience, String group) {
@@ -523,90 +615,6 @@ public final class VARecipeProvider {
                     .pattern("###")
                     .pattern("###")
                     .input('#', input).criterion("has_leaves", conditionsFromItem(input)).group("hedges").offerTo(exporter);
-        }
-    }
-
-    private static class Preview extends Base {
-        public Preview(FabricDataOutput fabricDataOutput, CompletableFuture<RegistryWrapper.WrapperLookup> wrapperLookupCompletableFuture) {
-            super(fabricDataOutput, wrapperLookupCompletableFuture);
-        }
-
-        @Override
-        public void generate(RecipeExporter exporter) {
-
-            offerSmelting(exporter, List.of(VAItems.FLOATROCK_COAL_ORE), RecipeCategory.MISC, Items.COAL, 0.1F, 200, "coal");
-            offerSmelting(exporter, List.of(VAItems.FLOATROCK_COPPER_ORE), RecipeCategory.MISC, Items.COPPER_INGOT, 0.7F, 200, "copper_ingot");
-            offerSmelting(exporter, List.of(VAItems.FLOATROCK_IRON_ORE), RecipeCategory.MISC, Items.IRON_INGOT, 0.7F, 200, "iron_ingot");
-            offerSmelting(exporter, List.of(VAItems.FLOATROCK_GOLD_ORE), RecipeCategory.MISC, Items.GOLD_INGOT, 1.0F, 200, "gold_ingot");
-            offerSmelting(exporter, List.of(VAItems.FLOATROCK_REDSTONE_ORE), RecipeCategory.MISC, Items.REDSTONE, 0.7F, 200, "redstone");
-            offerSmelting(exporter, List.of(VAItems.FLOATROCK_EMERALD_ORE), RecipeCategory.MISC, Items.EMERALD, 1.0F, 200, "emerald");
-            offerSmelting(exporter, List.of(VAItems.FLOATROCK_LAPIS_ORE), RecipeCategory.MISC, Items.LAPIS_LAZULI, 0.2F, 200, "lapis_lazuli");
-            offerSmelting(exporter, List.of(VAItems.FLOATROCK_DIAMOND_ORE), RecipeCategory.MISC, Items.DIAMOND, 1.0F, 200, "diamond");
-
-            offerBlasting(exporter, List.of(VAItems.FLOATROCK_COAL_ORE), RecipeCategory.MISC, Items.COAL, 0.1F, 100, "coal");
-            offerBlasting(exporter, List.of(VAItems.FLOATROCK_COPPER_ORE), RecipeCategory.MISC, Items.COPPER_INGOT, 0.7F, 100, "copper_ingot");
-            offerBlasting(exporter, List.of(VAItems.FLOATROCK_IRON_ORE), RecipeCategory.MISC, Items.IRON_INGOT, 0.7F, 100, "iron_ingot");
-            offerBlasting(exporter, List.of(VAItems.FLOATROCK_GOLD_ORE), RecipeCategory.MISC, Items.GOLD_INGOT, 1.0F, 100, "gold_ingot");
-            offerBlasting(exporter, List.of(VAItems.FLOATROCK_REDSTONE_ORE), RecipeCategory.MISC, Items.REDSTONE, 0.7F, 100, "redstone");
-            offerBlasting(exporter, List.of(VAItems.FLOATROCK_EMERALD_ORE), RecipeCategory.MISC, Items.EMERALD, 1.0F, 100, "emerald");
-            offerBlasting(exporter, List.of(VAItems.FLOATROCK_LAPIS_ORE), RecipeCategory.MISC, Items.LAPIS_LAZULI, 0.2F, 100, "lapis_lazuli");
-            offerBlasting(exporter, List.of(VAItems.FLOATROCK_DIAMOND_ORE), RecipeCategory.MISC, Items.DIAMOND, 1.0F, 100, "diamond");
-
-            offerHedgeRecipe(exporter, VABlocks.AEROBLOOM_HEDGE, VABlocks.AEROBLOOM_LEAVES);
-
-            offerStonecuttingRecipes(exporter, VABlocks.FLOATROCK, VACollections.POLISHED_FLOATROCK, VACollections.FLOATROCK_BRICKS);
-            generateCuttableFamilyChain(exporter, VACollections.FLOATROCK);
-            generateCuttableFamilyChain(exporter, VACollections.POLISHED_FLOATROCK);
-            generateCuttableFamilyChain(exporter, VACollections.FLOATROCK_BRICKS);
-            offer2x2FullRecipe(exporter, RecipeCategory.MISC, VAItems.POLISHED_FLOATROCK, VAItems.FLOATROCK, 4);
-            offer2x2FullRecipe(exporter, RecipeCategory.MISC, VAItems.FLOATROCK_BRICKS, VAItems.POLISHED_FLOATROCK, 4);
-
-            generateFamily(exporter, VACollections.AEROBLOOM, FeatureFlags.VANILLA_FEATURES);
-            offerBarkBlockRecipe(exporter, VAItems.AEROBLOOM_WOOD, VAItems.AEROBLOOM_LOG);
-            offerBarkBlockRecipe(exporter, VAItems.STRIPPED_AEROBLOOM_WOOD, VAItems.STRIPPED_AEROBLOOM_LOG);
-            offerPlanksRecipe2(exporter, VAItems.AEROBLOOM_PLANKS, VAItemTags.AEROBLOOM_LOGS, 4);
-            offerHangingSignRecipe(exporter, VAItems.AEROBLOOM_HANGING_SIGN, VAItems.STRIPPED_AEROBLOOM_LOG);
-
-            offerShapelessRecipe(exporter, RecipeCategory.MISC, VAItems.CRYSTAL_DUST, 3,
-                    Pair.of(VAItems.RED_GLIMMER_CRYSTAL, 1),
-                    Pair.of(VAItems.GREEN_GLIMMER_CRYSTAL, 1),
-                    Pair.of(VAItems.BLUE_GLIMMER_CRYSTAL, 1)
-            );
-
-            ShapedRecipeJsonBuilder.create(RecipeCategory.FOOD, VAItems.RED_ROCK_CANDY, 1)
-                    .pattern("#")
-                    .pattern("s")
-                    .pattern("/")
-                    .input('#', VAItems.RED_GLIMMER_CRYSTAL).input('s', Items.SUGAR).input('/', Items.STICK)
-                    .criterion("crystal", conditionsFromItem(VAItems.RED_GLIMMER_CRYSTAL)).offerTo(exporter);
-
-            ShapedRecipeJsonBuilder.create(RecipeCategory.FOOD, VAItems.GREEN_ROCK_CANDY, 1)
-                    .pattern("#")
-                    .pattern("s")
-                    .pattern("/")
-                    .input('#', VAItems.GREEN_GLIMMER_CRYSTAL).input('s', Items.SUGAR).input('/', Items.STICK)
-                    .criterion("crystal", conditionsFromItem(VAItems.GREEN_GLIMMER_CRYSTAL)).offerTo(exporter);
-
-            ShapedRecipeJsonBuilder.create(RecipeCategory.FOOD, VAItems.BLUE_ROCK_CANDY, 1)
-                    .pattern("#")
-                    .pattern("s")
-                    .pattern("/")
-                    .input('#', VAItems.BLUE_GLIMMER_CRYSTAL).input('s', Items.SUGAR).input('/', Items.STICK)
-                    .criterion("crystal", conditionsFromItem(VAItems.BLUE_GLIMMER_CRYSTAL)).offerTo(exporter);
-
-            ShapedRecipeJsonBuilder.create(RecipeCategory.FOOD, VAItems.MIXED_ROCK_CANDY, 1)
-                    .pattern("#")
-                    .pattern("s")
-                    .pattern("/")
-                    .input('#', VAItems.CRYSTAL_DUST).input('s', Items.SUGAR).input('/', Items.STICK)
-                    .criterion("crystal", conditionsFromItem(VAItems.CRYSTAL_DUST)).offerTo(exporter);
-
-            ShapedRecipeJsonBuilder.create(RecipeCategory.REDSTONE, VAItems.SPOTLIGHT, 1)
-                    .pattern("###")
-                    .pattern("csc")
-                    .pattern("crc")
-                    .input('#', VAItems.CRYSTAL_DUST).input('c', Items.COPPER_INGOT).input('s', VAItems.STEEL_INGOT).input('r', Items.REDSTONE)
-                    .criterion("crystal", conditionsFromItem(VAItems.CRYSTAL_DUST)).offerTo(exporter);
         }
     }
 }

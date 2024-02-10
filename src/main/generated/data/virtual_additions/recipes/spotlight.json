@@ -2,11 +2,11 @@
   "type": "minecraft:crafting_shaped",
   "category": "redstone",
   "key": {
-    "#": {
-      "item": "virtual_additions:crystal_dust"
+    "a": {
+      "item": "minecraft:amethyst_shard"
     },
-    "c": {
-      "item": "minecraft:copper_ingot"
+    "g": {
+      "item": "minecraft:glowstone"
     },
     "r": {
       "item": "minecraft:redstone"
@@ -16,9 +16,9 @@
     }
   },
   "pattern": [
-    "###",
-    "csc",
-    "crc"
+    "ssa",
+    "rga",
+    "ssa"
   ],
   "result": {
     "item": "virtual_additions:spotlight"

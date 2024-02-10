@@ -516,7 +516,7 @@ public class VAItems {
         GREEN_GLIMMER_CRYSTAL = registerBlockItem("green_glimmer_crystal", VABlocks.GREEN_GLIMMER_CRYSTAL, ItemGroups.NATURAL, prev, VirtualAdditions.PREVIEW);
         BLUE_GLIMMER_CRYSTAL = registerBlockItem("blue_glimmer_crystal", VABlocks.BLUE_GLIMMER_CRYSTAL, ItemGroups.NATURAL, prev, VirtualAdditions.PREVIEW);
         CRYSTAL_DUST = register("crystal_dust", ItemGroups.INGREDIENTS, Items.GUNPOWDER, VirtualAdditions.PREVIEW);
-        SPOTLIGHT = registerBlockItem("spotlight", VABlocks.SPOTLIGHT, ItemGroups.REDSTONE, Items.REDSTONE_LAMP, VirtualAdditions.PREVIEW);
+        SPOTLIGHT = registerBlockItem("spotlight", VABlocks.SPOTLIGHT, ItemGroups.REDSTONE, Items.REDSTONE_LAMP);
 
         RAW_STEEL_BLOCK = registerBlockItem("raw_steel_block", VABlocks.RAW_STEEL_BLOCK, ItemGroups.NATURAL, Items.RAW_GOLD_BLOCK);
         STEEL_BLOCK = registerBlockItem("steel_block", VABlocks.STEEL_BLOCK, ItemGroups.BUILDING_BLOCKS, Items.GOLD_BLOCK);
@@ -546,10 +546,10 @@ public class VAItems {
         ROASTED_CORN = register("roasted_corn", new Item(new Item.Settings().food(ROASTED_CORN_FOOD)), ItemGroups.FOOD_AND_DRINK, prev);
         FRIED_EGG = register("fried_egg", new Item(new Item.Settings().food(FRIED_EGG_FOOD)), ItemGroups.FOOD_AND_DRINK, Items.COOKED_CHICKEN);
 
-        RED_ROCK_CANDY = register("red_rock_candy", new RockCandyItem(new Item.Settings().food(ROCK_CANDY_FOOD).requires(VirtualAdditions.PREVIEW)), ItemGroups.FOOD_AND_DRINK, Items.COOKIE);
-        GREEN_ROCK_CANDY = register("green_rock_candy", new RockCandyItem(new Item.Settings().food(ROCK_CANDY_FOOD).requires(VirtualAdditions.PREVIEW)), ItemGroups.FOOD_AND_DRINK, prev);
-        BLUE_ROCK_CANDY = register("blue_rock_candy", new RockCandyItem(new Item.Settings().food(ROCK_CANDY_FOOD).requires(VirtualAdditions.PREVIEW)), ItemGroups.FOOD_AND_DRINK, prev);
-        MIXED_ROCK_CANDY = register("mixed_rock_candy", new RockCandyItem(new Item.Settings().food(ROCK_CANDY_FOOD).requires(VirtualAdditions.PREVIEW)), ItemGroups.FOOD_AND_DRINK, prev);
+        RED_ROCK_CANDY = register("red_rock_candy", new RockCandyItem(new Item.Settings().food(ROCK_CANDY_FOOD)), ItemGroups.FOOD_AND_DRINK, Items.COOKIE);
+        GREEN_ROCK_CANDY = register("green_rock_candy", new RockCandyItem(new Item.Settings().food(ROCK_CANDY_FOOD)), ItemGroups.FOOD_AND_DRINK, prev);
+        BLUE_ROCK_CANDY = register("blue_rock_candy", new RockCandyItem(new Item.Settings().food(ROCK_CANDY_FOOD)), ItemGroups.FOOD_AND_DRINK, prev);
+        MIXED_ROCK_CANDY = register("mixed_rock_candy", new RockCandyItem(new Item.Settings().food(ROCK_CANDY_FOOD)), ItemGroups.FOOD_AND_DRINK, prev);
 
         SILK_BLOCK = registerBlockItem("silk_block", VABlocks.SILK_BLOCK, ItemGroups.NATURAL, Items.SHROOMLIGHT);
         LUMWASP_NEST = registerBlockItem("lumwasp_nest", VABlocks.LUMWASP_NEST, ItemGroups.NATURAL, prev);

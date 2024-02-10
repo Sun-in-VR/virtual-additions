@@ -1,12 +1,12 @@
 {
   "parent": "minecraft:recipes/root",
   "criteria": {
-    "crystal": {
+    "glowstone": {
       "conditions": {
         "items": [
           {
             "items": [
-              "virtual_additions:crystal_dust"
+              "minecraft:glowstone"
             ]
           }
         ]
@@ -23,7 +23,7 @@
   "requirements": [
     [
       "has_the_recipe",
-      "crystal"
+      "glowstone"
     ]
   ],
   "rewards": {

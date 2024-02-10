@@ -1,17 +1,21 @@
 package com.github.suninvr.virtualadditions.block;
 
+import com.github.suninvr.virtualadditions.block.entity.SpotlightBlockEntity;
+import com.github.suninvr.virtualadditions.block.entity.SpotlightLightBlockEntity;
 import com.github.suninvr.virtualadditions.block.enums.LightStatus;
 import com.github.suninvr.virtualadditions.registry.VABlocks;
 import com.mojang.serialization.MapCodec;
 import net.minecraft.block.*;
+import net.minecraft.block.entity.BlockEntity;
 import net.minecraft.fluid.FluidState;
 import net.minecraft.fluid.Fluids;
-import net.minecraft.item.Items;
+import net.minecraft.server.world.ServerWorld;
 import net.minecraft.state.StateManager;
 import net.minecraft.state.property.BooleanProperty;
 import net.minecraft.state.property.EnumProperty;
 import net.minecraft.state.property.Properties;
 import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.math.Box;
 import net.minecraft.util.math.Direction;
 import net.minecraft.util.shape.VoxelShape;
 import net.minecraft.util.shape.VoxelShapes;
@@ -20,8 +24,11 @@ import net.minecraft.world.World;
 import net.minecraft.world.WorldAccess;
 import org.jetbrains.annotations.Nullable;
 
+import java.util.ArrayList;
+import java.util.List;
+
 @SuppressWarnings("deprecation")
-public class SpotlightLightBlock extends Block implements Waterloggable {
+public class SpotlightLightBlock extends BlockWithEntity implements Waterloggable {
     public static final MapCodec<SpotlightLightBlock> CODEC = createCodec(SpotlightLightBlock::new);
     public static BooleanProperty WATERLOGGED = Properties.WATERLOGGED;
     public static BooleanProperty LIT = Properties.LIT;
@@ -31,7 +38,6 @@ public class SpotlightLightBlock extends Block implements Waterloggable {
     public static EnumProperty<LightStatus> WEST = EnumProperty.of("west", LightStatus.class);
     public static EnumProperty<LightStatus> UP = EnumProperty.of("up", LightStatus.class);
     public static EnumProperty<LightStatus> DOWN = EnumProperty.of("down", LightStatus.class);
-    private static final VoxelShape box = VoxelShapes.cuboid(0, 0, 0, 1, 1, 1);
 
     public SpotlightLightBlock(Settings settings) {
         super(settings);
@@ -47,20 +53,55 @@ public class SpotlightLightBlock extends Block implements Waterloggable {
         );
     }
 
+    public static void updateSources(World world, BlockPos pos, BlockState state) {
+        if (!state.isOf(VABlocks.SPOTLIGHT_LIGHT)) return;
+        SpotlightLightBlock.getSources(world, pos, state).forEach(pos2 -> world.scheduleBlockTick(pos2, VABlocks.SPOTLIGHT, 1));
+    }
+
+    public static List<BlockPos> getSources(World world, BlockPos pos, BlockState state) {
+        List<BlockPos> posList = new ArrayList<>();
+        for (Direction dir : Direction.values()) if (state.get(getDirectionProperty(dir)).hasLight()) posList.add(findSource(world, pos, dir));
+        return posList;
+    }
+
+    protected static BlockPos findSource(World world, BlockPos pos, Direction dir) {
+        int i = 0;
+        BlockPos blockPos = BlockPos.ORIGIN;
+        while (i < 33) {
+            i++;
+            blockPos = pos.offset(dir, i);
+            if (world.getBlockEntity(blockPos) instanceof SpotlightBlockEntity spotlightBlockEntity && spotlightBlockEntity.getLightLocation().equals(pos)) return blockPos;
+        }
+        return blockPos;
+    }
+
     @Override
-    protected MapCodec<? extends Block> getCodec() {
+    protected void onStateReplaced(BlockState state, World world, BlockPos pos, BlockState newState, boolean moved) {
+        if (!world.isClient() && !state.isOf(newState.getBlock()) && !newState.isAir()) {
+            updateSources(world, pos, state);
+        }
+        super.onStateReplaced(state, world, pos, newState, moved);
+    }
+
+    protected static EnumProperty<LightStatus> getDirectionProperty(Direction dir) {
+        return switch (dir) {
+            case DOWN -> DOWN;
+            case UP -> UP;
+            case NORTH -> NORTH;
+            case SOUTH -> SOUTH;
+            case WEST -> WEST;
+            case EAST -> EAST;
+        };
+    }
+
+    @Override
+    protected MapCodec<? extends BlockWithEntity> getCodec() {
         return CODEC;
     }
 
     @Override
     public VoxelShape getOutlineShape(BlockState state, BlockView world, BlockPos pos, ShapeContext context) {
-        if (context.isHolding(Items.LIGHT)) return box;
-        return VoxelShapes.empty();
-    }
-
-    @Override
-    public VoxelShape getCollisionShape(BlockState state, BlockView world, BlockPos pos, ShapeContext context) {
-        return VoxelShapes.empty();
+            return VoxelShapes.empty();
     }
 
     @Override
@@ -92,14 +133,6 @@ public class SpotlightLightBlock extends Block implements Waterloggable {
         }
         return null;
     }
-    
-    public static void setStatus(World world, BlockState state, BlockPos pos, Direction direction, LightStatus status) {
-        if (state.isOf(VABlocks.SPOTLIGHT_LIGHT)) {
-            state = getStateWithStatus(state, direction, status);
-            world.setBlockState(pos, state);
-            updateLight(world, state, pos);
-        }
-    }
 
     public static boolean isLit(BlockState state) {
         if (state.isOf(VABlocks.SPOTLIGHT_LIGHT)) {
@@ -123,28 +156,10 @@ public class SpotlightLightBlock extends Block implements Waterloggable {
         return true;
     }
 
-    public static void updateLight(World world, BlockState state, BlockPos pos) {
-        if (state.isOf(VABlocks.SPOTLIGHT_LIGHT)) {
-            if (shouldRemove(state)) {
-                world.setBlockState(pos, state.get(WATERLOGGED) ? Blocks.WATER.getDefaultState() : Blocks.AIR.getDefaultState());
-                return;
-            }
-            world.setBlockState(pos, state.with(LIT, isLit(state)));
-        }
-    }
-
-    public static BlockState getStateWithStatus(BlockState state, Direction direction, LightStatus status) {
-        if (state.isOf(VABlocks.SPOTLIGHT_LIGHT)) {
-            state = switch (direction) {
-                case NORTH -> state.with(NORTH, status);
-                case EAST -> state.with(EAST, status);
-                case SOUTH -> state.with(SOUTH, status);
-                case WEST -> state.with(WEST, status);
-                case UP -> state.with(UP, status);
-                case DOWN -> state.with(DOWN, status);
-            };
-        }
-        return state;
+    public static BlockState getUpdatedLightState(BlockState state) {
+        if (!state.isOf(VABlocks.SPOTLIGHT_LIGHT)) return state;
+        if (shouldRemove(state)) return state.get(WATERLOGGED) ? Blocks.WATER.getDefaultState() : Blocks.AIR.getDefaultState();
+        return state.with(LIT, isLit(state));
     }
 
     @Override
@@ -161,5 +176,11 @@ public class SpotlightLightBlock extends Block implements Waterloggable {
     public BlockState getStateForNeighborUpdate(BlockState state, Direction direction, BlockState neighborState, WorldAccess world, BlockPos pos, BlockPos neighborPos) {
         if (state.get(WATERLOGGED)) world.scheduleFluidTick(pos, Fluids.WATER, Fluids.WATER.getTickRate(world));
         return state.with(LIT, isLit(state));
+    }
+
+    @Nullable
+    @Override
+    public BlockEntity createBlockEntity(BlockPos pos, BlockState state) {
+        return new SpotlightLightBlockEntity(pos, state);
     }
 }

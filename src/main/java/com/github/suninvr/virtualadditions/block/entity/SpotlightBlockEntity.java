@@ -6,30 +6,41 @@ import com.github.suninvr.virtualadditions.block.enums.LightStatus;
 import com.github.suninvr.virtualadditions.registry.VABlockEntityType;
 import com.github.suninvr.virtualadditions.registry.VABlockTags;
 import com.github.suninvr.virtualadditions.registry.VABlocks;
+import com.github.suninvr.virtualadditions.registry.VAGameEventTags;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.Blocks;
 import net.minecraft.block.entity.BlockEntity;
 import net.minecraft.fluid.Fluids;
 import net.minecraft.nbt.NbtCompound;
-import net.minecraft.nbt.NbtElement;
 import net.minecraft.nbt.NbtHelper;
 import net.minecraft.registry.RegistryWrapper;
+import net.minecraft.registry.entry.RegistryEntry;
+import net.minecraft.registry.tag.GameEventTags;
+import net.minecraft.server.world.ServerWorld;
+import net.minecraft.state.property.Properties;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Direction;
+import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.World;
+import net.minecraft.world.event.BlockPositionSource;
+import net.minecraft.world.event.GameEvent;
+import net.minecraft.world.event.PositionSource;
+import net.minecraft.world.event.listener.GameEventListener;
 
-public class SpotlightBlockEntity extends BlockEntity {
+public class SpotlightBlockEntity extends BlockEntity implements GameEventListener.Holder<SpotlightBlockEntity.Listener> {
     private BlockPos lightPos;
+    private final Listener listener;
 
     public SpotlightBlockEntity(BlockPos pos, BlockState state) {
         super(VABlockEntityType.SPOTLIGHT, pos, state);
         this.lightPos = pos;
+        this.listener = new Listener(pos);
     }
 
     @Override
     protected void writeNbt(NbtCompound nbt, RegistryWrapper.WrapperLookup lookup) {
         super.writeNbt(nbt, lookup);
-        if (this.lightPos != null) nbt.put("light_pos", NbtHelper.fromBlockPos(pos));
+        nbt.put("light_pos", NbtHelper.fromBlockPos(this.lightPos));
     }
 
     @Override
@@ -38,68 +49,60 @@ public class SpotlightBlockEntity extends BlockEntity {
         NbtHelper.toBlockPos(nbt, "light_pos").ifPresent(pos -> this.lightPos = pos);
     }
 
-    public static void tick(World world, BlockPos pos, BlockState state, SpotlightBlockEntity blockEntity) {
-        if (world.getTime() % 20 == 0) {
-            if (state.get(SpotlightBlock.POWERED)) blockEntity.updateLightLocation(world, pos, state);
-        }
-    }
-
-    public void updateLightLocation(World world, BlockPos pos, BlockState state) {
-        if (world.isClient) return;
-        if (!state.isOf(VABlocks.SPOTLIGHT)) return;
-
-        Direction direction = state.get(SpotlightBlock.FACING);
-        BlockPos newPos = this.getUpdatedLightLocation(world, pos, direction);
-        if (newPos != null) {
-            boolean powered = state.get(SpotlightBlock.POWERED);
-            //Initialize position and state variables.
-            BlockState newState = world.getBlockState(newPos);
-            BlockPos oldPos = this.getLightLocation();
-            BlockState oldState = world.getBlockState(oldPos);
-
-            if (newState.isOf(VABlocks.SPOTLIGHT_LIGHT)) {
-                //Update the state if already a light block
-                SpotlightLightBlock.setStatus(world, newState, newPos, direction, powered ? LightStatus.LIT : LightStatus.UNLIT);
-                this.setLightLocation(newPos);
-            } else {
-                //Place the new light if the space is available
-                boolean isWater = world.getFluidState(newPos).isEqualAndStill(Fluids.WATER);
-                if (world.isAir(newPos) || newState.isOf(Blocks.WATER)) {
-                    this.setLightLocation(newPos);
-                    BlockState lightState = VABlocks.SPOTLIGHT_LIGHT.getDefaultState().with(SpotlightLightBlock.WATERLOGGED, isWater).with(SpotlightLightBlock.LIT, powered);
-                    world.setBlockState(newPos, SpotlightLightBlock.getStateWithStatus(lightState, direction, powered ? LightStatus.LIT : LightStatus.UNLIT));
-                }
-            }
-
-            //Update the old state
-            if (!oldPos.equals(newPos) && oldState.isOf(VABlocks.SPOTLIGHT_LIGHT)) SpotlightLightBlock.setStatus(world, oldState, oldPos, direction, LightStatus.NONE);
-        }
-
-    }
-
-    private BlockPos getUpdatedLightLocation(World world, BlockPos startPos, Direction direction) {
-        BlockPos pos = new BlockPos(startPos.offset(direction));
-        if (!world.isAir(pos) && !world.getBlockState(pos).isIn(VABlockTags.SPOTLIGHT_PERMEABLE)) return pos;
-        int i = 0;
-
-        BlockPos finalPos = pos;
-        BlockPos offsetPos = new BlockPos(pos.offset(direction));
-        while ((world.isAir(offsetPos) || world.getBlockState(offsetPos).isIn(VABlockTags.SPOTLIGHT_PERMEABLE)) && i < 31) {
-            pos = new BlockPos(pos.offset(direction));
-            offsetPos = new BlockPos(pos.offset(direction));
-            i++;
-            if (world.isAir(pos) || world.getBlockState(pos).isOf(Blocks.WATER) || world.getBlockState(pos).isOf(VABlocks.SPOTLIGHT_LIGHT)) finalPos = pos;
-        }
-
-        return finalPos;
-    }
-
     public BlockPos getLightLocation() {
         return this.lightPos;
     }
 
-    private void setLightLocation(BlockPos pos) {
+    public void setLightLocation(BlockPos pos) {
         this.lightPos = pos;
         this.markDirty();
+    }
+
+    @Override
+    public Listener getEventListener() {
+        return this.listener;
+    }
+
+    protected static class Listener implements GameEventListener {
+        private final PositionSource positionSource;
+
+        public Listener(BlockPos pos) {
+            this.positionSource = new BlockPositionSource(pos);
+        }
+
+        @Override
+        public PositionSource getPositionSource() {
+            return this.positionSource;
+        }
+
+        @Override
+        public int getRange() {
+            return 16;
+        }
+
+        @Override
+        public boolean listen(ServerWorld world, RegistryEntry<GameEvent> event, GameEvent.Emitter emitter, Vec3d emitterPos) {
+            if (!event.isIn(VAGameEventTags.NOTIFIES_SPOTLIGHT)) return false;
+            Vec3d pos = this.getPositionSource().getPos(world).get();
+            BlockPos blockPos = new BlockPos((int)Math.floor(pos.x), (int)Math.floor(pos.y), (int)Math.floor(pos.z));
+            BlockState state = world.getBlockState(blockPos);
+            if (!state.isOf(VABlocks.SPOTLIGHT) || !state.get(SpotlightBlock.POWERED)) return false;
+            boolean bl = posIsInDirection(pos, emitterPos, world.getBlockState(blockPos).get(Properties.ORIENTATION).getFacing());
+            if (bl) {
+                world.scheduleBlockTick(new BlockPos((int)Math.floor(pos.x), (int)Math.floor(pos.y), (int)Math.floor(pos.z)), VABlocks.SPOTLIGHT, 1);
+            }
+            return bl;
+        }
+
+        private static boolean posIsInDirection(Vec3d from, Vec3d to, Direction dir) {
+            return switch (dir) {
+                case UP -> from.getX() == to.getX() && from.getY() < to.getY() && from.getZ() == to.getZ();
+                case DOWN -> from.getX() == to.getX() && from.getY() > to.getY() && from.getZ() == to.getZ();
+                case EAST -> from.getX() < to.getX() && from.getY() == to.getY() && from.getZ() == to.getZ();
+                case WEST -> from.getX() > to.getX() && from.getY() == to.getY() && from.getZ() == to.getZ();
+                case NORTH -> from.getX() == to.getX() && from.getY() == to.getY() && from.getZ() > to.getZ();
+                case SOUTH -> from.getX() == to.getX() && from.getY() == to.getY() && from.getZ() < to.getZ();
+            };
+        }
     }
 }

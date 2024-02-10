@@ -1,4 +1,4 @@
-// 24w05b	2024-02-06T23:39:52.278202041	virtual_additions:preview/Block Loot Tables
+// 24w06a	2024-02-09T06:54:45.226785523	virtual_additions:preview/Block Loot Tables
 454dd101e1592b22fb75adbdd0d1471f5cf75ca1 resourcepacks/preview/data/virtual_additions/loot_tables/blocks/aerobloom_log.json
 cba4452dc67504290d1264eeb3962b88f2fdc156 resourcepacks/preview/data/virtual_additions/loot_tables/blocks/aerobloom_trapdoor.json
 37deda053085e75a3d11d9619f8e3ba47711035f resourcepacks/preview/data/virtual_additions/loot_tables/blocks/aerobloom_fence_gate.json
@@ -42,6 +42,5 @@ b2cd184c3a1883cca9061c2164b648865592203e resourcepacks/preview/data/virtual_addi
 bb1176e997574a4f9450e54a82c3a5fc47f21ca6 resourcepacks/preview/data/virtual_additions/loot_tables/blocks/floatrock_iron_ore.json
 65fc10baa8cf2e99b29be298867b065c3f7a74b0 resourcepacks/preview/data/virtual_additions/loot_tables/blocks/stripped_aerobloom_log.json
 0c6bfa9f73d5ede5313a3bee685006e7401d9bf7 resourcepacks/preview/data/virtual_additions/loot_tables/blocks/floatrock_bricks.json
-f3ec3409d43ef6d6c9d5d61292b38c1c98703c03 resourcepacks/preview/data/virtual_additions/loot_tables/blocks/spotlight.json
 3dd4ac6e9dadc5ed335578ba66342faadc1f4c24 resourcepacks/preview/data/virtual_additions/loot_tables/blocks/polished_floatrock.json
 7e37f27549f5a4fc4ead913a41fa07925ed24bc7 resourcepacks/preview/data/virtual_additions/loot_tables/blocks/floatrock_copper_ore.json

@@ -80,7 +80,6 @@ public class EntanglementDriveBlockEntity extends BlockEntity implements NamedSc
 
     public EntanglementDriveBlockEntity(BlockPos pos, BlockState state) {
         super(VABlockEntityType.ENTANGLEMENT_DRIVE, pos, state);
-        System.out.println(this.properties);
         this.slotIndex = -1;
         this.playerId = nullId;
     }

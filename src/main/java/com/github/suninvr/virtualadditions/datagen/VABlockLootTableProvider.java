@@ -28,7 +28,6 @@ import net.minecraft.loot.function.SetCountLootFunction;
 import net.minecraft.loot.provider.number.UniformLootNumberProvider;
 import net.minecraft.predicate.StatePredicate;
 import net.minecraft.registry.RegistryWrapper;
-import net.minecraft.state.property.Properties;
 
 import java.util.concurrent.CompletableFuture;
 
@@ -37,15 +36,15 @@ public final class VABlockLootTableProvider {
     public static final VABlockLootTableProvider INSTANCE = new VABlockLootTableProvider();
 
     public FabricDataGenerator.Pack.RegistryDependentFactory<?> base() {
-        return Base::new;
+        return BaseProvider::new;
     }
     public FabricDataGenerator.Pack.RegistryDependentFactory<?> preview() {
-        return Preview::new;
+        return PreviewProvider::new;
     }
 
-    private static class Base extends FabricBlockLootTableProvider {
+    private static class BaseProvider extends Provider {
 
-        protected Base(FabricDataOutput dataOutput, CompletableFuture<RegistryWrapper.WrapperLookup> registryLookup) {
+        protected BaseProvider(FabricDataOutput dataOutput, CompletableFuture<RegistryWrapper.WrapperLookup> registryLookup) {
             super(dataOutput, registryLookup);
         }
 
@@ -106,7 +105,8 @@ public final class VABlockLootTableProvider {
                     VABlocks.ACID_BLOCK,
                     VABlocks.IOLITE_BLOCK,
                     VABlocks.WARP_ANCHOR,
-                    VABlocks.ENTANGLEMENT_DRIVE
+                    VABlocks.ENTANGLEMENT_DRIVE,
+                    VABlocks.SPOTLIGHT
             );
 
             addColorfulBlockSetDrops(VACollections.CHARTREUSE);
@@ -129,6 +129,57 @@ public final class VABlockLootTableProvider {
             this.addDrop(VABlocks.TALL_GREENCAP_MUSHROOMS, (Block block) -> this.dropsWithProperty(block, TallPlantBlock.HALF, DoubleBlockHalf.LOWER));
 
             this.addDrop(VABlocks.REDSTONE_BRIDGE);
+        }
+    }
+
+    private static class PreviewProvider extends Provider {
+        public PreviewProvider(FabricDataOutput output, CompletableFuture<RegistryWrapper.WrapperLookup> registryLookup) {
+            super(output, registryLookup);
+        }
+
+        @Override
+        public void generate() {
+            addFamilyDrops(
+                    VACollections.AEROBLOOM,
+                    VACollections.FLOATROCK,
+                    VACollections.POLISHED_FLOATROCK,
+                    VACollections.FLOATROCK_BRICKS
+            );
+            addSimpleDrops(
+                    VABlocks.AEROBLOOM_LOG,
+                    VABlocks.AEROBLOOM_WOOD,
+                    VABlocks.STRIPPED_AEROBLOOM_LOG,
+                    VABlocks.STRIPPED_AEROBLOOM_WOOD,
+                    VABlocks.AEROBLOOM_HANGING_SIGN,
+                    VABlocks.AEROBLOOM_SAPLING,
+                    VABlocks.SPRINGSOIL,
+                    VABlocks.AEROBLOOM_HEDGE,
+                    VABlocks.RED_GLIMMER_CRYSTAL,
+                    VABlocks.GREEN_GLIMMER_CRYSTAL,
+                    VABlocks.BLUE_GLIMMER_CRYSTAL
+            );
+
+            this.addDrop(VABlocks.GRASSY_FLOATROCK, block -> this.drops(block, VABlocks.FLOATROCK));
+
+            this.addDrop(VABlocks.FLOATROCK_COAL_ORE, block -> this.oreDrops(block, Items.COAL));
+            this.addDrop(VABlocks.FLOATROCK_IRON_ORE, block -> this.oreDrops(block, Items.RAW_IRON));
+            this.addDrop(VABlocks.FLOATROCK_COPPER_ORE, this::copperOreDrops);
+            this.addDrop(VABlocks.FLOATROCK_GOLD_ORE, block -> this.oreDrops(block, Items.RAW_GOLD));
+            this.addDrop(VABlocks.FLOATROCK_REDSTONE_ORE, this::redstoneOreDrops);
+            this.addDrop(VABlocks.FLOATROCK_EMERALD_ORE, block -> this.oreDrops(block, Items.EMERALD));
+            this.addDrop(VABlocks.FLOATROCK_LAPIS_ORE, this::lapisOreDrops);
+            this.addDrop(VABlocks.FLOATROCK_DIAMOND_ORE, block -> this.oreDrops(block, Items.DIAMOND));
+
+            this.addDrop(VABlocks.BALLOON_BULB, block -> this.drops(VAItems.BALLOON_FRUIT));
+            this.addDrop(VABlocks.BALLOON_BULB_PLANT, block -> new LootTable.Builder().pool(LootPool.builder().with(ItemEntry.builder(VAItems.BALLOON_FRUIT).conditionally(BlockStatePropertyLootCondition.builder(VABlocks.BALLOON_BULB_PLANT).properties(StatePredicate.Builder.create().exactMatch(BalloonBulbPlantBlock.AGE, 3))).apply(SetCountLootFunction.builder(UniformLootNumberProvider.create(2, 3))))));
+
+            this.addDrop(VABlocks.AEROBLOOM_LEAVES, block ->  leavesDrops(VABlocks.AEROBLOOM_LEAVES, VABlocks.AEROBLOOM_SAPLING, SAPLING_DROP_CHANCE));
+        }
+    }
+
+    private static abstract class Provider extends FabricBlockLootTableProvider {
+        protected Provider(FabricDataOutput dataOutput, CompletableFuture<RegistryWrapper.WrapperLookup> registryLookup) {
+            super(dataOutput, registryLookup);
         }
 
         protected void addFamilyDrops(BlockFamily... blockFamilies) {
@@ -187,52 +238,6 @@ public final class VABlockLootTableProvider {
             return BlockLootTableGenerator
                     .dropsWithSilkTouch(dropWithSilkTouch, this.applyExplosionDecay(dropWithSilkTouch, ItemEntry.builder(drop).apply(ApplyBonusLootFunction.oreDrops(Enchantments.FORTUNE))))
                     .randomSequenceId(dropWithSilkTouch.getLootTableId());
-        }
-    }
-
-    private static class Preview extends Base {
-        public Preview(FabricDataOutput output, CompletableFuture<RegistryWrapper.WrapperLookup> registryLookup) {
-            super(output, registryLookup);
-        }
-
-        @Override
-        public void generate() {
-            addFamilyDrops(
-                    VACollections.AEROBLOOM,
-                    VACollections.FLOATROCK,
-                    VACollections.POLISHED_FLOATROCK,
-                    VACollections.FLOATROCK_BRICKS
-            );
-            addSimpleDrops(
-                    VABlocks.AEROBLOOM_LOG,
-                    VABlocks.AEROBLOOM_WOOD,
-                    VABlocks.STRIPPED_AEROBLOOM_LOG,
-                    VABlocks.STRIPPED_AEROBLOOM_WOOD,
-                    VABlocks.AEROBLOOM_HANGING_SIGN,
-                    VABlocks.AEROBLOOM_SAPLING,
-                    VABlocks.SPRINGSOIL,
-                    VABlocks.AEROBLOOM_HEDGE,
-                    VABlocks.RED_GLIMMER_CRYSTAL,
-                    VABlocks.GREEN_GLIMMER_CRYSTAL,
-                    VABlocks.BLUE_GLIMMER_CRYSTAL,
-                    VABlocks.SPOTLIGHT
-            );
-
-            this.addDrop(VABlocks.GRASSY_FLOATROCK, block -> this.drops(block, VABlocks.FLOATROCK));
-
-            this.addDrop(VABlocks.FLOATROCK_COAL_ORE, block -> this.oreDrops(block, Items.COAL));
-            this.addDrop(VABlocks.FLOATROCK_IRON_ORE, block -> this.oreDrops(block, Items.RAW_IRON));
-            this.addDrop(VABlocks.FLOATROCK_COPPER_ORE, this::copperOreDrops);
-            this.addDrop(VABlocks.FLOATROCK_GOLD_ORE, block -> this.oreDrops(block, Items.RAW_GOLD));
-            this.addDrop(VABlocks.FLOATROCK_REDSTONE_ORE, this::redstoneOreDrops);
-            this.addDrop(VABlocks.FLOATROCK_EMERALD_ORE, block -> this.oreDrops(block, Items.EMERALD));
-            this.addDrop(VABlocks.FLOATROCK_LAPIS_ORE, this::lapisOreDrops);
-            this.addDrop(VABlocks.FLOATROCK_DIAMOND_ORE, block -> this.oreDrops(block, Items.DIAMOND));
-
-            this.addDrop(VABlocks.BALLOON_BULB, block -> this.drops(VAItems.BALLOON_FRUIT));
-            this.addDrop(VABlocks.BALLOON_BULB_PLANT, block -> new LootTable.Builder().pool(LootPool.builder().with(ItemEntry.builder(VAItems.BALLOON_FRUIT).conditionally(BlockStatePropertyLootCondition.builder(VABlocks.BALLOON_BULB_PLANT).properties(StatePredicate.Builder.create().exactMatch(BalloonBulbPlantBlock.AGE, 3))).apply(SetCountLootFunction.builder(UniformLootNumberProvider.create(2, 3))))));
-
-            this.addDrop(VABlocks.AEROBLOOM_LEAVES, block ->  leavesDrops(VABlocks.AEROBLOOM_LEAVES, VABlocks.AEROBLOOM_SAPLING, SAPLING_DROP_CHANCE));
         }
     }
 }

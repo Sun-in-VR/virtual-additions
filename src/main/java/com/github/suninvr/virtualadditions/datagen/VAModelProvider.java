@@ -1,5 +1,6 @@
 package com.github.suninvr.virtualadditions.datagen;
 
+import com.github.suninvr.virtualadditions.block.SpotlightBlock;
 import com.github.suninvr.virtualadditions.item.interfaces.GildedToolItem;
 import com.github.suninvr.virtualadditions.registry.RegistryHelper;
 import com.github.suninvr.virtualadditions.registry.VACollections;
@@ -9,9 +10,12 @@ import com.github.suninvr.virtualadditions.registry.collection.ColorfulBlockSet;
 import net.fabricmc.fabric.api.datagen.v1.FabricDataOutput;
 import net.fabricmc.fabric.api.datagen.v1.provider.FabricModelProvider;
 import net.minecraft.block.Blocks;
+import net.minecraft.block.CrafterBlock;
+import net.minecraft.block.enums.Orientation;
 import net.minecraft.data.client.*;
 import net.minecraft.item.*;
 import net.minecraft.registry.Registries;
+import net.minecraft.state.property.Properties;
 import net.minecraft.util.Identifier;
 
 import java.util.Map;
@@ -38,6 +42,8 @@ class VAModelProvider extends FabricModelProvider {
         registerColorfulBlockSetModels( blockStateModelGenerator,VACollections.SINOPIA);
         registerColorfulBlockSetModels( blockStateModelGenerator,VACollections.LILAC);
         registerColoringStation(blockStateModelGenerator);
+
+        registerSpotlight(blockStateModelGenerator);
     }
 
     private void registerColoringStation(BlockStateModelGenerator blockStateModelGenerator) {
@@ -111,5 +117,15 @@ class VAModelProvider extends FabricModelProvider {
         else if (item instanceof SwordItem) TOOL_TYPE_SUFFIX = "_sword";
         Identifier gild = gildedToolItem.getGildType().getId().withSuffixedPath(TOOL_TYPE_SUFFIX).withPrefixedPath("item/gilded_tools/");
         Models.HANDHELD.upload(ModelIds.getItemModelId(item), TextureMap.layered(base, base), itemModelGenerator.writer, (id, textures) -> Models.HANDHELD.createJson(ModelIds.getItemModelId(item), Map.of(TextureKey.LAYER0, base, TextureKey.LAYER1, gild)));
+    }
+
+    private void registerSpotlight(BlockStateModelGenerator generator) {
+        Identifier spotlight = ModelIds.getBlockModelId(VABlocks.SPOTLIGHT);
+        Identifier spotlightActive = ModelIds.getBlockSubModelId(VABlocks.SPOTLIGHT, "_active");
+        generator.blockStateCollector.accept(VariantsBlockStateSupplier.create(VABlocks.SPOTLIGHT)
+                .coordinate(BlockStateVariantMap.create(Properties.ORIENTATION)
+                        .register(orientation -> generator.addJigsawOrientationToVariant(orientation, BlockStateVariant.create())))
+                .coordinate(BlockStateVariantMap.create(SpotlightBlock.POWERED)
+                        .register(powered -> powered ? BlockStateVariant.create().put(VariantSettings.MODEL, spotlightActive) : BlockStateVariant.create().put(VariantSettings.MODEL, spotlight))));
     }
 }

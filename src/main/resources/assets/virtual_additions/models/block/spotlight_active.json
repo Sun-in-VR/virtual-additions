@@ -6,7 +6,7 @@
     "east": "virtual_additions:block/spotlight_east",
     "west": "virtual_additions:block/spotlight_west",
     "up": "virtual_additions:block/spotlight_top",
-    "north": "virtual_additions:block/spotlight_north",
+    "north": "virtual_additions:block/spotlight_north_lit",
     "particle": "virtual_additions:block/spotlight_east"
   }
 }
