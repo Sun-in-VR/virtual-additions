@@ -4,9 +4,7 @@ import com.github.suninvr.virtualadditions.VirtualAdditions;
 import com.github.suninvr.virtualadditions.block.*;
 import com.github.suninvr.virtualadditions.block.enums.ExtendedDyeColor;
 import com.github.suninvr.virtualadditions.mixin.FireBlockAccessor;
-import com.github.suninvr.virtualadditions.registry.collection.ColorfulBlockSet;
 import com.github.suninvr.virtualadditions.registry.constructors.block.CustomStairsBlock;
-import net.fabricmc.fabric.api.object.builder.v1.block.FabricBlockSettings;
 import net.fabricmc.fabric.api.object.builder.v1.block.type.BlockSetTypeBuilder;
 import net.fabricmc.fabric.api.object.builder.v1.block.type.WoodTypeBuilder;
 import net.fabricmc.fabric.api.registry.LandPathNodeTypesRegistry;
@@ -22,8 +20,6 @@ import net.minecraft.state.property.Properties;
 import net.minecraft.util.DyeColor;
 import net.minecraft.util.math.intprovider.ConstantIntProvider;
 import net.minecraft.util.math.intprovider.UniformIntProvider;
-
-import java.util.ArrayList;
 
 import static com.github.suninvr.virtualadditions.VirtualAdditions.idOf;
 import static com.github.suninvr.virtualadditions.registry.RegistryHelper.BlockRegistryHelper.register;
@@ -344,7 +340,7 @@ public class VABlocks {
         GREEN_GLIMMER_CRYSTAL = register("green_glimmer_crystal", new CrystalBlock(Settings.copy(Blocks.AMETHYST_CLUSTER).mapColor(MapColor.WHITE_GRAY).nonOpaque().dynamicBounds().pistonBehavior(PistonBehavior.DESTROY).requires(VirtualAdditions.PREVIEW)));
         BLUE_GLIMMER_CRYSTAL = register("blue_glimmer_crystal", new CrystalBlock(Settings.copy(Blocks.AMETHYST_CLUSTER).mapColor(MapColor.WHITE_GRAY).nonOpaque().dynamicBounds().pistonBehavior(PistonBehavior.DESTROY).requires(VirtualAdditions.PREVIEW)));
         SPOTLIGHT = register("spotlight", new SpotlightBlock(Settings.copy(STEEL_BLOCK).nonOpaque().luminance((state) -> state.get(SpotlightBlock.POWERED) ? 6 : 0).emissiveLighting((state, world, pos) -> state.get(Properties.POWERED)) ));
-        SPOTLIGHT_LIGHT = register("spotlight_light", new SpotlightLightBlock(Settings.create().sounds(BlockSoundGroup.INTENTIONALLY_EMPTY).replaceable().noCollision().dropsNothing().luminance((state) -> state.get(SpotlightLightBlock.LIT) ? 15 : 0)));
+        SPOTLIGHT_LIGHT = register("spotlight_light", new SpotlightLightBlock(Settings.create().sounds(BlockSoundGroup.INTENTIONALLY_EMPTY).replaceable().noCollision().dropsNothing().luminance((state) -> state.get(SpotlightLightBlock.LIT) ? 15 : 0).pistonBehavior(PistonBehavior.DESTROY)));
 
         COTTON = register("cotton", new CottonCropBlock(Settings.create().noCollision().ticksRandomly().breakInstantly().sounds(BlockSoundGroup.CROP)));
         CORN_CROP = register("corn_crop", new CornCropBlock(Settings.create().noCollision().ticksRandomly().breakInstantly().sounds(BlockSoundGroup.CROP).offset(AbstractBlock.OffsetType.XZ)));

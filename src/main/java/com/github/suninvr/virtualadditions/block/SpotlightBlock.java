@@ -2,39 +2,27 @@ package com.github.suninvr.virtualadditions.block;
 
 import com.github.suninvr.virtualadditions.block.entity.SpotlightBlockEntity;
 import com.github.suninvr.virtualadditions.block.enums.LightStatus;
-import com.github.suninvr.virtualadditions.registry.VABlockEntityType;
 import com.github.suninvr.virtualadditions.registry.VABlockTags;
 import com.github.suninvr.virtualadditions.registry.VABlocks;
 import com.mojang.serialization.MapCodec;
 import net.minecraft.block.*;
 import net.minecraft.block.entity.BlockEntity;
-import net.minecraft.block.entity.BlockEntityTicker;
-import net.minecraft.block.entity.BlockEntityType;
 import net.minecraft.block.enums.Orientation;
 import net.minecraft.entity.LivingEntity;
-import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.fluid.Fluids;
 import net.minecraft.item.ItemPlacementContext;
 import net.minecraft.item.ItemStack;
-import net.minecraft.registry.entry.RegistryEntry;
 import net.minecraft.server.world.ServerWorld;
 import net.minecraft.state.StateManager;
 import net.minecraft.state.property.BooleanProperty;
-import net.minecraft.state.property.DirectionProperty;
 import net.minecraft.state.property.EnumProperty;
 import net.minecraft.state.property.Properties;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Direction;
-import net.minecraft.util.math.Vec3d;
 import net.minecraft.util.math.random.Random;
 import net.minecraft.world.World;
-import net.minecraft.world.event.BlockPositionSource;
-import net.minecraft.world.event.GameEvent;
-import net.minecraft.world.event.PositionSource;
-import net.minecraft.world.event.listener.GameEventListener;
 import org.jetbrains.annotations.Nullable;
 
-@SuppressWarnings("deprecation")
 public class SpotlightBlock extends BlockWithEntity {
     public static final MapCodec<SpotlightBlock> CODEC = createCodec(SpotlightBlock::new);
     public static final EnumProperty<Orientation> ORIENTATION = Properties.ORIENTATION;
@@ -64,9 +52,11 @@ public class SpotlightBlock extends BlockWithEntity {
     }
 
     @Override
-    public BlockState onBreak(World world, BlockPos pos, BlockState state, PlayerEntity player) {
-        setLightState(world, pos, LightStatus.NONE);
-        return super.onBreak(world, pos, state, player);
+    protected void onStateReplaced(BlockState state, World world, BlockPos pos, BlockState newState, boolean moved) {
+        if (!state.isOf(newState.getBlock())) {
+            setLightState(world, pos, state, LightStatus.NONE);
+        }
+        super.onStateReplaced(state, world, pos, newState, moved);
     }
 
     @Override
@@ -97,21 +87,21 @@ public class SpotlightBlock extends BlockWithEntity {
 
         //Initialize position and state variables.
         Direction direction = state.get(SpotlightBlock.ORIENTATION).getFacing();
-        BlockPos newPos = findLightLocation(world, pos, direction);
-        BlockPos oldPos = blockEntity.getLightLocation();
-        BlockState newState = world.getBlockState(newPos);
-        BlockState oldState = world.getBlockState(oldPos);
-        boolean isWater = newState.isOf(Blocks.WATER) && world.getFluidState(newPos).isEqualAndStill(Fluids.WATER);
+        BlockPos newLightPos = findLightLocation(world, pos, direction);
+        BlockPos oldLightPos = blockEntity.getLightLocation();
+        BlockState newLightState = world.getBlockState(newLightPos);
+        BlockState oldLightState = world.getBlockState(oldLightPos);
+        boolean isWater = newLightState.isOf(Blocks.WATER) && world.getFluidState(newLightPos).isEqualAndStill(Fluids.WATER);
 
-        if (newState.isOf(VABlocks.SPOTLIGHT_LIGHT) || newState.isAir() || isWater) {
-            BlockState lightState = SpotlightBlock.getLightState(world, pos, (newState.isOf(VABlocks.SPOTLIGHT_LIGHT) ? newState : VABlocks.SPOTLIGHT_LIGHT.getDefaultState().with(Properties.WATERLOGGED, isWater)));
-            world.setBlockState(newPos, lightState);
-            blockEntity.setLightLocation(newPos);
+        if (newLightState.isOf(VABlocks.SPOTLIGHT_LIGHT) || newLightState.isAir() || isWater) {
+            BlockState lightState = SpotlightBlock.getLightState(world, pos, (newLightState.isOf(VABlocks.SPOTLIGHT_LIGHT) ? newLightState : VABlocks.SPOTLIGHT_LIGHT.getDefaultState().with(Properties.WATERLOGGED, isWater)));
+            world.setBlockState(newLightPos, lightState);
+            blockEntity.setLightLocation(newLightPos);
         }
 
-        if (!oldPos.equals(newPos) && oldState.isOf(VABlocks.SPOTLIGHT_LIGHT)) {
-            BlockState lightState = SpotlightBlock.getLightState(world, pos, oldState, LightStatus.NONE);
-            world.setBlockState(oldPos, lightState);
+        if (!oldLightPos.equals(newLightPos) && oldLightState.isOf(VABlocks.SPOTLIGHT_LIGHT)) {
+            BlockState lightState = SpotlightBlock.getLightState(state, oldLightState, LightStatus.NONE);
+            world.setBlockState(oldLightPos, lightState);
         }
     }
 
@@ -135,19 +125,21 @@ public class SpotlightBlock extends BlockWithEntity {
     }
 
     public static void setLightState(World world, BlockPos pos, LightStatus status) {
+        setLightState(world, pos, world.getBlockState(pos), status);
+    }
+
+    public static void setLightState(World world, BlockPos pos, BlockState state, LightStatus status) {
+        if (!state.isOf(VABlocks.SPOTLIGHT)) return;
         BlockEntity blockEntity = world.getBlockEntity(pos);
         if (!world.isClient() && blockEntity instanceof SpotlightBlockEntity spotlightBlockEntity) {
             BlockPos lightPos = spotlightBlockEntity.getLightLocation();
-            setLightState(world, pos, lightPos, status);
+            setLightState(world, state, lightPos, world.getBlockState(lightPos), status);
         }
     }
 
-    public static void setLightState(World world, BlockPos pos, BlockPos lightPos, LightStatus status) {
-        setLightState(world, pos, lightPos, world.getBlockState(lightPos), status);
-    }
-
-    public static void setLightState(World world, BlockPos pos, BlockPos lightPos, BlockState lightState, LightStatus status) {
-        BlockState updatedLightState = getLightState(world, pos, lightState, status);
+    public static void setLightState(World world, BlockState state, BlockPos lightPos, BlockState lightState, LightStatus status) {
+        if (!state.isOf(VABlocks.SPOTLIGHT)) return;
+        BlockState updatedLightState = getLightState(state, lightState, status);
         world.setBlockState(lightPos, updatedLightState);
     }
 
@@ -155,12 +147,11 @@ public class SpotlightBlock extends BlockWithEntity {
         BlockState state = world.getBlockState(pos);
         if (!state.isOf(VABlocks.SPOTLIGHT)) return lightState;
         LightStatus status = state.get(POWERED) ? LightStatus.LIT : LightStatus.UNLIT;
-        return getLightState(world, pos, lightState, status);
+        return getLightState(state, lightState, status);
     }
 
-    public static BlockState getLightState(World world, BlockPos pos, BlockState lightState, LightStatus status) {
+    public static BlockState getLightState(BlockState state, BlockState lightState, LightStatus status) {
         if (!lightState.isOf(VABlocks.SPOTLIGHT_LIGHT)) return lightState;
-        BlockState state = world.getBlockState(pos);
         if (!state.isOf(VABlocks.SPOTLIGHT)) return lightState;
         Direction direction = state.get(ORIENTATION).getFacing().getOpposite();
         return SpotlightLightBlock.getUpdatedLightState(lightState.with(SpotlightLightBlock.getDirectionProperty(direction), status));

@@ -14,12 +14,21 @@ import net.minecraft.world.event.GameEvent;
 import net.minecraft.world.event.PositionSource;
 import net.minecraft.world.event.listener.GameEventListener;
 
+@SuppressWarnings("ClassEscapesDefinedScope")
 public class SpotlightLightBlockEntity extends BlockEntity implements GameEventListener.Holder<SpotlightLightBlockEntity.Listener> {
     private final Listener listener;
+    private long lastUpdated;
 
     public SpotlightLightBlockEntity(BlockPos pos, BlockState state) {
         super(VABlockEntityType.SPOTLIGHT_LIGHT, pos, state);
         this.listener = new SpotlightLightBlockEntity.Listener(pos);
+        this.lastUpdated = -1;
+    }
+
+    private boolean canUpdate(long time) {
+        boolean bl = (time != this.lastUpdated);
+        if (bl) this.lastUpdated = time;
+        return bl;
     }
 
     @Override
@@ -47,13 +56,11 @@ public class SpotlightLightBlockEntity extends BlockEntity implements GameEventL
         @Override
         public boolean listen(ServerWorld world, RegistryEntry<GameEvent> event, GameEvent.Emitter emitter, Vec3d emitterPos) {
             if (!event.isIn(VAGameEventTags.NOTIFIES_SPOTLIGHT)) return false;
+            if (!SpotlightLightBlockEntity.this.canUpdate(world.getTime())) return false;
             Vec3d pos = this.getPositionSource().getPos(world).get();
-            BlockPos blockPos = new BlockPos((int)Math.floor(pos.x), (int)Math.floor(pos.y), (int)Math.floor(pos.z));
-            boolean bl = pos.x == emitterPos.x || pos.y == emitterPos.y || pos.z == emitterPos.z;
-            if (bl) {
-                SpotlightLightBlock.updateSources(world, blockPos, world.getBlockState(blockPos));
-            }
-            return bl;
+            BlockPos blockPos = BlockPos.ofFloored(pos);
+            SpotlightLightBlock.updateSources(world, blockPos, world.getBlockState(blockPos));
+            return true;
         }
     }
 }
