@@ -12,6 +12,7 @@ import com.github.suninvr.virtualadditions.registry.constructors.item.CustomAxeI
 import com.github.suninvr.virtualadditions.registry.constructors.item.CustomHoeItem;
 import com.github.suninvr.virtualadditions.registry.constructors.item.CustomPickaxeItem;
 import net.fabricmc.fabric.api.itemgroup.v1.ItemGroupEvents;
+import net.fabricmc.fabric.api.loot.v2.FabricLootPoolBuilder;
 import net.fabricmc.fabric.api.loot.v2.LootTableEvents;
 import net.minecraft.block.Blocks;
 import net.minecraft.block.DispenserBlock;
@@ -26,18 +27,20 @@ import net.minecraft.entity.projectile.ProjectileEntity;
 import net.minecraft.item.*;
 import net.minecraft.loot.LootPool;
 import net.minecraft.loot.LootTables;
-import net.minecraft.loot.condition.InvertedLootCondition;
-import net.minecraft.loot.condition.MatchToolLootCondition;
-import net.minecraft.loot.condition.RandomChanceLootCondition;
-import net.minecraft.loot.condition.RandomChanceWithLootingLootCondition;
+import net.minecraft.loot.condition.*;
+import net.minecraft.loot.context.LootContext;
 import net.minecraft.loot.entry.ItemEntry;
-import net.minecraft.loot.function.ApplyBonusLootFunction;
-import net.minecraft.loot.function.ExplosionDecayLootFunction;
-import net.minecraft.loot.function.SetCountLootFunction;
+import net.minecraft.loot.entry.LootPoolEntry;
+import net.minecraft.loot.entry.LootPoolEntryTypes;
+import net.minecraft.loot.function.*;
+import net.minecraft.loot.provider.number.ConstantLootNumberProvider;
 import net.minecraft.loot.provider.number.UniformLootNumberProvider;
 import net.minecraft.potion.Potion;
 import net.minecraft.potion.PotionUtil;
 import net.minecraft.potion.Potions;
+import net.minecraft.predicate.entity.EntityFlagsPredicate;
+import net.minecraft.predicate.entity.EntityPredicate;
+import net.minecraft.predicate.entity.EntityPredicates;
 import net.minecraft.predicate.item.ItemPredicate;
 import net.minecraft.recipe.BrewingRecipeRegistry;
 import net.minecraft.registry.Registries;
@@ -790,15 +793,22 @@ public class VAItems {
                 } else {
                     return this.fallbackBehavior.dispense(pointer, stack);
                 }
-            }});
+            }
+        });
     }
+
     protected static void initCompostables() {
         ComposterBlockAccessor.virtualAdditions$registerCompostableItem(0.3F, COTTON_SEEDS);
         ComposterBlockAccessor.virtualAdditions$registerCompostableItem(0.3F, COTTON);
+        ComposterBlockAccessor.virtualAdditions$registerCompostableItem(0.65F, CORN);
     }
+
     protected static void initLootTableModifiers() {
         LootTableEvents.MODIFY.register( (resourceManager, lootManager, id, tableBuilder, source) -> {
-            if (source.isBuiltin() && Blocks.SHORT_GRASS.getLootTableId().equals(id)) {
+            if (!source.isBuiltin()) return;
+
+            // Grass Drop
+            if (Blocks.SHORT_GRASS.getLootTableId().equals(id)) {
                 LootPool.Builder builder = LootPool.builder()
                         .with(ItemEntry.builder(COTTON_SEEDS)
                                 .apply(ApplyBonusLootFunction.uniformBonusCount(Enchantments.FORTUNE, 2))
@@ -808,60 +818,97 @@ public class VAItems {
                         );
                 tableBuilder.pool(builder);
             }
-        }); // Grass Drop
-        LootTableEvents.MODIFY.register( (resourceManager, lootManager, id, tableBuilder, source) -> {
-            if (!source.isBuiltin()) return;
+
+            // Abandoned Mineshaft Chest
             if (LootTables.ABANDONED_MINESHAFT_CHEST.equals(id)) {
-                LootPool.Builder builder = LootPool.builder()
-                        .with(ItemEntry.builder(CLIMBING_ROPE).weight(5).apply(SetCountLootFunction.builder(UniformLootNumberProvider.create(5, 16))))
-                        .with(ItemEntry.builder(Items.AIR).weight(3));
-                tableBuilder.pool(builder);
+                final int[] i = {0};
+                tableBuilder.modifyPools(builder -> {
+                    if (i[0] == 2) {
+                        builder.with(ItemEntry.builder(CLIMBING_ROPE).weight(5).apply(SetCountLootFunction.builder(UniformLootNumberProvider.create(2, 16))));
+                    }
+                    i[0]++;
+                });
             }
-        }); // Abandoned Mineshaft Chest
-        LootTableEvents.MODIFY.register( (resourceManager, lootManager, id, tableBuilder, source) -> {
-            if (!source.isBuiltin()) return;
+
+            // Village Toolsmith and Weaponsmith Chests
             if (LootTables.VILLAGE_TOOLSMITH_CHEST.equals(id) || LootTables.VILLAGE_WEAPONSMITH_CHEST.equals(id)) {
-                LootPool.Builder builder = LootPool.builder()
-                        .with(ItemEntry.builder(STEEL_INGOT).weight(5).apply(SetCountLootFunction.builder(UniformLootNumberProvider.create(1, 5))))
-                        .with(ItemEntry.builder(Items.AIR).weight(15));
-                tableBuilder.pool(builder);
+                tableBuilder.modifyPools( builder -> builder
+                        .with(ItemEntry.builder(STEEL_INGOT).weight(3).apply(SetCountLootFunction.builder(UniformLootNumberProvider.create(1, 4))))
+                );
+                LootPool.Builder smithingTemplateBuilder = LootPool.builder()
+                        .with(ItemEntry.builder(TOOL_GILD_SMITHING_TEMPLATE).apply(SetCountLootFunction.builder(UniformLootNumberProvider.create(2, 3))));
+                tableBuilder.pool(smithingTemplateBuilder);
+                LootPool.Builder gildMaterialBuilder = LootPool.builder()
+                        .with(ItemEntry.builder(Items.COPPER_INGOT).apply(SetCountLootFunction.builder(UniformLootNumberProvider.create(2, 4))))
+                        .with(ItemEntry.builder(Items.AMETHYST_SHARD).apply(SetCountLootFunction.builder(UniformLootNumberProvider.create(2, 4))))
+                        .with(ItemEntry.builder(Items.EMERALD).apply(SetCountLootFunction.builder(UniformLootNumberProvider.create(2, 4))));
+                tableBuilder.pool(gildMaterialBuilder);
+
             }
-        }); // Village Toolsmith and Weaponsmith Chests
-        LootTableEvents.MODIFY.register( (resourceManager, lootManager, id, tableBuilder, source) -> {
-            if (!source.isBuiltin()) return;
+
+            // Savannah and Desert Village House Chests
             if (LootTables.VILLAGE_SAVANNA_HOUSE_CHEST.equals(id) || LootTables.VILLAGE_DESERT_HOUSE_CHEST.equals(id)) {
                 tableBuilder.modifyPools( builder -> builder.with(ItemEntry.builder(CORN).weight(5).apply(SetCountLootFunction.builder(UniformLootNumberProvider.create(1, 4)))));
             }
-        }); // Village Savannah and Desert House Chests
-        LootTableEvents.MODIFY.register( (resourceManager, lootManager, id, tableBuilder, source) -> {
-            if (!source.isBuiltin()) return;
+
+            // Jungle Temple Chest
             if (LootTables.JUNGLE_TEMPLE_CHEST.equals(id)) {
-                LootPool.Builder builder = LootPool.builder()
-                        .with(ItemEntry.builder(STEEL_INGOT).weight(5).apply(SetCountLootFunction.builder(UniformLootNumberProvider.create(1, 5))))
-                        .with(ItemEntry.builder(Items.AIR).weight(10));
-                tableBuilder.pool(builder);
+                final int[] i = {0};
+                tableBuilder.modifyPools(builder -> {
+                    if (i[0] == 0) {
+                        builder.with(ItemEntry.builder(STEEL_INGOT).weight(5).apply(SetCountLootFunction.builder(UniformLootNumberProvider.create(2, 5))));
+                    }
+                    i[0]++;
+                });
             }
-        }); // Jungle Temple Chest
-        LootTableEvents.MODIFY.register( (resourceManager, lootManager, id, tableBuilder, source) -> {
-            if (!source.isBuiltin()) return;
+
+            // End City Chest
             if (LootTables.END_CITY_TREASURE_CHEST.equals(id)) {
-                LootPool.Builder builder = LootPool.builder()
-                        .with(ItemEntry.builder(IOLITE).weight(5).apply(SetCountLootFunction.builder(UniformLootNumberProvider.create(1, 4))))
-                        .with(ItemEntry.builder(Items.AIR).weight(25));
-                tableBuilder.pool(builder);
+                final int[] i = {0};
+                tableBuilder.modifyPools(builder -> {
+                    if (i[0] == 0) {
+                        builder.with(ItemEntry.builder(IOLITE).weight(5).apply(SetCountLootFunction.builder(UniformLootNumberProvider.create(1, 4))))
+                        .with(ItemEntry.builder(STEEL_INGOT).weight(10).apply(SetCountLootFunction.builder(UniformLootNumberProvider.create(3, 6))));
+                    }
+                    i[0]++;
+                });
             }
-        }); // End City Chest
-        LootTableEvents.MODIFY.register( (resourceManager, lootManager, id, tableBuilder, source) -> {
-            if (!source.isBuiltin()) return;
-            if (EntityType.ZOMBIE.getLootTableId().equals(id)) {
-                LootPool.Builder builder = LootPool.builder()
-                        .with(ItemEntry.builder(CORN).weight(1))
-                        .conditionally(RandomChanceWithLootingLootCondition.builder(0.025F, 0.01F));
-                tableBuilder.pool(builder);
+
+            // Ancient City Loot
+            if (LootTables.ANCIENT_CITY_CHEST.equals(id)) {
+                final int[] i = {0};
+                tableBuilder.modifyPools(builder -> {
+                    if (i[0] == 0) {
+                        builder.with(ItemEntry.builder(EMERALD_DIAMOND_TOOL_SET.HOE())
+                                .weight(2)
+                                .apply(SetCountLootFunction.builder(ConstantLootNumberProvider.create(1)))
+                                .apply(SetDamageLootFunction.builder(UniformLootNumberProvider.create(0.8F, 1), false))
+                        );
+                    }
+                    i[0]++;
+                });
             }
-        }); // Zombie Loot
+
+            // Zombie Loot
+            if (EntityType.ZOMBIE.getLootTableId().equals(id) || EntityType.HUSK.getLootTableId().equals(id)) {
+                final int[] i = {0};
+                tableBuilder.modifyPools(builder -> {
+                    if (i[0] == 1) {
+                        builder.with(ItemEntry.builder(CORN).apply(
+                                FurnaceSmeltLootFunction.builder().conditionally(
+                                        EntityPropertiesLootCondition.builder(
+                                                LootContext.EntityTarget.THIS, EntityPredicate.Builder.create().flags(EntityFlagsPredicate.Builder.create().onFire(true))
+                                        )
+                                )
+                        ));
+                    }
+                    i[0]++;
+                });
+            }
+        });
 
     }
+
     protected static void initBrewingRecipes() {
         BrewingRecipeRegistry.registerPotionType(APPLICABLE_POTION);
         BrewingRecipeRegistry.registerItemRecipe(Items.POTION, LUMWASP_MANDIBLE, APPLICABLE_POTION);
