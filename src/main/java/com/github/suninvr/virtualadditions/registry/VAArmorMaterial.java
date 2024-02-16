@@ -39,7 +39,7 @@ public class VAArmorMaterial {
 
         for(int var11 = 0; var11 < var10; ++var11) {
             ArmorItem.Type type = var9[var11];
-            enumMap.put(type, (Integer)defense.get(type));
+            enumMap.put(type, defense.get(type));
         }
 
         return Registry.registerReference(Registries.ARMOR_MATERIAL, idOf(id), new ArmorMaterial(enumMap, enchantability, equipSound, repairIngredient, layers, toughness, knockbackResistance));

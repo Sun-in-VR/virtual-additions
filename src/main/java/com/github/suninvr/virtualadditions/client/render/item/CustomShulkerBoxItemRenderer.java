@@ -17,7 +17,7 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.util.math.BlockPos;
 
 public class CustomShulkerBoxItemRenderer implements BuiltinItemRendererRegistry.DynamicItemRenderer {
-    private static CustomShulkerBoxBlockEntity renderer = new CustomShulkerBoxBlockEntity(ExtendedDyeColor.CHARTREUSE, BlockPos.ORIGIN, VABlocks.CHARTREUSE_BED.getDefaultState());
+    private static final CustomShulkerBoxBlockEntity renderer = new CustomShulkerBoxBlockEntity(ExtendedDyeColor.CHARTREUSE, BlockPos.ORIGIN, VABlocks.CHARTREUSE_BED.getDefaultState());
 
     @Override
     public void render(ItemStack stack, ModelTransformationMode mode, MatrixStack matrices, VertexConsumerProvider vertexConsumers, int light, int overlay) {

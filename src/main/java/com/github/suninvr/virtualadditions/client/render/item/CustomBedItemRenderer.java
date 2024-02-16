@@ -14,7 +14,7 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.util.math.BlockPos;
 
 public class CustomBedItemRenderer implements BuiltinItemRendererRegistry.DynamicItemRenderer {
-    private static CustomBedBlockEntity renderer = new CustomBedBlockEntity(BlockPos.ORIGIN, VABlocks.CHARTREUSE_BED.getDefaultState());
+    private static final CustomBedBlockEntity renderer = new CustomBedBlockEntity(BlockPos.ORIGIN, VABlocks.CHARTREUSE_BED.getDefaultState());
 
     @Override
     public void render(ItemStack stack, ModelTransformationMode mode, MatrixStack matrices, VertexConsumerProvider vertexConsumers, int light, int overlay) {

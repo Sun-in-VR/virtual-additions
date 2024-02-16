@@ -25,7 +25,7 @@ import java.util.Comparator;
 import java.util.List;
 
 public class ColoringStationScreenHandler extends ScreenHandler {
-    private ColoringStationBlockEntity.DyeContents dyeContents;
+    private final ColoringStationBlockEntity.DyeContents dyeContents;
     private ColoringStationBlockEntity.DyeContents dyeContentsAdder;
     private final World world;
     private List<RecipeEntry<ColoringRecipe>> availableRecipes = Lists.newArrayList();

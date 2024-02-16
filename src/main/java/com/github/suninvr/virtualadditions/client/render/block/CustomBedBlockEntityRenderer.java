@@ -84,7 +84,7 @@ public class CustomBedBlockEntityRenderer implements BlockEntityRenderer<CustomB
     }
 
     private static class ModelProvider implements EntityModelLayerRegistry.TexturedModelDataProvider {
-        private boolean head;
+        private final boolean head;
         protected ModelProvider(boolean head) {
             this.head = head;
         }

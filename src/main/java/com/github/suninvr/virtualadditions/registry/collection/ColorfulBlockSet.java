@@ -139,8 +139,8 @@ public class ColorfulBlockSet {
     }
 
     public static class Builder {
-        private ArrayList<TileBlockPair> entries;
-        private Item dye;
+        private final ArrayList<TileBlockPair> entries;
+        private final Item dye;
 
         private Builder(Item dye) {
             this.entries = new ArrayList<>();
