@@ -1,4 +1,4 @@
-// 24w06a	2024-02-09T06:54:45.227584394	Virtual Additions/Block Loot Tables
+// 24w07a	2024-02-16T08:25:17.789586077	Virtual Additions/Block Loot Tables
 ea8e64a5deb86ad9aac331af2a507916a7340b3c data/virtual_additions/loot_tables/blocks/lilac_concrete.json
 d7aa27ed0b8a6edd7aaff2670ec0469864347896 data/virtual_additions/loot_tables/blocks/cyan_silkbulb.json
 931202cd4ba57bdc65b968d43d0fa629a32e29aa data/virtual_additions/loot_tables/blocks/lilac_candle_cake.json
@@ -165,6 +165,7 @@ a0b30f47e07abd61ab8f2ff9bd3de7621d30c3f6 data/virtual_additions/loot_tables/bloc
 f883e39767bbbc5a96284d1053700ed8ef0e2fa8 data/virtual_additions/loot_tables/blocks/blueschist.json
 4421e65d99b737fbb1f07c1da9efcd5176851bef data/virtual_additions/loot_tables/blocks/cobbled_blueschist_stairs.json
 5db7d7af8bf666b9d196f3dc329d967b2d5788dc data/virtual_additions/loot_tables/blocks/maroon_concrete.json
+3bcc89fbfa93b9d45c284edc3d09c63be1c71529 data/virtual_additions/loot_tables/blocks/chiseled_hornfels_tiles.json
 11e3f5a79a0e124e54f80fed366da62b3ba29855 data/virtual_additions/loot_tables/blocks/tan_carpet.json
 3fc72242f465fcb0e734fa73b82372db9df51d37 data/virtual_additions/loot_tables/blocks/mangrove_hedge.json
 656c2de4248e6a6f4a4762fc7c76d75046f61a2d data/virtual_additions/loot_tables/blocks/entanglement_drive.json

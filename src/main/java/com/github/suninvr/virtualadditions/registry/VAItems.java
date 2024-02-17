@@ -73,6 +73,7 @@ public class VAItems {
     public static final Item HORNFELS_TILE_STAIRS;
     public static final Item HORNFELS_TILE_SLAB;
     public static final Item CHISELED_HORNFELS;
+    public static final Item CHISELED_HORNFELS_TILES;
     public static final Item BLUESCHIST;
     public static final Item COBBLED_BLUESCHIST;
     public static final Item COBBLED_BLUESCHIST_STAIRS;
@@ -418,7 +419,8 @@ public class VAItems {
         CRACKED_HORNFELS_TILES = registerBlockItem("cracked_hornfels_tiles", VABlocks.CRACKED_HORNFELS_TILES, ItemGroups.BUILDING_BLOCKS, HORNFELS_TILES);
         HORNFELS_TILE_STAIRS = registerBlockItem("hornfels_tile_stairs", VABlocks.HORNFELS_TILE_STAIRS, ItemGroups.BUILDING_BLOCKS, CRACKED_HORNFELS_TILES);
         HORNFELS_TILE_SLAB = registerBlockItem("hornfels_tile_slab", VABlocks.HORNFELS_TILE_SLAB, ItemGroups.BUILDING_BLOCKS, HORNFELS_TILE_STAIRS);
-        CHISELED_HORNFELS = registerBlockItem("chiseled_hornfels", VABlocks.CHISELED_HORNFELS, ItemGroups.BUILDING_BLOCKS, prev);
+        CHISELED_HORNFELS = registerBlockItem("chiseled_hornfels", VABlocks.CHISELED_HORNFELS, ItemGroups.BUILDING_BLOCKS, COBBLED_HORNFELS_WALL);
+        CHISELED_HORNFELS_TILES = registerBlockItem("chiseled_hornfels_tiles", VABlocks.CHISELED_HORNFELS_TILES, ItemGroups.BUILDING_BLOCKS, HORNFELS_TILE_SLAB);
 
         BLUESCHIST = registerBlockItem("blueschist", VABlocks.BLUESCHIST, new ItemGroupLocation(ItemGroups.NATURAL, HORNFELS), new ItemGroupLocation(ItemGroups.BUILDING_BLOCKS, prev));
         COBBLED_BLUESCHIST = registerBlockItem("cobbled_blueschist", VABlocks.COBBLED_BLUESCHIST, ItemGroups.BUILDING_BLOCKS, BLUESCHIST);

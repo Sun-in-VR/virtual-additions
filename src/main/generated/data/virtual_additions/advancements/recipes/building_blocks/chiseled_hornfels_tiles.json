@@ -1,12 +1,12 @@
 {
   "parent": "minecraft:recipes/root",
   "criteria": {
-    "has_hornfels_tiles": {
+    "has_hornfels_tile_slab": {
       "conditions": {
         "items": [
           {
             "items": [
-              "virtual_additions:hornfels_tiles"
+              "virtual_additions:hornfels_tile_slab"
             ]
           }
         ]
@@ -15,7 +15,7 @@
     },
     "has_the_recipe": {
       "conditions": {
-        "recipe": "minecraft:chiseled_hornfels_from_hornfels_tiles_stonecutting"
+        "recipe": "virtual_additions:chiseled_hornfels_tiles"
       },
       "trigger": "minecraft:recipe_unlocked"
     }
@@ -23,12 +23,12 @@
   "requirements": [
     [
       "has_the_recipe",
-      "has_hornfels_tiles"
+      "has_hornfels_tile_slab"
     ]
   ],
   "rewards": {
     "recipes": [
-      "minecraft:chiseled_hornfels_from_hornfels_tiles_stonecutting"
+      "virtual_additions:chiseled_hornfels_tiles"
     ]
   }
 }

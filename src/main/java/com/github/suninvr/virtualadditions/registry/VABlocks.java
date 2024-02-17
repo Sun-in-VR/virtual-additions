@@ -53,6 +53,7 @@ public class VABlocks {
     public static final Block HORNFELS_TILE_STAIRS;
     public static final Block HORNFELS_TILE_SLAB;
     public static final Block CHISELED_HORNFELS;
+    public static final Block CHISELED_HORNFELS_TILES;
     public static final Block BLUESCHIST;
     public static final Block COBBLED_BLUESCHIST;
     public static final Block COBBLED_BLUESCHIST_STAIRS;
@@ -304,7 +305,8 @@ public class VABlocks {
         CRACKED_HORNFELS_TILES = register("cracked_hornfels_tiles", new Block(Settings.copy(Blocks.DEEPSLATE_TILES)));
         HORNFELS_TILE_STAIRS = register("hornfels_tile_stairs", new CustomStairsBlock(HORNFELS_TILES.getDefaultState(), Settings.copy(Blocks.DEEPSLATE_TILE_STAIRS)));
         HORNFELS_TILE_SLAB = register("hornfels_tile_slab", new SlabBlock(Settings.copy(Blocks.DEEPSLATE_TILE_SLAB)));
-        CHISELED_HORNFELS = register("chiseled_hornfels", new Block(Settings.copy(HORNFELS_TILES)));
+        CHISELED_HORNFELS = register("chiseled_hornfels", new Block(Settings.copy(POLISHED_HORNFELS)));
+        CHISELED_HORNFELS_TILES = register("chiseled_hornfels_tiles", new Block(Settings.copy(HORNFELS_TILES)));
 
         BLUESCHIST = register("blueschist", new Block(Settings.copy(Blocks.DEEPSLATE).mapColor(MapColor.LIGHT_BLUE_GRAY)));
         COBBLED_BLUESCHIST = register("cobbled_blueschist", new Block(Settings.copy(Blocks.COBBLED_DEEPSLATE)));

@@ -1,4 +1,4 @@
-// 24w06a	2024-02-09T06:54:45.233786657	virtual_additions:preview/Tags for minecraft:block
+// 24w07a	2024-02-16T08:25:17.795412246	virtual_additions:preview/Tags for minecraft:block
 369a0572b1473f82b1c33d0c119c8a6d5794e402 resourcepacks/preview/data/minecraft/tags/blocks/wooden_buttons.json
 9d3246842c605fb7be8a0dc9a082dd5b9327d8fb resourcepacks/preview/data/minecraft/tags/blocks/emerald_ores.json
 8a5893600bf34dd78061ac0c3a00c919df20be27 resourcepacks/preview/data/virtual_additions/tags/blocks/hedges.json
@@ -30,7 +30,7 @@ f5f0eaad8ebf99962ffac356673b4ec4ead4e247 resourcepacks/preview/data/minecraft/ta
 2d1db828810bab72ebd2f3ebf1faf5a4a27324a2 resourcepacks/preview/data/minecraft/tags/blocks/lapis_ores.json
 5ebbfede3567267598305fec61af803afe256cc5 resourcepacks/preview/data/minecraft/tags/blocks/logs_that_burn.json
 931e56db741de9e055791c01f63fffa3016a1910 resourcepacks/preview/data/minecraft/tags/blocks/fence_gates.json
-fa0adf4f9fe9f95787c9393342cf54f51996c1d5 resourcepacks/preview/data/minecraft/tags/blocks/mineable/pickaxe.json
+79ef1a4099353a0eb68bf52507e7319d40a65617 resourcepacks/preview/data/minecraft/tags/blocks/mineable/pickaxe.json
 b54435540d105d2549e29bf111ae7c7df3e4ac11 resourcepacks/preview/data/minecraft/tags/blocks/ceiling_hanging_signs.json
 5bf0764245e513da114d9bdb17d27aba8e474c2e resourcepacks/preview/data/minecraft/tags/blocks/copper_ores.json
 6a1caa27048424c53764b596bfbe4874aa817dbb resourcepacks/preview/data/minecraft/tags/blocks/coal_ores.json
@@ -40,4 +40,4 @@ c5c4c77c64cbb5060a27841b654219b59177c3dd resourcepacks/preview/data/minecraft/ta
 afcfe8bcbbb6c1ae3ad4a400f1d760b42c80cd0d resourcepacks/preview/data/minecraft/tags/blocks/wall_signs.json
 76409102a4ed43af7fc45b949f93b357f482fd3b resourcepacks/preview/data/minecraft/tags/blocks/wooden_doors.json
 2a0d146fa008a1c036d5debfc18d03408372560b resourcepacks/preview/data/minecraft/tags/blocks/wooden_stairs.json
-023b0686dc9a7710d90d276667501da92a12dca2 resourcepacks/preview/data/minecraft/tags/blocks/mineable/axe.json
+41efb9ccb25e5710ee46c7ea8926c01dc33a2fa2 resourcepacks/preview/data/minecraft/tags/blocks/mineable/axe.json

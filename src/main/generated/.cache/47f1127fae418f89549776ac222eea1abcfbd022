@@ -1,4 +1,4 @@
-// 24w06a	2024-02-09T06:54:45.221877577	Virtual Additions/Tags for minecraft:block
+// 24w07a	2024-02-16T08:25:17.783257159	Virtual Additions/Tags for minecraft:block
 7974924626074ec09b6a94f6e8e03152a41b177e data/virtual_additions/tags/blocks/silkbulbs.json
 197cfa16846021a70cc0252d70ffe0024de667a8 data/minecraft/tags/blocks/sword_efficient.json
 84a0cfbe4d3f94be57eeb496f481a724588fe657 data/minecraft/tags/blocks/mineable/shovel.json
@@ -25,8 +25,8 @@ c082e2591fc1948fd545bb56ffbdc7e9a5400c74 data/virtual_additions/tags/blocks/clim
 5d5b7547e120580026eca9ac9d7ed471800cae39 data/virtual_additions/tags/blocks/spotlight_permeable.json
 b5d356ee194d044622ec0b337a311601e4c2b4bd data/minecraft/tags/blocks/wool.json
 84a0cfbe4d3f94be57eeb496f481a724588fe657 data/minecraft/tags/blocks/concrete_powder.json
-1d8d322431495482dd4e16935991bcb40658b7d2 data/minecraft/tags/blocks/needs_stone_tool.json
-bf051815bb45126fa5af437762006c79f3e3ae3f data/minecraft/tags/blocks/mineable/pickaxe.json
+8c7cc3179048b562b5fe80d8f00bc72dadfa8e9c data/minecraft/tags/blocks/needs_stone_tool.json
+9ede592e0f89b2719f3ea2cfca326c37ad9f38a6 data/minecraft/tags/blocks/mineable/pickaxe.json
 012c9e4f1431f946c8ddcc35102acd3a0ddaf84f data/minecraft/tags/blocks/crops.json
 afecaf5ae4536b7b8532e1f04778d1cb8b0d85a8 data/minecraft/tags/blocks/shulker_boxes.json
 b53c33792f741f46bbbb7e7cb63aebc62193928c data/minecraft/tags/blocks/terracotta.json
