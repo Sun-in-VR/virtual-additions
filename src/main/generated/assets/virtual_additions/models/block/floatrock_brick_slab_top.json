@@ -1,8 +1,0 @@
-{
-  "parent": "minecraft:block/slab_top",
-  "textures": {
-    "bottom": "virtual_additions:block/floatrock_bricks",
-    "side": "virtual_additions:block/floatrock_bricks",
-    "top": "virtual_additions:block/floatrock_bricks"
-  }
-}

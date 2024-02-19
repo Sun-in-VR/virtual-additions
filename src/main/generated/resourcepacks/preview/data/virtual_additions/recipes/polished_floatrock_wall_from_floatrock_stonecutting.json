@@ -1,8 +1,0 @@
-{
-  "type": "minecraft:stonecutting",
-  "count": 1,
-  "ingredient": {
-    "item": "virtual_additions:floatrock"
-  },
-  "result": "virtual_additions:polished_floatrock_wall"
-}

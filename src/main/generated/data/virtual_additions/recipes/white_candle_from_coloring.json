@@ -1,9 +1,0 @@
-{
-  "type": "virtual_additions:coloring",
-  "count": 1,
-  "ingredient": {
-    "tag": "minecraft:candles"
-  },
-  "result": "minecraft:white_candle",
-  "white_cost": 4
-}

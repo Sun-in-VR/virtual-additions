@@ -1,9 +1,0 @@
-{
-  "type": "virtual_additions:coloring",
-  "count": 1,
-  "ingredient": {
-    "tag": "minecraft:wool"
-  },
-  "result": "minecraft:white_wool",
-  "white_cost": 4
-}

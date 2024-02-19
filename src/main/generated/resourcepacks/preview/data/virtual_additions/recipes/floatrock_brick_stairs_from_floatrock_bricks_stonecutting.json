@@ -1,8 +1,0 @@
-{
-  "type": "minecraft:stonecutting",
-  "count": 1,
-  "ingredient": {
-    "item": "virtual_additions:floatrock_bricks"
-  },
-  "result": "virtual_additions:floatrock_brick_stairs"
-}

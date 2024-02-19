@@ -1,7 +1,0 @@
-{
-  "parent": "minecraft:item/handheld",
-  "textures": {
-    "layer0": "virtual_additions:item/steel_sword",
-    "layer1": "virtual_additions:item/gilded_tools/sculk_sword"
-  }
-}

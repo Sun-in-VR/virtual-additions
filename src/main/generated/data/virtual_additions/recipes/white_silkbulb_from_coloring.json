@@ -1,9 +1,0 @@
-{
-  "type": "virtual_additions:coloring",
-  "count": 1,
-  "ingredient": {
-    "tag": "virtual_additions:silkbulbs"
-  },
-  "result": "virtual_additions:white_silkbulb",
-  "white_cost": 4
-}

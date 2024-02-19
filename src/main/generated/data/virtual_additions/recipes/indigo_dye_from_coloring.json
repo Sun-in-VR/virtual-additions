@@ -1,9 +1,0 @@
-{
-  "type": "virtual_additions:coloring",
-  "blue_cost": 12,
-  "count": 1,
-  "index": 18,
-  "ingredient": [],
-  "red_cost": 4,
-  "result": "virtual_additions:indigo_dye"
-}

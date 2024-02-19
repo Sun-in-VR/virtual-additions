@@ -1,8 +1,0 @@
-{
-  "type": "minecraft:stonecutting",
-  "count": 2,
-  "ingredient": {
-    "item": "virtual_additions:cobbled_hornfels"
-  },
-  "result": "virtual_additions:cobbled_hornfels_slab"
-}

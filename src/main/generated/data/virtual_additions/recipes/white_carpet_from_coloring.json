@@ -1,9 +1,0 @@
-{
-  "type": "virtual_additions:coloring",
-  "count": 1,
-  "ingredient": {
-    "tag": "minecraft:wool_carpets"
-  },
-  "result": "minecraft:white_carpet",
-  "white_cost": 4
-}

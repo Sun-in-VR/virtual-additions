@@ -1,9 +1,0 @@
-{
-  "type": "virtual_additions:coloring",
-  "black_cost": 4,
-  "count": 1,
-  "index": 1,
-  "ingredient": [],
-  "result": "minecraft:light_gray_dye",
-  "white_cost": 12
-}

@@ -1,8 +1,0 @@
-{
-  "type": "minecraft:stonecutting",
-  "count": 1,
-  "ingredient": {
-    "item": "virtual_additions:polished_hornfels"
-  },
-  "result": "virtual_additions:hornfels_tile_stairs"
-}

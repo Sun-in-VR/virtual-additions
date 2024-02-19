@@ -1,8 +1,0 @@
-{
-  "parent": "minecraft:block/stairs",
-  "textures": {
-    "bottom": "virtual_additions:block/polished_floatrock",
-    "side": "virtual_additions:block/polished_floatrock",
-    "top": "virtual_additions:block/polished_floatrock"
-  }
-}
