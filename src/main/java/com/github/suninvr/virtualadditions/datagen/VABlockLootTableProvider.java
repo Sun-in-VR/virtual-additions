@@ -10,6 +10,7 @@ import net.fabricmc.fabric.api.datagen.v1.FabricDataOutput;
 import net.fabricmc.fabric.api.datagen.v1.provider.FabricBlockLootTableProvider;
 import net.minecraft.block.BedBlock;
 import net.minecraft.block.Block;
+import net.minecraft.block.Blocks;
 import net.minecraft.block.TallPlantBlock;
 import net.minecraft.block.enums.BedPart;
 import net.minecraft.block.enums.DoubleBlockHalf;
@@ -25,6 +26,7 @@ import net.minecraft.loot.condition.BlockStatePropertyLootCondition;
 import net.minecraft.loot.entry.ItemEntry;
 import net.minecraft.loot.function.ApplyBonusLootFunction;
 import net.minecraft.loot.function.SetCountLootFunction;
+import net.minecraft.loot.provider.number.ConstantLootNumberProvider;
 import net.minecraft.loot.provider.number.UniformLootNumberProvider;
 import net.minecraft.predicate.StatePredicate;
 import net.minecraft.registry.RegistryWrapper;
@@ -128,6 +130,9 @@ public final class VABlockLootTableProvider {
             this.addDrop(VABlocks.IOLITE_ORE, block -> this.oreDrops(block, VAItems.IOLITE));
             this.addDrop(VABlocks.TALL_GREENCAP_MUSHROOMS, (Block block) -> this.dropsWithProperty(block, TallPlantBlock.HALF, DoubleBlockHalf.LOWER));
 
+            this.addDrop(VABlocks.ROCK_SALT_BLOCK, (block) -> this.drops(block, VAItems.ROCK_SALT, ConstantLootNumberProvider.create(4.0F)));
+            this.addDrop(VABlocks.ROCK_SALT_CRYSTAL, (block) -> this.drops(block, VAItems.ROCK_SALT, ConstantLootNumberProvider.create(2.0F)));
+
             this.addDrop(VABlocks.REDSTONE_BRIDGE);
         }
     }
@@ -153,10 +158,7 @@ public final class VABlockLootTableProvider {
                     VABlocks.AEROBLOOM_HANGING_SIGN,
                     VABlocks.AEROBLOOM_SAPLING,
                     VABlocks.SPRINGSOIL,
-                    VABlocks.AEROBLOOM_HEDGE,
-                    VABlocks.RED_GLIMMER_CRYSTAL,
-                    VABlocks.GREEN_GLIMMER_CRYSTAL,
-                    VABlocks.BLUE_GLIMMER_CRYSTAL
+                    VABlocks.AEROBLOOM_HEDGE
             );
 
             this.addDrop(VABlocks.GRASSY_FLOATROCK, block -> this.drops(block, VABlocks.FLOATROCK));

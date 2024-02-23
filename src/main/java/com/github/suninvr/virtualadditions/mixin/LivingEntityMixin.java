@@ -11,11 +11,14 @@ import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.damage.DamageSource;
+import net.minecraft.entity.effect.StatusEffect;
 import net.minecraft.entity.effect.StatusEffectInstance;
 import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.registry.entry.RegistryEntry;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.shape.VoxelShapes;
 import net.minecraft.world.World;
+import org.jetbrains.annotations.Nullable;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.injection.At;
@@ -30,6 +33,10 @@ public abstract class LivingEntityMixin extends Entity implements LivingEntityIn
     @Shadow protected boolean dead;
 
     @Shadow public abstract boolean addStatusEffect(StatusEffectInstance effect);
+
+    @Shadow @Nullable public abstract StatusEffectInstance getStatusEffect(RegistryEntry<StatusEffect> effect);
+
+    @Shadow public abstract boolean hasStatusEffect(RegistryEntry<StatusEffect> effect);
 
     private float experienceMultiplier = 1.0F;
 
@@ -47,6 +54,11 @@ public abstract class LivingEntityMixin extends Entity implements LivingEntityIn
                 }
             }
         }
+    }
+
+    @Inject(method = "modifyAppliedDamage", at = @At("RETURN"), cancellable = true)
+    void virtualAdditions$modifyAppliedDamageForFrailty(DamageSource source, float amount, CallbackInfoReturnable<Float> cir) {
+        if (this.hasStatusEffect(VAStatusEffects.FRAILTY)) cir.setReturnValue(cir.getReturnValueF() * (1.0F + (0.2F * (this.getStatusEffect(VAStatusEffects.FRAILTY).getAmplifier() + 1))));
     }
 
     @Inject(method = "isClimbing", at = @At("HEAD"), cancellable = true)

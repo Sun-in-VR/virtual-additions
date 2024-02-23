@@ -1,6 +1,0 @@
-{
-    "parent": "item/generated",
-    "textures": {
-        "layer0": "virtual_additions:block/red_glimmer_crystal_tip"
-    }
-}

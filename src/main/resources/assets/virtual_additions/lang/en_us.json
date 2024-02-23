@@ -73,10 +73,8 @@
     "block.virtual_additions.steel_door": "Steel Door",
     "block.virtual_additions.steel_trapdoor": "Steel Trapdoor",
     "block.virtual_additions.redstone_bridge": "Redstone Bridge",
-    "block.virtual_additions.red_glimmer_crystal": "Red Glimmer Crystal",
-    "block.virtual_additions.green_glimmer_crystal": "Green Glimmer Crystal",
-    "block.virtual_additions.blue_glimmer_crystal": "Blue Glimmer Crystal",
-    "block.virtual_additions.luminous_crystal_block": "Block of Luminous Crystal",
+    "block.virtual_additions.rock_salt_block": "Rock Salt Block",
+    "block.virtual_additions.rock_salt_crystal": "Rock Salt Crystal",
     "block.virtual_additions.spotlight": "Spotlight",
     "block.virtual_additions.spotlight_light": "Spotlight Light",
     "block.virtual_additions.cotton": "Cotton",
@@ -262,6 +260,7 @@
     "datapack.virtual_additions.worldgen": "VA Worldgen",
 
     "effect.virtual_additions.iolite_interference": "Interference",
+    "effect.virtual_additions.frailty": "Frailty",
 
     "entity.virtual_additions.climbing_rope": "Climbing Rope",
     "entity.virtual_additions.steel_bomb": "Steel Bomb",
@@ -280,7 +279,6 @@
     "item.virtual_additions.climbing_rope": "Climbing Rope",
     "item.virtual_additions.raw_steel": "Raw Steel",
     "item.virtual_additions.steel_ingot": "Steel Ingot",
-    "item.virtual_additions.crystal_dust": "Mixed Crystal Dust",
     "item.virtual_additions.steel_sword": "Steel Sword",
     "item.virtual_additions.steel_shovel": "Steel Shovel",
     "item.virtual_additions.steel_pickaxe": "Steel Pickaxe",
@@ -294,10 +292,7 @@
     "item.virtual_additions.tool_gild_smithing_template": "Smithing Template",
     "item.virtual_additions.balloon_fruit": "Balloon Fruit",
     "item.virtual_additions.fried_egg": "Fried Egg",
-    "item.virtual_additions.red_rock_candy": "Red Rock Candy",
-    "item.virtual_additions.green_rock_candy": "Green Rock Candy",
-    "item.virtual_additions.blue_rock_candy": "Blue Rock Candy",
-    "item.virtual_additions.mixed_rock_candy": "Mixed Rock Candy",
+    "item.virtual_additions.rock_salt": "Rock Salt",
     "item.virtual_additions.silk_thread": "Silk Thread",
     "item.virtual_additions.lumwasp_mandible": "Lumwasp Mandible",
     "item.virtual_additions.chartreuse_dye": "Chartreuse Dye",
@@ -317,6 +312,12 @@
     "item.virtual_additions.iolite": "Iolite",
     "item.virtual_additions.lumwasp_spawn_egg": "Lumwasp Spawn Egg",
     "item.virtual_additions.lyft_spawn_egg": "Lyft Spawn Egg",
+
+    "item.minecraft.potion.effect.virtual_additions.frailty": "Potion of Frailty",
+    "item.minecraft.splash_potion.effect.virtual_additions.frailty": "Splash Potion of Frailty",
+    "item.minecraft.lingering_potion.effect.virtual_additions.frailty": "Lingering Potion of Frailty",
+    "item.minecraft.tipped_arrow.effect.virtual_additions.frailty": "Arrow of Frailty",
+    "item.virtual_additions.applicable_potion.effect.virtual_additions.frailty": "Applicable Potion of Frailty",
 
     "item.virtual_additions.applied_effect_tooltip": "Effects on Hit%s:",
     "item.virtual_additions.applicable_potion.effect.empty": "Applicable Uncraftable Potion",
@@ -366,7 +367,7 @@
 
     "item.virtual_additions.smithing_template.tool_gild.applies_to": "Tools",
     "item.virtual_additions.smithing_template.tool_gild.ingredients": "Tool Gild Materials",
-    "item.virtual_additions.smithing_template.tool_gild.base_slot_description": "Add metal or crystal tool",
+    "item.virtual_additions.smithing_template.tool_gild.base_slot_description": "Add metal or gemstone tool",
     "item.virtual_additions.smithing_template.tool_gild.additions_slot_description": "Add gild material",
 
     "trim_material.virtual_additions.steel": "Steel Material",

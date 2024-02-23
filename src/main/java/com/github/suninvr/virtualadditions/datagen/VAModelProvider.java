@@ -9,12 +9,8 @@ import com.github.suninvr.virtualadditions.registry.VAItems;
 import com.github.suninvr.virtualadditions.registry.collection.ColorfulBlockSet;
 import net.fabricmc.fabric.api.datagen.v1.FabricDataOutput;
 import net.fabricmc.fabric.api.datagen.v1.provider.FabricModelProvider;
-import net.minecraft.block.Blocks;
-import net.minecraft.block.CrafterBlock;
-import net.minecraft.block.enums.Orientation;
 import net.minecraft.data.client.*;
 import net.minecraft.item.*;
-import net.minecraft.registry.Registries;
 import net.minecraft.state.property.Properties;
 import net.minecraft.util.Identifier;
 
@@ -32,6 +28,8 @@ class VAModelProvider extends FabricModelProvider {
     public void generateBlockStateModels(BlockStateModelGenerator blockStateModelGenerator) {
         blockStateModelGenerator.registerCubeAllModelTexturePool(VABlocks.POLISHED_FLOATROCK).family(VACollections.POLISHED_FLOATROCK);
         blockStateModelGenerator.registerCubeAllModelTexturePool(VABlocks.FLOATROCK_BRICKS).family(VACollections.FLOATROCK_BRICKS);
+
+        blockStateModelGenerator.registerMirrorable(VABlocks.ROCK_SALT_BLOCK);
 
         registerColorfulBlockSetModels( blockStateModelGenerator,VACollections.CHARTREUSE);
         registerColorfulBlockSetModels( blockStateModelGenerator,VACollections.MAROON);

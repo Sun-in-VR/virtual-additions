@@ -2516,187 +2516,161 @@
         }
       },
       {
-        "type": "minecraft:sequence",
-        "sequence": [
-          {
-            "type": "minecraft:condition",
-            "if_true": {
-              "type": "minecraft:noise_threshold",
-              "noise": "virtual_additions:andesite",
-              "min_threshold": 0.4,
-              "max_threshold": 0.9
-            },
-            "then_run": {
-              "type": "minecraft:sequence",
-              "sequence": [
-                {
-                  "type": "minecraft:condition",
-                  "if_true": {
-                    "type": "minecraft:vertical_gradient",
-                    "random_name": "minecraft:deepslate",
-                    "true_at_and_below": {
-                      "absolute": 0
+        "type": "minecraft:condition",
+        "if_true": {
+          "type": "minecraft:vertical_gradient",
+          "random_name": "virtual_additions:alternate_stone",
+          "true_at_and_below": {
+            "absolute": 40
+          },
+          "false_at_and_above": {
+            "absolute": 48
+          }
+        },
+        "then_run": {
+          "type": "minecraft:sequence",
+          "sequence": [
+            {
+              "type": "minecraft:condition",
+              "if_true": {
+                "type": "minecraft:noise_threshold",
+                "noise": "virtual_additions:andesite",
+                "min_threshold": 0.25,
+                "max_threshold": 0.9
+              },
+              "then_run": {
+                "type": "minecraft:sequence",
+                "sequence": [
+                  {
+                    "type": "minecraft:condition",
+                    "if_true": {
+                      "type": "minecraft:vertical_gradient",
+                      "random_name": "minecraft:deepslate",
+                      "true_at_and_below": {
+                        "absolute": 0
+                      },
+                      "false_at_and_above": {
+                        "absolute": 8
+                      }
                     },
-                    "false_at_and_above": {
-                      "absolute": 8
+                    "then_run": {
+                      "type": "minecraft:block",
+                      "result_state": {
+                        "Name": "virtual_additions:hornfels"
+                      }
                     }
                   },
-                  "then_run": {
-                    "type": "minecraft:block",
-                    "result_state": {
-                      "Name": "virtual_additions:hornfels"
-                    }
-                  }
-                },
-                {
-                  "type": "minecraft:condition",
-                  "if_true": {
-                    "type": "minecraft:vertical_gradient",
-                    "random_name": "virtual_additions:alternate_stone",
-                    "true_at_and_below": {
-                      "absolute": 40
-                    },
-                    "false_at_and_above": {
-                      "absolute": 48
-                    }
-                  },
-                  "then_run": {
+                  {
                     "type": "minecraft:block",
                     "result_state": {
                       "Name": "minecraft:andesite"
                     }
                   }
-                }
-              ]
-            }
-          },
-          {
-            "type": "minecraft:condition",
-            "if_true": {
-              "type": "minecraft:noise_threshold",
-              "noise": "virtual_additions:diorite",
-              "min_threshold": 0.4,
-              "max_threshold": 0.9
+                ]
+              }
             },
-            "then_run": {
-              "type": "minecraft:sequence",
-              "sequence": [
-                {
-                  "type": "minecraft:condition",
-                  "if_true": {
-                    "type": "minecraft:vertical_gradient",
-                    "random_name": "minecraft:deepslate",
-                    "true_at_and_below": {
-                      "absolute": 0
+            {
+              "type": "minecraft:condition",
+              "if_true": {
+                "type": "minecraft:noise_threshold",
+                "noise": "virtual_additions:diorite",
+                "min_threshold": 0.25,
+                "max_threshold": 0.9
+              },
+              "then_run": {
+                "type": "minecraft:sequence",
+                "sequence": [
+                  {
+                    "type": "minecraft:condition",
+                    "if_true": {
+                      "type": "minecraft:vertical_gradient",
+                      "random_name": "minecraft:deepslate",
+                      "true_at_and_below": {
+                        "absolute": 0
+                      },
+                      "false_at_and_above": {
+                        "absolute": 8
+                      }
                     },
-                    "false_at_and_above": {
-                      "absolute": 8
+                    "then_run": {
+                      "type": "minecraft:block",
+                      "result_state": {
+                        "Name": "virtual_additions:blueschist"
+                      }
                     }
                   },
-                  "then_run": {
-                    "type": "minecraft:block",
-                    "result_state": {
-                      "Name": "virtual_additions:blueschist"
-                    }
-                  }
-                },
-                {
-                  "type": "minecraft:condition",
-                  "if_true": {
-                    "type": "minecraft:vertical_gradient",
-                    "random_name": "virtual_additions:alternate_stone",
-                    "true_at_and_below": {
-                      "absolute": 40
-                    },
-                    "false_at_and_above": {
-                      "absolute": 48
-                    }
-                  },
-                  "then_run": {
+                  {
                     "type": "minecraft:block",
                     "result_state": {
                       "Name": "minecraft:diorite"
                     }
                   }
-                }
-              ]
-            }
-          },
-          {
-            "type": "minecraft:condition",
-            "if_true": {
-              "type": "minecraft:noise_threshold",
-              "noise": "virtual_additions:granite",
-              "min_threshold": 0.4,
-              "max_threshold": 0.9
+                ]
+              }
             },
-            "then_run": {
-              "type": "minecraft:sequence",
-              "sequence": [
-                {
-                  "type": "minecraft:condition",
-                  "if_true": {
-                    "type": "minecraft:vertical_gradient",
-                    "random_name": "minecraft:deepslate",
-                    "true_at_and_below": {
-                      "absolute": 0
+            {
+              "type": "minecraft:condition",
+              "if_true": {
+                "type": "minecraft:noise_threshold",
+                "noise": "virtual_additions:granite",
+                "min_threshold": 0.25,
+                "max_threshold": 0.9
+              },
+              "then_run": {
+                "type": "minecraft:sequence",
+                "sequence": [
+                  {
+                    "type": "minecraft:condition",
+                    "if_true": {
+                      "type": "minecraft:vertical_gradient",
+                      "random_name": "minecraft:deepslate",
+                      "true_at_and_below": {
+                        "absolute": 0
+                      },
+                      "false_at_and_above": {
+                        "absolute": 8
+                      }
                     },
-                    "false_at_and_above": {
-                      "absolute": 8
+                    "then_run": {
+                      "type": "minecraft:block",
+                      "result_state": {
+                        "Name": "virtual_additions:syenite"
+                      }
                     }
                   },
-                  "then_run": {
-                    "type": "minecraft:block",
-                    "result_state": {
-                      "Name": "virtual_additions:syenite"
-                    }
-                  }
-                },
-                {
-                  "type": "minecraft:condition",
-                  "if_true": {
-                    "type": "minecraft:vertical_gradient",
-                    "random_name": "virtual_additions:alternate_stone",
-                    "true_at_and_below": {
-                      "absolute": 40
-                    },
-                    "false_at_and_above": {
-                      "absolute": 48
-                    }
-                  },
-                  "then_run": {
+                  {
                     "type": "minecraft:block",
                     "result_state": {
                       "Name": "minecraft:granite"
                     }
                   }
-                }
-              ]
+                ]
+              }
             }
+          ]
+        }
+      },
+      {
+        "type": "minecraft:condition",
+        "if_true": {
+          "type": "minecraft:vertical_gradient",
+          "random_name": "minecraft:deepslate",
+          "true_at_and_below": {
+            "absolute": 0
           },
-          {
-            "type": "minecraft:condition",
-            "if_true": {
-              "type": "minecraft:vertical_gradient",
-              "random_name": "minecraft:deepslate",
-              "true_at_and_below": {
-                "absolute": 0
-              },
-              "false_at_and_above": {
-                "absolute": 8
-              }
-            },
-            "then_run": {
-              "type": "minecraft:block",
-              "result_state": {
-                "Name": "minecraft:deepslate",
-                "Properties": {
-                  "axis": "y"
-                }
-              }
+          "false_at_and_above": {
+            "absolute": 8
+          }
+        },
+        "then_run": {
+          "type": "minecraft:block",
+          "result_state": {
+            "Name": "minecraft:deepslate",
+            "Properties": {
+              "axis": "y"
             }
           }
-        ]
+        }
       }
     ]
   }

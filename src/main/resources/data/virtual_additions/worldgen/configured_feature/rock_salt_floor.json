@@ -1,0 +1,13 @@
+{
+  "type": "minecraft:random_boolean_selector",
+  "config": {
+    "feature_false": {
+      "feature": "virtual_additions:rock_salt_floor_dry",
+      "placement": []
+    },
+    "feature_true": {
+      "feature": "virtual_additions:rock_salt_floor_wet",
+      "placement": []
+    }
+  }
+}

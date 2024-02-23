@@ -116,6 +116,8 @@ public final class VARecipeProvider {
             offerCookingRecipes(exporter, VAItems.FRIED_EGG, Items.EGG, 0.35F, "fried_egg");
             offerCookingRecipes(exporter, VAItems.ROASTED_CORN, VAItems.CORN, 0.35F, "corn");
 
+            offer2x2CompactingRecipe(exporter, RecipeCategory.BUILDING_BLOCKS, VAItems.ROCK_SALT_BLOCK, VAItems.ROCK_SALT);
+
             offer2x2CompactingRecipe(exporter, RecipeCategory.BUILDING_BLOCKS, VABlocks.WEBBED_SILK, VAItems.SILK_THREAD);
             offerCompactingRecipe(exporter, RecipeCategory.BUILDING_BLOCKS, VABlocks.SILK_BLOCK, VAItems.SILK_THREAD);
             List<Item> dyes = List.of(Items.BLACK_DYE, Items.BLUE_DYE, Items.BROWN_DYE, Items.CYAN_DYE, Items.GRAY_DYE, Items.GREEN_DYE, Items.LIGHT_BLUE_DYE, Items.LIGHT_GRAY_DYE, Items.LIME_DYE, Items.MAGENTA_DYE, Items.ORANGE_DYE, Items.PINK_DYE, Items.PURPLE_DYE, Items.RED_DYE, Items.YELLOW_DYE, Items.WHITE_DYE);
@@ -388,40 +390,6 @@ public final class VARecipeProvider {
             offerBarkBlockRecipe(exporter, VAItems.STRIPPED_AEROBLOOM_WOOD, VAItems.STRIPPED_AEROBLOOM_LOG);
             offerPlanksRecipe2(exporter, VAItems.AEROBLOOM_PLANKS, VAItemTags.AEROBLOOM_LOGS, 4);
             offerHangingSignRecipe(exporter, VAItems.AEROBLOOM_HANGING_SIGN, VAItems.STRIPPED_AEROBLOOM_LOG);
-
-            offerShapelessRecipe(exporter, RecipeCategory.MISC, VAItems.CRYSTAL_DUST, 3,
-                    Pair.of(VAItems.RED_GLIMMER_CRYSTAL, 1),
-                    Pair.of(VAItems.GREEN_GLIMMER_CRYSTAL, 1),
-                    Pair.of(VAItems.BLUE_GLIMMER_CRYSTAL, 1)
-            );
-
-            ShapedRecipeJsonBuilder.create(RecipeCategory.FOOD, VAItems.RED_ROCK_CANDY, 1)
-                    .pattern("#")
-                    .pattern("s")
-                    .pattern("/")
-                    .input('#', VAItems.RED_GLIMMER_CRYSTAL).input('s', Items.SUGAR).input('/', Items.STICK)
-                    .criterion("crystal", conditionsFromItem(VAItems.RED_GLIMMER_CRYSTAL)).offerTo(exporter);
-
-            ShapedRecipeJsonBuilder.create(RecipeCategory.FOOD, VAItems.GREEN_ROCK_CANDY, 1)
-                    .pattern("#")
-                    .pattern("s")
-                    .pattern("/")
-                    .input('#', VAItems.GREEN_GLIMMER_CRYSTAL).input('s', Items.SUGAR).input('/', Items.STICK)
-                    .criterion("crystal", conditionsFromItem(VAItems.GREEN_GLIMMER_CRYSTAL)).offerTo(exporter);
-
-            ShapedRecipeJsonBuilder.create(RecipeCategory.FOOD, VAItems.BLUE_ROCK_CANDY, 1)
-                    .pattern("#")
-                    .pattern("s")
-                    .pattern("/")
-                    .input('#', VAItems.BLUE_GLIMMER_CRYSTAL).input('s', Items.SUGAR).input('/', Items.STICK)
-                    .criterion("crystal", conditionsFromItem(VAItems.BLUE_GLIMMER_CRYSTAL)).offerTo(exporter);
-
-            ShapedRecipeJsonBuilder.create(RecipeCategory.FOOD, VAItems.MIXED_ROCK_CANDY, 1)
-                    .pattern("#")
-                    .pattern("s")
-                    .pattern("/")
-                    .input('#', VAItems.CRYSTAL_DUST).input('s', Items.SUGAR).input('/', Items.STICK)
-                    .criterion("crystal", conditionsFromItem(VAItems.CRYSTAL_DUST)).offerTo(exporter);
         }
     }
 

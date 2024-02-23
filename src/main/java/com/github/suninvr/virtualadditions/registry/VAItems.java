@@ -153,10 +153,9 @@ public class VAItems {
     public static final Item CHERRY_HEDGE;
     public static final Item AZALEA_HEDGE;
     public static final Item FLOWERING_AZALEA_HEDGE;
-    public static final Item RED_GLIMMER_CRYSTAL;
-    public static final Item GREEN_GLIMMER_CRYSTAL;
-    public static final Item BLUE_GLIMMER_CRYSTAL;
-    public static final Item CRYSTAL_DUST;
+    public static final Item ROCK_SALT_BLOCK;
+    public static final Item ROCK_SALT_CRYSTAL;
+    public static final Item ROCK_SALT;
     public static final Item SPOTLIGHT;
     public static final Item RAW_STEEL;
     public static final Item RAW_STEEL_BLOCK;
@@ -184,10 +183,6 @@ public class VAItems {
     public static final Item CORN;
     public static final Item ROASTED_CORN;
     public static final Item FRIED_EGG;
-    public static final Item RED_ROCK_CANDY;
-    public static final Item GREEN_ROCK_CANDY;
-    public static final Item BLUE_ROCK_CANDY;
-    public static final Item MIXED_ROCK_CANDY;
     public static final Item GLOWING_SILK;
     public static final Item FRAYED_SILK;
     public static final Item TALL_GREENCAP_MUSHROOMS;
@@ -509,10 +504,10 @@ public class VAItems {
         CHERRY_HEDGE = registerBlockItem("cherry_hedge", VABlocks.CHERRY_HEDGE, ItemGroups.BUILDING_BLOCKS, MANGROVE_HEDGE);
         AEROBLOOM_HEDGE = registerBlockItem("aerobloom_hedge", VABlocks.AEROBLOOM_HEDGE, ItemGroups.BUILDING_BLOCKS, prev);
 
-        RED_GLIMMER_CRYSTAL = registerBlockItem("red_glimmer_crystal", VABlocks.RED_GLIMMER_CRYSTAL, ItemGroups.NATURAL, Items.POINTED_DRIPSTONE, VirtualAdditions.PREVIEW);
-        GREEN_GLIMMER_CRYSTAL = registerBlockItem("green_glimmer_crystal", VABlocks.GREEN_GLIMMER_CRYSTAL, ItemGroups.NATURAL, prev, VirtualAdditions.PREVIEW);
-        BLUE_GLIMMER_CRYSTAL = registerBlockItem("blue_glimmer_crystal", VABlocks.BLUE_GLIMMER_CRYSTAL, ItemGroups.NATURAL, prev, VirtualAdditions.PREVIEW);
-        CRYSTAL_DUST = register("crystal_dust", ItemGroups.INGREDIENTS, Items.GUNPOWDER, VirtualAdditions.PREVIEW);
+        ROCK_SALT_BLOCK = registerBlockItem("rock_salt_block", VABlocks.ROCK_SALT_BLOCK, ItemGroups.NATURAL, Items.POINTED_DRIPSTONE);
+        ROCK_SALT_CRYSTAL = registerBlockItem("rock_salt_crystal", VABlocks.ROCK_SALT_CRYSTAL, ItemGroups.NATURAL, prev);
+        ROCK_SALT = register("rock_salt", ItemGroups.INGREDIENTS, Items.SUGAR);
+
         SPOTLIGHT = registerBlockItem("spotlight", VABlocks.SPOTLIGHT, ItemGroups.REDSTONE, Items.REDSTONE_LAMP);
 
         RAW_STEEL_BLOCK = registerBlockItem("raw_steel_block", VABlocks.RAW_STEEL_BLOCK, ItemGroups.NATURAL, Items.RAW_GOLD_BLOCK);
@@ -542,11 +537,6 @@ public class VAItems {
         CORN = register("corn", new AliasedBlockItem(VABlocks.CORN_CROP, new Item.Settings().food(CORN_FOOD)), ItemGroups.FOOD_AND_DRINK, Items.BEETROOT);
         ROASTED_CORN = register("roasted_corn", new Item(new Item.Settings().food(ROASTED_CORN_FOOD)), ItemGroups.FOOD_AND_DRINK, prev);
         FRIED_EGG = register("fried_egg", new Item(new Item.Settings().food(FRIED_EGG_FOOD)), ItemGroups.FOOD_AND_DRINK, Items.COOKED_CHICKEN);
-
-        RED_ROCK_CANDY = register("red_rock_candy", new RockCandyItem(new Item.Settings().food(ROCK_CANDY_FOOD)), ItemGroups.FOOD_AND_DRINK, Items.COOKIE);
-        GREEN_ROCK_CANDY = register("green_rock_candy", new RockCandyItem(new Item.Settings().food(ROCK_CANDY_FOOD)), ItemGroups.FOOD_AND_DRINK, prev);
-        BLUE_ROCK_CANDY = register("blue_rock_candy", new RockCandyItem(new Item.Settings().food(ROCK_CANDY_FOOD)), ItemGroups.FOOD_AND_DRINK, prev);
-        MIXED_ROCK_CANDY = register("mixed_rock_candy", new RockCandyItem(new Item.Settings().food(ROCK_CANDY_FOOD)), ItemGroups.FOOD_AND_DRINK, prev);
 
         SILK_BLOCK = registerBlockItem("silk_block", VABlocks.SILK_BLOCK, ItemGroups.NATURAL, Items.SHROOMLIGHT);
         LUMWASP_NEST = registerBlockItem("lumwasp_nest", VABlocks.LUMWASP_NEST, ItemGroups.NATURAL, prev);
@@ -751,7 +741,6 @@ public class VAItems {
         initDispenserBehaviors();
         initCompostables();
         initLootTableModifiers();
-        initBrewingRecipes();
 
         ItemGroupEvents.modifyEntriesEvent(ItemGroups.FOOD_AND_DRINK).register( (content) -> {
             if (ItemGroups.displayContext == null) return;
@@ -901,11 +890,6 @@ public class VAItems {
             }
         });
 
-    }
-
-    protected static void initBrewingRecipes() {
-        BrewingRecipeRegistry.registerPotionType(APPLICABLE_POTION);
-        BrewingRecipeRegistry.registerItemRecipe(Items.POTION, LUMWASP_MANDIBLE, APPLICABLE_POTION);
     }
 
 }

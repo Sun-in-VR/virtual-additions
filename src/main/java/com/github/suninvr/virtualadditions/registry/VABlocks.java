@@ -82,9 +82,8 @@ public class VABlocks {
     public static final Block SYENITE_BRICK_SLAB;
     public static final Block SYENITE_BRICK_WALL;
     public static final Block CHISELED_SYENITE;
-    public static final Block RED_GLIMMER_CRYSTAL;
-    public static final Block GREEN_GLIMMER_CRYSTAL;
-    public static final Block BLUE_GLIMMER_CRYSTAL;
+    public static final Block ROCK_SALT_BLOCK;
+    public static final Block ROCK_SALT_CRYSTAL;
     public static final Block SPOTLIGHT;
     public static final Block SPOTLIGHT_LIGHT;
     public static final Block COTTON;
@@ -338,9 +337,9 @@ public class VABlocks {
         SYENITE_BRICK_WALL = register("syenite_brick_wall", new WallBlock(Settings.copy(Blocks.DEEPSLATE_BRICK_WALL)));
         CHISELED_SYENITE = register("chiseled_syenite", new Block(Settings.copy(SYENITE_BRICKS)));
 
-        RED_GLIMMER_CRYSTAL = register("red_glimmer_crystal", new CrystalBlock(Settings.copy(Blocks.AMETHYST_CLUSTER).mapColor(MapColor.WHITE_GRAY).nonOpaque().dynamicBounds().pistonBehavior(PistonBehavior.DESTROY).requires(VirtualAdditions.PREVIEW)));
-        GREEN_GLIMMER_CRYSTAL = register("green_glimmer_crystal", new CrystalBlock(Settings.copy(Blocks.AMETHYST_CLUSTER).mapColor(MapColor.WHITE_GRAY).nonOpaque().dynamicBounds().pistonBehavior(PistonBehavior.DESTROY).requires(VirtualAdditions.PREVIEW)));
-        BLUE_GLIMMER_CRYSTAL = register("blue_glimmer_crystal", new CrystalBlock(Settings.copy(Blocks.AMETHYST_CLUSTER).mapColor(MapColor.WHITE_GRAY).nonOpaque().dynamicBounds().pistonBehavior(PistonBehavior.DESTROY).requires(VirtualAdditions.PREVIEW)));
+        ROCK_SALT_BLOCK = register("rock_salt_block", new Block(Settings.copy(Blocks.CALCITE)));
+        ROCK_SALT_CRYSTAL = register("rock_salt_crystal", new CrystalBlock(Settings.copy(Blocks.AMETHYST_CLUSTER).luminance(state -> 0).sounds(BlockSoundGroup.CALCITE).pistonBehavior(PistonBehavior.DESTROY)));
+
         SPOTLIGHT = register("spotlight", new SpotlightBlock(Settings.copy(STEEL_BLOCK).nonOpaque().luminance((state) -> state.get(SpotlightBlock.POWERED) ? 6 : 0).emissiveLighting((state, world, pos) -> state.get(Properties.POWERED)) ));
         SPOTLIGHT_LIGHT = register("spotlight_light", new SpotlightLightBlock(Settings.create().sounds(BlockSoundGroup.INTENTIONALLY_EMPTY).replaceable().noCollision().dropsNothing().luminance((state) -> state.get(SpotlightLightBlock.LIT) ? 15 : 0).pistonBehavior(PistonBehavior.DESTROY)));
 

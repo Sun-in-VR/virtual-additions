@@ -282,10 +282,7 @@ public final class VAItemTagProvider {
 
             getOrCreateTagBuilder(VAItemTags.LUMWASP_LARVAE_FOOD).add(
                     VAItems.FLOATROCK,
-                    VAItems.GRASSY_FLOATROCK,
-                    VAItems.RED_GLIMMER_CRYSTAL,
-                    VAItems.GREEN_GLIMMER_CRYSTAL,
-                    VAItems.BLUE_GLIMMER_CRYSTAL
+                    VAItems.GRASSY_FLOATROCK
             );
             getOrCreateTagBuilder(VAItemTags.AEROBLOOM_LOGS).add(
                     VAItems.AEROBLOOM_LOG,
@@ -301,8 +298,6 @@ public final class VAItemTagProvider {
                     VACollections.POLISHED_FLOATROCK,
                     VACollections.FLOATROCK_BRICKS
             );
-
-            getOrCreateTagBuilder(CRYSTALS).add(VAItems.RED_GLIMMER_CRYSTAL, VAItems.GREEN_GLIMMER_CRYSTAL, VAItems.BLUE_GLIMMER_CRYSTAL);
         }
     }
 

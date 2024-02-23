@@ -52,12 +52,7 @@
     "water_ambient": [],
     "water_creature": []
   },
-  "spawn_costs": {
-    "virtual_additions:lumwasp": {
-      "energy_budget": 0.25,
-      "charge": 0.7
-    }
-  },
+  "spawn_costs": {},
   "carvers": {
     "air": [
       "minecraft:cave",

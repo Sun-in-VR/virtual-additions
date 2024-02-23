@@ -1,0 +1,6 @@
+{
+  "parent": "minecraft:block/cross",
+  "textures": {
+    "cross": "virtual_additions:block/rock_salt_crystal_tip"
+  }
+}

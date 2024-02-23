@@ -24,6 +24,7 @@ import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.sound.SoundEvent;
 import net.minecraft.sound.SoundEvents;
 import net.minecraft.util.math.BlockPos;
+import net.minecraft.world.Difficulty;
 import net.minecraft.world.World;
 import net.minecraft.world.WorldView;
 
@@ -161,7 +162,7 @@ public class LumwaspEntity extends HostileEntity implements RangedAttackMob, Flu
     @Override
     public boolean tryAttack(Entity target) {
         boolean bl = super.tryAttack(target);
-        if (bl && target instanceof LivingEntity livingEntity) {
+        if (bl && this.getWorld().getDifficulty().compareTo(Difficulty.EASY) > 0 && target instanceof LivingEntity livingEntity) {
             if (!this.getStatusEffects().isEmpty()) {
                 for (StatusEffectInstance statusEffect : this.getStatusEffects()) {
                     livingEntity.addStatusEffect(statusEffect, this);

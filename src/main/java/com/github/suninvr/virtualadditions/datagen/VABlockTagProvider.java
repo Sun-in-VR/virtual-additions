@@ -52,7 +52,7 @@ public final class VABlockTagProvider {
             getOrCreateTagBuilder(BlockTags.FENCES).add(VABlocks.STEEL_FENCE);
             getOrCreateTagBuilder(BlockTags.MAINTAINS_FARMLAND).add(VABlocks.CORN_CROP, VABlocks.COTTON);
             getOrCreateTagBuilder(BlockTags.REPLACEABLE).add(VABlocks.ACID, VABlocks.FRAYED_SILK);
-            getOrCreateTagBuilder(BlockTags.SCULK_REPLACEABLE).add(VABlocks.SILK_BLOCK, VABlocks.WEBBED_SILK);
+            getOrCreateTagBuilder(BlockTags.SCULK_REPLACEABLE).add(VABlocks.SILK_BLOCK, VABlocks.WEBBED_SILK, VABlocks.ROCK_SALT_BLOCK);
             getOrCreateTagBuilder(BlockTags.TRAPDOORS).add(VABlocks.STEEL_TRAPDOOR);
             getOrCreateTagBuilder(BlockTags.REPLACEABLE).add(VABlocks.SPOTLIGHT_LIGHT);
 
@@ -77,9 +77,8 @@ public final class VABlockTagProvider {
             getOrCreateTagBuilder(BlockTags.PICKAXE_MINEABLE)
                     .add(VABlocks.CLIMBING_ROPE_ANCHOR)
                     .add(VABlocks.SPOTLIGHT)
-                    .add(VABlocks.RED_GLIMMER_CRYSTAL)
-                    .add(VABlocks.GREEN_GLIMMER_CRYSTAL)
-                    .add(VABlocks.BLUE_GLIMMER_CRYSTAL);
+                    .add(VABlocks.ROCK_SALT_BLOCK)
+                    .add(VABlocks.ROCK_SALT_CRYSTAL);
 
             configureMinable(BlockTags.PICKAXE_MINEABLE, 1,
                     VABlocks.STEEL_BLOCK,
@@ -129,6 +128,10 @@ public final class VABlockTagProvider {
             getOrCreateTagBuilder(VABlockTags.CLIMBING_ROPES).add(
                     VABlocks.CLIMBING_ROPE_ANCHOR,
                     VABlocks.CLIMBING_ROPE
+            );
+
+            getOrCreateTagBuilder(VABlockTags.CRYSTALS).add(
+                    VABlocks.ROCK_SALT_CRYSTAL
             );
 
             getOrCreateTagBuilder(VABlockTags.HEDGES).add(
@@ -312,12 +315,6 @@ public final class VABlockTagProvider {
 
             getOrCreateTagBuilder(VABlockTags.HEDGES).add(
                     VABlocks.AEROBLOOM_HEDGE
-            );
-
-            getOrCreateTagBuilder(VABlockTags.CRYSTALS).add(
-                    VABlocks.RED_GLIMMER_CRYSTAL,
-                    VABlocks.GREEN_GLIMMER_CRYSTAL,
-                    VABlocks.BLUE_GLIMMER_CRYSTAL
             );
         }
     }
