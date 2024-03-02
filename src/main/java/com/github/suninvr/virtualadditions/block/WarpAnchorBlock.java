@@ -1,7 +1,9 @@
 package com.github.suninvr.virtualadditions.block;
 
 import com.github.suninvr.virtualadditions.block.entity.WarpAnchorBlockEntity;
+import com.github.suninvr.virtualadditions.component.WarpTetherLocationComponent;
 import com.github.suninvr.virtualadditions.registry.VABlockEntityType;
+import com.github.suninvr.virtualadditions.registry.VADataComponentTypes;
 import com.github.suninvr.virtualadditions.registry.VAItems;
 import com.github.suninvr.virtualadditions.registry.VASoundEvents;
 import com.mojang.serialization.MapCodec;
@@ -71,7 +73,7 @@ public class WarpAnchorBlock extends BlockWithEntity implements Waterloggable {
     public ActionResult onUse(BlockState state, World world, BlockPos pos, PlayerEntity player, BlockHitResult hit) {
         ItemStack stack = player.getStackInHand(player.preferredHand);
         if (stack.isOf(VAItems.WARP_TETHER)) {
-            stack.getOrCreateNbt().put("destination", NbtHelper.fromBlockPos(pos));
+            stack.set(VADataComponentTypes.WARP_TETHER_LOCATION, new WarpTetherLocationComponent(pos));
             world.playSound(null, pos, VASoundEvents.BLOCK_WARP_ANCHOR_USE, SoundCategory.BLOCKS, 1.0F, 0.6F);
             return ActionResult.SUCCESS;
         }

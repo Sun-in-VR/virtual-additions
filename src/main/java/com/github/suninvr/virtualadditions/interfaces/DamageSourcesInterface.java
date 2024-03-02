@@ -6,6 +6,6 @@ import net.minecraft.entity.damage.DamageSource;
 import org.jetbrains.annotations.Nullable;
 
 public interface DamageSourcesInterface {
-    DamageSource acid();
-    DamageSource acidSpit(AcidSpitEntity source, @Nullable Entity attacker);
+    DamageSource virtualAdditions$acid();
+    DamageSource virtualAdditions$acidSpit(AcidSpitEntity source, @Nullable Entity attacker);
 }

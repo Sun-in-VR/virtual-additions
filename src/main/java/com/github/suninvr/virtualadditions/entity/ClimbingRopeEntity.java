@@ -15,7 +15,6 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Direction;
 import net.minecraft.world.World;
 
-@SuppressWarnings("deprecation")
 public class ClimbingRopeEntity extends PersistentProjectileEntity {
 
     public ClimbingRopeEntity(EntityType<? extends PersistentProjectileEntity> entityType, World world) {
@@ -24,6 +23,10 @@ public class ClimbingRopeEntity extends PersistentProjectileEntity {
 
     public ClimbingRopeEntity(double x, double y, double z, World world, ItemStack stack) {
         super(VAEntityType.CLIMBING_ROPE, x, y, z, world, stack);
+    }
+
+    public ClimbingRopeEntity(double x, double y, double z, World world) {
+        super(VAEntityType.CLIMBING_ROPE, x, y, z, world, new ItemStack(VAItems.CLIMBING_ROPE));
     }
 
     @Override
@@ -46,5 +49,10 @@ public class ClimbingRopeEntity extends PersistentProjectileEntity {
     @Override
     protected boolean canHit(Entity entity) {
         return false;
+    }
+
+    @Override
+    protected ItemStack method_57314() {
+        return new ItemStack(VAItems.CLIMBING_ROPE);
     }
 }

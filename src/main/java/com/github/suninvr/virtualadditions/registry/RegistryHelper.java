@@ -2,7 +2,6 @@ package com.github.suninvr.virtualadditions.registry;
 
 import com.github.suninvr.virtualadditions.VirtualAdditions;
 import com.github.suninvr.virtualadditions.item.*;
-import net.fabricmc.fabric.api.item.v1.FabricItemSettings;
 import net.fabricmc.fabric.api.itemgroup.v1.ItemGroupEvents;
 import net.minecraft.block.Block;
 import net.minecraft.item.*;
@@ -15,7 +14,7 @@ import java.util.function.Consumer;
 
 import static com.github.suninvr.virtualadditions.VirtualAdditions.idOf;
 
-@SuppressWarnings({"UnstableApiUsage", "unused"})
+@SuppressWarnings({"unused"})
 public class RegistryHelper {
 
     public static class BlockRegistryHelper {
@@ -114,7 +113,7 @@ public class RegistryHelper {
          * @param id The in-game ID. This will be "modid:id"
          * **/
         public static net.minecraft.item.Item register(String id) { // Create and register an item
-            FabricItemSettings settings = new FabricItemSettings();
+            Item.Settings settings = new Item.Settings();
             return register(id, new net.minecraft.item.Item(settings));
         }
 
@@ -125,7 +124,7 @@ public class RegistryHelper {
          * @param itemGroup The group to place the item into
          * **/
         public static net.minecraft.item.Item register(String id, RegistryKey<ItemGroup> itemGroup) { // Create and register an item, give a group
-            FabricItemSettings settings = new FabricItemSettings();
+            Item.Settings settings = new Item.Settings();
             return register(id, new net.minecraft.item.Item(settings), itemGroup);
         }
 
@@ -137,7 +136,7 @@ public class RegistryHelper {
          * @param itemAfter The item to place the registered item after
          * **/
         public static net.minecraft.item.Item register(String id, RegistryKey<ItemGroup> itemGroup, net.minecraft.item.Item itemAfter) { // Create and register an item, give a location in a group
-            FabricItemSettings settings = new FabricItemSettings();
+            Item.Settings settings = new Item.Settings();
             return register(id, new net.minecraft.item.Item(settings), itemGroup, itemAfter);
         }
 
@@ -150,7 +149,7 @@ public class RegistryHelper {
          * @param features What feature flags need to be enabled in-game for this item to appear
          * **/
         public static net.minecraft.item.Item register(String id, RegistryKey<ItemGroup> itemGroup, net.minecraft.item.Item itemAfter, FeatureFlag... features) { // Create and register an item, give a location in a group
-            FabricItemSettings settings = new FabricItemSettings().requires(features);
+            Item.Settings settings = new Item.Settings().requires(features);
             return register(id, new net.minecraft.item.Item(settings), itemGroup, itemAfter);
         }
 
@@ -163,7 +162,7 @@ public class RegistryHelper {
          * @see ItemGroupLocation
          * **/
         public static net.minecraft.item.Item register(String id, ItemGroupLocation... locations) { // Create and register an item, give several locations
-            FabricItemSettings settings = new FabricItemSettings();
+            Item.Settings settings = new Item.Settings();
             return register(id, new net.minecraft.item.Item(settings), locations);
         }
 
@@ -174,27 +173,27 @@ public class RegistryHelper {
          * @param block The block to create an item for.
          * **/
         public static net.minecraft.item.Item registerBlockItem(String id, Block block) { // Create and register a block item
-            return register(id, new BlockItem(block, new FabricItemSettings()));
+            return register(id, new BlockItem(block, new Item.Settings()));
         }
 
         public static net.minecraft.item.Item registerBlockItem(String id, Block block, RegistryKey<ItemGroup> itemGroup) { // Create and register a block item, give a group
-            return register(id, new BlockItem(block, new FabricItemSettings()), itemGroup);
+            return register(id, new BlockItem(block, new Item.Settings()), itemGroup);
         }
 
         public static net.minecraft.item.Item registerBlockItem(String id, Block block, RegistryKey<ItemGroup> itemGroup, net.minecraft.item.Item itemAfter) { // Create and register a block item, give a location in a group
-            return register(id, new BlockItem(block, new FabricItemSettings()), itemGroup, itemAfter);
+            return register(id, new BlockItem(block, new Item.Settings()), itemGroup, itemAfter);
         }
 
         public static net.minecraft.item.Item registerBlockItem(String id, Block block, ItemGroupLocation... locations) { // Create and register a block item, give several locations
-            return register(id, new BlockItem(block, new FabricItemSettings()), locations);
+            return register(id, new BlockItem(block, new Item.Settings()), locations);
         }
 
         public static net.minecraft.item.Item registerBlockItem(String id, Block block, RegistryKey<ItemGroup> itemGroup, net.minecraft.item.Item itemAfter, FeatureFlag... features) { // Create and register a block item, give a location in a group, assign required feature flags
-            return register(id, new BlockItem(block, new FabricItemSettings().requires(features)), itemGroup, itemAfter);
+            return register(id, new BlockItem(block, new Item.Settings().requires(features)), itemGroup, itemAfter);
         }
 
         public static net.minecraft.item.Item registerBlockItem(String id, Block block, ItemGroupLocation[] locations, FeatureFlag... features) { // Create and register a block item, give several locations, assign required feature flags
-            return register(id, new BlockItem(block, new FabricItemSettings().requires(features)), locations);
+            return register(id, new BlockItem(block, new Item.Settings().requires(features)), locations);
         }
 
         public static ToolSet registerGildedToolSet(ToolSet baseSet, GildType gildedToolMaterial) {

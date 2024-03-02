@@ -1,20 +1,24 @@
 package com.github.suninvr.virtualadditions.registry;
 
 import com.github.suninvr.virtualadditions.VirtualAdditions;
+import com.github.suninvr.virtualadditions.component.ExplosiveContentComponent;
+import com.github.suninvr.virtualadditions.component.WarpTetherLocationComponent;
 import com.github.suninvr.virtualadditions.entity.ClimbingRopeEntity;
 import com.github.suninvr.virtualadditions.entity.SteelBombEntity;
 import com.github.suninvr.virtualadditions.item.*;
 import com.github.suninvr.virtualadditions.item.materials.SteelToolMaterial;
-import com.github.suninvr.virtualadditions.mixin.ComposterBlockAccessor;
 import com.github.suninvr.virtualadditions.registry.constructors.item.CustomAxeItem;
 import com.github.suninvr.virtualadditions.registry.constructors.item.CustomHoeItem;
 import com.github.suninvr.virtualadditions.registry.constructors.item.CustomPickaxeItem;
 import net.fabricmc.fabric.api.itemgroup.v1.ItemGroupEvents;
 import net.fabricmc.fabric.api.loot.v2.LootTableEvents;
 import net.minecraft.block.Blocks;
+import net.minecraft.block.ComposterBlock;
 import net.minecraft.block.DispenserBlock;
 import net.minecraft.block.dispenser.ItemDispenserBehavior;
 import net.minecraft.block.dispenser.ProjectileDispenserBehavior;
+import net.minecraft.component.DataComponentTypes;
+import net.minecraft.component.type.PotionContentsComponent;
 import net.minecraft.enchantment.Enchantments;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.effect.StatusEffectInstance;
@@ -521,12 +525,12 @@ public class VAItems {
         REDSTONE_BRIDGE = registerBlockItem("redstone_bridge", VABlocks.REDSTONE_BRIDGE, ItemGroups.REDSTONE, Items.COMPARATOR);
         RAW_STEEL = register("raw_steel", ItemGroups.INGREDIENTS, Items.RAW_GOLD);
         STEEL_INGOT = register("steel_ingot", ItemGroups.INGREDIENTS, Items.GOLD_INGOT);
-        STEEL_BOMB = register("steel_bomb", new SteelBombItem(new Item.Settings().maxCount(16)), new ItemGroupLocation(ItemGroups.COMBAT, Items.SNOWBALL), new ItemGroupLocation(ItemGroups.TOOLS, CLIMBING_ROPE));
-        STEEL_SWORD = register("steel_sword", new SwordItem(SteelToolMaterial.INSTANCE, 3, -2.4F, new Item.Settings().maxCount(1)), ItemGroups.COMBAT, Items.GOLDEN_SWORD);
-        STEEL_SHOVEL = register("steel_shovel", new ShovelItem(SteelToolMaterial.INSTANCE, 1.5F, -3.0F, new Item.Settings().maxCount(1)), ItemGroups.TOOLS, Items.GOLDEN_HOE);
-        STEEL_PICKAXE = register("steel_pickaxe", new CustomPickaxeItem(SteelToolMaterial.INSTANCE, 1, -2.8F, new Item.Settings().maxCount(1)), ItemGroups.TOOLS, prev);
-        STEEL_AXE = register("steel_axe", new CustomAxeItem(SteelToolMaterial.INSTANCE, 6.0F, -3.1F, new Item.Settings().maxCount(1)), new ItemGroupLocation(ItemGroups.TOOLS, prev), new ItemGroupLocation(ItemGroups.COMBAT, Items.GOLDEN_AXE));
-        STEEL_HOE = register("steel_hoe", new CustomHoeItem(SteelToolMaterial.INSTANCE, -2, -1.0F, new Item.Settings().maxCount(1)), ItemGroups.TOOLS, prev);
+        STEEL_BOMB = register("steel_bomb", new SteelBombItem(new Item.Settings().maxCount(16).component(VADataComponentTypes.EXPLOSIVE_CONTENTS, ExplosiveContentComponent.DEFAULT)), new ItemGroupLocation(ItemGroups.COMBAT, Items.SNOWBALL), new ItemGroupLocation(ItemGroups.TOOLS, CLIMBING_ROPE));
+        STEEL_SWORD = register("steel_sword", new SwordItem(SteelToolMaterial.INSTANCE, new Item.Settings().maxCount(1).attributeModifiers(SwordItem.createAttributeModifiers(SteelToolMaterial.INSTANCE, 3, -2.4F))), ItemGroups.COMBAT, Items.GOLDEN_SWORD);
+        STEEL_SHOVEL = register("steel_shovel", new ShovelItem(SteelToolMaterial.INSTANCE, new Item.Settings().maxCount(1).attributeModifiers(ShovelItem.createAttributeModifiers(SteelToolMaterial.INSTANCE, 1.5F, -3.0F))), ItemGroups.TOOLS, Items.GOLDEN_HOE);
+        STEEL_PICKAXE = register("steel_pickaxe", new CustomPickaxeItem(SteelToolMaterial.INSTANCE, new Item.Settings().maxCount(1).attributeModifiers(PickaxeItem.createAttributeModifiers(SteelToolMaterial.INSTANCE, 1, -2.8F))), ItemGroups.TOOLS, prev);
+        STEEL_AXE = register("steel_axe", new CustomAxeItem(SteelToolMaterial.INSTANCE, new Item.Settings().maxCount(1).attributeModifiers(AxeItem.createAttributeModifiers(SteelToolMaterial.INSTANCE, 6.0F, -3.1F))), new ItemGroupLocation(ItemGroups.TOOLS, prev), new ItemGroupLocation(ItemGroups.COMBAT, Items.GOLDEN_AXE));
+        STEEL_HOE = register("steel_hoe", new CustomHoeItem(SteelToolMaterial.INSTANCE, new Item.Settings().maxCount(1).attributeModifiers(HoeItem.createAttributeModifiers(SteelToolMaterial.INSTANCE, -2, -1.0F))), ItemGroups.TOOLS, prev);
         STEEL_HELMET = register("steel_helmet", new ArmorItem(VAArmorMaterial.STEEL, ArmorItem.Type.HELMET, new Item.Settings().maxCount(1).maxDamageIfAbsent(ArmorItem.Type.HELMET.getMaxDamage(24))), ItemGroups.COMBAT, Items.GOLDEN_BOOTS);
         STEEL_CHESTPLATE = register("steel_chestplate", new ArmorItem(VAArmorMaterial.STEEL, ArmorItem.Type.CHESTPLATE, new Item.Settings().maxCount(1).maxDamageIfAbsent(ArmorItem.Type.CHESTPLATE.getMaxDamage(24))), ItemGroups.COMBAT, prev);
         STEEL_LEGGINGS = register("steel_leggings", new ArmorItem(VAArmorMaterial.STEEL, ArmorItem.Type.LEGGINGS, new Item.Settings().maxCount(1).maxDamageIfAbsent(ArmorItem.Type.LEGGINGS.getMaxDamage(24))), ItemGroups.COMBAT, prev);
@@ -569,7 +573,7 @@ public class VAItems {
 
         ACID_BUCKET = register("acid_bucket", new AcidBucketItem(new Item.Settings().recipeRemainder(Items.BUCKET).maxCount(1)), ItemGroups.TOOLS, Items.LAVA_BUCKET);
 
-        APPLICABLE_POTION = register("applicable_potion", new ApplicablePotionItem(new Item.Settings().maxCount(16)));
+        APPLICABLE_POTION = register("applicable_potion", new ApplicablePotionItem(new Item.Settings().maxCount(16).component(DataComponentTypes.POTION_CONTENTS, PotionContentsComponent.DEFAULT)));
 
         CHARTREUSE_DYE = register("chartreuse_dye", ItemGroups.INGREDIENTS, Items.YELLOW_DYE);
         CHARTREUSE_WOOL = registerBlockItem("chartreuse_wool", VABlocks.CHARTREUSE_WOOL, ItemGroups.COLORED_BLOCKS, Blocks.YELLOW_WOOL.asItem());
@@ -692,7 +696,7 @@ public class VAItems {
         IOLITE_ORE = registerBlockItem("iolite_ore", VABlocks.IOLITE_ORE, ItemGroups.NATURAL, Items.ANCIENT_DEBRIS);
         IOLITE_BLOCK = registerBlockItem("iolite_block", VABlocks.IOLITE_BLOCK, ItemGroups.BUILDING_BLOCKS, Items.NETHERITE_BLOCK);
         WARP_ANCHOR = register("warp_anchor", new BlockItem(VABlocks.WARP_ANCHOR, new Item.Settings().rarity(Rarity.RARE)), ItemGroups.REDSTONE, Items.CAULDRON);
-        WARP_TETHER = register("warp_tether", new BlockItem(VABlocks.WARP_TETHER, new Item.Settings().rarity(Rarity.RARE)), ItemGroups.REDSTONE, prev);
+        WARP_TETHER = register("warp_tether", new BlockItem(VABlocks.WARP_TETHER, new Item.Settings().rarity(Rarity.RARE).component(VADataComponentTypes.WARP_TETHER_LOCATION, WarpTetherLocationComponent.DEFAULT)), ItemGroups.REDSTONE, prev);
         ENTANGLEMENT_DRIVE = register("entanglement_drive", new BlockItem(VABlocks.ENTANGLEMENT_DRIVE, new Item.Settings().rarity(Rarity.RARE)), ItemGroups.REDSTONE, prev);
 
         AMETHYST_DIAMOND_TOOL_SET = registerGildedToolSet(DIAMOND_TOOL_SET, GildTypes.AMETHYST);
@@ -781,9 +785,9 @@ public class VAItems {
     }
 
     protected static void initCompostables() {
-        ComposterBlockAccessor.virtualAdditions$registerCompostableItem(0.3F, COTTON_SEEDS);
-        ComposterBlockAccessor.virtualAdditions$registerCompostableItem(0.3F, COTTON);
-        ComposterBlockAccessor.virtualAdditions$registerCompostableItem(0.65F, CORN);
+        ComposterBlock.registerCompostableItem(0.3F, COTTON_SEEDS);
+        ComposterBlock.registerCompostableItem(0.3F, COTTON);
+        ComposterBlock.registerCompostableItem(0.65F, CORN);
     }
 
     protected static void initLootTableModifiers() {

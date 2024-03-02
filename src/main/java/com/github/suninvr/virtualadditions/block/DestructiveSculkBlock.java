@@ -164,7 +164,7 @@ public class DestructiveSculkBlock extends BlockWithEntity {
         if (blockEntity != null) {
             Block block = blockEntity.getReplacedState().getBlock();
             if (block instanceof ExperienceDroppingBlock experienceDroppingBlock) {
-                dropExperienceWhenMined(world, pos, blockEntity.getTool(), ((ExperienceDroppingBlockInterface)experienceDroppingBlock).getExperienceDropped() );
+                dropExperienceWhenMined(world, pos, blockEntity.getTool(), ((ExperienceDroppingBlockInterface)experienceDroppingBlock).virtualAdditions$getExperienceDropped() );
             }
         }
     }

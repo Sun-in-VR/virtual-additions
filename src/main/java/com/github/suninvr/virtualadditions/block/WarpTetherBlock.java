@@ -1,6 +1,7 @@
 package com.github.suninvr.virtualadditions.block;
 
 import com.github.suninvr.virtualadditions.block.entity.WarpTetherBlockEntity;
+import com.github.suninvr.virtualadditions.component.WarpTetherLocationComponent;
 import com.github.suninvr.virtualadditions.registry.*;
 import com.mojang.serialization.MapCodec;
 import net.minecraft.block.*;
@@ -63,8 +64,9 @@ public class WarpTetherBlock extends BlockWithEntity implements Waterloggable {
     public void onPlaced(World world, BlockPos pos, BlockState state, @Nullable LivingEntity placer, ItemStack itemStack) {
         WarpTetherBlockEntity blockEntity = (WarpTetherBlockEntity) world.getBlockEntity(pos);
         if (blockEntity == null) return;
-        if (itemStack.hasNbt() && itemStack.getNbt().contains("destination")) {
-            NbtHelper.toBlockPos(itemStack.getNbt(), "destination").ifPresent(blockEntity::setDestination);
+        WarpTetherLocationComponent component = itemStack.get(VADataComponentTypes.WARP_TETHER_LOCATION);
+        if (component != null) {
+            component.pos().ifPresent(blockEntity::setDestination);
         }
         blockEntity.markDirty();
 
@@ -124,7 +126,7 @@ public class WarpTetherBlock extends BlockWithEntity implements Waterloggable {
             BlockPos destination = getBlockDestination(world, pos);
             if (destination != null) {
                 ItemStack stack = VAItems.WARP_TETHER.getDefaultStack();
-                stack.getOrCreateNbt().put("destination", NbtHelper.fromBlockPos(destination));
+                stack.set(VADataComponentTypes.WARP_TETHER_LOCATION, new WarpTetherLocationComponent(destination));
                 dropStack(world, pos, stack);
             }
         }

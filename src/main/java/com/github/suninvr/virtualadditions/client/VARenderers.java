@@ -27,10 +27,12 @@ import net.minecraft.client.render.block.entity.SignBlockEntityRenderer;
 import net.minecraft.client.render.entity.FlyingItemEntityRenderer;
 import net.minecraft.client.render.entity.model.EntityModelLayer;
 import net.minecraft.client.util.SpriteIdentifier;
-import net.minecraft.item.CrossbowItem;
+import net.minecraft.component.DataComponentTypes;
+import net.minecraft.component.type.ChargedProjectilesComponent;
+import net.minecraft.component.type.PotionContentsComponent;
 import net.minecraft.item.Items;
-import net.minecraft.potion.PotionUtil;
 import net.minecraft.util.Identifier;
+import net.minecraft.util.math.ColorHelper;
 
 import static com.github.suninvr.virtualadditions.VirtualAdditions.idOf;
 
@@ -178,7 +180,8 @@ public class VARenderers {
 
         ModelPredicateProviderRegistry.register(Items.CROSSBOW, idOf("climbing_rope"), (itemStack, clientWorld, livingEntity, a) -> {
             if(!itemStack.isOf(Items.CROSSBOW)) return 0.0F;
-            return CrossbowItem.hasProjectile(itemStack, VAItems.CLIMBING_ROPE) ? 1.0F : 0.0F;
+            ChargedProjectilesComponent component = itemStack.get(DataComponentTypes.CHARGED_PROJECTILES);
+            return component != null && component.contains(VAItems.CLIMBING_ROPE) ? 1.0F : 0.0F ;
         });
 
     }
@@ -205,7 +208,9 @@ public class VARenderers {
         ColorProviderRegistry.BLOCK.register( (state, world, pos, tintIndex) -> tintIndex <= 0 ? -1 : RedstoneWireBlock.getWireColor(state.get(RedstoneBridgeBlock.POWER)), VABlocks.REDSTONE_BRIDGE);
         ColorProviderRegistry.BLOCK.register( (state, world, pos, tintIndex) -> tintIndex <= 0 ? -1 : world != null ? BiomeColors.getGrassColor(world, pos) : 5353656, VABlocks.GRASSY_FLOATROCK);
 
-        ColorProviderRegistry.ITEM.register( (stack, tintIndex) -> tintIndex > 0 ? -1 : PotionUtil.getColor(stack), VAItems.APPLICABLE_POTION);
+        ColorProviderRegistry.ITEM.register( (stack, tintIndex) -> {
+            return tintIndex > 0 ? -1 : ColorHelper.Argb.fullAlpha(stack.getOrDefault(DataComponentTypes.POTION_CONTENTS, PotionContentsComponent.DEFAULT).getColor());
+        }, VAItems.APPLICABLE_POTION);
         ColorProviderRegistry.ITEM.register( (stack, tintIndex) -> FoliageColors.getDefaultColor(), VAItems.OAK_HEDGE, VAItems.JUNGLE_HEDGE, VAItems.ACACIA_HEDGE, VAItems.DARK_OAK_HEDGE);
         ColorProviderRegistry.ITEM.register( (stack, tintIndex) -> tintIndex <= 0 ? -1 : 5353656, VAItems.GRASSY_FLOATROCK);
         ColorProviderRegistry.ITEM.register( (stack, tintIndex) -> FoliageColors.getBirchColor(), VAItems.BIRCH_HEDGE);

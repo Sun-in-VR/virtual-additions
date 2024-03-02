@@ -29,7 +29,7 @@ public class GildedPickaxeItem extends PickaxeItem implements GildedToolItem {
     private final Multimap<RegistryEntry<EntityAttribute>, EntityAttributeModifier> attributeModifiers;
 
     public GildedPickaxeItem(GildType gildType, PickaxeItem baseItem, Settings settings) {
-        super(gildType.getModifiedMaterial(baseItem), (int) (baseItem.getAttackDamage() - baseItem.getMaterial().getAttackDamage()), (float) getAttackSpeed(baseItem, gildType), settings);
+        super(gildType.getModifiedMaterial(baseItem), settings);
         this.gildType = gildType;
         this.toolMaterial = gildType.getModifiedMaterial(baseItem);
         this.baseMaterial = baseItem.getMaterial();

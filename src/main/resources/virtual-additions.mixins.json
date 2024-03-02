@@ -7,24 +7,22 @@
     "AnvilScreenHandlerMixin",
     "BlockMixin",
     "ClientPlayerInteractionManagerMixin",
-    "ComposterBlockAccessor",
     "CrossbowItemMixin",
     "DamageSourcesMixin",
     "EntityMixin",
     "ExperienceDroppingBlockMixin",
     "FeatureFlagsMixin",
     "FenceBlockMixin",
-    "FireBlockAccessor",
     "ItemMixin",
     "LivingEntityMixin",
     "MilkBucketItemMixin",
     "MobEntityMixin",
     "PlayerEntityMixin",
-    "PlayerInventoryMixin",
     "RangedWeaponItemMixin",
     "RedstoneWireBlockMixin",
     "WallBlockMixin",
-    "WaterFluidMixin"
+    "WaterFluidMixin",
+    "WolfEntityMixin"
   ],
   "client": [
     "ClientPlayNetworkHandlerMixin"

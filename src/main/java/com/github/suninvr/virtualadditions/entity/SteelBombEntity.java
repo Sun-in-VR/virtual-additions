@@ -1,5 +1,7 @@
 package com.github.suninvr.virtualadditions.entity;
 
+import com.github.suninvr.virtualadditions.component.ExplosiveContentComponent;
+import com.github.suninvr.virtualadditions.registry.VADataComponentTypes;
 import com.github.suninvr.virtualadditions.registry.VAEntityType;
 import com.github.suninvr.virtualadditions.registry.VAItems;
 import net.minecraft.entity.EntityType;
@@ -14,7 +16,7 @@ import net.minecraft.util.hit.HitResult;
 import net.minecraft.world.World;
 
 public class SteelBombEntity extends ThrownItemEntity {
-    NbtCompound stackNbt;
+    ItemStack stack;
     int fuseLength;
 
     public SteelBombEntity(EntityType<? extends ThrownItemEntity> entityType, World world) {
@@ -49,21 +51,15 @@ public class SteelBombEntity extends ThrownItemEntity {
     }
 
     protected float getExplosivePower() {
-        float power;
-        if (this.stackNbt != null) {
-            power = this.stackNbt.getFloat("Power");
-            power = power <= 0 ? 2.0F : power;
-        } else power = 2.0F;
-        return power;
+        ExplosiveContentComponent component = this.stack.get(VADataComponentTypes.EXPLOSIVE_CONTENTS);
+        if (component != null) return component.getExplosionStrength();
+        return 2;
     }
 
     protected int getFuseLength() {
-        int fuseLength;
-        if (this.stackNbt != null) {
-            fuseLength = this.stackNbt.getInt("FuseLength");
-            fuseLength = fuseLength <= 0 ? -1 : fuseLength;
-        } else fuseLength = -1;
-        return fuseLength;
+        ExplosiveContentComponent component = this.stack.get(VADataComponentTypes.EXPLOSIVE_CONTENTS);
+        if (component != null) return component.getFuseLength();
+        return 200;
     }
 
     @Override
@@ -72,9 +68,9 @@ public class SteelBombEntity extends ThrownItemEntity {
     }
 
     @Override
-    public void setItem(ItemStack item) {
-        super.setItem(item);
-        this.stackNbt = item.getNbt();
+    public void setItem(ItemStack stack) {
+        super.setItem(stack);
+        this.stack = stack;
         this.fuseLength = this.getFuseLength();
     }
 

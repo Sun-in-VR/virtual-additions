@@ -1,5 +1,5 @@
 package com.github.suninvr.virtualadditions.interfaces;
 
 public interface LivingEntityInterface {
-    float getXpModifier();
+    float virtualAdditions$getXpModifier();
 }

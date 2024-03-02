@@ -1,13 +1,13 @@
 package com.github.suninvr.virtualadditions.item;
 
+import com.github.suninvr.virtualadditions.component.EffectsOnHitComponent;
+import com.github.suninvr.virtualadditions.registry.VADataComponentTypes;
 import net.minecraft.client.item.TooltipContext;
+import net.minecraft.component.DataComponentTypes;
+import net.minecraft.component.type.PotionContentsComponent;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.*;
-import net.minecraft.nbt.NbtCompound;
-import net.minecraft.potion.Potion;
-import net.minecraft.potion.PotionUtil;
 import net.minecraft.screen.slot.Slot;
-import net.minecraft.sound.SoundCategory;
 import net.minecraft.sound.SoundEvents;
 import net.minecraft.text.Text;
 import net.minecraft.util.ClickType;
@@ -17,6 +17,7 @@ import net.minecraft.world.World;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.List;
+import java.util.Objects;
 
 public class ApplicablePotionItem extends PotionItem {
     public ApplicablePotionItem(Settings settings) {
@@ -32,30 +33,18 @@ public class ApplicablePotionItem extends PotionItem {
     public boolean onStackClicked(ItemStack stack, Slot slot, ClickType clickType, PlayerEntity player) {
         if(clickType == ClickType.RIGHT) {
             ItemStack clickedStack = slot.getStack();
+            boolean bl = false;
             if(clickedStack.getItem() instanceof SwordItem || clickedStack.getItem() instanceof AxeItem) {
-
-                NbtCompound clickedStacknbt = clickedStack.getOrCreateNbt();
-                NbtCompound stackNbt = stack.getOrCreateNbt();
-                NbtCompound appliedPotionNbt = new NbtCompound();
-                Potion potion = PotionUtil.getPotion(stack).value();
-                player.playSound(SoundEvents.ITEM_BOTTLE_EMPTY, 0.3F, 1.4F);
-
-                if (stackNbt.contains("Potion")) appliedPotionNbt.putString("Potion", stackNbt.getString("Potion"));
-                if (stackNbt.contains("CustomPotionEffects")) appliedPotionNbt.put("CustomPotionEffects", stackNbt.get("CustomPotionEffects"));
-                if (stackNbt.contains("CustomPotionColor")) appliedPotionNbt.put("CustomPotionColor", stackNbt.get("CustomPotionColor"));
-                int uses = stack.getOrCreateNbt().getInt("Uses");
-                if (uses == 0) uses = potion.hasInstantEffect() ? 10 : 30;
-                appliedPotionNbt.putInt("Uses", uses);
-                appliedPotionNbt.putInt("MaxUses", uses);
-
-                clickedStacknbt.put("AppliedPotion", appliedPotionNbt);
-                stack.decrement(1);
-                return true;
+                PotionContentsComponent potionComponent = stack.get(DataComponentTypes.POTION_CONTENTS);
+                if (potionComponent != null) {
+                    int maxUses = 30; //potionComponent.potion().isPresent() ? potionComponent.potion().get().
+                    clickedStack.set(VADataComponentTypes.EFFECTS_ON_HIT, new EffectsOnHitComponent(potionComponent, maxUses, maxUses));
+                    bl = true;
+                }
 
             } else if (clickedStack.isOf(Items.ARROW)) {
                 ItemStack tippedArrowStack = Items.TIPPED_ARROW.getDefaultStack();
-                player.playSound(SoundEvents.ITEM_BOTTLE_EMPTY, 0.3F, 1.4F);
-                PotionUtil.setPotion(tippedArrowStack, PotionUtil.getPotion(stack));
+                tippedArrowStack.set(DataComponentTypes.POTION_CONTENTS, stack.get(DataComponentTypes.POTION_CONTENTS));
                 if(clickedStack.getCount() <= 10) {
                     tippedArrowStack.setCount(clickedStack.getCount());
                     slot.setStackNoCallbacks(tippedArrowStack);
@@ -64,15 +53,23 @@ public class ApplicablePotionItem extends PotionItem {
                     clickedStack.decrement(10);
                     player.getInventory().offerOrDrop(tippedArrowStack);
                 }
-                stack.decrement(1);
-                return true;
+                bl = true;
             }
+            if (bl) {
+                player.playSound(SoundEvents.ITEM_BOTTLE_EMPTY, 0.3F, 1.4F);
+                stack.decrement(1);
+            }
+            return bl;
         }
         return false;
     }
 
     @Override
     public void appendTooltip(ItemStack stack, @Nullable World world, List<Text> tooltip, TooltipContext context) {
-        PotionUtil.buildTooltip(stack, tooltip, 0.125F, world == null ? 1.0F : world.getTickManager().getTickRate());
+        PotionContentsComponent potionContentsComponent = stack.get(DataComponentTypes.POTION_CONTENTS);
+        if (potionContentsComponent != null) {
+            Objects.requireNonNull(tooltip);
+            potionContentsComponent.buildTooltip(tooltip::add, 0.125F, world == null ? 20.0F : world.getTickManager().getTickRate());
+        }
     }
 }

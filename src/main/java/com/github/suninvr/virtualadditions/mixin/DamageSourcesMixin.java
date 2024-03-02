@@ -32,11 +32,11 @@ public abstract class DamageSourcesMixin implements DamageSourcesInterface {
     }
 
     @Override
-    public DamageSource acid() {
+    public DamageSource virtualAdditions$acid() {
         return this.acid;
     }
 
-    public DamageSource acidSpit(AcidSpitEntity source, @Nullable Entity attacker) {
+    public DamageSource virtualAdditions$acidSpit(AcidSpitEntity source, @Nullable Entity attacker) {
         return this.create(VADamageTypes.ACID_SPIT, source, attacker);
     }
 }

@@ -29,7 +29,7 @@ public class GildedSwordItem extends SwordItem implements GildedToolItem {
     private final Multimap<RegistryEntry<EntityAttribute>, EntityAttributeModifier> attributeModifiers;
 
     public GildedSwordItem(GildType gildType, SwordItem baseItem, Settings settings) {
-        super(gildType.getModifiedMaterial(baseItem), (int) (baseItem.getAttackDamage() - baseItem.getMaterial().getAttackDamage()), (float) getAttackSpeed(baseItem, gildType), settings);
+        super(gildType.getModifiedMaterial(baseItem), settings);
         this.gildType = gildType;
         this.toolMaterial = gildType.getModifiedMaterial(baseItem);
         this.baseMaterial = baseItem.getMaterial();

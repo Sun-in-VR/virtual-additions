@@ -17,7 +17,7 @@ public class ExperienceDroppingBlockMixin extends Block implements ExperienceDro
         super(settings);
     }
 
-    public IntProvider getExperienceDropped() {
+    public IntProvider virtualAdditions$getExperienceDropped() {
         return this.experienceDropped;
     }
 }

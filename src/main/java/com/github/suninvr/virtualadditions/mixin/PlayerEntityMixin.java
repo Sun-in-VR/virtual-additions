@@ -3,10 +3,13 @@ package com.github.suninvr.virtualadditions.mixin;
 import com.github.suninvr.virtualadditions.item.GildTypes;
 import com.github.suninvr.virtualadditions.item.GildedToolUtil;
 import com.github.suninvr.virtualadditions.registry.VADamageTypes;
+import com.llamalad7.mixinextras.sugar.Local;
+import com.llamalad7.mixinextras.sugar.ref.LocalFloatRef;
 import net.minecraft.block.BlockState;
 import net.minecraft.enchantment.EnchantmentHelper;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityType;
+import net.minecraft.entity.EquipmentSlot;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.damage.DamageSource;
 import net.minecraft.entity.player.PlayerEntity;
@@ -52,12 +55,8 @@ public abstract class PlayerEntityMixin extends LivingEntity {
         cir.setReturnValue(r);
     }
 
-    @Inject(method = "damageArmor", at = @At("HEAD"), cancellable = true)
-    void virtualAdditions$damageArmorFromAcid(DamageSource source, float amount, CallbackInfo ci) {
-        if (source.isIn(VADamageTypes.INCREASED_ARMOR_DAMAGE)) {
-            if (amount > 1) amount *= 3;
-            this.inventory.damageArmor(source, amount, PlayerInventory.ARMOR_SLOTS);
-            ci.cancel();
-        }
+    @Inject(method = "damageArmor", at = @At("HEAD"))
+    void virtualAdditions$damageArmorFromAcid(DamageSource source, float amount, CallbackInfo ci, @Local(argsOnly = true) LocalFloatRef amountRef) {
+        if (source.isIn(VADamageTypes.INCREASED_ARMOR_DAMAGE)) amountRef.set(amountRef.get() * 3.0F);
     }
 }

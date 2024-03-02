@@ -29,7 +29,7 @@ public class GildedAxeItem extends AxeItem implements GildedToolItem {
     private final Multimap<RegistryEntry<EntityAttribute>, EntityAttributeModifier> attributeModifiers;
 
     public GildedAxeItem(GildType gildType, AxeItem baseItem, Settings settings) {
-        super(gildType.getModifiedMaterial(baseItem), (int) (baseItem.getAttackDamage() - baseItem.getMaterial().getAttackDamage()), (float) getAttackSpeed(baseItem, gildType), settings);
+        super(gildType.getModifiedMaterial(baseItem), settings);
         this.gildType = gildType;
         this.toolMaterial = gildType.getModifiedMaterial(baseItem);
         this.baseMaterial = baseItem.getMaterial();
@@ -40,10 +40,6 @@ public class GildedAxeItem extends AxeItem implements GildedToolItem {
         super.getAttributeModifiers(EquipmentSlot.MAINHAND).get(EntityAttributes.GENERIC_ATTACK_SPEED).forEach(entityAttributeModifier -> builder.put(EntityAttributes.GENERIC_ATTACK_SPEED, entityAttributeModifier));
         gildType.appendAttributeModifiers(builder);
         attributeModifiers = builder.build();
-    }
-
-    private static double getAttackSpeed(ToolItem baseItem, GildType gildType) {
-        return gildType.getModifiedAttackSpeed(baseItem);
     }
 
     @Override

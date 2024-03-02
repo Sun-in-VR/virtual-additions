@@ -12,7 +12,7 @@ public class MobEntityMixin {
 
     @Inject(method = "getXpToDrop", at = @At("RETURN"), cancellable = true)
     void virtualAdditions$getModifiedXpToDrop(CallbackInfoReturnable<Integer> cir) {
-        float mul = ((LivingEntityInterface)this).getXpModifier();
+        float mul = ((LivingEntityInterface)this).virtualAdditions$getXpModifier();
         if (mul > 1) {
             cir.setReturnValue((int) Math.ceil(cir.getReturnValueI() * mul));
         }

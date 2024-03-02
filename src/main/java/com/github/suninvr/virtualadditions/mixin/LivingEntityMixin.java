@@ -78,7 +78,7 @@ public abstract class LivingEntityMixin extends Entity implements LivingEntityIn
     }
 
     @Override
-    public float getXpModifier() {
+    public float virtualAdditions$getXpModifier() {
         return this.experienceMultiplier;
     }
 }

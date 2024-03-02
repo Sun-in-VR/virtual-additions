@@ -92,7 +92,7 @@ public class ColoringRecipe implements Recipe<Inventory> {
         private final Codec<ColoringRecipe> CODEC = RecordCodecBuilder.create(
                 instance -> instance.group(
                         Ingredient.ALLOW_EMPTY_CODEC.fieldOf("ingredient").forGetter(recipe -> recipe.ingredient),
-                        ItemStack.CUTTING_RECIPE_RESULT_CODEC.forGetter(recipe -> recipe.result),
+                        ItemStack.RECIPE_RESULT_CODEC.fieldOf("result").forGetter(recipe -> recipe.result),
                         Codecs.createStrictOptionalFieldCodec(Codec.INT, "red_cost", 0).forGetter(recipe -> recipe.cost.getR()),
                         Codecs.createStrictOptionalFieldCodec(Codec.INT, "green_cost", 0).forGetter(recipe -> recipe.cost.getG()),
                         Codecs.createStrictOptionalFieldCodec(Codec.INT, "blue_cost", 0).forGetter(recipe -> recipe.cost.getB()),

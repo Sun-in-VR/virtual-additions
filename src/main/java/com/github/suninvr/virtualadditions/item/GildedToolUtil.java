@@ -1,14 +1,13 @@
 package com.github.suninvr.virtualadditions.item;
 
 import com.github.suninvr.virtualadditions.item.interfaces.GildedToolItem;
-import net.fabricmc.fabric.api.item.v1.FabricItemSettings;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NbtCompound;
 
 public class GildedToolUtil {
-    public static FabricItemSettings settingsOf(Item item) {
-        FabricItemSettings settings = new FabricItemSettings();
+    public static Item.Settings settingsOf(Item item) {
+        Item.Settings settings = new Item.Settings();
         if (item.isFireproof()) settings = settings.fireproof();
         return settings;
     }
@@ -26,10 +25,7 @@ public class GildedToolUtil {
         ItemStack baseStack = stack.copy();
         if (stack.getItem() instanceof GildedToolItem gildedToolItem) {
             baseStack = gildedToolItem.getBaseItem().getDefaultStack();
-            NbtCompound nbt = stack.getNbt();
-            if (nbt != null) {
-                baseStack.setNbt(nbt);
-            }
+            baseStack.copyComponentsFrom(stack.getComponents());
         }
         return baseStack;
     }
