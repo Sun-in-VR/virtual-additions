@@ -1,7 +1,7 @@
 {
   "display": {
     "icon": {
-      "item": "virtual_additions:iolite"
+      "id": "virtual_additions:iolite"
     },
     "title": {
       "translate": "advancements.virtual_additions.end.mine_iolite.title"

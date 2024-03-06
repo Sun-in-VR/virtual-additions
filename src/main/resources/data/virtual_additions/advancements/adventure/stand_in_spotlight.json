@@ -1,7 +1,8 @@
 {
   "display": {
     "icon": {
-      "item": "virtual_additions:spotlight"
+      "id": "virtual_additions:spotlight"
+
     },
     "title": {
       "translate": "advancements.virtual_additions.adventure.stand_in_spotlight.title"

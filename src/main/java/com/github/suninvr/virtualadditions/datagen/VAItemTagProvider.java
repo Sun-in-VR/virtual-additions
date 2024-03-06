@@ -29,13 +29,11 @@ import static com.github.suninvr.virtualadditions.VirtualAdditions.idOf;
 @SuppressWarnings("SameParameterValue")
 public final class VAItemTagProvider {
 
-    public static final VAItemTagProvider INSTANCE = new VAItemTagProvider();
-
-    public FabricDataGenerator.Pack.RegistryDependentFactory<?> base() {
+    public static FabricDataGenerator.Pack.RegistryDependentFactory<?> base() {
         return BaseProvider::new;
     }
 
-    public FabricDataGenerator.Pack.RegistryDependentFactory<?> preview() {
+    public static FabricDataGenerator.Pack.RegistryDependentFactory<?> preview() {
         return PreviewProvider::new;
     }
 

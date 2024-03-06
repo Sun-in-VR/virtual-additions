@@ -1,7 +1,7 @@
 {
   "display": {
     "icon": {
-      "item": "virtual_additions:acid_bucket"
+      "id": "virtual_additions:acid_bucket"
     },
     "title": {
       "translate": "advancements.virtual_additions.adventure.fill_bucket_acid.title"

@@ -1,7 +1,7 @@
 {
   "display": {
     "icon": {
-      "item": "virtual_additions:warp_tether"
+      "id": "virtual_additions:warp_tether"
     },
     "title": {
       "translate": "advancements.virtual_additions.end.use_teleporter.title"

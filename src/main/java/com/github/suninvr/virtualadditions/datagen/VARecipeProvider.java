@@ -33,13 +33,12 @@ import static com.github.suninvr.virtualadditions.VirtualAdditions.idOf;
 
 @SuppressWarnings({"SameParameterValue", "unused"})
 public final class VARecipeProvider {
-    public static final VARecipeProvider INSTANCE = new VARecipeProvider();
 
-    public FabricDataGenerator.Pack.RegistryDependentFactory<?> base() {
+    public static FabricDataGenerator.Pack.RegistryDependentFactory<?> base() {
         return BaseProvider::new;
     }
 
-    public FabricDataGenerator.Pack.RegistryDependentFactory<?> preview() {
+    public static FabricDataGenerator.Pack.RegistryDependentFactory<?> preview() {
         return PreviewProvider::new;
     }
 

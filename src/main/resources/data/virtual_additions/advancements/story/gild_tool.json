@@ -1,8 +1,7 @@
 {
   "display": {
     "icon": {
-      "item": "virtual_additions:amethyst_diamond_pickaxe",
-      "nbt": "{Damage:0}"
+      "id": "virtual_additions:amethyst_diamond_pickaxe"
     },
     "title": {
       "translate": "advancements.virtual_additions.story.gild_tool.title"
@@ -19,11 +18,9 @@
     "requirement": {
       "trigger": "minecraft:inventory_changed",
       "conditions": {
-        "items": [
-          {
-            "tag": "virtual_additions:gilded_tools"
-          }
-        ]
+        "items": [{
+          "items": "#virtual_additions:gilded_tools"
+          }]
       }
     }
   },

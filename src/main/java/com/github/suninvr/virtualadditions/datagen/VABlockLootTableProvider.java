@@ -35,12 +35,11 @@ import java.util.concurrent.CompletableFuture;
 
 @SuppressWarnings("SameParameterValue")
 public final class VABlockLootTableProvider {
-    public static final VABlockLootTableProvider INSTANCE = new VABlockLootTableProvider();
 
-    public FabricDataGenerator.Pack.RegistryDependentFactory<?> base() {
+    public static FabricDataGenerator.Pack.RegistryDependentFactory<?> base() {
         return BaseProvider::new;
     }
-    public FabricDataGenerator.Pack.RegistryDependentFactory<?> preview() {
+    public static FabricDataGenerator.Pack.RegistryDependentFactory<?> preview() {
         return PreviewProvider::new;
     }
 

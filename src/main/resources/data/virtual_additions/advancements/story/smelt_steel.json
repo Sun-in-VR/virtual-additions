@@ -1,7 +1,7 @@
 {
   "display": {
     "icon": {
-      "item": "virtual_additions:steel_ingot"
+      "id": "virtual_additions:steel_ingot"
     },
     "title": {
       "translate": "advancements.virtual_additions.story.smelt_steel.title"

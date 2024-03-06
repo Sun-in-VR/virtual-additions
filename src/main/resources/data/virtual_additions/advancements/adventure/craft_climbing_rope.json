@@ -1,7 +1,7 @@
 {
   "display": {
     "icon": {
-      "item": "virtual_additions:climbing_rope"
+      "id": "virtual_additions:climbing_rope"
     },
     "title": {
       "translate": "advancements.virtual_additions.adventure.craft_climbing_rope.title"

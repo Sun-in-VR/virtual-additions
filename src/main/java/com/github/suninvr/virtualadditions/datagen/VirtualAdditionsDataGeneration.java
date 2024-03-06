@@ -9,18 +9,18 @@ public class VirtualAdditionsDataGeneration implements DataGeneratorEntrypoint {
     @Override
     public void onInitializeDataGenerator(FabricDataGenerator fabricDataGenerator) {
         FabricDataGenerator.Pack pack = fabricDataGenerator.createPack();
-        pack.addProvider(VAItemTagProvider.INSTANCE.base());
-        pack.addProvider(VABlockTagProvider.INSTANCE.base());
+        pack.addProvider(VAItemTagProvider.base());
+        pack.addProvider(VABlockTagProvider.base());
+        pack.addProvider(VARecipeProvider.base());
+        pack.addProvider(VABlockLootTableProvider.base());
         pack.addProvider(VAEntityTypeTagProvider::new);
-        pack.addProvider(VARecipeProvider.INSTANCE.base());
-        pack.addProvider(VABlockLootTableProvider.INSTANCE.base());
         pack.addProvider(VAModelProvider::new);
 
         FabricDataGenerator.Pack preview = fabricDataGenerator.createBuiltinResourcePack(idOf("preview"));
-        preview.addProvider(VAItemTagProvider.INSTANCE.preview());
-        preview.addProvider(VABlockTagProvider.INSTANCE.preview());
-        preview.addProvider(VARecipeProvider.INSTANCE.preview());
-        preview.addProvider(VABlockLootTableProvider.INSTANCE.preview());
+        preview.addProvider(VAItemTagProvider.preview());
+        preview.addProvider(VABlockTagProvider.preview());
+        preview.addProvider(VARecipeProvider.preview());
+        preview.addProvider(VABlockLootTableProvider.preview());
     }
 
 }

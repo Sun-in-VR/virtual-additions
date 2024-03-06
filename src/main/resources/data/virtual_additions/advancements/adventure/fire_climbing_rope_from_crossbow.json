@@ -1,8 +1,14 @@
 {
   "display": {
     "icon": {
-      "item": "minecraft:crossbow",
-      "nbt": "{ChargedProjectiles:[{id:\"virtual_additions:climbing_rope\",Count:1b}],Charged:1b}"
+      "id": "minecraft:crossbow",
+      "components": {
+        "minecraft:charged_projectiles": [
+          {
+            "id": "virtual_additions:climbing_rope"
+          }
+        ]
+      }
     },
     "title": {
       "translate": "advancements.virtual_additions.adventure.fire_climbing_rope_from_crossbow.title"

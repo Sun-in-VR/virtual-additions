@@ -1,7 +1,7 @@
 {
   "display": {
     "icon": {
-      "item": "virtual_additions:entanglement_drive"
+      "id": "virtual_additions:entanglement_drive"
     },
     "title": {
       "translate": "advancements.virtual_additions.end.use_entanglement_drive.title"
