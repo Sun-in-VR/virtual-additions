@@ -1,5 +1,8 @@
 package com.github.suninvr.virtualadditions.entity;
 
+import com.github.suninvr.virtualadditions.interfaces.EntityInterface;
+import com.github.suninvr.virtualadditions.interfaces.LivingEntityInterface;
+import com.github.suninvr.virtualadditions.registry.VADamageTypes;
 import com.github.suninvr.virtualadditions.registry.VASoundEvents;
 import net.minecraft.block.BlockState;
 import net.minecraft.entity.*;
@@ -15,6 +18,7 @@ import net.minecraft.entity.attribute.EntityAttributes;
 import net.minecraft.entity.damage.DamageSource;
 import net.minecraft.entity.effect.StatusEffectInstance;
 import net.minecraft.entity.effect.StatusEffects;
+import net.minecraft.entity.mob.BreezeEntity;
 import net.minecraft.entity.mob.HostileEntity;
 import net.minecraft.entity.mob.MobEntity;
 import net.minecraft.entity.mob.PathAwareEntity;
@@ -27,6 +31,7 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.Difficulty;
 import net.minecraft.world.World;
 import net.minecraft.world.WorldView;
+import org.jetbrains.annotations.Nullable;
 
 public class LumwaspEntity extends HostileEntity implements RangedAttackMob, Flutterer {
     public LumwaspEntity(EntityType<? extends HostileEntity> entityType, World world) {
@@ -53,13 +58,13 @@ public class LumwaspEntity extends HostileEntity implements RangedAttackMob, Flu
     public void shootAt(LivingEntity target, float pullProgress) {
         int i = 0;
         this.playSound(SoundEvents.ENTITY_LLAMA_SPIT, 1.0F, 1.0F);
+        double d = target.getEyeY() - 1.100000023841858;
+        double e = target.getX() - this.getX();
+        double g = target.getZ() - this.getZ();
+        double h = Math.sqrt(e * e + g * g) * 0.20000000298023224;
         while (i <= 2) {
             AcidSpitEntity projectile = new AcidSpitEntity(this.getWorld(), this);
-            double d = target.getEyeY() - 1.100000023841858;
-            double e = target.getX() - this.getX();
             double f = d - projectile.getY();
-            double g = target.getZ() - this.getZ();
-            double h = Math.sqrt(e * e + g * g) * 0.20000000298023224;
             projectile.setVelocity(e, f + h, g, 1.6F, 10.0F);
             this.getWorld().spawnEntity(projectile);
             i++;
@@ -68,13 +73,13 @@ public class LumwaspEntity extends HostileEntity implements RangedAttackMob, Flu
 
     @Override
     protected void initGoals() {
-        this.goalSelector.add(1, new AlwaysEscapeSunlightGoal(this, 1.2D));
         this.goalSelector.add(2, new MeleeCloseRangeGoal(this, 1.0D, 4, true));
         this.goalSelector.add(3, new ProjectileAttackGoal(this, 1.0D, 45, 8));
-        this.goalSelector.add(4, new FlyGoal(this, 1.0D));
+        this.goalSelector.add(4, new AlwaysEscapeSunlightGoal(this, 1.2D));
+        this.goalSelector.add(5, new FlyGoal(this, 1.0D));
         this.goalSelector.add(6, new LookAtEntityGoal(this, PlayerEntity.class, 8.0F));
         this.goalSelector.add(6, new LookAroundGoal(this));
-        this.targetSelector.add(1, new RevengeGoal(this, LumwaspEntity.class));
+        this.targetSelector.add(1, new RevengeGoal(this, LumwaspEntity.class, BreezeEntity.class).setGroupRevenge());
         this.targetSelector.add(2, new ActiveTargetGoal<>(this, PlayerEntity.class, true));
         this.targetSelector.add(3, new ActiveTargetGoal<>(this, IronGolemEntity.class, true));
         this.targetSelector.add(3, new ActiveTargetGoal<>(this, BeeEntity.class, true));
@@ -131,7 +136,7 @@ public class LumwaspEntity extends HostileEntity implements RangedAttackMob, Flu
 
     @Override
     public boolean isInvulnerableTo(DamageSource damageSource) {
-        return super.isInvulnerableTo(damageSource);
+        return damageSource.isIn(VADamageTypes.ACID_TAG) || super.isInvulnerableTo(damageSource);
     }
 
     protected void fall(double heightDifference, boolean onGround, BlockState state, BlockPos landedPosition) {
@@ -154,9 +159,17 @@ public class LumwaspEntity extends HostileEntity implements RangedAttackMob, Flu
 
     @Override
     protected void mobTick() {
-        if (this.isInsideWaterOrBubbleColumn()) {
+        if (this.isInsideWaterOrBubbleColumn() && !((EntityInterface)this).virtualAdditions$isInAcid() ) {
             this.damage(this.getDamageSources().drown(), 1.0F);
         }
+    }
+
+    @Override
+    public void setTarget(@Nullable LivingEntity target) {
+        if (target instanceof PlayerEntity) {
+            this.setAttacking((PlayerEntity)target);
+        }
+        super.setTarget(target);
     }
 
     @Override

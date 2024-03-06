@@ -320,6 +320,7 @@ public class VAItems {
     public static final Item WARP_ANCHOR;
     public static final Item WARP_TETHER;
     public static final Item ENTANGLEMENT_DRIVE;
+    public static final Item SALINE_SPAWN_EGG;
     public static final Item LUMWASP_SPAWN_EGG;
     public static final Item LYFT_SPAWN_EGG;
 
@@ -737,6 +738,7 @@ public class VAItems {
         QUARTZ_TOOL_SETS = new ToolSet[]{QUARTZ_DIAMOND_TOOL_SET, QUARTZ_IRON_TOOL_SET, QUARTZ_GOLDEN_TOOL_SET, QUARTZ_STEEL_TOOL_SET, QUARTZ_NETHERITE_TOOL_SET};
         SCULK_TOOL_SETS = new ToolSet[]{SCULK_DIAMOND_TOOL_SET, SCULK_IRON_TOOL_SET, SCULK_GOLDEN_TOOL_SET, SCULK_STEEL_TOOL_SET, SCULK_NETHERITE_TOOL_SET};
 
+        SALINE_SPAWN_EGG = register("saline_spawn_egg", new SpawnEggItem(VAEntityType.SALINE, 0x924C2E, 0xE49A6C, new Item.Settings()), ItemGroups.SPAWN_EGGS, Items.RAVAGER_SPAWN_EGG);
         LUMWASP_SPAWN_EGG = register("lumwasp_spawn_egg", new SpawnEggItem(VAEntityType.LUMWASP, 0x00d67a, 0x214132, new Item.Settings()), ItemGroups.SPAWN_EGGS, Items.LLAMA_SPAWN_EGG);
         LYFT_SPAWN_EGG = register("lyft_spawn_egg", new SpawnEggItem(VAEntityType.LYFT, 0xB1C1DC, 0x88A1C0, new Item.Settings()), ItemGroups.SPAWN_EGGS, prev);
     }

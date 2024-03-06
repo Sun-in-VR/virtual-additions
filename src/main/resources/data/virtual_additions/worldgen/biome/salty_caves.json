@@ -39,8 +39,14 @@
         "maxCount": 4
       },
       {
+        "type": "virtual_additions:saline",
+        "weight": 75,
+        "minCount": 4,
+        "maxCount": 4
+      },
+      {
         "type": "minecraft:zombie",
-        "weight": 95,
+        "weight": 20,
         "minCount": 4,
         "maxCount": 4
       },

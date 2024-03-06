@@ -17,5 +17,6 @@ public class VAEntityTypeTagProvider extends FabricTagProvider.EntityTypeTagProv
     protected void configure(RegistryWrapper.WrapperLookup arg) {
         getOrCreateTagBuilder(EntityTypeTags.IMPACT_PROJECTILES).add(VAEntityType.STEEL_BOMB, VAEntityType.CLIMBING_ROPE, VAEntityType.ACID_SPIT);
         getOrCreateTagBuilder(EntityTypeTags.ARTHROPOD).add(VAEntityType.LUMWASP);
+        getOrCreateTagBuilder(EntityTypeTags.UNDEAD).add(VAEntityType.SALINE);
     }
 }

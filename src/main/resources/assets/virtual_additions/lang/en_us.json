@@ -264,6 +264,7 @@
 
     "entity.virtual_additions.climbing_rope": "Climbing Rope",
     "entity.virtual_additions.steel_bomb": "Steel Bomb",
+    "entity.virtual_additions.saline": "Saline",
     "entity.virtual_additions.lumwasp": "Lumwasp",
     "entity.virtual_additions.lyft": "Lyft",
 
@@ -310,6 +311,7 @@
     "item.virtual_additions.roasted_corn": "Roasted Corn",
     "item.virtual_additions.acid_bucket": "Acid Bucket",
     "item.virtual_additions.iolite": "Iolite",
+    "item.virtual_additions.saline_spawn_egg": "Saline Spawn Egg",
     "item.virtual_additions.lumwasp_spawn_egg": "Lumwasp Spawn Egg",
     "item.virtual_additions.lyft_spawn_egg": "Lyft Spawn Egg",
 

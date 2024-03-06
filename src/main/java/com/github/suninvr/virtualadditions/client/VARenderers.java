@@ -142,6 +142,7 @@ public class VARenderers {
         EntityRendererRegistry.register(VAEntityType.ACID_SPIT, AcidSpitEntityRenderer::new);
         EntityRendererRegistry.register(VAEntityType.LUMWASP, LumwaspEntityRenderer::new);
         EntityRendererRegistry.register(VAEntityType.LYFT, LyftEntityRenderer::new);
+        EntityRendererRegistry.register(VAEntityType.SALINE, SalineEntityRenderer::new);
     }
 
     private static void initBlockEntityRenderers() {

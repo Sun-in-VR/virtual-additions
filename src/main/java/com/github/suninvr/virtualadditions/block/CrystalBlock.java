@@ -153,15 +153,15 @@ public class CrystalBlock extends Block implements Waterloggable {
 
     static {
         BODY_Y_SHAPE = Block.createCuboidShape(4.0, 0.0, 4.0, 12.0, 16.0, 12.0);
-        TIP_DOWN_SHAPE = Block.createCuboidShape(4.0, 3.0, 4.0, 12.0, 16.0, 12.0);
-        TIP_UP_SHAPE = Block.createCuboidShape(4.0, 0.0, 4.0, 12.0, 13.0, 12.0);
+        TIP_DOWN_SHAPE = Block.createCuboidShape(4.0, 7.0, 4.0, 12.0, 16.0, 12.0);
+        TIP_UP_SHAPE = Block.createCuboidShape(4.0, 0.0, 4.0, 12.0, 9.0, 12.0);
 
         BODY_X_SHAPE = Block.createCuboidShape(0.0, 4.0, 4.0, 16.0, 12.0, 12.0);
-        TIP_EAST_SHAPE = Block.createCuboidShape(0.0, 4.0, 4.0, 13.0, 12.0, 12.0);
-        TIP_WEST_SHAPE = Block.createCuboidShape(3.0, 4.0, 4.0, 16.0, 12.0, 12.0);
+        TIP_EAST_SHAPE = Block.createCuboidShape(0.0, 4.0, 4.0, 9.0, 12.0, 12.0);
+        TIP_WEST_SHAPE = Block.createCuboidShape(7.0, 4.0, 4.0, 16.0, 12.0, 12.0);
 
         BODY_Z_SHAPE = Block.createCuboidShape(4.0, 4.0, 0.0, 12.0, 12.0, 16.0);
-        TIP_NORTH_SHAPE = Block.createCuboidShape(4.0, 4.0, 3.0, 12.0, 12.0, 16.0);
-        TIP_SOUTH_SHAPE = Block.createCuboidShape(4.0, 4.0, 0.0, 12.0, 12.0, 13.0);
+        TIP_NORTH_SHAPE = Block.createCuboidShape(4.0, 4.0, 7.0, 12.0, 12.0, 16.0);
+        TIP_SOUTH_SHAPE = Block.createCuboidShape(4.0, 4.0, 0.0, 12.0, 12.0, 9.0);
     }
 }
