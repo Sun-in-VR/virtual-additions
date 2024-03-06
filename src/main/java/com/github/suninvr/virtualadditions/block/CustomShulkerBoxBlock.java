@@ -50,7 +50,7 @@ public class CustomShulkerBoxBlock extends ShulkerBoxBlock {
         if (blockEntity instanceof CustomShulkerBoxBlockEntity shulkerBoxBlockEntity) {
             if (!world.isClient && player.isCreative() && !shulkerBoxBlockEntity.isEmpty()) {
                 ItemStack itemStack = CustomShulkerBoxBlock.getItemStack(this.getExtendedDyeColor());
-                itemStack.copyComponentsFrom(blockEntity.createComponentMap());
+                itemStack.applyComponentsFrom(blockEntity.createComponentMap());
                 ItemEntity itemEntity = new ItemEntity(world, (double)pos.getX() + 0.5, (double)pos.getY() + 0.5, (double)pos.getZ() + 0.5, itemStack);
                 itemEntity.setToDefaultPickupDelay();
                 world.spawnEntity(itemEntity);

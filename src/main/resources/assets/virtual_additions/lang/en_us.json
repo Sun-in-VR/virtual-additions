@@ -321,7 +321,8 @@
     "item.minecraft.tipped_arrow.effect.virtual_additions.frailty": "Arrow of Frailty",
     "item.virtual_additions.applicable_potion.effect.virtual_additions.frailty": "Applicable Potion of Frailty",
 
-    "item.virtual_additions.applied_effect_tooltip": "Effects on Hit%s:",
+    "item.virtual_additions.applied_effect_tooltip": "Applied On Hit:",
+    "item.virtual_additions.applied_effect_tooltip.advanced": "Effect Uses: %s / %s",
     "item.virtual_additions.applicable_potion.effect.empty": "Applicable Uncraftable Potion",
     "item.virtual_additions.applicable_potion.effect.water": "Applicable Water Bottle",
     "item.virtual_additions.applicable_potion.effect.mundane": "Mundane Applicable Potion",

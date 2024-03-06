@@ -2,9 +2,11 @@ package com.github.suninvr.virtualadditions.component;
 
 import com.mojang.serialization.Codec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
+import net.minecraft.client.item.TooltipContext;
 import net.minecraft.component.DataComponentType;
 import net.minecraft.component.type.PotionContentsComponent;
 import net.minecraft.entity.effect.StatusEffectInstance;
+import net.minecraft.item.TooltipAppender;
 import net.minecraft.network.RegistryByteBuf;
 import net.minecraft.network.codec.PacketCodec;
 import net.minecraft.network.codec.PacketCodecs;
@@ -19,10 +21,11 @@ import java.util.List;
 import java.util.Optional;
 import java.util.function.Consumer;
 
-public record EffectsOnHitComponent(Optional<PotionContentsComponent> potionContents, Optional<Integer> uses, Optional<Integer> remaining){
+public record EffectsOnHitComponent(Optional<PotionContentsComponent> potionContents, Optional<Integer> uses, Optional<Integer> remaining) implements TooltipAppender {
     public static final EffectsOnHitComponent DEFAULT = new EffectsOnHitComponent(Optional.empty(), Optional.empty(), Optional.empty());
     public static final Codec<EffectsOnHitComponent> CODEC;
     public static final PacketCodec<RegistryByteBuf, EffectsOnHitComponent> PACKET_CODEC;
+    private static final Text tooltipText = Text.translatable("item.virtual_additions.applied_effect_tooltip").formatted(Formatting.DARK_PURPLE);
 
     public EffectsOnHitComponent(RegistryEntry<Potion> potion) {
         this(Optional.of(new PotionContentsComponent(potion)), Optional.of(30), Optional.of(0));
@@ -54,10 +57,15 @@ public record EffectsOnHitComponent(Optional<PotionContentsComponent> potionCont
         return this.potionContents.isPresent();
     }
 
-    public void buildTooltip(Consumer<Text> textConsumer, float tickRate, boolean advanced) {
+    @Override
+    public void appendTooltip(Consumer<Text> textConsumer, TooltipContext context) {
         if (this.hasEffectsComponent()) {
-            MutableText text = Text.translatable("item.virtual_additions.applied_effect_tooltip").formatted(Formatting.DARK_PURPLE);
-            this.potionContents.get().buildTooltip(textConsumer, 0.125F, tickRate);
+            if (context.isAdvanced() && this.getRemainingUses() > 0) {
+                MutableText text = Text.translatable("item.virtual_additions.applied_effect_tooltip.advanced", this.getRemainingUses(), this.getTotalUses()).formatted(Formatting.DARK_PURPLE);
+                textConsumer.accept(text);
+            }
+            textConsumer.accept(tooltipText);
+            this.potionContents.get().buildTooltip(textConsumer, 0.125F, 20);
         }
     }
 

@@ -1,7 +1,11 @@
 package com.github.suninvr.virtualadditions.item;
 
 import com.google.common.collect.ImmutableMultimap;
+import com.google.common.collect.Multimap;
 import net.minecraft.block.BlockState;
+import net.minecraft.component.DataComponentTypes;
+import net.minecraft.component.type.AttributeModifierSlot;
+import net.minecraft.component.type.AttributeModifiersComponent;
 import net.minecraft.entity.EquipmentSlot;
 import net.minecraft.entity.attribute.EntityAttribute;
 import net.minecraft.entity.attribute.EntityAttributeModifier;
@@ -56,6 +60,14 @@ public class GildType {
                 if (type.matches(item)) return true;
             }
             return false;
+        }
+
+        public boolean shouldBeAppended() {
+            return this.type.shouldBeAppended();
+        }
+
+        public boolean modifiesAttribute(RegistryEntry<EntityAttribute> attribute) {
+            return this.type.getAttributeType() != null && this.type.getAttributeType().equals(attribute);
         }
     }
 
@@ -146,20 +158,35 @@ public class GildType {
         return new ModifiedToolMaterial(miningLevel, durability, miningSpeed, attackDamage, enchantability, baseMaterial.getRepairIngredient());
     }
 
-    /**
-     * Get a value for attack speed from a base item.
-     *
-     * @return the modified attack speed value
-     *
-     * @param baseItem the item from which the base attack speed is obtained
-     *
-     * **/
-    public double getModifiedAttackSpeed(ToolItem baseItem) {
-        double attackSpeed = baseItem.getAttributeModifiers(EquipmentSlot.MAINHAND).get(EntityAttributes.GENERIC_ATTACK_SPEED).stream().mapToDouble(EntityAttributeModifier::getValue).sum();
-        for (Modifier modifier : this.modifiers) {
-            if (modifier.shouldApplyToTool(baseItem) && modifier.type.equals(ModifierType.ATTACK_SPEED)) attackSpeed = modifier.apply((float) attackSpeed);
-        }
-        return attackSpeed;
+    public AttributeModifiersComponent createAttributeModifiers(Item baseItem) {
+        AttributeModifiersComponent.Builder builder = AttributeModifiersComponent.builder();
+
+        baseItem.getComponents().get(DataComponentTypes.ATTRIBUTE_MODIFIERS).modifiers().forEach(entry -> {
+            EntityAttributeModifier modifier = entry.modifier();
+            if (entry.attribute().equals(EntityAttributes.GENERIC_ATTACK_SPEED) || entry.attribute().equals(EntityAttributes.GENERIC_ATTACK_DAMAGE)) {
+                double[] value = {modifier.value()};
+                this.modifiers.forEach(gildModifier -> {
+                    if (gildModifier.modifiesAttribute(entry.attribute()) && gildModifier.shouldApplyToTool(baseItem)) {
+                        value[0] = gildModifier.apply((float) value[0]);
+                    }
+                });
+                modifier = new EntityAttributeModifier(modifier.uuid(), modifier.name(), value[0], modifier.operation());
+            }
+            builder.add(entry.attribute(), modifier, entry.slot());
+        });
+
+        this.appendAttributeModifiers(builder, baseItem);
+        return builder.build();
+    }
+
+    public final void appendAttributeModifiers(AttributeModifiersComponent.Builder builder, Item baseItem) {
+        this.modifiers.forEach( modifier -> {
+            if (!modifier.shouldBeAppended() || !modifier.shouldApplyToTool(baseItem)) return;
+            RegistryEntry<EntityAttribute> attribute = modifier.type.getAttributeType();
+            if (attribute != null) {
+                builder.add(attribute, new EntityAttributeModifier(modifier.type.getAttributeId(), "Tool Modifier", modifier.value, EntityAttributeModifier.Operation.ADDITION), AttributeModifierSlot.MAINHAND);
+            }
+        } );
     }
 
     public ToolMaterial getModifiedMaterial(ToolItem item) {
@@ -252,15 +279,6 @@ public class GildType {
         return this.swordsTag;
     }
 
-    public final void appendAttributeModifiers(ImmutableMultimap.Builder<RegistryEntry<EntityAttribute>, EntityAttributeModifier> builder) {
-        this.modifiers.forEach( modifier -> {
-            RegistryEntry<EntityAttribute> attribute = modifier.type.getAttributeType();
-            if (attribute != null) {
-                builder.put(attribute, new EntityAttributeModifier(modifier.type.getAttributeId(), "Tool Modifier", modifier.value, EntityAttributeModifier.Operation.ADDITION));
-            }
-        } );
-    }
-
     @Override
     public final boolean equals(Object obj) {
         return (obj instanceof GildType gildType && gildType.getId().equals(this.id)) || (obj instanceof Identifier identifier && identifier.equals(this.id));
@@ -310,6 +328,8 @@ public class GildType {
             return switch (this) {
                 case BLOCK_INTERACTION_RANGE -> EntityAttributes.PLAYER_BLOCK_INTERACTION_RANGE;
                 case ENTITY_INTERACTION_RANGE -> EntityAttributes.PLAYER_ENTITY_INTERACTION_RANGE;
+                case ATTACK_SPEED -> EntityAttributes.GENERIC_ATTACK_SPEED;
+                case ATTACK_DAMAGE -> EntityAttributes.GENERIC_ATTACK_DAMAGE;
                 default -> null;
             };
         }
@@ -318,8 +338,14 @@ public class GildType {
             return switch (this) {
                 case BLOCK_INTERACTION_RANGE -> UUID.fromString("C39B0D39-EB64-45E9-A58E-52DA390DD1A2");
                 case ENTITY_INTERACTION_RANGE -> UUID.fromString("D4786B0F-DF61-45D8-B77C-E5B55C4F4066");
+                case ATTACK_SPEED -> UUID.fromString("68701EAF-5C43-42E8-95F0-BAA0E3E2438A");
+                case ATTACK_DAMAGE -> UUID.fromString("F09A0E0B-32E7-407C-A4E6-17E9F5EB9C2B");
                 default -> UUID.fromString("0-0-0-0-0");
             };
+        }
+
+        public boolean shouldBeAppended() {
+            return !this.equals(ATTACK_SPEED) && !this.equals(ATTACK_DAMAGE);
         }
 
         ModifierType() {

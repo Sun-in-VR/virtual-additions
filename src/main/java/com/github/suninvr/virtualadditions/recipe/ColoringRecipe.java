@@ -44,7 +44,7 @@ public class ColoringRecipe implements Recipe<Inventory> {
     public ItemStack craft(Inventory inventory, DynamicRegistryManager registryManager) {
         ItemStack stack = inventory.getStack(1);
         if (stack.getItem() instanceof BlockItem blockItem && blockItem.getBlock() instanceof ShulkerBoxBlock) {
-            return stack.copyNbtToNewStack(this.result.getItem(), this.result.getCount());
+            return stack.copyComponentsToNewStack(this.result.getItem(), this.result.getCount());
         }
         return this.result.copy();
     }
@@ -92,7 +92,7 @@ public class ColoringRecipe implements Recipe<Inventory> {
         private final Codec<ColoringRecipe> CODEC = RecordCodecBuilder.create(
                 instance -> instance.group(
                         Ingredient.ALLOW_EMPTY_CODEC.fieldOf("ingredient").forGetter(recipe -> recipe.ingredient),
-                        ItemStack.RECIPE_RESULT_CODEC.fieldOf("result").forGetter(recipe -> recipe.result),
+                        ItemStack.CODEC.fieldOf("result").forGetter(recipe -> recipe.result),
                         Codecs.createStrictOptionalFieldCodec(Codec.INT, "red_cost", 0).forGetter(recipe -> recipe.cost.getR()),
                         Codecs.createStrictOptionalFieldCodec(Codec.INT, "green_cost", 0).forGetter(recipe -> recipe.cost.getG()),
                         Codecs.createStrictOptionalFieldCodec(Codec.INT, "blue_cost", 0).forGetter(recipe -> recipe.cost.getB()),

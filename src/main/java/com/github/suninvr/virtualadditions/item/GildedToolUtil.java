@@ -6,10 +6,10 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NbtCompound;
 
 public class GildedToolUtil {
-    public static Item.Settings settingsOf(Item item) {
+    public static Item.Settings settingsOf(Item item, GildType type) {
         Item.Settings settings = new Item.Settings();
         if (item.isFireproof()) settings = settings.fireproof();
-        return settings;
+        return settings.attributeModifiers(type.createAttributeModifiers(item));
     }
 
     public static GildType getGildType(ItemStack itemStack) {
@@ -25,7 +25,7 @@ public class GildedToolUtil {
         ItemStack baseStack = stack.copy();
         if (stack.getItem() instanceof GildedToolItem gildedToolItem) {
             baseStack = gildedToolItem.getBaseItem().getDefaultStack();
-            baseStack.copyComponentsFrom(stack.getComponents());
+            baseStack.applyComponentsFrom(stack.getComponents());
         }
         return baseStack;
     }

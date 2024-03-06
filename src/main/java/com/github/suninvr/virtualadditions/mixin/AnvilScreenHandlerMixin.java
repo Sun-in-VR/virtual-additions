@@ -47,7 +47,7 @@ public abstract class AnvilScreenHandlerMixin extends ForgingScreenHandler {
         if (!(baseType.equals(additionsType))) {
             if (stack.isEmpty()) stack = baseStack.copy();
             ItemStack resultStack = additionsStack.copy();
-            resultStack.copyComponentsFrom(stack.getComponents());
+            resultStack.applyComponentsFrom(stack.getComponents());
 
             int damage = stack.getDamage() - (baseStack.getDamage() - additionsStack.getDamage());
 

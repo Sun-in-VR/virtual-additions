@@ -52,7 +52,7 @@ public class ClimbingRopeEntity extends PersistentProjectileEntity {
     }
 
     @Override
-    protected ItemStack method_57314() {
+    protected ItemStack getDefaultItemStack() {
         return new ItemStack(VAItems.CLIMBING_ROPE);
     }
 }

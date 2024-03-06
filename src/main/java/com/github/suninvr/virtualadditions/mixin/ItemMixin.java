@@ -27,14 +27,6 @@ import java.util.List;
 @Mixin(Item.class)
 public class ItemMixin {
 
-    @Shadow @Final private ComponentMap components;
-
-    @Inject(at = @At("TAIL"), method = "appendTooltip")
-    private void virtualAdditions$addAppliedPotionTooltip(ItemStack stack, World world, List<Text> tooltip, TooltipContext context, CallbackInfo ci) {
-        EffectsOnHitComponent component;
-        if ((component = stack.get(VADataComponentTypes.EFFECTS_ON_HIT)) != null) component.buildTooltip(tooltip::add, world == null ? 20.0F : world.getTickManager().getTickRate(), context.isAdvanced());
-    }
-
     @Inject(at = @At("HEAD"), method = "getItemBarColor", cancellable = true)
     private void virtualAdditions$getItemBarColorForAppliedEffect(ItemStack stack, CallbackInfoReturnable<Integer> cir) {
         EffectsOnHitComponent component;
@@ -44,9 +36,8 @@ public class ItemMixin {
     @Inject(at = @At("HEAD"), method = "getItemBarStep", cancellable = true)
     void virtualAdditions$getItemBarStepForAppliedPotion(ItemStack stack, CallbackInfoReturnable<Integer> cir) {
         EffectsOnHitComponent component;
-        if ((component = stack.get(VADataComponentTypes.EFFECTS_ON_HIT)) != null) {
+        if ((component = stack.get(VADataComponentTypes.EFFECTS_ON_HIT)) != null && component.getRemainingUses() > 0) {
             cir.setReturnValue(component.getItemBarAmount());
-            //cir.setReturnValue(Math.round((float)getAppliedPotionUses(stack) * 13.0F / (float)getMaxAppliedPotionUses(stack)));
         }
     }
 
