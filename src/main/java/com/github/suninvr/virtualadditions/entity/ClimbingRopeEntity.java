@@ -47,6 +47,24 @@ public class ClimbingRopeEntity extends PersistentProjectileEntity {
     }
 
     @Override
+    public void setVelocity(double x, double y, double z, float speed, float divergence) {
+        if (this.isShotFromCrossbow()) {
+            speed *= 0.8F;
+            divergence = 0;
+        }
+        super.setVelocity(x, y, z, speed, divergence);
+    }
+
+    @Override
+    public void setVelocity(Entity shooter, float pitch, float yaw, float roll,  float speed, float divergence) {
+        if (this.isShotFromCrossbow()) {
+            speed *= 0.8F;
+            divergence = 0;
+        }
+        super.setVelocity(shooter, pitch, yaw, roll, speed, divergence);
+    }
+
+    @Override
     protected boolean canHit(Entity entity) {
         return false;
     }
