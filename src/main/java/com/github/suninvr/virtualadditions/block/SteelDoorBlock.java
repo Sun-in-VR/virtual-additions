@@ -1,5 +1,6 @@
 package com.github.suninvr.virtualadditions.block;
 
+import com.github.suninvr.virtualadditions.registry.VABlocks;
 import com.github.suninvr.virtualadditions.registry.VASoundEvents;
 import com.mojang.serialization.MapCodec;
 import net.minecraft.block.Block;
@@ -25,7 +26,7 @@ public class SteelDoorBlock extends DoorBlock {
     public static final BooleanProperty SHUTTER_OPEN = BooleanProperty.of("shutter_open");
 
     public SteelDoorBlock(Settings settings) {
-        super(BlockSetType.IRON, settings);
+        super(VABlocks.STEEL_BLOCK_SET_TYPE, settings);
         this.setDefaultState(getStateManager().getDefaultState().with(SHUTTER_OPEN, false));
     }
 

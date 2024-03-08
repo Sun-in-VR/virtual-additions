@@ -276,7 +276,11 @@ public class VABlocks {
     public static final BlockSetType AEROBLOOM = BlockSetTypeBuilder.copyOf(BlockSetType.CHERRY).build(idOf("aerobloom"));
     public static final WoodType AEROBLOOM_WOODTYPE = WoodType.register(WoodTypeBuilder.copyOf(WoodType.CHERRY).build(idOf("aerobloom"), AEROBLOOM));
 
+    public static final BlockSetType STEEL_BLOCK_SET_TYPE;
+
     static {
+        STEEL_BLOCK_SET_TYPE = new BlockSetType("steel", false, false, false, BlockSetType.ActivationRule.EVERYTHING, BlockSoundGroup.NETHERITE, SoundEvents.BLOCK_IRON_DOOR_CLOSE, SoundEvents.BLOCK_IRON_DOOR_OPEN, SoundEvents.BLOCK_IRON_TRAPDOOR_CLOSE, SoundEvents.BLOCK_IRON_TRAPDOOR_OPEN, SoundEvents.BLOCK_METAL_PRESSURE_PLATE_CLICK_OFF, SoundEvents.BLOCK_METAL_PRESSURE_PLATE_CLICK_ON, SoundEvents.BLOCK_STONE_BUTTON_CLICK_OFF, SoundEvents.BLOCK_STONE_BUTTON_CLICK_ON);
+
         CLIMBING_ROPE = register("climbing_rope", new ClimbingRopeBlock(Settings.create().sounds(ROPE_SOUND_GROUP).pistonBehavior(PistonBehavior.DESTROY).noCollision().nonOpaque().burnable().hardness(0.5F)));
         CLIMBING_ROPE_ANCHOR = register("climbing_rope_anchor", new ClimbingRopeAnchorBlock(Settings.create().sounds(ROPE_SOUND_GROUP).pistonBehavior(PistonBehavior.DESTROY).noCollision().nonOpaque().burnable().hardness(0.5F)));
 
