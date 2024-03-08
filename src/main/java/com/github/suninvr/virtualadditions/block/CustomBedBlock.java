@@ -1,7 +1,7 @@
 package com.github.suninvr.virtualadditions.block;
 
 import com.github.suninvr.virtualadditions.block.entity.CustomBedBlockEntity;
-import com.github.suninvr.virtualadditions.block.enums.ExtendedDyeColor;
+import com.github.suninvr.virtualadditions.registry.VADyeColors;
 import net.minecraft.block.BedBlock;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.entity.BlockEntity;
@@ -10,10 +10,10 @@ import net.minecraft.util.DyeColor;
 import net.minecraft.util.math.BlockPos;
 
 public class CustomBedBlock extends BedBlock {
-    private final ExtendedDyeColor color;
+    DyeColor color;
 
-    public CustomBedBlock(ExtendedDyeColor color, Settings settings) {
-        super(DyeColor.WHITE, settings);
+    public CustomBedBlock(DyeColor color, Settings settings) {
+        super(color, settings);
         this.color = color;
     }
 
@@ -23,10 +23,6 @@ public class CustomBedBlock extends BedBlock {
     }
 
     public SpriteIdentifier getTexture() {
-        return this.color.getBedTexture();
-    }
-
-    public ExtendedDyeColor getExtendedColor() {
-        return this.color;
+        return VADyeColors.getBedTexture(this.color);
     }
 }

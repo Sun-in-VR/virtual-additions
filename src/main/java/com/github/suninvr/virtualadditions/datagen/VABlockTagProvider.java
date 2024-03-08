@@ -414,6 +414,8 @@ public final class VABlockTagProvider {
             s.ifSilkbulb(block -> getOrCreateTagBuilder(VABlockTags.SILKBULBS).add(block));
             s.ifBed(block -> getOrCreateTagBuilder(BlockTags.BEDS).add(block));
             s.ifShulkerBox(block -> getOrCreateTagBuilder(BlockTags.SHULKER_BOXES).add(block));
+            s.ifBanner(block -> getOrCreateTagBuilder(BlockTags.BANNERS).add(block));
+            s.ifWallBanner(block -> getOrCreateTagBuilder(BlockTags.BANNERS).add(block));
         }
     }
 }

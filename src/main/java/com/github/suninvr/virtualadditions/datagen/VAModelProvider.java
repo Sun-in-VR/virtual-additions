@@ -9,12 +9,17 @@ import com.github.suninvr.virtualadditions.registry.VAItems;
 import com.github.suninvr.virtualadditions.registry.collection.ColorfulBlockSet;
 import net.fabricmc.fabric.api.datagen.v1.FabricDataOutput;
 import net.fabricmc.fabric.api.datagen.v1.provider.FabricModelProvider;
+import net.minecraft.block.Block;
+import net.minecraft.block.Blocks;
 import net.minecraft.data.client.*;
 import net.minecraft.item.*;
 import net.minecraft.state.property.Properties;
 import net.minecraft.util.Identifier;
 
+import java.util.ArrayList;
 import java.util.Map;
+
+import static com.github.suninvr.virtualadditions.VirtualAdditions.idOf;
 
 @SuppressWarnings("SameParameterValue")
 class VAModelProvider extends FabricModelProvider {
@@ -39,6 +44,9 @@ class VAModelProvider extends FabricModelProvider {
         registerColorfulBlockSetModels( blockStateModelGenerator,VACollections.TAN);
         registerColorfulBlockSetModels( blockStateModelGenerator,VACollections.SINOPIA);
         registerColorfulBlockSetModels( blockStateModelGenerator,VACollections.LILAC);
+
+        registerBanners(blockStateModelGenerator, VACollections.CHARTREUSE, VACollections.MAROON, VACollections.INDIGO, VACollections.PLUM, VACollections.VIRIDIAN, VACollections.TAN, VACollections.SINOPIA, VACollections.LILAC);
+
         registerColoringStation(blockStateModelGenerator);
 
         registerSpotlight(blockStateModelGenerator);
@@ -93,6 +101,16 @@ class VAModelProvider extends FabricModelProvider {
         if (s.candle() != null && s.candleCake() != null) g.registerCandle(s.candle(), s.candleCake());
         s.ifBed(bed -> g.registerBuiltinWithParticle(bed, OAK_PLANKS_TEXTURE));
         s.ifShulkerBox(g::registerShulkerBox);
+    }
+
+    private void registerBanners(BlockStateModelGenerator g, ColorfulBlockSet... s) {
+        ArrayList<Block> banners = new ArrayList<>();
+        ArrayList<Block> wallBanners = new ArrayList<>();
+        for (ColorfulBlockSet set : s) {
+            banners.add(set.banner());
+            wallBanners.add(set.wallBanner());
+        }
+        g.registerBuiltin(idOf("banner"), Blocks.OAK_PLANKS).includeWithItem(Models.TEMPLATE_BANNER, banners.toArray(new Block[0])).includeWithoutItem(wallBanners.toArray(new Block[0]));
     }
 
     private void generateGildedToolItemModels(ItemModelGenerator itemModelGenerator, RegistryHelper.ItemRegistryHelper.ToolSet... toolSets) {

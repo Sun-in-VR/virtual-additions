@@ -1,10 +1,9 @@
 package com.github.suninvr.virtualadditions.block;
 
 import com.github.suninvr.virtualadditions.block.entity.CustomShulkerBoxBlockEntity;
-import com.github.suninvr.virtualadditions.block.enums.ExtendedDyeColor;
 import com.github.suninvr.virtualadditions.registry.VABlockEntityType;
 import com.github.suninvr.virtualadditions.registry.VABlocks;
-import com.github.suninvr.virtualadditions.registry.VAItems;
+import com.github.suninvr.virtualadditions.registry.VADyeColors;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.ShulkerBoxBlock;
@@ -19,16 +18,19 @@ import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.registry.tag.BlockTags;
+import net.minecraft.server.world.ServerWorld;
 import net.minecraft.util.DyeColor;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 import net.minecraft.world.event.GameEvent;
 import org.jetbrains.annotations.Nullable;
 
-public class CustomShulkerBoxBlock extends ShulkerBoxBlock {
-    private final ExtendedDyeColor color;
+import java.util.Objects;
 
-    public CustomShulkerBoxBlock(ExtendedDyeColor color, Settings settings) {
+public class CustomShulkerBoxBlock extends ShulkerBoxBlock {
+    private final DyeColor color;
+
+    public CustomShulkerBoxBlock(DyeColor color, Settings settings) {
         super(null, settings);
         this.color = color;
     }
@@ -38,18 +40,12 @@ public class CustomShulkerBoxBlock extends ShulkerBoxBlock {
         return new CustomShulkerBoxBlockEntity(this.color, pos, state);
     }
 
-    @Nullable
-    @Override
-    public <T extends BlockEntity> BlockEntityTicker<T> getTicker(World world, BlockState state, BlockEntityType<T> type) {
-        return CustomShulkerBoxBlock.validateTicker(type, VABlockEntityType.CUSTOM_SHULKER_BOX, CustomShulkerBoxBlockEntity::tick);
-    }
-
     @Override
     public BlockState onBreak(World world, BlockPos pos, BlockState state, PlayerEntity player) {
         BlockEntity blockEntity = world.getBlockEntity(pos);
-        if (blockEntity instanceof CustomShulkerBoxBlockEntity shulkerBoxBlockEntity) {
+        if (blockEntity instanceof ShulkerBoxBlockEntity shulkerBoxBlockEntity) {
             if (!world.isClient && player.isCreative() && !shulkerBoxBlockEntity.isEmpty()) {
-                ItemStack itemStack = CustomShulkerBoxBlock.getItemStack(this.getExtendedDyeColor());
+                ItemStack itemStack = getItemStack(this.color);
                 itemStack.applyComponentsFrom(blockEntity.createComponentMap());
                 ItemEntity itemEntity = new ItemEntity(world, (double)pos.getX() + 0.5, (double)pos.getY() + 0.5, (double)pos.getZ() + 0.5, itemStack);
                 itemEntity.setToDefaultPickupDelay();
@@ -61,7 +57,7 @@ public class CustomShulkerBoxBlock extends ShulkerBoxBlock {
         return this.finishBreak(world, pos, state, player);
     }
 
-    public BlockState finishBreak(World world, BlockPos pos, BlockState state, PlayerEntity player) {
+    private BlockState finishBreak(World world, BlockPos pos, BlockState state, PlayerEntity player) {
         this.spawnBreakParticles(world, player, pos, state);
         if (state.isIn(BlockTags.GUARDED_BY_PIGLINS)) {
             PiglinBrain.onGuardedBlockInteracted(player, false);
@@ -70,24 +66,26 @@ public class CustomShulkerBoxBlock extends ShulkerBoxBlock {
         return state;
     }
 
-    public static ItemStack getItemStack(ExtendedDyeColor color) {
-        return new ItemStack(CustomShulkerBoxBlock.get(color));
+    public static Block get(@Nullable DyeColor dyeColor) {
+        if (dyeColor == null) return ShulkerBoxBlock.get(null);
+        if (dyeColor.equals(VADyeColors.CHARTREUSE)) return VABlocks.CHARTREUSE_SHULKER_BOX;
+        if (dyeColor.equals(VADyeColors.MAROON)) return VABlocks.MAROON_SHULKER_BOX;
+        if (dyeColor.equals(VADyeColors.INDIGO)) return VABlocks.INDIGO_SHULKER_BOX;
+        if (dyeColor.equals(VADyeColors.PLUM)) return VABlocks.PLUM_SHULKER_BOX;
+        if (dyeColor.equals(VADyeColors.VIRIDIAN)) return VABlocks.VIRIDIAN_SHULKER_BOX;
+        if (dyeColor.equals(VADyeColors.TAN)) return VABlocks.TAN_SHULKER_BOX;
+        if (dyeColor.equals(VADyeColors.SINOPIA)) return VABlocks.SINOPIA_SHULKER_BOX;
+        if (dyeColor.equals(VADyeColors.LILAC)) return VABlocks.LILAC_SHULKER_BOX;
+        return ShulkerBoxBlock.get(dyeColor);
     }
 
-    public static Block get(ExtendedDyeColor color) {
-        return switch (color) {
-            case CHARTREUSE -> VABlocks.CHARTREUSE_SHULKER_BOX;
-            case MAROON -> VABlocks.MAROON_SHULKER_BOX;
-            case INDIGO -> VABlocks.INDIGO_SHULKER_BOX;
-            case PLUM -> VABlocks.PLUM_SHULKER_BOX;
-            case VIRIDIAN -> VABlocks.VIRIDIAN_SHULKER_BOX;
-            case TAN -> VABlocks.TAN_SHULKER_BOX;
-            case SINOPIA -> VABlocks.SINOPIA_SHULKER_BOX;
-            case LILAC -> VABlocks.LILAC_SHULKER_BOX;
-        };
+    public static ItemStack getItemStack(@Nullable DyeColor color) {
+        return new ItemStack(get(color));
     }
 
-    public ExtendedDyeColor getExtendedDyeColor() {
-        return this.color;
+    @Nullable
+    @Override
+    public <T extends BlockEntity> BlockEntityTicker<T> getTicker(World world, BlockState state, BlockEntityType<T> type) {
+        return CustomShulkerBoxBlock.validateTicker(type, VABlockEntityType.CUSTOM_SHULKER_BOX, CustomShulkerBoxBlockEntity::tick);
     }
 }

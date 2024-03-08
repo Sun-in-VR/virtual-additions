@@ -21,9 +21,7 @@ import net.minecraft.client.color.world.FoliageColors;
 import net.minecraft.client.item.ModelPredicateProviderRegistry;
 import net.minecraft.client.render.RenderLayer;
 import net.minecraft.client.render.TexturedRenderLayers;
-import net.minecraft.client.render.block.entity.BlockEntityRendererFactories;
-import net.minecraft.client.render.block.entity.HangingSignBlockEntityRenderer;
-import net.minecraft.client.render.block.entity.SignBlockEntityRenderer;
+import net.minecraft.client.render.block.entity.*;
 import net.minecraft.client.render.entity.FlyingItemEntityRenderer;
 import net.minecraft.client.render.entity.model.EntityModelLayer;
 import net.minecraft.client.util.SpriteIdentifier;
@@ -154,6 +152,7 @@ public class VARenderers {
         BlockEntityRendererFactories.register( VABlockEntityType.CUSTOM_HANGING_SIGN, HangingSignBlockEntityRenderer::new );
         BlockEntityRendererFactories.register( VABlockEntityType.CUSTOM_BED, CustomBedBlockEntityRenderer::new );
         BlockEntityRendererFactories.register( VABlockEntityType.CUSTOM_SHULKER_BOX, CustomShulkerBoxBlockEntityRenderer::new );
+        BlockEntityRendererFactories.register( VABlockEntityType.CUSTOM_BANNER, BannerBlockEntityRenderer::new );
 
         TexturedRenderLayers.SIGN_TYPE_TEXTURES.put(VABlocks.AEROBLOOM_WOODTYPE, new SpriteIdentifier(TexturedRenderLayers.SIGNS_ATLAS_TEXTURE, idOf("entity/signs/aerobloom")));
         TexturedRenderLayers.HANGING_SIGN_TYPE_TEXTURES.put(VABlocks.AEROBLOOM_WOODTYPE, new SpriteIdentifier(TexturedRenderLayers.SIGNS_ATLAS_TEXTURE, idOf("entity/signs/hanging/aerobloom")));

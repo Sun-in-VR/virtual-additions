@@ -1,6 +1,5 @@
 package com.github.suninvr.virtualadditions.registry;
 
-import com.github.suninvr.virtualadditions.VirtualAdditions;
 import com.github.suninvr.virtualadditions.component.ExplosiveContentComponent;
 import com.github.suninvr.virtualadditions.component.WarpTetherLocationComponent;
 import com.github.suninvr.virtualadditions.entity.ClimbingRopeEntity;
@@ -18,6 +17,8 @@ import net.minecraft.block.DispenserBlock;
 import net.minecraft.block.dispenser.ItemDispenserBehavior;
 import net.minecraft.block.dispenser.ProjectileDispenserBehavior;
 import net.minecraft.component.DataComponentTypes;
+import net.minecraft.component.type.BannerPatternsComponent;
+import net.minecraft.component.type.ContainerComponent;
 import net.minecraft.component.type.PotionContentsComponent;
 import net.minecraft.enchantment.Enchantments;
 import net.minecraft.entity.EntityType;
@@ -40,7 +41,6 @@ import net.minecraft.loot.provider.number.UniformLootNumberProvider;
 import net.minecraft.predicate.entity.EntityFlagsPredicate;
 import net.minecraft.predicate.entity.EntityPredicate;
 import net.minecraft.predicate.item.ItemPredicate;
-import net.minecraft.recipe.BrewingRecipeRegistry;
 import net.minecraft.registry.RegistryKeys;
 import net.minecraft.text.Text;
 import net.minecraft.util.Formatting;
@@ -228,6 +228,7 @@ public class VAItems {
     public static final Item CHARTREUSE_SILKBULB;
     public static final Item CHARTREUSE_BED;
     public static final Item CHARTREUSE_SHULKER_BOX;
+    public static final Item CHARTREUSE_BANNER;
     public static final Item MAROON_DYE;
     public static final Item MAROON_WOOL;
     public static final Item MAROON_CARPET;
@@ -240,6 +241,7 @@ public class VAItems {
     public static final Item MAROON_SILKBULB;
     public static final Item MAROON_BED;
     public static final Item MAROON_SHULKER_BOX;
+    public static final Item MAROON_BANNER;
     public static final Item INDIGO_DYE;
     public static final Item INDIGO_WOOL;
     public static final Item INDIGO_CARPET;
@@ -252,6 +254,7 @@ public class VAItems {
     public static final Item INDIGO_SILKBULB;
     public static final Item INDIGO_BED;
     public static final Item INDIGO_SHULKER_BOX;
+    public static final Item INDIGO_BANNER;
     public static final Item PLUM_DYE;
     public static final Item PLUM_WOOL;
     public static final Item PLUM_CARPET;
@@ -264,6 +267,7 @@ public class VAItems {
     public static final Item PLUM_SILKBULB;
     public static final Item PLUM_BED;
     public static final Item PLUM_SHULKER_BOX;
+    public static final Item PLUM_BANNER;
     public static final Item VIRIDIAN_DYE;
     public static final Item VIRIDIAN_WOOL;
     public static final Item VIRIDIAN_CARPET;
@@ -276,6 +280,7 @@ public class VAItems {
     public static final Item VIRIDIAN_SILKBULB;
     public static final Item VIRIDIAN_BED;
     public static final Item VIRIDIAN_SHULKER_BOX;
+    public static final Item VIRIDIAN_BANNER;
     public static final Item TAN_DYE;
     public static final Item TAN_WOOL;
     public static final Item TAN_CARPET;
@@ -288,6 +293,7 @@ public class VAItems {
     public static final Item TAN_SILKBULB;
     public static final Item TAN_BED;
     public static final Item TAN_SHULKER_BOX;
+    public static final Item TAN_BANNER;
     public static final Item SINOPIA_DYE;
     public static final Item SINOPIA_WOOL;
     public static final Item SINOPIA_CARPET;
@@ -300,6 +306,7 @@ public class VAItems {
     public static final Item SINOPIA_SILKBULB;
     public static final Item SINOPIA_BED;
     public static final Item SINOPIA_SHULKER_BOX;
+    public static final Item SINOPIA_BANNER;
     public static final Item LILAC_DYE;
     public static final Item LILAC_WOOL;
     public static final Item LILAC_CARPET;
@@ -312,6 +319,7 @@ public class VAItems {
     public static final Item LILAC_SILKBULB;
     public static final Item LILAC_BED;
     public static final Item LILAC_SHULKER_BOX;
+    public static final Item LILAC_BANNER;
     public static final Item COLORING_STATION;
     public static final Item TOOL_GILD_SMITHING_TEMPLATE;
     public static final Item IOLITE;
@@ -576,7 +584,7 @@ public class VAItems {
 
         APPLICABLE_POTION = register("applicable_potion", new ApplicablePotionItem(new Item.Settings().maxCount(16).component(DataComponentTypes.POTION_CONTENTS, PotionContentsComponent.DEFAULT)));
 
-        CHARTREUSE_DYE = register("chartreuse_dye", ItemGroups.INGREDIENTS, Items.YELLOW_DYE);
+        CHARTREUSE_DYE = register("chartreuse_dye", new DyeItem(VADyeColors.CHARTREUSE, new Item.Settings()), ItemGroups.INGREDIENTS, Items.YELLOW_DYE);
         CHARTREUSE_WOOL = registerBlockItem("chartreuse_wool", VABlocks.CHARTREUSE_WOOL, ItemGroups.COLORED_BLOCKS, Blocks.YELLOW_WOOL.asItem());
         CHARTREUSE_CARPET = registerBlockItem("chartreuse_carpet", VABlocks.CHARTREUSE_CARPET, ItemGroups.COLORED_BLOCKS, Blocks.YELLOW_CARPET.asItem());
         CHARTREUSE_TERRACOTTA = registerBlockItem("chartreuse_terracotta", VABlocks.CHARTREUSE_TERRACOTTA, ItemGroups.COLORED_BLOCKS, Blocks.YELLOW_TERRACOTTA.asItem());
@@ -584,12 +592,13 @@ public class VAItems {
         CHARTREUSE_CONCRETE_POWDER = registerBlockItem("chartreuse_concrete_powder", VABlocks.CHARTREUSE_CONCRETE_POWDER, ItemGroups.COLORED_BLOCKS, Blocks.YELLOW_CONCRETE_POWDER.asItem());
         CHARTREUSE_STAINED_GLASS = registerBlockItem("chartreuse_stained_glass", VABlocks.CHARTREUSE_STAINED_GLASS, ItemGroups.COLORED_BLOCKS, Blocks.YELLOW_STAINED_GLASS.asItem());
         CHARTREUSE_STAINED_GLASS_PANE = registerBlockItem("chartreuse_stained_glass_pane", VABlocks.CHARTREUSE_STAINED_GLASS_PANE, ItemGroups.COLORED_BLOCKS, Blocks.YELLOW_STAINED_GLASS_PANE.asItem());
-        CHARTREUSE_CANDLE = registerBlockItem("chartreuse_candle", VABlocks.CHARTREUSE_CANDLE, ItemGroups.COLORED_BLOCKS, Blocks.YELLOW_CANDLE.asItem());
+        CHARTREUSE_CANDLE = registerBlockItem("chartreuse_candle", VABlocks.CHARTREUSE_CANDLE, new ItemGroupLocation(ItemGroups.COLORED_BLOCKS, Blocks.YELLOW_CANDLE.asItem()), new ItemGroupLocation(ItemGroups.FUNCTIONAL, Blocks.YELLOW_CANDLE.asItem()));
         CHARTREUSE_SILKBULB = registerBlockItem("chartreuse_silkbulb", VABlocks.CHARTREUSE_SILKBULB, ItemGroups.COLORED_BLOCKS, VAItems.YELLOW_SILKBULB);
-        CHARTREUSE_BED = register("chartreuse_bed", new BedItem(VABlocks.CHARTREUSE_BED, new Item.Settings().maxCount(1)), ItemGroups.COLORED_BLOCKS, Items.YELLOW_BED);
-        CHARTREUSE_SHULKER_BOX = register("chartreuse_shulker_box", new BlockItem(VABlocks.CHARTREUSE_SHULKER_BOX, new Item.Settings().maxCount(1)), ItemGroups.COLORED_BLOCKS, Items.YELLOW_SHULKER_BOX);
-
-        MAROON_DYE = register("maroon_dye", ItemGroups.INGREDIENTS, Items.BROWN_DYE);
+        CHARTREUSE_BED = register("chartreuse_bed", new BedItem(VABlocks.CHARTREUSE_BED, new Item.Settings().maxCount(1)), new ItemGroupLocation(ItemGroups.COLORED_BLOCKS, Items.YELLOW_BED), new ItemGroupLocation(ItemGroups.FUNCTIONAL, Items.YELLOW_BED));
+        CHARTREUSE_SHULKER_BOX = register("chartreuse_shulker_box", new BlockItem(VABlocks.CHARTREUSE_SHULKER_BOX, new Item.Settings().maxCount(1).component(DataComponentTypes.CONTAINER, ContainerComponent.DEFAULT)), new ItemGroupLocation(ItemGroups.COLORED_BLOCKS, Items.YELLOW_SHULKER_BOX), new ItemGroupLocation(ItemGroups.FUNCTIONAL, Items.YELLOW_SHULKER_BOX));
+        CHARTREUSE_BANNER = register("chartreuse_banner", new BannerItem(VABlocks.CHARTREUSE_BANNER, VABlocks.CHARTREUSE_WALL_BANNER, new Item.Settings().maxCount(16).component(DataComponentTypes.BANNER_PATTERNS, BannerPatternsComponent.DEFAULT)), new ItemGroupLocation(ItemGroups.COLORED_BLOCKS, Items.YELLOW_BANNER), new ItemGroupLocation(ItemGroups.FUNCTIONAL, Items.YELLOW_BANNER));
+        
+        MAROON_DYE = register("maroon_dye", new DyeItem(VADyeColors.MAROON, new Item.Settings()), ItemGroups.INGREDIENTS, Items.BROWN_DYE);
         MAROON_WOOL = registerBlockItem("maroon_wool", VABlocks.MAROON_WOOL, ItemGroups.COLORED_BLOCKS, Blocks.BROWN_WOOL.asItem());
         MAROON_CARPET = registerBlockItem("maroon_carpet", VABlocks.MAROON_CARPET, ItemGroups.COLORED_BLOCKS, Blocks.BROWN_CARPET.asItem());
         MAROON_TERRACOTTA = registerBlockItem("maroon_terracotta", VABlocks.MAROON_TERRACOTTA, ItemGroups.COLORED_BLOCKS, Blocks.BROWN_TERRACOTTA.asItem());
@@ -597,12 +606,13 @@ public class VAItems {
         MAROON_CONCRETE_POWDER = registerBlockItem("maroon_concrete_powder", VABlocks.MAROON_CONCRETE_POWDER, ItemGroups.COLORED_BLOCKS, Blocks.BROWN_CONCRETE_POWDER.asItem());
         MAROON_STAINED_GLASS = registerBlockItem("maroon_stained_glass", VABlocks.MAROON_STAINED_GLASS, ItemGroups.COLORED_BLOCKS, Blocks.BROWN_STAINED_GLASS.asItem());
         MAROON_STAINED_GLASS_PANE = registerBlockItem("maroon_stained_glass_pane", VABlocks.MAROON_STAINED_GLASS_PANE, ItemGroups.COLORED_BLOCKS, Blocks.BROWN_STAINED_GLASS_PANE.asItem());
-        MAROON_CANDLE = registerBlockItem("maroon_candle", VABlocks.MAROON_CANDLE, ItemGroups.COLORED_BLOCKS, Blocks.BROWN_CANDLE.asItem());
+        MAROON_CANDLE = registerBlockItem("maroon_candle", VABlocks.MAROON_CANDLE, new ItemGroupLocation(ItemGroups.COLORED_BLOCKS, Blocks.BROWN_CANDLE.asItem()), new ItemGroupLocation(ItemGroups.FUNCTIONAL, Blocks.BROWN_CANDLE.asItem()));
         MAROON_SILKBULB = registerBlockItem("maroon_silkbulb", VABlocks.MAROON_SILKBULB, ItemGroups.COLORED_BLOCKS, VAItems.BROWN_SILKBULB);
-        MAROON_BED = register("maroon_bed", new BedItem(VABlocks.MAROON_BED, new Item.Settings().maxCount(1)), ItemGroups.COLORED_BLOCKS, Items.BROWN_BED);
-        MAROON_SHULKER_BOX = register("maroon_shulker_box", new BlockItem(VABlocks.MAROON_SHULKER_BOX, new Item.Settings().maxCount(1)), ItemGroups.COLORED_BLOCKS, Items.BROWN_SHULKER_BOX);
+        MAROON_BED = register("maroon_bed", new BedItem(VABlocks.MAROON_BED, new Item.Settings().maxCount(1)), new ItemGroupLocation(ItemGroups.COLORED_BLOCKS, Items.BROWN_BED), new ItemGroupLocation(ItemGroups.FUNCTIONAL, Items.BROWN_BED));
+        MAROON_SHULKER_BOX = register("maroon_shulker_box", new BlockItem(VABlocks.MAROON_SHULKER_BOX, new Item.Settings().maxCount(1).component(DataComponentTypes.CONTAINER, ContainerComponent.DEFAULT)), new ItemGroupLocation(ItemGroups.COLORED_BLOCKS, Items.BROWN_SHULKER_BOX), new ItemGroupLocation(ItemGroups.FUNCTIONAL, Items.BROWN_SHULKER_BOX));
+        MAROON_BANNER = register("maroon_banner", new BannerItem(VABlocks.MAROON_BANNER, VABlocks.MAROON_WALL_BANNER, new Item.Settings().maxCount(16).component(DataComponentTypes.BANNER_PATTERNS, BannerPatternsComponent.DEFAULT)), new ItemGroupLocation(ItemGroups.COLORED_BLOCKS, Items.BROWN_BANNER), new ItemGroupLocation(ItemGroups.FUNCTIONAL, Items.BROWN_BANNER));
 
-        INDIGO_DYE = register("indigo_dye", ItemGroups.INGREDIENTS, Items.BLUE_DYE);
+        INDIGO_DYE = register("indigo_dye", new DyeItem(VADyeColors.INDIGO, new Item.Settings()), ItemGroups.INGREDIENTS, Items.BLUE_DYE);
         INDIGO_WOOL = registerBlockItem("indigo_wool", VABlocks.INDIGO_WOOL, ItemGroups.COLORED_BLOCKS, Blocks.BLUE_WOOL.asItem());
         INDIGO_CARPET = registerBlockItem("indigo_carpet", VABlocks.INDIGO_CARPET, ItemGroups.COLORED_BLOCKS, Blocks.BLUE_CARPET.asItem());
         INDIGO_TERRACOTTA = registerBlockItem("indigo_terracotta", VABlocks.INDIGO_TERRACOTTA, ItemGroups.COLORED_BLOCKS, Blocks.BLUE_TERRACOTTA.asItem());
@@ -610,12 +620,13 @@ public class VAItems {
         INDIGO_CONCRETE_POWDER = registerBlockItem("indigo_concrete_powder", VABlocks.INDIGO_CONCRETE_POWDER, ItemGroups.COLORED_BLOCKS, Blocks.BLUE_CONCRETE_POWDER.asItem());
         INDIGO_STAINED_GLASS = registerBlockItem("indigo_stained_glass", VABlocks.INDIGO_STAINED_GLASS, ItemGroups.COLORED_BLOCKS, Blocks.BLUE_STAINED_GLASS.asItem());
         INDIGO_STAINED_GLASS_PANE = registerBlockItem("indigo_stained_glass_pane", VABlocks.INDIGO_STAINED_GLASS_PANE, ItemGroups.COLORED_BLOCKS, Blocks.BLUE_STAINED_GLASS_PANE.asItem());
-        INDIGO_CANDLE = registerBlockItem("indigo_candle", VABlocks.INDIGO_CANDLE, ItemGroups.COLORED_BLOCKS, Blocks.BLUE_CANDLE.asItem());
+        INDIGO_CANDLE = registerBlockItem("indigo_candle", VABlocks.INDIGO_CANDLE, new ItemGroupLocation(ItemGroups.COLORED_BLOCKS, Blocks.BLUE_CANDLE.asItem()), new ItemGroupLocation(ItemGroups.FUNCTIONAL, Blocks.BLUE_CANDLE.asItem()));
         INDIGO_SILKBULB = registerBlockItem("indigo_silkbulb", VABlocks.INDIGO_SILKBULB, ItemGroups.COLORED_BLOCKS, VAItems.BLUE_SILKBULB);
-        INDIGO_BED = register("indigo_bed", new BedItem(VABlocks.INDIGO_BED, new Item.Settings().maxCount(1)), ItemGroups.COLORED_BLOCKS, Items.BLUE_BED);
-        INDIGO_SHULKER_BOX = register("indigo_shulker_box", new BlockItem(VABlocks.INDIGO_SHULKER_BOX, new Item.Settings().maxCount(1)), ItemGroups.COLORED_BLOCKS, Items.BLUE_SHULKER_BOX);
+        INDIGO_BED = register("indigo_bed", new BedItem(VABlocks.INDIGO_BED, new Item.Settings().maxCount(1)), new ItemGroupLocation(ItemGroups.COLORED_BLOCKS, Items.BLUE_BED), new ItemGroupLocation(ItemGroups.FUNCTIONAL, Items.BLUE_BED));
+        INDIGO_SHULKER_BOX = register("indigo_shulker_box", new BlockItem(VABlocks.INDIGO_SHULKER_BOX, new Item.Settings().maxCount(1).component(DataComponentTypes.CONTAINER, ContainerComponent.DEFAULT)), new ItemGroupLocation(ItemGroups.COLORED_BLOCKS, Items.BLUE_SHULKER_BOX), new ItemGroupLocation(ItemGroups.FUNCTIONAL, Items.BLUE_SHULKER_BOX));
+        INDIGO_BANNER = register("indigo_banner", new BannerItem(VABlocks.INDIGO_BANNER, VABlocks.INDIGO_WALL_BANNER, new Item.Settings().maxCount(16).component(DataComponentTypes.BANNER_PATTERNS, BannerPatternsComponent.DEFAULT)), new ItemGroupLocation(ItemGroups.COLORED_BLOCKS, Items.BLUE_BANNER), new ItemGroupLocation(ItemGroups.FUNCTIONAL, Items.BLUE_BANNER));
 
-        PLUM_DYE = register("plum_dye", ItemGroups.INGREDIENTS, Items.PURPLE_DYE);
+        PLUM_DYE = register("plum_dye", new DyeItem(VADyeColors.PLUM, new Item.Settings()), ItemGroups.INGREDIENTS, Items.PURPLE_DYE);
         PLUM_WOOL = registerBlockItem("plum_wool", VABlocks.PLUM_WOOL, ItemGroups.COLORED_BLOCKS, Blocks.PURPLE_WOOL.asItem());
         PLUM_CARPET = registerBlockItem("plum_carpet", VABlocks.PLUM_CARPET, ItemGroups.COLORED_BLOCKS, Blocks.PURPLE_CARPET.asItem());
         PLUM_TERRACOTTA = registerBlockItem("plum_terracotta", VABlocks.PLUM_TERRACOTTA, ItemGroups.COLORED_BLOCKS, Blocks.PURPLE_TERRACOTTA.asItem());
@@ -623,12 +634,13 @@ public class VAItems {
         PLUM_CONCRETE_POWDER = registerBlockItem("plum_concrete_powder", VABlocks.PLUM_CONCRETE_POWDER, ItemGroups.COLORED_BLOCKS, Blocks.PURPLE_CONCRETE_POWDER.asItem());
         PLUM_STAINED_GLASS = registerBlockItem("plum_stained_glass", VABlocks.PLUM_STAINED_GLASS, ItemGroups.COLORED_BLOCKS, Blocks.PURPLE_STAINED_GLASS.asItem());
         PLUM_STAINED_GLASS_PANE = registerBlockItem("plum_stained_glass_pane", VABlocks.PLUM_STAINED_GLASS_PANE, ItemGroups.COLORED_BLOCKS, Blocks.PURPLE_STAINED_GLASS_PANE.asItem());
-        PLUM_CANDLE = registerBlockItem("plum_candle", VABlocks.PLUM_CANDLE, ItemGroups.COLORED_BLOCKS, Blocks.PURPLE_CANDLE.asItem());
+        PLUM_CANDLE = registerBlockItem("plum_candle", VABlocks.PLUM_CANDLE, new ItemGroupLocation(ItemGroups.COLORED_BLOCKS, Blocks.PURPLE_CANDLE.asItem()), new ItemGroupLocation(ItemGroups.FUNCTIONAL, Blocks.PURPLE_CANDLE.asItem()));
         PLUM_SILKBULB = registerBlockItem("plum_silkbulb", VABlocks.PLUM_SILKBULB, ItemGroups.COLORED_BLOCKS, VAItems.PURPLE_SILKBULB);
-        PLUM_BED = register("plum_bed", new BedItem(VABlocks.PLUM_BED, new Item.Settings().maxCount(1)), ItemGroups.COLORED_BLOCKS, Items.PURPLE_BED);
-        PLUM_SHULKER_BOX = register("plum_shulker_box", new BlockItem(VABlocks.PLUM_SHULKER_BOX, new Item.Settings().maxCount(1)), ItemGroups.COLORED_BLOCKS, Items.PURPLE_SHULKER_BOX);
+        PLUM_BED = register("plum_bed", new BedItem(VABlocks.PLUM_BED, new Item.Settings().maxCount(1)), new ItemGroupLocation(ItemGroups.COLORED_BLOCKS, Items.PURPLE_BED), new ItemGroupLocation(ItemGroups.FUNCTIONAL, Items.PURPLE_BED));
+        PLUM_SHULKER_BOX = register("plum_shulker_box", new BlockItem(VABlocks.PLUM_SHULKER_BOX, new Item.Settings().maxCount(1).component(DataComponentTypes.CONTAINER, ContainerComponent.DEFAULT)), new ItemGroupLocation(ItemGroups.COLORED_BLOCKS, Items.PURPLE_SHULKER_BOX), new ItemGroupLocation(ItemGroups.FUNCTIONAL, Items.PURPLE_SHULKER_BOX));
+        PLUM_BANNER = register("plum_banner", new BannerItem(VABlocks.PLUM_BANNER, VABlocks.PLUM_WALL_BANNER, new Item.Settings().maxCount(16).component(DataComponentTypes.BANNER_PATTERNS, BannerPatternsComponent.DEFAULT)), new ItemGroupLocation(ItemGroups.COLORED_BLOCKS, Items.PURPLE_BANNER), new ItemGroupLocation(ItemGroups.FUNCTIONAL, Items.PURPLE_BANNER));
 
-        VIRIDIAN_DYE = register("viridian_dye", ItemGroups.INGREDIENTS, Items.GREEN_DYE);
+        VIRIDIAN_DYE = register("viridian_dye", new DyeItem(VADyeColors.VIRIDIAN, new Item.Settings()), ItemGroups.INGREDIENTS, Items.GREEN_DYE);
         VIRIDIAN_WOOL = registerBlockItem("viridian_wool", VABlocks.VIRIDIAN_WOOL, ItemGroups.COLORED_BLOCKS, Blocks.GREEN_WOOL.asItem());
         VIRIDIAN_CARPET = registerBlockItem("viridian_carpet", VABlocks.VIRIDIAN_CARPET, ItemGroups.COLORED_BLOCKS, Blocks.GREEN_CARPET.asItem());
         VIRIDIAN_TERRACOTTA = registerBlockItem("viridian_terracotta", VABlocks.VIRIDIAN_TERRACOTTA, ItemGroups.COLORED_BLOCKS, Blocks.GREEN_TERRACOTTA.asItem());
@@ -636,12 +648,13 @@ public class VAItems {
         VIRIDIAN_CONCRETE_POWDER = registerBlockItem("viridian_concrete_powder", VABlocks.VIRIDIAN_CONCRETE_POWDER, ItemGroups.COLORED_BLOCKS, Blocks.GREEN_CONCRETE_POWDER.asItem());
         VIRIDIAN_STAINED_GLASS = registerBlockItem("viridian_stained_glass", VABlocks.VIRIDIAN_STAINED_GLASS, ItemGroups.COLORED_BLOCKS, Blocks.GREEN_STAINED_GLASS.asItem());
         VIRIDIAN_STAINED_GLASS_PANE = registerBlockItem("viridian_stained_glass_pane", VABlocks.VIRIDIAN_STAINED_GLASS_PANE, ItemGroups.COLORED_BLOCKS, Blocks.GREEN_STAINED_GLASS_PANE.asItem());
-        VIRIDIAN_CANDLE = registerBlockItem("viridian_candle", VABlocks.VIRIDIAN_CANDLE, ItemGroups.COLORED_BLOCKS, Blocks.GREEN_CANDLE.asItem());
+        VIRIDIAN_CANDLE = registerBlockItem("viridian_candle", VABlocks.VIRIDIAN_CANDLE, new ItemGroupLocation(ItemGroups.COLORED_BLOCKS, Blocks.GREEN_CANDLE.asItem()), new ItemGroupLocation(ItemGroups.FUNCTIONAL, Blocks.GREEN_CANDLE.asItem()));
         VIRIDIAN_SILKBULB = registerBlockItem("viridian_silkbulb", VABlocks.VIRIDIAN_SILKBULB, ItemGroups.COLORED_BLOCKS, VAItems.GREEN_SILKBULB);
-        VIRIDIAN_BED = register("viridian_bed", new BedItem(VABlocks.VIRIDIAN_BED, new Item.Settings().maxCount(1)), ItemGroups.COLORED_BLOCKS, Items.GREEN_BED);
-        VIRIDIAN_SHULKER_BOX = register("viridian_shulker_box", new BlockItem(VABlocks.VIRIDIAN_SHULKER_BOX, new Item.Settings().maxCount(1)), ItemGroups.COLORED_BLOCKS, Items.GREEN_SHULKER_BOX);
+        VIRIDIAN_BED = register("viridian_bed", new BedItem(VABlocks.VIRIDIAN_BED, new Item.Settings().maxCount(1)), new ItemGroupLocation(ItemGroups.COLORED_BLOCKS, Items.GREEN_BED), new ItemGroupLocation(ItemGroups.FUNCTIONAL, Items.GREEN_BED));
+        VIRIDIAN_SHULKER_BOX = register("viridian_shulker_box", new BlockItem(VABlocks.VIRIDIAN_SHULKER_BOX, new Item.Settings().maxCount(1).component(DataComponentTypes.CONTAINER, ContainerComponent.DEFAULT)), new ItemGroupLocation(ItemGroups.COLORED_BLOCKS, Items.GREEN_SHULKER_BOX), new ItemGroupLocation(ItemGroups.FUNCTIONAL, Items.GREEN_SHULKER_BOX));
+        VIRIDIAN_BANNER = register("viridian_banner", new BannerItem(VABlocks.VIRIDIAN_BANNER, VABlocks.VIRIDIAN_WALL_BANNER, new Item.Settings().maxCount(16).component(DataComponentTypes.BANNER_PATTERNS, BannerPatternsComponent.DEFAULT)), new ItemGroupLocation(ItemGroups.COLORED_BLOCKS, Items.GREEN_BANNER), new ItemGroupLocation(ItemGroups.FUNCTIONAL, Items.GREEN_BANNER));
 
-        TAN_DYE = register("tan_dye", ItemGroups.INGREDIENTS, Items.BLACK_DYE);
+        TAN_DYE = register("tan_dye", new DyeItem(VADyeColors.TAN, new Item.Settings()), ItemGroups.INGREDIENTS, Items.BLACK_DYE);
         TAN_WOOL = registerBlockItem("tan_wool", VABlocks.TAN_WOOL, ItemGroups.COLORED_BLOCKS, Blocks.BLACK_WOOL.asItem());
         TAN_CARPET = registerBlockItem("tan_carpet", VABlocks.TAN_CARPET, ItemGroups.COLORED_BLOCKS, Blocks.BLACK_CARPET.asItem());
         TAN_TERRACOTTA = registerBlockItem("tan_terracotta", VABlocks.TAN_TERRACOTTA, ItemGroups.COLORED_BLOCKS, Blocks.BLACK_TERRACOTTA.asItem());
@@ -649,12 +662,13 @@ public class VAItems {
         TAN_CONCRETE_POWDER = registerBlockItem("tan_concrete_powder", VABlocks.TAN_CONCRETE_POWDER, ItemGroups.COLORED_BLOCKS, Blocks.BLACK_CONCRETE_POWDER.asItem());
         TAN_STAINED_GLASS = registerBlockItem("tan_stained_glass", VABlocks.TAN_STAINED_GLASS, ItemGroups.COLORED_BLOCKS, Blocks.BLACK_STAINED_GLASS.asItem());
         TAN_STAINED_GLASS_PANE = registerBlockItem("tan_stained_glass_pane", VABlocks.TAN_STAINED_GLASS_PANE, ItemGroups.COLORED_BLOCKS, Blocks.BLACK_STAINED_GLASS_PANE.asItem());
-        TAN_CANDLE = registerBlockItem("tan_candle", VABlocks.TAN_CANDLE, ItemGroups.COLORED_BLOCKS, Blocks.BLACK_CANDLE.asItem());
+        TAN_CANDLE = registerBlockItem("tan_candle", VABlocks.TAN_CANDLE, new ItemGroupLocation(ItemGroups.COLORED_BLOCKS, Blocks.BLACK_CANDLE.asItem()), new ItemGroupLocation(ItemGroups.FUNCTIONAL, Blocks.BLACK_CANDLE.asItem()));
         TAN_SILKBULB = registerBlockItem("tan_silkbulb", VABlocks.TAN_SILKBULB, ItemGroups.COLORED_BLOCKS, VAItems.BLACK_SILKBULB);
-        TAN_BED = register("tan_bed", new BedItem(VABlocks.TAN_BED, new Item.Settings().maxCount(1)), ItemGroups.COLORED_BLOCKS, Items.BLACK_BED);
-        TAN_SHULKER_BOX = register("tan_shulker_box", new BlockItem(VABlocks.TAN_SHULKER_BOX, new Item.Settings().maxCount(1)), ItemGroups.COLORED_BLOCKS, Items.BLACK_SHULKER_BOX);
+        TAN_BED = register("tan_bed", new BedItem(VABlocks.TAN_BED, new Item.Settings().maxCount(1)), new ItemGroupLocation(ItemGroups.COLORED_BLOCKS, Items.BLACK_BED), new ItemGroupLocation(ItemGroups.FUNCTIONAL, Items.BLACK_BED));
+        TAN_SHULKER_BOX = register("tan_shulker_box", new BlockItem(VABlocks.TAN_SHULKER_BOX, new Item.Settings().maxCount(1).component(DataComponentTypes.CONTAINER, ContainerComponent.DEFAULT)), new ItemGroupLocation(ItemGroups.COLORED_BLOCKS, Items.BLACK_SHULKER_BOX), new ItemGroupLocation(ItemGroups.FUNCTIONAL, Items.BLACK_SHULKER_BOX));
+        TAN_BANNER = register("tan_banner", new BannerItem(VABlocks.TAN_BANNER, VABlocks.TAN_WALL_BANNER, new Item.Settings().maxCount(16).component(DataComponentTypes.BANNER_PATTERNS, BannerPatternsComponent.DEFAULT)), new ItemGroupLocation(ItemGroups.COLORED_BLOCKS, Items.BLACK_BANNER), new ItemGroupLocation(ItemGroups.FUNCTIONAL, Items.BLACK_BANNER));
 
-        SINOPIA_DYE = register("sinopia_dye", ItemGroups.INGREDIENTS, Items.RED_DYE);
+        SINOPIA_DYE = register("sinopia_dye", new DyeItem(VADyeColors.SINOPIA, new Item.Settings()), ItemGroups.INGREDIENTS, Items.RED_DYE);
         SINOPIA_WOOL = registerBlockItem("sinopia_wool", VABlocks.SINOPIA_WOOL, ItemGroups.COLORED_BLOCKS, Blocks.RED_WOOL.asItem());
         SINOPIA_CARPET = registerBlockItem("sinopia_carpet", VABlocks.SINOPIA_CARPET, ItemGroups.COLORED_BLOCKS, Blocks.RED_CARPET.asItem());
         SINOPIA_TERRACOTTA = registerBlockItem("sinopia_terracotta", VABlocks.SINOPIA_TERRACOTTA, ItemGroups.COLORED_BLOCKS, Blocks.RED_TERRACOTTA.asItem());
@@ -662,12 +676,13 @@ public class VAItems {
         SINOPIA_CONCRETE_POWDER = registerBlockItem("sinopia_concrete_powder", VABlocks.SINOPIA_CONCRETE_POWDER, ItemGroups.COLORED_BLOCKS, Blocks.RED_CONCRETE_POWDER.asItem());
         SINOPIA_STAINED_GLASS = registerBlockItem("sinopia_stained_glass", VABlocks.SINOPIA_STAINED_GLASS, ItemGroups.COLORED_BLOCKS, Blocks.RED_STAINED_GLASS.asItem());
         SINOPIA_STAINED_GLASS_PANE = registerBlockItem("sinopia_stained_glass_pane", VABlocks.SINOPIA_STAINED_GLASS_PANE, ItemGroups.COLORED_BLOCKS, Blocks.RED_STAINED_GLASS_PANE.asItem());
-        SINOPIA_CANDLE = registerBlockItem("sinopia_candle", VABlocks.SINOPIA_CANDLE, ItemGroups.COLORED_BLOCKS, Blocks.RED_CANDLE.asItem());
+        SINOPIA_CANDLE = registerBlockItem("sinopia_candle", VABlocks.SINOPIA_CANDLE, new ItemGroupLocation(ItemGroups.COLORED_BLOCKS, Blocks.RED_CANDLE.asItem()), new ItemGroupLocation(ItemGroups.FUNCTIONAL, Blocks.RED_CANDLE.asItem()));
         SINOPIA_SILKBULB = registerBlockItem("sinopia_silkbulb", VABlocks.SINOPIA_SILKBULB, ItemGroups.COLORED_BLOCKS, VAItems.RED_SILKBULB);
-        SINOPIA_BED = register("sinopia_bed", new BedItem(VABlocks.SINOPIA_BED, new Item.Settings().maxCount(1)), ItemGroups.COLORED_BLOCKS, Items.RED_BED);
-        SINOPIA_SHULKER_BOX = register("sinopia_shulker_box", new BlockItem(VABlocks.SINOPIA_SHULKER_BOX, new Item.Settings().maxCount(1)), ItemGroups.COLORED_BLOCKS, Items.RED_SHULKER_BOX);
+        SINOPIA_BED = register("sinopia_bed", new BedItem(VABlocks.SINOPIA_BED, new Item.Settings().maxCount(1)), new ItemGroupLocation(ItemGroups.COLORED_BLOCKS, Items.RED_BED), new ItemGroupLocation(ItemGroups.FUNCTIONAL, Items.RED_BED));
+        SINOPIA_SHULKER_BOX = register("sinopia_shulker_box", new BlockItem(VABlocks.SINOPIA_SHULKER_BOX, new Item.Settings().maxCount(1).component(DataComponentTypes.CONTAINER, ContainerComponent.DEFAULT)), new ItemGroupLocation(ItemGroups.COLORED_BLOCKS, Items.RED_SHULKER_BOX), new ItemGroupLocation(ItemGroups.FUNCTIONAL, Items.RED_SHULKER_BOX));
+        SINOPIA_BANNER = register("sinopia_banner", new BannerItem(VABlocks.SINOPIA_BANNER, VABlocks.SINOPIA_WALL_BANNER, new Item.Settings().maxCount(16).component(DataComponentTypes.BANNER_PATTERNS, BannerPatternsComponent.DEFAULT)), new ItemGroupLocation(ItemGroups.COLORED_BLOCKS, Items.RED_BANNER), new ItemGroupLocation(ItemGroups.FUNCTIONAL, Items.RED_BANNER));
 
-        LILAC_DYE = register("lilac_dye", ItemGroups.INGREDIENTS, Items.PINK_DYE);
+        LILAC_DYE = register("lilac_dye", new DyeItem(VADyeColors.LILAC, new Item.Settings()), ItemGroups.INGREDIENTS, Items.PINK_DYE);
         LILAC_WOOL = registerBlockItem("lilac_wool", VABlocks.LILAC_WOOL, ItemGroups.COLORED_BLOCKS, Blocks.PINK_WOOL.asItem());
         LILAC_CARPET = registerBlockItem("lilac_carpet", VABlocks.LILAC_CARPET, ItemGroups.COLORED_BLOCKS, Blocks.PINK_CARPET.asItem());
         LILAC_TERRACOTTA = registerBlockItem("lilac_terracotta", VABlocks.LILAC_TERRACOTTA, ItemGroups.COLORED_BLOCKS, Blocks.PINK_TERRACOTTA.asItem());
@@ -675,10 +690,11 @@ public class VAItems {
         LILAC_CONCRETE_POWDER = registerBlockItem("lilac_concrete_powder", VABlocks.LILAC_CONCRETE_POWDER, ItemGroups.COLORED_BLOCKS, Blocks.PINK_CONCRETE_POWDER.asItem());
         LILAC_STAINED_GLASS = registerBlockItem("lilac_stained_glass", VABlocks.LILAC_STAINED_GLASS, ItemGroups.COLORED_BLOCKS, Blocks.PINK_STAINED_GLASS.asItem());
         LILAC_STAINED_GLASS_PANE = registerBlockItem("lilac_stained_glass_pane", VABlocks.LILAC_STAINED_GLASS_PANE, ItemGroups.COLORED_BLOCKS, Blocks.PINK_STAINED_GLASS_PANE.asItem());
-        LILAC_CANDLE = registerBlockItem("lilac_candle", VABlocks.LILAC_CANDLE, ItemGroups.COLORED_BLOCKS, Blocks.PINK_CANDLE.asItem());
+        LILAC_CANDLE = registerBlockItem("lilac_candle", VABlocks.LILAC_CANDLE, new ItemGroupLocation(ItemGroups.COLORED_BLOCKS, Blocks.PINK_CANDLE.asItem()), new ItemGroupLocation(ItemGroups.FUNCTIONAL, Blocks.PINK_CANDLE.asItem()));
         LILAC_SILKBULB = registerBlockItem("lilac_silkbulb", VABlocks.LILAC_SILKBULB, ItemGroups.COLORED_BLOCKS, VAItems.PINK_SILKBULB);
-        LILAC_BED = register("lilac_bed", new BedItem(VABlocks.LILAC_BED, new Item.Settings().maxCount(1)), ItemGroups.COLORED_BLOCKS, Items.PINK_BED);
-        LILAC_SHULKER_BOX = register("lilac_shulker_box", new BlockItem(VABlocks.LILAC_SHULKER_BOX, new Item.Settings().maxCount(1)), ItemGroups.COLORED_BLOCKS, Items.PINK_SHULKER_BOX);
+        LILAC_BED = register("lilac_bed", new BedItem(VABlocks.LILAC_BED, new Item.Settings().maxCount(1)), new ItemGroupLocation(ItemGroups.COLORED_BLOCKS, Items.PINK_BED), new ItemGroupLocation(ItemGroups.FUNCTIONAL, Items.PINK_BED));
+        LILAC_SHULKER_BOX = register("lilac_shulker_box", new BlockItem(VABlocks.LILAC_SHULKER_BOX, new Item.Settings().maxCount(1).component(DataComponentTypes.CONTAINER, ContainerComponent.DEFAULT)), new ItemGroupLocation(ItemGroups.COLORED_BLOCKS, Items.PINK_SHULKER_BOX), new ItemGroupLocation(ItemGroups.FUNCTIONAL, Items.PINK_SHULKER_BOX));
+        LILAC_BANNER = register("lilac_banner", new BannerItem(VABlocks.LILAC_BANNER, VABlocks.LILAC_WALL_BANNER, new Item.Settings().maxCount(16).component(DataComponentTypes.BANNER_PATTERNS, BannerPatternsComponent.DEFAULT)), new ItemGroupLocation(ItemGroups.COLORED_BLOCKS, Items.PINK_BANNER), new ItemGroupLocation(ItemGroups.FUNCTIONAL, Items.PINK_BANNER));
 
         COLORING_STATION = registerBlockItem("coloring_station", VABlocks.COLORING_STATION, ItemGroups.FUNCTIONAL, Items.LOOM);
 

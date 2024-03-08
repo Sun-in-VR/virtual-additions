@@ -203,6 +203,7 @@ public final class VABlockLootTableProvider {
             set.ifCandleCake(block -> this.lootTables.put(block.getLootTableId(), BlockLootTableGenerator.candleCakeDrops(block)));
             set.ifBed(block -> this.lootTables.put(block.getLootTableId(), this.dropsWithProperty(block, BedBlock.PART, BedPart.HEAD)));
             set.ifShulkerBox(block -> this.lootTables.put(block.getLootTableId(), this.shulkerBoxDrops(block)));
+            set.ifBanner(block -> this.lootTables.put(block.getLootTableId(), this.bannerDrops(block)));
         }
 
         protected void addDrop(BlockFamily.Variant variant, Block block) {

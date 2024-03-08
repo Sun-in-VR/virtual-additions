@@ -138,6 +138,24 @@ public class ColorfulBlockSet {
         if (block != null) consumer.accept(block);
     }
 
+    public Block banner() {
+        return this.blockMap.get(Tile.BANNER);
+    }
+
+    public void ifBanner(Consumer<Block> consumer) {
+        Block block = this.banner();
+        if (block != null) consumer.accept(block);
+    }
+
+    public Block wallBanner() {
+        return this.blockMap.get(Tile.WALL_BANNER);
+    }
+
+    public void ifWallBanner(Consumer<Block> consumer) {
+        Block block = this.wallBanner();
+        if (block != null) consumer.accept(block);
+    }
+
     public static class Builder {
         private final ArrayList<TileBlockPair> entries;
         private final Item dye;
@@ -214,6 +232,16 @@ public class ColorfulBlockSet {
             this.entries.add(TileBlockPair.of(Tile.SHULKER_BOX, block));
             return this;
         }
+
+        public Builder banner(Block block) {
+            this.entries.add(TileBlockPair.of(Tile.BANNER, block));
+            return this;
+        }
+
+        public Builder wallBanner(Block block) {
+            this.entries.add(TileBlockPair.of(Tile.WALL_BANNER, block));
+            return this;
+        }
     }
 
     private static class TileBlockPair extends Pair<Tile, Block> implements Map.Entry<Tile, Block> {
@@ -254,6 +282,8 @@ public class ColorfulBlockSet {
         CANDLE_CAKE,
         SILKBULB,
         BED,
-        SHULKER_BOX
+        SHULKER_BOX,
+        BANNER,
+        WALL_BANNER
     }
 }

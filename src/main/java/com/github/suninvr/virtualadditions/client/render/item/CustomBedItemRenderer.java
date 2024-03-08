@@ -19,7 +19,7 @@ public class CustomBedItemRenderer implements BuiltinItemRendererRegistry.Dynami
     @Override
     public void render(ItemStack stack, ModelTransformationMode mode, MatrixStack matrices, VertexConsumerProvider vertexConsumers, int light, int overlay) {
         if (stack.getItem() instanceof BlockItem item && item.getBlock() instanceof CustomBedBlock block) {
-            renderer.setColor(block.getExtendedColor());
+            renderer.setColor(block.getColor());
         }
         BlockEntityRenderDispatcher dispatcher = MinecraftClient.getInstance().getBlockEntityRenderDispatcher();
         dispatcher.renderEntity(renderer, matrices, vertexConsumers, light, overlay);

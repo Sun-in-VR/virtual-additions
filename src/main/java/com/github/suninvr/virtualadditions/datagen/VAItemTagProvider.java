@@ -345,6 +345,7 @@ public final class VAItemTagProvider {
                 set.ifCandle(block -> addTo(ItemTags.CANDLES, block));
                 set.ifSilkbulb(block -> addTo(VAItemTags.SILKBULBS, block));
                 set.ifBed(block -> addTo(ItemTags.BEDS, block));
+                set.ifBanner(block -> addTo(ItemTags.BANNERS, block));
             }
         }
 

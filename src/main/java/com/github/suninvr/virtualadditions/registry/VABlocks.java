@@ -2,7 +2,6 @@ package com.github.suninvr.virtualadditions.registry;
 
 import com.github.suninvr.virtualadditions.VirtualAdditions;
 import com.github.suninvr.virtualadditions.block.*;
-import com.github.suninvr.virtualadditions.block.enums.ExtendedDyeColor;
 import com.github.suninvr.virtualadditions.registry.constructors.block.CustomStairsBlock;
 import net.fabricmc.fabric.api.object.builder.v1.block.type.BlockSetTypeBuilder;
 import net.fabricmc.fabric.api.object.builder.v1.block.type.WoodTypeBuilder;
@@ -178,6 +177,8 @@ public class VABlocks {
     public static final Block CHARTREUSE_CANDLE_CAKE;
     public static final Block CHARTREUSE_BED;
     public static final Block CHARTREUSE_SHULKER_BOX;
+    public static final Block CHARTREUSE_BANNER;
+    public static final Block CHARTREUSE_WALL_BANNER;
     public static final Block MAROON_WOOL;
     public static final Block MAROON_CARPET;
     public static final Block MAROON_TERRACOTTA;
@@ -190,6 +191,8 @@ public class VABlocks {
     public static final Block MAROON_CANDLE_CAKE;
     public static final Block MAROON_BED;
     public static final Block MAROON_SHULKER_BOX;
+    public static final Block MAROON_BANNER;
+    public static final Block MAROON_WALL_BANNER;
     public static final Block INDIGO_WOOL;
     public static final Block INDIGO_CARPET;
     public static final Block INDIGO_TERRACOTTA;
@@ -202,6 +205,8 @@ public class VABlocks {
     public static final Block INDIGO_CANDLE_CAKE;
     public static final Block INDIGO_BED;
     public static final Block INDIGO_SHULKER_BOX;
+    public static final Block INDIGO_BANNER;
+    public static final Block INDIGO_WALL_BANNER;
     public static final Block PLUM_WOOL;
     public static final Block PLUM_CARPET;
     public static final Block PLUM_TERRACOTTA;
@@ -214,6 +219,8 @@ public class VABlocks {
     public static final Block PLUM_CANDLE_CAKE;
     public static final Block PLUM_BED;
     public static final Block PLUM_SHULKER_BOX;
+    public static final Block PLUM_BANNER;
+    public static final Block PLUM_WALL_BANNER;
     public static final Block VIRIDIAN_WOOL;
     public static final Block VIRIDIAN_CARPET;
     public static final Block VIRIDIAN_TERRACOTTA;
@@ -226,6 +233,8 @@ public class VABlocks {
     public static final Block VIRIDIAN_CANDLE_CAKE;
     public static final Block VIRIDIAN_BED;
     public static final Block VIRIDIAN_SHULKER_BOX;
+    public static final Block VIRIDIAN_BANNER;
+    public static final Block VIRIDIAN_WALL_BANNER;
     public static final Block TAN_WOOL;
     public static final Block TAN_CARPET;
     public static final Block TAN_TERRACOTTA;
@@ -238,6 +247,8 @@ public class VABlocks {
     public static final Block TAN_CANDLE_CAKE;
     public static final Block TAN_BED;
     public static final Block TAN_SHULKER_BOX;
+    public static final Block TAN_BANNER;
+    public static final Block TAN_WALL_BANNER;
     public static final Block SINOPIA_WOOL;
     public static final Block SINOPIA_CARPET;
     public static final Block SINOPIA_TERRACOTTA;
@@ -250,6 +261,8 @@ public class VABlocks {
     public static final Block SINOPIA_CANDLE_CAKE;
     public static final Block SINOPIA_BED;
     public static final Block SINOPIA_SHULKER_BOX;
+    public static final Block SINOPIA_BANNER;
+    public static final Block SINOPIA_WALL_BANNER;
     public static final Block LILAC_WOOL;
     public static final Block LILAC_CARPET;
     public static final Block LILAC_TERRACOTTA;
@@ -262,6 +275,8 @@ public class VABlocks {
     public static final Block LILAC_CANDLE_CAKE;
     public static final Block LILAC_BED;
     public static final Block LILAC_SHULKER_BOX;
+    public static final Block LILAC_BANNER;
+    public static final Block LILAC_WALL_BANNER;
     public static final Block COLORING_STATION;
     public static final Block ACID;
     public static final Block ACID_BLOCK;
@@ -438,7 +453,7 @@ public class VABlocks {
         PINK_SILKBULB = register("pink_silkbulb", new Block(Settings.copy(SILKBULB).mapColor(MapColor.PINK)));
 
         CHARTREUSE_WOOL = register("chartreuse_wool", new Block(Settings.copy(Blocks.WHITE_WOOL).mapColor(MapColor.LIME)));
-        CHARTREUSE_CARPET = register("chartreuse_carpet", new CarpetBlock(Settings.copy(Blocks.WHITE_CARPET).mapColor(MapColor.LIME)));
+        CHARTREUSE_CARPET = register("chartreuse_carpet", new CarpetBlock( Settings.copy(Blocks.WHITE_CARPET).mapColor(MapColor.LIME)));
         CHARTREUSE_TERRACOTTA = register("chartreuse_terracotta", new Block(Settings.copy(Blocks.WHITE_TERRACOTTA).mapColor(MapColor.LIME)));
         CHARTREUSE_CONCRETE = register("chartreuse_concrete", new Block(Settings.copy(Blocks.WHITE_CONCRETE).mapColor(MapColor.LIME)));
         CHARTREUSE_CONCRETE_POWDER = register("chartreuse_concrete_powder", new ConcretePowderBlock(CHARTREUSE_CONCRETE, Settings.copy(Blocks.WHITE_CONCRETE_POWDER).mapColor(MapColor.LIME)));
@@ -447,9 +462,11 @@ public class VABlocks {
         CHARTREUSE_SILKBULB = register("chartreuse_silkbulb", new Block(Settings.copy(SILKBULB).mapColor(MapColor.LIME)));
         CHARTREUSE_CANDLE = register("chartreuse_candle", new CandleBlock(Settings.copy(Blocks.CANDLE).mapColor(MapColor.LIME)));
         CHARTREUSE_CANDLE_CAKE = register("chartreuse_candle_cake", new CandleCakeBlock(CHARTREUSE_CANDLE, Settings.copy(Blocks.CANDLE_CAKE).mapColor(MapColor.LIME)));
-        CHARTREUSE_BED = register("chartreuse_bed", new CustomBedBlock(ExtendedDyeColor.CHARTREUSE, Settings.copy(Blocks.WHITE_BED)));
-        CHARTREUSE_SHULKER_BOX = register("chartreuse_shulker_box", new CustomShulkerBoxBlock(ExtendedDyeColor.CHARTREUSE, Settings.copy(Blocks.SHULKER_BOX)));
-        
+        CHARTREUSE_BED = register("chartreuse_bed", new CustomBedBlock(VADyeColors.CHARTREUSE, Settings.copy(Blocks.WHITE_BED)));
+        CHARTREUSE_SHULKER_BOX = register("chartreuse_shulker_box", new CustomShulkerBoxBlock(VADyeColors.CHARTREUSE, Settings.copy(Blocks.SHULKER_BOX)));
+        CHARTREUSE_BANNER = register("chartreuse_banner", new CustomBannerBlock(VADyeColors.CHARTREUSE, Settings.copy(Blocks.WHITE_BANNER)));
+        CHARTREUSE_WALL_BANNER = register("chartreuse_wall_banner", new CustomWallBannerBlock(VADyeColors.CHARTREUSE, Settings.copy(Blocks.WHITE_WALL_BANNER).dropsLike(CHARTREUSE_BANNER)));
+
         MAROON_WOOL = register("maroon_wool", new Block(Settings.copy(Blocks.WHITE_WOOL).mapColor(MapColor.LIME)));
         MAROON_CARPET = register("maroon_carpet", new CarpetBlock(Settings.copy(Blocks.WHITE_CARPET).mapColor(MapColor.LIME)));
         MAROON_TERRACOTTA = register("maroon_terracotta", new Block(Settings.copy(Blocks.WHITE_TERRACOTTA).mapColor(MapColor.LIME)));
@@ -460,8 +477,10 @@ public class VABlocks {
         MAROON_SILKBULB = register("maroon_silkbulb", new Block(Settings.copy(SILKBULB).mapColor(MapColor.LIME)));
         MAROON_CANDLE = register("maroon_candle", new CandleBlock(Settings.copy(Blocks.CANDLE).mapColor(MapColor.LIME)));
         MAROON_CANDLE_CAKE = register("maroon_candle_cake", new CandleCakeBlock(MAROON_CANDLE, Settings.copy(Blocks.CANDLE_CAKE).mapColor(MapColor.LIME)));
-        MAROON_BED = register("maroon_bed", new CustomBedBlock(ExtendedDyeColor.MAROON, Settings.copy(Blocks.WHITE_BED)));
-        MAROON_SHULKER_BOX = register("maroon_shulker_box", new CustomShulkerBoxBlock(ExtendedDyeColor.MAROON, Settings.copy(Blocks.SHULKER_BOX)));
+        MAROON_BED = register("maroon_bed", new CustomBedBlock(VADyeColors.MAROON, Settings.copy(Blocks.WHITE_BED)));
+        MAROON_SHULKER_BOX = register("maroon_shulker_box", new CustomShulkerBoxBlock(VADyeColors.MAROON, Settings.copy(Blocks.SHULKER_BOX)));
+        MAROON_BANNER = register("maroon_banner", new CustomBannerBlock(VADyeColors.MAROON, Settings.copy(Blocks.WHITE_BANNER)));
+        MAROON_WALL_BANNER = register("maroon_wall_banner", new CustomWallBannerBlock(VADyeColors.MAROON, Settings.copy(Blocks.WHITE_WALL_BANNER).dropsLike(MAROON_BANNER)));
 
         INDIGO_WOOL = register("indigo_wool", new Block(Settings.copy(Blocks.WHITE_WOOL).mapColor(MapColor.LIME)));
         INDIGO_CARPET = register("indigo_carpet", new CarpetBlock(Settings.copy(Blocks.WHITE_CARPET).mapColor(MapColor.LIME)));
@@ -473,8 +492,10 @@ public class VABlocks {
         INDIGO_SILKBULB = register("indigo_silkbulb", new Block(Settings.copy(SILKBULB).mapColor(MapColor.LIME)));
         INDIGO_CANDLE = register("indigo_candle", new CandleBlock(Settings.copy(Blocks.CANDLE).mapColor(MapColor.LIME)));
         INDIGO_CANDLE_CAKE = register("indigo_candle_cake", new CandleCakeBlock(INDIGO_CANDLE, Settings.copy(Blocks.CANDLE_CAKE).mapColor(MapColor.LIME)));
-        INDIGO_BED = register("indigo_bed", new CustomBedBlock(ExtendedDyeColor.INDIGO, Settings.copy(Blocks.WHITE_BED)));
-        INDIGO_SHULKER_BOX = register("indigo_shulker_box", new CustomShulkerBoxBlock(ExtendedDyeColor.INDIGO, Settings.copy(Blocks.SHULKER_BOX)));
+        INDIGO_BED = register("indigo_bed", new CustomBedBlock(VADyeColors.INDIGO, Settings.copy(Blocks.WHITE_BED)));
+        INDIGO_SHULKER_BOX = register("indigo_shulker_box", new CustomShulkerBoxBlock(VADyeColors.INDIGO, Settings.copy(Blocks.SHULKER_BOX)));
+        INDIGO_BANNER = register("indigo_banner", new CustomBannerBlock(VADyeColors.INDIGO, Settings.copy(Blocks.WHITE_BANNER)));
+        INDIGO_WALL_BANNER = register("indigo_wall_banner", new CustomWallBannerBlock(VADyeColors.INDIGO, Settings.copy(Blocks.WHITE_WALL_BANNER).dropsLike(INDIGO_BANNER)));
 
         PLUM_WOOL = register("plum_wool", new Block(Settings.copy(Blocks.WHITE_WOOL).mapColor(MapColor.LIME)));
         PLUM_CARPET = register("plum_carpet", new CarpetBlock(Settings.copy(Blocks.WHITE_CARPET).mapColor(MapColor.LIME)));
@@ -486,8 +507,10 @@ public class VABlocks {
         PLUM_SILKBULB = register("plum_silkbulb", new Block(Settings.copy(SILKBULB).mapColor(MapColor.LIME)));
         PLUM_CANDLE = register("plum_candle", new CandleBlock(Settings.copy(Blocks.CANDLE).mapColor(MapColor.LIME)));
         PLUM_CANDLE_CAKE = register("plum_candle_cake", new CandleCakeBlock(PLUM_CANDLE, Settings.copy(Blocks.CANDLE_CAKE).mapColor(MapColor.LIME)));
-        PLUM_BED = register("plum_bed", new CustomBedBlock(ExtendedDyeColor.PLUM, Settings.copy(Blocks.WHITE_BED)));
-        PLUM_SHULKER_BOX = register("plum_shulker_box", new CustomShulkerBoxBlock(ExtendedDyeColor.PLUM, Settings.copy(Blocks.SHULKER_BOX)));
+        PLUM_BED = register("plum_bed", new CustomBedBlock(VADyeColors.PLUM, Settings.copy(Blocks.WHITE_BED)));
+        PLUM_SHULKER_BOX = register("plum_shulker_box", new CustomShulkerBoxBlock(VADyeColors.PLUM, Settings.copy(Blocks.SHULKER_BOX)));
+        PLUM_BANNER = register("plum_banner", new CustomBannerBlock(VADyeColors.PLUM, Settings.copy(Blocks.WHITE_BANNER)));
+        PLUM_WALL_BANNER = register("plum_wall_banner", new CustomWallBannerBlock(VADyeColors.PLUM, Settings.copy(Blocks.WHITE_WALL_BANNER).dropsLike(PLUM_BANNER)));
 
         VIRIDIAN_WOOL = register("viridian_wool", new Block(Settings.copy(Blocks.WHITE_WOOL).mapColor(MapColor.LIME)));
         VIRIDIAN_CARPET = register("viridian_carpet", new CarpetBlock(Settings.copy(Blocks.WHITE_CARPET).mapColor(MapColor.LIME)));
@@ -499,8 +522,10 @@ public class VABlocks {
         VIRIDIAN_SILKBULB = register("viridian_silkbulb", new Block(Settings.copy(SILKBULB).mapColor(MapColor.LIME)));
         VIRIDIAN_CANDLE = register("viridian_candle", new CandleBlock(Settings.copy(Blocks.CANDLE).mapColor(MapColor.LIME)));
         VIRIDIAN_CANDLE_CAKE = register("viridian_candle_cake", new CandleCakeBlock(VIRIDIAN_CANDLE, Settings.copy(Blocks.CANDLE_CAKE).mapColor(MapColor.LIME)));
-        VIRIDIAN_BED = register("viridian_bed", new CustomBedBlock(ExtendedDyeColor.VIRIDIAN, Settings.copy(Blocks.WHITE_BED)));
-        VIRIDIAN_SHULKER_BOX = register("viridian_shulker_box", new CustomShulkerBoxBlock(ExtendedDyeColor.VIRIDIAN, Settings.copy(Blocks.SHULKER_BOX)));
+        VIRIDIAN_BED = register("viridian_bed", new CustomBedBlock(VADyeColors.VIRIDIAN, Settings.copy(Blocks.WHITE_BED)));
+        VIRIDIAN_SHULKER_BOX = register("viridian_shulker_box", new CustomShulkerBoxBlock(VADyeColors.VIRIDIAN, Settings.copy(Blocks.SHULKER_BOX)));
+        VIRIDIAN_BANNER = register("viridian_banner", new CustomBannerBlock(VADyeColors.VIRIDIAN, Settings.copy(Blocks.WHITE_BANNER)));
+        VIRIDIAN_WALL_BANNER = register("viridian_wall_banner", new CustomWallBannerBlock(VADyeColors.VIRIDIAN, Settings.copy(Blocks.WHITE_WALL_BANNER).dropsLike(VIRIDIAN_BANNER)));
 
         TAN_WOOL = register("tan_wool", new Block(Settings.copy(Blocks.WHITE_WOOL).mapColor(MapColor.LIME)));
         TAN_CARPET = register("tan_carpet", new CarpetBlock(Settings.copy(Blocks.WHITE_CARPET).mapColor(MapColor.LIME)));
@@ -512,8 +537,10 @@ public class VABlocks {
         TAN_SILKBULB = register("tan_silkbulb", new Block(Settings.copy(SILKBULB).mapColor(MapColor.LIME)));
         TAN_CANDLE = register("tan_candle", new CandleBlock(Settings.copy(Blocks.CANDLE).mapColor(MapColor.LIME)));
         TAN_CANDLE_CAKE = register("tan_candle_cake", new CandleCakeBlock(TAN_CANDLE, Settings.copy(Blocks.CANDLE_CAKE).mapColor(MapColor.LIME)));
-        TAN_BED = register("tan_bed", new CustomBedBlock(ExtendedDyeColor.TAN, Settings.copy(Blocks.WHITE_BED)));
-        TAN_SHULKER_BOX = register("tan_shulker_box", new CustomShulkerBoxBlock(ExtendedDyeColor.TAN, Settings.copy(Blocks.SHULKER_BOX)));
+        TAN_BED = register("tan_bed", new CustomBedBlock(VADyeColors.TAN, Settings.copy(Blocks.WHITE_BED)));
+        TAN_SHULKER_BOX = register("tan_shulker_box", new CustomShulkerBoxBlock(VADyeColors.TAN, Settings.copy(Blocks.SHULKER_BOX)));
+        TAN_BANNER = register("tan_banner", new CustomBannerBlock(VADyeColors.TAN, Settings.copy(Blocks.WHITE_BANNER)));
+        TAN_WALL_BANNER = register("tan_wall_banner", new CustomWallBannerBlock(VADyeColors.TAN, Settings.copy(Blocks.WHITE_WALL_BANNER).dropsLike(TAN_BANNER)));
 
         SINOPIA_WOOL = register("sinopia_wool", new Block(Settings.copy(Blocks.WHITE_WOOL).mapColor(MapColor.LIME)));
         SINOPIA_CARPET = register("sinopia_carpet", new CarpetBlock(Settings.copy(Blocks.WHITE_CARPET).mapColor(MapColor.LIME)));
@@ -525,21 +552,25 @@ public class VABlocks {
         SINOPIA_SILKBULB = register("sinopia_silkbulb", new Block(Settings.copy(SILKBULB).mapColor(MapColor.LIME)));
         SINOPIA_CANDLE = register("sinopia_candle", new CandleBlock(Settings.copy(Blocks.CANDLE).mapColor(MapColor.LIME)));
         SINOPIA_CANDLE_CAKE = register("sinopia_candle_cake", new CandleCakeBlock(SINOPIA_CANDLE, Settings.copy(Blocks.CANDLE_CAKE).mapColor(MapColor.LIME)));
-        SINOPIA_BED = register("sinopia_bed", new CustomBedBlock(ExtendedDyeColor.SINOPIA, Settings.copy(Blocks.WHITE_BED)));
-        SINOPIA_SHULKER_BOX = register("sinopia_shulker_box", new CustomShulkerBoxBlock(ExtendedDyeColor.SINOPIA, Settings.copy(Blocks.SHULKER_BOX)));
+        SINOPIA_BED = register("sinopia_bed", new CustomBedBlock(VADyeColors.SINOPIA, Settings.copy(Blocks.WHITE_BED)));
+        SINOPIA_SHULKER_BOX = register("sinopia_shulker_box", new CustomShulkerBoxBlock(VADyeColors.SINOPIA, Settings.copy(Blocks.SHULKER_BOX)));
+        SINOPIA_BANNER = register("sinopia_banner", new CustomBannerBlock(VADyeColors.SINOPIA, Settings.copy(Blocks.WHITE_BANNER)));
+        SINOPIA_WALL_BANNER = register("sinopia_wall_banner", new CustomWallBannerBlock(VADyeColors.SINOPIA, Settings.copy(Blocks.WHITE_WALL_BANNER).dropsLike(SINOPIA_BANNER)));
 
         LILAC_WOOL = register("lilac_wool", new Block(Settings.copy(Blocks.WHITE_WOOL).mapColor(MapColor.LIME)));
         LILAC_CARPET = register("lilac_carpet", new CarpetBlock(Settings.copy(Blocks.WHITE_CARPET).mapColor(MapColor.LIME)));
         LILAC_TERRACOTTA = register("lilac_terracotta", new Block(Settings.copy(Blocks.WHITE_TERRACOTTA).mapColor(MapColor.LIME)));
         LILAC_CONCRETE = register("lilac_concrete", new Block(Settings.copy(Blocks.WHITE_CONCRETE).mapColor(MapColor.LIME)));
         LILAC_CONCRETE_POWDER = register("lilac_concrete_powder", new ConcretePowderBlock(LILAC_CONCRETE, Settings.copy(Blocks.WHITE_CONCRETE_POWDER).mapColor(MapColor.LIME)));
-        LILAC_STAINED_GLASS = register("lilac_stained_glass", new StainedGlassBlock(DyeColor.LIME, Settings.copy(Blocks.GLASS).mapColor(MapColor.LIME)));
-        LILAC_STAINED_GLASS_PANE = register("lilac_stained_glass_pane", new StainedGlassPaneBlock(DyeColor.LIME, Settings.copy(Blocks.GLASS_PANE).mapColor(MapColor.LIME)));
+        LILAC_STAINED_GLASS = register("lilac_stained_glass", new StainedGlassBlock(VADyeColors.LILAC, Settings.copy(Blocks.GLASS).mapColor(MapColor.LIME)));
+        LILAC_STAINED_GLASS_PANE = register("lilac_stained_glass_pane", new StainedGlassPaneBlock(VADyeColors.LILAC, Settings.copy(Blocks.GLASS_PANE).mapColor(MapColor.LIME)));
         LILAC_SILKBULB = register("lilac_silkbulb", new Block(Settings.copy(SILKBULB).mapColor(MapColor.LIME)));
         LILAC_CANDLE = register("lilac_candle", new CandleBlock(Settings.copy(Blocks.CANDLE).mapColor(MapColor.LIME)));
         LILAC_CANDLE_CAKE = register("lilac_candle_cake", new CandleCakeBlock(LILAC_CANDLE, Settings.copy(Blocks.CANDLE_CAKE).mapColor(MapColor.LIME)));
-        LILAC_BED = register("lilac_bed", new CustomBedBlock(ExtendedDyeColor.LILAC, Settings.copy(Blocks.WHITE_BED)));
-        LILAC_SHULKER_BOX = register("lilac_shulker_box", new CustomShulkerBoxBlock(ExtendedDyeColor.LILAC, Settings.copy(Blocks.SHULKER_BOX)));
+        LILAC_BED = register("lilac_bed", new CustomBedBlock(VADyeColors.LILAC, Settings.copy(Blocks.WHITE_BED)));
+        LILAC_SHULKER_BOX = register("lilac_shulker_box", new CustomShulkerBoxBlock(VADyeColors.LILAC, Settings.copy(Blocks.SHULKER_BOX)));
+        LILAC_BANNER = register("lilac_banner", new CustomBannerBlock(VADyeColors.LILAC, Settings.copy(Blocks.WHITE_BANNER)));
+        LILAC_WALL_BANNER = register("lilac_wall_banner", new CustomWallBannerBlock(VADyeColors.LILAC, Settings.copy(Blocks.WHITE_WALL_BANNER).dropsLike(LILAC_BANNER)));
 
         COLORING_STATION = register("coloring_station", new ColoringStationBlock(Settings.copy(Blocks.SMITHING_TABLE)));
 

@@ -1,9 +1,9 @@
 package com.github.suninvr.virtualadditions.client.render.block;
 
-import com.github.suninvr.virtualadditions.block.entity.CustomShulkerBoxBlockEntity;
-import com.github.suninvr.virtualadditions.block.enums.ExtendedDyeColor;
+import com.github.suninvr.virtualadditions.registry.VADyeColors;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.ShulkerBoxBlock;
+import net.minecraft.block.entity.ShulkerBoxBlockEntity;
 import net.minecraft.client.model.ModelPart;
 import net.minecraft.client.render.RenderLayer;
 import net.minecraft.client.render.TexturedRenderLayers;
@@ -18,7 +18,7 @@ import net.minecraft.client.util.math.MatrixStack;
 import net.minecraft.util.DyeColor;
 import net.minecraft.util.math.Direction;
 
-public class CustomShulkerBoxBlockEntityRenderer implements BlockEntityRenderer<CustomShulkerBoxBlockEntity> {
+public class CustomShulkerBoxBlockEntityRenderer implements BlockEntityRenderer<ShulkerBoxBlockEntity> {
     private final ShulkerEntityModel<?> model;
 
     public CustomShulkerBoxBlockEntityRenderer(BlockEntityRendererFactory.Context ctx) {
@@ -26,13 +26,13 @@ public class CustomShulkerBoxBlockEntityRenderer implements BlockEntityRenderer<
     }
     
     @Override
-    public void render(CustomShulkerBoxBlockEntity entity, float tickDelta, MatrixStack matrices, VertexConsumerProvider vertexConsumers, int light, int overlay) {
+    public void render(ShulkerBoxBlockEntity entity, float tickDelta, MatrixStack matrices, VertexConsumerProvider vertexConsumers, int light, int overlay) {
         BlockState blockState;
         Direction direction = Direction.UP;
         if (entity.hasWorld() && (blockState = entity.getWorld().getBlockState(entity.getPos())).getBlock() instanceof ShulkerBoxBlock) {
             direction = blockState.get(ShulkerBoxBlock.FACING);
         }
-        SpriteIdentifier spriteIdentifier = entity.getExtendedDyeColor() == null ? TexturedRenderLayers.SHULKER_TEXTURE_ID : entity.getExtendedDyeColor().getShulkerBoxTexture();
+        SpriteIdentifier spriteIdentifier = entity.getColor() == null ? TexturedRenderLayers.SHULKER_TEXTURE_ID : VADyeColors.getShulkerBoxTexture(entity.getColor());
         spriteIdentifier = spriteIdentifier == null ? TexturedRenderLayers.SHULKER_TEXTURE_ID : spriteIdentifier;
         matrices.push();
         matrices.translate(0.5f, 0.5f, 0.5f);

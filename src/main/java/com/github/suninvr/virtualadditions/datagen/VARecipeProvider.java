@@ -476,6 +476,7 @@ public final class VARecipeProvider {
             set.ifWool(wool -> {
                 ShapelessRecipeJsonBuilder.create(RecipeCategory.BUILDING_BLOCKS, wool).input(ItemTags.WOOL).input(dye).criterion("has_block", conditionsFromItem(wool)).offerTo(exporter);
                 set.ifBed( bed -> offerBedRecipe(exporter, bed, wool));
+                set.ifBanner(banner -> offerBannerRecipe(exporter, banner, wool));
             });
             set.ifCarpet(block -> ShapelessRecipeJsonBuilder.create(RecipeCategory.BUILDING_BLOCKS, block).input(ItemTags.WOOL_CARPETS).input(dye).criterion("has_block", conditionsFromItem(block)).offerTo(exporter));
             set.ifConcretePowder( block -> offerConcretePowderDyeingRecipe(exporter, block, dye));

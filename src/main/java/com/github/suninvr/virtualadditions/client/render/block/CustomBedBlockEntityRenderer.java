@@ -1,6 +1,7 @@
 package com.github.suninvr.virtualadditions.client.render.block;
 
 import com.github.suninvr.virtualadditions.block.entity.CustomBedBlockEntity;
+import com.github.suninvr.virtualadditions.registry.VADyeColors;
 import it.unimi.dsi.fastutil.ints.Int2IntFunction;
 import net.fabricmc.fabric.api.client.rendering.v1.EntityModelLayerRegistry;
 import net.minecraft.block.BedBlock;
@@ -27,38 +28,21 @@ import net.minecraft.util.math.Direction;
 import net.minecraft.util.math.RotationAxis;
 import net.minecraft.world.World;
 
-public class CustomBedBlockEntityRenderer implements BlockEntityRenderer<CustomBedBlockEntity> {
+public class CustomBedBlockEntityRenderer extends BedBlockEntityRenderer {
     public static final ModelProvider HEAD_MODEL_PROVIDER = new ModelProvider(true);
     public static final ModelProvider FOOT_MODEL_PROVIDER = new ModelProvider(false);
     private final ModelPart bedHead;
     private final ModelPart bedFoot;
 
     public CustomBedBlockEntityRenderer(BlockEntityRendererFactory.Context ctx) {
+        super(ctx);
         this.bedHead = ctx.getLayerModelPart(EntityModelLayers.BED_HEAD);
         this.bedFoot = ctx.getLayerModelPart(EntityModelLayers.BED_FOOT);
     }
 
-    public static TexturedModelData getHeadTexturedModelData() {
-        ModelData modelData = new ModelData();
-        ModelPartData modelPartData = modelData.getRoot();
-        modelPartData.addChild("main", ModelPartBuilder.create().uv(0, 0).cuboid(0.0f, 0.0f, 0.0f, 16.0f, 16.0f, 6.0f), ModelTransform.NONE);
-        modelPartData.addChild(EntityModelPartNames.LEFT_LEG, ModelPartBuilder.create().uv(50, 6).cuboid(0.0f, 6.0f, 0.0f, 3.0f, 3.0f, 3.0f), ModelTransform.rotation(1.5707964f, 0.0f, 1.5707964f));
-        modelPartData.addChild(EntityModelPartNames.RIGHT_LEG, ModelPartBuilder.create().uv(50, 18).cuboid(-16.0f, 6.0f, 0.0f, 3.0f, 3.0f, 3.0f), ModelTransform.rotation(1.5707964f, 0.0f, (float)Math.PI));
-        return TexturedModelData.of(modelData, 64, 64);
-    }
-
-    public static TexturedModelData getFootTexturedModelData() {
-        ModelData modelData = new ModelData();
-        ModelPartData modelPartData = modelData.getRoot();
-        modelPartData.addChild("main", ModelPartBuilder.create().uv(0, 22).cuboid(0.0f, 0.0f, 0.0f, 16.0f, 16.0f, 6.0f), ModelTransform.NONE);
-        modelPartData.addChild(EntityModelPartNames.LEFT_LEG, ModelPartBuilder.create().uv(50, 0).cuboid(0.0f, 6.0f, -16.0f, 3.0f, 3.0f, 3.0f), ModelTransform.rotation(1.5707964f, 0.0f, 0.0f));
-        modelPartData.addChild(EntityModelPartNames.RIGHT_LEG, ModelPartBuilder.create().uv(50, 12).cuboid(-16.0f, 6.0f, -16.0f, 3.0f, 3.0f, 3.0f), ModelTransform.rotation(1.5707964f, 0.0f, 4.712389f));
-        return TexturedModelData.of(modelData, 64, 64);
-    }
-
     @Override
-    public void render(CustomBedBlockEntity bedBlockEntity, float f, MatrixStack matrixStack, VertexConsumerProvider vertexConsumerProvider, int i, int j) {
-        SpriteIdentifier spriteIdentifier = bedBlockEntity.getExtendedColor().getBedTexture();
+    public void render(BedBlockEntity bedBlockEntity, float f, MatrixStack matrixStack, VertexConsumerProvider vertexConsumerProvider, int i, int j) {
+        SpriteIdentifier spriteIdentifier = VADyeColors.getBedTexture(bedBlockEntity.getColor());
         World world2 = bedBlockEntity.getWorld();
         if (world2 != null) {
             BlockState blockState = bedBlockEntity.getCachedState();

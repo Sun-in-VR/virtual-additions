@@ -4,9 +4,9 @@ import com.github.suninvr.virtualadditions.VirtualAdditions;
 import com.github.suninvr.virtualadditions.block.entity.*;
 import net.fabricmc.fabric.api.object.builder.v1.block.entity.FabricBlockEntityTypeBuilder;
 import net.minecraft.block.Block;
-import net.minecraft.block.entity.BlockEntity;
-import net.minecraft.block.entity.BlockEntityType;
-import net.minecraft.block.entity.SignBlockEntity;
+import net.minecraft.block.Blocks;
+import net.minecraft.block.ShulkerBoxBlock;
+import net.minecraft.block.entity.*;
 import net.minecraft.registry.Registries;
 import net.minecraft.registry.Registry;
 
@@ -22,7 +22,8 @@ public class VABlockEntityType {
     public static final BlockEntityType<SignBlockEntity> CUSTOM_SIGN;
     public static final BlockEntityType<SignBlockEntity> CUSTOM_HANGING_SIGN;
     public static final BlockEntityType<CustomBedBlockEntity> CUSTOM_BED;
-    public static final BlockEntityType<CustomShulkerBoxBlockEntity> CUSTOM_SHULKER_BOX;
+    public static final BlockEntityType<ShulkerBoxBlockEntity> CUSTOM_SHULKER_BOX;
+    public static final BlockEntityType<BannerBlockEntity> CUSTOM_BANNER;
 
     static {
         SPOTLIGHT = register("spotlight", SpotlightBlockEntity::new, VABlocks.SPOTLIGHT);
@@ -36,7 +37,9 @@ public class VABlockEntityType {
         CUSTOM_SIGN = register("custom_sign", CustomSignBlockEntity::new, VABlocks.AEROBLOOM_SIGN, VABlocks.AEROBLOOM_WALL_SIGN);
         CUSTOM_HANGING_SIGN = register("custom_hanging_sign", CustomHangingSignBlockEntity::new, VABlocks.AEROBLOOM_HANGING_SIGN, VABlocks.AEROBLOOM_WALL_HANGING_SIGN);
         CUSTOM_BED = register("custom_bed", CustomBedBlockEntity::new, VABlocks.CHARTREUSE_BED, VABlocks.MAROON_BED, VABlocks.INDIGO_BED, VABlocks.PLUM_BED, VABlocks.VIRIDIAN_BED, VABlocks.TAN_BED, VABlocks.SINOPIA_BED, VABlocks.LILAC_BED);
-        CUSTOM_SHULKER_BOX = register("custom_shulker_box", CustomShulkerBoxBlockEntity::new, VABlocks.CHARTREUSE_SHULKER_BOX, VABlocks.MAROON_SHULKER_BOX, VABlocks.INDIGO_SHULKER_BOX, VABlocks.PLUM_SHULKER_BOX, VABlocks.VIRIDIAN_SHULKER_BOX, VABlocks.TAN_SHULKER_BOX, VABlocks.SINOPIA_SHULKER_BOX, VABlocks.LILAC_SHULKER_BOX);
+        CUSTOM_SHULKER_BOX = register("shulker_box", CustomShulkerBoxBlockEntity::new, VABlocks.CHARTREUSE_SHULKER_BOX, VABlocks.MAROON_SHULKER_BOX, VABlocks.INDIGO_SHULKER_BOX, VABlocks.PLUM_SHULKER_BOX, VABlocks.VIRIDIAN_SHULKER_BOX, VABlocks.TAN_SHULKER_BOX, VABlocks.SINOPIA_SHULKER_BOX, VABlocks.LILAC_SHULKER_BOX);
+        CUSTOM_BANNER = register("banner", CustomBannerBlockEntity::new, VABlocks.CHARTREUSE_BANNER, VABlocks.CHARTREUSE_WALL_BANNER, VABlocks.MAROON_BANNER, VABlocks.MAROON_WALL_BANNER, VABlocks.INDIGO_BANNER, VABlocks.INDIGO_WALL_BANNER, VABlocks.PLUM_BANNER, VABlocks.PLUM_WALL_BANNER, VABlocks.VIRIDIAN_BANNER, VABlocks.VIRIDIAN_WALL_BANNER, VABlocks.TAN_BANNER, VABlocks.TAN_WALL_BANNER, VABlocks.SINOPIA_BANNER, VABlocks.SINOPIA_WALL_BANNER, VABlocks.LILAC_BANNER, VABlocks.LILAC_WALL_BANNER);
+
     }
 
     public static void init(){}
