@@ -474,11 +474,12 @@ public final class VARecipeProvider {
 
         protected static void generateColorfulBlockSetRecipes(RecipeExporter exporter, ColorfulBlockSet set, Item dye) {
             set.ifWool(wool -> {
-                ShapelessRecipeJsonBuilder.create(RecipeCategory.BUILDING_BLOCKS, wool).input(ItemTags.WOOL).input(dye).criterion("has_block", conditionsFromItem(wool)).offerTo(exporter);
+                ShapelessRecipeJsonBuilder.create(RecipeCategory.BUILDING_BLOCKS, wool).input(ItemTags.WOOL).input(dye).criterion("has_dye", conditionsFromItem(dye)).offerTo(exporter);
                 set.ifBed( bed -> offerBedRecipe(exporter, bed, wool));
                 set.ifBanner(banner -> offerBannerRecipe(exporter, banner, wool));
+                set.ifCarpet(carpet -> offerCarpetRecipe(exporter, carpet, wool));
             });
-            set.ifCarpet(block -> ShapelessRecipeJsonBuilder.create(RecipeCategory.BUILDING_BLOCKS, block).input(ItemTags.WOOL_CARPETS).input(dye).criterion("has_block", conditionsFromItem(block)).offerTo(exporter));
+            set.ifCarpet(block -> ShapelessRecipeJsonBuilder.create(RecipeCategory.BUILDING_BLOCKS, block).input(ItemTags.WOOL_CARPETS).input(dye).criterion("has_dye", conditionsFromItem(dye)).offerTo(exporter, CraftingRecipeJsonBuilder.getItemId(block).withSuffixedPath("_dyeing")));
             set.ifConcretePowder( block -> offerConcretePowderDyeingRecipe(exporter, block, dye));
             set.ifTerracotta(block -> offerTerracottaDyeingRecipe(exporter, block, dye));
             set.ifStainedGlass(block -> {
@@ -489,7 +490,7 @@ public final class VARecipeProvider {
                 });
             });
             set.ifCandle(block -> offerCandleDyeingRecipe(exporter, block, dye));
-            set.ifSilkbulb(block -> ShapelessRecipeJsonBuilder.create(RecipeCategory.BUILDING_BLOCKS, block).input(VAItemTags.SILKBULBS).input(dye).criterion("has_block", conditionsFromItem(block)).offerTo(exporter));
+            set.ifSilkbulb(block -> ShapelessRecipeJsonBuilder.create(RecipeCategory.BUILDING_BLOCKS, block).input(VAItemTags.SILKBULBS).input(dye).criterion("has_dye", conditionsFromItem(dye)).offerTo(exporter));
         }
 
         protected static void offerStonecuttingRecipes(RecipeExporter exporter, BlockFamily baseFamily, BlockFamily... resultFamilies) {

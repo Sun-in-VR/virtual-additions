@@ -66,19 +66,6 @@ public class CustomShulkerBoxBlock extends ShulkerBoxBlock {
         return state;
     }
 
-    public static Block get(@Nullable DyeColor dyeColor) {
-        if (dyeColor == null) return ShulkerBoxBlock.get(null);
-        if (dyeColor.equals(VADyeColors.CHARTREUSE)) return VABlocks.CHARTREUSE_SHULKER_BOX;
-        if (dyeColor.equals(VADyeColors.MAROON)) return VABlocks.MAROON_SHULKER_BOX;
-        if (dyeColor.equals(VADyeColors.INDIGO)) return VABlocks.INDIGO_SHULKER_BOX;
-        if (dyeColor.equals(VADyeColors.PLUM)) return VABlocks.PLUM_SHULKER_BOX;
-        if (dyeColor.equals(VADyeColors.VIRIDIAN)) return VABlocks.VIRIDIAN_SHULKER_BOX;
-        if (dyeColor.equals(VADyeColors.TAN)) return VABlocks.TAN_SHULKER_BOX;
-        if (dyeColor.equals(VADyeColors.SINOPIA)) return VABlocks.SINOPIA_SHULKER_BOX;
-        if (dyeColor.equals(VADyeColors.LILAC)) return VABlocks.LILAC_SHULKER_BOX;
-        return ShulkerBoxBlock.get(dyeColor);
-    }
-
     public static ItemStack getItemStack(@Nullable DyeColor color) {
         return new ItemStack(get(color));
     }

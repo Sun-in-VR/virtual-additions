@@ -20,6 +20,7 @@ import net.minecraft.util.math.intprovider.ConstantIntProvider;
 import net.minecraft.util.math.intprovider.UniformIntProvider;
 
 import static com.github.suninvr.virtualadditions.VirtualAdditions.idOf;
+import static com.github.suninvr.virtualadditions.VirtualAdditions.setBlocksInitialized;
 import static com.github.suninvr.virtualadditions.registry.RegistryHelper.BlockRegistryHelper.register;
 
 public class VABlocks {
@@ -585,6 +586,8 @@ public class VABlocks {
 
         DESTRUCTIVE_SCULK = register("destructive_sculk", new DestructiveSculkBlock(Settings.copy(Blocks.SCULK)));
         WIND = register("wind", new WindBlock(Settings.copy(Blocks.AIR)));
+
+        setBlocksInitialized();
     }
 
     public static void init(){

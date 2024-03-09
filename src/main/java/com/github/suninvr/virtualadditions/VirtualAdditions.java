@@ -23,10 +23,19 @@ public class VirtualAdditions implements ModInitializer {
 	public static final String NAMESPACE = "virtual_additions";
 	public static final String MODNAME = "Virtual Additions";
 	public static FeatureFlag PREVIEW;
+	private static boolean areBlocksInitialized = false;
 
 	public static Logger LOGGER = LogManager.getLogger();
 
-	@Override
+    public static boolean areBlocksInitialized() {
+		return areBlocksInitialized;
+    }
+
+	public static void setBlocksInitialized() {
+		areBlocksInitialized = true;
+	}
+
+    @Override
 	public void onInitialize() {
 		LOGGER.log(Level.INFO, "Virtual Additions is now loading!");
 
