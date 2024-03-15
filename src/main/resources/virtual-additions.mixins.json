@@ -25,10 +25,12 @@
     "ShulkerBoxBlockMixin",
     "WallBlockMixin",
     "WaterFluidMixin",
-    "WolfEntityMixin"
+    "WolfEntityMixin",
+    "WorldMixin"
   ],
   "client": [
-    "ClientPlayNetworkHandlerMixin"
+    "ClientPlayNetworkHandlerMixin",
+    "LlamaDecorFeatureRendererMixin"
   ],
   "injectors": {
     "defaultRequire": 1

@@ -92,7 +92,7 @@ class VAModelProvider extends FabricModelProvider {
         });
         if (s.terracotta() != null) g.registerSimpleCubeAll(s.terracotta());
         if (s.concrete() != null) g.registerSimpleCubeAll(s.concrete());
-        if (s.concretePowder() != null) g.registerSimpleCubeAll(s.concretePowder());
+        if (s.concretePowder() != null) g.registerRandomHorizontalRotations(TexturedModel.CUBE_ALL,s.concretePowder());
         if (s.stainedGlass() != null) {
             if (s.stainedGlassPane() != null) g.registerGlassPane(s.stainedGlass(), s.stainedGlassPane());
             else g.registerSimpleCubeAll(s.stainedGlass());
@@ -101,6 +101,7 @@ class VAModelProvider extends FabricModelProvider {
         if (s.candle() != null && s.candleCake() != null) g.registerCandle(s.candle(), s.candleCake());
         s.ifBed(bed -> g.registerBuiltinWithParticle(bed, OAK_PLANKS_TEXTURE));
         s.ifShulkerBox(g::registerShulkerBox);
+        s.ifGlazedTerracotta(block -> g.registerSouthDefaultHorizontalFacing(TexturedModel.TEMPLATE_GLAZED_TERRACOTTA, block));
     }
 
     private void registerBanners(BlockStateModelGenerator g, ColorfulBlockSet... s) {

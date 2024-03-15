@@ -65,6 +65,28 @@
       "random/bow"
     ]
   },
+  "entity.saline.ambient": {
+    "subtitle": "subtitles.entity.saline.ambient",
+    "sounds": [
+      "virtual_additions:entity/saline/idle1",
+      "virtual_additions:entity/saline/idle2",
+      "virtual_additions:entity/saline/idle3",
+      "virtual_additions:entity/saline/idle4"
+    ]
+  },
+  "entity.saline.hurt": {
+    "subtitle": "subtitles.entity.saline.hurt",
+    "sounds": [
+      "virtual_additions:entity/saline/hurt1",
+      "virtual_additions:entity/saline/hurt2"
+    ]
+  },
+  "entity.saline.death": {
+    "subtitle": "subtitles.entity.saline.death",
+    "sounds": [
+      "virtual_additions:entity/saline/death"
+    ]
+  },
   "entity.lumwasp.hurt": {
     "subtitle": "subtitles.entity.lumwasp.hurt",
     "sounds": [
@@ -77,10 +99,7 @@
   "entity.lumwasp.death": {
     "subtitle": "subtitles.entity.lumwasp.death",
     "sounds": [
-      "virtual_additions:entity/lumwasp/hurt1",
-      "virtual_additions:entity/lumwasp/hurt2",
-      "virtual_additions:entity/lumwasp/hurt3",
-      "virtual_additions:entity/lumwasp/hurt4"
+      "virtual_additions:entity/lumwasp/death"
     ]
   },
   "item.bucket.empty_acid": {

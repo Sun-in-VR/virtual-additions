@@ -7,8 +7,10 @@ import net.minecraft.block.Block;
 import net.minecraft.block.BlockSetType;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.TrapdoorBlock;
+import net.minecraft.block.enums.DoubleBlockHalf;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.item.ItemStack;
 import net.minecraft.sound.SoundCategory;
 import net.minecraft.state.StateManager;
 import net.minecraft.state.property.BooleanProperty;
@@ -18,7 +20,10 @@ import net.minecraft.util.hit.BlockHitResult;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 import net.minecraft.world.event.GameEvent;
+import net.minecraft.world.explosion.Explosion;
 import org.jetbrains.annotations.Nullable;
+
+import java.util.function.BiConsumer;
 
 public class SteelTrapdoorBlock extends TrapdoorBlock {
     public static final MapCodec<SteelTrapdoorBlock> CODEC = createCodec(SteelTrapdoorBlock::new);
@@ -35,15 +40,25 @@ public class SteelTrapdoorBlock extends TrapdoorBlock {
     }
 
     @Override
+    protected void onExploded(BlockState state, World world, BlockPos pos, Explosion explosion, BiConsumer<ItemStack, BlockPos> stackMerger) {
+        if (explosion.getDestructionType() == Explosion.DestructionType.TRIGGER_BLOCK && !world.isClient) toggleShutter(world, state, pos, null);
+        super.onExploded(state, world, pos, explosion, stackMerger);
+    }
+
+    @Override
     public ActionResult onUse(BlockState state, World world, BlockPos pos, PlayerEntity player, BlockHitResult hit) {
-        state = state.cycle(SHUTTER_OPEN);
-        world.setBlockState(pos, state, Block.NOTIFY_LISTENERS | Block.REDRAW_ON_MAIN_THREAD);
-        this.playOpenCloseShutterSound(player, world, pos, state.get(SHUTTER_OPEN));
-        world.emitGameEvent(player, state.get(SHUTTER_OPEN) ? GameEvent.BLOCK_OPEN : GameEvent.BLOCK_CLOSE, pos);
+        toggleShutter(world, state, pos, player);
         return ActionResult.success(world.isClient);
     }
 
-    private void playOpenCloseShutterSound(@Nullable Entity entity, World world, BlockPos pos, boolean open) {
+    private static void toggleShutter(World world, BlockState state, BlockPos pos, @Nullable Entity source) {
+        state = state.cycle(SHUTTER_OPEN);
+        world.setBlockState(pos, state, Block.NOTIFY_LISTENERS | Block.REDRAW_ON_MAIN_THREAD);
+        playOpenCloseShutterSound(source, world, pos, state.get(SHUTTER_OPEN));
+        world.emitGameEvent(source, state.get(SHUTTER_OPEN) ? GameEvent.BLOCK_OPEN : GameEvent.BLOCK_CLOSE, pos);
+    }
+
+    private static void playOpenCloseShutterSound(@Nullable Entity entity, World world, BlockPos pos, boolean open) {
         world.playSound(entity, pos, open ? VASoundEvents.BLOCK_STEEL_DOOR_SHUTTER_OPEN : VASoundEvents.BLOCK_STEEL_DOOR_SHUTTER_CLOSE, SoundCategory.BLOCKS, 0.4F, world.getRandom().nextFloat() * 0.1F + 1.2F);
     }
 

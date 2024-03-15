@@ -15,6 +15,9 @@ public class VASoundEvents {
     public static final SoundEvent BLOCK_ROPE_PLACE;
     public static final SoundEvent BLOCK_ROPE_STEP;
     public static final SoundEvent ENTITY_STEEL_BOMB_THROW;
+    public static final SoundEvent ENTITY_SALINE_AMBIENT;
+    public static final SoundEvent ENTITY_SALINE_HURT;
+    public static final SoundEvent ENTITY_SALINE_DEATH;
     public static final SoundEvent ENTITY_LUMWASP_HURT;
     public static final SoundEvent ENTITY_LUMWASP_DEATH;
     public static final SoundEvent BUCKET_FILL_ACID;
@@ -38,6 +41,9 @@ public class VASoundEvents {
         BLOCK_ROPE_PLACE = register("block.rope.place");
         BLOCK_ROPE_STEP = register("block.rope.step");
         ENTITY_STEEL_BOMB_THROW = register("entity.steel_bomb.throw");
+        ENTITY_SALINE_AMBIENT = register("entity.saline.ambient");
+        ENTITY_SALINE_HURT = register("entity.saline.hurt");
+        ENTITY_SALINE_DEATH = register("entity.saline.death");
         ENTITY_LUMWASP_HURT = register("entity.lumwasp.hurt");
         ENTITY_LUMWASP_DEATH = register("entity.lumwasp.death");
         BUCKET_FILL_ACID = register("item.bucket.fill_acid");

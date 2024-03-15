@@ -188,6 +188,11 @@ public class ColorfulBlockSet {
             return this;
         }
 
+        public Builder glazedTerracotta(Block block) {
+            this.entries.add(TileBlockPair.of(Tile.GLAZED_TERRACOTTA, block));
+            return this;
+        }
+
         public Builder concrete(Block block) {
             this.entries.add(TileBlockPair.of(Tile.CONCRETE, block));
             return this;

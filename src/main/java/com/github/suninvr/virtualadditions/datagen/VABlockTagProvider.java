@@ -403,6 +403,7 @@ public final class VABlockTagProvider {
                 getOrCreateTagBuilder(BlockTags.TERRACOTTA).add(block);
                 configureMinable(BlockTags.PICKAXE_MINEABLE, 0, block);
             });
+            s.ifGlazedTerracotta(block -> configureMinable(BlockTags.PICKAXE_MINEABLE, 0, block));
             s.ifConcrete(block -> configureMinable(BlockTags.PICKAXE_MINEABLE, 0, block));
             s.ifConcretePowder(block -> {
                 getOrCreateTagBuilder(BlockTags.CONCRETE_POWDER).add(block);

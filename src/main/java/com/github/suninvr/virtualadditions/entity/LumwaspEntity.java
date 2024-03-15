@@ -28,9 +28,9 @@ import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.sound.SoundEvent;
 import net.minecraft.sound.SoundEvents;
 import net.minecraft.util.math.BlockPos;
-import net.minecraft.world.Difficulty;
-import net.minecraft.world.World;
-import net.minecraft.world.WorldView;
+import net.minecraft.util.math.random.Random;
+import net.minecraft.world.*;
+import net.minecraft.world.dimension.DimensionType;
 import org.jetbrains.annotations.Nullable;
 
 public class LumwaspEntity extends HostileEntity implements RangedAttackMob, Flutterer {
@@ -157,6 +157,22 @@ public class LumwaspEntity extends HostileEntity implements RangedAttackMob, Flu
         return world.doesNotIntersectEntities(this);
     }
 
+    public static boolean canSpawnInDark(EntityType<? extends HostileEntity> type, ServerWorldAccess world, SpawnReason spawnReason, BlockPos pos, Random random) {
+        return world.getDifficulty() != Difficulty.PEACEFUL && (SpawnReason.isTrialSpawner(spawnReason) || LumwaspEntity.isSpawnDark(world, pos, random)) && HostileEntity.canMobSpawn(type, world, spawnReason, pos, random);
+    }
+
+    public static boolean isSpawnDark(ServerWorldAccess world, BlockPos pos, Random random) {
+        if (world.getLightLevel(LightType.SKY, pos) > random.nextInt(32)) {
+            return false;
+        }
+        if (world.getLightLevel(LightType.BLOCK, pos) > 7) {
+            return false;
+        }
+        DimensionType dimensionType = world.getDimension();
+        int j = world.toServerWorld().isThundering() ? world.getLightLevel(pos, 10) : world.getLightLevel(pos);
+        return j <= dimensionType.monsterSpawnLightTest().get(random);
+    }
+
     @Override
     protected void mobTick() {
         if (this.isInsideWaterOrBubbleColumn() && !((EntityInterface)this).virtualAdditions$isInAcid() ) {
@@ -216,10 +232,6 @@ public class LumwaspEntity extends HostileEntity implements RangedAttackMob, Flu
                 bl = (this.mob.squaredDistanceTo(target) <= range);
             }
             return bl;
-        }
-
-        protected double getSquaredMaxAttackDistance(LivingEntity entity) {
-            return 4.0F + entity.getWidth();
         }
     }
     private static class AlwaysEscapeSunlightGoal extends EscapeSunlightGoal {

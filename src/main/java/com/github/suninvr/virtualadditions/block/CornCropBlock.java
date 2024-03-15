@@ -1,5 +1,6 @@
 package com.github.suninvr.virtualadditions.block;
 
+import com.github.suninvr.virtualadditions.registry.VABlocks;
 import com.github.suninvr.virtualadditions.registry.VAItems;
 import com.mojang.serialization.MapCodec;
 import net.minecraft.block.Block;
@@ -133,7 +134,8 @@ public class CornCropBlock extends CropBlock {
     }
     
     private boolean canReplaceBlockState(World world, BlockPos pos) {
-        return world.getBlockState(pos).isAir() || world.getBlockState(pos).isOf(this);
+        BlockState state = world.getBlockState(pos);
+        return state.isAir() || state.isOf(VABlocks.SPOTLIGHT_LIGHT) || state.isOf(this);
     }
 
     @Override

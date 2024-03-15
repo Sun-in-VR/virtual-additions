@@ -1,4 +1,4 @@
-package com.github.suninvr.virtualadditions.registry.constructors.item;
+package com.github.suninvr.virtualadditions.item;
 
 import net.minecraft.item.PickaxeItem;
 import net.minecraft.item.ToolMaterial;

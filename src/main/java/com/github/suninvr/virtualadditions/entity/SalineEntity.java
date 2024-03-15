@@ -1,5 +1,6 @@
 package com.github.suninvr.virtualadditions.entity;
 
+import com.github.suninvr.virtualadditions.registry.VASoundEvents;
 import com.github.suninvr.virtualadditions.registry.VAStatusEffects;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityType;
@@ -33,17 +34,17 @@ public class SalineEntity extends ZombieEntity {
 
     @Override
     protected SoundEvent getAmbientSound() {
-        return SoundEvents.ENTITY_HUSK_AMBIENT;
+        return VASoundEvents.ENTITY_SALINE_AMBIENT;
     }
 
     @Override
     protected SoundEvent getHurtSound(DamageSource source) {
-        return SoundEvents.ENTITY_HUSK_HURT;
+        return VASoundEvents.ENTITY_SALINE_HURT;
     }
 
     @Override
     protected SoundEvent getDeathSound() {
-        return SoundEvents.ENTITY_HUSK_DEATH;
+        return VASoundEvents.ENTITY_SALINE_DEATH;
     }
 
     @Override

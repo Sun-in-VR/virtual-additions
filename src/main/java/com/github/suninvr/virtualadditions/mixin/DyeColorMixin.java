@@ -32,7 +32,7 @@ public class DyeColorMixin {
             virtualAdditions$addVariant("VIRIDIAN", "viridian", 0x406C5F, MapColor.PALE_GREEN, 0x406C5F, 0x406C5F);
             virtualAdditions$addVariant("TAN", "tan", 0xC1906F, MapColor.TERRACOTTA_WHITE, 0xC1906F, 0xC1906F);
             virtualAdditions$addVariant("SINOPIA", "sinopia", 0xB1390A, MapColor.ORANGE, 0xB1390A, 0xB1390A);
-            virtualAdditions$addVariant("LILAC", "lilac", 0xB290B3, MapColor.PALE_PURPLE, 0xB290B3, 0xB290B3);
+            virtualAdditions$addVariant("LILAC", "lilac", 0xCF96D5, MapColor.PALE_PURPLE, 0xCF96D5, 0xCF96D5);
         }
         cir.setReturnValue(allValues);
     }

@@ -1,4 +1,4 @@
-package com.github.suninvr.virtualadditions.registry.constructors.block;
+package com.github.suninvr.virtualadditions.block;
 
 import net.minecraft.block.BlockState;
 import net.minecraft.block.StairsBlock;

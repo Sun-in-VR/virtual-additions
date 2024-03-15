@@ -33,7 +33,7 @@ public class FlyingLumwaspSoundInstance extends MovingSoundInstance {
     @Override
     public void tick() {
 
-        if (!this.lumwasp.isRemoved()) {
+        if (!this.lumwasp.isRemoved() && !this.lumwasp.isDead()) {
             if (this.lumwasp.isInAir()) {
                 this.x = (float)this.lumwasp.getX();
                 this.y = (float)this.lumwasp.getY();
