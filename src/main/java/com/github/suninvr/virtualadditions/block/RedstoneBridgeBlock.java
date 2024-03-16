@@ -76,18 +76,6 @@ public class RedstoneBridgeBlock extends Block implements Waterloggable {
     }
 
     @Override
-    protected boolean hasComparatorOutput(BlockState state) {
-        return true;
-    }
-
-    @Override
-    protected int getComparatorOutput(BlockState state, World world, BlockPos pos) {
-        Direction direction = state.get(FACING).getOpposite();
-        BlockPos blockPos = pos.offset(direction);
-        return world.getBlockState(blockPos).getComparatorOutput(world, blockPos);
-    }
-
-    @Override
     public boolean emitsRedstonePower(BlockState state) {
         return true;
     }

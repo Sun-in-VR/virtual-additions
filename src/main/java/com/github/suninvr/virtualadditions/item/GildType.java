@@ -184,7 +184,7 @@ public class GildType {
             if (!modifier.shouldBeAppended() || !modifier.shouldApplyToTool(baseItem)) return;
             RegistryEntry<EntityAttribute> attribute = modifier.type.getAttributeType();
             if (attribute != null) {
-                builder.add(attribute, new EntityAttributeModifier(modifier.type.getAttributeId(), "Tool Modifier", modifier.value, EntityAttributeModifier.Operation.ADDITION), AttributeModifierSlot.MAINHAND);
+                builder.add(attribute, new EntityAttributeModifier(modifier.type.getAttributeId(), "Tool Modifier", modifier.value, EntityAttributeModifier.Operation.ADD_VALUE), AttributeModifierSlot.MAINHAND);
             }
         } );
     }
