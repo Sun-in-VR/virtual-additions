@@ -2,6 +2,7 @@ package com.github.suninvr.virtualadditions.screen;
 
 import com.github.suninvr.virtualadditions.block.entity.ColoringStationBlockEntity;
 import com.github.suninvr.virtualadditions.recipe.ColoringRecipe;
+import com.github.suninvr.virtualadditions.recipe.ColoringStationRecipe;
 import com.github.suninvr.virtualadditions.registry.VAItemTags;
 import com.github.suninvr.virtualadditions.registry.VARecipeType;
 import com.github.suninvr.virtualadditions.registry.VAScreenHandler;
@@ -11,6 +12,7 @@ import net.minecraft.entity.player.PlayerInventory;
 import net.minecraft.inventory.CraftingResultInventory;
 import net.minecraft.inventory.Inventory;
 import net.minecraft.inventory.SimpleInventory;
+import net.minecraft.item.DyeItem;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.network.PacketByteBuf;
@@ -28,7 +30,7 @@ public class ColoringStationScreenHandler extends ScreenHandler {
     private final ColoringStationBlockEntity.DyeContents dyeContents;
     private ColoringStationBlockEntity.DyeContents dyeContentsAdder;
     private final World world;
-    private List<RecipeEntry<ColoringRecipe>> availableRecipes = Lists.newArrayList();
+    private List<RecipeEntry<ColoringStationRecipe>> availableRecipes = Lists.newArrayList();
     private ItemStack inputStack = ItemStack.EMPTY;
     private final Property selectedRecipe = Property.create();
     private final PropertyDelegate propertyDelegate;
@@ -170,7 +172,7 @@ public class ColoringStationScreenHandler extends ScreenHandler {
         return this.selectedRecipe.get();
     }
 
-    public List<RecipeEntry<ColoringRecipe>> getAvailableRecipes() {
+    public List<RecipeEntry<ColoringStationRecipe>> getAvailableRecipes() {
         return this.availableRecipes;
     }
 
@@ -205,7 +207,7 @@ public class ColoringStationScreenHandler extends ScreenHandler {
                             ? !this.insertItem(itemStack2, 3, 39, false)
                             : (this.world.getRecipeManager().getFirstMatch(VARecipeType.COLORING, new SimpleInventory(itemStack2), this.world).isPresent()
                                 ? !this.insertItem(itemStack2, 1, 2, false)
-                                : itemStack2.isIn(VAItemTags.BASE_DYE) ? !this.insertItem(itemStack2, 0, 1, false) : (slot >= 3 && slot < 30
+                                : itemStack2.getItem() instanceof DyeItem ? !this.insertItem(itemStack2, 0, 1, false) : (slot >= 3 && slot < 30
                                     ? !this.insertItem(itemStack2, 30, 39, false)
                                     : slot >= 30 && slot < 39 && !this.insertItem(itemStack2, 3, 30, false)))) {
                 return ItemStack.EMPTY;
@@ -254,7 +256,7 @@ public class ColoringStationScreenHandler extends ScreenHandler {
     private void updateDyeInput() {
         ItemStack dyeStack = this.dyeSlot.getStack();
         if (this.dyeSlot.hasStack()) {
-            this.dyeContents.addDye(dyeStack, 1024);
+            this.dyeContents.addDye(dyeStack);
         }
     }
 
@@ -268,7 +270,7 @@ public class ColoringStationScreenHandler extends ScreenHandler {
 
     void populateResult() {
         if (!this.availableRecipes.isEmpty() && this.isInBounds(this.selectedRecipe.get())) {
-            RecipeEntry<ColoringRecipe> recipeEntry = this.availableRecipes.get(this.selectedRecipe.get());
+            RecipeEntry<ColoringStationRecipe> recipeEntry = this.availableRecipes.get(this.selectedRecipe.get());
             ItemStack itemStack = recipeEntry.value().craftWithDye(this.input, this.world.getRegistryManager(), this.dyeContents);
             this.dyeContentsAdder = recipeEntry.value().getDyeCost();
             if (itemStack.isItemEnabled(this.world.getEnabledFeatures())) {

@@ -1,0 +1,16 @@
+{
+    "parent": "item/generated",
+    "textures": {
+        "layer0": "virtual_additions:item/ice_cream",
+        "particle": "virtual_additions:item/ice_cream_particle"
+    },
+    "overrides": [
+        {
+            "predicate": {
+                "virtual_additions:colorful": 1
+            },
+            "model": "virtual_additions:item/ice_cream_with_color"
+        }
+    ]
+}
+

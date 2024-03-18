@@ -2,6 +2,7 @@ package com.github.suninvr.virtualadditions.registry.collection;
 
 import com.ibm.icu.impl.Pair;
 import net.minecraft.block.Block;
+import net.minecraft.item.DyeItem;
 import net.minecraft.item.Item;
 
 import java.util.ArrayList;
@@ -10,14 +11,14 @@ import java.util.function.Consumer;
 
 public class ColorfulBlockSet {
     private final Map<Tile, Block> blockMap;
-    private final Item dye;
+    private final DyeItem dye;
 
-    private ColorfulBlockSet(Item dye, TileBlockPair... entries) {
+    private ColorfulBlockSet(DyeItem dye, TileBlockPair... entries) {
         this.blockMap = Map.ofEntries(entries);
         this.dye = dye;
     }
 
-    public Item dye() {
+    public DyeItem dye() {
         return this.dye;
     }
 
@@ -170,7 +171,7 @@ public class ColorfulBlockSet {
         }
 
         public ColorfulBlockSet build() {
-            return new ColorfulBlockSet(this.dye, this.entries.toArray(new TileBlockPair[0]));
+            return new ColorfulBlockSet((DyeItem) this.dye, this.entries.toArray(new TileBlockPair[0]));
         }
 
         public Builder wool(Block block) {

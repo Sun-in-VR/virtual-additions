@@ -1,0 +1,8 @@
+{
+    "parent": "item/generated",
+    "textures": {
+        "layer0": "virtual_additions:item/ice_cream_layer",
+        "layer1": "virtual_additions:item/ice_cream_bowl"
+    }
+}
+

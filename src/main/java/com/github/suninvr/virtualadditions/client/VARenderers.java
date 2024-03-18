@@ -27,6 +27,7 @@ import net.minecraft.client.render.entity.model.EntityModelLayer;
 import net.minecraft.client.util.SpriteIdentifier;
 import net.minecraft.component.DataComponentTypes;
 import net.minecraft.component.type.ChargedProjectilesComponent;
+import net.minecraft.component.type.DyedColorComponent;
 import net.minecraft.component.type.PotionContentsComponent;
 import net.minecraft.item.Items;
 import net.minecraft.util.Identifier;
@@ -184,6 +185,10 @@ public class VARenderers {
             return component != null && component.contains(VAItems.CLIMBING_ROPE) ? 1.0F : 0.0F ;
         });
 
+        ModelPredicateProviderRegistry.register(VAItems.ICE_CREAM, idOf("colorful"), (stack, world, entity, seed) -> {
+            if (!stack.isOf(VAItems.ICE_CREAM)) return 0.0F;
+            return stack.contains(DataComponentTypes.DYED_COLOR) ? 1.0F : 0.0F;
+        });
     }
 
     private static void  initFluidRenderers() {
@@ -216,5 +221,8 @@ public class VARenderers {
         ColorProviderRegistry.ITEM.register( (stack, tintIndex) -> FoliageColors.getBirchColor(), VAItems.BIRCH_HEDGE);
         ColorProviderRegistry.ITEM.register( (stack, tintIndex) -> FoliageColors.getSpruceColor(), VAItems.SPRUCE_HEDGE);
         ColorProviderRegistry.ITEM.register( (stack, tintIndex) -> FoliageColors.getMangroveColor(), VAItems.MANGROVE_HEDGE);
+        ColorProviderRegistry.ITEM.register( (stack, tintIndex) -> {
+            return tintIndex > 0 ? -1 : ColorHelper.Argb.fullAlpha(stack.get(DataComponentTypes.DYED_COLOR) != null ? stack.get(DataComponentTypes.DYED_COLOR).rgb() : 0xFFFFFF);
+        }, VAItems.ICE_CREAM);
     }
 }

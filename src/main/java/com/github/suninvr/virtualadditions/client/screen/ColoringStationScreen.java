@@ -2,6 +2,7 @@ package com.github.suninvr.virtualadditions.client.screen;
 
 import com.github.suninvr.virtualadditions.block.entity.ColoringStationBlockEntity;
 import com.github.suninvr.virtualadditions.recipe.ColoringRecipe;
+import com.github.suninvr.virtualadditions.recipe.ColoringStationRecipe;
 import com.github.suninvr.virtualadditions.screen.ColoringStationScreenHandler;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.gui.DrawContext;
@@ -93,13 +94,13 @@ public class ColoringStationScreen extends HandledScreen<ColoringStationScreenHa
             int i = this.x + 52;
             int j = this.y + 14;
             int k = this.scrollOffset + 12;
-            List<RecipeEntry<ColoringRecipe>> list = (this.handler).getAvailableRecipes();
+            List<RecipeEntry<ColoringStationRecipe>> list = (this.handler).getAvailableRecipes();
             for (int l = this.scrollOffset; l < k && l < (this.handler).getAvailableRecipeCount(); ++l) {
                 int m = l - this.scrollOffset;
                 int n = i + m % 4 * 16;
                 int o = j + m / 4 * 18 + 2;
                 if (x < n || x >= n + 16 || y < o || y >= o + 18) continue;
-                ItemStack stack = list.get(l).value().getResult(this.client.world.getRegistryManager());
+                ItemStack stack = list.get(l).value().getResultStack(this.client.world.getRegistryManager(), this.handler.getSlot(1).getStack());
                 ColoringStationBlockEntity.DyeContents cost = list.get(l).value().getDyeCost(true);
                 ArrayList<Text> tooltip = new ArrayList<>(Screen.getTooltipFromItem(this.client, stack));
                 if (advanced) {
@@ -153,13 +154,13 @@ public class ColoringStationScreen extends HandledScreen<ColoringStationScreenHa
     }
 
     private void renderRecipeIcons(DrawContext context, int x, int y, int scrollOffset) {
-        List<RecipeEntry<ColoringRecipe>> list = (this.handler).getAvailableRecipes();
+        List<RecipeEntry<ColoringStationRecipe>> list = (this.handler).getAvailableRecipes();
         for (int i = this.scrollOffset; i < scrollOffset && i < (this.handler).getAvailableRecipeCount(); ++i) {
             int j = i - this.scrollOffset;
             int k = x + j % 4 * 16;
             int l = j / 4;
             int m = y + l * 18 + 2;
-            context.drawItem(list.get(i).value().getResult(this.client.world.getRegistryManager()), k, m);
+            context.drawItem(list.get(i).value().getResultStack(this.client.world.getRegistryManager(), this.handler.getSlot(1).getStack()), k, m);
         }
     }
 

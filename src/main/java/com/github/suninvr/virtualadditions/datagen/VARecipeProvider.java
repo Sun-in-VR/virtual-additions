@@ -1,6 +1,7 @@
 package com.github.suninvr.virtualadditions.datagen;
 
 import com.github.suninvr.virtualadditions.block.entity.ColoringStationBlockEntity;
+import com.github.suninvr.virtualadditions.datagen.recipe.ArmorColoringRecipeJsonBuilder;
 import com.github.suninvr.virtualadditions.datagen.recipe.ColoringRecipeJsonBuilder;
 import com.github.suninvr.virtualadditions.item.interfaces.GildedToolItem;
 import com.github.suninvr.virtualadditions.registry.*;
@@ -12,6 +13,7 @@ import net.minecraft.block.Block;
 import net.minecraft.block.Blocks;
 import net.minecraft.data.family.BlockFamily;
 import net.minecraft.data.server.recipe.*;
+import net.minecraft.item.DyeItem;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemConvertible;
 import net.minecraft.item.Items;
@@ -157,30 +159,30 @@ public final class VARecipeProvider {
             generateColorfulBlockSetRecipes(exporter, VACollections.LILAC, VAItems.LILAC_DYE);
 
             offerColoringStationRecipes(exporter,
-                    Pair.of(VACollections.WHITE, WHITE_COST),
-                    Pair.of(VACollections.LIGHT_GRAY, LIGHT_GRAY_COST),
-                    Pair.of(VACollections.GRAY, GRAY_COST),
-                    Pair.of(VACollections.BLACK, BLACK_COST),
-                    Pair.of(VACollections.TAN, TAN_COST),
-                    Pair.of(VACollections.BROWN, BROWN_COST),
-                    Pair.of(VACollections.MAROON, MAROON_COST),
-                    Pair.of(VACollections.RED, RED_COST),
-                    Pair.of(VACollections.SINOPIA, SINOPIA_COST),
-                    Pair.of(VACollections.ORANGE, ORANGE_COST),
-                    Pair.of(VACollections.YELLOW, YELLOW_COST),
-                    Pair.of(VACollections.CHARTREUSE, CHARTREUSE_COST),
-                    Pair.of(VACollections.LIME, LIME_COST),
-                    Pair.of(VACollections.GREEN, GREEN_COST),
-                    Pair.of(VACollections.VIRIDIAN, VIRIDIAN_COST),
-                    Pair.of(VACollections.CYAN, CYAN_COST),
-                    Pair.of(VACollections.LIGHT_BLUE, LIGHT_BLUE_COST),
-                    Pair.of(VACollections.BLUE, BLUE_COST),
-                    Pair.of(VACollections.INDIGO, INDIGO_COST),
-                    Pair.of(VACollections.PURPLE, PURPLE_COST),
-                    Pair.of(VACollections.PLUM, PLUM_COST),
-                    Pair.of(VACollections.MAGENTA, MAGENTA_COST),
-                    Pair.of(VACollections.PINK, PINK_COST),
-                    Pair.of(VACollections.LILAC, LILAC_COST)
+                    VACollections.WHITE,
+                    VACollections.LIGHT_GRAY,
+                    VACollections.GRAY,
+                    VACollections.BLACK,
+                    VACollections.TAN,
+                    VACollections.BROWN,
+                    VACollections.MAROON,
+                    VACollections.RED,
+                    VACollections.SINOPIA,
+                    VACollections.ORANGE,
+                    VACollections.YELLOW,
+                    VACollections.CHARTREUSE,
+                    VACollections.LIME,
+                    VACollections.GREEN,
+                    VACollections.VIRIDIAN,
+                    VACollections.CYAN,
+                    VACollections.LIGHT_BLUE,
+                    VACollections.BLUE,
+                    VACollections.INDIGO,
+                    VACollections.PURPLE,
+                    VACollections.PLUM,
+                    VACollections.MAGENTA,
+                    VACollections.PINK,
+                    VACollections.LILAC
             );
 
             ShapelessRecipeJsonBuilder.create(RecipeCategory.MISC, VAItems.MAROON_DYE, 2)
@@ -346,6 +348,13 @@ public final class VARecipeProvider {
                     .input('a', Items.AMETHYST_SHARD).input('g', Items.GLOWSTONE).input('s', VAItems.STEEL_INGOT).input('r', Items.REDSTONE)
                     .criterion("glowstone", conditionsFromItem(Items.GLOWSTONE)).offerTo(exporter);
 
+            ShapedRecipeJsonBuilder.create(RecipeCategory.FOOD, VAItems.ICE_CREAM, 1)
+                    .pattern(" s ")
+                    .pattern("bmb")
+                    .pattern(" w ")
+                    .input('s', VAItems.ROCK_SALT).input('b', Items.SNOWBALL).input('m', Items.MILK_BUCKET).input('w', Items.BOWL)
+                    .criterion("milk", conditionsFromItem(Items.MILK_BUCKET)).offerTo(exporter);
+
         }
     }
 
@@ -440,8 +449,13 @@ public final class VARecipeProvider {
             ColoringRecipeJsonBuilder.create(Ingredient.fromTag(input), cost, output, index).offerTo(exporter);
         }
 
+        protected static void offerArmorColoringRecipe(RecipeExporter exporter, DyeItem input, int i) {
+            ArmorColoringRecipeJsonBuilder.create(Ingredient.ofItems(input), i).offerTo(exporter);
+        }
+
         protected static void offerColoringRecipes(RecipeExporter exporter, ColorfulBlockSet set, ColoringStationBlockEntity.DyeContents cost, int index) {
             offerColoringRecipe(exporter, set.dye(), cost.copyAndMultiply(4), index);
+            offerArmorColoringRecipe(exporter, set.dye(), index);
             set.ifWool(block -> offerColoringRecipe(exporter, ItemTags.WOOL, block, cost, index));
             set.ifCarpet(block -> offerColoringRecipe(exporter, ItemTags.WOOL_CARPETS, block, cost, index));
             set.ifStainedGlass(block -> offerColoringRecipe(exporter, VAItemTags.COLORABLE_GLASS, block, cost, index));
@@ -454,12 +468,10 @@ public final class VARecipeProvider {
         }
 
         @SafeVarargs
-        protected static void offerColoringStationRecipes(RecipeExporter exporter, Pair<ColorfulBlockSet, ColoringStationBlockEntity.DyeContents>... sets) {
+        protected static void offerColoringStationRecipes(RecipeExporter exporter, ColorfulBlockSet... sets) {
             int i = 0;
-            for (Pair<ColorfulBlockSet, ColoringStationBlockEntity.DyeContents> setAndCost : sets) {
-                ColorfulBlockSet set = setAndCost.getLeft();
-                ColoringStationBlockEntity.DyeContents cost = setAndCost.getRight();
-                offerColoringRecipes(exporter, set, cost, i);
+            for (ColorfulBlockSet set : sets) {
+                offerColoringRecipes(exporter, set, VADyeColors.getContents(set.dye(), 1), i);
                 i += 1;
             }
         }

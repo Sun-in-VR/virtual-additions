@@ -10,12 +10,15 @@ import net.minecraft.item.BlockItem;
 import net.minecraft.item.ItemStack;
 import net.minecraft.network.RegistryByteBuf;
 import net.minecraft.network.codec.PacketCodec;
-import net.minecraft.recipe.*;
+import net.minecraft.recipe.Ingredient;
+import net.minecraft.recipe.Recipe;
+import net.minecraft.recipe.RecipeSerializer;
+import net.minecraft.recipe.RecipeType;
 import net.minecraft.registry.DynamicRegistryManager;
 import net.minecraft.util.dynamic.Codecs;
 import net.minecraft.world.World;
 
-public class ColoringRecipe implements Recipe<Inventory> {
+public class ColoringRecipe implements Recipe<Inventory>, ColoringStationRecipe {
     public final ColoringStationBlockEntity.DyeContents cost;
     public final int index;
     protected final Ingredient ingredient;
@@ -84,8 +87,9 @@ public class ColoringRecipe implements Recipe<Inventory> {
         return inverted ? this.cost : this.cost.copyAndMultiply(-1);
     }
 
-    public ColoringStationBlockEntity.DyeContents getDyeCost() {
-        return getDyeCost(false);
+    @Override
+    public ItemStack getResultStack(DynamicRegistryManager registryManager, ItemStack input) {
+        return this.getResult(registryManager);
     }
 
     public static class Serializer implements RecipeSerializer<ColoringRecipe> {

@@ -54,6 +54,7 @@ public final class VAItemTagProvider {
             getOrCreateTagBuilder(ItemTags.VILLAGER_PLANTABLE_SEEDS).add(VAItems.CORN, VAItems.COTTON_SEEDS);
             getOrCreateTagBuilder(ItemTags.DOORS).add(VAItems.STEEL_DOOR);
             getOrCreateTagBuilder(ItemTags.TRAPDOORS).add(VAItems.STEEL_TRAPDOOR);
+            getOrCreateTagBuilder(ItemTags.DYEABLE).add(VAItems.ICE_CREAM);
 
             getOrCreateTagBuilder(INGOTS).add(VAItems.STEEL_INGOT);
             getOrCreateTagBuilder(STEEL_INGOTS).add(VAItems.STEEL_INGOT);

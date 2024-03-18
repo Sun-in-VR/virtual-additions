@@ -1,6 +1,7 @@
 package com.github.suninvr.virtualadditions.block.entity;
 
 import com.github.suninvr.virtualadditions.registry.VABlockEntityType;
+import com.github.suninvr.virtualadditions.registry.VADyeColors;
 import com.github.suninvr.virtualadditions.screen.ColoringStationScreenHandler;
 import com.mojang.serialization.Codec;
 import net.fabricmc.fabric.api.screenhandler.v1.ExtendedScreenHandlerFactory;
@@ -8,6 +9,7 @@ import net.minecraft.block.BlockState;
 import net.minecraft.block.entity.BlockEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.PlayerInventory;
+import net.minecraft.item.DyeItem;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.Items;
 import net.minecraft.nbt.NbtCompound;
@@ -21,6 +23,7 @@ import net.minecraft.screen.ScreenHandler;
 import net.minecraft.screen.ScreenHandlerContext;
 import net.minecraft.server.network.ServerPlayerEntity;
 import net.minecraft.text.Text;
+import net.minecraft.util.DyeColor;
 import net.minecraft.util.math.BlockPos;
 import org.jetbrains.annotations.Nullable;
 
@@ -155,6 +158,10 @@ public class ColoringStationBlockEntity extends BlockEntity implements NamedScre
             return new DyeContents(buf.readInt(), buf.readInt(), buf.readInt(), buf.readInt(), buf.readInt(), buf.readInt());
         }
 
+        public static DyeContents empty() {
+            return new DyeContents(0, 0, 0, 0, 0, 0);
+        }
+
         public void to(NbtCompound nbt) {
             NbtCompound dyeContents = new NbtCompound();
             dyeContents.putInt("red", this.getR());
@@ -184,13 +191,24 @@ public class ColoringStationBlockEntity extends BlockEntity implements NamedScre
             this.setW(w);
         }
 
-        public void add(DyeContents contents) {
+        public DyeContents add(DyeContents contents) {
             this.setR(this.getR() + contents.getR());
             this.setG(this.getG() + contents.getG());
             this.setB(this.getB() + contents.getB());
             this.setY(this.getY() + contents.getY());
             this.setK(this.getK() + contents.getK());
             this.setW(this.getW() + contents.getW());
+            return this;
+        }
+
+        public boolean canAdd(DyeContents contents) {
+            if (this.getR() + contents.getR() > 1024) return false;
+            if (this.getG() + contents.getG() > 1024) return false;
+            if (this.getB() + contents.getB() > 1024) return false;
+            if (this.getY() + contents.getY() > 1024) return false;
+            if (this.getK() + contents.getK() > 1024) return false;
+            if (this.getW() + contents.getW() > 1024) return false;
+            return true;
         }
 
         public void add(int r, int g, int b, int y, int k, int w) {
@@ -280,69 +298,14 @@ public class ColoringStationBlockEntity extends BlockEntity implements NamedScre
             return contents;
         }
 
-        public boolean addDye(ItemStack itemStack, int max) {
-            boolean bl = false;
-            if (itemStack.isOf(Items.RED_DYE)) {
-                int diff = max - this.getR();
-                diff = diff - (diff % 16);
-                while (diff > 0 && itemStack.getCount() > 0) {
-                    diff -= 16;
-                    this.setR(Math.min(max, this.getR() + 16));
+        public void addDye(ItemStack itemStack) {
+            if (itemStack.getItem() instanceof DyeItem dyeItem) {
+                DyeContents contents = VADyeColors.getContents(dyeItem, 4);
+                while (!itemStack.isEmpty() && this.canAdd(contents)) {
+                    this.add(contents);
                     itemStack.decrement(1);
-                    bl = true;
                 }
             }
-            if (itemStack.isOf(Items.GREEN_DYE)) {
-                int diff = max - this.getG();
-                diff = diff - (diff % 16);
-                while (diff > 0 && itemStack.getCount() > 0) {
-                    diff -= 16;
-                    this.setG(Math.min(max, this.getG() + 16));
-                    itemStack.decrement(1);
-                    bl = true;
-                }
-            }
-            if (itemStack.isOf(Items.BLUE_DYE)) {
-                int diff = max - this.getB();
-                diff = diff - (diff % 16);
-                while (diff > 0 && itemStack.getCount() > 0) {
-                    diff -= 16;
-                    this.setB(Math.min(max, this.getB() + 16));
-                    itemStack.decrement(1);
-                    bl = true;
-                }
-            }
-            if (itemStack.isOf(Items.YELLOW_DYE)) {
-                int diff = max - this.getY();
-                diff = diff - (diff % 16);
-                while (diff > 0 && itemStack.getCount() > 0) {
-                    diff -= 16;
-                    this.setY(Math.min(max, this.getY() + 16));
-                    itemStack.decrement(1);
-                    bl = true;
-                }
-            }
-            if (itemStack.isOf(Items.BLACK_DYE)) {
-                int diff = max - this.getK();
-                diff = diff - (diff % 16);
-                while (diff > 0 && itemStack.getCount() > 0) {
-                    diff -= 16;
-                    this.setK(Math.min(max, this.getK() + 16));
-                    itemStack.decrement(1);
-                    bl = true;
-                }
-            }
-            if (itemStack.isOf(Items.WHITE_DYE)) {
-                int diff = max - this.getW();
-                diff = diff - (diff % 16);
-                while (diff > 0 && itemStack.getCount() > 0) {
-                    diff -= 16;
-                    this.setW(Math.min(max, this.getW() + 16));
-                    itemStack.decrement(1);
-                    bl = true;
-                }
-            }
-            return bl;
         }
     }
 }

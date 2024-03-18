@@ -187,6 +187,7 @@ public class VAItems {
     public static final Item CORN;
     public static final Item ROASTED_CORN;
     public static final Item FRIED_EGG;
+    public static final Item ICE_CREAM;
     public static final Item GLOWING_SILK;
     public static final Item FRAYED_SILK;
     public static final Item TALL_GREENCAP_MUSHROOMS;
@@ -343,7 +344,7 @@ public class VAItems {
     public static final FoodComponent FRIED_EGG_FOOD = (new FoodComponent.Builder().hunger(4).saturationModifier(0.4F).build());
     public static final FoodComponent CORN_FOOD = (new FoodComponent.Builder()).hunger(1).saturationModifier(0.3F).build();
     public static final FoodComponent ROASTED_CORN_FOOD = (new FoodComponent.Builder()).hunger(5).saturationModifier(0.6F).build();
-    public static final FoodComponent ROCK_CANDY_FOOD = (new FoodComponent.Builder().hunger(2).saturationModifier(0.1F).build());
+    public static final FoodComponent ICE_CREAM_FOOD = new FoodComponent.Builder().hunger(7).saturationModifier(0.1F).build();
     public static final FoodComponent BALLOON_FRUIT_FOOD = (new FoodComponent.Builder().hunger(2).saturationModifier(0.1F).alwaysEdible().statusEffect(new StatusEffectInstance(StatusEffects.LEVITATION, 100, 1), 1.0F).build());
 
     public static final ToolSet AMETHYST_DIAMOND_TOOL_SET;
@@ -558,6 +559,7 @@ public class VAItems {
         CORN = register("corn", new AliasedBlockItem(VABlocks.CORN_CROP, new Item.Settings().food(CORN_FOOD)), ItemGroups.FOOD_AND_DRINK, Items.BEETROOT);
         ROASTED_CORN = register("roasted_corn", new Item(new Item.Settings().food(ROASTED_CORN_FOOD)), ItemGroups.FOOD_AND_DRINK, prev);
         FRIED_EGG = register("fried_egg", new Item(new Item.Settings().food(FRIED_EGG_FOOD)), ItemGroups.FOOD_AND_DRINK, Items.COOKED_CHICKEN);
+        ICE_CREAM = register("ice_cream", new StewItem(new Item.Settings().food(ICE_CREAM_FOOD).maxCount(1)), ItemGroups.FOOD_AND_DRINK, Items.COOKIE);
 
         SILK_BLOCK = registerBlockItem("silk_block", VABlocks.SILK_BLOCK, ItemGroups.NATURAL, Items.SHROOMLIGHT);
         LUMWASP_NEST = registerBlockItem("lumwasp_nest", VABlocks.LUMWASP_NEST, ItemGroups.NATURAL, prev);
