@@ -79,13 +79,23 @@ public final class VARecipeProvider {
             offerShapelessRecipe(exporter, RecipeCategory.MISC, VAItems.TOOL_GILD_SMITHING_TEMPLATE, 1, Pair.of(VAItems.STEEL_INGOT, 1), Pair.of(Items.DIAMOND, 1));
             offerStonecuttingRecipe(exporter, RecipeCategory.BUILDING_BLOCKS, VABlocks.CUT_STEEL_STAIRS, VABlocks.CUT_STEEL);
             offerStonecuttingRecipe(exporter, RecipeCategory.BUILDING_BLOCKS, VABlocks.CUT_STEEL_SLAB, VABlocks.CUT_STEEL, 2);
+            offerStonecuttingRecipe(exporter, RecipeCategory.BUILDING_BLOCKS, VABlocks.STEEL_GRATE, VABlocks.CUT_STEEL, 1);
+            offerStonecuttingRecipe(exporter, RecipeCategory.BUILDING_BLOCKS, VABlocks.CHISELED_STEEL, VABlocks.CUT_STEEL, 1);
             ShapedRecipeJsonBuilder.create(RecipeCategory.DECORATIONS, VABlocks.CUT_STEEL_STAIRS, 4).input('#', VABlocks.CUT_STEEL).pattern("#  ").pattern("## ").pattern("###").criterion("cut_steel", conditionsFromItem(VABlocks.CUT_STEEL)).offerTo(exporter);
             ShapedRecipeJsonBuilder.create(RecipeCategory.DECORATIONS, VABlocks.CUT_STEEL_SLAB, 6).input('#', VABlocks.CUT_STEEL).pattern("###").criterion("cut_steel", conditionsFromItem(VABlocks.CUT_STEEL)).offerTo(exporter);
             ShapedRecipeJsonBuilder.create(RecipeCategory.DECORATIONS, VABlocks.STEEL_FENCE, 6).input('W', VABlocks.CUT_STEEL).input('#', VAItems.STEEL_INGOT).pattern("W#W").pattern("W#W").criterion("cut_steel", conditionsFromItem(VABlocks.CUT_STEEL)).offerTo(exporter);
             offer2x2FullRecipe(exporter, RecipeCategory.BUILDING_BLOCKS, VABlocks.CUT_STEEL, VAItems.STEEL_INGOT, 16);
             offerStonecuttingRecipe(exporter, RecipeCategory.BUILDING_BLOCKS, VABlocks.CUT_STEEL, VABlocks.STEEL_BLOCK, 36);
+            offerStonecuttingRecipe(exporter, RecipeCategory.BUILDING_BLOCKS, VABlocks.STEEL_GRATE, VABlocks.STEEL_BLOCK, 36);
+            offerStonecuttingRecipe(exporter, RecipeCategory.BUILDING_BLOCKS, VABlocks.CHISELED_STEEL, VABlocks.STEEL_BLOCK, 36);
+            offerStonecuttingRecipe(exporter, RecipeCategory.BUILDING_BLOCKS, VABlocks.CUT_STEEL, VAItems.STEEL_INGOT, 4);
+            offerStonecuttingRecipe(exporter, RecipeCategory.BUILDING_BLOCKS, VABlocks.CUT_STEEL_STAIRS, VAItems.STEEL_INGOT, 4);
+            offerStonecuttingRecipe(exporter, RecipeCategory.BUILDING_BLOCKS, VABlocks.CUT_STEEL_SLAB, VAItems.STEEL_INGOT, 8);
+            offerStonecuttingRecipe(exporter, RecipeCategory.BUILDING_BLOCKS, VABlocks.STEEL_GRATE, VAItems.STEEL_INGOT, 4);
+            offerStonecuttingRecipe(exporter, RecipeCategory.BUILDING_BLOCKS, VABlocks.CHISELED_STEEL, VAItems.STEEL_INGOT, 4);
             createDoorRecipe(VABlocks.STEEL_DOOR, Ingredient.ofItems(VAItems.STEEL_INGOT)).criterion("steel_ingot", conditionsFromItem(VAItems.STEEL_INGOT)).offerTo(exporter);
             createTrapdoorRecipe(VABlocks.STEEL_TRAPDOOR, Ingredient.ofItems(VAItems.STEEL_INGOT)).criterion("steel_ingot", conditionsFromItem(VAItems.STEEL_INGOT)).offerTo(exporter);
+            createChiseledBlockRecipe(RecipeCategory.BUILDING_BLOCKS, VABlocks.CHISELED_STEEL, Ingredient.ofItems(VABlocks.CUT_STEEL_SLAB));
 
             offerSmelting(exporter, List.of(VABlocks.COBBLED_HORNFELS), RecipeCategory.BUILDING_BLOCKS, VABlocks.HORNFELS, 0.1F, 200, "hornfels");
             offerStonecuttingRecipes(exporter, VABlocks.HORNFELS, VACollections.POLISHED_HORNFELS, VACollections.HORNFELS_TILES);
@@ -113,6 +123,8 @@ public final class VARecipeProvider {
 
             offer2x2FullRecipe(exporter, RecipeCategory.MISC, Items.STRING, VAItems.COTTON, 2);
             offerShapelessRecipe(exporter, VAItems.COTTON_SEEDS, VAItems.COTTON, "cotton_seeds", 1);
+
+            offerShapelessRecipe(exporter, VAItems.CORN_SEEDS, VAItems.CORN, "corn_seeds", 1);
 
             offerCookingRecipes(exporter, VAItems.FRIED_EGG, Items.EGG, 0.35F, "fried_egg");
             offerCookingRecipes(exporter, VAItems.ROASTED_CORN, VAItems.CORN, 0.35F, "corn");
@@ -354,6 +366,13 @@ public final class VARecipeProvider {
                     .pattern(" w ")
                     .input('s', VAItems.ROCK_SALT).input('b', Items.SNOWBALL).input('m', Items.MILK_BUCKET).input('w', Items.BOWL)
                     .criterion("milk", conditionsFromItem(Items.MILK_BUCKET)).offerTo(exporter);
+
+            ShapedRecipeJsonBuilder.create(RecipeCategory.DECORATIONS, VAItems.STEEL_GRATE, 4)
+                    .pattern(" c ")
+                    .pattern("c c")
+                    .pattern(" c ")
+                    .input('c', VAItems.CUT_STEEL)
+                    .criterion("cut_steel", conditionsFromItem(VAItems.CUT_STEEL)).offerTo(exporter);
 
         }
     }

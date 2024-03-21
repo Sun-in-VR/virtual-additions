@@ -51,7 +51,7 @@ public final class VAItemTagProvider {
             getOrCreateTagBuilder(ItemTags.STONE_TOOL_MATERIALS).add(VAItems.COBBLED_HORNFELS, VAItems.COBBLED_BLUESCHIST, VAItems.COBBLED_SYENITE);
             getOrCreateTagBuilder(ItemTags.TRIM_MATERIALS).add(VAItems.STEEL_INGOT, VAItems.IOLITE);
             getOrCreateTagBuilder(ItemTags.TRIMMABLE_ARMOR).add(VAItems.STEEL_HELMET, VAItems.STEEL_CHESTPLATE, VAItems.STEEL_LEGGINGS, VAItems.STEEL_BOOTS);
-            getOrCreateTagBuilder(ItemTags.VILLAGER_PLANTABLE_SEEDS).add(VAItems.CORN, VAItems.COTTON_SEEDS);
+            getOrCreateTagBuilder(ItemTags.VILLAGER_PLANTABLE_SEEDS).add(VAItems.CORN_SEEDS, VAItems.COTTON_SEEDS);
             getOrCreateTagBuilder(ItemTags.DOORS).add(VAItems.STEEL_DOOR);
             getOrCreateTagBuilder(ItemTags.TRAPDOORS).add(VAItems.STEEL_TRAPDOOR);
             getOrCreateTagBuilder(ItemTags.DYEABLE).add(VAItems.ICE_CREAM);
@@ -63,7 +63,7 @@ public final class VAItemTagProvider {
             getOrCreateTagBuilder(IOLITE_ORES).add(VAItems.IOLITE_ORE);
             getOrCreateTagBuilder(GEMS).addOptionalTag(IOLITE);
             getOrCreateTagBuilder(ORES).addOptionalTag(IOLITE_ORES);
-            getOrCreateTagBuilder(FOODS).add(VAItems.FRIED_EGG, VAItems.CORN, VAItems.ROASTED_CORN);
+            getOrCreateTagBuilder(FOODS).add(VAItems.FRIED_EGG, VAItems.CORN, VAItems.ROASTED_CORN, VAItems.ICE_CREAM);
             getOrCreateTagBuilder(POTIONS).add(VAItems.APPLICABLE_POTION);
 
             configureColorfulBlockSet(

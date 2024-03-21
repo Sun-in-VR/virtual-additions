@@ -55,7 +55,7 @@ public class VACollections {
     public static final ColorfulBlockSet PINK;
 
     static {
-        CUT_STEEL = register(VABlocks.CUT_STEEL).stairs(VABlocks.CUT_STEEL_STAIRS).slab(VABlocks.CUT_STEEL_SLAB).customFence(VABlocks.STEEL_FENCE).build();
+        CUT_STEEL = register(VABlocks.CUT_STEEL).stairs(VABlocks.CUT_STEEL_STAIRS).slab(VABlocks.CUT_STEEL_SLAB).customFence(VABlocks.STEEL_FENCE).chiseled(CHISELED_STEEL).build();
         COBBLED_HORNFELS = register(VABlocks.COBBLED_HORNFELS).stairs(VABlocks.COBBLED_HORNFELS_STAIRS).slab(VABlocks.COBBLED_HORNFELS_SLAB).wall(VABlocks.COBBLED_HORNFELS_WALL).build();
         POLISHED_HORNFELS = register(VABlocks.POLISHED_HORNFELS).stairs(VABlocks.POLISHED_HORNFELS_STAIRS).slab(VABlocks.POLISHED_HORNFELS_SLAB).chiseled(CHISELED_HORNFELS).build();
         HORNFELS_TILES = register(VABlocks.HORNFELS_TILES).stairs(VABlocks.HORNFELS_TILE_STAIRS).slab(VABlocks.HORNFELS_TILE_SLAB).cracked(VABlocks.CRACKED_HORNFELS_TILES).chiseled(CHISELED_HORNFELS_TILES).build();

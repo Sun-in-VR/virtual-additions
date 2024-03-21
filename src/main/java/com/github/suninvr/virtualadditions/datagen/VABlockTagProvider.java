@@ -87,7 +87,8 @@ public final class VABlockTagProvider {
                     VABlocks.WARP_ANCHOR,
                     VABlocks.WARP_TETHER,
                     VABlocks.ENTANGLEMENT_DRIVE,
-                    VABlocks.REDSTONE_BRIDGE
+                    VABlocks.REDSTONE_BRIDGE,
+                    VABlocks.STEEL_GRATE
             );
 
             configureMinable(BlockTags.PICKAXE_MINEABLE, 3,

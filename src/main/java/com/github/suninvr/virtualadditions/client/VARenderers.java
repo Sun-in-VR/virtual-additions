@@ -110,7 +110,8 @@ public class VARenderers {
                 VABlocks.GLOWING_SILK,
                 VABlocks.FRAYED_SILK,
                 VABlocks.TALL_GREENCAP_MUSHROOMS,
-                VABlocks.GREENCAP_MUSHROOM
+                VABlocks.GREENCAP_MUSHROOM,
+                VABlocks.STEEL_GRATE
         );
 
         BlockRenderLayerMap.INSTANCE.putBlocks(RenderLayer.getCutoutMipped(),

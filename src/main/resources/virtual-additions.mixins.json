@@ -23,6 +23,7 @@
     "RangedWeaponItemMixin",
     "RedstoneWireBlockMixin",
     "ShulkerBoxBlockMixin",
+    "VillagerEntityMixin",
     "WallBlockMixin",
     "WaterFluidMixin",
     "WolfEntityMixin"

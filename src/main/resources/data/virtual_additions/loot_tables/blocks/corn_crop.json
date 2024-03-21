@@ -6,7 +6,7 @@
       "entries": [
         {
           "type": "minecraft:item",
-          "name": "virtual_additions:corn",
+          "name": "virtual_additions:corn_seeds",
           "conditions": [
             {
               "condition": "minecraft:all_of",
@@ -16,16 +16,6 @@
                   "block": "virtual_additions:corn_crop",
                   "properties": {
                     "segment": "bottom"
-                  }
-                },
-                {
-                  "condition": "minecraft:inverted",
-                  "term": {
-                    "condition": "minecraft:block_state_property",
-                    "block": "virtual_additions:corn_crop",
-                    "properties": {
-                      "age": "7"
-                    }
                   }
                 }
               ]

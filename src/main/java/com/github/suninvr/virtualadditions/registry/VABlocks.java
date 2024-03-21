@@ -35,6 +35,8 @@ public class VABlocks {
     public static final Block CUT_STEEL;
     public static final Block CUT_STEEL_STAIRS;
     public static final Block CUT_STEEL_SLAB;
+    public static final Block STEEL_GRATE;
+    public static final Block CHISELED_STEEL;
     public static final Block STEEL_FENCE;
     public static final Block STEEL_DOOR;
     public static final Block STEEL_TRAPDOOR;
@@ -313,6 +315,8 @@ public class VABlocks {
         CUT_STEEL = register("cut_steel", new Block(Settings.copy(STEEL_BLOCK).strength(3.0F, 300.0F)));
         CUT_STEEL_STAIRS = register("cut_steel_stairs", new StairsBlock(CUT_STEEL.getDefaultState(), Settings.copy(CUT_STEEL)));
         CUT_STEEL_SLAB = register("cut_steel_slab", new SlabBlock(Settings.copy(CUT_STEEL)));
+        STEEL_GRATE = register("steel_grate", new GrateBlock(Settings.copy(CUT_STEEL).strength(2.0F, 300.0F).nonOpaque()));
+        CHISELED_STEEL = register("chiseled_steel", new Block(Settings.copy(CUT_STEEL)));
         STEEL_FENCE = register("steel_fence", new FenceBlock(Settings.copy(CUT_STEEL)));
         STEEL_DOOR = register("steel_door", new SteelDoorBlock(Settings.copy(STEEL_BLOCK).nonOpaque().pistonBehavior(PistonBehavior.DESTROY)));
         STEEL_TRAPDOOR = register("steel_trapdoor", new SteelTrapdoorBlock(Settings.copy(STEEL_DOOR)));

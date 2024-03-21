@@ -29,7 +29,13 @@
           "items": [
             "minecraft:crossbow"
           ],
-          "nbt": "{ChargedProjectiles:[{id:\"virtual_additions:climbing_rope\"}]}"
+          "components": {
+            "minecraft:charged_projectiles": [
+              {
+                "id": "virtual_additions:climbing_rope"
+              }
+            ]
+          }
         }
       }
     }

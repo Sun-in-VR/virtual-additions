@@ -168,6 +168,8 @@ public class VAItems {
     public static final Item CUT_STEEL;
     public static final Item CUT_STEEL_STAIRS;
     public static final Item CUT_STEEL_SLAB;
+    public static final Item STEEL_GRATE;
+    public static final Item CHISELED_STEEL;
     public static final Item STEEL_FENCE;
     public static final Item STEEL_DOOR;
     public static final Item STEEL_TRAPDOOR;
@@ -185,6 +187,7 @@ public class VAItems {
     public static final Item COTTON_SEEDS;
     public static final Item COTTON;
     public static final Item CORN;
+    public static final Item CORN_SEEDS;
     public static final Item ROASTED_CORN;
     public static final Item FRIED_EGG;
     public static final Item ICE_CREAM;
@@ -537,6 +540,8 @@ public class VAItems {
         CUT_STEEL = registerBlockItem("cut_steel", VABlocks.CUT_STEEL, ItemGroups.BUILDING_BLOCKS, prev);
         CUT_STEEL_STAIRS = registerBlockItem("cut_steel_stairs", VABlocks.CUT_STEEL_STAIRS, ItemGroups.BUILDING_BLOCKS, prev);
         CUT_STEEL_SLAB = registerBlockItem("cut_steel_slab", VABlocks.CUT_STEEL_SLAB, ItemGroups.BUILDING_BLOCKS, prev);
+        STEEL_GRATE = registerBlockItem("steel_grate", VABlocks.STEEL_GRATE, ItemGroups.BUILDING_BLOCKS, prev);
+        CHISELED_STEEL = registerBlockItem("chiseled_steel", VABlocks.CHISELED_STEEL, ItemGroups.BUILDING_BLOCKS, prev);
         STEEL_FENCE = registerBlockItem("steel_fence", VABlocks.STEEL_FENCE, ItemGroups.BUILDING_BLOCKS, prev);
         STEEL_DOOR = registerBlockItem("steel_door", VABlocks.STEEL_DOOR, ItemGroups.BUILDING_BLOCKS, prev);
         STEEL_TRAPDOOR = registerBlockItem("steel_trapdoor", VABlocks.STEEL_TRAPDOOR, ItemGroups.BUILDING_BLOCKS, prev);
@@ -556,8 +561,9 @@ public class VAItems {
 
         COTTON_SEEDS = register("cotton_seeds", new AliasedBlockItem(VABlocks.COTTON, new Item.Settings()), ItemGroups.NATURAL, Items.BEETROOT_SEEDS);
         COTTON = register("cotton", ItemGroups.INGREDIENTS, Items.WHEAT);
-        CORN = register("corn", new AliasedBlockItem(VABlocks.CORN_CROP, new Item.Settings().food(CORN_FOOD)), ItemGroups.FOOD_AND_DRINK, Items.BEETROOT);
+        CORN = register("corn", new Item(new Item.Settings().food(CORN_FOOD)), ItemGroups.FOOD_AND_DRINK, Items.BEETROOT);
         ROASTED_CORN = register("roasted_corn", new Item(new Item.Settings().food(ROASTED_CORN_FOOD)), ItemGroups.FOOD_AND_DRINK, prev);
+        CORN_SEEDS = register("corn_seeds", new AliasedBlockItem(VABlocks.CORN_CROP, new Item.Settings()), ItemGroups.NATURAL, COTTON_SEEDS);
         FRIED_EGG = register("fried_egg", new Item(new Item.Settings().food(FRIED_EGG_FOOD)), ItemGroups.FOOD_AND_DRINK, Items.COOKED_CHICKEN);
         ICE_CREAM = register("ice_cream", new StewItem(new Item.Settings().food(ICE_CREAM_FOOD).maxCount(1)), ItemGroups.FOOD_AND_DRINK, Items.COOKIE);
 
@@ -832,14 +838,21 @@ public class VAItems {
 
             // Grass Drop
             if (Blocks.SHORT_GRASS.getLootTableId().equals(id)) {
-                LootPool.Builder builder = LootPool.builder()
+                LootPool.Builder cottonBuilder = LootPool.builder()
                         .with(ItemEntry.builder(COTTON_SEEDS)
                                 .apply(ApplyBonusLootFunction.uniformBonusCount(Enchantments.FORTUNE, 2))
                                 .apply(ExplosionDecayLootFunction.builder())
                                 .conditionally(RandomChanceLootCondition.builder(0.125F))
                                 .conditionally(InvertedLootCondition.builder(MatchToolLootCondition.builder(ItemPredicate.Builder.create().items(Items.SHEARS))))
                         );
-                tableBuilder.pool(builder);
+                LootPool.Builder cornBuilder = LootPool.builder()
+                        .with(ItemEntry.builder(CORN_SEEDS)
+                                .apply(ApplyBonusLootFunction.uniformBonusCount(Enchantments.FORTUNE, 2))
+                                .apply(ExplosionDecayLootFunction.builder())
+                                .conditionally(RandomChanceLootCondition.builder(0.125F))
+                                .conditionally(InvertedLootCondition.builder(MatchToolLootCondition.builder(ItemPredicate.Builder.create().items(Items.SHEARS))))
+                        );
+                tableBuilder.pool(cottonBuilder).pool(cornBuilder);
             }
 
             // Abandoned Mineshaft Chest

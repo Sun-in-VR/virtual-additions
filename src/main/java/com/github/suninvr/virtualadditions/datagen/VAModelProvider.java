@@ -50,6 +50,9 @@ class VAModelProvider extends FabricModelProvider {
         registerColoringStation(blockStateModelGenerator);
 
         registerSpotlight(blockStateModelGenerator);
+
+        blockStateModelGenerator.registerSimpleCubeAll(VABlocks.STEEL_GRATE);
+        blockStateModelGenerator.registerSimpleCubeAll(VABlocks.CHISELED_STEEL);
     }
 
     private void registerColoringStation(BlockStateModelGenerator blockStateModelGenerator) {
@@ -81,6 +84,8 @@ class VAModelProvider extends FabricModelProvider {
         itemModelGenerator.register(VAItems.TAN_DYE, Models.GENERATED);
         itemModelGenerator.register(VAItems.SINOPIA_DYE, Models.GENERATED);
         itemModelGenerator.register(VAItems.LILAC_DYE, Models.GENERATED);
+
+        itemModelGenerator.register(VAItems.CORN_SEEDS, Models.GENERATED);
 
     }
 

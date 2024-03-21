@@ -1,5 +1,6 @@
 package com.github.suninvr.virtualadditions.block.entity;
 
+import com.github.suninvr.virtualadditions.block.SpotlightBlock;
 import com.github.suninvr.virtualadditions.registry.VABlockEntityType;
 import com.github.suninvr.virtualadditions.registry.VABlocks;
 import com.github.suninvr.virtualadditions.registry.VAGameEventTags;
@@ -42,9 +43,11 @@ public class SpotlightBlockEntity extends BlockEntity implements GameEventListen
     }
 
     private boolean canUpdate(long time) {
+        if (this.world == null) return false;
         boolean bl = (time != this.lastUpdated);
         if (bl) this.lastUpdated = time;
-        return bl;
+        BlockState state = this.world.getBlockState(this.pos);
+        return bl && state.isOf(VABlocks.SPOTLIGHT) && state.get(SpotlightBlock.POWERED);
     }
 
     public BlockPos getLightLocation() {
