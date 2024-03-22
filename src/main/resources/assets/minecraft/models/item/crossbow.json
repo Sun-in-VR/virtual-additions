@@ -62,9 +62,30 @@
         {
             "predicate": {
                 "charged": 1,
-                "virtual_additions:climbing_rope": 1
+                "virtual_additions:climbing_rope": 0.25
             },
             "model": "virtual_additions:item/crossbow_climbing_rope"
+        },
+        {
+            "predicate": {
+                "charged": 1,
+                "virtual_additions:climbing_rope": 0.5
+            },
+            "model": "virtual_additions:item/crossbow_exposed_climbing_rope"
+        },
+        {
+            "predicate": {
+                "charged": 1,
+                "virtual_additions:climbing_rope": 0.75
+            },
+            "model": "virtual_additions:item/crossbow_weathered_climbing_rope"
+        },
+        {
+            "predicate": {
+                "charged": 1,
+                "virtual_additions:climbing_rope": 1
+            },
+            "model": "virtual_additions:item/crossbow_oxidized_climbing_rope"
         }
     ]
 }

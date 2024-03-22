@@ -10,6 +10,7 @@ import net.fabricmc.fabric.api.itemgroup.v1.ItemGroupEvents;
 import net.minecraft.block.Blocks;
 import net.minecraft.block.ComposterBlock;
 import net.minecraft.block.DispenserBlock;
+import net.minecraft.block.dispenser.DispenserBehavior;
 import net.minecraft.block.dispenser.ItemDispenserBehavior;
 import net.minecraft.block.dispenser.ProjectileDispenserBehavior;
 import net.minecraft.component.DataComponentTypes;
@@ -795,13 +796,17 @@ public class VAItems {
             }
         });
 
-        DispenserBlock.registerBehavior(CLIMBING_ROPE, new ProjectileDispenserBehavior() {
+        Item[] climbingRopes = {VAItems.CLIMBING_ROPE, VAItems.WAXED_CLIMBING_ROPE, VAItems.EXPOSED_CLIMBING_ROPE, VAItems.WAXED_EXPOSED_CLIMBING_ROPE, VAItems.WEATHERED_CLIMBING_ROPE, VAItems.WAXED_WEATHERED_CLIMBING_ROPE, VAItems.OXIDIZED_CLIMBING_ROPE, VAItems.WAXED_OXIDIZED_CLIMBING_ROPE};
+        DispenserBehavior climbingRopeBehavior = new ProjectileDispenserBehavior() {
             protected ProjectileEntity createProjectile(World world, Position position, ItemStack stack) {
-                ClimbingRopeEntity climbingRopeEntity = new ClimbingRopeEntity( position.getX(), position.getY(), position.getZ(), world, stack);
+                ClimbingRopeEntity climbingRopeEntity = new ClimbingRopeEntity(position.getX(), position.getY(), position.getZ(), world, stack.copyWithCount(1));
                 climbingRopeEntity.pickupType = PersistentProjectileEntity.PickupPermission.ALLOWED;
                 return climbingRopeEntity;
             }
-        });
+        };
+        for (Item item : climbingRopes) {
+            DispenserBlock.registerBehavior(item, climbingRopeBehavior);
+        }
 
         DispenserBlock.registerBehavior(ACID_BUCKET, new ItemDispenserBehavior(){
             private final ItemDispenserBehavior fallbackBehavior = new ItemDispenserBehavior();

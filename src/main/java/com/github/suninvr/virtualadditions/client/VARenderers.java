@@ -29,6 +29,7 @@ import net.minecraft.component.DataComponentTypes;
 import net.minecraft.component.type.ChargedProjectilesComponent;
 import net.minecraft.component.type.DyedColorComponent;
 import net.minecraft.component.type.PotionContentsComponent;
+import net.minecraft.item.ItemStack;
 import net.minecraft.item.Items;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.math.ColorHelper;
@@ -190,7 +191,15 @@ public class VARenderers {
         ModelPredicateProviderRegistry.register(Items.CROSSBOW, idOf("climbing_rope"), (itemStack, clientWorld, livingEntity, a) -> {
             if(!itemStack.isOf(Items.CROSSBOW)) return 0.0F;
             ChargedProjectilesComponent component = itemStack.get(DataComponentTypes.CHARGED_PROJECTILES);
-            return component != null && component.contains(VAItems.CLIMBING_ROPE) ? 1.0F : 0.0F ;
+            float f = 0.0F;
+            if (component != null) {
+                ItemStack stack = component.getProjectiles().isEmpty() ? ItemStack.EMPTY : component.getProjectiles().get(0);
+                if (stack.isOf(VAItems.CLIMBING_ROPE) || stack.isOf(VAItems.WAXED_CLIMBING_ROPE)) f = 0.25F;
+                else if (stack.isOf(VAItems.EXPOSED_CLIMBING_ROPE) || stack.isOf(VAItems.WAXED_EXPOSED_CLIMBING_ROPE)) f = 0.5F;
+                else if (stack.isOf(VAItems.WEATHERED_CLIMBING_ROPE) || stack.isOf(VAItems.WAXED_WEATHERED_CLIMBING_ROPE)) f = 0.75F;
+                else if (stack.isOf(VAItems.OXIDIZED_CLIMBING_ROPE) || stack.isOf(VAItems.WAXED_OXIDIZED_CLIMBING_ROPE)) f = 1.0F;
+            }
+            return f ;
         });
 
         ModelPredicateProviderRegistry.register(VAItems.ICE_CREAM, idOf("colorful"), (stack, world, entity, seed) -> {

@@ -110,6 +110,7 @@ public class ClimbingRopeAnchorBlock extends Block implements Waterloggable {
     @Override
     public void scheduledTick(BlockState state, ServerWorld world, BlockPos pos, net.minecraft.util.math.random.Random random) {
         if (state.canPlaceAt(world,pos)) {
+            if (!state.get(END)) return;
             BlockPos belowPos = new BlockPos(pos.down());
             BlockState belowState = world.getBlockState(belowPos);
             if (world.getBottomY() <= belowPos.getY() && (belowState.canReplace(new AutomaticItemPlacementContext(world, belowPos, Direction.DOWN, ItemStack.EMPTY, Direction.UP))) && !belowState.isOf(Blocks.LAVA)) {
