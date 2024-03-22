@@ -17,10 +17,6 @@ public class DyeColorMixin {
     @Unique
     private static DyeColor[] allValues;
 
-    @Shadow @Final private int id;
-
-    //private static final DyeColor CHARTREUSE = virtualAdditions$addVariant("CHARTREUSE", "chartreuse", 0xA3C115, MapColor.LIME, 0xA3C115, 0xA3C115);
-
     @Inject(method = "values", at = @At("RETURN"), cancellable = true)
     private static void virtualAdditions$values(CallbackInfoReturnable<DyeColor[]> cir) {
         if (allValues == null) {

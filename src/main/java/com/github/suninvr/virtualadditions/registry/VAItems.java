@@ -6,11 +6,7 @@ import com.github.suninvr.virtualadditions.entity.ClimbingRopeEntity;
 import com.github.suninvr.virtualadditions.entity.SteelBombEntity;
 import com.github.suninvr.virtualadditions.item.*;
 import com.github.suninvr.virtualadditions.item.materials.SteelToolMaterial;
-import com.github.suninvr.virtualadditions.item.CustomAxeItem;
-import com.github.suninvr.virtualadditions.item.CustomHoeItem;
-import com.github.suninvr.virtualadditions.item.CustomPickaxeItem;
 import net.fabricmc.fabric.api.itemgroup.v1.ItemGroupEvents;
-import net.fabricmc.fabric.api.loot.v2.LootTableEvents;
 import net.minecraft.block.Blocks;
 import net.minecraft.block.ComposterBlock;
 import net.minecraft.block.DispenserBlock;
@@ -20,27 +16,11 @@ import net.minecraft.component.DataComponentTypes;
 import net.minecraft.component.type.BannerPatternsComponent;
 import net.minecraft.component.type.ContainerComponent;
 import net.minecraft.component.type.PotionContentsComponent;
-import net.minecraft.enchantment.Enchantments;
-import net.minecraft.entity.EntityType;
 import net.minecraft.entity.effect.StatusEffectInstance;
 import net.minecraft.entity.effect.StatusEffects;
 import net.minecraft.entity.projectile.PersistentProjectileEntity;
 import net.minecraft.entity.projectile.ProjectileEntity;
 import net.minecraft.item.*;
-import net.minecraft.loot.LootPool;
-import net.minecraft.loot.LootTables;
-import net.minecraft.loot.condition.EntityPropertiesLootCondition;
-import net.minecraft.loot.condition.InvertedLootCondition;
-import net.minecraft.loot.condition.MatchToolLootCondition;
-import net.minecraft.loot.condition.RandomChanceLootCondition;
-import net.minecraft.loot.context.LootContext;
-import net.minecraft.loot.entry.ItemEntry;
-import net.minecraft.loot.function.*;
-import net.minecraft.loot.provider.number.ConstantLootNumberProvider;
-import net.minecraft.loot.provider.number.UniformLootNumberProvider;
-import net.minecraft.predicate.entity.EntityFlagsPredicate;
-import net.minecraft.predicate.entity.EntityPredicate;
-import net.minecraft.predicate.item.ItemPredicate;
 import net.minecraft.registry.RegistryKeys;
 import net.minecraft.text.Text;
 import net.minecraft.util.Formatting;
@@ -64,6 +44,13 @@ public class VAItems {
     public static final ToolSet NETHERITE_TOOL_SET;
     public static final ToolSet STEEL_TOOL_SET;
     public static final Item CLIMBING_ROPE;
+    public static final Item EXPOSED_CLIMBING_ROPE;
+    public static final Item WEATHERED_CLIMBING_ROPE;
+    public static final Item OXIDIZED_CLIMBING_ROPE;
+    public static final Item WAXED_CLIMBING_ROPE;
+    public static final Item WAXED_EXPOSED_CLIMBING_ROPE;
+    public static final Item WAXED_WEATHERED_CLIMBING_ROPE;
+    public static final Item WAXED_OXIDIZED_CLIMBING_ROPE;
     public static final Item HORNFELS;
     public static final Item COBBLED_HORNFELS;
     public static final Item COBBLED_HORNFELS_STAIRS;
@@ -426,6 +413,13 @@ public class VAItems {
         EMPTY_SLOT_IOLITE_TEXTURE = new Identifier("virtual_additions:item/empty_slot_iolite");
 
         CLIMBING_ROPE = register("climbing_rope", new AliasedBlockItem(VABlocks.CLIMBING_ROPE_ANCHOR, new Item.Settings().maxCount(16)), ItemGroups.TOOLS, Items.LEAD);
+        EXPOSED_CLIMBING_ROPE = register("exposed_climbing_rope", new AliasedBlockItem(VABlocks.EXPOSED_CLIMBING_ROPE_ANCHOR, new Item.Settings().maxCount(16)), ItemGroups.TOOLS, prev);
+        WEATHERED_CLIMBING_ROPE = register("weathered_climbing_rope", new AliasedBlockItem(VABlocks.WEATHERED_CLIMBING_ROPE_ANCHOR, new Item.Settings().maxCount(16)), ItemGroups.TOOLS, prev);
+        OXIDIZED_CLIMBING_ROPE = register("oxidized_climbing_rope", new AliasedBlockItem(VABlocks.OXIDIZED_CLIMBING_ROPE_ANCHOR, new Item.Settings().maxCount(16)), ItemGroups.TOOLS, prev);
+        WAXED_CLIMBING_ROPE = register("waxed_climbing_rope", new AliasedBlockItem(VABlocks.WAXED_CLIMBING_ROPE_ANCHOR, new Item.Settings().maxCount(16)), ItemGroups.TOOLS, prev);
+        WAXED_EXPOSED_CLIMBING_ROPE = register("waxed_exposed_climbing_rope", new AliasedBlockItem(VABlocks.WAXED_EXPOSED_CLIMBING_ROPE_ANCHOR, new Item.Settings().maxCount(16)), ItemGroups.TOOLS, prev);
+        WAXED_WEATHERED_CLIMBING_ROPE = register("waxed_weathered_climbing_rope", new AliasedBlockItem(VABlocks.WAXED_WEATHERED_CLIMBING_ROPE_ANCHOR, new Item.Settings().maxCount(16)), ItemGroups.TOOLS, prev);
+        WAXED_OXIDIZED_CLIMBING_ROPE = register("waxed_oxidized_climbing_rope", new AliasedBlockItem(VABlocks.WAXED_OXIDIZED_CLIMBING_ROPE_ANCHOR, new Item.Settings().maxCount(16)), ItemGroups.TOOLS, prev);
 
         HORNFELS = registerBlockItem("hornfels", VABlocks.HORNFELS, new ItemGroupLocation(ItemGroups.NATURAL, Items.DEEPSLATE), new ItemGroupLocation(ItemGroups.BUILDING_BLOCKS, Items.DEEPSLATE_TILE_WALL));
         COBBLED_HORNFELS = registerBlockItem("cobbled_hornfels", VABlocks.COBBLED_HORNFELS, ItemGroups.BUILDING_BLOCKS, HORNFELS);
@@ -548,16 +542,16 @@ public class VAItems {
         REDSTONE_BRIDGE = registerBlockItem("redstone_bridge", VABlocks.REDSTONE_BRIDGE, ItemGroups.REDSTONE, Items.COMPARATOR);
         RAW_STEEL = register("raw_steel", ItemGroups.INGREDIENTS, Items.RAW_GOLD);
         STEEL_INGOT = register("steel_ingot", ItemGroups.INGREDIENTS, Items.GOLD_INGOT);
-        STEEL_BOMB = register("steel_bomb", new SteelBombItem(new Item.Settings().maxCount(16).component(VADataComponentTypes.EXPLOSIVE_CONTENTS, ExplosiveContentComponent.DEFAULT)), new ItemGroupLocation(ItemGroups.COMBAT, Items.SNOWBALL), new ItemGroupLocation(ItemGroups.TOOLS, CLIMBING_ROPE));
+        STEEL_BOMB = register("steel_bomb", new SteelBombItem(new Item.Settings().maxCount(16).component(VADataComponentTypes.EXPLOSIVE_CONTENTS, ExplosiveContentComponent.DEFAULT)), new ItemGroupLocation(ItemGroups.COMBAT, Items.SNOWBALL), new ItemGroupLocation(ItemGroups.TOOLS, WAXED_OXIDIZED_CLIMBING_ROPE));
         STEEL_SWORD = register("steel_sword", new SwordItem(SteelToolMaterial.INSTANCE, new Item.Settings().maxCount(1).attributeModifiers(SwordItem.createAttributeModifiers(SteelToolMaterial.INSTANCE, 3, -2.4F))), ItemGroups.COMBAT, Items.GOLDEN_SWORD);
         STEEL_SHOVEL = register("steel_shovel", new ShovelItem(SteelToolMaterial.INSTANCE, new Item.Settings().maxCount(1).attributeModifiers(ShovelItem.createAttributeModifiers(SteelToolMaterial.INSTANCE, 1.5F, -3.0F))), ItemGroups.TOOLS, Items.GOLDEN_HOE);
         STEEL_PICKAXE = register("steel_pickaxe", new CustomPickaxeItem(SteelToolMaterial.INSTANCE, new Item.Settings().maxCount(1).attributeModifiers(PickaxeItem.createAttributeModifiers(SteelToolMaterial.INSTANCE, 1, -2.8F))), ItemGroups.TOOLS, prev);
         STEEL_AXE = register("steel_axe", new CustomAxeItem(SteelToolMaterial.INSTANCE, new Item.Settings().maxCount(1).attributeModifiers(AxeItem.createAttributeModifiers(SteelToolMaterial.INSTANCE, 6.0F, -3.1F))), new ItemGroupLocation(ItemGroups.TOOLS, prev), new ItemGroupLocation(ItemGroups.COMBAT, Items.GOLDEN_AXE));
         STEEL_HOE = register("steel_hoe", new CustomHoeItem(SteelToolMaterial.INSTANCE, new Item.Settings().maxCount(1).attributeModifiers(HoeItem.createAttributeModifiers(SteelToolMaterial.INSTANCE, -2, -1.0F))), ItemGroups.TOOLS, prev);
-        STEEL_HELMET = register("steel_helmet", new ArmorItem(VAArmorMaterial.STEEL, ArmorItem.Type.HELMET, new Item.Settings().maxCount(1).maxDamageIfAbsent(ArmorItem.Type.HELMET.getMaxDamage(24))), ItemGroups.COMBAT, Items.GOLDEN_BOOTS);
-        STEEL_CHESTPLATE = register("steel_chestplate", new ArmorItem(VAArmorMaterial.STEEL, ArmorItem.Type.CHESTPLATE, new Item.Settings().maxCount(1).maxDamageIfAbsent(ArmorItem.Type.CHESTPLATE.getMaxDamage(24))), ItemGroups.COMBAT, prev);
-        STEEL_LEGGINGS = register("steel_leggings", new ArmorItem(VAArmorMaterial.STEEL, ArmorItem.Type.LEGGINGS, new Item.Settings().maxCount(1).maxDamageIfAbsent(ArmorItem.Type.LEGGINGS.getMaxDamage(24))), ItemGroups.COMBAT, prev);
-        STEEL_BOOTS = register("steel_boots", new ArmorItem(VAArmorMaterial.STEEL, ArmorItem.Type.BOOTS, new Item.Settings().maxCount(1).maxDamageIfAbsent(ArmorItem.Type.BOOTS.getMaxDamage(24))), ItemGroups.COMBAT, prev);
+        STEEL_HELMET = register("steel_helmet", new ArmorItem(VAArmorMaterial.STEEL, ArmorItem.Type.HELMET, new Item.Settings().maxCount(1).maxDamage(ArmorItem.Type.HELMET.getMaxDamage(24))), ItemGroups.COMBAT, Items.GOLDEN_BOOTS);
+        STEEL_CHESTPLATE = register("steel_chestplate", new ArmorItem(VAArmorMaterial.STEEL, ArmorItem.Type.CHESTPLATE, new Item.Settings().maxCount(1).maxDamage(ArmorItem.Type.CHESTPLATE.getMaxDamage(24))), ItemGroups.COMBAT, prev);
+        STEEL_LEGGINGS = register("steel_leggings", new ArmorItem(VAArmorMaterial.STEEL, ArmorItem.Type.LEGGINGS, new Item.Settings().maxCount(1).maxDamage(ArmorItem.Type.LEGGINGS.getMaxDamage(24))), ItemGroups.COMBAT, prev);
+        STEEL_BOOTS = register("steel_boots", new ArmorItem(VAArmorMaterial.STEEL, ArmorItem.Type.BOOTS, new Item.Settings().maxCount(1).maxDamage(ArmorItem.Type.BOOTS.getMaxDamage(24))), ItemGroups.COMBAT, prev);
 
         COTTON_SEEDS = register("cotton_seeds", new AliasedBlockItem(VABlocks.COTTON, new Item.Settings()), ItemGroups.NATURAL, Items.BEETROOT_SEEDS);
         COTTON = register("cotton", ItemGroups.INGREDIENTS, Items.WHEAT);
@@ -833,116 +827,115 @@ public class VAItems {
     }
 
     protected static void initLootTableModifiers() {
-        LootTableEvents.MODIFY.register( (resourceManager, lootManager, id, tableBuilder, source) -> {
-            if (!source.isBuiltin()) return;
-
-            // Grass Drop
-            if (Blocks.SHORT_GRASS.getLootTableId().equals(id)) {
-                LootPool.Builder cottonBuilder = LootPool.builder()
-                        .with(ItemEntry.builder(COTTON_SEEDS)
-                                .apply(ApplyBonusLootFunction.uniformBonusCount(Enchantments.FORTUNE, 2))
-                                .apply(ExplosionDecayLootFunction.builder())
-                                .conditionally(RandomChanceLootCondition.builder(0.125F))
-                                .conditionally(InvertedLootCondition.builder(MatchToolLootCondition.builder(ItemPredicate.Builder.create().items(Items.SHEARS))))
-                        );
-                LootPool.Builder cornBuilder = LootPool.builder()
-                        .with(ItemEntry.builder(CORN_SEEDS)
-                                .apply(ApplyBonusLootFunction.uniformBonusCount(Enchantments.FORTUNE, 2))
-                                .apply(ExplosionDecayLootFunction.builder())
-                                .conditionally(RandomChanceLootCondition.builder(0.125F))
-                                .conditionally(InvertedLootCondition.builder(MatchToolLootCondition.builder(ItemPredicate.Builder.create().items(Items.SHEARS))))
-                        );
-                tableBuilder.pool(cottonBuilder).pool(cornBuilder);
-            }
-
-            // Abandoned Mineshaft Chest
-            if (LootTables.ABANDONED_MINESHAFT_CHEST.equals(id)) {
-                final int[] i = {0};
-                tableBuilder.modifyPools(builder -> {
-                    if (i[0] == 2) {
-                        builder.with(ItemEntry.builder(CLIMBING_ROPE).weight(5).apply(SetCountLootFunction.builder(UniformLootNumberProvider.create(2, 16))));
-                    }
-                    i[0]++;
-                });
-            }
-
-            // Village Toolsmith and Weaponsmith Chests
-            if (LootTables.VILLAGE_TOOLSMITH_CHEST.equals(id) || LootTables.VILLAGE_WEAPONSMITH_CHEST.equals(id)) {
-                tableBuilder.modifyPools( builder -> builder
-                        .with(ItemEntry.builder(STEEL_INGOT).weight(3).apply(SetCountLootFunction.builder(UniformLootNumberProvider.create(1, 4))))
-                );
-                LootPool.Builder smithingTemplateBuilder = LootPool.builder()
-                        .with(ItemEntry.builder(TOOL_GILD_SMITHING_TEMPLATE).apply(SetCountLootFunction.builder(UniformLootNumberProvider.create(2, 3))));
-                tableBuilder.pool(smithingTemplateBuilder);
-                LootPool.Builder gildMaterialBuilder = LootPool.builder()
-                        .with(ItemEntry.builder(Items.COPPER_INGOT).apply(SetCountLootFunction.builder(UniformLootNumberProvider.create(2, 4))))
-                        .with(ItemEntry.builder(Items.AMETHYST_SHARD).apply(SetCountLootFunction.builder(UniformLootNumberProvider.create(2, 4))))
-                        .with(ItemEntry.builder(Items.EMERALD).apply(SetCountLootFunction.builder(UniformLootNumberProvider.create(2, 4))));
-                tableBuilder.pool(gildMaterialBuilder);
-
-            }
-
-            // Savannah and Desert Village House Chests
-            if (LootTables.VILLAGE_SAVANNA_HOUSE_CHEST.equals(id) || LootTables.VILLAGE_DESERT_HOUSE_CHEST.equals(id)) {
-                tableBuilder.modifyPools( builder -> builder.with(ItemEntry.builder(CORN).weight(5).apply(SetCountLootFunction.builder(UniformLootNumberProvider.create(1, 4)))));
-            }
-
-            // Jungle Temple Chest
-            if (LootTables.JUNGLE_TEMPLE_CHEST.equals(id)) {
-                final int[] i = {0};
-                tableBuilder.modifyPools(builder -> {
-                    if (i[0] == 0) {
-                        builder.with(ItemEntry.builder(STEEL_INGOT).weight(5).apply(SetCountLootFunction.builder(UniformLootNumberProvider.create(2, 5))));
-                    }
-                    i[0]++;
-                });
-            }
-
-            // End City Chest
-            if (LootTables.END_CITY_TREASURE_CHEST.equals(id)) {
-                final int[] i = {0};
-                tableBuilder.modifyPools(builder -> {
-                    if (i[0] == 0) {
-                        builder.with(ItemEntry.builder(IOLITE).weight(5).apply(SetCountLootFunction.builder(UniformLootNumberProvider.create(1, 4))))
-                        .with(ItemEntry.builder(STEEL_INGOT).weight(10).apply(SetCountLootFunction.builder(UniformLootNumberProvider.create(3, 6))));
-                    }
-                    i[0]++;
-                });
-            }
-
-            // Ancient City Loot
-            if (LootTables.ANCIENT_CITY_CHEST.equals(id)) {
-                final int[] i = {0};
-                tableBuilder.modifyPools(builder -> {
-                    if (i[0] == 0) {
-                        builder.with(ItemEntry.builder(EMERALD_DIAMOND_TOOL_SET.HOE())
-                                .weight(2)
-                                .apply(SetCountLootFunction.builder(ConstantLootNumberProvider.create(1)))
-                                .apply(SetDamageLootFunction.builder(UniformLootNumberProvider.create(0.8F, 1), false))
-                        );
-                    }
-                    i[0]++;
-                });
-            }
-
-            // Zombie Loot
-            if (EntityType.ZOMBIE.getLootTableId().equals(id) || EntityType.HUSK.getLootTableId().equals(id)) {
-                final int[] i = {0};
-                tableBuilder.modifyPools(builder -> {
-                    if (i[0] == 1) {
-                        builder.with(ItemEntry.builder(CORN).apply(
-                                FurnaceSmeltLootFunction.builder().conditionally(
-                                        EntityPropertiesLootCondition.builder(
-                                                LootContext.EntityTarget.THIS, EntityPredicate.Builder.create().flags(EntityFlagsPredicate.Builder.create().onFire(true))
-                                        )
-                                )
-                        ));
-                    }
-                    i[0]++;
-                });
-            }
-        });
-
+        //LootTableEvents.MODIFY.register( (resourceManager, lootManager, id, tableBuilder, source) -> {
+        //    if (!source.isBuiltin()) return;
+//
+        //    // Grass Drop
+        //    if (Blocks.SHORT_GRASS.getLootTableId().equals(id)) {
+        //        LootPool.Builder cottonBuilder = LootPool.builder()
+        //                .with(ItemEntry.builder(COTTON_SEEDS)
+        //                        .apply(ApplyBonusLootFunction.uniformBonusCount(Enchantments.FORTUNE, 2))
+        //                        .apply(ExplosionDecayLootFunction.builder())
+        //                        .conditionally(RandomChanceLootCondition.builder(0.125F))
+        //                        .conditionally(InvertedLootCondition.builder(MatchToolLootCondition.builder(ItemPredicate.Builder.create().items(Items.SHEARS))))
+        //                );
+        //        LootPool.Builder cornBuilder = LootPool.builder()
+        //                .with(ItemEntry.builder(CORN_SEEDS)
+        //                        .apply(ApplyBonusLootFunction.uniformBonusCount(Enchantments.FORTUNE, 2))
+        //                        .apply(ExplosionDecayLootFunction.builder())
+        //                        .conditionally(RandomChanceLootCondition.builder(0.125F))
+        //                        .conditionally(InvertedLootCondition.builder(MatchToolLootCondition.builder(ItemPredicate.Builder.create().items(Items.SHEARS))))
+        //                );
+        //        tableBuilder.pool(cottonBuilder).pool(cornBuilder);
+        //    }
+//
+        //    // Abandoned Mineshaft Chest
+        //    if (LootTables.ABANDONED_MINESHAFT_CHEST.equals(id)) {
+        //        final int[] i = {0};
+        //        tableBuilder.modifyPools(builder -> {
+        //            if (i[0] == 2) {
+        //                builder.with(ItemEntry.builder(CLIMBING_ROPE).weight(5).apply(SetCountLootFunction.builder(UniformLootNumberProvider.create(2, 16))));
+        //            }
+        //            i[0]++;
+        //        });
+        //    }
+//
+        //    // Village Toolsmith and Weaponsmith Chests
+        //    if (LootTables.VILLAGE_TOOLSMITH_CHEST.equals(id) || LootTables.VILLAGE_WEAPONSMITH_CHEST.equals(id)) {
+        //        tableBuilder.modifyPools( builder -> builder
+        //                .with(ItemEntry.builder(STEEL_INGOT).weight(3).apply(SetCountLootFunction.builder(UniformLootNumberProvider.create(1, 4))))
+        //        );
+        //        LootPool.Builder smithingTemplateBuilder = LootPool.builder()
+        //                .with(ItemEntry.builder(TOOL_GILD_SMITHING_TEMPLATE).apply(SetCountLootFunction.builder(UniformLootNumberProvider.create(2, 3))));
+        //        tableBuilder.pool(smithingTemplateBuilder);
+        //        LootPool.Builder gildMaterialBuilder = LootPool.builder()
+        //                .with(ItemEntry.builder(Items.COPPER_INGOT).apply(SetCountLootFunction.builder(UniformLootNumberProvider.create(2, 4))))
+        //                .with(ItemEntry.builder(Items.AMETHYST_SHARD).apply(SetCountLootFunction.builder(UniformLootNumberProvider.create(2, 4))))
+        //                .with(ItemEntry.builder(Items.EMERALD).apply(SetCountLootFunction.builder(UniformLootNumberProvider.create(2, 4))));
+        //        tableBuilder.pool(gildMaterialBuilder);
+//
+        //    }
+//
+        //    // Savannah and Desert Village House Chests
+        //    if (LootTables.VILLAGE_SAVANNA_HOUSE_CHEST.equals(id) || LootTables.VILLAGE_DESERT_HOUSE_CHEST.equals(id)) {
+        //        tableBuilder.modifyPools( builder -> builder.with(ItemEntry.builder(CORN).weight(5).apply(SetCountLootFunction.builder(UniformLootNumberProvider.create(1, 4)))));
+        //    }
+//
+        //    // Jungle Temple Chest
+        //    if (LootTables.JUNGLE_TEMPLE_CHEST.equals(id)) {
+        //        final int[] i = {0};
+        //        tableBuilder.modifyPools(builder -> {
+        //            if (i[0] == 0) {
+        //                builder.with(ItemEntry.builder(STEEL_INGOT).weight(5).apply(SetCountLootFunction.builder(UniformLootNumberProvider.create(2, 5))));
+        //            }
+        //            i[0]++;
+        //        });
+        //    }
+//
+        //    // End City Chest
+        //    if (LootTables.END_CITY_TREASURE_CHEST.equals(id)) {
+        //        final int[] i = {0};
+        //        tableBuilder.modifyPools(builder -> {
+        //            if (i[0] == 0) {
+        //                builder.with(ItemEntry.builder(IOLITE).weight(5).apply(SetCountLootFunction.builder(UniformLootNumberProvider.create(1, 4))))
+        //                .with(ItemEntry.builder(STEEL_INGOT).weight(10).apply(SetCountLootFunction.builder(UniformLootNumberProvider.create(3, 6))));
+        //            }
+        //            i[0]++;
+        //        });
+        //    }
+//
+        //    // Ancient City Loot
+        //    if (LootTables.ANCIENT_CITY_CHEST.equals(id)) {
+        //        final int[] i = {0};
+        //        tableBuilder.modifyPools(builder -> {
+        //            if (i[0] == 0) {
+        //                builder.with(ItemEntry.builder(EMERALD_DIAMOND_TOOL_SET.HOE())
+        //                        .weight(2)
+        //                        .apply(SetCountLootFunction.builder(ConstantLootNumberProvider.create(1)))
+        //                        .apply(SetDamageLootFunction.builder(UniformLootNumberProvider.create(0.8F, 1), false))
+        //                );
+        //            }
+        //            i[0]++;
+        //        });
+        //    }
+//
+        //    // Zombie Loot
+        //    if (EntityType.ZOMBIE.getLootTableId().equals(id) || EntityType.HUSK.getLootTableId().equals(id)) {
+        //        final int[] i = {0};
+        //        tableBuilder.modifyPools(builder -> {
+        //            if (i[0] == 1) {
+        //                builder.with(ItemEntry.builder(CORN).apply(
+        //                        FurnaceSmeltLootFunction.builder().conditionally(
+        //                                EntityPropertiesLootCondition.builder(
+        //                                        LootContext.EntityTarget.THIS, EntityPredicate.Builder.create().flags(EntityFlagsPredicate.Builder.create().onFire(true))
+        //                                )
+        //                        )
+        //                ));
+        //            }
+        //            i[0]++;
+        //        });
+        //    }
+        //});
     }
 
 }

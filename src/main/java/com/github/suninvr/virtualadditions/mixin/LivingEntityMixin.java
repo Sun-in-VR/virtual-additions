@@ -3,6 +3,7 @@ package com.github.suninvr.virtualadditions.mixin;
 import com.github.suninvr.virtualadditions.interfaces.LivingEntityInterface;
 import com.github.suninvr.virtualadditions.item.GildTypes;
 import com.github.suninvr.virtualadditions.item.interfaces.GildedToolItem;
+import com.github.suninvr.virtualadditions.registry.VABlockTags;
 import com.github.suninvr.virtualadditions.registry.VABlocks;
 import com.github.suninvr.virtualadditions.registry.VAGameRules;
 import com.github.suninvr.virtualadditions.registry.VAStatusEffects;
@@ -67,7 +68,7 @@ public abstract class LivingEntityMixin extends Entity implements LivingEntityIn
             if (this.getWorld().getBlockState(this.getBlockPos()).getCollisionShape(this.getWorld(), this.getBlockPos()).equals(VoxelShapes.empty())) {
                 BlockPos blockPos = this.getBlockPos().down();
                 BlockState state = this.getWorld().getBlockState(blockPos);
-                if (state.isOf(VABlocks.CLIMBING_ROPE_ANCHOR)) cir.setReturnValue(true);
+                if (state.isIn(VABlockTags.CLIMBING_ROPES)) cir.setReturnValue(true);
             }
         }
     }

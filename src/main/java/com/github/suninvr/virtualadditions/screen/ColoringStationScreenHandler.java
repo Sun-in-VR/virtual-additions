@@ -257,6 +257,7 @@ public class ColoringStationScreenHandler extends ScreenHandler {
         ItemStack dyeStack = this.dyeSlot.getStack();
         if (this.dyeSlot.hasStack()) {
             this.dyeContents.addDye(dyeStack);
+            this.populateResult();
         }
     }
 

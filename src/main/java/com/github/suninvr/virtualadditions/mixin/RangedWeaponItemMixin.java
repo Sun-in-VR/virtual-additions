@@ -1,5 +1,6 @@
 package com.github.suninvr.virtualadditions.mixin;
 
+import com.github.suninvr.virtualadditions.registry.VAItemTags;
 import com.github.suninvr.virtualadditions.registry.VAItems;
 import com.llamalad7.mixinextras.sugar.Local;
 import com.llamalad7.mixinextras.sugar.ref.LocalIntRef;
@@ -20,7 +21,7 @@ import java.util.function.Predicate;
 @Mixin(RangedWeaponItem.class)
 public class RangedWeaponItemMixin {
     @Unique
-    private static final Predicate<ItemStack> climbingRopePredicate = (itemStack -> itemStack.isOf(VAItems.CLIMBING_ROPE));
+    private static final Predicate<ItemStack> climbingRopePredicate = (itemStack -> itemStack.isIn(VAItemTags.CLIMBING_ROPES));
 
     @Inject(at = @At("HEAD"), method = "getHeldProjectile", cancellable = true)
     private static void virtualAdditions$getHeldProjectile(LivingEntity entity, Predicate<ItemStack> predicate, CallbackInfoReturnable<ItemStack> cir) {

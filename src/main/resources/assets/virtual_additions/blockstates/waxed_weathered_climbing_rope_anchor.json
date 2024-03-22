@@ -1,0 +1,39 @@
+ 
+{
+    "variants": {
+     "facing=north,half=top":{
+        "model": "virtual_additions:block/weathered_climbing_rope_anchor"
+     },
+     "facing=south,half=top": {
+        "model": "virtual_additions:block/weathered_climbing_rope_anchor",
+       "y": 180
+     },
+     "facing=east,half=top": {
+        "model": "virtual_additions:block/weathered_climbing_rope_anchor",
+        "y": 90
+     },
+     "facing=west,half=top": {
+        "model": "virtual_additions:block/weathered_climbing_rope_anchor",
+        "y": 270
+     },
+      "facing=north,half=bottom":{
+        "model": "virtual_additions:block/weathered_climbing_rope_anchor_low"
+      },
+      "facing=south,half=bottom": {
+        "model": "virtual_additions:block/weathered_climbing_rope_anchor_low",
+        "y": 180
+      },
+      "facing=east,half=bottom": {
+        "model": "virtual_additions:block/weathered_climbing_rope_anchor_low",
+        "y": 90
+      },
+      "facing=west,half=bottom": {
+        "model": "virtual_additions:block/weathered_climbing_rope_anchor_low",
+        "y": 270
+      },
+     "facing=up": {
+        "model": "virtual_additions:block/weathered_climbing_rope_anchor_up"
+     }
+
+    }
+}

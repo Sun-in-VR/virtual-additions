@@ -234,6 +234,17 @@ public final class VAItemTagProvider {
                     Items.PINK_SHULKER_BOX
             );
 
+            getOrCreateTagBuilder(VAItemTags.CLIMBING_ROPES).add(
+                    VAItems.CLIMBING_ROPE,
+                    VAItems.EXPOSED_CLIMBING_ROPE,
+                    VAItems.WEATHERED_CLIMBING_ROPE,
+                    VAItems.OXIDIZED_CLIMBING_ROPE,
+                    VAItems.WAXED_CLIMBING_ROPE,
+                    VAItems.WAXED_EXPOSED_CLIMBING_ROPE,
+                    VAItems.WAXED_WEATHERED_CLIMBING_ROPE,
+                    VAItems.WAXED_OXIDIZED_CLIMBING_ROPE
+            );
+
             configureBlockFamilies(
                     VACollections.CUT_STEEL,
                     VACollections.COBBLED_HORNFELS,

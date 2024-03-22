@@ -128,7 +128,7 @@ public class ClimbingRopeAnchorBlock extends Block implements Waterloggable {
     @Override
     public void neighborUpdate(BlockState state, World world, BlockPos pos, Block sourceBlock, BlockPos sourcePos, boolean notify) {
         if (state.get(WATERLOGGED)) world.scheduleFluidTick(pos, Fluids.WATER, Fluids.WATER.getTickRate(world));
-        if (!state.canPlaceAt(world, pos)) world.scheduleBlockTick(pos, VABlocks.CLIMBING_ROPE_ANCHOR, 1);
+        if (!state.canPlaceAt(world, pos)) world.scheduleBlockTick(pos, this, 1);
     }
 
     @Override

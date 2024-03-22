@@ -97,6 +97,13 @@ public class VARenderers {
 
         BlockRenderLayerMap.INSTANCE.putBlocks(RenderLayer.getCutout(),
                 VABlocks.CLIMBING_ROPE_ANCHOR,
+                VABlocks.EXPOSED_CLIMBING_ROPE_ANCHOR,
+                VABlocks.WEATHERED_CLIMBING_ROPE_ANCHOR,
+                VABlocks.OXIDIZED_CLIMBING_ROPE_ANCHOR,
+                VABlocks.WAXED_CLIMBING_ROPE_ANCHOR,
+                VABlocks.WAXED_EXPOSED_CLIMBING_ROPE_ANCHOR,
+                VABlocks.WAXED_WEATHERED_CLIMBING_ROPE_ANCHOR,
+                VABlocks.WAXED_OXIDIZED_CLIMBING_ROPE_ANCHOR,
                 VABlocks.CLIMBING_ROPE,
                 VABlocks.AEROBLOOM_DOOR,
                 VABlocks.AEROBLOOM_TRAPDOOR,

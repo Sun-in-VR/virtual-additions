@@ -15,6 +15,7 @@ import net.minecraft.recipe.Recipe;
 import net.minecraft.recipe.RecipeSerializer;
 import net.minecraft.recipe.RecipeType;
 import net.minecraft.registry.DynamicRegistryManager;
+import net.minecraft.registry.RegistryWrapper;
 import net.minecraft.util.dynamic.Codecs;
 import net.minecraft.world.World;
 
@@ -44,7 +45,7 @@ public class ColoringRecipe implements Recipe<Inventory>, ColoringStationRecipe 
     }
 
     @Override
-    public ItemStack craft(Inventory inventory, DynamicRegistryManager registryManager) {
+    public ItemStack craft(Inventory inventory, RegistryWrapper.WrapperLookup wrapperLookup) {
         ItemStack stack = inventory.getStack(1);
         if (stack.getItem() instanceof BlockItem blockItem && blockItem.getBlock() instanceof ShulkerBoxBlock) {
             return stack.copyComponentsToNewStack(this.result.getItem(), this.result.getCount());
@@ -65,7 +66,7 @@ public class ColoringRecipe implements Recipe<Inventory>, ColoringStationRecipe 
     }
 
     @Override
-    public ItemStack getResult(DynamicRegistryManager registryManager) {
+    public ItemStack getResult(RegistryWrapper.WrapperLookup wrapperLookup) {
         return this.result;
     }
 

@@ -43,7 +43,7 @@ public final class VABlockTagProvider {
             getOrCreateTagBuilder(BlockTags.SWORD_EFFICIENT).addOptionalTag(HEDGES);
             getOrCreateTagBuilder(BlockTags.FLOWERS).add(VABlocks.CHERRY_HEDGE, VABlocks.FLOWERING_AZALEA_HEDGE);
             getOrCreateTagBuilder(BlockTags.BEACON_BASE_BLOCKS).add(VABlocks.STEEL_BLOCK, VABlocks.IOLITE_BLOCK);
-            getOrCreateTagBuilder(BlockTags.CLIMBABLE).add(VABlocks.CLIMBING_ROPE, VABlocks.CLIMBING_ROPE_ANCHOR);
+            getOrCreateTagBuilder(BlockTags.CLIMBABLE).add(VABlocks.CLIMBING_ROPE, VABlocks.CLIMBING_ROPE_ANCHOR, VABlocks.EXPOSED_CLIMBING_ROPE_ANCHOR, VABlocks.WEATHERED_CLIMBING_ROPE_ANCHOR, VABlocks.OXIDIZED_CLIMBING_ROPE_ANCHOR, VABlocks.WAXED_CLIMBING_ROPE_ANCHOR, VABlocks.WAXED_EXPOSED_CLIMBING_ROPE_ANCHOR, VABlocks.WAXED_WEATHERED_CLIMBING_ROPE_ANCHOR);
             getOrCreateTagBuilder(BlockTags.COMBINATION_STEP_SOUND_BLOCKS).add(VABlocks.WEBBED_SILK);
             getOrCreateTagBuilder(BlockTags.CROPS).add(VABlocks.CORN_CROP, VABlocks.COTTON);
             getOrCreateTagBuilder(BlockTags.DEEPSLATE_ORE_REPLACEABLES).add(VABlocks.HORNFELS, VABlocks.BLUESCHIST, VABlocks.SYENITE);
@@ -75,6 +75,13 @@ public final class VABlockTagProvider {
 
             getOrCreateTagBuilder(BlockTags.PICKAXE_MINEABLE)
                     .add(VABlocks.CLIMBING_ROPE_ANCHOR)
+                    .add(VABlocks.EXPOSED_CLIMBING_ROPE_ANCHOR)
+                    .add(VABlocks.WEATHERED_CLIMBING_ROPE_ANCHOR)
+                    .add(VABlocks.OXIDIZED_CLIMBING_ROPE_ANCHOR)
+                    .add(VABlocks.WAXED_CLIMBING_ROPE_ANCHOR)
+                    .add(VABlocks.WAXED_EXPOSED_CLIMBING_ROPE_ANCHOR)
+                    .add(VABlocks.WAXED_WEATHERED_CLIMBING_ROPE_ANCHOR)
+                    .add(VABlocks.WAXED_OXIDIZED_CLIMBING_ROPE_ANCHOR)
                     .add(VABlocks.SPOTLIGHT)
                     .add(VABlocks.ROCK_SALT_BLOCK)
                     .add(VABlocks.ROCK_SALT_CRYSTAL);
@@ -115,6 +122,8 @@ public final class VABlockTagProvider {
                     VACollections.SYENITE_BRICKS
             );
 
+            getOrCreateTagBuilder(VABlockTags.INCORRECT_FOR_STEEL_TOOL).addOptionalTag(BlockTags.NEEDS_DIAMOND_TOOL);
+
             getOrCreateTagBuilder(VABlockTags.ACID_UNBREAKABLE).add(
                             Blocks.BARRIER,
                             Blocks.BEDROCK,
@@ -127,6 +136,13 @@ public final class VABlockTagProvider {
 
             getOrCreateTagBuilder(VABlockTags.CLIMBING_ROPES).add(
                     VABlocks.CLIMBING_ROPE_ANCHOR,
+                    VABlocks.EXPOSED_CLIMBING_ROPE_ANCHOR,
+                    VABlocks.WEATHERED_CLIMBING_ROPE_ANCHOR,
+                    VABlocks.OXIDIZED_CLIMBING_ROPE_ANCHOR,
+                    VABlocks.WAXED_CLIMBING_ROPE_ANCHOR,
+                    VABlocks.WAXED_EXPOSED_CLIMBING_ROPE_ANCHOR,
+                    VABlocks.WAXED_WEATHERED_CLIMBING_ROPE_ANCHOR,
+                    VABlocks.WAXED_OXIDIZED_CLIMBING_ROPE_ANCHOR,
                     VABlocks.CLIMBING_ROPE
             );
 

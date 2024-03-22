@@ -1,0 +1,6 @@
+{
+  "parent": "virtual_additions:block/template_climbing_rope_anchor_low",
+  "textures": {
+    "anchor": "virtual_additions:block/oxidized_climbing_rope_anchor"
+  }
+}

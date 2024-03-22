@@ -66,6 +66,13 @@ public final class VABlockLootTableProvider {
 
             addSimpleDrops(
                     VABlocks.CLIMBING_ROPE_ANCHOR,
+                    VABlocks.EXPOSED_CLIMBING_ROPE_ANCHOR,
+                    VABlocks.WEATHERED_CLIMBING_ROPE_ANCHOR,
+                    VABlocks.OXIDIZED_CLIMBING_ROPE_ANCHOR,
+                    VABlocks.WAXED_CLIMBING_ROPE_ANCHOR,
+                    VABlocks.WAXED_EXPOSED_CLIMBING_ROPE_ANCHOR,
+                    VABlocks.WAXED_WEATHERED_CLIMBING_ROPE_ANCHOR,
+                    VABlocks.WAXED_OXIDIZED_CLIMBING_ROPE_ANCHOR,
                     VABlocks.RAW_STEEL_BLOCK,
                     VABlocks.STEEL_BLOCK,
                     VABlocks.STEEL_FENCE,
@@ -234,14 +241,14 @@ public final class VABlockLootTableProvider {
 
         @Override
         public void addDrop(Block block, LootTable.Builder lootTable) {
-            this.lootTables.put(block.getLootTableId(), lootTable.randomSequenceId(block.getLootTableId()));
+            this.lootTables.put(block.getLootTableId(), lootTable.randomSequenceId(block.getLootTableId().getValue()));
         }
 
         @Override
         public LootTable.Builder oreDrops(Block dropWithSilkTouch, Item drop) {
             return BlockLootTableGenerator
                     .dropsWithSilkTouch(dropWithSilkTouch, this.applyExplosionDecay(dropWithSilkTouch, ItemEntry.builder(drop).apply(ApplyBonusLootFunction.oreDrops(Enchantments.FORTUNE))))
-                    .randomSequenceId(dropWithSilkTouch.getLootTableId());
+                    .randomSequenceId(dropWithSilkTouch.getLootTableId().getValue());
         }
     }
 }

@@ -202,12 +202,13 @@ public class ColoringStationBlockEntity extends BlockEntity implements NamedScre
         }
 
         public boolean canAdd(DyeContents contents) {
-            if (this.getR() + contents.getR() > 1024) return false;
-            if (this.getG() + contents.getG() > 1024) return false;
-            if (this.getB() + contents.getB() > 1024) return false;
-            if (this.getY() + contents.getY() > 1024) return false;
-            if (this.getK() + contents.getK() > 1024) return false;
-            if (this.getW() + contents.getW() > 1024) return false;
+            int R, G, B, Y, K, W;
+            if ((R = this.getR() + contents.getR()) > 1024 || R < 0) return false;
+            if ((G = this.getG() + contents.getG()) > 1024 || G < 0) return false;
+            if ((B = this.getB() + contents.getB()) > 1024 || B < 0) return false;
+            if ((Y = this.getY() + contents.getY()) > 1024 || Y < 0) return false;
+            if ((K = this.getK() + contents.getK()) > 1024 || K < 0) return false;
+            if ((W = this.getW() + contents.getW()) > 1024 || W < 0) return false;
             return true;
         }
 

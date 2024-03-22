@@ -20,6 +20,7 @@ public class VABlockTags {
     public static final TagKey<Block> FLOATROCK_ORE_REPLACEABLES = register("floatrock_ore_replaceables");
     public static final TagKey<Block> SKYLANDS_CARVER_REPLACEABLES = register("skylands_carver_replaceables");
     public static final TagKey<Block> NO_FOLIAGE_WORLDGEN = register("no_foliage_worldgen");
+    public static final TagKey<Block> INCORRECT_FOR_STEEL_TOOL = register("incorrect_for_steel_tool");
 
     private static TagKey<Block> register(String id) {
         return TagKey.of(Registries.BLOCK.getKey(), idOf(id));

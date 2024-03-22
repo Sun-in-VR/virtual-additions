@@ -1,8 +1,12 @@
 package com.github.suninvr.virtualadditions.item.materials;
 
+import com.github.suninvr.virtualadditions.registry.VABlockTags;
 import com.github.suninvr.virtualadditions.registry.VAItems;
+import net.minecraft.block.Block;
 import net.minecraft.item.ToolMaterial;
 import net.minecraft.recipe.Ingredient;
+import net.minecraft.registry.tag.BlockTags;
+import net.minecraft.registry.tag.TagKey;
 
 public class SteelToolMaterial implements ToolMaterial {
     public static final SteelToolMaterial INSTANCE = new SteelToolMaterial();
@@ -23,8 +27,8 @@ public class SteelToolMaterial implements ToolMaterial {
     }
 
     @Override
-    public int getMiningLevel() {
-        return 2;
+    public TagKey<Block> getInverseTag() {
+        return VABlockTags.INCORRECT_FOR_STEEL_TOOL;
     }
 
     @Override

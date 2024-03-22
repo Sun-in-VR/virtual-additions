@@ -87,6 +87,10 @@ class VAModelProvider extends FabricModelProvider {
 
         itemModelGenerator.register(VAItems.CORN_SEEDS, Models.GENERATED);
 
+        itemModelGenerator.register(VAItems.EXPOSED_CLIMBING_ROPE, Models.GENERATED);
+        itemModelGenerator.register(VAItems.WEATHERED_CLIMBING_ROPE, Models.GENERATED);
+        itemModelGenerator.register(VAItems.OXIDIZED_CLIMBING_ROPE, Models.GENERATED);
+
     }
 
     private void registerColorfulBlockSetModels(BlockStateModelGenerator g, ColorfulBlockSet s) {

@@ -2,6 +2,7 @@ package com.github.suninvr.virtualadditions.item;
 
 import com.google.common.collect.ImmutableMultimap;
 import com.google.common.collect.Multimap;
+import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.component.DataComponentTypes;
 import net.minecraft.component.type.AttributeModifierSlot;
@@ -142,7 +143,6 @@ public class GildType {
         int durability = baseMaterial.getDurability();
         float miningSpeed = baseMaterial.getMiningSpeedMultiplier();
         float attackDamage = baseMaterial.getAttackDamage();
-        int miningLevel = baseMaterial.getMiningLevel();
         int enchantability = baseMaterial.getEnchantability();
 
         for (Modifier modifier : this.modifiers) {
@@ -150,12 +150,11 @@ public class GildType {
                 case DURABILITY -> durability = modifier.apply(durability, baseItem);
                 case MINING_SPEED -> miningSpeed = modifier.apply(miningSpeed, baseItem);
                 case ATTACK_DAMAGE -> attackDamage = modifier.apply(attackDamage, baseItem);
-                case MINING_LEVEL -> miningLevel = modifier.apply(miningLevel, baseItem);
                 case ENCHANTABILITY -> enchantability = modifier.apply(enchantability, baseItem);
             }
         }
 
-        return new ModifiedToolMaterial(miningLevel, durability, miningSpeed, attackDamage, enchantability, baseMaterial.getRepairIngredient());
+        return new ModifiedToolMaterial(baseMaterial.getInverseTag(), durability, miningSpeed, attackDamage, enchantability, baseMaterial.getRepairIngredient());
     }
 
     public AttributeModifiersComponent createAttributeModifiers(Item baseItem) {
@@ -293,7 +292,6 @@ public class GildType {
         DURABILITY,
         MINING_SPEED,
         ATTACK_DAMAGE,
-        MINING_LEVEL,
         ENCHANTABILITY,
         ATTACK_SPEED(false),
         BLOCK_INTERACTION_RANGE(false),
@@ -354,15 +352,15 @@ public class GildType {
     }
 
     public static class ModifiedToolMaterial implements ToolMaterial {
-        private final int miningLevel;
+        private final TagKey<Block> inverseTag;
         private final int itemDurability;
         private final float miningSpeed;
         private final float attackDamage;
         private final int enchantability;
         private final Ingredient repairIngredient;
         
-        public ModifiedToolMaterial(int miningLevel, int itemDurability, float miningSpeed, float attackDamage, int enchantability, Ingredient repairIngredient) {
-            this.miningLevel = miningLevel;
+        public ModifiedToolMaterial(TagKey<Block> inverseTag, int itemDurability, float miningSpeed, float attackDamage, int enchantability, Ingredient repairIngredient) {
+            this.inverseTag = inverseTag;
             this.itemDurability = itemDurability;
             this.miningSpeed = miningSpeed;
             this.attackDamage = attackDamage;
@@ -386,8 +384,8 @@ public class GildType {
         }
 
         @Override
-        public int getMiningLevel() {
-            return this.miningLevel;
+        public TagKey<Block> getInverseTag() {
+            return this.inverseTag;
         }
 
         @Override

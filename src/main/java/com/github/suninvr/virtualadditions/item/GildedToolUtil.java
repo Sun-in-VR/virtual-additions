@@ -1,6 +1,7 @@
 package com.github.suninvr.virtualadditions.item;
 
 import com.github.suninvr.virtualadditions.item.interfaces.GildedToolItem;
+import net.minecraft.component.DataComponentTypes;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NbtCompound;
@@ -8,7 +9,7 @@ import net.minecraft.nbt.NbtCompound;
 public class GildedToolUtil {
     public static Item.Settings settingsOf(Item item, GildType type) {
         Item.Settings settings = new Item.Settings();
-        if (item.isFireproof()) settings = settings.fireproof();
+        if (item.getComponents().contains(DataComponentTypes.FIRE_RESISTANT)) settings.fireproof();
         return settings.attributeModifiers(type.createAttributeModifiers(item));
     }
 

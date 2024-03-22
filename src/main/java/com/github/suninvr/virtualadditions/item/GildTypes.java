@@ -83,9 +83,6 @@ public class GildTypes {
     public static GildType.Modifier attackDamageModifier(float value, BiFunction<Float, Float, Float> function, GildType.ModifierType.ToolType... appliesTo) {
         return new GildType.Modifier(GildType.ModifierType.ATTACK_DAMAGE, value, function, appliesTo);
     }
-    public static GildType.Modifier miningLevelModifier(float value, BiFunction<Float, Float, Float> function, GildType.ModifierType.ToolType... appliesTo) {
-        return new GildType.Modifier(GildType.ModifierType.MINING_LEVEL, value, function, appliesTo);
-    }
     public static GildType.Modifier enchantabilityModifier(float value, BiFunction<Float, Float, Float> function, GildType.ModifierType.ToolType... appliesTo) {
         return new GildType.Modifier(GildType.ModifierType.ENCHANTABILITY, value, function, appliesTo);
     }

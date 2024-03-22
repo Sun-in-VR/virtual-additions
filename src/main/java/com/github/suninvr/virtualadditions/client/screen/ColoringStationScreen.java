@@ -14,6 +14,7 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.recipe.RecipeEntry;
 import net.minecraft.screen.slot.Slot;
 import net.minecraft.sound.SoundEvents;
+import net.minecraft.text.MutableText;
 import net.minecraft.text.Text;
 import net.minecraft.util.Formatting;
 import net.minecraft.util.Identifier;
@@ -29,9 +30,26 @@ public class ColoringStationScreen extends HandledScreen<ColoringStationScreenHa
     private static final Identifier SCROLLER_DISABLED_TEXTURE = new Identifier("container/stonecutter/scroller_disabled");
     private static final Identifier RECIPE_SELECTED_TEXTURE = new Identifier("container/stonecutter/recipe_selected");
     private static final Identifier RECIPE_HIGHLIGHTED_TEXTURE = new Identifier("container/stonecutter/recipe_highlighted");
+    private static final Identifier RECIPE_UNCRAFTABLE_TEXTURE = idOf("container/coloring_station/recipe_uncraftable");
     private static final Identifier RECIPE_TEXTURE = new Identifier("container/stonecutter/recipe");
     private static final Identifier DYE_SLOT_TEXTURE = new Identifier("container/loom/dye_slot");
     private static final Identifier TEXTURE = idOf("textures/gui/container/coloring_station.png");
+    private static final Text NOT_ENOUGH_DYE_WARNING = Text.translatable("container.virtual_additions.coloring_station.not_enough_dye_warning").formatted(Formatting.RED);
+    private static final Text DYE_SLOT_HINT = Text.translatable("container.virtual_additions.coloring_station.dye_slot_hint");
+    private static final Text ITEM_SLOT_HINT = Text.translatable("container.virtual_additions.coloring_station.item_slot_hint");
+    private static int K = 0, W = 0, R = 0, G = 0, B = 0, Y = 0;
+    private static final String INDICATOR_BLACK = "container.virtual_additions.coloring_station.indicator.black";
+    private static final String INDICATOR_WHITE = "container.virtual_additions.coloring_station.indicator.white";
+    private static final String INDICATOR_RED = "container.virtual_additions.coloring_station.indicator.red";
+    private static final String INDICATOR_GREEN = "container.virtual_additions.coloring_station.indicator.green";
+    private static final String INDICATOR_BLUE = "container.virtual_additions.coloring_station.indicator.blue";
+    private static final String INDICATOR_YELLOW = "container.virtual_additions.coloring_station.indicator.yellow";
+    private static final String INDICATOR_ADVANCED_BLACK = "container.virtual_additions.coloring_station.indicator.advanced.black";
+    private static final String INDICATOR_ADVANCED_WHITE = "container.virtual_additions.coloring_station.indicator.advanced.white";
+    private static final String INDICATOR_ADVANCED_RED = "container.virtual_additions.coloring_station.indicator.advanced.red";
+    private static final String INDICATOR_ADVANCED_GREEN = "container.virtual_additions.coloring_station.indicator.advanced.green";
+    private static final String INDICATOR_ADVANCED_BLUE = "container.virtual_additions.coloring_station.indicator.advanced.blue";
+    private static final String INDICATOR_ADVANCED_YELLOW = "container.virtual_additions.coloring_station.indicator.advanced.yellow";
     private ColoringStationBlockEntity.DyeContents dyeContents;
     private float scrollAmount;
     private boolean mouseClicked;
@@ -110,12 +128,15 @@ public class ColoringStationScreen extends HandledScreen<ColoringStationScreenHa
                     int G = cost.getG();
                     int B = cost.getB();
                     int Y = cost.getY();
-                    if (K > 0) tooltip.add(Text.of("Black Cost: " + K / 16.0F).copy().formatted(K > this.dyeContents.getK() ? Formatting.RED : Formatting.GRAY));
-                    if (W > 0) tooltip.add(Text.of("White Cost: " + W / 16.0F).copy().formatted(W > this.dyeContents.getW() ? Formatting.RED : Formatting.GRAY));
-                    if (R > 0) tooltip.add(Text.of("Red Cost: " + R / 16.0F).copy().formatted(R > this.dyeContents.getR() ? Formatting.RED : Formatting.GRAY));
-                    if (G > 0) tooltip.add(Text.of("Green Cost: " + G / 16.0F).copy().formatted(G > this.dyeContents.getG() ? Formatting.RED : Formatting.GRAY));
-                    if (B > 0) tooltip.add(Text.of("Blue Cost: " + B / 16.0F).copy().formatted(B > this.dyeContents.getB() ? Formatting.RED : Formatting.GRAY));
-                    if (Y > 0) tooltip.add(Text.of("Yellow Cost: " + Y / 16.0F).copy().formatted(Y > this.dyeContents.getY() ? Formatting.RED : Formatting.GRAY));
+                    if (K > 0) tooltip.add(Text.of("Black Cost: " + K).copy().formatted(K > this.dyeContents.getK() ? Formatting.RED : Formatting.GRAY));
+                    if (W > 0) tooltip.add(Text.of("White Cost: " + W).copy().formatted(W > this.dyeContents.getW() ? Formatting.RED : Formatting.GRAY));
+                    if (R > 0) tooltip.add(Text.of("Red Cost: " + R).copy().formatted(R > this.dyeContents.getR() ? Formatting.RED : Formatting.GRAY));
+                    if (G > 0) tooltip.add(Text.of("Green Cost: " + G).copy().formatted(G > this.dyeContents.getG() ? Formatting.RED : Formatting.GRAY));
+                    if (B > 0) tooltip.add(Text.of("Blue Cost: " + B).copy().formatted(B > this.dyeContents.getB() ? Formatting.RED : Formatting.GRAY));
+                    if (Y > 0) tooltip.add(Text.of("Yellow Cost: " + Y).copy().formatted(Y > this.dyeContents.getY() ? Formatting.RED : Formatting.GRAY));
+                }
+                else if (!this.dyeContents.canAdd(cost.copyAndMultiply(-1))) {
+                    tooltip.add(NOT_ENOUGH_DYE_WARNING);
                 }
                 context.drawTooltip(textRenderer, tooltip, stack.getTooltipData(), x, y);
             }
@@ -123,22 +144,37 @@ public class ColoringStationScreen extends HandledScreen<ColoringStationScreenHa
         int i = this.x;
         int j = this.y;
         if (x < i + 45 && x >= i + 9 && y < j + 40 && y >= j + 34) {
-            context.drawTooltip(textRenderer, Text.of("Black Dye: " + (advanced ? this.dyeContents.getK() / 16.0F : Math.round(this.dyeContents.getK() / 16.0F)) + " / 64"), x, y);
+            K = !advanced ? (int)Math.floor(this.dyeContents.getK() / 16.0F) : this.dyeContents.getK();
+            context.drawTooltip(textRenderer, Text.translatable(advanced ? INDICATOR_ADVANCED_BLACK : INDICATOR_BLACK, K), x, y);
         }
         if (x < i + 45 && x >= i + 9 && y < j + 46 && y >= j + 40) {
-            context.drawTooltip(textRenderer, Text.of("White Dye: " + (advanced ? this.dyeContents.getW() / 16.0F : Math.round(this.dyeContents.getW() / 16.0F)) + " / 64"), x, y);
+            W = !advanced ? (int)Math.floor(this.dyeContents.getW() / 16.0F) : this.dyeContents.getW();
+            context.drawTooltip(textRenderer, Text.translatable(advanced ? INDICATOR_ADVANCED_WHITE : INDICATOR_WHITE, W), x, y);
         }
         if (x < i + 45 && x >= i + 9 && y < j + 52 && y >= j + 46) {
-            context.drawTooltip(textRenderer, Text.of("Red Dye: " + (advanced ? this.dyeContents.getR() / 16.0F : Math.round(this.dyeContents.getR() / 16.0F)) + " / 64"), x, y);
+            R = !advanced ? (int)Math.floor(this.dyeContents.getR() / 16.0F) : this.dyeContents.getR();
+            context.drawTooltip(textRenderer, Text.translatable(advanced ? INDICATOR_ADVANCED_RED : INDICATOR_RED, R), x, y);
         }
         if (x < i + 45 && x >= i + 9 && y < j + 58 && y >= j + 52) {
-            context.drawTooltip(textRenderer, Text.of("Green Dye: " + (advanced ? this.dyeContents.getG() / 16.0F : Math.round(this.dyeContents.getG() / 16.0F)) + " / 64"), x, y);
+            G = !advanced ? (int)Math.floor(this.dyeContents.getG() / 16.0F) : this.dyeContents.getG();
+            context.drawTooltip(textRenderer, Text.translatable(advanced ? INDICATOR_ADVANCED_GREEN : INDICATOR_GREEN, G), x, y);
         }
         if (x < i + 45 && x >= i + 9 && y < j + 64 && y >= j + 58) {
-            context.drawTooltip(textRenderer, Text.of("Blue Dye: " + (advanced ? this.dyeContents.getB() / 16.0F : Math.round(this.dyeContents.getB() / 16.0F)) + " / 64"), x, y);
+            B = !advanced ? (int)Math.floor(this.dyeContents.getB() / 16.0F) : this.dyeContents.getB();
+            context.drawTooltip(textRenderer, Text.translatable(advanced ? INDICATOR_ADVANCED_BLUE : INDICATOR_BLUE, B), x, y);
         }
         if (x < i + 45 && x >= i + 9 && y < j + 70 && y >= j + 64) {
-            context.drawTooltip(textRenderer, Text.of("Yellow Dye: " + (advanced ? this.dyeContents.getY() / 16.0F : Math.round(this.dyeContents.getY() / 16.0F)) + " / 64"), x, y);
+            Y = !advanced ? (int)Math.floor(this.dyeContents.getY() / 16.0F) : this.dyeContents.getY();
+            context.drawTooltip(textRenderer, Text.translatable(advanced ? INDICATOR_ADVANCED_YELLOW : INDICATOR_YELLOW, Y), x, y);
+        }
+        int k = 0;
+        boolean bl = this.focusedSlot != null;
+        if (bl) k = this.focusedSlot.id;
+        if (bl && k == 0 && !this.focusedSlot.hasStack()) {
+            context.drawTooltip(textRenderer, DYE_SLOT_HINT, x, y);
+        }
+        if (bl && k == 1 && !this.focusedSlot.hasStack()) {
+            context.drawTooltip(textRenderer, ITEM_SLOT_HINT, x, y);
         }
     }
 
@@ -148,7 +184,8 @@ public class ColoringStationScreen extends HandledScreen<ColoringStationScreenHa
             int k = x + j % 4 * 16;
             int l = j / 4;
             int m = y + l * 18 + 2;
-            Identifier identifier = i == (this.handler).getSelectedRecipe() ? RECIPE_SELECTED_TEXTURE : (mouseX >= k && mouseY >= m && mouseX < k + 16 && mouseY < m + 18 ? RECIPE_HIGHLIGHTED_TEXTURE : RECIPE_TEXTURE);
+            //Identifier identifier = i == (this.handler).getSelectedRecipe() ? RECIPE_SELECTED_TEXTURE : (mouseX >= k && mouseY >= m && mouseX < k + 16 && mouseY < m + 18 ? RECIPE_HIGHLIGHTED_TEXTURE : RECIPE_TEXTURE);
+            Identifier identifier = this.dyeContents.canAdd(this.handler.getAvailableRecipes().get(i).value().getDyeCost(false)) ? (i == (this.handler).getSelectedRecipe() ? RECIPE_SELECTED_TEXTURE : mouseX >= k && mouseY >= m && mouseX < k + 16 && mouseY < m + 18 ? RECIPE_HIGHLIGHTED_TEXTURE : RECIPE_TEXTURE) : RECIPE_UNCRAFTABLE_TEXTURE;
             context.drawGuiTexture(identifier, k, m - 1, 16, 18);
         }
     }

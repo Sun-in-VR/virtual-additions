@@ -306,6 +306,11 @@ public final class VARecipeProvider {
                     .input('#', Items.COPPER_INGOT).input('s', Items.STRING)
                     .criterion("copper_ingot", conditionsFromItem(Items.COPPER_INGOT)).offerTo(exporter);
 
+            ShapelessRecipeJsonBuilder.create(RecipeCategory.TOOLS, VAItems.WAXED_CLIMBING_ROPE, 1).input(VAItems.CLIMBING_ROPE).input(Items.HONEYCOMB).criterion("has_rope", conditionsFromItem(VAItems.CLIMBING_ROPE)).offerTo(exporter);
+            ShapelessRecipeJsonBuilder.create(RecipeCategory.TOOLS, VAItems.WAXED_EXPOSED_CLIMBING_ROPE, 1).input(VAItems.EXPOSED_CLIMBING_ROPE).input(Items.HONEYCOMB).criterion("has_rope", conditionsFromItem(VAItems.EXPOSED_CLIMBING_ROPE)).offerTo(exporter);
+            ShapelessRecipeJsonBuilder.create(RecipeCategory.TOOLS, VAItems.WAXED_WEATHERED_CLIMBING_ROPE, 1).input(VAItems.WEATHERED_CLIMBING_ROPE).input(Items.HONEYCOMB).criterion("has_rope", conditionsFromItem(VAItems.WEATHERED_CLIMBING_ROPE)).offerTo(exporter);
+            ShapelessRecipeJsonBuilder.create(RecipeCategory.TOOLS, VAItems.WAXED_OXIDIZED_CLIMBING_ROPE, 1).input(VAItems.OXIDIZED_CLIMBING_ROPE).input(Items.HONEYCOMB).criterion("has_rope", conditionsFromItem(VAItems.OXIDIZED_CLIMBING_ROPE)).offerTo(exporter);
+
             ShapedRecipeJsonBuilder.create(RecipeCategory.BUILDING_BLOCKS, VABlocks.SILKBULB, 1)
                     .pattern("###")
                     .pattern("#b#")

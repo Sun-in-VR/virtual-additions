@@ -16,6 +16,7 @@ import net.minecraft.recipe.Recipe;
 import net.minecraft.recipe.RecipeSerializer;
 import net.minecraft.recipe.RecipeType;
 import net.minecraft.registry.DynamicRegistryManager;
+import net.minecraft.registry.RegistryWrapper;
 import net.minecraft.registry.tag.ItemTags;
 import net.minecraft.util.DyeColor;
 import net.minecraft.util.dynamic.Codecs;
@@ -60,7 +61,12 @@ public class ArmorColoringRecipe implements Recipe<Inventory>, ColoringStationRe
         return contents;
     }
 
+    @Override
     public ItemStack getResultStack(DynamicRegistryManager registryManager, ItemStack input) {
+        return getResultStack(input);
+    }
+
+    public ItemStack getResultStack(ItemStack input) {
         if (!input.isEmpty() && this.dyeItem != null) {
             ItemStack result = input.copy();
             return DyedColorComponent.setColor(result, List.of(this.dyeItem));
@@ -69,9 +75,9 @@ public class ArmorColoringRecipe implements Recipe<Inventory>, ColoringStationRe
     }
 
     @Override
-    public ItemStack craft(Inventory inventory, DynamicRegistryManager registryManager) {
+    public ItemStack craft(Inventory inventory, RegistryWrapper.WrapperLookup wrapperLookup) {
         ItemStack stack = inventory.getStack(1);
-        return this.getResultStack(registryManager, stack);
+        return this.getResultStack( stack);
     }
 
     @Override
@@ -80,7 +86,7 @@ public class ArmorColoringRecipe implements Recipe<Inventory>, ColoringStationRe
     }
 
     @Override
-    public ItemStack getResult(DynamicRegistryManager registryManager) {
+    public ItemStack getResult(RegistryWrapper.WrapperLookup wrapperLookup) {
         return ItemStack.EMPTY;
     }
 

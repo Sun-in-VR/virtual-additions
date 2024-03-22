@@ -1,12 +1,17 @@
 package com.github.suninvr.virtualadditions.registry;
 
 import com.github.suninvr.virtualadditions.registry.collection.ColorfulBlockSet;
+import com.google.common.base.Suppliers;
+import com.google.common.collect.BiMap;
+import com.google.common.collect.ImmutableBiMap;
 import net.minecraft.block.Block;
 import net.minecraft.data.family.BlockFamilies;
 import net.minecraft.data.family.BlockFamily;
 import net.minecraft.item.Items;
 
 import java.util.ArrayList;
+import java.util.Map;
+import java.util.function.Supplier;
 
 import static com.github.suninvr.virtualadditions.registry.VABlocks.*;
 import static net.minecraft.block.Blocks.*;
@@ -54,6 +59,11 @@ public class VACollections {
     public static final ColorfulBlockSet MAGENTA;
     public static final ColorfulBlockSet PINK;
 
+    public static final Supplier<ImmutableBiMap<Block, Block>> CLIMBING_ROPE_OXIDIZATION_INCREASES;
+    public static final Supplier<ImmutableBiMap<Block, Block>> CLIMBING_ROPE_OXIDIZATION_DECREASES;
+    public static final Supplier<ImmutableBiMap<Block, Block>> UNWAXED_TO_WAXED_CLIMBING_ROPES;
+    public static final Supplier<ImmutableBiMap<Block, Block>> WAXED_TO_UNWAXED_CLIMBING_ROPES;
+
     static {
         CUT_STEEL = register(VABlocks.CUT_STEEL).stairs(VABlocks.CUT_STEEL_STAIRS).slab(VABlocks.CUT_STEEL_SLAB).customFence(VABlocks.STEEL_FENCE).chiseled(CHISELED_STEEL).build();
         COBBLED_HORNFELS = register(VABlocks.COBBLED_HORNFELS).stairs(VABlocks.COBBLED_HORNFELS_STAIRS).slab(VABlocks.COBBLED_HORNFELS_SLAB).wall(VABlocks.COBBLED_HORNFELS_WALL).build();
@@ -94,6 +104,13 @@ public class VACollections {
         PLUM = ColorfulBlockSet.Builder.create(VAItems.PLUM_DYE).wool(PLUM_WOOL).carpet(PLUM_CARPET).terracotta(PLUM_TERRACOTTA).concrete(PLUM_CONCRETE).concretePowder(PLUM_CONCRETE_POWDER).stainedGlass(PLUM_STAINED_GLASS).stainedGlassPane(PLUM_STAINED_GLASS_PANE).candle(PLUM_CANDLE).candleCake(PLUM_CANDLE_CAKE).silkbulb(PLUM_SILKBULB).bed(PLUM_BED).shulkerBox(PLUM_SHULKER_BOX).banner(PLUM_BANNER).wallBanner(PLUM_WALL_BANNER).glazedTerracotta(PLUM_GLAZED_TERRACOTTA).build();
         MAGENTA = ColorfulBlockSet.Builder.create(Items.MAGENTA_DYE).wool(MAGENTA_WOOL).carpet(MAGENTA_CARPET).terracotta(MAGENTA_TERRACOTTA).concrete(MAGENTA_CONCRETE).concretePowder(MAGENTA_CONCRETE_POWDER).stainedGlass(MAGENTA_STAINED_GLASS).stainedGlassPane(MAGENTA_STAINED_GLASS_PANE).candle(MAGENTA_CANDLE).candleCake(MAGENTA_CANDLE_CAKE).silkbulb(MAGENTA_SILKBULB).bed(MAGENTA_BED).shulkerBox(MAGENTA_SHULKER_BOX).banner(MAGENTA_BANNER).wallBanner(MAGENTA_WALL_BANNER).glazedTerracotta(MAGENTA_GLAZED_TERRACOTTA).build();
         PINK = ColorfulBlockSet.Builder.create(Items.PINK_DYE).wool(PINK_WOOL).carpet(PINK_CARPET).terracotta(PINK_TERRACOTTA).concrete(PINK_CONCRETE).concretePowder(PINK_CONCRETE_POWDER).stainedGlass(PINK_STAINED_GLASS).stainedGlassPane(PINK_STAINED_GLASS_PANE).candle(PINK_CANDLE).candleCake(PINK_CANDLE_CAKE).silkbulb(PINK_SILKBULB).bed(PINK_BED).shulkerBox(PINK_SHULKER_BOX).banner(PINK_BANNER).wallBanner(PINK_WALL_BANNER).glazedTerracotta(PINK_GLAZED_TERRACOTTA).build();
+
+        ImmutableBiMap.Builder oxidizationBuilder = ImmutableBiMap.builder().put(VABlocks.CLIMBING_ROPE_ANCHOR, VABlocks.EXPOSED_CLIMBING_ROPE_ANCHOR).put(VABlocks.EXPOSED_CLIMBING_ROPE_ANCHOR, VABlocks.WEATHERED_CLIMBING_ROPE_ANCHOR).put(VABlocks.WEATHERED_CLIMBING_ROPE_ANCHOR, VABlocks.OXIDIZED_CLIMBING_ROPE_ANCHOR);
+        CLIMBING_ROPE_OXIDIZATION_INCREASES = Suppliers.memoize( () -> oxidizationBuilder.build());
+        CLIMBING_ROPE_OXIDIZATION_DECREASES = Suppliers.memoize( () -> CLIMBING_ROPE_OXIDIZATION_INCREASES.get().inverse() );
+        ImmutableBiMap.Builder waxedBuilder = ImmutableBiMap.builder().put(VABlocks.CLIMBING_ROPE_ANCHOR, VABlocks.WAXED_CLIMBING_ROPE_ANCHOR).put(VABlocks.EXPOSED_CLIMBING_ROPE_ANCHOR, VABlocks.WAXED_EXPOSED_CLIMBING_ROPE_ANCHOR).put(VABlocks.WEATHERED_CLIMBING_ROPE_ANCHOR, VABlocks.WAXED_WEATHERED_CLIMBING_ROPE_ANCHOR).put(VABlocks.OXIDIZED_CLIMBING_ROPE_ANCHOR, VABlocks.WAXED_OXIDIZED_CLIMBING_ROPE_ANCHOR);
+        UNWAXED_TO_WAXED_CLIMBING_ROPES = Suppliers.memoize( () -> waxedBuilder.build());
+        WAXED_TO_UNWAXED_CLIMBING_ROPES = Suppliers.memoize( () -> UNWAXED_TO_WAXED_CLIMBING_ROPES.get().inverse() );
     }
 
     private static BlockFamily.Builder register(Block baseBlock) {

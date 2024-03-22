@@ -1,6 +1,7 @@
 package com.github.suninvr.virtualadditions.mixin;
 
 import com.github.suninvr.virtualadditions.entity.ClimbingRopeEntity;
+import com.github.suninvr.virtualadditions.registry.VAItemTags;
 import com.github.suninvr.virtualadditions.registry.VAItems;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.projectile.PersistentProjectileEntity;
@@ -19,7 +20,7 @@ public abstract class CrossbowItemMixin {
 
     @Inject(at = @At("HEAD"), method = "createArrowEntity", cancellable = true)
     void virtualAdditions$createClimbingRopeEntity(World world, LivingEntity shooter, ItemStack weaponStack, ItemStack projectileStack, boolean critical, CallbackInfoReturnable<ProjectileEntity> cir) {
-        if (projectileStack.isOf(VAItems.CLIMBING_ROPE)) {
+        if (projectileStack.isIn(VAItemTags.CLIMBING_ROPES)) {
             ClimbingRopeEntity projectileEntity = new ClimbingRopeEntity(shooter.getX(), shooter.getEyeY(), shooter.getZ(), world);
             projectileEntity.pickupType = shooter.isPlayer() && !shooter.isInCreativeMode() ? PersistentProjectileEntity.PickupPermission.ALLOWED : PersistentProjectileEntity.PickupPermission.CREATIVE_ONLY;
             projectileEntity.setShotFromCrossbow(true);

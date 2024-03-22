@@ -30,6 +30,13 @@ public class VABlocks {
 
     public static final Block CLIMBING_ROPE;
     public static final Block CLIMBING_ROPE_ANCHOR;
+    public static final Block EXPOSED_CLIMBING_ROPE_ANCHOR;
+    public static final Block WEATHERED_CLIMBING_ROPE_ANCHOR;
+    public static final Block OXIDIZED_CLIMBING_ROPE_ANCHOR;
+    public static final Block WAXED_CLIMBING_ROPE_ANCHOR;
+    public static final Block WAXED_EXPOSED_CLIMBING_ROPE_ANCHOR;
+    public static final Block WAXED_WEATHERED_CLIMBING_ROPE_ANCHOR;
+    public static final Block WAXED_OXIDIZED_CLIMBING_ROPE_ANCHOR;
     public static final Block RAW_STEEL_BLOCK;
     public static final Block STEEL_BLOCK;
     public static final Block CUT_STEEL;
@@ -308,7 +315,14 @@ public class VABlocks {
         STEEL_BLOCK_SET_TYPE = new BlockSetType("steel", false, false, false, BlockSetType.ActivationRule.EVERYTHING, BlockSoundGroup.NETHERITE, SoundEvents.BLOCK_IRON_DOOR_CLOSE, SoundEvents.BLOCK_IRON_DOOR_OPEN, SoundEvents.BLOCK_IRON_TRAPDOOR_CLOSE, SoundEvents.BLOCK_IRON_TRAPDOOR_OPEN, SoundEvents.BLOCK_METAL_PRESSURE_PLATE_CLICK_OFF, SoundEvents.BLOCK_METAL_PRESSURE_PLATE_CLICK_ON, SoundEvents.BLOCK_STONE_BUTTON_CLICK_OFF, SoundEvents.BLOCK_STONE_BUTTON_CLICK_ON);
 
         CLIMBING_ROPE = register("climbing_rope", new ClimbingRopeBlock(Settings.create().sounds(ROPE_SOUND_GROUP).pistonBehavior(PistonBehavior.DESTROY).noCollision().nonOpaque().burnable().hardness(0.5F)));
-        CLIMBING_ROPE_ANCHOR = register("climbing_rope_anchor", new ClimbingRopeAnchorBlock(Settings.create().sounds(ROPE_SOUND_GROUP).pistonBehavior(PistonBehavior.DESTROY).noCollision().nonOpaque().burnable().hardness(0.5F)));
+        CLIMBING_ROPE_ANCHOR = register("climbing_rope_anchor", new OxidizableClimbingRopeAnchor(Settings.create().sounds(ROPE_SOUND_GROUP).pistonBehavior(PistonBehavior.DESTROY).noCollision().nonOpaque().burnable().hardness(0.5F), Oxidizable.OxidationLevel.UNAFFECTED));
+        EXPOSED_CLIMBING_ROPE_ANCHOR = register("exposed_climbing_rope_anchor", new OxidizableClimbingRopeAnchor(Settings.create().sounds(ROPE_SOUND_GROUP).pistonBehavior(PistonBehavior.DESTROY).noCollision().nonOpaque().burnable().hardness(0.5F), Oxidizable.OxidationLevel.EXPOSED));
+        WEATHERED_CLIMBING_ROPE_ANCHOR = register("weathered_climbing_rope_anchor", new OxidizableClimbingRopeAnchor(Settings.create().sounds(ROPE_SOUND_GROUP).pistonBehavior(PistonBehavior.DESTROY).noCollision().nonOpaque().burnable().hardness(0.5F), Oxidizable.OxidationLevel.WEATHERED));
+        OXIDIZED_CLIMBING_ROPE_ANCHOR = register("oxidized_climbing_rope_anchor", new OxidizableClimbingRopeAnchor(Settings.create().sounds(ROPE_SOUND_GROUP).pistonBehavior(PistonBehavior.DESTROY).noCollision().nonOpaque().burnable().hardness(0.5F), Oxidizable.OxidationLevel.OXIDIZED));
+        WAXED_CLIMBING_ROPE_ANCHOR = register("waxed_climbing_rope_anchor", new ClimbingRopeAnchorBlock(Settings.create().sounds(ROPE_SOUND_GROUP).pistonBehavior(PistonBehavior.DESTROY).noCollision().nonOpaque().burnable().hardness(0.5F)));
+        WAXED_EXPOSED_CLIMBING_ROPE_ANCHOR = register("waxed_exposed_climbing_rope_anchor", new ClimbingRopeAnchorBlock(Settings.create().sounds(ROPE_SOUND_GROUP).pistonBehavior(PistonBehavior.DESTROY).noCollision().nonOpaque().burnable().hardness(0.5F)));
+        WAXED_WEATHERED_CLIMBING_ROPE_ANCHOR = register("waxed_weathered_climbing_rope_anchor", new ClimbingRopeAnchorBlock(Settings.create().sounds(ROPE_SOUND_GROUP).pistonBehavior(PistonBehavior.DESTROY).noCollision().nonOpaque().burnable().hardness(0.5F)));
+        WAXED_OXIDIZED_CLIMBING_ROPE_ANCHOR = register("waxed_oxidized_climbing_rope_anchor", new ClimbingRopeAnchorBlock(Settings.create().sounds(ROPE_SOUND_GROUP).pistonBehavior(PistonBehavior.DESTROY).noCollision().nonOpaque().burnable().hardness(0.5F)));
 
         RAW_STEEL_BLOCK = register("raw_steel_block", new Block(Settings.create().mapColor(MapColor.GRAY).requiresTool().strength(5.0F, 300.0F)));
         STEEL_BLOCK = register("steel_block", new Block(Settings.create().mapColor(MapColor.GRAY).sounds(BlockSoundGroup.NETHERITE).requiresTool().hardness(5.0F).resistance(300.0F)));
