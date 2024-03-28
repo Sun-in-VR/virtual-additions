@@ -351,6 +351,13 @@ public final class VARecipeProvider {
                     .input('#', VAItems.STEEL_INGOT).input('r', Items.REDSTONE)
                     .criterion("steel_ingot", conditionsFromItem(VAItems.STEEL_INGOT)).offerTo(exporter);
 
+            ShapedRecipeJsonBuilder.create(RecipeCategory.DECORATIONS, VAItems.CAGELIGHT, 3)
+                    .pattern("#")
+                    .pattern("g")
+                    .pattern("#")
+                    .input('#', VAItems.STEEL_INGOT).input('g', Items.GLOWSTONE_DUST)
+                    .criterion("steel_ingot", conditionsFromItem(VAItems.STEEL_INGOT)).offerTo(exporter);
+
             ShapedRecipeJsonBuilder.create(RecipeCategory.MISC, VAItems.COLORING_STATION, 1)
                     .pattern("BB")
                     .pattern("##")

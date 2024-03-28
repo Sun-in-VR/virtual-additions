@@ -95,6 +95,7 @@ public final class VABlockTagProvider {
                     VABlocks.WARP_TETHER,
                     VABlocks.ENTANGLEMENT_DRIVE,
                     VABlocks.REDSTONE_BRIDGE,
+                    VABlocks.CAGELIGHT,
                     VABlocks.STEEL_GRATE
             );
 

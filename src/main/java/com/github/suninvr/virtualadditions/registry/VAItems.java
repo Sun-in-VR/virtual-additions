@@ -162,6 +162,7 @@ public class VAItems {
     public static final Item STEEL_DOOR;
     public static final Item STEEL_TRAPDOOR;
     public static final Item REDSTONE_BRIDGE;
+    public static final Item CAGELIGHT;
     public static final Item STEEL_BOMB;
     public static final Item STEEL_SWORD;
     public static final Item STEEL_SHOVEL;
@@ -541,6 +542,7 @@ public class VAItems {
         STEEL_DOOR = registerBlockItem("steel_door", VABlocks.STEEL_DOOR, ItemGroups.BUILDING_BLOCKS, prev);
         STEEL_TRAPDOOR = registerBlockItem("steel_trapdoor", VABlocks.STEEL_TRAPDOOR, ItemGroups.BUILDING_BLOCKS, prev);
         REDSTONE_BRIDGE = registerBlockItem("redstone_bridge", VABlocks.REDSTONE_BRIDGE, ItemGroups.REDSTONE, Items.COMPARATOR);
+        CAGELIGHT = registerBlockItem("cagelight", VABlocks.CAGELIGHT, ItemGroups.BUILDING_BLOCKS, STEEL_TRAPDOOR);
         RAW_STEEL = register("raw_steel", ItemGroups.INGREDIENTS, Items.RAW_GOLD);
         STEEL_INGOT = register("steel_ingot", ItemGroups.INGREDIENTS, Items.GOLD_INGOT);
         STEEL_BOMB = register("steel_bomb", new SteelBombItem(new Item.Settings().maxCount(16).component(VADataComponentTypes.EXPLOSIVE_CONTENTS, ExplosiveContentComponent.DEFAULT)), new ItemGroupLocation(ItemGroups.COMBAT, Items.SNOWBALL), new ItemGroupLocation(ItemGroups.TOOLS, WAXED_OXIDIZED_CLIMBING_ROPE));

@@ -48,6 +48,9 @@ public class VABlocks {
     public static final Block STEEL_DOOR;
     public static final Block STEEL_TRAPDOOR;
     public static final Block REDSTONE_BRIDGE;
+    public static final Block SPOTLIGHT;
+    public static final Block SPOTLIGHT_LIGHT;
+    public static final Block CAGELIGHT;
     public static final Block HORNFELS;
     public static final Block COBBLED_HORNFELS;
     public static final Block COBBLED_HORNFELS_STAIRS;
@@ -92,8 +95,6 @@ public class VABlocks {
     public static final Block CHISELED_SYENITE;
     public static final Block ROCK_SALT_BLOCK;
     public static final Block ROCK_SALT_CRYSTAL;
-    public static final Block SPOTLIGHT;
-    public static final Block SPOTLIGHT_LIGHT;
     public static final Block COTTON;
     public static final Block CORN_CROP;
     public static final Block FLOATROCK;
@@ -335,7 +336,8 @@ public class VABlocks {
         STEEL_DOOR = register("steel_door", new SteelDoorBlock(Settings.copy(STEEL_BLOCK).nonOpaque().pistonBehavior(PistonBehavior.DESTROY)));
         STEEL_TRAPDOOR = register("steel_trapdoor", new SteelTrapdoorBlock(Settings.copy(STEEL_DOOR)));
 
-        REDSTONE_BRIDGE = register("redstone_bridge", new RedstoneBridgeBlock(Settings.copy(CUT_STEEL)));
+        REDSTONE_BRIDGE = register("redstone_bridge", new RedstoneBridgeBlock(Settings.copy(STEEL_GRATE)));
+        CAGELIGHT = register("cagelight", new ThinPillarBlock(Settings.copy(STEEL_GRATE).nonOpaque().emissiveLighting((state, world, pos) -> true).luminance( (state) -> 11 ) ));
 
         HORNFELS = register("hornfels", new PillarBlock(Settings.copy(Blocks.DEEPSLATE)));
         COBBLED_HORNFELS = register("cobbled_hornfels", new Block(Settings.copy(Blocks.COBBLED_DEEPSLATE)));

@@ -1,0 +1,7 @@
+{
+  "parent": "virtual_additions:block/thin_pillar",
+  "textures": {
+    "side": "virtual_additions:block/cagelight_side",
+    "top": "virtual_additions:block/cagelight_top"
+  }
+}

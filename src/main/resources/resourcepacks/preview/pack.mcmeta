@@ -5,7 +5,7 @@
         ]
     },
     "pack": {
-        "pack_format": 32,
+        "pack_format": 36,
         "description": "Preview for future Virtual Additions content"
     }
 }

@@ -79,6 +79,7 @@ public final class VABlockLootTableProvider {
                     VABlocks.STEEL_TRAPDOOR,
                     VABlocks.STEEL_GRATE,
                     VABlocks.REDSTONE_BRIDGE,
+                    VABlocks.CAGELIGHT,
                     VABlocks.OAK_HEDGE,
                     VABlocks.SPRUCE_HEDGE,
                     VABlocks.BIRCH_HEDGE,

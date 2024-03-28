@@ -12,6 +12,7 @@ import net.minecraft.state.property.BooleanProperty;
 import net.minecraft.state.property.DirectionProperty;
 import net.minecraft.state.property.IntProperty;
 import net.minecraft.state.property.Properties;
+import net.minecraft.util.BlockRotation;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Direction;
 import net.minecraft.util.shape.VoxelShape;
@@ -54,6 +55,20 @@ public class RedstoneBridgeBlock extends Block implements Waterloggable {
             case Y -> SHAPE_Y;
             case Z -> SHAPE_Z;
         };
+    }
+
+    @Override
+    protected BlockState rotate(BlockState state, BlockRotation rotation) {
+        Direction dir = state.get(FACING);
+        if (dir.getAxis() != Direction.Axis.Y) {
+            dir = switch (rotation) {
+                case NONE -> dir;
+                case CLOCKWISE_90 -> dir.rotateYClockwise();
+                case CLOCKWISE_180 -> dir.getOpposite();
+                case COUNTERCLOCKWISE_90 -> dir.rotateYCounterclockwise();
+            };
+        }
+        return state.with(FACING, dir);
     }
 
     @Override

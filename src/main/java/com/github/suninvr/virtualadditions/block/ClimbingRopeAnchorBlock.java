@@ -145,7 +145,7 @@ public class ClimbingRopeAnchorBlock extends Block implements Waterloggable {
     }
 
     private boolean canPlaceOn(WorldView world, BlockPos pos, Direction direction, BlockHalf height) {
-        if (direction == Direction.DOWN) return Block.sideCoversSmallSquare(world, pos, direction);
+        if (direction == Direction.UP) return Block.sideCoversSmallSquare(world, pos, Direction.DOWN);
 
         BlockState placeOnState = world.getBlockState(pos);
         if (height == BlockHalf.BOTTOM) return !VoxelShapes.matchesAnywhere(placeOnState.getSidesShape(world, pos).getFace(direction), ATTACHABLE_LOW, BooleanBiFunction.ONLY_SECOND);
