@@ -29,6 +29,22 @@
           ]
         }
       ]
+    },
+    {
+      "rolls": 1,
+      "entries": [
+        {
+          "type": "minecraft:item",
+          "name": "virtual_additions:exoskeleton_armor_trim_smithing_template"
+        }
+      ],
+      "conditions": [
+        {
+          "condition": "minecraft:random_chance_with_looting",
+          "chance": 0.0125,
+          "looting_multiplier": 0.0025
+        }
+      ]
     }
   ],
   "random_sequence": "virtual_additions:entities/lumwasp"

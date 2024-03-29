@@ -1,0 +1,7 @@
+{
+  "asset_id": "virtual_additions:exoskeleton",
+  "description": {
+    "translate": "trim_pattern.virtual_additions.exoskeleton"
+  },
+  "template_item": "virtual_additions:exoskeleton_armor_trim_smithing_template"
+}

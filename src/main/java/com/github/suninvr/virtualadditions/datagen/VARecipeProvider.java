@@ -386,6 +386,9 @@ public final class VARecipeProvider {
                     .input('c', VAItems.CUT_STEEL)
                     .criterion("cut_steel", conditionsFromItem(VAItems.CUT_STEEL)).offerTo(exporter);
 
+            offerSmithingTrimRecipe(exporter, VAItems.EXOSKELETON_ARMOR_TRIM_SMITHING_TEMPLATE, idOf("exoskeleton_armor_trim_smithing_template_smithing_trim"));
+            offerSmithingTemplateCopyingRecipe(exporter, VAItems.EXOSKELETON_ARMOR_TRIM_SMITHING_TEMPLATE, VAItems.SILK_BLOCK);
+
         }
     }
 

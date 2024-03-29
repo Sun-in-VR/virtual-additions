@@ -90,6 +90,7 @@ class VAModelProvider extends FabricModelProvider {
         itemModelGenerator.register(VAItems.EXPOSED_CLIMBING_ROPE, Models.GENERATED);
         itemModelGenerator.register(VAItems.WEATHERED_CLIMBING_ROPE, Models.GENERATED);
         itemModelGenerator.register(VAItems.OXIDIZED_CLIMBING_ROPE, Models.GENERATED);
+        itemModelGenerator.register(VAItems.EXOSKELETON_ARMOR_TRIM_SMITHING_TEMPLATE, Models.GENERATED);
 
     }
 

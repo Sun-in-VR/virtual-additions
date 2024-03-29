@@ -340,6 +340,7 @@
     "item.virtual_additions.steel_leggings": "Steel Leggings",
     "item.virtual_additions.steel_boots": "Steel Boots",
     "item.virtual_additions.tool_gild_smithing_template": "Smithing Template",
+    "item.virtual_additions.exoskeleton_armor_trim_smithing_template": "Smithing Template",
     "item.virtual_additions.balloon_fruit": "Balloon Fruit",
     "item.virtual_additions.fried_egg": "Fried Egg",
     "item.virtual_additions.ice_cream": "Ice Cream",
@@ -432,6 +433,8 @@
 
     "trim_material.virtual_additions.steel": "Steel Material",
     "trim_material.virtual_additions.iolite": "Iolite Material",
+
+    "trim_pattern.virtual_additions.exoskeleton": "Exoskeleton Armor Trim",
 
     "item.minecraft.shield.chartreuse": "Chartreuse Shield",
     "item.minecraft.shield.maroon": "Maroon Shield",
