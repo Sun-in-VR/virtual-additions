@@ -5,5 +5,8 @@
     "translate": "trim_material.virtual_additions.steel"
   },
   "ingredient": "virtual_additions:steel_ingot",
-  "item_model_index": 0.0
+  "item_model_index": 0.0,
+  "override_armor_materials": {
+    "virtual_additions:virtual_additions_steel": "steel_darker"
+  }
 }

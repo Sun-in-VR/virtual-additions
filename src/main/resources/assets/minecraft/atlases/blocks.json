@@ -11,7 +11,8 @@
       "palette_key": "trims/color_palettes/trim_palette",
       "permutations": {
         "virtual_additions_iolite": "virtual_additions:trims/color_palettes/iolite",
-        "virtual_additions_steel": "virtual_additions:trims/color_palettes/steel"
+        "virtual_additions_steel": "virtual_additions:trims/color_palettes/steel",
+        "virtual_additions_steel_darker": "virtual_additions:trims/color_palettes/steel_darker"
       }
     }
   ]

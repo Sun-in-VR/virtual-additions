@@ -43,6 +43,7 @@
             "palette_key": "minecraft:trims/color_palettes/trim_palette",
             "permutations": {
                 "steel": "virtual_additions:trims/color_palettes/steel",
+                "steel_darker": "virtual_additions:trims/color_palettes/steel_darker",
                 "iolite": "virtual_additions:trims/color_palettes/iolite"
             }
         },
@@ -64,12 +65,13 @@
                 "emerald": "minecraft:trims/color_palettes/emerald",
                 "lapis": "minecraft:trims/color_palettes/lapis",
                 "amethyst": "minecraft:trims/color_palettes/amethyst",
+                "steel": "virtual_additions:trims/color_palettes/steel",
+                "iolite": "virtual_additions:trims/color_palettes/iolite",
                 "iron_darker": "minecraft:trims/color_palettes/iron_darker",
                 "gold_darker": "minecraft:trims/color_palettes/gold_darker",
                 "diamond_darker": "minecraft:trims/color_palettes/diamond_darker",
                 "netherite_darker": "minecraft:trims/color_palettes/netherite_darker",
-                "steel": "virtual_additions:trims/color_palettes/steel",
-                "iolite": "virtual_additions:trims/color_palettes/iolite"
+                "steel_darker": "virtual_additions:trims/color_palettes/steel_darker"
             }
         }
     ]
