@@ -91,10 +91,10 @@ public record EffectsOnHitComponent(Optional<PotionContentsComponent> potionCont
     static {
         CODEC = RecordCodecBuilder.create( instance -> {
             return instance.group(
-                    Codecs.createStrictOptionalFieldCodec(PotionContentsComponent.CODEC, "potion").forGetter(EffectsOnHitComponent::potionContents),
-                    Codecs.createStrictOptionalFieldCodec(Codecs.NONNEGATIVE_INT, "total_uses").forGetter(EffectsOnHitComponent::uses),
-                    Codecs.createStrictOptionalFieldCodec(Codecs.NONNEGATIVE_INT, "remaining_uses").forGetter(EffectsOnHitComponent::remaining)
-            ).apply(instance, EffectsOnHitComponent::new); //return instance.group(Codecs.createStrictOptionalFieldCodec(Registries.POTION.getEntryCodec(), "potion").forGetter(EffectsOnHitComponent::potion), Codecs.createStrictOptionalFieldCodec(Codec.INT, "custom_color").forGetter(EffectsOnHitComponent::customColor), Codecs.createStrictOptionalFieldCodec(StatusEffectInstance.CODEC.listOf(), "custom_effects", List.of()).forGetter(EffectsOnHitComponent::customEffects), Codecs.createStrictOptionalFieldCodec()).apply(instance, PotionContentsComponent::new);
+                    PotionContentsComponent.CODEC.optionalFieldOf("potion").forGetter(EffectsOnHitComponent::potionContents),
+                    Codecs.NONNEGATIVE_INT.optionalFieldOf("total_uses").forGetter(EffectsOnHitComponent::uses),
+                    Codecs.NONNEGATIVE_INT.optionalFieldOf("remaining_uses").forGetter(EffectsOnHitComponent::remaining)
+            ).apply(instance, EffectsOnHitComponent::new);
         });
         PACKET_CODEC = PacketCodec.tuple(PacketCodecs.optional(PotionContentsComponent.PACKET_CODEC), EffectsOnHitComponent::potionContents, PacketCodecs.INTEGER.collect(PacketCodecs::optional), EffectsOnHitComponent::uses, PacketCodecs.INTEGER.collect(PacketCodecs::optional), EffectsOnHitComponent::remaining, EffectsOnHitComponent::new);
     }

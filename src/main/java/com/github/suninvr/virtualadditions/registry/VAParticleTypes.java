@@ -3,6 +3,7 @@ package com.github.suninvr.virtualadditions.registry;
 import com.github.suninvr.virtualadditions.VirtualAdditions;
 import com.github.suninvr.virtualadditions.particle.IoliteRingParticleEffect;
 import com.mojang.serialization.Codec;
+import com.mojang.serialization.MapCodec;
 import net.fabricmc.fabric.api.particle.v1.FabricParticleTypes;
 import net.minecraft.network.RegistryByteBuf;
 import net.minecraft.network.codec.PacketCodec;
@@ -33,7 +34,17 @@ public class VAParticleTypes {
     public static void init() {}
 
     private static <T extends ParticleEffect> ParticleType<T> register(String name, boolean alwaysShow, ParticleEffect.Factory<T> factory, Function<ParticleType<T>, Codec<T>> codecGetter, Function<ParticleType<T>, PacketCodec<? super RegistryByteBuf, T>> packetCodecGetter) {
-        return Registry.register(Registries.PARTICLE_TYPE, VirtualAdditions.idOf(name), FabricParticleTypes.complex(alwaysShow, factory, codecGetter, packetCodecGetter));
+        return Registry.register(Registries.PARTICLE_TYPE, VirtualAdditions.idOf(name), new ParticleType<T>(alwaysShow, factory) {
+            @Override
+            public MapCodec<T> getCodec() {
+                return (MapCodec)codecGetter.apply(this) ;
+            }
+
+            @Override
+            public PacketCodec<? super RegistryByteBuf, T> getPacketCodec() {
+                return packetCodecGetter.apply(this);
+            }
+        });
     }
 
     private static DefaultParticleType register(String name, boolean alwaysShow) {

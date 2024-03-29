@@ -20,7 +20,7 @@ import java.util.List;
 import java.util.Objects;
 
 public class ApplicablePotionItem extends PotionItem {
-    public ApplicablePotionItem(Settings settings) {
+    public ApplicablePotionItem(net.minecraft.item.Item.Settings settings) {
         super(settings);
     }
 

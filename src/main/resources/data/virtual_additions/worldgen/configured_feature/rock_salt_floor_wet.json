@@ -9,10 +9,8 @@
     "vegetation_chance": 0.15,
     "xz_radius": {
       "type": "minecraft:uniform",
-      "value": {
-        "min_inclusive": 3,
-        "max_inclusive": 5
-      }
+      "min_inclusive": 3,
+      "max_inclusive": 5
     },
     "replaceable": "#minecraft:dripstone_replaceable_blocks",
     "ground_state": {
@@ -43,10 +41,8 @@
             {
               "height": {
                 "type": "minecraft:biased_to_bottom",
-                "value": {
-                  "min_inclusive": 0,
-                  "max_inclusive": 3
-                }
+                "min_inclusive": 0,
+                "max_inclusive": 3
               },
               "provider": {
                 "type": "minecraft:simple_state_provider",

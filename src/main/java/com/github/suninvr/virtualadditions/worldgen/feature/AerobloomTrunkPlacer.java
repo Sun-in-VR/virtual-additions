@@ -1,7 +1,7 @@
 package com.github.suninvr.virtualadditions.worldgen.feature;
 
 import com.github.suninvr.virtualadditions.registry.VAFeatures;
-import com.mojang.serialization.Codec;
+import com.mojang.serialization.MapCodec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
 import net.minecraft.block.BlockState;
 import net.minecraft.util.math.BlockPos;
@@ -17,8 +17,8 @@ import java.util.List;
 import java.util.function.BiConsumer;
 
 public class AerobloomTrunkPlacer extends TrunkPlacer {
-    public static final Codec<AerobloomTrunkPlacer> CODEC =
-            RecordCodecBuilder.create(instance -> AerobloomTrunkPlacer.fillTrunkPlacerFields(instance).apply(instance, AerobloomTrunkPlacer::new));
+    public static final MapCodec<AerobloomTrunkPlacer> CODEC =
+            RecordCodecBuilder.mapCodec(aerobloomTrunkPlacerInstance -> AerobloomTrunkPlacer.fillTrunkPlacerFields(aerobloomTrunkPlacerInstance).apply(aerobloomTrunkPlacerInstance, AerobloomTrunkPlacer::new));
 
 
     public AerobloomTrunkPlacer(int baseHeight, int firstRandomHeight, int secondRandomHeight) {

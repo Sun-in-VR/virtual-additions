@@ -27,7 +27,7 @@ public record WarpTetherLocationComponent(Optional<BlockPos> pos) {
     static {
         CODEC = RecordCodecBuilder.create(instance -> {
             return instance.group(
-                    Codecs.createStrictOptionalFieldCodec(BlockPos.CODEC, "pos").forGetter(WarpTetherLocationComponent::pos)
+                    BlockPos.CODEC.optionalFieldOf("pos").forGetter(WarpTetherLocationComponent::pos)
             ).apply(instance, WarpTetherLocationComponent::new);
         });
         PACKET_CODEC = PacketCodec.tuple(

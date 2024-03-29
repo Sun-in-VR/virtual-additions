@@ -3,6 +3,7 @@ package com.github.suninvr.virtualadditions.recipe;
 import com.github.suninvr.virtualadditions.block.entity.ColoringStationBlockEntity;
 import com.github.suninvr.virtualadditions.registry.VARecipeType;
 import com.mojang.serialization.Codec;
+import com.mojang.serialization.MapCodec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
 import net.minecraft.block.ShulkerBoxBlock;
 import net.minecraft.inventory.Inventory;
@@ -16,7 +17,6 @@ import net.minecraft.recipe.RecipeSerializer;
 import net.minecraft.recipe.RecipeType;
 import net.minecraft.registry.DynamicRegistryManager;
 import net.minecraft.registry.RegistryWrapper;
-import net.minecraft.util.dynamic.Codecs;
 import net.minecraft.world.World;
 
 public class ColoringRecipe implements Recipe<Inventory>, ColoringStationRecipe {
@@ -94,24 +94,24 @@ public class ColoringRecipe implements Recipe<Inventory>, ColoringStationRecipe 
     }
 
     public static class Serializer implements RecipeSerializer<ColoringRecipe> {
-        private final Codec<ColoringRecipe> CODEC = RecordCodecBuilder.create(
+        private final MapCodec<ColoringRecipe> CODEC = RecordCodecBuilder.mapCodec(
                 instance -> instance.group(
                         Ingredient.ALLOW_EMPTY_CODEC.fieldOf("ingredient").forGetter(recipe -> recipe.ingredient),
                         ItemStack.CODEC.fieldOf("result").forGetter(recipe -> recipe.result),
-                        Codecs.createStrictOptionalFieldCodec(Codec.INT, "red_cost", 0).forGetter(recipe -> recipe.cost.getR()),
-                        Codecs.createStrictOptionalFieldCodec(Codec.INT, "green_cost", 0).forGetter(recipe -> recipe.cost.getG()),
-                        Codecs.createStrictOptionalFieldCodec(Codec.INT, "blue_cost", 0).forGetter(recipe -> recipe.cost.getB()),
-                        Codecs.createStrictOptionalFieldCodec(Codec.INT, "yellow_cost", 0).forGetter(recipe -> recipe.cost.getY()),
-                        Codecs.createStrictOptionalFieldCodec(Codec.INT, "black_cost", 0).forGetter(recipe -> recipe.cost.getK()),
-                        Codecs.createStrictOptionalFieldCodec(Codec.INT, "white_cost", 0).forGetter(recipe -> recipe.cost.getW()),
-                        Codecs.createStrictOptionalFieldCodec(Codec.INT, "index", 0).forGetter(recipe -> recipe.index)
+                        Codec.INT.optionalFieldOf("red_cost", 0).forGetter(recipe -> recipe.cost.getR()),
+                        Codec.INT.optionalFieldOf("green_cost", 0).forGetter(recipe -> recipe.cost.getG()),
+                        Codec.INT.optionalFieldOf("blue_cost", 0).forGetter(recipe -> recipe.cost.getB()),
+                        Codec.INT.optionalFieldOf("yellow_cost", 0).forGetter(recipe -> recipe.cost.getY()),
+                        Codec.INT.optionalFieldOf("black_cost", 0).forGetter(recipe -> recipe.cost.getK()),
+                        Codec.INT.optionalFieldOf("white_cost", 0).forGetter(recipe -> recipe.cost.getW()),
+                        Codec.INT.optionalFieldOf("index", 0).forGetter(recipe -> recipe.index)
                 ).apply(instance, ColoringRecipe::new)
         );
         private static final PacketCodec<RegistryByteBuf, ColoringRecipe> PACKET_CODEC = PacketCodec.ofStatic(Serializer::write, Serializer::read);
 
         @Override
-        public Codec<ColoringRecipe> codec() {
-            return this.CODEC;
+        public MapCodec<ColoringRecipe> codec() {
+            return (MapCodec<ColoringRecipe>) this.CODEC;
         }
 
         @Override

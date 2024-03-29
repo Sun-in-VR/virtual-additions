@@ -395,6 +395,10 @@
     "item.virtual_additions.applicable_potion.effect.luck": "Applicable Potion of Luck",
     "item.virtual_additions.applicable_potion.effect.turtle_master": "Applicable Potion of the Turtle Master",
     "item.virtual_additions.applicable_potion.effect.slow_falling": "Applicable Potion of Slow Falling",
+    "item.virtual_additions.applicable_potion.effect.wind_charged": "Applicable Potion of Wind Charging",
+    "item.virtual_additions.applicable_potion.effect.weaving": "Applicable Potion of Weaving",
+    "item.virtual_additions.applicable_potion.effect.oozing": "Applicable Potion of Oozing",
+    "item.virtual_additions.applicable_potion.effect.infested": "Applicable Potion of Infestation",
 
     "subtitles.block.climbing_rope.extends": "Rope extends",
     "subtitles.block.acid.sizzle": "Acid sizzles",

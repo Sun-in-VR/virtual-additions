@@ -4,6 +4,7 @@ import com.github.suninvr.virtualadditions.block.entity.ColoringStationBlockEnti
 import com.github.suninvr.virtualadditions.registry.VADyeColors;
 import com.github.suninvr.virtualadditions.registry.VARecipeType;
 import com.mojang.serialization.Codec;
+import com.mojang.serialization.MapCodec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
 import net.minecraft.component.type.DyedColorComponent;
 import net.minecraft.inventory.Inventory;
@@ -18,12 +19,10 @@ import net.minecraft.recipe.RecipeType;
 import net.minecraft.registry.DynamicRegistryManager;
 import net.minecraft.registry.RegistryWrapper;
 import net.minecraft.registry.tag.ItemTags;
-import net.minecraft.util.DyeColor;
-import net.minecraft.util.dynamic.Codecs;
 import net.minecraft.world.World;
 
-import java.util.ArrayList;
 import java.util.List;
+import java.util.function.Function;
 
 public class ArmorColoringRecipe implements Recipe<Inventory>, ColoringStationRecipe {
     public final Ingredient item;
@@ -101,17 +100,17 @@ public class ArmorColoringRecipe implements Recipe<Inventory>, ColoringStationRe
     }
 
     public static class Serializer implements RecipeSerializer<ArmorColoringRecipe> {
-        private final Codec<ArmorColoringRecipe> CODEC = RecordCodecBuilder.create(
+        private final MapCodec<ArmorColoringRecipe> CODEC = RecordCodecBuilder.mapCodec(
                 instance -> instance.group(
-                        Ingredient.DISALLOW_EMPTY_CODEC.fieldOf("dye").forGetter(recipe -> recipe.item),
-                        Codecs.createStrictOptionalFieldCodec(Codec.INT, "index", 0).forGetter(recipe -> recipe.index)
+                        Ingredient.DISALLOW_EMPTY_CODEC.fieldOf("dye").forGetter(armorColoringRecipe -> armorColoringRecipe.item),
+                        Codec.INT.optionalFieldOf("index", 0).forGetter(recipe -> recipe.index)
                 ).apply(instance, ArmorColoringRecipe::new)
         );
         private static final PacketCodec<RegistryByteBuf, ArmorColoringRecipe> PACKET_CODEC = PacketCodec.ofStatic(Serializer::write, Serializer::read);
 
         @Override
-        public Codec<ArmorColoringRecipe> codec() {
-            return CODEC;
+        public MapCodec<ArmorColoringRecipe> codec() {
+            return (MapCodec<ArmorColoringRecipe>) CODEC;
         }
 
         @Override

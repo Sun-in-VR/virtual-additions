@@ -5,8 +5,8 @@ accessible method net/minecraft/sound/SoundEvent of (Lnet/minecraft/util/Identif
 accessible field net/minecraft/block/RedstoneWireBlock wiresGivePower Z
 accessible method net/minecraft/block/WoodType register (Lnet/minecraft/block/WoodType;)Lnet/minecraft/block/WoodType;
 accessible field net/minecraft/data/client/BlockStateModelGenerator texturedModels Ljava/util/Map;
-accessible method net/minecraft/item/ItemGroups addPotions (Lnet/minecraft/item/ItemGroup$Entries;Lnet/minecraft/registry/RegistryWrapper;Lnet/minecraft/item/Item;Lnet/minecraft/item/ItemGroup$StackVisibility;)V
 accessible field net/minecraft/item/ItemGroups displayContext Lnet/minecraft/item/ItemGroup$DisplayContext;
 accessible field net/minecraft/block/Blocks SHULKER_BOX_SUFFOCATES_PREDICATE Lnet/minecraft/block/AbstractBlock$ContextPredicate;
 accessible method net/minecraft/block/AbstractBlock canPlaceAt (Lnet/minecraft/block/BlockState;Lnet/minecraft/world/WorldView;Lnet/minecraft/util/math/BlockPos;)Z
 accessible method net/minecraft/block/ComposterBlock registerCompostableItem (FLnet/minecraft/item/ItemConvertible;)V
+accessible method net/minecraft/item/ItemGroups addPotions (Lnet/minecraft/item/ItemGroup$Entries;Lnet/minecraft/registry/RegistryWrapper;Lnet/minecraft/item/Item;Lnet/minecraft/item/ItemGroup$StackVisibility;Lnet/minecraft/resource/featuretoggle/FeatureSet;)V

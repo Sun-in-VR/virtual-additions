@@ -3,17 +3,21 @@ package com.github.suninvr.virtualadditions.item;
 import com.github.suninvr.virtualadditions.entity.SteelBombEntity;
 import com.github.suninvr.virtualadditions.registry.VASoundEvents;
 import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.entity.projectile.ProjectileEntity;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
+import net.minecraft.item.ProjectileItem;
 import net.minecraft.sound.SoundCategory;
 import net.minecraft.stat.Stats;
 import net.minecraft.util.Hand;
 import net.minecraft.util.TypedActionResult;
+import net.minecraft.util.math.Direction;
+import net.minecraft.util.math.Position;
 import net.minecraft.world.World;
 
-public class SteelBombItem extends Item {
+public class SteelBombItem extends Item implements ProjectileItem {
 
-    public SteelBombItem(Settings settings) {
+    public SteelBombItem(net.minecraft.item.Item.Settings settings) {
         super(settings);
     }
 
@@ -34,5 +38,12 @@ public class SteelBombItem extends Item {
         }
 
         return TypedActionResult.success(itemStack, world.isClient());
+    }
+
+    @Override
+    public ProjectileEntity createEntity(World world, Position position, ItemStack itemStack, Direction direction) {
+        SteelBombEntity steelBombEntity = new SteelBombEntity(world, position.getX(), position.getY(), position.getZ());
+        steelBombEntity.setItem(itemStack);
+        return steelBombEntity;
     }
 }

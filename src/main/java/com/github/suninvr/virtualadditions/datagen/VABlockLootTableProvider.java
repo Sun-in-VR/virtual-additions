@@ -208,11 +208,11 @@ public final class VABlockLootTableProvider {
             set.ifStainedGlass(this::addDropWithSilkTouch);
             set.ifStainedGlassPane(this::addDropWithSilkTouch);
             set.ifSilkbulb(this::addDrop);
-            set.ifCandle(block -> this.lootTables.put(block.getLootTableId(), this.candleDrops(block)));
-            set.ifCandleCake(block -> this.lootTables.put(block.getLootTableId(), BlockLootTableGenerator.candleCakeDrops(block)));
-            set.ifBed(block -> this.lootTables.put(block.getLootTableId(), this.dropsWithProperty(block, BedBlock.PART, BedPart.HEAD)));
-            set.ifShulkerBox(block -> this.lootTables.put(block.getLootTableId(), this.shulkerBoxDrops(block)));
-            set.ifBanner(block -> this.lootTables.put(block.getLootTableId(), this.bannerDrops(block)));
+            set.ifCandle(block -> this.lootTables.put(block.getLootTableKey(), this.candleDrops(block)));
+            set.ifCandleCake(block -> this.lootTables.put(block.getLootTableKey(), BlockLootTableGenerator.candleCakeDrops(block)));
+            set.ifBed(block -> this.lootTables.put(block.getLootTableKey(), this.dropsWithProperty(block, BedBlock.PART, BedPart.HEAD)));
+            set.ifShulkerBox(block -> this.lootTables.put(block.getLootTableKey(), this.shulkerBoxDrops(block)));
+            set.ifBanner(block -> this.lootTables.put(block.getLootTableKey(), this.bannerDrops(block)));
             set.ifGlazedTerracotta(this::addDrop);
         }
 
@@ -242,14 +242,14 @@ public final class VABlockLootTableProvider {
 
         @Override
         public void addDrop(Block block, LootTable.Builder lootTable) {
-            this.lootTables.put(block.getLootTableId(), lootTable.randomSequenceId(block.getLootTableId().getValue()));
+            this.lootTables.put(block.getLootTableKey(), lootTable.randomSequenceId(block.getLootTableKey().getValue()));
         }
 
         @Override
         public LootTable.Builder oreDrops(Block dropWithSilkTouch, Item drop) {
             return BlockLootTableGenerator
                     .dropsWithSilkTouch(dropWithSilkTouch, this.applyExplosionDecay(dropWithSilkTouch, ItemEntry.builder(drop).apply(ApplyBonusLootFunction.oreDrops(Enchantments.FORTUNE))))
-                    .randomSequenceId(dropWithSilkTouch.getLootTableId().getValue());
+                    .randomSequenceId(dropWithSilkTouch.getLootTableKey().getValue());
         }
     }
 }

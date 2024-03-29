@@ -3,6 +3,7 @@ package com.github.suninvr.virtualadditions.registry;
 import com.github.suninvr.virtualadditions.worldgen.feature.AerobloomTrunkPlacer;
 import com.github.suninvr.virtualadditions.worldgen.feature.BalloonBulbFeature;
 import com.github.suninvr.virtualadditions.worldgen.feature.LumwaspNestFeature;
+import com.mojang.serialization.MapCodec;
 import net.fabricmc.fabric.api.biome.v1.BiomeModifications;
 import net.fabricmc.fabric.api.biome.v1.BiomeSelectors;
 import net.minecraft.registry.Registries;
@@ -47,7 +48,7 @@ public class VAFeatures {
     }
 
     public static class TrunkPlacerTypes {
-        public static final TrunkPlacerType<AerobloomTrunkPlacer> AEROBLOOM_TRUNK_PLACER = Registry.register(Registries.TRUNK_PLACER_TYPE, idOf("aerobloom_trunk_placer"), new TrunkPlacerType<>(AerobloomTrunkPlacer.CODEC));
+        public static final TrunkPlacerType<AerobloomTrunkPlacer> AEROBLOOM_TRUNK_PLACER = Registry.register(Registries.TRUNK_PLACER_TYPE, idOf("aerobloom_trunk_placer"), new TrunkPlacerType<>((MapCodec<AerobloomTrunkPlacer>) AerobloomTrunkPlacer.CODEC));
         public static void init(){}
     }
 }

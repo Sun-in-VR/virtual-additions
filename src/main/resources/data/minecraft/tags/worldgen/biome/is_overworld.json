@@ -1,5 +1,5 @@
 {
-  "replace": "false",
+  "replace": false,
   "values": [
     "virtual_additions:wasp_den",
     "virtual_additions:salty_caves"
