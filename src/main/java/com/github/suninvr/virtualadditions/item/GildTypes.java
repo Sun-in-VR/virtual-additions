@@ -34,14 +34,6 @@ public class GildTypes {
         public boolean isGildEffective(World world, PlayerEntity player, BlockPos pos, BlockState state, ItemStack tool) {
             return super.isGildEffective(world, player, pos, state, tool) && state.getBlock() instanceof ExperienceDroppingBlock;
         }
-
-        @Override
-        public void emitBlockBreakingEffects(World world, PlayerEntity player, BlockPos pos, ItemStack tool) {
-            world.playSound(null, pos, SoundEvents.ENTITY_PLAYER_LEVELUP, SoundCategory.BLOCKS, 0.02F, world.getRandom().nextFloat() * 0.5F + 1.5F);
-            if (world instanceof ServerWorld serverWorld) {
-                serverWorld.spawnParticles(ParticleTypes.HAPPY_VILLAGER, pos.getX() + 0.5, pos.getY() + 0.5, pos.getZ() + 0.5, 10, 0.25, 0.25, 0.25, 0.02);
-            }
-        }
     };
     public static final GildType IOLITE = new GildType(idOf("iolite"), 0x702bff, blockInteractionRangeModifier(4, ADD), entityInteractionRangeModifier(2, ADD));
     public static final GildType QUARTZ = new GildType(idOf("quartz"), 0xE3D4C4, attackDamageModifier(2, ADD));

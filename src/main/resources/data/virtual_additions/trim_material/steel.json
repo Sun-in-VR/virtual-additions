@@ -1,7 +1,7 @@
 {
   "asset_name": "steel",
   "description": {
-    "color": "#868697",
+    "color": "#686b93",
     "translate": "trim_material.virtual_additions.steel"
   },
   "ingredient": "virtual_additions:steel_ingot",
