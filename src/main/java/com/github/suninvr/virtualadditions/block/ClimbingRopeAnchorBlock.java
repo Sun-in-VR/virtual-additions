@@ -7,6 +7,8 @@ import com.mojang.serialization.MapCodec;
 import net.minecraft.block.*;
 import net.minecraft.block.entity.BlockEntity;
 import net.minecraft.block.enums.BlockHalf;
+import net.minecraft.entity.EntityType;
+import net.minecraft.entity.ItemEntity;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.fluid.FluidState;
@@ -25,6 +27,7 @@ import net.minecraft.state.property.Properties;
 import net.minecraft.util.function.BooleanBiFunction;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Direction;
+import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.shape.VoxelShape;
 import net.minecraft.util.shape.VoxelShapes;
 import net.minecraft.world.BlockView;
@@ -93,19 +96,19 @@ public class ClimbingRopeAnchorBlock extends Block implements Waterloggable {
         world.scheduleBlockTick( pos, state.getBlock(), 0 );
     }
 
-    @Override
-    public void afterBreak(World world, PlayerEntity player, BlockPos pos, BlockState state, @Nullable BlockEntity blockEntity, ItemStack stack) {
-        player.incrementStat(Stats.MINED.getOrCreateStat(this));
-        player.addExhaustion(0.005F);
-        if (world instanceof ServerWorld serverWorld) {
-            getDroppedStacks(state, serverWorld, pos, blockEntity, null, stack).forEach((stackx) -> {
-                if (!player.getInventory().insertStack(stackx)) {
-                    dropStack(world, pos, stackx);
-                }
-            });
-            state.onStacksDropped(serverWorld, pos, stack, true);
-        }
-    }
+    //@Override
+    //public void afterBreak(World world, PlayerEntity player, BlockPos pos, BlockState state, @Nullable BlockEntity blockEntity, ItemStack stack) {
+    //    player.incrementStat(Stats.MINED.getOrCreateStat(this));
+    //    player.addExhaustion(0.005F);
+    //    if (world instanceof ServerWorld serverWorld) {
+    //        getDroppedStacks(state, serverWorld, pos, blockEntity, null, stack).forEach((stackx) -> {
+    //            if (!player.getInventory().insertStack(stackx)) {
+    //                dropStack(world, pos, stackx);
+    //            }
+    //        });
+    //        state.onStacksDropped(serverWorld, pos, stack, true);
+    //    }
+    //}
 
     @Override
     public void scheduledTick(BlockState state, ServerWorld world, BlockPos pos, net.minecraft.util.math.random.Random random) {

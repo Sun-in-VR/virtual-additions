@@ -1,8 +1,10 @@
 package com.github.suninvr.virtualadditions.mixin;
 
 import com.github.suninvr.virtualadditions.item.GildType;
+import com.github.suninvr.virtualadditions.item.GildTypes;
 import com.github.suninvr.virtualadditions.item.GildedToolUtil;
 import com.github.suninvr.virtualadditions.item.interfaces.GildedToolItem;
+import net.minecraft.component.DataComponentTypes;
 import net.minecraft.entity.player.PlayerInventory;
 import net.minecraft.inventory.CraftingResultInventory;
 import net.minecraft.item.Item;
@@ -41,18 +43,15 @@ public abstract class AnvilScreenHandlerMixin extends ForgingScreenHandler {
     void virtualAdditions$setStack(CraftingResultInventory instance, int slot, ItemStack stack) {
         ItemStack baseStack = this.getSlot(0).getStack();
         ItemStack additionsStack = this.getSlot(1).getStack();
+        ItemStack baseBaseStack = GildedToolUtil.getBaseStack(baseStack);
+        ItemStack additionsBaseStack = GildedToolUtil.getBaseStack(additionsStack);
         GildType baseType = GildedToolItem.getGildType(baseStack);
         GildType additionsType = GildedToolItem.getGildType(additionsStack);
 
-        if (!(baseType.equals(additionsType))) {
-            if (stack.isEmpty()) stack = baseStack.copy();
-            ItemStack resultStack = additionsStack.copy();
+        if (baseBaseStack.isOf(additionsBaseStack.getItem()) && !(baseType.equals(additionsType))) {
+            ItemStack resultStack = baseStack.copy();
             resultStack.applyComponentsFrom(stack.getComponents());
-
-            int damage = stack.getDamage() - (baseStack.getDamage() - additionsStack.getDamage());
-
-            resultStack.setDamage(damage);
-            this.levelCost.set(this.levelCost.get() + 5);
+            this.levelCost.set(this.levelCost.get() + 3);
             instance.setStack(slot, resultStack);
         } else {
             instance.setStack(slot, stack);

@@ -1,5 +1,6 @@
 package com.github.suninvr.virtualadditions.mixin;
 
+import com.github.suninvr.virtualadditions.block.ClimbingRopeAnchorBlock;
 import com.github.suninvr.virtualadditions.item.GildTypes;
 import com.github.suninvr.virtualadditions.item.GildedToolUtil;
 import com.github.suninvr.virtualadditions.item.interfaces.GildedToolItem;
@@ -51,7 +52,7 @@ public abstract class BlockMixin {
 
     @Inject(method = "dropStacks(Lnet/minecraft/block/BlockState;Lnet/minecraft/world/World;Lnet/minecraft/util/math/BlockPos;Lnet/minecraft/block/entity/BlockEntity;Lnet/minecraft/entity/Entity;Lnet/minecraft/item/ItemStack;)V", at = @At("HEAD"), cancellable = true)
     private static void virtualAdditions$dropAndPickUpStacks(BlockState state, World world, BlockPos pos, BlockEntity blockEntity, Entity entity, ItemStack tool, CallbackInfo ci) {
-        if (GildedToolUtil.getGildType(tool).equals(GildTypes.IOLITE) && world instanceof ServerWorld && entity instanceof PlayerEntity player) {
+        if ((state.getBlock() instanceof ClimbingRopeAnchorBlock || GildedToolUtil.getGildType(tool).equals(GildTypes.IOLITE)) && world instanceof ServerWorld && entity instanceof PlayerEntity player) {
             List<ItemStack> stacks = getDroppedStacks(state, (ServerWorld)world, pos, blockEntity, entity, tool);
             if (stacks != null) stacks.forEach( stack -> dropStackIntoInventory(world, pos, stack, player));
             state.onStacksDropped((ServerWorld)world, pos, tool, true);
