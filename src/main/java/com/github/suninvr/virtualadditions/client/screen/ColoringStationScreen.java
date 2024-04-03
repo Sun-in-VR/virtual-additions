@@ -1,7 +1,6 @@
 package com.github.suninvr.virtualadditions.client.screen;
 
 import com.github.suninvr.virtualadditions.block.entity.ColoringStationBlockEntity;
-import com.github.suninvr.virtualadditions.recipe.ColoringRecipe;
 import com.github.suninvr.virtualadditions.recipe.ColoringStationRecipe;
 import com.github.suninvr.virtualadditions.screen.ColoringStationScreenHandler;
 import net.minecraft.client.MinecraftClient;
@@ -14,7 +13,6 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.recipe.RecipeEntry;
 import net.minecraft.screen.slot.Slot;
 import net.minecraft.sound.SoundEvents;
-import net.minecraft.text.MutableText;
 import net.minecraft.text.Text;
 import net.minecraft.util.Formatting;
 import net.minecraft.util.Identifier;

@@ -1,8 +1,8 @@
 package com.github.suninvr.virtualadditions.datagen;
 
-import com.github.suninvr.virtualadditions.registry.VACollections;
 import com.github.suninvr.virtualadditions.registry.VABlockTags;
 import com.github.suninvr.virtualadditions.registry.VABlocks;
+import com.github.suninvr.virtualadditions.registry.VACollections;
 import com.github.suninvr.virtualadditions.registry.collection.ColorfulBlockSet;
 import net.fabricmc.fabric.api.datagen.v1.FabricDataGenerator;
 import net.fabricmc.fabric.api.datagen.v1.FabricDataOutput;

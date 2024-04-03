@@ -1,7 +1,7 @@
 package com.github.suninvr.virtualadditions.registry;
 
-import com.github.suninvr.virtualadditions.screen.EntanglementDriveScreenHandler;
 import com.github.suninvr.virtualadditions.screen.ColoringStationScreenHandler;
+import com.github.suninvr.virtualadditions.screen.EntanglementDriveScreenHandler;
 import net.minecraft.registry.Registries;
 import net.minecraft.registry.Registry;
 import net.minecraft.resource.featuretoggle.FeatureFlags;

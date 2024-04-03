@@ -2,7 +2,7 @@ package com.github.suninvr.virtualadditions.item;
 
 import com.github.suninvr.virtualadditions.component.EffectsOnHitComponent;
 import com.github.suninvr.virtualadditions.registry.VADataComponentTypes;
-import net.minecraft.client.item.TooltipContext;
+import net.minecraft.client.item.TooltipType;
 import net.minecraft.component.DataComponentTypes;
 import net.minecraft.component.type.PotionContentsComponent;
 import net.minecraft.entity.player.PlayerEntity;
@@ -14,7 +14,6 @@ import net.minecraft.util.ClickType;
 import net.minecraft.util.Hand;
 import net.minecraft.util.TypedActionResult;
 import net.minecraft.world.World;
-import org.jetbrains.annotations.Nullable;
 
 import java.util.List;
 import java.util.Objects;
@@ -65,11 +64,11 @@ public class ApplicablePotionItem extends PotionItem {
     }
 
     @Override
-    public void appendTooltip(ItemStack stack, @Nullable World world, List<Text> tooltip, TooltipContext context) {
+    public void appendTooltip(ItemStack stack, TooltipContext context, List<Text> tooltip, TooltipType type) {
         PotionContentsComponent potionContentsComponent = stack.get(DataComponentTypes.POTION_CONTENTS);
         if (potionContentsComponent != null) {
             Objects.requireNonNull(tooltip);
-            potionContentsComponent.buildTooltip(tooltip::add, 0.125F, world == null ? 20.0F : world.getTickManager().getTickRate());
+            potionContentsComponent.buildTooltip(tooltip::add, 0.125F, context.getUpdateTickRate());
         }
     }
 }

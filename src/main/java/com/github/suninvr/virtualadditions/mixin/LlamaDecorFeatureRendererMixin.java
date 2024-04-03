@@ -5,7 +5,6 @@ import net.minecraft.client.render.entity.feature.FeatureRendererContext;
 import net.minecraft.client.render.entity.feature.LlamaDecorFeatureRenderer;
 import net.minecraft.client.render.entity.model.LlamaEntityModel;
 import net.minecraft.entity.passive.LlamaEntity;
-import net.minecraft.util.DyeColor;
 import net.minecraft.util.Identifier;
 import org.spongepowered.asm.mixin.Final;
 import org.spongepowered.asm.mixin.Mixin;

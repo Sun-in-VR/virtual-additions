@@ -4,7 +4,6 @@ import com.github.suninvr.virtualadditions.interfaces.LivingEntityInterface;
 import com.github.suninvr.virtualadditions.item.GildTypes;
 import com.github.suninvr.virtualadditions.item.interfaces.GildedToolItem;
 import com.github.suninvr.virtualadditions.registry.VABlockTags;
-import com.github.suninvr.virtualadditions.registry.VABlocks;
 import com.github.suninvr.virtualadditions.registry.VAGameRules;
 import com.github.suninvr.virtualadditions.registry.VAStatusEffects;
 import net.minecraft.block.BlockState;

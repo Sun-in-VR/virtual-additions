@@ -4,7 +4,6 @@ import com.github.suninvr.virtualadditions.item.interfaces.GildedToolItem;
 import net.minecraft.component.DataComponentTypes;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
-import net.minecraft.nbt.NbtCompound;
 
 public class GildedToolUtil {
     public static Item.Settings settingsOf(Item item, GildType type) {

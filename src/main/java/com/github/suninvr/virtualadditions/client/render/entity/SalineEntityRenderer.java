@@ -1,6 +1,5 @@
 package com.github.suninvr.virtualadditions.client.render.entity;
 
-import com.github.suninvr.virtualadditions.entity.SalineEntity;
 import net.minecraft.client.render.entity.EntityRendererFactory;
 import net.minecraft.client.render.entity.ZombieEntityRenderer;
 import net.minecraft.client.util.math.MatrixStack;

@@ -22,7 +22,6 @@ import net.minecraft.registry.tag.ItemTags;
 import net.minecraft.world.World;
 
 import java.util.List;
-import java.util.function.Function;
 
 public class ArmorColoringRecipe implements Recipe<Inventory>, ColoringStationRecipe {
     public final Ingredient item;

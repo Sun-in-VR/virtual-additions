@@ -2,30 +2,22 @@ package com.github.suninvr.virtualadditions.block;
 
 import com.github.suninvr.virtualadditions.block.entity.CustomShulkerBoxBlockEntity;
 import com.github.suninvr.virtualadditions.registry.VABlockEntityType;
-import com.github.suninvr.virtualadditions.registry.VABlocks;
-import com.github.suninvr.virtualadditions.registry.VADyeColors;
-import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.ShulkerBoxBlock;
 import net.minecraft.block.entity.BlockEntity;
 import net.minecraft.block.entity.BlockEntityTicker;
 import net.minecraft.block.entity.BlockEntityType;
 import net.minecraft.block.entity.ShulkerBoxBlockEntity;
-import net.minecraft.component.DataComponentTypes;
 import net.minecraft.entity.ItemEntity;
 import net.minecraft.entity.mob.PiglinBrain;
 import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.registry.tag.BlockTags;
-import net.minecraft.server.world.ServerWorld;
 import net.minecraft.util.DyeColor;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 import net.minecraft.world.event.GameEvent;
 import org.jetbrains.annotations.Nullable;
-
-import java.util.Objects;
 
 public class CustomShulkerBoxBlock extends ShulkerBoxBlock {
     private final DyeColor color;

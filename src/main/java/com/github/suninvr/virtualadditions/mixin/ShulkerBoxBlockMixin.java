@@ -3,7 +3,6 @@ package com.github.suninvr.virtualadditions.mixin;
 import com.github.suninvr.virtualadditions.VirtualAdditions;
 import com.github.suninvr.virtualadditions.registry.VABlocks;
 import com.github.suninvr.virtualadditions.registry.VADyeColors;
-import com.github.suninvr.virtualadditions.registry.VAItems;
 import net.minecraft.block.Block;
 import net.minecraft.block.Blocks;
 import net.minecraft.block.ShulkerBoxBlock;

@@ -2,7 +2,6 @@ package com.github.suninvr.virtualadditions.registry;
 
 import com.github.suninvr.virtualadditions.registry.collection.ColorfulBlockSet;
 import com.google.common.base.Suppliers;
-import com.google.common.collect.BiMap;
 import com.google.common.collect.ImmutableBiMap;
 import net.minecraft.block.Block;
 import net.minecraft.data.family.BlockFamilies;
@@ -10,7 +9,6 @@ import net.minecraft.data.family.BlockFamily;
 import net.minecraft.item.Items;
 
 import java.util.ArrayList;
-import java.util.Map;
 import java.util.function.Supplier;
 
 import static com.github.suninvr.virtualadditions.registry.VABlocks.*;

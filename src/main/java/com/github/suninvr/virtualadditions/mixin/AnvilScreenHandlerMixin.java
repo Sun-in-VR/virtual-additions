@@ -1,10 +1,8 @@
 package com.github.suninvr.virtualadditions.mixin;
 
 import com.github.suninvr.virtualadditions.item.GildType;
-import com.github.suninvr.virtualadditions.item.GildTypes;
 import com.github.suninvr.virtualadditions.item.GildedToolUtil;
 import com.github.suninvr.virtualadditions.item.interfaces.GildedToolItem;
-import net.minecraft.component.DataComponentTypes;
 import net.minecraft.entity.player.PlayerInventory;
 import net.minecraft.inventory.CraftingResultInventory;
 import net.minecraft.item.Item;

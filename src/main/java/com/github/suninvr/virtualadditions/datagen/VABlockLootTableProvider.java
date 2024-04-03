@@ -1,8 +1,8 @@
 package com.github.suninvr.virtualadditions.datagen;
 
 import com.github.suninvr.virtualadditions.block.BalloonBulbPlantBlock;
-import com.github.suninvr.virtualadditions.registry.VACollections;
 import com.github.suninvr.virtualadditions.registry.VABlocks;
+import com.github.suninvr.virtualadditions.registry.VACollections;
 import com.github.suninvr.virtualadditions.registry.VAItems;
 import com.github.suninvr.virtualadditions.registry.collection.ColorfulBlockSet;
 import net.fabricmc.fabric.api.datagen.v1.FabricDataGenerator;
@@ -10,7 +10,6 @@ import net.fabricmc.fabric.api.datagen.v1.FabricDataOutput;
 import net.fabricmc.fabric.api.datagen.v1.provider.FabricBlockLootTableProvider;
 import net.minecraft.block.BedBlock;
 import net.minecraft.block.Block;
-import net.minecraft.block.Blocks;
 import net.minecraft.block.TallPlantBlock;
 import net.minecraft.block.enums.BedPart;
 import net.minecraft.block.enums.DoubleBlockHalf;

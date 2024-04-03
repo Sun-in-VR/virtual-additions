@@ -51,6 +51,14 @@ public final class VAItemTagProvider {
             getOrCreateTagBuilder(ItemTags.STONE_TOOL_MATERIALS).add(VAItems.COBBLED_HORNFELS, VAItems.COBBLED_BLUESCHIST, VAItems.COBBLED_SYENITE);
             getOrCreateTagBuilder(ItemTags.TRIM_MATERIALS).add(VAItems.STEEL_INGOT, VAItems.IOLITE);
             getOrCreateTagBuilder(ItemTags.TRIMMABLE_ARMOR).add(VAItems.STEEL_HELMET, VAItems.STEEL_CHESTPLATE, VAItems.STEEL_LEGGINGS, VAItems.STEEL_BOOTS);
+            getOrCreateTagBuilder(ItemTags.HEAD_ARMOR_ENCHANTABLE).add(VAItems.STEEL_HELMET);
+            getOrCreateTagBuilder(ItemTags.CHEST_ARMOR_ENCHANTABLE).add(VAItems.STEEL_CHESTPLATE);
+            getOrCreateTagBuilder(ItemTags.LEG_ARMOR_ENCHANTABLE).add(VAItems.STEEL_LEGGINGS);
+            getOrCreateTagBuilder(ItemTags.FOOT_ARMOR_ENCHANTABLE).add(VAItems.STEEL_BOOTS);
+            getOrCreateTagBuilder(ItemTags.HEAD_ARMOR).add(VAItems.STEEL_HELMET);
+            getOrCreateTagBuilder(ItemTags.CHEST_ARMOR).add(VAItems.STEEL_CHESTPLATE);
+            getOrCreateTagBuilder(ItemTags.LEG_ARMOR).add(VAItems.STEEL_LEGGINGS);
+            getOrCreateTagBuilder(ItemTags.FOOT_ARMOR).add(VAItems.STEEL_BOOTS);
             getOrCreateTagBuilder(ItemTags.VILLAGER_PLANTABLE_SEEDS).add(VAItems.CORN_SEEDS, VAItems.COTTON_SEEDS);
             getOrCreateTagBuilder(ItemTags.DOORS).add(VAItems.STEEL_DOOR);
             getOrCreateTagBuilder(ItemTags.TRAPDOORS).add(VAItems.STEEL_TRAPDOOR);

@@ -4,7 +4,6 @@ import com.github.suninvr.virtualadditions.registry.VAItemTags;
 import com.github.suninvr.virtualadditions.registry.VAItems;
 import com.llamalad7.mixinextras.sugar.Local;
 import com.llamalad7.mixinextras.sugar.ref.LocalIntRef;
-import com.llamalad7.mixinextras.sugar.ref.LocalRef;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.RangedWeaponItem;

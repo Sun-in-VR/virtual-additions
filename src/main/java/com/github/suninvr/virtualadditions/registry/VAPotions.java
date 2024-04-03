@@ -8,7 +8,6 @@ import net.minecraft.recipe.BrewingRecipeRegistry;
 import net.minecraft.registry.Registries;
 import net.minecraft.registry.Registry;
 import net.minecraft.registry.entry.RegistryEntry;
-import net.minecraft.util.Identifier;
 
 import static com.github.suninvr.virtualadditions.VirtualAdditions.idOf;
 

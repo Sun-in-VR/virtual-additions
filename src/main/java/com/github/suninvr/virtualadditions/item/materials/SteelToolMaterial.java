@@ -5,7 +5,6 @@ import com.github.suninvr.virtualadditions.registry.VAItems;
 import net.minecraft.block.Block;
 import net.minecraft.item.ToolMaterial;
 import net.minecraft.recipe.Ingredient;
-import net.minecraft.registry.tag.BlockTags;
 import net.minecraft.registry.tag.TagKey;
 
 public class SteelToolMaterial implements ToolMaterial {

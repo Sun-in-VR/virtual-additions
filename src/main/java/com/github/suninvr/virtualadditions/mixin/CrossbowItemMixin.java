@@ -2,7 +2,6 @@ package com.github.suninvr.virtualadditions.mixin;
 
 import com.github.suninvr.virtualadditions.entity.ClimbingRopeEntity;
 import com.github.suninvr.virtualadditions.registry.VAItemTags;
-import com.github.suninvr.virtualadditions.registry.VAItems;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.projectile.PersistentProjectileEntity;
 import net.minecraft.entity.projectile.ProjectileEntity;

@@ -1,7 +1,6 @@
 package com.github.suninvr.virtualadditions.entity;
 
 import com.github.suninvr.virtualadditions.interfaces.EntityInterface;
-import com.github.suninvr.virtualadditions.interfaces.LivingEntityInterface;
 import com.github.suninvr.virtualadditions.registry.VADamageTypes;
 import com.github.suninvr.virtualadditions.registry.VASoundEvents;
 import net.minecraft.block.BlockState;

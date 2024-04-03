@@ -1,16 +1,13 @@
 package com.github.suninvr.virtualadditions.datagen.recipe;
 
 import com.github.suninvr.virtualadditions.recipe.ArmorColoringRecipe;
-import com.github.suninvr.virtualadditions.recipe.ColoringRecipe;
 import net.minecraft.advancement.Advancement;
 import net.minecraft.advancement.AdvancementRequirements;
 import net.minecraft.advancement.AdvancementRewards;
 import net.minecraft.advancement.criterion.RecipeUnlockedCriterion;
 import net.minecraft.data.server.recipe.RecipeExporter;
 import net.minecraft.item.DyeItem;
-import net.minecraft.item.ItemStack;
 import net.minecraft.recipe.Ingredient;
-import net.minecraft.registry.Registries;
 import net.minecraft.util.Identifier;
 import org.jetbrains.annotations.Nullable;
 

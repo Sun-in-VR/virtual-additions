@@ -1,9 +1,7 @@
 package com.github.suninvr.virtualadditions.screen;
 
 import com.github.suninvr.virtualadditions.block.entity.ColoringStationBlockEntity;
-import com.github.suninvr.virtualadditions.recipe.ColoringRecipe;
 import com.github.suninvr.virtualadditions.recipe.ColoringStationRecipe;
-import com.github.suninvr.virtualadditions.registry.VAItemTags;
 import com.github.suninvr.virtualadditions.registry.VARecipeType;
 import com.github.suninvr.virtualadditions.registry.VAScreenHandler;
 import com.google.common.collect.Lists;
@@ -15,7 +13,6 @@ import net.minecraft.inventory.SimpleInventory;
 import net.minecraft.item.DyeItem;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
-import net.minecraft.network.PacketByteBuf;
 import net.minecraft.recipe.RecipeEntry;
 import net.minecraft.screen.*;
 import net.minecraft.screen.slot.Slot;

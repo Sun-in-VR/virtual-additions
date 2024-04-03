@@ -3,8 +3,6 @@ package com.github.suninvr.virtualadditions.block.entity;
 import com.github.suninvr.virtualadditions.registry.VABlockEntityType;
 import com.github.suninvr.virtualadditions.registry.VADyeColors;
 import com.github.suninvr.virtualadditions.screen.ColoringStationScreenHandler;
-import com.mojang.serialization.Codec;
-import net.fabricmc.fabric.api.screenhandler.v1.ExtendedScreenHandlerFactory;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.entity.BlockEntity;
 import net.minecraft.entity.player.PlayerEntity;
@@ -21,9 +19,7 @@ import net.minecraft.screen.NamedScreenHandlerFactory;
 import net.minecraft.screen.PropertyDelegate;
 import net.minecraft.screen.ScreenHandler;
 import net.minecraft.screen.ScreenHandlerContext;
-import net.minecraft.server.network.ServerPlayerEntity;
 import net.minecraft.text.Text;
-import net.minecraft.util.DyeColor;
 import net.minecraft.util.math.BlockPos;
 import org.jetbrains.annotations.Nullable;
 

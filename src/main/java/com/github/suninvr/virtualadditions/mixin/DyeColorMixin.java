@@ -2,7 +2,8 @@ package com.github.suninvr.virtualadditions.mixin;
 
 import net.minecraft.block.MapColor;
 import net.minecraft.util.DyeColor;
-import org.spongepowered.asm.mixin.*;
+import org.spongepowered.asm.mixin.Mixin;
+import org.spongepowered.asm.mixin.Unique;
 import org.spongepowered.asm.mixin.gen.Invoker;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
