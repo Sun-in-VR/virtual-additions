@@ -1,0 +1,15 @@
+{
+    "parent": "item/generated",
+    "textures": {
+        "layer0": "virtual_additions:item/engraving_chisel"
+    },
+    "overrides": [
+        {
+            "predicate": {
+                "virtual_additions:colorful": 1
+            },
+            "model": "virtual_additions:item/engraving_chisel_with_color"
+        }
+    ]
+}
+

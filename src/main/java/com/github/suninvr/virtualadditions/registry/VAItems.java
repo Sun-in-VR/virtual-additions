@@ -65,6 +65,7 @@ public class VAItems {
     public static final Item WAXED_EXPOSED_CLIMBING_ROPE;
     public static final Item WAXED_WEATHERED_CLIMBING_ROPE;
     public static final Item WAXED_OXIDIZED_CLIMBING_ROPE;
+    public static final Item ENGRAVING_CHISEL;
     public static final Item HORNFELS;
     public static final Item COBBLED_HORNFELS;
     public static final Item COBBLED_HORNFELS_STAIRS;
@@ -436,6 +437,8 @@ public class VAItems {
         WAXED_EXPOSED_CLIMBING_ROPE = register("waxed_exposed_climbing_rope", new ClimbingRopeItem(VABlocks.WAXED_EXPOSED_CLIMBING_ROPE_ANCHOR, new Item.Settings().maxCount(16)), ItemGroups.TOOLS, prev);
         WAXED_WEATHERED_CLIMBING_ROPE = register("waxed_weathered_climbing_rope", new ClimbingRopeItem(VABlocks.WAXED_WEATHERED_CLIMBING_ROPE_ANCHOR, new Item.Settings().maxCount(16)), ItemGroups.TOOLS, prev);
         WAXED_OXIDIZED_CLIMBING_ROPE = register("waxed_oxidized_climbing_rope", new ClimbingRopeItem(VABlocks.WAXED_OXIDIZED_CLIMBING_ROPE_ANCHOR, new Item.Settings().maxCount(16)), ItemGroups.TOOLS, prev);
+
+        ENGRAVING_CHISEL = register("engraving_chisel", new Item(new Item.Settings().maxCount(1).maxDamage(64)), ItemGroups.TOOLS, Items.NAME_TAG);
 
         HORNFELS = registerBlockItem("hornfels", VABlocks.HORNFELS, new ItemGroupLocation(ItemGroups.NATURAL, Items.DEEPSLATE), new ItemGroupLocation(ItemGroups.BUILDING_BLOCKS, Items.DEEPSLATE_TILE_WALL));
         COBBLED_HORNFELS = registerBlockItem("cobbled_hornfels", VABlocks.COBBLED_HORNFELS, ItemGroups.BUILDING_BLOCKS, HORNFELS);

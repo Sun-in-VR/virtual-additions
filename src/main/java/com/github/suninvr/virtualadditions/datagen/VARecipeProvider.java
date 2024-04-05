@@ -386,6 +386,14 @@ public final class VARecipeProvider {
                     .input('c', VAItems.CUT_STEEL)
                     .criterion("cut_steel", conditionsFromItem(VAItems.CUT_STEEL)).offerTo(exporter);
 
+            ShapedRecipeJsonBuilder.create(RecipeCategory.DECORATIONS, VAItems.ENGRAVING_CHISEL, 1)
+                    .pattern("c")
+                    .pattern("s")
+                    .pattern("c")
+                    .input('c', ItemTags.STONE_CRAFTING_MATERIALS)
+                    .input('s', VAItems.STEEL_INGOT)
+                    .criterion("steel_ingot", conditionsFromItem(VAItems.STEEL_INGOT)).offerTo(exporter);
+
             offerSmithingTrimRecipe(exporter, VAItems.EXOSKELETON_ARMOR_TRIM_SMITHING_TEMPLATE, idOf("exoskeleton_armor_trim_smithing_template_smithing_trim"));
             offerSmithingTemplateCopyingRecipe(exporter, VAItems.EXOSKELETON_ARMOR_TRIM_SMITHING_TEMPLATE, VAItems.SILK_BLOCK);
 

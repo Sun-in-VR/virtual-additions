@@ -69,7 +69,7 @@ public class CornCropBlock extends CropBlock {
 
     @Override
     protected ItemConvertible getSeedsItem() {
-        return VAItems.CORN;
+        return VAItems.CORN_SEEDS;
     }
 
     public void applyGrowth(World world, BlockPos pos, BlockState state) {

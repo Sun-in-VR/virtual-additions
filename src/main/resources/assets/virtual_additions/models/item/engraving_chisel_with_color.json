@@ -1,0 +1,8 @@
+{
+    "parent": "item/generated",
+    "textures": {
+        "layer0": "virtual_additions:item/engraving_chisel_layer",
+        "layer1": "virtual_additions:item/engraving_chisel_base"
+    }
+}
+
