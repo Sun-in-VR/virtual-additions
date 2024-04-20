@@ -3,7 +3,7 @@ package com.github.suninvr.virtualadditions.client.particle;
 import net.minecraft.block.BlockState;
 import net.minecraft.client.particle.*;
 import net.minecraft.client.world.ClientWorld;
-import net.minecraft.particle.DefaultParticleType;
+import net.minecraft.particle.SimpleParticleType;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.world.LightType;
@@ -53,7 +53,7 @@ public class GreencapSporeParticle extends SpriteBillboardParticle {
         return ParticleTextureSheet.PARTICLE_SHEET_OPAQUE;
     }
 
-    public static class Factory implements ParticleFactory<DefaultParticleType> {
+    public static class Factory implements ParticleFactory<SimpleParticleType> {
         private final SpriteProvider spriteProvider;
 
         public Factory(SpriteProvider spriteProvider) {
@@ -62,7 +62,7 @@ public class GreencapSporeParticle extends SpriteBillboardParticle {
 
         @Nullable
         @Override
-        public Particle createParticle(DefaultParticleType parameters, ClientWorld world, double x, double y, double z, double velocityX, double velocityY, double velocityZ) {
+        public Particle createParticle(SimpleParticleType parameters, ClientWorld world, double x, double y, double z, double velocityX, double velocityY, double velocityZ) {
             GreencapSporeParticle particle = new GreencapSporeParticle(world, this.spriteProvider, x, y, z, 0.0, 0.0, 0.0) {
                 public Optional<ParticleGroup> getGroup() {
                     return Optional.of(ParticleGroup.SPORE_BLOSSOM_AIR);

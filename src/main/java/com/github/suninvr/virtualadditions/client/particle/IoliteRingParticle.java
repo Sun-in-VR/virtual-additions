@@ -23,7 +23,7 @@ public class IoliteRingParticle extends SpriteBillboardParticle {
     private static final Vector3f quarternionVector = Util.make(new Vector3f(0.5F, 0.5F, 0.5F), Vector3f::normalize);
     private static final Vector3f thisIsUsedForSomethingIdkWhat = new Vector3f(-1.0F, -1.0F, 0.0F);
     private final boolean inverse;
-    protected IoliteRingParticle(ClientWorld clientWorld, double d, double e, double f, boolean inverse, double velocity) {
+    public IoliteRingParticle(ClientWorld clientWorld, double d, double e, double f, boolean inverse, double velocity) {
         super(clientWorld, d, e, f, 0.0, 0.0, 0.0);
         this.scale = 0.5F;
         this.maxAge = 8;

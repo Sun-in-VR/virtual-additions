@@ -1,5 +1,6 @@
 package com.github.suninvr.virtualadditions.registry;
 
+import net.fabricmc.fabric.api.registry.FabricBrewingRecipeRegistryBuilder;
 import net.minecraft.entity.effect.StatusEffectInstance;
 import net.minecraft.item.Items;
 import net.minecraft.potion.Potion;
@@ -31,10 +32,12 @@ public class VAPotions {
     }
 
     protected static void initBrewingRecipes() {
-        BrewingRecipeRegistry.registerPotionType(VAItems.APPLICABLE_POTION);
-        BrewingRecipeRegistry.registerItemRecipe(Items.POTION, VAItems.LUMWASP_MANDIBLE, VAItems.APPLICABLE_POTION);
-        BrewingRecipeRegistry.registerPotionRecipe(Potions.AWKWARD, VAItems.ROCK_SALT, FRAILTY);
-        BrewingRecipeRegistry.registerPotionRecipe(FRAILTY, Items.REDSTONE, LONG_FRAILTY);
-        BrewingRecipeRegistry.registerPotionRecipe(FRAILTY, Items.GLOWSTONE_DUST, STRONG_FRAILTY);
+        FabricBrewingRecipeRegistryBuilder.BUILD.register(builder -> {
+            builder.registerPotionType(VAItems.APPLICABLE_POTION);
+            builder.registerItemRecipe(Items.POTION, VAItems.LUMWASP_MANDIBLE, VAItems.APPLICABLE_POTION);
+            builder.registerPotionRecipe(Potions.AWKWARD, VAItems.ROCK_SALT, FRAILTY);
+            builder.registerPotionRecipe(FRAILTY, Items.REDSTONE, LONG_FRAILTY);
+            builder.registerPotionRecipe(FRAILTY, Items.GLOWSTONE_DUST, STRONG_FRAILTY);
+        });
     }
 }

@@ -348,11 +348,11 @@ public class VAItems {
     public static final Item LUMWASP_SPAWN_EGG;
     public static final Item LYFT_SPAWN_EGG;
 
-    public static final FoodComponent FRIED_EGG_FOOD = (new FoodComponent.Builder().hunger(4).saturationModifier(0.4F).build());
-    public static final FoodComponent CORN_FOOD = (new FoodComponent.Builder()).hunger(1).saturationModifier(0.3F).build();
-    public static final FoodComponent ROASTED_CORN_FOOD = (new FoodComponent.Builder()).hunger(5).saturationModifier(0.6F).build();
-    public static final FoodComponent ICE_CREAM_FOOD = new FoodComponent.Builder().hunger(7).saturationModifier(0.1F).build();
-    public static final FoodComponent BALLOON_FRUIT_FOOD = (new FoodComponent.Builder().hunger(2).saturationModifier(0.1F).alwaysEdible().statusEffect(new StatusEffectInstance(StatusEffects.LEVITATION, 100, 1), 1.0F).build());
+    public static final FoodComponent FRIED_EGG_FOOD = (new FoodComponent.Builder().nutrition(4).saturationModifier(0.4F).build());
+    public static final FoodComponent CORN_FOOD = (new FoodComponent.Builder()).nutrition(1).saturationModifier(0.3F).build();
+    public static final FoodComponent ROASTED_CORN_FOOD = (new FoodComponent.Builder()).nutrition(5).saturationModifier(0.6F).build();
+    public static final FoodComponent ICE_CREAM_FOOD = new FoodComponent.Builder().nutrition(7).saturationModifier(0.1F).build();
+    public static final FoodComponent BALLOON_FRUIT_FOOD = (new FoodComponent.Builder().nutrition(2).saturationModifier(0.1F).alwaysEdible().statusEffect(new StatusEffectInstance(StatusEffects.LEVITATION, 100, 1), 1.0F).build());
 
     public static final ToolSet AMETHYST_DIAMOND_TOOL_SET;
     public static final ToolSet COPPER_DIAMOND_TOOL_SET;

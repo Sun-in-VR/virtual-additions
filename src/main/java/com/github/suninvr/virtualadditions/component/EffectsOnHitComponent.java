@@ -6,6 +6,7 @@ import net.minecraft.client.item.TooltipType;
 import net.minecraft.component.DataComponentType;
 import net.minecraft.component.type.PotionContentsComponent;
 import net.minecraft.entity.effect.StatusEffectInstance;
+import net.minecraft.item.Item;
 import net.minecraft.item.TooltipAppender;
 import net.minecraft.network.RegistryByteBuf;
 import net.minecraft.network.codec.PacketCodec;
@@ -58,14 +59,14 @@ public record EffectsOnHitComponent(Optional<PotionContentsComponent> potionCont
     }
 
     @Override
-    public void appendTooltip(Consumer<Text> textConsumer, TooltipType context) {
+    public void appendTooltip(Item.TooltipContext context, Consumer<Text> tooltip, TooltipType type) {
         if (this.hasEffectsComponent()) {
-            if (context.isAdvanced() && this.getRemainingUses() > 0) {
+            if (type.isAdvanced() && this.getRemainingUses() > 0) {
                 MutableText text = Text.translatable("item.virtual_additions.applied_effect_tooltip.advanced", this.getRemainingUses(), this.getTotalUses()).formatted(Formatting.DARK_PURPLE);
-                textConsumer.accept(text);
+                tooltip.accept(text);
             }
-            textConsumer.accept(tooltipText);
-            this.potionContents.get().buildTooltip(textConsumer, 0.125F, 20);
+            tooltip.accept(tooltipText);
+            this.potionContents.get().buildTooltip(tooltip, 0.125F, 20);
         }
     }
     public EffectsOnHitComponent decrementRemainingUses() {

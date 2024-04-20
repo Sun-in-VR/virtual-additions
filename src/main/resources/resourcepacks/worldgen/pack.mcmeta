@@ -1,6 +1,6 @@
 {
     "pack": {
-        "pack_format": 36,
+        "pack_format": 41,
         "description": "World Generation for Virtual Additions"
     }
 }

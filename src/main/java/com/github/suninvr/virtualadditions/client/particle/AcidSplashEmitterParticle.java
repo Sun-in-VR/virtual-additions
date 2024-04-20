@@ -6,8 +6,9 @@ import net.fabricmc.api.Environment;
 import net.minecraft.client.particle.NoRenderParticle;
 import net.minecraft.client.particle.Particle;
 import net.minecraft.client.particle.ParticleFactory;
+import net.minecraft.client.particle.SpriteProvider;
 import net.minecraft.client.world.ClientWorld;
-import net.minecraft.particle.DefaultParticleType;
+import net.minecraft.particle.SimpleParticleType;
 
 public class AcidSplashEmitterParticle extends NoRenderParticle {
     private int age;
@@ -30,8 +31,14 @@ public class AcidSplashEmitterParticle extends NoRenderParticle {
     }
 
     @Environment(EnvType.CLIENT)
-    public static class Factory implements ParticleFactory<DefaultParticleType> {
-        public Particle createParticle(DefaultParticleType defaultParticleType, ClientWorld clientWorld, double d, double e, double f, double g, double h, double i) {
+    public static class Factory implements ParticleFactory<SimpleParticleType> {
+        private final SpriteProvider spriteProvider;
+
+        public Factory(SpriteProvider spriteProvider) {
+            this.spriteProvider = spriteProvider;
+        }
+
+        public Particle createParticle(SimpleParticleType defaultParticleType, ClientWorld clientWorld, double d, double e, double f, double g, double h, double i) {
             return new AcidSplashEmitterParticle(clientWorld, d, e, f);
         }
     }
