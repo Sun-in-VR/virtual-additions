@@ -141,16 +141,7 @@ public final class VABlockLootTableProvider {
             this.addDrop(VABlocks.ROCK_SALT_CRYSTAL, (block) -> this.drops(block, VAItems.ROCK_SALT, ConstantLootNumberProvider.create(2.0F)));
 
             this.addDrop(VABlocks.REDSTONE_BRIDGE);
-        }
-    }
 
-    private static class PreviewProvider extends Provider {
-        public PreviewProvider(FabricDataOutput output, CompletableFuture<RegistryWrapper.WrapperLookup> registryLookup) {
-            super(output, registryLookup);
-        }
-
-        @Override
-        public void generate() {
             addFamilyDrops(
                     VACollections.AEROBLOOM,
                     VACollections.FLOATROCK,
@@ -164,7 +155,6 @@ public final class VABlockLootTableProvider {
                     VABlocks.STRIPPED_AEROBLOOM_WOOD,
                     VABlocks.AEROBLOOM_HANGING_SIGN,
                     VABlocks.AEROBLOOM_SAPLING,
-                    VABlocks.SPRINGSOIL,
                     VABlocks.AEROBLOOM_HEDGE
             );
 
@@ -179,10 +169,25 @@ public final class VABlockLootTableProvider {
             this.addDrop(VABlocks.FLOATROCK_LAPIS_ORE, this::lapisOreDrops);
             this.addDrop(VABlocks.FLOATROCK_DIAMOND_ORE, block -> this.oreDrops(block, Items.DIAMOND));
 
-            this.addDrop(VABlocks.BALLOON_BULB, block -> this.drops(VAItems.BALLOON_FRUIT));
-            this.addDrop(VABlocks.BALLOON_BULB_PLANT, block -> new LootTable.Builder().pool(LootPool.builder().with(ItemEntry.builder(VAItems.BALLOON_FRUIT).conditionally(BlockStatePropertyLootCondition.builder(VABlocks.BALLOON_BULB_PLANT).properties(StatePredicate.Builder.create().exactMatch(BalloonBulbPlantBlock.AGE, 3))).apply(SetCountLootFunction.builder(UniformLootNumberProvider.create(2, 3))))));
-
             this.addDrop(VABlocks.AEROBLOOM_LEAVES, block ->  leavesDrops(VABlocks.AEROBLOOM_LEAVES, VABlocks.AEROBLOOM_SAPLING, SAPLING_DROP_CHANCE));
+
+        }
+    }
+
+    private static class PreviewProvider extends Provider {
+        public PreviewProvider(FabricDataOutput output, CompletableFuture<RegistryWrapper.WrapperLookup> registryLookup) {
+            super(output, registryLookup);
+        }
+
+        @Override
+        public void generate() {
+            this.addDrop(VABlocks.BALLOON_BULB, block -> this.drops(VAItems.BALLOON_FRUIT));
+
+            this.addSimpleDrops(
+                    VABlocks.SPRINGSOIL
+                    );
+
+            this.addDrop(VABlocks.BALLOON_BULB_PLANT, block -> new LootTable.Builder().pool(LootPool.builder().with(ItemEntry.builder(VAItems.BALLOON_FRUIT).conditionally(BlockStatePropertyLootCondition.builder(VABlocks.BALLOON_BULB_PLANT).properties(StatePredicate.Builder.create().exactMatch(BalloonBulbPlantBlock.AGE, 3))).apply(SetCountLootFunction.builder(UniformLootNumberProvider.create(2, 3))))));
         }
     }
 

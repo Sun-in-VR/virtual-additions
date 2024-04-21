@@ -9,6 +9,7 @@ import net.fabricmc.fabric.api.biome.v1.BiomeSelectors;
 import net.minecraft.registry.Registries;
 import net.minecraft.registry.Registry;
 import net.minecraft.registry.RegistryKey;
+import net.minecraft.registry.tag.BiomeTags;
 import net.minecraft.world.biome.BiomeKeys;
 import net.minecraft.world.gen.GenerationStep;
 import net.minecraft.world.gen.feature.*;
@@ -19,12 +20,14 @@ import static com.github.suninvr.virtualadditions.VirtualAdditions.idOf;
 @SuppressWarnings("SameParameterValue")
 public class VAFeatures {
     public static final RegistryKey<PlacedFeature> ORE_IOLITE;
+    public static final RegistryKey<PlacedFeature> ORE_FLOATROCK;
     public static final RegistryKey<ConfiguredFeature<?, ?>> AEROBLOOM_TREE;
     public static Feature<DefaultFeatureConfig> LUMWASP_NEST;
     public static Feature<DefaultFeatureConfig> BALLOON_BULB;
 
     static {
         ORE_IOLITE = registerPlaced("ore_iolite");
+        ORE_FLOATROCK = registerPlaced("ore_floatrock");
         AEROBLOOM_TREE = registerConfigured("aerobloom_tree");
     }
 
@@ -33,6 +36,11 @@ public class VAFeatures {
                 BiomeSelectors.foundInTheEnd().and( biomeSelectionContext -> !(biomeSelectionContext.getBiomeKey().equals(BiomeKeys.THE_END)) ),
                 GenerationStep.Feature.UNDERGROUND_ORES,
                 ORE_IOLITE
+        );
+        BiomeModifications.addFeature(
+                BiomeSelectors.tag(BiomeTags.IS_HILL),
+                GenerationStep.Feature.UNDERGROUND_ORES,
+                ORE_FLOATROCK
         );
         TrunkPlacerTypes.init();
         BALLOON_BULB = Registry.register(Registries.FEATURE, idOf("balloon_bulb"), new BalloonBulbFeature(DefaultFeatureConfig.CODEC));

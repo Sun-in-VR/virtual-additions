@@ -394,19 +394,17 @@ public final class VARecipeProvider {
                     .input('s', VAItems.STEEL_INGOT)
                     .criterion("steel_ingot", conditionsFromItem(VAItems.STEEL_INGOT)).offerTo(exporter);
 
+            ShapedRecipeJsonBuilder.create(RecipeCategory.BUILDING_BLOCKS, VAItems.FLOATROCK, 9)
+                    .pattern("ccc")
+                    .pattern("cfc")
+                    .pattern("ccc")
+                    .input('c', Items.COBBLESTONE)
+                    .input('f', VAItems.FLOATROCK)
+                    .criterion("floatrock", conditionsFromItem(VAItems.FLOATROCK)).offerTo(exporter);
+
+
             offerSmithingTrimRecipe(exporter, VAItems.EXOSKELETON_ARMOR_TRIM_SMITHING_TEMPLATE, idOf("exoskeleton_armor_trim_smithing_template_smithing_trim"));
             offerSmithingTemplateCopyingRecipe(exporter, VAItems.EXOSKELETON_ARMOR_TRIM_SMITHING_TEMPLATE, VAItems.SILK_BLOCK);
-
-        }
-    }
-
-    private static class PreviewProvider extends Provider {
-        public PreviewProvider(FabricDataOutput fabricDataOutput, CompletableFuture<RegistryWrapper.WrapperLookup> wrapperLookupCompletableFuture) {
-            super(fabricDataOutput, wrapperLookupCompletableFuture);
-        }
-
-        @Override
-        public void generate(RecipeExporter exporter) {
 
             offerSmelting(exporter, List.of(VAItems.FLOATROCK_COAL_ORE), RecipeCategory.MISC, Items.COAL, 0.1F, 200, "coal");
             offerSmelting(exporter, List.of(VAItems.FLOATROCK_COPPER_ORE), RecipeCategory.MISC, Items.COPPER_INGOT, 0.7F, 200, "copper_ingot");
@@ -440,6 +438,16 @@ public final class VARecipeProvider {
             offerBarkBlockRecipe(exporter, VAItems.STRIPPED_AEROBLOOM_WOOD, VAItems.STRIPPED_AEROBLOOM_LOG);
             offerPlanksRecipe2(exporter, VAItems.AEROBLOOM_PLANKS, VAItemTags.AEROBLOOM_LOGS, 4);
             offerHangingSignRecipe(exporter, VAItems.AEROBLOOM_HANGING_SIGN, VAItems.STRIPPED_AEROBLOOM_LOG);
+        }
+    }
+
+    private static class PreviewProvider extends Provider {
+        public PreviewProvider(FabricDataOutput fabricDataOutput, CompletableFuture<RegistryWrapper.WrapperLookup> wrapperLookupCompletableFuture) {
+            super(fabricDataOutput, wrapperLookupCompletableFuture);
+        }
+
+        @Override
+        public void generate(RecipeExporter exporter) {
         }
     }
 

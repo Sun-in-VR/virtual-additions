@@ -274,16 +274,7 @@ public final class VAItemTagProvider {
             configureGildedToolSet(VAItems.IOLITE_TOOL_SETS);
             configureGildedToolSet(VAItems.QUARTZ_TOOL_SETS);
             configureGildedToolSet(VAItems.SCULK_TOOL_SETS);
-        }
-    }
 
-    private static class PreviewProvider extends Provider {
-        public PreviewProvider(FabricDataOutput output, CompletableFuture<RegistryWrapper.WrapperLookup> completableFuture) {
-            super(output, completableFuture);
-        }
-
-        @Override
-        protected void configure(RegistryWrapper.WrapperLookup arg) {
             getOrCreateTagBuilder(ItemTags.STONE_CRAFTING_MATERIALS).add(VAItems.FLOATROCK);
             getOrCreateTagBuilder(ItemTags.STONE_TOOL_MATERIALS).add(VAItems.FLOATROCK);
             getOrCreateTagBuilder(ItemTags.LOGS_THAT_BURN).add(VAItems.AEROBLOOM_LOG, VAItems.AEROBLOOM_WOOD, VAItems.STRIPPED_AEROBLOOM_LOG, VAItems.STRIPPED_AEROBLOOM_WOOD);
@@ -295,9 +286,6 @@ public final class VAItemTagProvider {
             getOrCreateTagBuilder(ItemTags.TRAPDOORS).add(VAItems.AEROBLOOM_TRAPDOOR);
             getOrCreateTagBuilder(ItemTags.LEAVES).add(VAItems.AEROBLOOM_LEAVES);
             getOrCreateTagBuilder(ItemTags.SAPLINGS).add(VAItems.AEROBLOOM_SAPLING);
-
-            getOrCreateTagBuilder(FOODS).add(VAItems.BALLOON_FRUIT);
-
 
             getOrCreateTagBuilder(VAItemTags.LUMWASP_LARVAE_FOOD).add(
                     VAItems.FLOATROCK,
@@ -317,6 +305,18 @@ public final class VAItemTagProvider {
                     VACollections.POLISHED_FLOATROCK,
                     VACollections.FLOATROCK_BRICKS
             );
+        }
+    }
+
+    private static class PreviewProvider extends Provider {
+        public PreviewProvider(FabricDataOutput output, CompletableFuture<RegistryWrapper.WrapperLookup> completableFuture) {
+            super(output, completableFuture);
+        }
+
+        @Override
+        protected void configure(RegistryWrapper.WrapperLookup arg) {
+
+            getOrCreateTagBuilder(FOODS).add(VAItems.BALLOON_FRUIT);
         }
     }
 

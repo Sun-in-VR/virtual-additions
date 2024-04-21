@@ -9,6 +9,7 @@ import net.fabricmc.fabric.api.loot.v2.LootTableEvents;
 import net.minecraft.block.Blocks;
 import net.minecraft.block.ComposterBlock;
 import net.minecraft.block.DispenserBlock;
+import net.minecraft.block.cauldron.CauldronBehavior;
 import net.minecraft.block.dispenser.DispenserBehavior;
 import net.minecraft.block.dispenser.ItemDispenserBehavior;
 import net.minecraft.block.dispenser.ProjectileDispenserBehavior;
@@ -47,6 +48,7 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 
 import java.util.List;
+import java.util.Map;
 
 import static com.github.suninvr.virtualadditions.VirtualAdditions.idOf;
 import static com.github.suninvr.virtualadditions.registry.RegistryHelper.ItemRegistryHelper.*;
@@ -803,6 +805,8 @@ public class VAItems {
         initDispenserBehaviors();
         initCompostables();
         initLootTableModifiers();
+        initCauldronBehaviors();
+
 
         ItemGroupEvents.modifyEntriesEvent(ItemGroups.FOOD_AND_DRINK).register( (content) -> {
             if (ItemGroups.displayContext == null) return;
@@ -969,6 +973,27 @@ public class VAItems {
                 });
             }
         } ));
+    }
+
+    protected static void initCauldronBehaviors() {
+        Map<Item, CauldronBehavior> waterBehaviors = CauldronBehavior.WATER_CAULDRON_BEHAVIOR.map();
+        waterBehaviors.put(VAItems.ENGRAVING_CHISEL, CauldronBehavior.CLEAN_DYEABLE_ITEM);
+        waterBehaviors.put(VAItems.CHARTREUSE_SHULKER_BOX, CauldronBehavior.CLEAN_SHULKER_BOX);
+        waterBehaviors.put(VAItems.MAROON_SHULKER_BOX, CauldronBehavior.CLEAN_SHULKER_BOX);
+        waterBehaviors.put(VAItems.INDIGO_SHULKER_BOX, CauldronBehavior.CLEAN_SHULKER_BOX);
+        waterBehaviors.put(VAItems.PLUM_SHULKER_BOX, CauldronBehavior.CLEAN_SHULKER_BOX);
+        waterBehaviors.put(VAItems.VIRIDIAN_SHULKER_BOX, CauldronBehavior.CLEAN_SHULKER_BOX);
+        waterBehaviors.put(VAItems.TAN_SHULKER_BOX, CauldronBehavior.CLEAN_SHULKER_BOX);
+        waterBehaviors.put(VAItems.SINOPIA_SHULKER_BOX, CauldronBehavior.CLEAN_SHULKER_BOX);
+        waterBehaviors.put(VAItems.LILAC_SHULKER_BOX, CauldronBehavior.CLEAN_SHULKER_BOX);
+        waterBehaviors.put(VAItems.CHARTREUSE_BANNER, CauldronBehavior.CLEAN_BANNER);
+        waterBehaviors.put(VAItems.MAROON_BANNER, CauldronBehavior.CLEAN_BANNER);
+        waterBehaviors.put(VAItems.INDIGO_BANNER, CauldronBehavior.CLEAN_BANNER);
+        waterBehaviors.put(VAItems.PLUM_BANNER, CauldronBehavior.CLEAN_BANNER);
+        waterBehaviors.put(VAItems.VIRIDIAN_BANNER, CauldronBehavior.CLEAN_BANNER);
+        waterBehaviors.put(VAItems.TAN_BANNER, CauldronBehavior.CLEAN_BANNER);
+        waterBehaviors.put(VAItems.SINOPIA_BANNER, CauldronBehavior.CLEAN_BANNER);
+        waterBehaviors.put(VAItems.LILAC_BANNER, CauldronBehavior.CLEAN_BANNER);
     }
 
 }
