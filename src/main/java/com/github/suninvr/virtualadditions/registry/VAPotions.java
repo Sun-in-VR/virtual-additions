@@ -16,6 +16,8 @@ public class VAPotions {
     public static final RegistryEntry<Potion> FRAILTY;
     public static final RegistryEntry<Potion> LONG_FRAILTY;
     public static final RegistryEntry<Potion> STRONG_FRAILTY;
+    public static final RegistryEntry<Potion> LOVE;
+    public static final RegistryEntry<Potion> LONG_LOVE;
 
     public static void init(){
         initBrewingRecipes();
@@ -24,7 +26,9 @@ public class VAPotions {
     static {
         FRAILTY = register("frailty", new Potion( "virtual_additions.frailty", new StatusEffectInstance(VAStatusEffects.FRAILTY, 800)));
         LONG_FRAILTY = register("long_frailty", new Potion("virtual_additions.frailty", new StatusEffectInstance(VAStatusEffects.FRAILTY, 1800)));
-        STRONG_FRAILTY = register("strong_frailty", new Potion("virtual_additions.frailty", new StatusEffectInstance(VAStatusEffects.FRAILTY, 400, 1)));
+        STRONG_FRAILTY = register("strong_frailty", new Potion("virtual_additions.frailty", new StatusEffectInstance(VAStatusEffects.FRAILTY, 400, 2)));
+        LOVE = register("love", new Potion( "virtual_additions.love", new StatusEffectInstance(VAStatusEffects.LOVE, 1800)));
+        LONG_LOVE = register("long_love", new Potion( "virtual_additions.love", new StatusEffectInstance(VAStatusEffects.LOVE, 4800)));
     }
 
     private static RegistryEntry<Potion> register(String id, Potion potion) {
@@ -38,6 +42,8 @@ public class VAPotions {
             builder.registerPotionRecipe(Potions.AWKWARD, VAItems.ROCK_SALT, FRAILTY);
             builder.registerPotionRecipe(FRAILTY, Items.REDSTONE, LONG_FRAILTY);
             builder.registerPotionRecipe(FRAILTY, Items.GLOWSTONE_DUST, STRONG_FRAILTY);
+            builder.registerPotionRecipe(Potions.AWKWARD, Items.ROSE_BUSH, LOVE);
+            builder.registerPotionRecipe(LOVE, Items.REDSTONE, LONG_LOVE);
         });
     }
 }

@@ -11,10 +11,12 @@ import static com.github.suninvr.virtualadditions.VirtualAdditions.idOf;
 public class VAStatusEffects {
     public static final RegistryEntry<StatusEffect> IOLITE_INTERFERENCE;
     public static final RegistryEntry<StatusEffect> FRAILTY;
+    public static final RegistryEntry<StatusEffect> LOVE;
 
     static {
         IOLITE_INTERFERENCE = Registry.registerReference(Registries.STATUS_EFFECT, idOf("iolite_interference"), new CustomStatusEffect(StatusEffectCategory.HARMFUL, 0x9a5bff));
         FRAILTY = Registry.registerReference(Registries.STATUS_EFFECT, idOf("frailty"), new CustomStatusEffect(StatusEffectCategory.HARMFUL, 0xe9E4021));
+        LOVE = Registry.registerReference(Registries.STATUS_EFFECT, idOf("love"), new CustomStatusEffect(StatusEffectCategory.NEUTRAL, 0xdfa7e5));
     }
 
     public static void init(){}

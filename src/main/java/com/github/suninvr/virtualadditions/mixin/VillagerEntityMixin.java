@@ -19,7 +19,7 @@ public class VillagerEntityMixin {
     private static Map<Item, Integer> ITEM_FOOD_VALUES;
 
     @Unique
-    private static final Set<Item> virtualAddition$GATHERABLE_ITEMS = Set.of(VAItems.COTTON_SEEDS, VAItems.COTTON, VAItems.CORN_SEEDS, VAItems.CORN);
+    private static final Set<Item> virtualAddition$GATHERABLE_ITEMS = Set.of(VAItems.CORN_SEEDS, VAItems.CORN);
 
     @Unique
     private static final Map<Item, Integer> virtualAddition$ITEM_FOOD_VALUES = ImmutableMap.of(VAItems.CORN, 1);

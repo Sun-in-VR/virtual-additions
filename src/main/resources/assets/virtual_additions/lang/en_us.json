@@ -303,6 +303,7 @@
 
     "effect.virtual_additions.iolite_interference": "Interference",
     "effect.virtual_additions.frailty": "Frailty",
+    "effect.virtual_additions.love": "Love",
 
     "entity.virtual_additions.climbing_rope": "Climbing Rope",
     "entity.virtual_additions.steel_bomb": "Steel Bomb",
@@ -372,6 +373,11 @@
     "item.minecraft.lingering_potion.effect.virtual_additions.frailty": "Lingering Potion of Frailty",
     "item.minecraft.tipped_arrow.effect.virtual_additions.frailty": "Arrow of Frailty",
     "item.virtual_additions.applicable_potion.effect.virtual_additions.frailty": "Applicable Potion of Frailty",
+    "item.minecraft.potion.effect.virtual_additions.love": "Potion of Love",
+    "item.minecraft.splash_potion.effect.virtual_additions.love": "Splash Potion of Love",
+    "item.minecraft.lingering_potion.effect.virtual_additions.love": "Lingering Potion of Love",
+    "item.minecraft.tipped_arrow.effect.virtual_additions.love": "Arrow of Love",
+    "item.virtual_additions.applicable_potion.effect.virtual_additions.love": "Applicable Potion of Love",
 
     "item.virtual_additions.applied_effect_tooltip": "Applied On Hit:",
     "item.virtual_additions.applied_effect_tooltip.advanced": "Effect Uses: %s / %s",
@@ -495,6 +501,8 @@
     "block.minecraft.banner.mojang.tan": "Tan Thing",
     "block.minecraft.banner.globe.tan": "Tan Globe",
     "block.minecraft.banner.piglin.tan": "Tan Snout",
+    "block.minecraft.banner.flow.tan": "Tan Flow",
+    "block.minecraft.banner.guster.tan": "Tan Guster",
 
     "block.minecraft.banner.square_bottom_left.maroon": "Maroon Base Dexter Canton",
     "block.minecraft.banner.square_bottom_right.maroon": "Maroon Base Sinister Canton",
@@ -536,6 +544,8 @@
     "block.minecraft.banner.mojang.maroon": "Maroon Thing",
     "block.minecraft.banner.globe.maroon": "Maroon Globe",
     "block.minecraft.banner.piglin.maroon": "Maroon Snout",
+    "block.minecraft.banner.flow.maroon": "Maroon Flow",
+    "block.minecraft.banner.guster.maroon": "Maroon Guster",
 
     "block.minecraft.banner.square_bottom_left.sinopia": "Sinopia Base Dexter Canton",
     "block.minecraft.banner.square_bottom_right.sinopia": "Sinopia Base Sinister Canton",
@@ -577,6 +587,8 @@
     "block.minecraft.banner.mojang.sinopia": "Sinopia Thing",
     "block.minecraft.banner.globe.sinopia": "Sinopia Globe",
     "block.minecraft.banner.piglin.sinopia": "Sinopia Snout",
+    "block.minecraft.banner.flow.sinopia": "Sinopia Flow",
+    "block.minecraft.banner.guster.sinopia": "Sinopia Guster",
 
     "block.minecraft.banner.square_bottom_left.chartreuse": "Chartreuse Base Dexter Canton",
     "block.minecraft.banner.square_bottom_right.chartreuse": "Chartreuse Base Sinister Canton",
@@ -618,6 +630,8 @@
     "block.minecraft.banner.mojang.chartreuse": "Chartreuse Thing",
     "block.minecraft.banner.globe.chartreuse": "Chartreuse Globe",
     "block.minecraft.banner.piglin.chartreuse": "Chartreuse Snout",
+    "block.minecraft.banner.flow.chartreuse": "Chartreuse Flow",
+    "block.minecraft.banner.guster.chartreuse": "Chartreuse Guster",
 
     "block.minecraft.banner.square_bottom_left.viridian": "Viridian Base Dexter Canton",
     "block.minecraft.banner.square_bottom_right.viridian": "Viridian Base Sinister Canton",
@@ -659,6 +673,8 @@
     "block.minecraft.banner.mojang.viridian": "Viridian Thing",
     "block.minecraft.banner.globe.viridian": "Viridian Globe",
     "block.minecraft.banner.piglin.viridian": "Viridian Snout",
+    "block.minecraft.banner.flow.viridian": "Viridian Flow",
+    "block.minecraft.banner.guster.viridian": "Viridian Guster",
 
     "block.minecraft.banner.square_bottom_left.indigo": "Indigo Base Dexter Canton",
     "block.minecraft.banner.square_bottom_right.indigo": "Indigo Base Sinister Canton",
@@ -700,6 +716,8 @@
     "block.minecraft.banner.mojang.indigo": "Indigo Thing",
     "block.minecraft.banner.globe.indigo": "Indigo Globe",
     "block.minecraft.banner.piglin.indigo": "Indigo Snout",
+    "block.minecraft.banner.flow.indigo": "Indigo Flow",
+    "block.minecraft.banner.guster.indigo": "Indigo Guster",
 
     "block.minecraft.banner.square_bottom_left.plum": "Plum Base Dexter Canton",
     "block.minecraft.banner.square_bottom_right.plum": "Plum Base Sinister Canton",
@@ -741,6 +759,8 @@
     "block.minecraft.banner.mojang.plum": "Plum Thing",
     "block.minecraft.banner.globe.plum": "Plum Globe",
     "block.minecraft.banner.piglin.plum": "Plum Snout",
+    "block.minecraft.banner.flow.plum": "Plum Flow",
+    "block.minecraft.banner.guster.plum": "Plum Guster",
 
     "block.minecraft.banner.square_bottom_left.lilac": "Lilac Base Dexter Canton",
     "block.minecraft.banner.square_bottom_right.lilac": "Lilac Base Sinister Canton",
@@ -781,5 +801,7 @@
     "block.minecraft.banner.skull.lilac": "Lilac Skull Charge",
     "block.minecraft.banner.mojang.lilac": "Lilac Thing",
     "block.minecraft.banner.globe.lilac": "Lilac Globe",
-    "block.minecraft.banner.piglin.lilac": "Lilac Snout"
+    "block.minecraft.banner.piglin.lilac": "Lilac Snout",
+    "block.minecraft.banner.flow.lilac": "Lilac Flow",
+    "block.minecraft.banner.guster.lilac": "Lilac Guster"
 }

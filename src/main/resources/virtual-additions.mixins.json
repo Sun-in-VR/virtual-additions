@@ -4,6 +4,7 @@
   "package": "com.github.suninvr.virtualadditions.mixin",
   "compatibilityLevel": "JAVA_17",
   "mixins": [
+    "AnimalEntityMixin",
     "AnvilScreenHandlerMixin",
     "AxeItemMixin",
     "BlockMixin",
