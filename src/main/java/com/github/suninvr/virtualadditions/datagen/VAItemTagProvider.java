@@ -46,7 +46,6 @@ public final class VAItemTagProvider {
         @Override
         protected void configure(RegistryWrapper.WrapperLookup arg) {
             getOrCreateTagBuilder(ItemTags.BEACON_PAYMENT_ITEMS).add(VAItems.STEEL_INGOT, VAItems.IOLITE);
-            getOrCreateTagBuilder(ItemTags.CLUSTER_MAX_HARVESTABLES).addOptionalTag(PICKAXES);
             getOrCreateTagBuilder(ItemTags.STONE_CRAFTING_MATERIALS).add(VAItems.COBBLED_HORNFELS, VAItems.COBBLED_BLUESCHIST, VAItems.COBBLED_SYENITE);
             getOrCreateTagBuilder(ItemTags.STONE_TOOL_MATERIALS).add(VAItems.COBBLED_HORNFELS, VAItems.COBBLED_BLUESCHIST, VAItems.COBBLED_SYENITE);
             getOrCreateTagBuilder(ItemTags.TRIM_MATERIALS).add(VAItems.STEEL_INGOT, VAItems.IOLITE);
@@ -321,11 +320,6 @@ public final class VAItemTagProvider {
     }
 
     private abstract static class Provider extends FabricTagProvider.ItemTagProvider {
-        protected static final TagKey<Item> SWORDS = TagKey.of(RegistryKeys.ITEM, new Identifier("c:swords"));
-        protected static final TagKey<Item> SHOVELS = TagKey.of(RegistryKeys.ITEM, new Identifier("c:shovels"));
-        protected static final TagKey<Item> PICKAXES = TagKey.of(RegistryKeys.ITEM, new Identifier("c:pickaxes"));
-        protected static final TagKey<Item> AXES = TagKey.of(RegistryKeys.ITEM, new Identifier("c:axes"));
-        protected static final TagKey<Item> HOES = TagKey.of(RegistryKeys.ITEM, new Identifier("c:hoes"));
         protected static final TagKey<Item> INGOTS = TagKey.of(RegistryKeys.ITEM, new Identifier("c:ingots"));
         protected static final TagKey<Item> STEEL_INGOTS = TagKey.of(RegistryKeys.ITEM, new Identifier("c:steel_ingots"));
         protected static final TagKey<Item> RAW_ORES = TagKey.of(RegistryKeys.ITEM, new Identifier("c:raw_ores"));
@@ -411,11 +405,13 @@ public final class VAItemTagProvider {
         }
 
         protected void configureToolSet(RegistryHelper.ItemRegistryHelper.ToolSet set) {
-            getOrCreateTagBuilder(AXES).add(set.AXE());
-            getOrCreateTagBuilder(HOES).add(set.HOE());
-            getOrCreateTagBuilder(PICKAXES).add(set.PICKAXE());
-            getOrCreateTagBuilder(SHOVELS).add(set.SHOVEL());
-            getOrCreateTagBuilder(SWORDS).add(set.SWORD());
+            getOrCreateTagBuilder(ItemTags.AXES).add(set.AXE());
+            getOrCreateTagBuilder(ItemTags.HOES).add(set.HOE());
+            getOrCreateTagBuilder(ItemTags.PICKAXES).add(set.PICKAXE());
+            getOrCreateTagBuilder(ItemTags.SHOVELS).add(set.SHOVEL());
+            getOrCreateTagBuilder(ItemTags.SWORDS).add(set.SWORD());
+
+            getOrCreateTagBuilder(ItemTags.CLUSTER_MAX_HARVESTABLES).add(set.PICKAXE());
         }
 
         protected void configureToolSets(TagKey<Item> tag, RegistryHelper.ItemRegistryHelper.ToolSet... sets) {
