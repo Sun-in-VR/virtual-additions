@@ -1,6 +1,5 @@
 package com.github.suninvr.virtualadditions.registry.collection;
 
-import com.ibm.icu.impl.Pair;
 import net.minecraft.block.Block;
 import net.minecraft.item.DyeItem;
 import net.minecraft.item.Item;
@@ -250,9 +249,13 @@ public class ColorfulBlockSet {
         }
     }
 
-    private static class TileBlockPair extends Pair<Tile, Block> implements Map.Entry<Tile, Block> {
-        protected TileBlockPair(Tile first, Block second) {
-            super(first, second);
+    private static class TileBlockPair implements Map.Entry<Tile, Block> {
+        public final Tile tile;
+        public final Block block;
+
+        protected TileBlockPair(Tile tile, Block block) {
+            this.tile = tile;
+            this.block = block;
         }
 
         public static TileBlockPair of(Tile tile, Block block) {
@@ -261,17 +264,17 @@ public class ColorfulBlockSet {
 
         @Override
         public Tile getKey() {
-            return this.first;
+            return this.tile;
         }
 
         @Override
         public Block getValue() {
-            return this.second;
+            return this.block;
         }
 
         @Override
         public Block setValue(Block value) {
-            return this.second;
+            return this.block;
         }
     }
 
