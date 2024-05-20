@@ -22,6 +22,7 @@ import net.minecraft.recipe.Ingredient;
 import net.minecraft.recipe.RecipeSerializer;
 import net.minecraft.recipe.SmokingRecipe;
 import net.minecraft.recipe.book.RecipeCategory;
+import net.minecraft.registry.Registries;
 import net.minecraft.registry.RegistryWrapper;
 import net.minecraft.registry.tag.ItemTags;
 import net.minecraft.registry.tag.TagKey;
@@ -102,24 +103,21 @@ public final class VARecipeProvider {
             generateCuttableFamilyChain(exporter, VACollections.COBBLED_HORNFELS);
             generateCuttableFamilyChain(exporter, VACollections.POLISHED_HORNFELS, VACollections.HORNFELS_TILES);
             generateCuttableFamilyChain(exporter, VACollections.HORNFELS_TILES);
-            offer2x2CompactingRecipe(exporter, RecipeCategory.BUILDING_BLOCKS, VABlocks.HORNFELS, VABlocks.POLISHED_HORNFELS);
-            offer2x2CompactingRecipe(exporter, RecipeCategory.BUILDING_BLOCKS, VABlocks.POLISHED_HORNFELS, VABlocks.HORNFELS_TILES);
+            offer2x2ConversionChain(exporter, VABlocks.HORNFELS, VABlocks.POLISHED_HORNFELS, VABlocks.HORNFELS_TILES);
 
             offerSmelting(exporter, List.of(VABlocks.COBBLED_BLUESCHIST), RecipeCategory.BUILDING_BLOCKS, VABlocks.BLUESCHIST, 0.1F, 200, "blueschist");
             offerStonecuttingRecipes(exporter, VABlocks.BLUESCHIST, VACollections.POLISHED_BLUESCHIST, VACollections.BLUESCHIST_BRICKS);
             generateCuttableFamilyChain(exporter, VACollections.COBBLED_BLUESCHIST);
             generateCuttableFamilyChain(exporter, VACollections.POLISHED_BLUESCHIST, VACollections.BLUESCHIST_BRICKS);
             generateCuttableFamilyChain(exporter, VACollections.BLUESCHIST_BRICKS);
-            offer2x2CompactingRecipe(exporter, RecipeCategory.BUILDING_BLOCKS, VABlocks.BLUESCHIST, VABlocks.POLISHED_BLUESCHIST);
-            offer2x2CompactingRecipe(exporter, RecipeCategory.BUILDING_BLOCKS, VABlocks.POLISHED_BLUESCHIST, VABlocks.BLUESCHIST_BRICKS);
+            offer2x2ConversionChain(exporter, VABlocks.BLUESCHIST, VABlocks.POLISHED_BLUESCHIST, VABlocks.BLUESCHIST_BRICKS);
 
             offerSmelting(exporter, List.of(VABlocks.COBBLED_SYENITE), RecipeCategory.BUILDING_BLOCKS, VABlocks.SYENITE, 0.1F, 200, "syenite");
             offerStonecuttingRecipes(exporter, VABlocks.SYENITE, VACollections.POLISHED_SYENITE, VACollections.SYENITE_BRICKS);
             generateCuttableFamilyChain(exporter, VACollections.COBBLED_SYENITE);
             generateCuttableFamilyChain(exporter, VACollections.POLISHED_SYENITE, VACollections.SYENITE_BRICKS);
             generateCuttableFamilyChain(exporter, VACollections.SYENITE_BRICKS);
-            offer2x2CompactingRecipe(exporter, RecipeCategory.BUILDING_BLOCKS, VABlocks.SYENITE, VABlocks.POLISHED_SYENITE);
-            offer2x2CompactingRecipe(exporter, RecipeCategory.BUILDING_BLOCKS, VABlocks.POLISHED_SYENITE, VABlocks.SYENITE_BRICKS);
+            offer2x2ConversionChain(exporter, VABlocks.SYENITE, VABlocks.POLISHED_SYENITE, VABlocks.SYENITE_BRICKS);
 
             offer2x2FullRecipe(exporter, RecipeCategory.MISC, Items.STRING, VAItems.COTTON, 2);
             offerShapelessRecipe(exporter, VAItems.COTTON_SEEDS, VAItems.COTTON, "cotton_seeds", 1);
@@ -430,8 +428,7 @@ public final class VARecipeProvider {
             generateCuttableFamilyChain(exporter, VACollections.FLOATROCK);
             generateCuttableFamilyChain(exporter, VACollections.POLISHED_FLOATROCK);
             generateCuttableFamilyChain(exporter, VACollections.FLOATROCK_BRICKS);
-            offer2x2FullRecipe(exporter, RecipeCategory.MISC, VAItems.POLISHED_FLOATROCK, VAItems.FLOATROCK, 4);
-            offer2x2FullRecipe(exporter, RecipeCategory.MISC, VAItems.FLOATROCK_BRICKS, VAItems.POLISHED_FLOATROCK, 4);
+            offer2x2ConversionChain(exporter, VABlocks.FLOATROCK, VABlocks.POLISHED_FLOATROCK, VABlocks.FLOATROCK_BRICKS);
 
             generateFamily(exporter, VACollections.AEROBLOOM, FeatureFlags.VANILLA_FEATURES);
             offerBarkBlockRecipe(exporter, VAItems.AEROBLOOM_WOOD, VAItems.AEROBLOOM_LOG);
@@ -501,6 +498,18 @@ public final class VARecipeProvider {
 
         protected static void offerArmorColoringRecipe(RecipeExporter exporter, DyeItem input, int i) {
             ArmorColoringRecipeJsonBuilder.create(Ingredient.ofItems(input), i).offerTo(exporter);
+        }
+
+        protected static void offer2x2ConversionChain(RecipeExporter exporter, Block... blocks) {
+            for (int i = 0; i < blocks.length - 1; i++) {
+                Block input = blocks[i];
+                Block output = blocks[i + 1];
+                String id = Registries.BLOCK.getId(output).getPath() + "_from_compacting_" + Registries.BLOCK.getId(input).getPath();
+                ShapedRecipeJsonBuilder.create(RecipeCategory.BUILDING_BLOCKS, output, 4)
+                        .pattern("##")
+                        .pattern("##")
+                        .input('#', input).criterion(hasItem(input), conditionsFromItem(input)).offerTo(exporter, id);
+            }
         }
 
         protected static void offerColoringRecipes(RecipeExporter exporter, ColorfulBlockSet set, ColoringStationBlockEntity.DyeContents cost, int index) {

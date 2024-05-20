@@ -848,6 +848,7 @@ public class VAItems {
         ComposterBlock.registerCompostableItem(0.3F, COTTON_SEEDS);
         ComposterBlock.registerCompostableItem(0.3F, COTTON);
         ComposterBlock.registerCompostableItem(0.65F, CORN);
+        ComposterBlock.registerCompostableItem(0.3F, CORN_SEEDS);
     }
 
     protected static void initLootTableModifiers() {
