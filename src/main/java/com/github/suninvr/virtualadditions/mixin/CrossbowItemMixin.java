@@ -20,9 +20,8 @@ public abstract class CrossbowItemMixin {
     @Inject(at = @At("HEAD"), method = "createArrowEntity", cancellable = true)
     void virtualAdditions$createClimbingRopeEntity(World world, LivingEntity shooter, ItemStack weaponStack, ItemStack projectileStack, boolean critical, CallbackInfoReturnable<ProjectileEntity> cir) {
         if (projectileStack.isIn(VAItemTags.CLIMBING_ROPES)) {
-            ClimbingRopeEntity projectileEntity = new ClimbingRopeEntity(shooter.getX(), shooter.getEyeY(), shooter.getZ(), world, projectileStack);
+            ClimbingRopeEntity projectileEntity = new ClimbingRopeEntity(shooter.getX(), shooter.getEyeY(), shooter.getZ(), world, projectileStack, weaponStack);
             projectileEntity.pickupType = shooter.isPlayer() && !shooter.isInCreativeMode() ? PersistentProjectileEntity.PickupPermission.ALLOWED : PersistentProjectileEntity.PickupPermission.CREATIVE_ONLY;
-            projectileEntity.setShotFromCrossbow(true);
             cir.setReturnValue(projectileEntity);
         }
     }

@@ -2,7 +2,7 @@ package com.github.suninvr.virtualadditions.component;
 
 import com.mojang.serialization.Codec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
-import net.minecraft.component.DataComponentType;
+import net.minecraft.component.ComponentType;
 import net.minecraft.network.RegistryByteBuf;
 import net.minecraft.network.codec.PacketCodec;
 import net.minecraft.network.codec.PacketCodecs;
@@ -19,7 +19,7 @@ public record WarpTetherLocationComponent(Optional<BlockPos> pos) {
         this(Optional.of(pos));
     }
 
-    public static DataComponentType.Builder<WarpTetherLocationComponent> setCodecs(DataComponentType.Builder<WarpTetherLocationComponent> builder) {
+    public static ComponentType.Builder<WarpTetherLocationComponent> setCodecs(ComponentType.Builder<WarpTetherLocationComponent> builder) {
         return builder.codec(CODEC).packetCodec(PACKET_CODEC);
     }
 

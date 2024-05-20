@@ -16,6 +16,7 @@ import net.minecraft.recipe.Ingredient;
 import net.minecraft.recipe.Recipe;
 import net.minecraft.recipe.RecipeSerializer;
 import net.minecraft.recipe.RecipeType;
+import net.minecraft.recipe.input.RecipeInput;
 import net.minecraft.registry.DynamicRegistryManager;
 import net.minecraft.registry.RegistryWrapper;
 import net.minecraft.registry.tag.ItemTags;
@@ -23,7 +24,7 @@ import net.minecraft.world.World;
 
 import java.util.List;
 
-public class ArmorColoringRecipe implements Recipe<Inventory>, ColoringStationRecipe {
+public class ArmorColoringRecipe implements Recipe<RecipeInput>, ColoringStationRecipe {
     public final Ingredient item;
     public final int index;
     public final DyeItem dyeItem;
@@ -35,8 +36,8 @@ public class ArmorColoringRecipe implements Recipe<Inventory>, ColoringStationRe
     }
 
     @Override
-    public boolean matches(Inventory inventory, World world) {
-        return inventory.getStack(0).isIn(ItemTags.DYEABLE);
+    public boolean matches(RecipeInput inventory, World world) {
+        return inventory.getStackInSlot(0).isIn(ItemTags.DYEABLE);
     }
 
     public int getIndex() {
@@ -44,7 +45,7 @@ public class ArmorColoringRecipe implements Recipe<Inventory>, ColoringStationRe
     }
 
     @Override
-    public ItemStack craftWithDye(Inventory input, DynamicRegistryManager registryManager, ColoringStationBlockEntity.DyeContents dyeContents) {
+    public ItemStack craftWithDye(RecipeInput input, DynamicRegistryManager registryManager, ColoringStationBlockEntity.DyeContents dyeContents) {
         ColoringStationBlockEntity.DyeContents cost = this.getDyeCost(true);
         if (dyeContents.getR() - cost.getR() >= 0 && dyeContents.getG() - cost.getG() >= 0 && dyeContents.getB() - cost.getB() >= 0 && dyeContents.getY() - cost.getY() >= 0 && dyeContents.getK() - cost.getK() >= 0 && dyeContents.getW() - cost.getW() >= 0) {
             return craft(input, registryManager);
@@ -73,8 +74,8 @@ public class ArmorColoringRecipe implements Recipe<Inventory>, ColoringStationRe
     }
 
     @Override
-    public ItemStack craft(Inventory inventory, RegistryWrapper.WrapperLookup wrapperLookup) {
-        ItemStack stack = inventory.getStack(1);
+    public ItemStack craft(RecipeInput inventory, RegistryWrapper.WrapperLookup wrapperLookup) {
+        ItemStack stack = inventory.getStackInSlot(1);
         return this.getResultStack( stack);
     }
 

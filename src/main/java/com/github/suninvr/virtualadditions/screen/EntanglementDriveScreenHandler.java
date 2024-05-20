@@ -5,14 +5,19 @@ import com.github.suninvr.virtualadditions.block.entity.EntanglementDriveBlockEn
 import com.github.suninvr.virtualadditions.registry.VAItems;
 import com.github.suninvr.virtualadditions.registry.VAScreenHandler;
 import com.mojang.datafixers.util.Pair;
+import net.minecraft.component.EnchantmentEffectComponentTypes;
+import net.minecraft.enchantment.Enchantment;
 import net.minecraft.enchantment.EnchantmentHelper;
+import net.minecraft.enchantment.Enchantments;
 import net.minecraft.entity.EquipmentSlot;
-import net.minecraft.entity.mob.MobEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.PlayerInventory;
 import net.minecraft.inventory.Inventory;
 import net.minecraft.inventory.SimpleInventory;
 import net.minecraft.item.ItemStack;
+import net.minecraft.registry.BuiltinRegistries;
+import net.minecraft.registry.RegistryEntryLookup;
+import net.minecraft.registry.RegistryKeys;
 import net.minecraft.screen.*;
 import net.minecraft.screen.slot.Slot;
 import net.minecraft.screen.slot.SlotActionType;
@@ -32,6 +37,7 @@ public class EntanglementDriveScreenHandler extends ScreenHandler {
     static final Identifier[] EMPTY_ARMOR_SLOT_TEXTURES;
     private static final EquipmentSlot[] EQUIPMENT_SLOT_ORDER;
     private final Inventory inventory;
+    private final PlayerInventory playerInventory;
     private final Slot paymentSlot;
     private int selectedSlotIndex;
     private final ScreenHandlerContext context;
@@ -53,6 +59,7 @@ public class EntanglementDriveScreenHandler extends ScreenHandler {
         this.addProperty(this.isSamePlayer);
         this.playerId = inventory.player.getUuid();
         this.isSamePlayer.set( getActivePlayerId().equals(this.playerId) ? 1 : 0 );
+        this.playerInventory = inventory;
         this.inventory = new SimpleInventory(1) {
             @Override
             public void markDirty() {
@@ -92,12 +99,12 @@ public class EntanglementDriveScreenHandler extends ScreenHandler {
                 }
 
                 public boolean canInsert(ItemStack stack) {
-                    return equipmentSlot == MobEntity.getPreferredEquipmentSlot(stack);
+                    return equipmentSlot == EntanglementDriveScreenHandler.this.playerInventory.player.getPreferredEquipmentSlot(stack);
                 }
 
                 public boolean canTakeItems(PlayerEntity playerEntity) {
                     ItemStack itemStack = this.getStack();
-                    return (itemStack.isEmpty() || playerEntity.isCreative() || !EnchantmentHelper.hasBindingCurse(itemStack)) && super.canTakeItems(playerEntity);
+                    return (itemStack.isEmpty() || playerEntity.isCreative() || !EnchantmentHelper.hasAnyEnchantmentsWith(itemStack, EnchantmentEffectComponentTypes.PREVENT_ARMOR_CHANGE)) && super.canTakeItems(playerEntity);
                 }
 
                 public Pair<Identifier, Identifier> getBackgroundSprite() {

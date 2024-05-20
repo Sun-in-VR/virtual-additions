@@ -17,6 +17,6 @@ public class ClimbingRopeItem extends AliasedBlockItem implements ProjectileItem
 
     @Override
     public ProjectileEntity createEntity(World world, Position position, ItemStack itemStack, Direction direction) {
-        return new ClimbingRopeEntity(position.getX(), position.getY(), position.getZ(), world, itemStack);
+        return new ClimbingRopeEntity(position.getX(), position.getY(), position.getZ(), world, itemStack, null);
     }
 }

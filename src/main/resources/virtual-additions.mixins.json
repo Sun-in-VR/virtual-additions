@@ -12,6 +12,7 @@
     "CrossbowItemMixin",
     "DamageSourcesMixin",
     "DyeColorMixin",
+    "EnchantmentHelperMixin",
     "EntityMixin",
     "ExperienceDroppingBlockMixin",
     "FeatureFlagsMixin",

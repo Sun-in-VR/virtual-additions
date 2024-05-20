@@ -3,6 +3,7 @@ package com.github.suninvr.virtualadditions.mixin;
 import com.github.suninvr.virtualadditions.item.GildTypes;
 import com.github.suninvr.virtualadditions.item.GildedToolUtil;
 import com.github.suninvr.virtualadditions.registry.VADamageTypes;
+import com.github.suninvr.virtualadditions.registry.VAEnchantmentTags;
 import com.llamalad7.mixinextras.sugar.Local;
 import com.llamalad7.mixinextras.sugar.ref.LocalFloatRef;
 import net.minecraft.block.BlockState;
@@ -36,8 +37,11 @@ public abstract class PlayerEntityMixin extends LivingEntity {
 
         ItemStack stack = player.getMainHandStack();
         if (GildedToolUtil.getGildType(stack).equals(GildTypes.SCULK)) {
-            float e = 0.12F * EnchantmentHelper.getEfficiency(player);
-            r *= 1 - e;
+            float[] e = {0.0F};
+            EnchantmentHelper.forEachEnchantment(stack, (enchantment, level) -> {
+                if (enchantment.isIn(VAEnchantmentTags.REDUCES_SCULK_GILD_MINING_SPEED)) e[0] += 0.12F * level;
+            });
+            r *= Math.max(1 - e[0], 0.4F);
         }
 
         Entity entity = player.getRootVehicle();

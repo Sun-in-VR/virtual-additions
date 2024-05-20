@@ -34,7 +34,7 @@ public class RangedWeaponItemMixin {
     }
 
     @Inject(method = "load", at = @At(value = "INVOKE", target = "Ljava/util/ArrayList;<init>(I)V", shift = At.Shift.BEFORE))
-    private static void virtualAdditions$cancelMultishotLoad(ItemStack weaponStack, ItemStack projectileStack, LivingEntity shooter, CallbackInfoReturnable<List<ItemStack>> cir, @Local(ordinal = 1) LocalIntRef j) {
-        if (projectileStack.isOf(VAItems.CLIMBING_ROPE)) j.set(1);
+    private static void virtualAdditions$cancelMultishotLoad(ItemStack weaponStack, ItemStack projectileStack, LivingEntity shooter, CallbackInfoReturnable<List<ItemStack>> cir, @Local LocalIntRef i) {
+        if (projectileStack.isIn(VAItemTags.CLIMBING_ROPES)) i.set(1);
     }
 }

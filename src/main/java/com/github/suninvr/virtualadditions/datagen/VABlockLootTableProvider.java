@@ -15,6 +15,7 @@ import net.minecraft.block.enums.BedPart;
 import net.minecraft.block.enums.DoubleBlockHalf;
 import net.minecraft.data.family.BlockFamily;
 import net.minecraft.data.server.loottable.BlockLootTableGenerator;
+import net.minecraft.enchantment.Enchantment;
 import net.minecraft.enchantment.Enchantments;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemConvertible;
@@ -28,6 +29,7 @@ import net.minecraft.loot.function.SetCountLootFunction;
 import net.minecraft.loot.provider.number.ConstantLootNumberProvider;
 import net.minecraft.loot.provider.number.UniformLootNumberProvider;
 import net.minecraft.predicate.StatePredicate;
+import net.minecraft.registry.RegistryKeys;
 import net.minecraft.registry.RegistryWrapper;
 
 import java.util.concurrent.CompletableFuture;
@@ -251,8 +253,10 @@ public final class VABlockLootTableProvider {
 
         @Override
         public LootTable.Builder oreDrops(Block dropWithSilkTouch, Item drop) {
-            return BlockLootTableGenerator
-                    .dropsWithSilkTouch(dropWithSilkTouch, this.applyExplosionDecay(dropWithSilkTouch, ItemEntry.builder(drop).apply(ApplyBonusLootFunction.oreDrops(Enchantments.FORTUNE))))
+            RegistryWrapper.Impl<Enchantment> impl = ((BlockLootTableGenerator)(this)).registryLookup.getWrapperOrThrow(RegistryKeys.ENCHANTMENT);
+            return this.dropsWithSilkTouch(dropWithSilkTouch,
+                            this.applyExplosionDecay(dropWithSilkTouch, ItemEntry.builder(drop)
+                                    .apply(ApplyBonusLootFunction.oreDrops(impl.getOrThrow(Enchantments.FORTUNE)))))
                     .randomSequenceId(dropWithSilkTouch.getLootTableKey().getValue());
         }
     }

@@ -3,18 +3,26 @@ package com.github.suninvr.virtualadditions.mixin;
 import com.github.suninvr.virtualadditions.item.GildType;
 import com.github.suninvr.virtualadditions.item.GildTypes;
 import com.github.suninvr.virtualadditions.item.interfaces.GildedToolItem;
+import com.github.suninvr.virtualadditions.registry.VAEnchantmentTags;
 import net.minecraft.block.BlockState;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.network.ClientPlayerInteractionManager;
+import net.minecraft.enchantment.Enchantment;
 import net.minecraft.enchantment.EnchantmentHelper;
 import net.minecraft.enchantment.Enchantments;
 import net.minecraft.entity.effect.StatusEffects;
 import net.minecraft.item.ItemStack;
+import net.minecraft.predicate.item.EnchantmentPredicate;
+import net.minecraft.registry.BuiltinRegistries;
+import net.minecraft.registry.RegistryEntryLookup;
+import net.minecraft.registry.RegistryKeys;
+import net.minecraft.registry.entry.RegistryEntry;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.GameMode;
 import org.objectweb.asm.Opcodes;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
+import org.spongepowered.asm.mixin.Unique;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.Redirect;
@@ -25,8 +33,8 @@ public abstract class ClientPlayerInteractionManagerMixin {
     @Shadow
     private int blockBreakingCooldown;
     @Shadow public abstract GameMode getCurrentGameMode();
-    private BlockState brokenState;
-    private final MinecraftClient client = MinecraftClient.getInstance();
+    @Unique private BlockState brokenState;
+    @Unique private final MinecraftClient client = MinecraftClient.getInstance();
 
     @Inject(method = "breakBlock", at = @At("HEAD"))
     private void virtualAdditions$setBrokenBlockState(BlockPos pos, CallbackInfoReturnable<Boolean> cir) {
@@ -39,7 +47,11 @@ public abstract class ClientPlayerInteractionManagerMixin {
             ItemStack heldStack = client.player.getMainHandStack();
             GildType gild = GildedToolItem.getGildType(heldStack);
             if (heldStack.isSuitableFor(this.brokenState) && !gild.equals(GildTypes.SCULK)) {
-                int y = (gild.equals(GildTypes.AMETHYST) ? 2 : 0) + Math.max(0, EnchantmentHelper.getLevel(Enchantments.EFFICIENCY, heldStack) - 3) + (client.player.hasStatusEffect(StatusEffects.HASTE) ? 1 : 0);
+                int efficiency[] = {0};
+                EnchantmentHelper.forEachEnchantment(heldStack, (enchantment, level) -> {
+                    if (enchantment.isIn(VAEnchantmentTags.REDUCES_SCULK_GILD_MINING_SPEED)) efficiency[0] = level;
+                });
+                int y = (gild.equals(GildTypes.AMETHYST) ? 2 : 0) + Math.max(0, efficiency[0] - 3) + (client.player.hasStatusEffect(StatusEffects.HASTE) ? 1 : 0);
                 x = Math.max(0, x - y);
             }
         }

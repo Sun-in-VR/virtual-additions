@@ -15,11 +15,12 @@ import net.minecraft.recipe.Ingredient;
 import net.minecraft.recipe.Recipe;
 import net.minecraft.recipe.RecipeSerializer;
 import net.minecraft.recipe.RecipeType;
+import net.minecraft.recipe.input.RecipeInput;
 import net.minecraft.registry.DynamicRegistryManager;
 import net.minecraft.registry.RegistryWrapper;
 import net.minecraft.world.World;
 
-public class ColoringRecipe implements Recipe<Inventory>, ColoringStationRecipe {
+public class ColoringRecipe implements Recipe<RecipeInput>, ColoringStationRecipe {
     public final ColoringStationBlockEntity.DyeContents cost;
     public final int index;
     protected final Ingredient ingredient;
@@ -40,20 +41,20 @@ public class ColoringRecipe implements Recipe<Inventory>, ColoringStationRecipe 
     }
 
     @Override
-    public boolean matches(Inventory inventory, World world) {
-        return this.ingredient.test(inventory.getStack(0));
+    public boolean matches(RecipeInput inventory, World world) {
+        return this.ingredient.test(inventory.getStackInSlot(0));
     }
 
     @Override
-    public ItemStack craft(Inventory inventory, RegistryWrapper.WrapperLookup wrapperLookup) {
-        ItemStack stack = inventory.getStack(1);
+    public ItemStack craft(RecipeInput inventory, RegistryWrapper.WrapperLookup wrapperLookup) {
+        ItemStack stack = inventory.getStackInSlot(1);
         if (stack.getItem() instanceof BlockItem blockItem && blockItem.getBlock() instanceof ShulkerBoxBlock) {
             return stack.copyComponentsToNewStack(this.result.getItem(), this.result.getCount());
         }
         return this.result.copy();
     }
 
-    public ItemStack craftWithDye(Inventory inventory, DynamicRegistryManager registryManager, ColoringStationBlockEntity.DyeContents contents) {
+    public ItemStack craftWithDye(RecipeInput inventory, DynamicRegistryManager registryManager, ColoringStationBlockEntity.DyeContents contents) {
         if (contents.getR() - this.cost.getR() >= 0 && contents.getG() - this.cost.getG() >= 0 && contents.getB() - this.cost.getB() >= 0 && contents.getY() - this.cost.getY() >= 0 && contents.getK() - this.cost.getK() >= 0 && contents.getW() - this.cost.getW() >= 0) {
             return craft(inventory, registryManager);
         }

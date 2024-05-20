@@ -3,7 +3,7 @@ package com.github.suninvr.virtualadditions.component;
 import com.mojang.serialization.Codec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
 import net.minecraft.client.item.TooltipType;
-import net.minecraft.component.DataComponentType;
+import net.minecraft.component.ComponentType;
 import net.minecraft.component.type.PotionContentsComponent;
 import net.minecraft.entity.effect.StatusEffectInstance;
 import net.minecraft.item.Item;
@@ -84,7 +84,7 @@ public record EffectsOnHitComponent(Optional<PotionContentsComponent> potionCont
         this.potionContents.ifPresent(component -> component.forEachEffect(effectConsumer));
     }
 
-    public static DataComponentType.Builder<EffectsOnHitComponent> setCodecs(DataComponentType.Builder<EffectsOnHitComponent> builder) {
+    public static ComponentType.Builder<EffectsOnHitComponent> setCodecs(ComponentType.Builder<EffectsOnHitComponent> builder) {
         return builder.codec(CODEC).packetCodec(PACKET_CODEC);
     }
 

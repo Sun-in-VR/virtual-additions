@@ -14,6 +14,8 @@ import net.minecraft.item.DyeItem;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.recipe.RecipeEntry;
+import net.minecraft.recipe.input.RecipeInput;
+import net.minecraft.recipe.input.SingleStackRecipeInput;
 import net.minecraft.screen.*;
 import net.minecraft.screen.slot.Slot;
 import net.minecraft.sound.SoundCategory;
@@ -202,7 +204,7 @@ public class ColoringStationScreenHandler extends ScreenHandler {
             } else if (
                     slot <= 1
                             ? !this.insertItem(itemStack2, 3, 39, false)
-                            : (this.world.getRecipeManager().getFirstMatch(VARecipeType.COLORING, new SimpleInventory(itemStack2), this.world).isPresent()
+                            : (this.world.getRecipeManager().getFirstMatch(VARecipeType.COLORING, new SingleStackRecipeInput(itemStack2), this.world).isPresent()
                                 ? !this.insertItem(itemStack2, 1, 2, false)
                                 : itemStack2.getItem() instanceof DyeItem ? !this.insertItem(itemStack2, 0, 1, false) : (slot >= 3 && slot < 30
                                     ? !this.insertItem(itemStack2, 30, 39, false)
@@ -262,14 +264,14 @@ public class ColoringStationScreenHandler extends ScreenHandler {
         this.availableRecipes.clear();
         this.selectedRecipe.set(-1);
         this.outputSlot.setStackNoCallbacks(ItemStack.EMPTY);
-        this.availableRecipes = this.world.getRecipeManager().getAllMatches(VARecipeType.COLORING, new SimpleInventory(this.input.getStack(1)), this.world);
+        this.availableRecipes = this.world.getRecipeManager().getAllMatches(VARecipeType.COLORING, new SingleStackRecipeInput(this.input.getStack(1)), this.world);
         this.availableRecipes.sort(Comparator.comparingInt(o -> o.value().getIndex()));
     }
 
     void populateResult() {
         if (!this.availableRecipes.isEmpty() && this.isInBounds(this.selectedRecipe.get())) {
             RecipeEntry<ColoringStationRecipe> recipeEntry = this.availableRecipes.get(this.selectedRecipe.get());
-            ItemStack itemStack = recipeEntry.value().craftWithDye(this.input, this.world.getRegistryManager(), this.dyeContents);
+            ItemStack itemStack = recipeEntry.value().craftWithDye((RecipeInput) this.input, this.world.getRegistryManager(), this.dyeContents);
             this.dyeContentsAdder = recipeEntry.value().getDyeCost();
             if (itemStack.isItemEnabled(this.world.getEnabledFeatures())) {
                 this.output.setLastRecipe(recipeEntry);

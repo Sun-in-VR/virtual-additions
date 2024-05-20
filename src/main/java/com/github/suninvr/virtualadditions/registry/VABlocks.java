@@ -8,7 +8,7 @@ import net.fabricmc.fabric.api.registry.LandPathNodeTypesRegistry;
 import net.fabricmc.fabric.api.registry.StrippableBlockRegistry;
 import net.minecraft.block.*;
 import net.minecraft.block.AbstractBlock.Settings;
-import net.minecraft.block.enums.Instrument;
+import net.minecraft.block.enums.NoteBlockInstrument;
 import net.minecraft.block.piston.PistonBehavior;
 import net.minecraft.entity.ai.pathing.PathNodeType;
 import net.minecraft.sound.BlockSoundGroup;
@@ -410,7 +410,7 @@ public class VABlocks {
         BALLOON_BULB_PLANT = register("balloon_bulb_plant", new BalloonBulbPlantBlock(Settings.copy(BALLOON_BULB).requires(VirtualAdditions.PREVIEW)));
         BALLOON_BULB_BUD = register("balloon_bulb_bud", new BalloonBulbBudBlock(Settings.copy(BALLOON_BULB).requires(VirtualAdditions.PREVIEW)));
 
-        Settings floatrockOreSettings = Settings.create().mapColor(MapColor.TERRACOTTA_BROWN).instrument(Instrument.BASEDRUM).requiresTool().strength(2.0F, 1.5F).sounds(BlockSoundGroup.TUFF);
+        Settings floatrockOreSettings = Settings.create().mapColor(MapColor.TERRACOTTA_BROWN).instrument(NoteBlockInstrument.BASS).requiresTool().strength(2.0F, 1.5F).sounds(BlockSoundGroup.TUFF);
 
         FLOATROCK_COAL_ORE = register("floatrock_coal_ore", new ExperienceDroppingBlock(UniformIntProvider.create(0, 2), floatrockOreSettings));
         FLOATROCK_IRON_ORE = register("floatrock_iron_ore", new ExperienceDroppingBlock(ConstantIntProvider.create(0), floatrockOreSettings));

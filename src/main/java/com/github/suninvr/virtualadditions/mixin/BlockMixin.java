@@ -4,9 +4,11 @@ import com.github.suninvr.virtualadditions.block.ClimbingRopeAnchorBlock;
 import com.github.suninvr.virtualadditions.item.GildTypes;
 import com.github.suninvr.virtualadditions.item.GildedToolUtil;
 import com.github.suninvr.virtualadditions.item.interfaces.GildedToolItem;
+import com.github.suninvr.virtualadditions.registry.VAEnchantmentTags;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.entity.BlockEntity;
+import net.minecraft.enchantment.Enchantment;
 import net.minecraft.enchantment.EnchantmentHelper;
 import net.minecraft.enchantment.Enchantments;
 import net.minecraft.entity.Entity;
@@ -14,6 +16,10 @@ import net.minecraft.entity.EntityType;
 import net.minecraft.entity.ItemEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
+import net.minecraft.registry.BuiltinRegistries;
+import net.minecraft.registry.RegistryEntryLookup;
+import net.minecraft.registry.RegistryKeys;
+import net.minecraft.registry.entry.RegistryEntry;
 import net.minecraft.server.world.ServerWorld;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.MathHelper;
@@ -31,23 +37,10 @@ import java.util.List;
 
 @Mixin(Block.class)
 public abstract class BlockMixin {
-    @Shadow protected abstract void dropExperience(ServerWorld world, BlockPos pos, int size);
 
     @Shadow
     public static List<ItemStack> getDroppedStacks(BlockState state, ServerWorld world, BlockPos pos, @Nullable BlockEntity blockEntity, @Nullable Entity entity, ItemStack stack) {
         return null;
-    }
-
-    @Inject(method = "dropExperienceWhenMined", at = @At("HEAD"), cancellable = true)
-    void virtualAdditions$dropExtraExperienceWhenMined(ServerWorld world, BlockPos pos, ItemStack tool, IntProvider experience, CallbackInfo ci) {
-        if (!GildedToolItem.getGildType(tool).equals(GildTypes.EMERALD)) return;
-        if (EnchantmentHelper.getLevel(Enchantments.SILK_TOUCH, tool) == 0) {
-            int i = (int)Math.ceil(experience.get(world.random) * 1.6);
-            if (i > 0) {
-                this.dropExperience(world, pos, i);
-            }
-        }
-        ci.cancel();
     }
 
     @Inject(method = "dropStacks(Lnet/minecraft/block/BlockState;Lnet/minecraft/world/World;Lnet/minecraft/util/math/BlockPos;Lnet/minecraft/block/entity/BlockEntity;Lnet/minecraft/entity/Entity;Lnet/minecraft/item/ItemStack;)V", at = @At("HEAD"), cancellable = true)

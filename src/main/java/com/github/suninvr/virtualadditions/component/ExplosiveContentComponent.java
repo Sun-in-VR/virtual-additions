@@ -2,7 +2,7 @@ package com.github.suninvr.virtualadditions.component;
 
 import com.mojang.serialization.Codec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
-import net.minecraft.component.DataComponentType;
+import net.minecraft.component.ComponentType;
 import net.minecraft.network.RegistryByteBuf;
 import net.minecraft.network.codec.PacketCodec;
 import net.minecraft.network.codec.PacketCodecs;
@@ -28,7 +28,7 @@ public record ExplosiveContentComponent(Optional<Integer> explosionStrength, Opt
         return this.destroysBlocks.orElse(true);
     }
 
-    public static DataComponentType.Builder<ExplosiveContentComponent> setCodecs(DataComponentType.Builder<ExplosiveContentComponent> builder) {
+    public static ComponentType.Builder<ExplosiveContentComponent> setCodecs(ComponentType.Builder<ExplosiveContentComponent> builder) {
         return builder.codec(CODEC).packetCodec(PACKET_CODEC);
     }
 

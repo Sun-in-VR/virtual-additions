@@ -18,6 +18,7 @@ import net.minecraft.component.type.BannerPatternsComponent;
 import net.minecraft.component.type.ContainerComponent;
 import net.minecraft.component.type.FoodComponent;
 import net.minecraft.component.type.PotionContentsComponent;
+import net.minecraft.enchantment.Enchantment;
 import net.minecraft.enchantment.Enchantments;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.effect.StatusEffectInstance;
@@ -37,6 +38,8 @@ import net.minecraft.loot.provider.number.UniformLootNumberProvider;
 import net.minecraft.predicate.entity.EntityFlagsPredicate;
 import net.minecraft.predicate.entity.EntityPredicate;
 import net.minecraft.predicate.item.ItemPredicate;
+import net.minecraft.registry.BuiltinRegistries;
+import net.minecraft.registry.RegistryEntryLookup;
 import net.minecraft.registry.RegistryKeys;
 import net.minecraft.text.Text;
 import net.minecraft.util.Formatting;
@@ -353,7 +356,7 @@ public class VAItems {
     public static final FoodComponent FRIED_EGG_FOOD = (new FoodComponent.Builder().nutrition(4).saturationModifier(0.4F).build());
     public static final FoodComponent CORN_FOOD = (new FoodComponent.Builder()).nutrition(1).saturationModifier(0.3F).build();
     public static final FoodComponent ROASTED_CORN_FOOD = (new FoodComponent.Builder()).nutrition(5).saturationModifier(0.6F).build();
-    public static final FoodComponent ICE_CREAM_FOOD = new FoodComponent.Builder().nutrition(7).saturationModifier(0.1F).build();
+    public static final FoodComponent ICE_CREAM_FOOD = new FoodComponent.Builder().nutrition(7).saturationModifier(0.1F).usingConvertsTo(Items.BOWL).build();
     public static final FoodComponent BALLOON_FRUIT_FOOD = (new FoodComponent.Builder().nutrition(2).saturationModifier(0.1F).alwaysEdible().statusEffect(new StatusEffectInstance(StatusEffects.LEVITATION, 100, 1), 1.0F).build());
 
     public static final ToolSet AMETHYST_DIAMOND_TOOL_SET;
@@ -581,7 +584,7 @@ public class VAItems {
         ROASTED_CORN = register("roasted_corn", new Item(new Item.Settings().food(ROASTED_CORN_FOOD)), ItemGroups.FOOD_AND_DRINK, prev);
         CORN_SEEDS = register("corn_seeds", new AliasedBlockItem(VABlocks.CORN_CROP, new Item.Settings()), ItemGroups.NATURAL, COTTON_SEEDS);
         FRIED_EGG = register("fried_egg", new Item(new Item.Settings().food(FRIED_EGG_FOOD)), ItemGroups.FOOD_AND_DRINK, Items.COOKED_CHICKEN);
-        ICE_CREAM = register("ice_cream", new StewItem(new Item.Settings().food(ICE_CREAM_FOOD).maxCount(1)), ItemGroups.FOOD_AND_DRINK, Items.COOKIE);
+        ICE_CREAM = register("ice_cream", new Item(new Item.Settings().food(ICE_CREAM_FOOD).maxCount(1)), ItemGroups.FOOD_AND_DRINK, Items.COOKIE);
 
         SILK_BLOCK = registerBlockItem("silk_block", VABlocks.SILK_BLOCK, ItemGroups.NATURAL, Items.SHROOMLIGHT);
         LUMWASP_NEST = registerBlockItem("lumwasp_nest", VABlocks.LUMWASP_NEST, ItemGroups.NATURAL, prev);
@@ -804,7 +807,7 @@ public class VAItems {
     public static void init(){
         initDispenserBehaviors();
         initCompostables();
-        initLootTableModifiers();
+        //initLootTableModifiers();
         initCauldronBehaviors();
 
 
@@ -850,6 +853,9 @@ public class VAItems {
     protected static void initLootTableModifiers() {
         LootTableEvents.MODIFY.register( ((key, tableBuilder, source) -> {
 
+            if (!source.isBuiltin()) return;
+
+            RegistryEntryLookup<Enchantment> enchantmentLookup = BuiltinRegistries.createWrapperLookup().createRegistryLookup().getOrThrow(RegistryKeys.ENCHANTMENT);
 
             // Ominous Trial Spawner Throwables
             if (LootTables.TRIAL_CHAMBER_ITEMS_TO_DROP_WHEN_OMINOUS_SPAWNER.equals(key)) {
@@ -865,20 +871,18 @@ public class VAItems {
                 });
             }
 
-            if (!source.isBuiltin()) return;
-
             // Grass Drop
             if (Blocks.SHORT_GRASS.getLootTableKey().equals(key)) {
                 LootPool.Builder cottonBuilder = LootPool.builder()
                         .with(ItemEntry.builder(COTTON_SEEDS)
-                                .apply(ApplyBonusLootFunction.uniformBonusCount(Enchantments.FORTUNE, 2))
+                                .apply(ApplyBonusLootFunction.uniformBonusCount(enchantmentLookup.getOrThrow(Enchantments.FORTUNE), 2))
                                 .apply(ExplosionDecayLootFunction.builder())
                                 .conditionally(RandomChanceLootCondition.builder(0.125F))
                                 .conditionally(InvertedLootCondition.builder(MatchToolLootCondition.builder(ItemPredicate.Builder.create().items(Items.SHEARS))))
                         );
                 LootPool.Builder cornBuilder = LootPool.builder()
                         .with(ItemEntry.builder(CORN_SEEDS)
-                                .apply(ApplyBonusLootFunction.uniformBonusCount(Enchantments.FORTUNE, 2))
+                                .apply(ApplyBonusLootFunction.uniformBonusCount(enchantmentLookup.getOrThrow(Enchantments.FORTUNE), 2))
                                 .apply(ExplosionDecayLootFunction.builder())
                                 .conditionally(RandomChanceLootCondition.builder(0.125F))
                                 .conditionally(InvertedLootCondition.builder(MatchToolLootCondition.builder(ItemPredicate.Builder.create().items(Items.SHEARS))))

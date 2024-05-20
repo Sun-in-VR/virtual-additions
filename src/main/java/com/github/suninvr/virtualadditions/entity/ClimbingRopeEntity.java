@@ -19,16 +19,17 @@ import net.minecraft.util.hit.BlockHitResult;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Direction;
 import net.minecraft.world.World;
+import org.jetbrains.annotations.Nullable;
 
 public class ClimbingRopeEntity extends PersistentProjectileEntity {
     private static final TrackedData<Integer> OXIDATION_LEVEL = DataTracker.registerData(ClimbingRopeEntity.class, TrackedDataHandlerRegistry.INTEGER);
 
     public ClimbingRopeEntity(EntityType<? extends PersistentProjectileEntity> entityType, World world) {
-        super(entityType, world, VAItems.CLIMBING_ROPE.getDefaultStack());
+        super(entityType, world);
     }
 
-    public ClimbingRopeEntity(double x, double y, double z, World world, ItemStack stack) {
-        super(VAEntityType.CLIMBING_ROPE, x, y, z, world, stack);
+    public ClimbingRopeEntity(double x, double y, double z, World world, ItemStack stack, @Nullable ItemStack shotFrom) {
+        super(VAEntityType.CLIMBING_ROPE, x, y, z, world, stack, shotFrom);
 
         if (stack.isOf(VAItems.OXIDIZED_CLIMBING_ROPE) || stack.isOf(VAItems.WAXED_OXIDIZED_CLIMBING_ROPE)) this.setOxidation(Oxidizable.OxidationLevel.OXIDIZED);
         else if (stack.isOf(VAItems.WEATHERED_CLIMBING_ROPE) || stack.isOf(VAItems.WAXED_WEATHERED_CLIMBING_ROPE)) this.setOxidation(Oxidizable.OxidationLevel.WEATHERED);

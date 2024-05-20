@@ -4,12 +4,13 @@ import com.github.suninvr.virtualadditions.block.entity.ColoringStationBlockEnti
 import net.minecraft.inventory.Inventory;
 import net.minecraft.item.ItemStack;
 import net.minecraft.recipe.Recipe;
+import net.minecraft.recipe.input.RecipeInput;
 import net.minecraft.registry.DynamicRegistryManager;
 
-public interface ColoringStationRecipe extends Recipe<Inventory> {
+public interface ColoringStationRecipe extends Recipe<RecipeInput> {
     int getIndex();
 
-    ItemStack craftWithDye(Inventory input, DynamicRegistryManager registryManager, ColoringStationBlockEntity.DyeContents dyeContents);
+    ItemStack craftWithDye(RecipeInput input, DynamicRegistryManager registryManager, ColoringStationBlockEntity.DyeContents dyeContents);
 
     ColoringStationBlockEntity.DyeContents getDyeCost(boolean inverted);
 
