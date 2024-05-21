@@ -25,6 +25,7 @@ import org.jetbrains.annotations.Nullable;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 public class ColoringStationBlockEntity extends BlockEntity implements NamedScreenHandlerFactory {
     private static final Text displayName = Text.translatable("container.virtual_additions.coloring_station");
@@ -197,14 +198,31 @@ public class ColoringStationBlockEntity extends BlockEntity implements NamedScre
             return this;
         }
 
+        public int[] asIntArray() {
+            return new int[]{this.getR(), this.getG(), this.getB(), this.getY(), this.getW(), this.getK()};
+        }
+
+        @Override
+        public boolean equals(Object o) {
+            if (this == o) return true;
+            if (o == null || getClass() != o.getClass()) return false;
+            DyeContents contents = (DyeContents) o;
+            return r == contents.r && g == contents.g && b == contents.b && y == contents.y && k == contents.k && w == contents.w;
+        }
+
+        @Override
+        public int hashCode() {
+            return Objects.hash(r, g, b, y, k, w);
+        }
+
         public boolean canAdd(DyeContents contents) {
             int R, G, B, Y, K, W;
-            if ((R = this.getR() + contents.getR()) > 1024 || R < 0) return false;
-            if ((G = this.getG() + contents.getG()) > 1024 || G < 0) return false;
-            if ((B = this.getB() + contents.getB()) > 1024 || B < 0) return false;
-            if ((Y = this.getY() + contents.getY()) > 1024 || Y < 0) return false;
-            if ((K = this.getK() + contents.getK()) > 1024 || K < 0) return false;
-            if ((W = this.getW() + contents.getW()) > 1024 || W < 0) return false;
+            if ((R = this.getR() + contents.getR()) > 8192 || R < 0) return false;
+            if ((G = this.getG() + contents.getG()) > 8192 || G < 0) return false;
+            if ((B = this.getB() + contents.getB()) > 8192 || B < 0) return false;
+            if ((Y = this.getY() + contents.getY()) > 8192 || Y < 0) return false;
+            if ((K = this.getK() + contents.getK()) > 8192 || K < 0) return false;
+            if ((W = this.getW() + contents.getW()) > 8192 || W < 0) return false;
             return true;
         }
 
@@ -276,12 +294,36 @@ public class ColoringStationBlockEntity extends BlockEntity implements NamedScre
 
         public List<ItemStack> getDyeStacks() {
             ArrayList<ItemStack> stacks = new ArrayList<>();
-            stacks.add(new ItemStack(Items.RED_DYE, Math.floorDiv(this.getR(), 16)));
-            stacks.add(new ItemStack(Items.GREEN_DYE, Math.floorDiv(this.getG(), 16)));
-            stacks.add(new ItemStack(Items.BLUE_DYE, Math.floorDiv(this.getB(), 16)));
-            stacks.add(new ItemStack(Items.YELLOW_DYE, Math.floorDiv(this.getY(), 16)));
-            stacks.add(new ItemStack(Items.BLACK_DYE, Math.floorDiv(this.getK(), 16)));
-            stacks.add(new ItemStack(Items.WHITE_DYE, Math.floorDiv(this.getW(), 16)));
+            int r = Math.floorDiv(this.getR(), 32);
+            while (r > 0) {
+                stacks.add(new ItemStack(Items.RED_DYE, Math.min(r, 64)));
+                r -= 64;
+            }
+            int g = Math.floorDiv(this.getG(), 32);
+            while (g > 0) {
+                stacks.add(new ItemStack(Items.GREEN_DYE, Math.min(g, 64)));
+                g -= 64;
+            }
+            int b = Math.floorDiv(this.getB(), 32);
+            while (b > 0) {
+                stacks.add(new ItemStack(Items.BLUE_DYE, Math.min(b, 64)));
+                b -= 64;
+            }
+            int y = Math.floorDiv(this.getY(), 32);
+            while (y > 0) {
+                stacks.add(new ItemStack(Items.YELLOW_DYE, Math.min(y, 64)));
+                y -= 64;
+            }
+            int w = Math.floorDiv(this.getW(), 32);
+            while (w > 0) {
+                stacks.add(new ItemStack(Items.WHITE_DYE, Math.min(w, 64)));
+                w -= 64;
+            }
+            int k = Math.floorDiv(this.getK(), 32);
+            while (k > 0) {
+                stacks.add(new ItemStack(Items.BLACK_DYE, Math.min(k, 64)));
+                k -= 64;
+            }
             return stacks;
         }
 
@@ -297,7 +339,7 @@ public class ColoringStationBlockEntity extends BlockEntity implements NamedScre
 
         public void addDye(ItemStack itemStack) {
             if (itemStack.getItem() instanceof DyeItem dyeItem) {
-                DyeContents contents = VADyeColors.getContents(dyeItem, 4);
+                DyeContents contents = VADyeColors.getContents(dyeItem, 8);
                 while (!itemStack.isEmpty() && this.canAdd(contents)) {
                     this.add(contents);
                     itemStack.decrement(1);

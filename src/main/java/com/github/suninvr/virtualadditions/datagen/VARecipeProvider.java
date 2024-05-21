@@ -449,30 +449,30 @@ public final class VARecipeProvider {
     }
 
     private abstract static class Provider extends FabricRecipeProvider {
-        protected static final ColoringStationBlockEntity.DyeContents WHITE_COST = new ColoringStationBlockEntity.DyeContents(0, 0, 0, 0, 0, 4);
-        protected static final ColoringStationBlockEntity.DyeContents LIGHT_GRAY_COST = new ColoringStationBlockEntity.DyeContents(0, 0, 0, 0, 1, 3);
-        protected static final ColoringStationBlockEntity.DyeContents GRAY_COST = new ColoringStationBlockEntity.DyeContents(0, 0, 0, 0, 2, 2);
-        protected static final ColoringStationBlockEntity.DyeContents BLACK_COST = new ColoringStationBlockEntity.DyeContents(0, 0, 0, 0, 4, 0);
-        protected static final ColoringStationBlockEntity.DyeContents TAN_COST = new ColoringStationBlockEntity.DyeContents(1, 0, 0, 1, 1, 1);
-        protected static final ColoringStationBlockEntity.DyeContents BROWN_COST = new ColoringStationBlockEntity.DyeContents(1, 0, 0, 1, 2, 0);
-        protected static final ColoringStationBlockEntity.DyeContents MAROON_COST = new ColoringStationBlockEntity.DyeContents(2, 0, 0, 0, 2, 0);
-        protected static final ColoringStationBlockEntity.DyeContents RED_COST = new ColoringStationBlockEntity.DyeContents(4, 0, 0, 0, 0, 0);
-        protected static final ColoringStationBlockEntity.DyeContents SINOPIA_COST = new ColoringStationBlockEntity.DyeContents(3, 0, 0, 1, 0, 0);
-        protected static final ColoringStationBlockEntity.DyeContents ORANGE_COST = new ColoringStationBlockEntity.DyeContents(2, 0, 0, 2, 0, 0);
-        protected static final ColoringStationBlockEntity.DyeContents YELLOW_COST = new ColoringStationBlockEntity.DyeContents(0, 0, 0, 4, 0, 0);
-        protected static final ColoringStationBlockEntity.DyeContents CHARTREUSE_COST = new ColoringStationBlockEntity.DyeContents(0, 2, 0, 1, 0, 1);
-        protected static final ColoringStationBlockEntity.DyeContents LIME_COST = new ColoringStationBlockEntity.DyeContents(0, 0, 0, 2, 0, 2);
-        protected static final ColoringStationBlockEntity.DyeContents GREEN_COST = new ColoringStationBlockEntity.DyeContents(0, 4, 0, 0, 0, 0);
-        protected static final ColoringStationBlockEntity.DyeContents VIRIDIAN_COST = new ColoringStationBlockEntity.DyeContents(0, 3, 1, 0, 0, 0);
-        protected static final ColoringStationBlockEntity.DyeContents CYAN_COST = new ColoringStationBlockEntity.DyeContents(0, 2, 2, 0, 0, 0);
-        protected static final ColoringStationBlockEntity.DyeContents LIGHT_BLUE_COST = new ColoringStationBlockEntity.DyeContents(0, 0, 2, 0, 0, 2);
-        protected static final ColoringStationBlockEntity.DyeContents BLUE_COST = new ColoringStationBlockEntity.DyeContents(0, 0, 4, 0, 0, 0);
-        protected static final ColoringStationBlockEntity.DyeContents INDIGO_COST = new ColoringStationBlockEntity.DyeContents(1, 0, 3, 0, 0, 0);
-        protected static final ColoringStationBlockEntity.DyeContents PURPLE_COST = new ColoringStationBlockEntity.DyeContents(2, 0, 2, 0, 0, 0);
-        protected static final ColoringStationBlockEntity.DyeContents PLUM_COST = new ColoringStationBlockEntity.DyeContents(2, 0, 1, 0, 1, 0);
-        protected static final ColoringStationBlockEntity.DyeContents MAGENTA_COST = new ColoringStationBlockEntity.DyeContents(2, 0, 1, 0, 0, 1);
-        protected static final ColoringStationBlockEntity.DyeContents PINK_COST = new ColoringStationBlockEntity.DyeContents(2, 0, 0, 0, 0, 2);
-        protected static final ColoringStationBlockEntity.DyeContents LILAC_COST = new ColoringStationBlockEntity.DyeContents(1, 0, 1, 0, 0, 2);
+        protected static final ColoringStationBlockEntity.DyeContents WHITE_COST = VADyeColors.WHITE_CONTENT;
+        protected static final ColoringStationBlockEntity.DyeContents LIGHT_GRAY_COST = VADyeColors.LIGHT_GRAY_CONTENT;
+        protected static final ColoringStationBlockEntity.DyeContents GRAY_COST = VADyeColors.GRAY_CONTENT;
+        protected static final ColoringStationBlockEntity.DyeContents BLACK_COST = VADyeColors.BLACK_CONTENT;
+        protected static final ColoringStationBlockEntity.DyeContents TAN_COST = VADyeColors.TAN_CONTENT;
+        protected static final ColoringStationBlockEntity.DyeContents BROWN_COST = VADyeColors.BROWN_CONTENT;
+        protected static final ColoringStationBlockEntity.DyeContents MAROON_COST = VADyeColors.MAROON_CONTENT;
+        protected static final ColoringStationBlockEntity.DyeContents RED_COST = VADyeColors.RED_CONTENT;
+        protected static final ColoringStationBlockEntity.DyeContents SINOPIA_COST = VADyeColors.SINOPIA_CONTENT;
+        protected static final ColoringStationBlockEntity.DyeContents ORANGE_COST = VADyeColors.ORANGE_CONTENT;
+        protected static final ColoringStationBlockEntity.DyeContents YELLOW_COST = VADyeColors.YELLOW_CONTENT;
+        protected static final ColoringStationBlockEntity.DyeContents CHARTREUSE_COST = VADyeColors.CHARTREUSE_CONTENT;
+        protected static final ColoringStationBlockEntity.DyeContents LIME_COST = VADyeColors.LIME_CONTENT;
+        protected static final ColoringStationBlockEntity.DyeContents GREEN_COST = VADyeColors.GREEN_CONTENT;
+        protected static final ColoringStationBlockEntity.DyeContents VIRIDIAN_COST = VADyeColors.VIRIDIAN_CONTENT;
+        protected static final ColoringStationBlockEntity.DyeContents CYAN_COST = VADyeColors.CYAN_CONTENT;
+        protected static final ColoringStationBlockEntity.DyeContents LIGHT_BLUE_COST = VADyeColors.LIGHT_BLUE_CONTENT;
+        protected static final ColoringStationBlockEntity.DyeContents BLUE_COST = VADyeColors.BLUE_CONTENT;
+        protected static final ColoringStationBlockEntity.DyeContents INDIGO_COST = VADyeColors.INDIGO_CONTENT;
+        protected static final ColoringStationBlockEntity.DyeContents PURPLE_COST = VADyeColors.PURPLE_CONTENT;
+        protected static final ColoringStationBlockEntity.DyeContents PLUM_COST = VADyeColors.PLUM_CONTENT;
+        protected static final ColoringStationBlockEntity.DyeContents MAGENTA_COST = VADyeColors.MAGENTA_CONTENT;
+        protected static final ColoringStationBlockEntity.DyeContents PINK_COST = VADyeColors.PINK_CONTENT;
+        protected static final ColoringStationBlockEntity.DyeContents LILAC_COST = VADyeColors.LILAC_CONTENT;
 
         public Provider(FabricDataOutput output, CompletableFuture<RegistryWrapper.WrapperLookup> registriesFuture) {
             super(output, registriesFuture);
@@ -513,7 +513,7 @@ public final class VARecipeProvider {
         }
 
         protected static void offerColoringRecipes(RecipeExporter exporter, ColorfulBlockSet set, ColoringStationBlockEntity.DyeContents cost, int index) {
-            offerColoringRecipe(exporter, set.dye(), cost.copyAndMultiply(4), index);
+            offerColoringRecipe(exporter, set.dye(), cost.copyAndMultiply(8), index);
             offerArmorColoringRecipe(exporter, set.dye(), index);
             set.ifWool(block -> offerColoringRecipe(exporter, ItemTags.WOOL, block, cost, index));
             set.ifCarpet(block -> offerColoringRecipe(exporter, ItemTags.WOOL_CARPETS, block, cost, index));

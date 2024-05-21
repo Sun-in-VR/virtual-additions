@@ -48,6 +48,22 @@ public class ColoringStationScreenHandler extends ScreenHandler {
             ColoringStationScreenHandler.this.contentsChangedListener.run();
         }
     };
+    public final RecipeInput recipeInput = new RecipeInput() {
+        @Override
+        public ItemStack getStackInSlot(int slot) {
+            return ColoringStationScreenHandler.this.input.getStack(1);
+        }
+
+        @Override
+        public int getSize() {
+            return 0;
+        }
+
+        @Override
+        public boolean isEmpty() {
+            return this.getStackInSlot(0).isEmpty();
+        }
+    };
     final CraftingResultInventory output = new CraftingResultInventory();
 
     public ColoringStationScreenHandler(int syncId, PlayerInventory playerInventory) {
@@ -264,14 +280,14 @@ public class ColoringStationScreenHandler extends ScreenHandler {
         this.availableRecipes.clear();
         this.selectedRecipe.set(-1);
         this.outputSlot.setStackNoCallbacks(ItemStack.EMPTY);
-        this.availableRecipes = this.world.getRecipeManager().getAllMatches(VARecipeType.COLORING, new SingleStackRecipeInput(this.input.getStack(1)), this.world);
+        this.availableRecipes = this.world.getRecipeManager().getAllMatches(VARecipeType.COLORING, this.recipeInput, this.world);
         this.availableRecipes.sort(Comparator.comparingInt(o -> o.value().getIndex()));
     }
 
     void populateResult() {
         if (!this.availableRecipes.isEmpty() && this.isInBounds(this.selectedRecipe.get())) {
             RecipeEntry<ColoringStationRecipe> recipeEntry = this.availableRecipes.get(this.selectedRecipe.get());
-            ItemStack itemStack = recipeEntry.value().craftWithDye((RecipeInput) this.input, this.world.getRegistryManager(), this.dyeContents);
+            ItemStack itemStack = recipeEntry.value().craftWithDye(this.recipeInput, this.world.getRegistryManager(), this.dyeContents);
             this.dyeContentsAdder = recipeEntry.value().getDyeCost();
             if (itemStack.isItemEnabled(this.world.getEnabledFeatures())) {
                 this.output.setLastRecipe(recipeEntry);

@@ -49,20 +49,44 @@ public class ColoringStationScreen extends HandledScreen<ColoringStationScreenHa
     private static final String INDICATOR_ADVANCED_BLUE = "container.virtual_additions.coloring_station.indicator.advanced.blue";
     private static final String INDICATOR_ADVANCED_YELLOW = "container.virtual_additions.coloring_station.indicator.advanced.yellow";
     private ColoringStationBlockEntity.DyeContents dyeContents;
+    private ColoringStationBlockEntity.DyeContents cachedDyeContents;
     private float scrollAmount;
     private boolean mouseClicked;
     private int scrollOffset;
     private boolean canCraft;
+    private record ColorCache(int amount, int dye, float percent){
+        private ColorCache(int amount) {
+            this(amount, amount / 32, amount / 8192.0F);
+        }
+    }
+    private ColorCache[] caches = {
+            new ColorCache(0),
+            new ColorCache(0),
+            new ColorCache(0),
+            new ColorCache(0),
+            new ColorCache(0),
+            new ColorCache(0)
+    };
 
     public ColoringStationScreen(ColoringStationScreenHandler handler, PlayerInventory inventory, Text title) {
         super(handler, inventory, title);
         handler.setContentsChangedListener(this::onInventoryChange);
         this.dyeContents = handler.getDyeContents();
+        this.updateCaches();
         --this.titleY;
+    }
+
+    private void updateCaches() {
+        int[] dyes = this.dyeContents.asIntArray();
+        for (int i = 0; i < 6; i++) {
+            this.caches[i] = new ColorCache(dyes[i]);
+        }
+        this.cachedDyeContents = this.dyeContents.copy();
     }
 
     @Override
     public void render(DrawContext context, int mouseX, int mouseY, float delta) {
+        if (!this.cachedDyeContents.equals(this.dyeContents)) this.updateCaches();
         super.render(context, mouseX, mouseY, delta);
         this.drawMouseoverTooltip(context, mouseX, mouseY);
     }
@@ -73,12 +97,12 @@ public class ColoringStationScreen extends HandledScreen<ColoringStationScreenHa
         int j = this.y;
         context.drawTexture(TEXTURE, i, j, 0, 0, this.backgroundWidth, this.backgroundHeight);
 
-        this.drawDyeStatusBar(context, 0, this.dyeContents.getK() / 1024.0F, i + 10, j + 35);
-        this.drawDyeStatusBar(context, 1, this.dyeContents.getW() / 1024.0F, i + 10, j + 41);
-        this.drawDyeStatusBar(context, 2, this.dyeContents.getR() / 1024.0F, i + 10, j + 47);
-        this.drawDyeStatusBar(context, 3, this.dyeContents.getG() / 1024.0F, i + 10, j + 53);
-        this.drawDyeStatusBar(context, 4, this.dyeContents.getB() / 1024.0F, i + 10, j + 59);
-        this.drawDyeStatusBar(context, 5, this.dyeContents.getY() / 1024.0F, i + 10, j + 65);
+        this.drawDyeStatusBar(context, 0, this.caches[5].percent, i + 10, j + 35);
+        this.drawDyeStatusBar(context, 1, this.caches[4].percent, i + 10, j + 41);
+        this.drawDyeStatusBar(context, 2, this.caches[0].percent, i + 10, j + 47);
+        this.drawDyeStatusBar(context, 3, this.caches[1].percent, i + 10, j + 53);
+        this.drawDyeStatusBar(context, 4, this.caches[2].percent, i + 10, j + 59);
+        this.drawDyeStatusBar(context, 5, this.caches[3].percent, i + 10, j + 65);
 
         Slot slot = this.handler.getSlot(0);
         if (!slot.hasStack()) {
@@ -97,7 +121,7 @@ public class ColoringStationScreen extends HandledScreen<ColoringStationScreenHa
 
     private void drawDyeStatusBar(DrawContext context, int index, float percent, int x, int y) {
         int v = index * 4;
-        int max = Math.round(34 * percent);
+        int max = (int)Math.ceil(34 * percent);
         context.drawTexture(TEXTURE, x, y, 176, v, max, 4);
     }
 
@@ -142,27 +166,27 @@ public class ColoringStationScreen extends HandledScreen<ColoringStationScreenHa
         int i = this.x;
         int j = this.y;
         if (x < i + 45 && x >= i + 9 && y < j + 40 && y >= j + 34) {
-            K = !advanced ? (int)Math.floor(this.dyeContents.getK() / 16.0F) : this.dyeContents.getK();
+            K = !advanced ? this.caches[5].dye : this.dyeContents.getK();
             context.drawTooltip(textRenderer, Text.translatable(advanced ? INDICATOR_ADVANCED_BLACK : INDICATOR_BLACK, K), x, y);
         }
         if (x < i + 45 && x >= i + 9 && y < j + 46 && y >= j + 40) {
-            W = !advanced ? (int)Math.floor(this.dyeContents.getW() / 16.0F) : this.dyeContents.getW();
+            W = !advanced ? this.caches[4].dye : this.dyeContents.getW();
             context.drawTooltip(textRenderer, Text.translatable(advanced ? INDICATOR_ADVANCED_WHITE : INDICATOR_WHITE, W), x, y);
         }
         if (x < i + 45 && x >= i + 9 && y < j + 52 && y >= j + 46) {
-            R = !advanced ? (int)Math.floor(this.dyeContents.getR() / 16.0F) : this.dyeContents.getR();
+            R = !advanced ? this.caches[0].dye : this.dyeContents.getR();
             context.drawTooltip(textRenderer, Text.translatable(advanced ? INDICATOR_ADVANCED_RED : INDICATOR_RED, R), x, y);
         }
         if (x < i + 45 && x >= i + 9 && y < j + 58 && y >= j + 52) {
-            G = !advanced ? (int)Math.floor(this.dyeContents.getG() / 16.0F) : this.dyeContents.getG();
+            G = !advanced ? this.caches[1].dye : this.dyeContents.getG();
             context.drawTooltip(textRenderer, Text.translatable(advanced ? INDICATOR_ADVANCED_GREEN : INDICATOR_GREEN, G), x, y);
         }
         if (x < i + 45 && x >= i + 9 && y < j + 64 && y >= j + 58) {
-            B = !advanced ? (int)Math.floor(this.dyeContents.getB() / 16.0F) : this.dyeContents.getB();
+            B = !advanced ? this.caches[2].dye : this.dyeContents.getB();
             context.drawTooltip(textRenderer, Text.translatable(advanced ? INDICATOR_ADVANCED_BLUE : INDICATOR_BLUE, B), x, y);
         }
         if (x < i + 45 && x >= i + 9 && y < j + 70 && y >= j + 64) {
-            Y = !advanced ? (int)Math.floor(this.dyeContents.getY() / 16.0F) : this.dyeContents.getY();
+            Y = !advanced ? this.caches[3].dye : this.dyeContents.getY();
             context.drawTooltip(textRenderer, Text.translatable(advanced ? INDICATOR_ADVANCED_YELLOW : INDICATOR_YELLOW, Y), x, y);
         }
         int k = 0;
@@ -182,7 +206,6 @@ public class ColoringStationScreen extends HandledScreen<ColoringStationScreenHa
             int k = x + j % 4 * 16;
             int l = j / 4;
             int m = y + l * 18 + 2;
-            //Identifier identifier = i == (this.handler).getSelectedRecipe() ? RECIPE_SELECTED_TEXTURE : (mouseX >= k && mouseY >= m && mouseX < k + 16 && mouseY < m + 18 ? RECIPE_HIGHLIGHTED_TEXTURE : RECIPE_TEXTURE);
             Identifier identifier = this.dyeContents.canAdd(this.handler.getAvailableRecipes().get(i).value().getDyeCost(false)) ? (i == (this.handler).getSelectedRecipe() ? RECIPE_SELECTED_TEXTURE : mouseX >= k && mouseY >= m && mouseX < k + 16 && mouseY < m + 18 ? RECIPE_HIGHLIGHTED_TEXTURE : RECIPE_TEXTURE) : RECIPE_UNCRAFTABLE_TEXTURE;
             context.drawGuiTexture(identifier, k, m - 1, 16, 18);
         }

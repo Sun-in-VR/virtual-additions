@@ -102,7 +102,7 @@ public class ColoringStationBlock extends BlockWithEntity implements InventoryPr
         public void markDirty() {
             ItemStack itemStack = this.getStack(0);
             if (!itemStack.isEmpty() && itemStack.getItem() instanceof DyeItem dyeItem) {
-                this.entity.dyeContents.add(VADyeColors.getContents(dyeItem, 4));
+                this.entity.dyeContents.add(VADyeColors.getContents(dyeItem, 8));
                 this.dirty = true;
                 this.removeStack(0);
             }
@@ -110,7 +110,7 @@ public class ColoringStationBlock extends BlockWithEntity implements InventoryPr
 
         @Override
         public boolean canInsert(int slot, ItemStack stack, @Nullable Direction dir) {
-            return !this.dirty && stack.getItem() instanceof DyeItem dyeItem && entity.dyeContents.canAdd(VADyeColors.getContents(dyeItem, 4));
+            return !this.dirty && stack.getItem() instanceof DyeItem dyeItem && entity.dyeContents.canAdd(VADyeColors.getContents(dyeItem, 8));
         }
 
         @Override
