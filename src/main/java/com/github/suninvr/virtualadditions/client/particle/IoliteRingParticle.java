@@ -68,11 +68,11 @@ public class IoliteRingParticle extends SpriteBillboardParticle {
     }
 
     private void vertex(VertexConsumer vertexConsumer, Vector3f pos, float u, float v, int light) {
-        vertexConsumer.vertex(pos.x(), pos.y(), pos.z()).texture(u, v).color(this.red, this.green, this.blue, this.alpha).light(light).next();
+        vertexConsumer.vertex(pos.x(), pos.y(), pos.z()).texture(u, v).color(this.red, this.green, this.blue, this.alpha).light(light);
     }
 
     private void applyUv(VertexConsumer vertexConsumer, Vector3f vec3f, float f, float g, int i) {
-        vertexConsumer.vertex(vec3f.x, vec3f.y, vec3f.z).texture(f, g).color(this.red, this.green, this.blue, this.alpha).light(i).next();
+        vertexConsumer.vertex(vec3f.x, vec3f.y, vec3f.z).texture(f, g).color(this.red, this.green, this.blue, this.alpha).light(i);
     }
 
     @Override

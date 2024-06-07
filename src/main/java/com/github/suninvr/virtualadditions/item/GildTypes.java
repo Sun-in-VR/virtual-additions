@@ -1,10 +1,13 @@
 package com.github.suninvr.virtualadditions.item;
 
+import com.github.suninvr.virtualadditions.VirtualAdditions;
 import com.github.suninvr.virtualadditions.block.DestructiveSculkBlock;
 import com.github.suninvr.virtualadditions.registry.VABlockTags;
 import com.github.suninvr.virtualadditions.registry.VABlocks;
+import com.github.suninvr.virtualadditions.registry.VAEnchantmentTags;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.ExperienceDroppingBlock;
+import net.minecraft.enchantment.EnchantmentHelper;
 import net.minecraft.entity.EquipmentSlot;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
@@ -56,7 +59,12 @@ public class GildTypes {
             if (player.getItemCooldownManager().isCoolingDown(tool.getItem())) return true;
             boolean stronglyEffective = state.isIn(VABlockTags.SCULK_GILD_STRONGLY_EFFECTIVE);
             int potency = (int) Math.floor( Math.max(30 - (state.getHardness(world, pos) * (stronglyEffective ? 3 : 6) + 1), 0) );
+            int[] corruptionLevel = {0};
+            EnchantmentHelper.forEachEnchantment(tool, (enchantment, level) -> {
+                if (enchantment.isIn(VAEnchantmentTags.CORRUPTION)) corruptionLevel[0] = level;
+            });
             player.getItemCooldownManager().set(tool.getItem(), potency);
+            potency += (potency * corruptionLevel[0]) / 3;
             DestructiveSculkBlock.placeState(world, pos, state, player.getUuid(), tool, potency);
             player.incrementStat(Stats.USED.getOrCreateStat(tool.getItem()));
             tool.damage( potency, player, EquipmentSlot.MAINHAND);
@@ -66,25 +74,25 @@ public class GildTypes {
     public static final GildType NONE = new GildType(idOf("none"), 0xFFFFFF);
 
     public static GildType.Modifier durabilityModifier(float value, BiFunction<Float, Float, Float> function, GildType.ModifierType.ToolType... appliesTo) {
-        return new GildType.Modifier(GildType.ModifierType.DURABILITY, value, function, appliesTo);
+        return new GildType.Modifier(VirtualAdditions.idOf("gild_durability_modifier"), GildType.ModifierType.DURABILITY, value, function, appliesTo);
     }
     public static GildType.Modifier miningSpeedModifier(float value, BiFunction<Float, Float, Float> function, GildType.ModifierType.ToolType... appliesTo) {
-        return new GildType.Modifier(GildType.ModifierType.MINING_SPEED, value, function, appliesTo);
+        return new GildType.Modifier(VirtualAdditions.idOf("gild_mining_speed_modifier"), GildType.ModifierType.MINING_SPEED, value, function, appliesTo);
     }
     public static GildType.Modifier attackDamageModifier(float value, BiFunction<Float, Float, Float> function, GildType.ModifierType.ToolType... appliesTo) {
-        return new GildType.Modifier(GildType.ModifierType.ATTACK_DAMAGE, value, function, appliesTo);
+        return new GildType.Modifier(VirtualAdditions.idOf("gild_attack_damage_modifier"), GildType.ModifierType.ATTACK_DAMAGE, value, function, appliesTo);
     }
     public static GildType.Modifier enchantabilityModifier(float value, BiFunction<Float, Float, Float> function, GildType.ModifierType.ToolType... appliesTo) {
-        return new GildType.Modifier(GildType.ModifierType.ENCHANTABILITY, value, function, appliesTo);
+        return new GildType.Modifier(VirtualAdditions.idOf("gild_enchantability_modifier"), GildType.ModifierType.ENCHANTABILITY, value, function, appliesTo);
     }
     public static GildType.Modifier attackSpeedModifier(float value, BiFunction<Float, Float, Float> function, GildType.ModifierType.ToolType... appliesTo) {
-        return new GildType.Modifier(GildType.ModifierType.ATTACK_SPEED, value, function, appliesTo);
+        return new GildType.Modifier(VirtualAdditions.idOf("gild_attack_speed_modifier"), GildType.ModifierType.ATTACK_SPEED, value, function, appliesTo);
     }
     public static GildType.Modifier blockInteractionRangeModifier(float value, BiFunction<Float, Float, Float> function, GildType.ModifierType.ToolType... appliesTo) {
-        return new GildType.Modifier(GildType.ModifierType.BLOCK_INTERACTION_RANGE, value, function, appliesTo);
+        return new GildType.Modifier(VirtualAdditions.idOf("gild_block_interaction_range_modifier"), GildType.ModifierType.BLOCK_INTERACTION_RANGE, value, function, appliesTo);
     }
     public static GildType.Modifier entityInteractionRangeModifier(float value, BiFunction<Float, Float, Float> function, GildType.ModifierType.ToolType... appliesTo) {
-        return new GildType.Modifier(GildType.ModifierType.ENTITY_INTERACTION_RANGE, value, function, appliesTo);
+        return new GildType.Modifier(VirtualAdditions.idOf("gild_entity_interaction_range_modifier"), GildType.ModifierType.ENTITY_INTERACTION_RANGE, value, function, appliesTo);
     }
 
 }

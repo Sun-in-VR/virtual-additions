@@ -1,7 +1,7 @@
 package com.github.suninvr.virtualadditions.item;
 
 import com.github.suninvr.virtualadditions.item.interfaces.GildedToolItem;
-import net.minecraft.client.item.TooltipType;
+import net.minecraft.item.tooltip.TooltipType;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.ShovelItem;

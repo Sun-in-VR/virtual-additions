@@ -17,7 +17,6 @@ import net.fabricmc.fabric.api.client.rendering.v1.EntityModelLayerRegistry;
 import net.fabricmc.fabric.api.client.rendering.v1.EntityRendererRegistry;
 import net.minecraft.block.RedstoneWireBlock;
 import net.minecraft.client.color.world.BiomeColors;
-import net.minecraft.client.color.world.FoliageColors;
 import net.minecraft.client.item.ModelPredicateProviderRegistry;
 import net.minecraft.client.render.RenderLayer;
 import net.minecraft.client.render.TexturedRenderLayers;
@@ -35,12 +34,13 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.item.Items;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.math.ColorHelper;
+import net.minecraft.world.biome.FoliageColors;
 
 import static com.github.suninvr.virtualadditions.VirtualAdditions.idOf;
 
 public class VARenderers {
-    public static EntityModelLayer LUMWASP_LAYER = new EntityModelLayer(new Identifier("virtual_additions", "lumwasp"), "main");
-    public static EntityModelLayer LYFT_LAYER = new EntityModelLayer(new Identifier("virtual_additions", "lyft"), "main");
+    public static EntityModelLayer LUMWASP_LAYER = new EntityModelLayer(Identifier.of("virtual_additions", "lumwasp"), "main");
+    public static EntityModelLayer LYFT_LAYER = new EntityModelLayer(Identifier.of("virtual_additions", "lyft"), "main");
     public static EntityModelLayer CUSTOM_BED_FOOT_LAYER = new EntityModelLayer(idOf("bed_foot"), "main");
     public static EntityModelLayer CUSTOM_BED_HEAD_LAYER = new EntityModelLayer(idOf("bed_head"), "main");
     public static final SpriteIdentifier CHARTREUSE_SHULKER_BOX = new SpriteIdentifier(TexturedRenderLayers.SHULKER_BOXES_ATLAS_TEXTURE, VirtualAdditions.idOf("entity/shulker/chartreuse"));
@@ -217,8 +217,8 @@ public class VARenderers {
 
     private static void  initFluidRenderers() {
         FluidRenderHandlerRegistry.INSTANCE.register(VAFluids.ACID, VAFluids.FLOWING_ACID, new SimpleFluidRenderHandler(
-                new Identifier("minecraft:block/water_still"),
-                new Identifier("minecraft:block/water_flow"),
+                Identifier.of("minecraft:block/water_still"),
+                Identifier.of("minecraft:block/water_flow"),
                 0x00e076
         ));
     }

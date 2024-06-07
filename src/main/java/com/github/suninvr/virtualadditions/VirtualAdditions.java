@@ -74,6 +74,6 @@ public class VirtualAdditions implements ModInitializer {
 	 * @param id The identifier's path.
 	 * **/
 	public static Identifier idOf(String id) {
-		return new Identifier(NAMESPACE, id);
+		return Identifier.of(NAMESPACE, id);
 	}
 }

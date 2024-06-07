@@ -422,17 +422,17 @@ public class VAItems {
         TOOL_GILD_ADDITIONS_SLOT_DESCRIPTION_TEXT = Text.translatable(Util.createTranslationKey("item", idOf("smithing_template.tool_gild.additions_slot_description")));
         TOOL_GILD_TEXT = Text.translatable(Util.createTranslationKey("upgrade", idOf("tool_gild"))).formatted(Formatting.GRAY);
 
-        EMPTY_SLOT_HOE_TEXTURE = new Identifier("item/empty_slot_hoe");
-        EMPTY_SLOT_AXE_TEXTURE = new Identifier("item/empty_slot_axe");
-        EMPTY_SLOT_SWORD_TEXTURE = new Identifier("item/empty_slot_sword");
-        EMPTY_SLOT_SHOVEL_TEXTURE = new Identifier("item/empty_slot_shovel");
-        EMPTY_SLOT_PICKAXE_TEXTURE = new Identifier("item/empty_slot_pickaxe");
-        EMPTY_SLOT_INGOT_TEXTURE = new Identifier("item/empty_slot_ingot");
-        EMPTY_SLOT_QUARTZ_TEXTURE = new Identifier("item/empty_slot_quartz");
-        EMPTY_SLOT_EMERALD_TEXTURE = new Identifier("item/empty_slot_emerald");
-        EMPTY_SLOT_AMETHYST_TEXTURE = new Identifier("item/empty_slot_amethyst_shard");
-        EMPTY_SLOT_ECHO_SHARD_TEXTURE = new Identifier("virtual_additions:item/empty_slot_echo_shard");
-        EMPTY_SLOT_IOLITE_TEXTURE = new Identifier("virtual_additions:item/empty_slot_iolite");
+        EMPTY_SLOT_HOE_TEXTURE = Identifier.ofVanilla("item/empty_slot_hoe");
+        EMPTY_SLOT_AXE_TEXTURE = Identifier.ofVanilla("item/empty_slot_axe");
+        EMPTY_SLOT_SWORD_TEXTURE = Identifier.ofVanilla("item/empty_slot_sword");
+        EMPTY_SLOT_SHOVEL_TEXTURE = Identifier.ofVanilla("item/empty_slot_shovel");
+        EMPTY_SLOT_PICKAXE_TEXTURE = Identifier.ofVanilla("item/empty_slot_pickaxe");
+        EMPTY_SLOT_INGOT_TEXTURE = Identifier.ofVanilla("item/empty_slot_ingot");
+        EMPTY_SLOT_QUARTZ_TEXTURE = Identifier.ofVanilla("item/empty_slot_quartz");
+        EMPTY_SLOT_EMERALD_TEXTURE = Identifier.ofVanilla("item/empty_slot_emerald");
+        EMPTY_SLOT_AMETHYST_TEXTURE = Identifier.ofVanilla("item/empty_slot_amethyst_shard");
+        EMPTY_SLOT_ECHO_SHARD_TEXTURE = Identifier.of("virtual_additions:item/empty_slot_echo_shard");
+        EMPTY_SLOT_IOLITE_TEXTURE = Identifier.of("virtual_additions:item/empty_slot_iolite");
 
         CLIMBING_ROPE = register("climbing_rope", new ClimbingRopeItem(VABlocks.CLIMBING_ROPE_ANCHOR, new Item.Settings().maxCount(16)), ItemGroups.TOOLS, Items.LEAD);
         EXPOSED_CLIMBING_ROPE = register("exposed_climbing_rope", new ClimbingRopeItem(VABlocks.EXPOSED_CLIMBING_ROPE_ANCHOR, new Item.Settings().maxCount(16)), ItemGroups.TOOLS, prev);
@@ -807,7 +807,7 @@ public class VAItems {
     public static void init(){
         initDispenserBehaviors();
         initCompostables();
-        //initLootTableModifiers();
+        initLootTableModifiers();
         initCauldronBehaviors();
 
 
@@ -856,8 +856,6 @@ public class VAItems {
 
             if (!source.isBuiltin()) return;
 
-            RegistryEntryLookup<Enchantment> enchantmentLookup = BuiltinRegistries.createWrapperLookup().createRegistryLookup().getOrThrow(RegistryKeys.ENCHANTMENT);
-
             // Ominous Trial Spawner Throwables
             if (LootTables.TRIAL_CHAMBER_ITEMS_TO_DROP_WHEN_OMINOUS_SPAWNER.equals(key)) {
                 final int[] i = {0};
@@ -874,6 +872,7 @@ public class VAItems {
 
             // Grass Drop
             if (Blocks.SHORT_GRASS.getLootTableKey().equals(key)) {
+                RegistryEntryLookup<Enchantment> enchantmentLookup = BuiltinRegistries.createWrapperLookup().createRegistryLookup().getOrThrow(RegistryKeys.ENCHANTMENT);
                 LootPool.Builder cottonBuilder = LootPool.builder()
                         .with(ItemEntry.builder(COTTON_SEEDS)
                                 .apply(ApplyBonusLootFunction.uniformBonusCount(enchantmentLookup.getOrThrow(Enchantments.FORTUNE), 2))

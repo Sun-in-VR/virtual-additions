@@ -13,7 +13,7 @@ import net.minecraft.util.math.RotationAxis;
 import org.joml.Matrix4f;
 
 public class AcidSpitEntityRenderer extends EntityRenderer<AcidSpitEntity> {
-    private static final Identifier TEXTURE = new Identifier("virtual_additions", "textures/entity/lumwasp/acid_spit.png");
+    private static final Identifier TEXTURE = Identifier.of("virtual_additions", "textures/entity/lumwasp/acid_spit.png");
     private static final RenderLayer LAYER;
 
     public AcidSpitEntityRenderer(EntityRendererFactory.Context ctx) {
@@ -28,22 +28,16 @@ public class AcidSpitEntityRenderer extends EntityRenderer<AcidSpitEntity> {
         MatrixStack.Entry entry = matrixStack.peek();
         Matrix4f matrix4f = entry.getPositionMatrix();
         VertexConsumer vertexConsumer = vertexConsumerProvider.getBuffer(LAYER);
-        produceVertex(vertexConsumer, matrix4f, entry, i, 0.0F, 0, 0, 1);
-        produceVertex(vertexConsumer, matrix4f, entry, i, 1.0F, 0, 1, 1);
-        produceVertex(vertexConsumer, matrix4f, entry, i, 1.0F, 1, 1, 0);
-        produceVertex(vertexConsumer, matrix4f, entry, i, 0.0F, 1, 0, 0);
+        produceVertex(vertexConsumer, entry, i, 0.0F, 0, 0, 1);
+        produceVertex(vertexConsumer, entry, i, 1.0F, 0, 1, 1);
+        produceVertex(vertexConsumer, entry, i, 1.0F, 1, 1, 0);
+        produceVertex(vertexConsumer, entry, i, 0.0F, 1, 0, 0);
         matrixStack.pop();
         super.render(entity, f, g, matrixStack, vertexConsumerProvider, i);
     }
 
-    private static void produceVertex(VertexConsumer vertexConsumer, Matrix4f positionMatrix, MatrixStack.Entry normalMatrix, int light, float x, int y, int textureU, int textureV) {
-        vertexConsumer.vertex(positionMatrix, x - 0.5F, (float)y - 0.25F, 0.0F)
-                .color(255, 255, 255, 255)
-                .texture((float)textureU, (float)textureV)
-                .overlay(OverlayTexture.DEFAULT_UV)
-                .light(light)
-                .normal(normalMatrix, 0.0F, 1.0F, 0.0F)
-                .next();
+    private static void produceVertex(VertexConsumer vertexConsumer, MatrixStack.Entry matrix, int light, float x, int z, int textureU, int textureV) {
+        vertexConsumer.vertex(matrix, x - 0.5F, (float)z - 0.25F, 0.0F).color(-1).texture((float)textureU, (float)textureV).overlay(OverlayTexture.DEFAULT_UV).light(light).normal(matrix, 0.0F, 1.0F, 0.0F);
     }
 
     @Override

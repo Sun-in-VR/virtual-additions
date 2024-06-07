@@ -7,10 +7,10 @@ import net.minecraft.client.render.entity.ProjectileEntityRenderer;
 import net.minecraft.util.Identifier;
 
 public class ClimbingRopeEntityRenderer extends ProjectileEntityRenderer<ClimbingRopeEntity> {
-    public static final Identifier UNAFFECTED_TEXTURE = new Identifier(VirtualAdditions.NAMESPACE, "textures/entity/projectiles/climbing_rope.png");
-    public static final Identifier EXPOSED_TEXTURE = new Identifier(VirtualAdditions.NAMESPACE, "textures/entity/projectiles/exposed_climbing_rope.png");
-    public static final Identifier WEATHERED_TEXTURE = new Identifier(VirtualAdditions.NAMESPACE, "textures/entity/projectiles/weathered_climbing_rope.png");
-    public static final Identifier OXIDIZED_TEXTURE = new Identifier(VirtualAdditions.NAMESPACE, "textures/entity/projectiles/oxidized_climbing_rope.png");
+    public static final Identifier UNAFFECTED_TEXTURE = Identifier.of(VirtualAdditions.NAMESPACE, "textures/entity/projectiles/climbing_rope.png");
+    public static final Identifier EXPOSED_TEXTURE = Identifier.of(VirtualAdditions.NAMESPACE, "textures/entity/projectiles/exposed_climbing_rope.png");
+    public static final Identifier WEATHERED_TEXTURE = Identifier.of(VirtualAdditions.NAMESPACE, "textures/entity/projectiles/weathered_climbing_rope.png");
+    public static final Identifier OXIDIZED_TEXTURE = Identifier.of(VirtualAdditions.NAMESPACE, "textures/entity/projectiles/oxidized_climbing_rope.png");
 
     public ClimbingRopeEntityRenderer(EntityRendererFactory.Context context) {
         super(context);

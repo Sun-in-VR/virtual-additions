@@ -16,6 +16,6 @@ public class LumwaspEntityRenderer extends MobEntityRenderer {
 
     @Override
     public Identifier getTexture(Entity entity) {
-        return new Identifier("virtual_additions", "textures/entity/lumwasp/lumwasp.png");
+        return Identifier.of("virtual_additions", "textures/entity/lumwasp/lumwasp.png");
     }
 }

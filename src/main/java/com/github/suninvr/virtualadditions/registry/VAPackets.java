@@ -13,7 +13,7 @@ import static com.github.suninvr.virtualadditions.VirtualAdditions.idOf;
 public class VAPackets {
 
     public static Identifier WIND_UPDATE_VELOCITY = idOf("wind_update_velocity");
-    public static CustomPayload.Id<EntanglementDriveC2SPayload> ENTANGLEMENT_DRIVE_C2S_ID = CustomPayload.id(idOf("entanglement_drive_c2s").toString());
+    public static CustomPayload.Id<EntanglementDriveC2SPayload> ENTANGLEMENT_DRIVE_C2S_ID = new CustomPayload.Id<>(idOf("entanglement_drive_c2s"));
 
     static {
         PayloadTypeRegistry.playC2S().register(ENTANGLEMENT_DRIVE_C2S_ID, EntanglementDriveC2SPayload.CODEC);

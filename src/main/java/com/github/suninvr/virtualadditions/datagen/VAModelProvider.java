@@ -23,7 +23,7 @@ import static com.github.suninvr.virtualadditions.VirtualAdditions.idOf;
 
 @SuppressWarnings("SameParameterValue")
 class VAModelProvider extends FabricModelProvider {
-    private static final Identifier OAK_PLANKS_TEXTURE = new Identifier("block/oak_planks");
+    private static final Identifier OAK_PLANKS_TEXTURE = Identifier.of("block/oak_planks");
 
     public VAModelProvider(FabricDataOutput output) {
         super(output);

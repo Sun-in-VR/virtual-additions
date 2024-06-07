@@ -72,7 +72,7 @@ public class WarpTetherBlock extends BlockWithEntity implements Waterloggable {
 
     @Override
     public void onSteppedOn(World world, BlockPos pos, BlockState state, Entity entity) {
-        if(!world.isClient() && !state.get(COOLDOWN) && !entity.isSneaking() && entity.canUsePortals()) {
+        if(!world.isClient() && !state.get(COOLDOWN) && !entity.isSneaking()) {
             teleportEntity(world, state, pos, entity);
         }
     }
@@ -89,7 +89,7 @@ public class WarpTetherBlock extends BlockWithEntity implements Waterloggable {
             boolean bl = entity instanceof LivingEntity livingEntity && livingEntity.getStatusEffect(VAStatusEffects.IOLITE_INTERFERENCE) != null;
             if (!bl && destState.getBlock() == VABlocks.WARP_ANCHOR && !destState.get(WarpAnchorBlock.POWERED)) {
                 destY += destState.get(WarpAnchorBlock.FACING).equals(Direction.DOWN) ? (entity.getBoundingBox().getLengthY()) * -1 : 0;
-                entity.teleport(destX, destY, destZ);
+                entity.requestTeleport(destX, destY, destZ);
                 world.emitGameEvent(entity, GameEvent.TELEPORT, pos);
                 world.emitGameEvent(entity, GameEvent.TELEPORT, destPos);
                 if (!state.get(WATERLOGGED)) world.playSound(null, pos, VASoundEvents.BLOCK_WARP_TETHER_WARP, SoundCategory.BLOCKS, 1.0F, 1.0F);

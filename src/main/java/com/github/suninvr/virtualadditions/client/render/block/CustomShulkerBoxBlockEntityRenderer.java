@@ -43,7 +43,7 @@ public class CustomShulkerBoxBlockEntityRenderer implements BlockEntityRenderer<
         modelPart.setPivot(0.0f, 24.0f - entity.getAnimationProgress(tickDelta) * 0.5f * 16.0f, 0.0f);
         modelPart.yaw = 270.0f * entity.getAnimationProgress(tickDelta) * ((float)Math.PI / 180);
         VertexConsumer vertexConsumer = spriteIdentifier.getVertexConsumer(vertexConsumers, RenderLayer::getEntityCutoutNoCull);
-        this.model.render(matrices, vertexConsumer, light, overlay, 1.0f, 1.0f, 1.0f, 1.0f);
+        this.model.render(matrices, vertexConsumer, light, overlay);
         matrices.pop();
     }
 }

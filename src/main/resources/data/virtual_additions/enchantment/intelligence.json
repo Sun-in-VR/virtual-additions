@@ -1,0 +1,18 @@
+{
+  "description": "Intelligence",
+  "supported_items": "#virtual_additions:emerald_gilded_tools",
+  "weight": 2,
+  "max_level": 3,
+  "min_cost": {
+    "base": 12,
+    "per_level_above_first": 3
+  },
+  "max_cost": {
+    "base": 41,
+    "per_level_above_first": 8
+  },
+  "anvil_cost": 4,
+  "slots": [
+    "mainhand"
+  ]
+}

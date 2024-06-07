@@ -24,13 +24,13 @@ import java.util.List;
 import static com.github.suninvr.virtualadditions.VirtualAdditions.idOf;
 
 public class ColoringStationScreen extends HandledScreen<ColoringStationScreenHandler> {
-    private static final Identifier SCROLLER_TEXTURE = new Identifier("container/stonecutter/scroller");
-    private static final Identifier SCROLLER_DISABLED_TEXTURE = new Identifier("container/stonecutter/scroller_disabled");
-    private static final Identifier RECIPE_SELECTED_TEXTURE = new Identifier("container/stonecutter/recipe_selected");
-    private static final Identifier RECIPE_HIGHLIGHTED_TEXTURE = new Identifier("container/stonecutter/recipe_highlighted");
+    private static final Identifier SCROLLER_TEXTURE = Identifier.of("container/stonecutter/scroller");
+    private static final Identifier SCROLLER_DISABLED_TEXTURE = Identifier.of("container/stonecutter/scroller_disabled");
+    private static final Identifier RECIPE_SELECTED_TEXTURE = Identifier.of("container/stonecutter/recipe_selected");
+    private static final Identifier RECIPE_HIGHLIGHTED_TEXTURE = Identifier.of("container/stonecutter/recipe_highlighted");
     private static final Identifier RECIPE_UNCRAFTABLE_TEXTURE = idOf("container/coloring_station/recipe_uncraftable");
-    private static final Identifier RECIPE_TEXTURE = new Identifier("container/stonecutter/recipe");
-    private static final Identifier DYE_SLOT_TEXTURE = new Identifier("container/loom/dye_slot");
+    private static final Identifier RECIPE_TEXTURE = Identifier.of("container/stonecutter/recipe");
+    private static final Identifier DYE_SLOT_TEXTURE = Identifier.of("container/loom/dye_slot");
     private static final Identifier TEXTURE = idOf("textures/gui/container/coloring_station.png");
     private static final Text NOT_ENOUGH_DYE_WARNING = Text.translatable("container.virtual_additions.coloring_station.not_enough_dye_warning").formatted(Formatting.RED);
     private static final Text DYE_SLOT_HINT = Text.translatable("container.virtual_additions.coloring_station.dye_slot_hint");

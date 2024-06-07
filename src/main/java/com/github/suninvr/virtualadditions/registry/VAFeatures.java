@@ -9,7 +9,9 @@ import net.fabricmc.fabric.api.biome.v1.BiomeSelectors;
 import net.minecraft.registry.Registries;
 import net.minecraft.registry.Registry;
 import net.minecraft.registry.RegistryKey;
+import net.minecraft.registry.RegistryKeys;
 import net.minecraft.registry.tag.BiomeTags;
+import net.minecraft.util.Identifier;
 import net.minecraft.world.biome.BiomeKeys;
 import net.minecraft.world.gen.GenerationStep;
 import net.minecraft.world.gen.feature.*;
@@ -26,9 +28,9 @@ public class VAFeatures {
     public static Feature<DefaultFeatureConfig> BALLOON_BULB;
 
     static {
-        ORE_IOLITE = registerPlaced("ore_iolite");
-        ORE_FLOATROCK = registerPlaced("ore_floatrock");
-        AEROBLOOM_TREE = registerConfigured("aerobloom_tree");
+        ORE_IOLITE = registerPlaced(idOf("ore_iolite"));
+        ORE_FLOATROCK = registerPlaced(idOf("ore_floatrock"));
+        AEROBLOOM_TREE = registerConfigured(idOf("aerobloom_tree"));
     }
 
     public static void init(){
@@ -47,12 +49,12 @@ public class VAFeatures {
         LUMWASP_NEST = Registry.register(Registries.FEATURE, idOf("lumwasp_nest"), new LumwaspNestFeature(DefaultFeatureConfig.CODEC));
     }
 
-    private static RegistryKey<PlacedFeature> registerPlaced(String id) {
-        return PlacedFeatures.of(idOf(id).toString());
+    private static RegistryKey<PlacedFeature> registerPlaced(Identifier id) {
+        return RegistryKey.of(RegistryKeys.PLACED_FEATURE, id);
     }
 
-    private static RegistryKey<ConfiguredFeature<?, ?>> registerConfigured(String id) {
-        return ConfiguredFeatures.of(idOf(id).toString());
+    private static RegistryKey<ConfiguredFeature<?, ?>> registerConfigured(Identifier id) {
+        return RegistryKey.of(RegistryKeys.CONFIGURED_FEATURE, id);
     }
 
     public static class TrunkPlacerTypes {

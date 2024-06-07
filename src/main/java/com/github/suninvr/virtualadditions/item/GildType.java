@@ -34,7 +34,7 @@ public class GildType {
     private TagKey<Item> pickaxesTag;
     private TagKey<Item> shovelsTag;
     private TagKey<Item> swordsTag;
-    public record Modifier(ModifierType type, float value, BiFunction<Float, Float, Float> function, ModifierType.ToolType... appliesTo){
+    public record Modifier(Identifier id, ModifierType type, float value, BiFunction<Float, Float, Float> function, ModifierType.ToolType... appliesTo){
 
         public float apply(float f) {
             return this.function.apply(f, this.value);
@@ -166,7 +166,7 @@ public class GildType {
                         value[0] = gildModifier.apply((float) value[0]);
                     }
                 });
-                modifier = new EntityAttributeModifier(modifier.uuid(), modifier.name(), value[0], modifier.operation());
+                modifier = new EntityAttributeModifier(entry.modifier().id(), value[0], modifier.operation());
             }
             builder.add(entry.attribute(), modifier, entry.slot());
         });
@@ -180,7 +180,7 @@ public class GildType {
             if (!modifier.shouldBeAppended() || !modifier.shouldApplyToTool(baseItem)) return;
             RegistryEntry<EntityAttribute> attribute = modifier.type.getAttributeType();
             if (attribute != null) {
-                builder.add(attribute, new EntityAttributeModifier(modifier.type.getAttributeId(), "Tool Modifier", modifier.value, EntityAttributeModifier.Operation.ADD_VALUE), AttributeModifierSlot.MAINHAND);
+                builder.add(attribute, new EntityAttributeModifier(modifier.id, modifier.value, EntityAttributeModifier.Operation.ADD_VALUE), AttributeModifierSlot.MAINHAND);
             }
         } );
     }

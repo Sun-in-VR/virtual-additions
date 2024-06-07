@@ -320,15 +320,15 @@ public final class VAItemTagProvider {
     }
 
     private abstract static class Provider extends FabricTagProvider.ItemTagProvider {
-        protected static final TagKey<Item> INGOTS = TagKey.of(RegistryKeys.ITEM, new Identifier("c:ingots"));
-        protected static final TagKey<Item> STEEL_INGOTS = TagKey.of(RegistryKeys.ITEM, new Identifier("c:steel_ingots"));
-        protected static final TagKey<Item> RAW_ORES = TagKey.of(RegistryKeys.ITEM, new Identifier("c:raw_ores"));
-        protected static final TagKey<Item> GEMS = TagKey.of(RegistryKeys.ITEM, new Identifier("c:gems"));
-        protected static final TagKey<Item> FOODS = TagKey.of(RegistryKeys.ITEM, new Identifier("c:foods"));
-        protected static final TagKey<Item> IOLITE = TagKey.of(RegistryKeys.ITEM, new Identifier("c:iolite"));
-        protected static final TagKey<Item> IOLITE_ORES = TagKey.of(RegistryKeys.ITEM, new Identifier("c:iolite_ores"));
-        protected static final TagKey<Item> ORES = TagKey.of(RegistryKeys.ITEM, new Identifier("c:ores"));
-        protected static final TagKey<Item> POTIONS = TagKey.of(RegistryKeys.ITEM, new Identifier("c:potions"));
+        protected static final TagKey<Item> INGOTS = TagKey.of(RegistryKeys.ITEM, Identifier.of("c:ingots"));
+        protected static final TagKey<Item> STEEL_INGOTS = TagKey.of(RegistryKeys.ITEM, Identifier.of("c:steel_ingots"));
+        protected static final TagKey<Item> RAW_ORES = TagKey.of(RegistryKeys.ITEM, Identifier.of("c:raw_ores"));
+        protected static final TagKey<Item> GEMS = TagKey.of(RegistryKeys.ITEM, Identifier.of("c:gems"));
+        protected static final TagKey<Item> FOODS = TagKey.of(RegistryKeys.ITEM, Identifier.of("c:foods"));
+        protected static final TagKey<Item> IOLITE = TagKey.of(RegistryKeys.ITEM, Identifier.of("c:iolite"));
+        protected static final TagKey<Item> IOLITE_ORES = TagKey.of(RegistryKeys.ITEM, Identifier.of("c:iolite_ores"));
+        protected static final TagKey<Item> ORES = TagKey.of(RegistryKeys.ITEM, Identifier.of("c:ores"));
+        protected static final TagKey<Item> POTIONS = TagKey.of(RegistryKeys.ITEM, Identifier.of("c:potions"));
         protected static final TagKey<Item> CRYSTALS = TagKey.of(RegistryKeys.ITEM, idOf("crystals"));
 
         public Provider(FabricDataOutput output, CompletableFuture<RegistryWrapper.WrapperLookup> completableFuture) {

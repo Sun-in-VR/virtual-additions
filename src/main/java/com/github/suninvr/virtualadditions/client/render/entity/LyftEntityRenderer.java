@@ -13,6 +13,6 @@ public class LyftEntityRenderer extends MobEntityRenderer<LyftEntity, LyftEntity
 
     @Override
     public Identifier getTexture(LyftEntity entity) {
-        return new Identifier("virtual_additions", "textures/entity/lyft.png");
+        return Identifier.of("virtual_additions", "textures/entity/lyft.png");
     }
 }

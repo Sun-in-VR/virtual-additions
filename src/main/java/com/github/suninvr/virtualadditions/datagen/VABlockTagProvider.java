@@ -340,7 +340,7 @@ public final class VABlockTagProvider {
     private abstract static class Provider extends FabricTagProvider.BlockTagProvider {
         protected static final TagKey<Block> SILKBULBS = TagKey.of(RegistryKeys.BLOCK, idOf("silkbulbs"));
         protected static final TagKey<Block> HEDGES = TagKey.of(RegistryKeys.BLOCK, idOf("hedges"));
-        protected static final TagKey<Block> ORES = TagKey.of(RegistryKeys.BLOCK, new Identifier("c:ores"));
+        protected static final TagKey<Block> ORES = TagKey.of(RegistryKeys.BLOCK, Identifier.of("c:ores"));
 
         public Provider(FabricDataOutput output, CompletableFuture<RegistryWrapper.WrapperLookup> registriesFuture) {
             super(output, registriesFuture);

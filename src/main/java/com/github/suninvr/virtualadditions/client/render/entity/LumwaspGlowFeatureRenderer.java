@@ -13,14 +13,14 @@ import net.minecraft.util.Identifier;
 
 @SuppressWarnings("unchecked")
 public class LumwaspGlowFeatureRenderer<T extends LumwaspEntity, M extends EntityModel<T>> extends EyesFeatureRenderer<T, M> {
-    private static final RenderLayer SKIN = RenderLayer.getEyes(new Identifier("virtual_additions","textures/entity/lumwasp/lumwasp_glow.png"));
+    private static final RenderLayer SKIN = RenderLayer.getEyes(Identifier.of("virtual_additions","textures/entity/lumwasp/lumwasp_glow.png"));
     public LumwaspGlowFeatureRenderer(FeatureRendererContext featureRendererContext) {
         super(featureRendererContext);
     }
 
     public void render(MatrixStack matrices, VertexConsumerProvider vertexConsumers, int light, T entity, float limbAngle, float limbDistance, float tickDelta, float animationProgress, float headYaw, float headPitch) {
         VertexConsumer vertexConsumer = vertexConsumers.getBuffer(this.getEyesTexture());
-        this.getContextModel().render(matrices, vertexConsumer, 15728640, OverlayTexture.DEFAULT_UV, 0.33F, 0.33F, 0.33F, 1.0F);
+        this.getContextModel().render(matrices, vertexConsumer, 15728640, OverlayTexture.DEFAULT_UV);
     }
 
     @Override
