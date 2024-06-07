@@ -111,6 +111,7 @@ public class VARenderers {
                 VABlocks.AEROBLOOM_DOOR,
                 VABlocks.AEROBLOOM_TRAPDOOR,
                 VABlocks.AEROBLOOM_SAPLING,
+                VABlocks.POTTED_AEROBLOOM_SAPLING,
                 VABlocks.BALLOON_BULB,
                 VABlocks.BALLOON_BULB_PLANT,
                 VABlocks.BALLOON_BULB_BUD,
@@ -121,6 +122,7 @@ public class VARenderers {
                 VABlocks.FRAYED_SILK,
                 VABlocks.TALL_GREENCAP_MUSHROOMS,
                 VABlocks.GREENCAP_MUSHROOM,
+                VABlocks.POTTED_GREENCAP_MUSHROOM,
                 VABlocks.STEEL_GRATE
         );
 

@@ -51,6 +51,9 @@ class VAModelProvider extends FabricModelProvider {
 
         registerSpotlight(blockStateModelGenerator);
 
+        blockStateModelGenerator.registerFlowerPotPlant(VABlocks.AEROBLOOM_SAPLING, VABlocks.POTTED_AEROBLOOM_SAPLING, BlockStateModelGenerator.TintType.NOT_TINTED);
+        blockStateModelGenerator.registerFlowerPotPlant(VABlocks.GREENCAP_MUSHROOM, VABlocks.POTTED_GREENCAP_MUSHROOM, BlockStateModelGenerator.TintType.NOT_TINTED);
+
         blockStateModelGenerator.registerSimpleCubeAll(VABlocks.STEEL_GRATE);
         blockStateModelGenerator.registerSimpleCubeAll(VABlocks.CHISELED_STEEL);
     }

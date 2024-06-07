@@ -54,6 +54,7 @@ public final class VABlockTagProvider {
             getOrCreateTagBuilder(BlockTags.SCULK_REPLACEABLE).add(VABlocks.SILK_BLOCK, VABlocks.WEBBED_SILK, VABlocks.ROCK_SALT_BLOCK);
             getOrCreateTagBuilder(BlockTags.TRAPDOORS).add(VABlocks.STEEL_TRAPDOOR);
             getOrCreateTagBuilder(BlockTags.REPLACEABLE).add(VABlocks.SPOTLIGHT_LIGHT);
+            getOrCreateTagBuilder(BlockTags.FLOWER_POTS).add(VABlocks.POTTED_AEROBLOOM_SAPLING, VABlocks.POTTED_GREENCAP_MUSHROOM);
 
             configureColorfulBlockSet(VACollections.CHARTREUSE);
             configureColorfulBlockSet(VACollections.MAROON);

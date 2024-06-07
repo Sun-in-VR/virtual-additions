@@ -139,6 +139,7 @@ public class VABlocks {
     public static final Block AEROBLOOM_WALL_HANGING_SIGN;
     public static final Block AEROBLOOM_LEAVES;
     public static final Block AEROBLOOM_SAPLING;
+    public static final Block POTTED_AEROBLOOM_SAPLING;
     public static final Block BALLOON_BULB;
     public static final Block BALLOON_BULB_PLANT;
     public static final Block BALLOON_BULB_BUD;
@@ -159,6 +160,7 @@ public class VABlocks {
     public static final Block SILK_BLOCK;
     public static final Block GREENCAP_MUSHROOM;
     public static final Block TALL_GREENCAP_MUSHROOMS;
+    public static final Block POTTED_GREENCAP_MUSHROOM;
     public static final Block WEBBED_SILK;
     public static final Block SILKBULB;
     public static final Block WHITE_SILKBULB;
@@ -444,6 +446,7 @@ public class VABlocks {
         AEROBLOOM_WALL_HANGING_SIGN = register("aerobloom_wall_hanging_sign", new CustomSignBlocks.CustomWallHangingSignBlock(Settings.copy(Blocks.CHERRY_WALL_HANGING_SIGN).dropsLike(AEROBLOOM_HANGING_SIGN), AEROBLOOM_WOODTYPE));
         AEROBLOOM_LEAVES = register("aerobloom_leaves", new LeavesBlock(Settings.copy(Blocks.CHERRY_LEAVES)));
         AEROBLOOM_SAPLING = register("aerobloom_sapling", new SaplingBlock(CustomSaplingGenerator.AEROBLOOM, Settings.copy(Blocks.CHERRY_SAPLING)));
+        POTTED_AEROBLOOM_SAPLING = register("potted_aerobloom", Blocks.createFlowerPotBlock(AEROBLOOM_SAPLING));
 
         OAK_HEDGE = register("oak_hedge", new HedgeBlock(Settings.copy(Blocks.OAK_LEAVES)));
         SPRUCE_HEDGE = register("spruce_hedge", new HedgeBlock(Settings.copy(Blocks.SPRUCE_LEAVES)));
@@ -463,6 +466,7 @@ public class VABlocks {
         SILK_BLOCK = register("silk_block", new SilkBlock(Settings.copy(Blocks.HONEYCOMB_BLOCK).sounds(BlockSoundGroup.WART_BLOCK).mapColor(MapColor.DARK_AQUA).burnable()));
         GREENCAP_MUSHROOM = register("greencap_mushroom", new GreencapMushroomBlock(Settings.create().mapColor(MapColor.DARK_GREEN).noCollision().breakInstantly().sounds(BlockSoundGroup.NETHER_SPROUTS).offset(AbstractBlock.OffsetType.XZ).luminance((state) -> 2).pistonBehavior(PistonBehavior.DESTROY)));
         TALL_GREENCAP_MUSHROOMS = register("tall_greencap_mushrooms", new TallGreencapMushroomBlock(Settings.create().mapColor(MapColor.DARK_GREEN).noCollision().breakInstantly().sounds(BlockSoundGroup.NETHER_SPROUTS).offset(AbstractBlock.OffsetType.XZ).luminance((state) -> 5).pistonBehavior(PistonBehavior.DESTROY)));
+        POTTED_GREENCAP_MUSHROOM = register("potted_greencap_mushroom", Blocks.createFlowerPotBlock(GREENCAP_MUSHROOM));
         WEBBED_SILK = register("webbed_silk", new SilkFluffBlock(Settings.create().strength(0.25F).sounds(BlockSoundGroup.POWDER_SNOW).mapColor(MapColor.DARK_AQUA).nonOpaque().solidBlock((state, world, pos) -> false).suffocates(((state, world, pos) -> false)).blockVision((state, world, pos) -> false).burnable().allowsSpawning((state, world, pos, type) -> type == VAEntityType.LUMWASP)));
         SILKBULB = register("silkbulb", new Block(Settings.copy(Blocks.SHROOMLIGHT).mapColor(MapColor.DARK_AQUA).luminance( (state) -> 15 ).burnable()));
         WHITE_SILKBULB = register("white_silkbulb", new Block(Settings.copy(SILKBULB).mapColor(MapColor.WHITE)));
