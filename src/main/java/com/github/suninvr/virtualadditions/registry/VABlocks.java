@@ -4,8 +4,10 @@ import com.github.suninvr.virtualadditions.VirtualAdditions;
 import com.github.suninvr.virtualadditions.block.*;
 import net.fabricmc.fabric.api.object.builder.v1.block.type.BlockSetTypeBuilder;
 import net.fabricmc.fabric.api.object.builder.v1.block.type.WoodTypeBuilder;
+import net.fabricmc.fabric.api.registry.FlattenableBlockRegistry;
 import net.fabricmc.fabric.api.registry.LandPathNodeTypesRegistry;
 import net.fabricmc.fabric.api.registry.StrippableBlockRegistry;
+import net.fabricmc.fabric.api.registry.TillableBlockRegistry;
 import net.minecraft.block.*;
 import net.minecraft.block.AbstractBlock.Settings;
 import net.minecraft.block.enums.NoteBlockInstrument;
@@ -699,6 +701,9 @@ public class VABlocks {
         fire.registerFlammableBlock(LILAC_SILKBULB, 5, 20);
         StrippableBlockRegistry.register(AEROBLOOM_LOG, STRIPPED_AEROBLOOM_LOG);
         StrippableBlockRegistry.register(AEROBLOOM_WOOD, STRIPPED_AEROBLOOM_WOOD);
+        FlattenableBlockRegistry.register(Blocks.DIRT_PATH, Blocks.DIRT.getDefaultState());
+        FlattenableBlockRegistry.register(Blocks.FARMLAND, Blocks.DIRT_PATH.getDefaultState());
+        TillableBlockRegistry.register(Blocks.FARMLAND, context -> true, Blocks.DIRT.getDefaultState());
 
     }
 
