@@ -359,7 +359,7 @@ public class VAItems {
     public static final FoodComponent ROASTED_CORN_FOOD = (new FoodComponent.Builder()).nutrition(5).saturationModifier(0.6F).build();
     public static final FoodComponent ICE_CREAM_FOOD = new FoodComponent.Builder().nutrition(7).saturationModifier(0.1F).usingConvertsTo(Items.BOWL).build();
     public static final FoodComponent BALLOON_FRUIT_FOOD = (new FoodComponent.Builder().nutrition(2).saturationModifier(0.1F).alwaysEdible().statusEffect(new StatusEffectInstance(StatusEffects.LEVITATION, 100, 1), 1.0F).build());
-    public static final FoodComponent SWEET_BERRY_PIE_FOOD = (new FoodComponent.Builder().nutrition(8).saturationModifier(0.1F).build());
+    public static final FoodComponent SWEET_BERRY_PIE_FOOD = (new FoodComponent.Builder().nutrition(8).saturationModifier(0.3F).build());
 
     public static final ToolSet AMETHYST_DIAMOND_TOOL_SET;
     public static final ToolSet COPPER_DIAMOND_TOOL_SET;

@@ -119,20 +119,6 @@ public class CrystalBlock extends Block implements Waterloggable {
     }
 
     @Override
-    public boolean hasRandomTicks(BlockState state) {
-        return state.get(SHAPE).equals(CrystalShape.TIP);
-    }
-
-
-    @Override
-    public void randomTick(BlockState state, ServerWorld world, BlockPos pos, net.minecraft.util.math.random.Random random) {
-        if (world.getLightLevel(LightType.BLOCK, pos) >= 14) {
-            BlockPos nextPos = new BlockPos(pos.offset(state.get(POINTING)));
-            if (random.nextInt(6) == 1 && (world.isAir(nextPos) || world.getBlockState(nextPos).isOf(Blocks.WATER)) ) world.setBlockState(nextPos, state.with(Properties.WATERLOGGED, world.getFluidState(nextPos).getFluid().equals(Fluids.WATER)));
-        }
-    }
-
-    @Override
     public FluidState getFluidState(BlockState state) {
         return state.get(WATERLOGGED) ? Fluids.WATER.getStill(false) : Fluids.EMPTY.getDefaultState();
     }
