@@ -199,6 +199,7 @@ public class VAItems {
     public static final Item ROASTED_CORN;
     public static final Item FRIED_EGG;
     public static final Item ICE_CREAM;
+    public static final Item SWEET_BERRY_PIE;
     public static final Item GLOWING_SILK;
     public static final Item FRAYED_SILK;
     public static final Item TALL_GREENCAP_MUSHROOMS;
@@ -358,6 +359,7 @@ public class VAItems {
     public static final FoodComponent ROASTED_CORN_FOOD = (new FoodComponent.Builder()).nutrition(5).saturationModifier(0.6F).build();
     public static final FoodComponent ICE_CREAM_FOOD = new FoodComponent.Builder().nutrition(7).saturationModifier(0.1F).usingConvertsTo(Items.BOWL).build();
     public static final FoodComponent BALLOON_FRUIT_FOOD = (new FoodComponent.Builder().nutrition(2).saturationModifier(0.1F).alwaysEdible().statusEffect(new StatusEffectInstance(StatusEffects.LEVITATION, 100, 1), 1.0F).build());
+    public static final FoodComponent SWEET_BERRY_PIE_FOOD = (new FoodComponent.Builder().nutrition(8).saturationModifier(0.1F).build());
 
     public static final ToolSet AMETHYST_DIAMOND_TOOL_SET;
     public static final ToolSet COPPER_DIAMOND_TOOL_SET;
@@ -585,6 +587,7 @@ public class VAItems {
         CORN_SEEDS = register("corn_seeds", new AliasedBlockItem(VABlocks.CORN_CROP, new Item.Settings()), ItemGroups.NATURAL, COTTON_SEEDS);
         FRIED_EGG = register("fried_egg", new Item(new Item.Settings().food(FRIED_EGG_FOOD)), ItemGroups.FOOD_AND_DRINK, Items.COOKED_CHICKEN);
         ICE_CREAM = register("ice_cream", new Item(new Item.Settings().food(ICE_CREAM_FOOD).maxCount(1)), ItemGroups.FOOD_AND_DRINK, Items.COOKIE);
+        SWEET_BERRY_PIE = register("sweet_berry_pie", new Item(new Item.Settings().food(SWEET_BERRY_PIE_FOOD)), ItemGroups.FOOD_AND_DRINK, Items.PUMPKIN_PIE);
 
         SILK_BLOCK = registerBlockItem("silk_block", VABlocks.SILK_BLOCK, ItemGroups.NATURAL, Items.SHROOMLIGHT);
         LUMWASP_NEST = registerBlockItem("lumwasp_nest", VABlocks.LUMWASP_NEST, ItemGroups.NATURAL, prev);

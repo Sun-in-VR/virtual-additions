@@ -89,6 +89,7 @@ class VAModelProvider extends FabricModelProvider {
         itemModelGenerator.register(VAItems.LILAC_DYE, Models.GENERATED);
 
         itemModelGenerator.register(VAItems.CORN_SEEDS, Models.GENERATED);
+        itemModelGenerator.register(VAItems.SWEET_BERRY_PIE, Models.GENERATED);
 
         itemModelGenerator.register(VAItems.EXPOSED_CLIMBING_ROPE, Models.GENERATED);
         itemModelGenerator.register(VAItems.WEATHERED_CLIMBING_ROPE, Models.GENERATED);

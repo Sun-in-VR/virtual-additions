@@ -71,7 +71,7 @@ public final class VAItemTagProvider {
             getOrCreateTagBuilder(IOLITE_ORES).add(VAItems.IOLITE_ORE);
             getOrCreateTagBuilder(GEMS).addOptionalTag(IOLITE);
             getOrCreateTagBuilder(ORES).addOptionalTag(IOLITE_ORES);
-            getOrCreateTagBuilder(FOODS).add(VAItems.FRIED_EGG, VAItems.CORN, VAItems.ROASTED_CORN, VAItems.ICE_CREAM);
+            getOrCreateTagBuilder(FOODS).add(VAItems.FRIED_EGG, VAItems.CORN, VAItems.ROASTED_CORN, VAItems.ICE_CREAM, VAItems.SWEET_BERRY_PIE);
             getOrCreateTagBuilder(POTIONS).add(VAItems.APPLICABLE_POTION);
 
             configureColorfulBlockSet(

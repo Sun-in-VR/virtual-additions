@@ -294,6 +294,10 @@ public final class VARecipeProvider {
                     .input(Ingredient.ofItems(Items.BLUE_DYE), 1)
                     .criterion("has_dye", conditionsFromItem(Items.WHITE_DYE)).offerTo(exporter, idOf("lilac_from_white_red_blue_dye"));
 
+            ShapelessRecipeJsonBuilder.create(RecipeCategory.FOOD, VAItems.SWEET_BERRY_PIE, 1)
+                    .input(Items.SWEET_BERRIES, 3)
+                    .input(Items.SUGAR)
+                    .input(Items.EGG).criterion("has_sweet_berries", conditionsFromItem(Items.SWEET_BERRIES)).offerTo(exporter);
 
 
 
