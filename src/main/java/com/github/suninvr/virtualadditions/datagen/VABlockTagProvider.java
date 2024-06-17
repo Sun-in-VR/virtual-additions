@@ -134,6 +134,34 @@ public final class VABlockTagProvider {
                     VACollections.WAXED_WEATHERED_CUT_STEEL,
                     VACollections.WAXED_OXIDIZED_CUT_STEEL
             );
+            
+            configureFamily(VACollections.CUT_STEEL, VABlockTags.USES_STEEL_SCRAPE_PARTICLES);
+            configureFamily(VACollections.EXPOSED_CUT_STEEL, VABlockTags.USES_STEEL_SCRAPE_PARTICLES);
+            configureFamily(VACollections.WEATHERED_CUT_STEEL, VABlockTags.USES_STEEL_SCRAPE_PARTICLES);
+            configureFamily(VACollections.OXIDIZED_CUT_STEEL, VABlockTags.USES_STEEL_SCRAPE_PARTICLES);
+            configureFamily(VACollections.WAXED_CUT_STEEL, VABlockTags.USES_STEEL_SCRAPE_PARTICLES);
+            configureFamily(VACollections.WAXED_EXPOSED_CUT_STEEL, VABlockTags.USES_STEEL_SCRAPE_PARTICLES);
+            configureFamily(VACollections.WAXED_WEATHERED_CUT_STEEL, VABlockTags.USES_STEEL_SCRAPE_PARTICLES);
+            configureFamily(VACollections.WAXED_OXIDIZED_CUT_STEEL, VABlockTags.USES_STEEL_SCRAPE_PARTICLES);
+            getOrCreateTagBuilder(VABlockTags.USES_STEEL_SCRAPE_PARTICLES).add(
+                    VABlocks.STEEL_BLOCK,
+                    VABlocks.EXPOSED_STEEL_BLOCK,
+                    VABlocks.WEATHERED_STEEL_BLOCK,
+                    VABlocks.OXIDIZED_STEEL_BLOCK,
+                    VABlocks.WAXED_STEEL_BLOCK,
+                    VABlocks.WAXED_EXPOSED_STEEL_BLOCK,
+                    VABlocks.WAXED_WEATHERED_STEEL_BLOCK,
+                    VABlocks.WAXED_OXIDIZED_STEEL_BLOCK,
+                    VABlocks.STEEL_GRATE,
+                    VABlocks.EXPOSED_STEEL_GRATE,
+                    VABlocks.WEATHERED_STEEL_GRATE,
+                    VABlocks.OXIDIZED_STEEL_GRATE,
+                    VABlocks.WAXED_STEEL_GRATE,
+                    VABlocks.WAXED_EXPOSED_STEEL_GRATE,
+                    VABlocks.WAXED_WEATHERED_STEEL_GRATE,
+                    VABlocks.WAXED_OXIDIZED_STEEL_GRATE
+            );
+            
             configureFamily(BlockTags.PICKAXE_MINEABLE, 0,
                     VACollections.COBBLED_HORNFELS,
                     VACollections.COBBLED_BLUESCHIST,
@@ -418,6 +446,16 @@ public final class VABlockTagProvider {
                     case PRESSURE_PLATE -> getOrCreateTagBuilder(BlockTags.PRESSURE_PLATES).add(block);
                 }
             });
+        }
+        
+        protected void configureFamily(BlockFamily family, TagKey<Block>... blockTags) {
+            for (TagKey<Block> tag : blockTags) {
+                FabricTagBuilder builder = getOrCreateTagBuilder(tag);
+                builder.add(family.getBaseBlock());
+                family.getVariants().forEach((variant, block) -> {
+                    builder.add(block);
+                });
+            }
         }
 
         protected void configureWoodenFamily(BlockFamily family) {
