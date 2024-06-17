@@ -122,8 +122,7 @@ public class VARenderers {
                 VABlocks.FRAYED_SILK,
                 VABlocks.TALL_GREENCAP_MUSHROOMS,
                 VABlocks.GREENCAP_MUSHROOM,
-                VABlocks.POTTED_GREENCAP_MUSHROOM,
-                VABlocks.STEEL_GRATE
+                VABlocks.POTTED_GREENCAP_MUSHROOM
         );
 
         BlockRenderLayerMap.INSTANCE.putBlocks(RenderLayer.getCutoutMipped(),
@@ -142,7 +141,15 @@ public class VARenderers {
                 VABlocks.FLOWERING_AZALEA_HEDGE,
                 VABlocks.STEEL_DOOR,
                 VABlocks.STEEL_TRAPDOOR,
-                VABlocks.REDSTONE_BRIDGE
+                VABlocks.REDSTONE_BRIDGE,
+                VABlocks.STEEL_GRATE,
+                VABlocks.EXPOSED_STEEL_GRATE,
+                VABlocks.WEATHERED_STEEL_GRATE,
+                VABlocks.OXIDIZED_STEEL_GRATE,
+                VABlocks.WAXED_STEEL_GRATE,
+                VABlocks.WAXED_EXPOSED_STEEL_GRATE,
+                VABlocks.WAXED_WEATHERED_STEEL_GRATE,
+                VABlocks.WAXED_OXIDIZED_STEEL_GRATE
         );
     }
 

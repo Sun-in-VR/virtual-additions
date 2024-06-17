@@ -42,7 +42,7 @@ public final class VABlockTagProvider {
 
             getOrCreateTagBuilder(BlockTags.SWORD_EFFICIENT).addOptionalTag(HEDGES);
             getOrCreateTagBuilder(BlockTags.FLOWERS).add(VABlocks.CHERRY_HEDGE, VABlocks.FLOWERING_AZALEA_HEDGE);
-            getOrCreateTagBuilder(BlockTags.BEACON_BASE_BLOCKS).add(VABlocks.STEEL_BLOCK, VABlocks.IOLITE_BLOCK);
+            getOrCreateTagBuilder(BlockTags.BEACON_BASE_BLOCKS).add(VABlocks.STEEL_BLOCK, VABlocks.EXPOSED_STEEL_BLOCK, VABlocks.WEATHERED_STEEL_BLOCK, VABlocks.OXIDIZED_STEEL_BLOCK, VABlocks.WAXED_STEEL_BLOCK, VABlocks.WAXED_EXPOSED_STEEL_BLOCK, VABlocks.WAXED_WEATHERED_STEEL_BLOCK, VABlocks.WAXED_OXIDIZED_STEEL_BLOCK, VABlocks.IOLITE_BLOCK);
             getOrCreateTagBuilder(BlockTags.CLIMBABLE).add(VABlocks.CLIMBING_ROPE, VABlocks.CLIMBING_ROPE_ANCHOR, VABlocks.EXPOSED_CLIMBING_ROPE_ANCHOR, VABlocks.WEATHERED_CLIMBING_ROPE_ANCHOR, VABlocks.OXIDIZED_CLIMBING_ROPE_ANCHOR, VABlocks.WAXED_CLIMBING_ROPE_ANCHOR, VABlocks.WAXED_EXPOSED_CLIMBING_ROPE_ANCHOR, VABlocks.WAXED_WEATHERED_CLIMBING_ROPE_ANCHOR);
             getOrCreateTagBuilder(BlockTags.COMBINATION_STEP_SOUND_BLOCKS).add(VABlocks.WEBBED_SILK);
             getOrCreateTagBuilder(BlockTags.CROPS).add(VABlocks.CORN_CROP, VABlocks.COTTON);
@@ -89,6 +89,13 @@ public final class VABlockTagProvider {
 
             configureMinable(BlockTags.PICKAXE_MINEABLE, 1,
                     VABlocks.STEEL_BLOCK,
+                    VABlocks.EXPOSED_STEEL_BLOCK,
+                    VABlocks.WEATHERED_STEEL_BLOCK,
+                    VABlocks.OXIDIZED_STEEL_BLOCK,
+                    VABlocks.WAXED_STEEL_BLOCK,
+                    VABlocks.WAXED_EXPOSED_STEEL_BLOCK,
+                    VABlocks.WAXED_WEATHERED_STEEL_BLOCK,
+                    VABlocks.WAXED_OXIDIZED_STEEL_BLOCK,
                     VABlocks.RAW_STEEL_BLOCK,
                     VABlocks.STEEL_TRAPDOOR,
                     VABlocks.STEEL_DOOR,
@@ -97,7 +104,14 @@ public final class VABlockTagProvider {
                     VABlocks.ENTANGLEMENT_DRIVE,
                     VABlocks.REDSTONE_BRIDGE,
                     VABlocks.CAGELIGHT,
-                    VABlocks.STEEL_GRATE
+                    VABlocks.STEEL_GRATE,
+                    VABlocks.EXPOSED_STEEL_GRATE,
+                    VABlocks.WEATHERED_STEEL_GRATE,
+                    VABlocks.OXIDIZED_STEEL_GRATE,
+                    VABlocks.WAXED_STEEL_GRATE,
+                    VABlocks.WAXED_EXPOSED_STEEL_GRATE,
+                    VABlocks.WAXED_WEATHERED_STEEL_GRATE,
+                    VABlocks.WAXED_OXIDIZED_STEEL_GRATE
             );
 
             configureMinable(BlockTags.PICKAXE_MINEABLE, 3,
@@ -110,9 +124,17 @@ public final class VABlockTagProvider {
                     );
 
             configureOverworldStone(VABlocks.HORNFELS, VABlocks.BLUESCHIST, VABlocks.SYENITE);
-            configureFamily(BlockTags.PICKAXE_MINEABLE, 1, VACollections.CUT_STEEL);
-            configureFamily(BlockTags.PICKAXE_MINEABLE, 0,
+            configureFamily(BlockTags.PICKAXE_MINEABLE, 1,
                     VACollections.CUT_STEEL,
+                    VACollections.EXPOSED_CUT_STEEL,
+                    VACollections.WEATHERED_CUT_STEEL,
+                    VACollections.OXIDIZED_CUT_STEEL,
+                    VACollections.WAXED_CUT_STEEL,
+                    VACollections.WAXED_EXPOSED_CUT_STEEL,
+                    VACollections.WAXED_WEATHERED_CUT_STEEL,
+                    VACollections.WAXED_OXIDIZED_CUT_STEEL
+            );
+            configureFamily(BlockTags.PICKAXE_MINEABLE, 0,
                     VACollections.COBBLED_HORNFELS,
                     VACollections.COBBLED_BLUESCHIST,
                     VACollections.COBBLED_SYENITE,
@@ -388,8 +410,8 @@ public final class VABlockTagProvider {
                     case STAIRS -> getOrCreateTagBuilder(BlockTags.STAIRS).add(block);
                     case SLAB -> getOrCreateTagBuilder(BlockTags.SLABS).add(block);
                     case WALL -> getOrCreateTagBuilder(BlockTags.WALLS).add(block);
-                    case FENCE -> getOrCreateTagBuilder(BlockTags.FENCES).add(block);
-                    case FENCE_GATE -> getOrCreateTagBuilder(BlockTags.FENCE_GATES).add(block);
+                    case FENCE, CUSTOM_FENCE -> getOrCreateTagBuilder(BlockTags.FENCES).add(block);
+                    case FENCE_GATE, CUSTOM_FENCE_GATE -> getOrCreateTagBuilder(BlockTags.FENCE_GATES).add(block);
                     case DOOR -> getOrCreateTagBuilder(BlockTags.DOORS).add(block);
                     case TRAPDOOR -> getOrCreateTagBuilder(BlockTags.TRAPDOORS).add(block);
                     case BUTTON -> getOrCreateTagBuilder(BlockTags.BUTTONS).add(block);
