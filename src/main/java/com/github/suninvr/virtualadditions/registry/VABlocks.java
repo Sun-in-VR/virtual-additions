@@ -491,8 +491,8 @@ public class VABlocks {
         CHARTREUSE_TERRACOTTA = register("chartreuse_terracotta", new Block(Settings.copy(Blocks.WHITE_TERRACOTTA).mapColor(MapColor.LIME)));
         CHARTREUSE_CONCRETE = register("chartreuse_concrete", new Block(Settings.copy(Blocks.WHITE_CONCRETE).mapColor(MapColor.LIME)));
         CHARTREUSE_CONCRETE_POWDER = register("chartreuse_concrete_powder", new ConcretePowderBlock(CHARTREUSE_CONCRETE, Settings.copy(Blocks.WHITE_CONCRETE_POWDER).mapColor(MapColor.LIME)));
-        CHARTREUSE_STAINED_GLASS = register("chartreuse_stained_glass", new StainedGlassBlock(DyeColor.LIME, Settings.copy(Blocks.GLASS).mapColor(MapColor.LIME)));
-        CHARTREUSE_STAINED_GLASS_PANE = register("chartreuse_stained_glass_pane", new StainedGlassPaneBlock(DyeColor.LIME, Settings.copy(Blocks.GLASS_PANE).mapColor(MapColor.LIME)));
+        CHARTREUSE_STAINED_GLASS = register("chartreuse_stained_glass", new StainedGlassBlock(VADyeColors.CHARTREUSE, Settings.copy(Blocks.GLASS).mapColor(MapColor.LIME)));
+        CHARTREUSE_STAINED_GLASS_PANE = register("chartreuse_stained_glass_pane", new StainedGlassPaneBlock(VADyeColors.CHARTREUSE, Settings.copy(Blocks.GLASS_PANE).mapColor(MapColor.LIME)));
         CHARTREUSE_SILKBULB = register("chartreuse_silkbulb", new Block(Settings.copy(SILKBULB).mapColor(MapColor.LIME)));
         CHARTREUSE_CANDLE = register("chartreuse_candle", new CandleBlock(Settings.copy(Blocks.CANDLE).mapColor(MapColor.LIME)));
         CHARTREUSE_CANDLE_CAKE = register("chartreuse_candle_cake", new CandleCakeBlock(CHARTREUSE_CANDLE, Settings.copy(Blocks.CANDLE_CAKE).mapColor(MapColor.LIME)));
@@ -507,8 +507,8 @@ public class VABlocks {
         MAROON_TERRACOTTA = register("maroon_terracotta", new Block(Settings.copy(Blocks.WHITE_TERRACOTTA).mapColor(MapColor.LIME)));
         MAROON_CONCRETE = register("maroon_concrete", new Block(Settings.copy(Blocks.WHITE_CONCRETE).mapColor(MapColor.LIME)));
         MAROON_CONCRETE_POWDER = register("maroon_concrete_powder", new ConcretePowderBlock(MAROON_CONCRETE, Settings.copy(Blocks.WHITE_CONCRETE_POWDER).mapColor(MapColor.LIME)));
-        MAROON_STAINED_GLASS = register("maroon_stained_glass", new StainedGlassBlock(DyeColor.LIME, Settings.copy(Blocks.GLASS).mapColor(MapColor.LIME)));
-        MAROON_STAINED_GLASS_PANE = register("maroon_stained_glass_pane", new StainedGlassPaneBlock(DyeColor.LIME, Settings.copy(Blocks.GLASS_PANE).mapColor(MapColor.LIME)));
+        MAROON_STAINED_GLASS = register("maroon_stained_glass", new StainedGlassBlock(VADyeColors.MAROON, Settings.copy(Blocks.GLASS).mapColor(MapColor.LIME)));
+        MAROON_STAINED_GLASS_PANE = register("maroon_stained_glass_pane", new StainedGlassPaneBlock(VADyeColors.MAROON, Settings.copy(Blocks.GLASS_PANE).mapColor(MapColor.LIME)));
         MAROON_SILKBULB = register("maroon_silkbulb", new Block(Settings.copy(SILKBULB).mapColor(MapColor.LIME)));
         MAROON_CANDLE = register("maroon_candle", new CandleBlock(Settings.copy(Blocks.CANDLE).mapColor(MapColor.LIME)));
         MAROON_CANDLE_CAKE = register("maroon_candle_cake", new CandleCakeBlock(MAROON_CANDLE, Settings.copy(Blocks.CANDLE_CAKE).mapColor(MapColor.LIME)));
@@ -523,8 +523,8 @@ public class VABlocks {
         INDIGO_TERRACOTTA = register("indigo_terracotta", new Block(Settings.copy(Blocks.WHITE_TERRACOTTA).mapColor(MapColor.LIME)));
         INDIGO_CONCRETE = register("indigo_concrete", new Block(Settings.copy(Blocks.WHITE_CONCRETE).mapColor(MapColor.LIME)));
         INDIGO_CONCRETE_POWDER = register("indigo_concrete_powder", new ConcretePowderBlock(INDIGO_CONCRETE, Settings.copy(Blocks.WHITE_CONCRETE_POWDER).mapColor(MapColor.LIME)));
-        INDIGO_STAINED_GLASS = register("indigo_stained_glass", new StainedGlassBlock(DyeColor.LIME, Settings.copy(Blocks.GLASS).mapColor(MapColor.LIME)));
-        INDIGO_STAINED_GLASS_PANE = register("indigo_stained_glass_pane", new StainedGlassPaneBlock(DyeColor.LIME, Settings.copy(Blocks.GLASS_PANE).mapColor(MapColor.LIME)));
+        INDIGO_STAINED_GLASS = register("indigo_stained_glass", new StainedGlassBlock(VADyeColors.INDIGO, Settings.copy(Blocks.GLASS).mapColor(MapColor.LIME)));
+        INDIGO_STAINED_GLASS_PANE = register("indigo_stained_glass_pane", new StainedGlassPaneBlock(VADyeColors.INDIGO, Settings.copy(Blocks.GLASS_PANE).mapColor(MapColor.LIME)));
         INDIGO_SILKBULB = register("indigo_silkbulb", new Block(Settings.copy(SILKBULB).mapColor(MapColor.LIME)));
         INDIGO_CANDLE = register("indigo_candle", new CandleBlock(Settings.copy(Blocks.CANDLE).mapColor(MapColor.LIME)));
         INDIGO_CANDLE_CAKE = register("indigo_candle_cake", new CandleCakeBlock(INDIGO_CANDLE, Settings.copy(Blocks.CANDLE_CAKE).mapColor(MapColor.LIME)));
@@ -539,8 +539,8 @@ public class VABlocks {
         PLUM_TERRACOTTA = register("plum_terracotta", new Block(Settings.copy(Blocks.WHITE_TERRACOTTA).mapColor(MapColor.LIME)));
         PLUM_CONCRETE = register("plum_concrete", new Block(Settings.copy(Blocks.WHITE_CONCRETE).mapColor(MapColor.LIME)));
         PLUM_CONCRETE_POWDER = register("plum_concrete_powder", new ConcretePowderBlock(PLUM_CONCRETE, Settings.copy(Blocks.WHITE_CONCRETE_POWDER).mapColor(MapColor.LIME)));
-        PLUM_STAINED_GLASS = register("plum_stained_glass", new StainedGlassBlock(DyeColor.LIME, Settings.copy(Blocks.GLASS).mapColor(MapColor.LIME)));
-        PLUM_STAINED_GLASS_PANE = register("plum_stained_glass_pane", new StainedGlassPaneBlock(DyeColor.LIME, Settings.copy(Blocks.GLASS_PANE).mapColor(MapColor.LIME)));
+        PLUM_STAINED_GLASS = register("plum_stained_glass", new StainedGlassBlock(VADyeColors.PLUM, Settings.copy(Blocks.GLASS).mapColor(MapColor.LIME)));
+        PLUM_STAINED_GLASS_PANE = register("plum_stained_glass_pane", new StainedGlassPaneBlock(VADyeColors.PLUM, Settings.copy(Blocks.GLASS_PANE).mapColor(MapColor.LIME)));
         PLUM_SILKBULB = register("plum_silkbulb", new Block(Settings.copy(SILKBULB).mapColor(MapColor.LIME)));
         PLUM_CANDLE = register("plum_candle", new CandleBlock(Settings.copy(Blocks.CANDLE).mapColor(MapColor.LIME)));
         PLUM_CANDLE_CAKE = register("plum_candle_cake", new CandleCakeBlock(PLUM_CANDLE, Settings.copy(Blocks.CANDLE_CAKE).mapColor(MapColor.LIME)));
@@ -555,8 +555,8 @@ public class VABlocks {
         VIRIDIAN_TERRACOTTA = register("viridian_terracotta", new Block(Settings.copy(Blocks.WHITE_TERRACOTTA).mapColor(MapColor.LIME)));
         VIRIDIAN_CONCRETE = register("viridian_concrete", new Block(Settings.copy(Blocks.WHITE_CONCRETE).mapColor(MapColor.LIME)));
         VIRIDIAN_CONCRETE_POWDER = register("viridian_concrete_powder", new ConcretePowderBlock(VIRIDIAN_CONCRETE, Settings.copy(Blocks.WHITE_CONCRETE_POWDER).mapColor(MapColor.LIME)));
-        VIRIDIAN_STAINED_GLASS = register("viridian_stained_glass", new StainedGlassBlock(DyeColor.LIME, Settings.copy(Blocks.GLASS).mapColor(MapColor.LIME)));
-        VIRIDIAN_STAINED_GLASS_PANE = register("viridian_stained_glass_pane", new StainedGlassPaneBlock(DyeColor.LIME, Settings.copy(Blocks.GLASS_PANE).mapColor(MapColor.LIME)));
+        VIRIDIAN_STAINED_GLASS = register("viridian_stained_glass", new StainedGlassBlock(VADyeColors.VIRIDIAN, Settings.copy(Blocks.GLASS).mapColor(MapColor.LIME)));
+        VIRIDIAN_STAINED_GLASS_PANE = register("viridian_stained_glass_pane", new StainedGlassPaneBlock(VADyeColors.VIRIDIAN, Settings.copy(Blocks.GLASS_PANE).mapColor(MapColor.LIME)));
         VIRIDIAN_SILKBULB = register("viridian_silkbulb", new Block(Settings.copy(SILKBULB).mapColor(MapColor.LIME)));
         VIRIDIAN_CANDLE = register("viridian_candle", new CandleBlock(Settings.copy(Blocks.CANDLE).mapColor(MapColor.LIME)));
         VIRIDIAN_CANDLE_CAKE = register("viridian_candle_cake", new CandleCakeBlock(VIRIDIAN_CANDLE, Settings.copy(Blocks.CANDLE_CAKE).mapColor(MapColor.LIME)));
@@ -571,8 +571,8 @@ public class VABlocks {
         TAN_TERRACOTTA = register("tan_terracotta", new Block(Settings.copy(Blocks.WHITE_TERRACOTTA).mapColor(MapColor.LIME)));
         TAN_CONCRETE = register("tan_concrete", new Block(Settings.copy(Blocks.WHITE_CONCRETE).mapColor(MapColor.LIME)));
         TAN_CONCRETE_POWDER = register("tan_concrete_powder", new ConcretePowderBlock(TAN_CONCRETE, Settings.copy(Blocks.WHITE_CONCRETE_POWDER).mapColor(MapColor.LIME)));
-        TAN_STAINED_GLASS = register("tan_stained_glass", new StainedGlassBlock(DyeColor.LIME, Settings.copy(Blocks.GLASS).mapColor(MapColor.LIME)));
-        TAN_STAINED_GLASS_PANE = register("tan_stained_glass_pane", new StainedGlassPaneBlock(DyeColor.LIME, Settings.copy(Blocks.GLASS_PANE).mapColor(MapColor.LIME)));
+        TAN_STAINED_GLASS = register("tan_stained_glass", new StainedGlassBlock(VADyeColors.TAN, Settings.copy(Blocks.GLASS).mapColor(MapColor.LIME)));
+        TAN_STAINED_GLASS_PANE = register("tan_stained_glass_pane", new StainedGlassPaneBlock(VADyeColors.TAN, Settings.copy(Blocks.GLASS_PANE).mapColor(MapColor.LIME)));
         TAN_SILKBULB = register("tan_silkbulb", new Block(Settings.copy(SILKBULB).mapColor(MapColor.LIME)));
         TAN_CANDLE = register("tan_candle", new CandleBlock(Settings.copy(Blocks.CANDLE).mapColor(MapColor.LIME)));
         TAN_CANDLE_CAKE = register("tan_candle_cake", new CandleCakeBlock(TAN_CANDLE, Settings.copy(Blocks.CANDLE_CAKE).mapColor(MapColor.LIME)));
@@ -587,8 +587,8 @@ public class VABlocks {
         SINOPIA_TERRACOTTA = register("sinopia_terracotta", new Block(Settings.copy(Blocks.WHITE_TERRACOTTA).mapColor(MapColor.LIME)));
         SINOPIA_CONCRETE = register("sinopia_concrete", new Block(Settings.copy(Blocks.WHITE_CONCRETE).mapColor(MapColor.LIME)));
         SINOPIA_CONCRETE_POWDER = register("sinopia_concrete_powder", new ConcretePowderBlock(SINOPIA_CONCRETE, Settings.copy(Blocks.WHITE_CONCRETE_POWDER).mapColor(MapColor.LIME)));
-        SINOPIA_STAINED_GLASS = register("sinopia_stained_glass", new StainedGlassBlock(DyeColor.LIME, Settings.copy(Blocks.GLASS).mapColor(MapColor.LIME)));
-        SINOPIA_STAINED_GLASS_PANE = register("sinopia_stained_glass_pane", new StainedGlassPaneBlock(DyeColor.LIME, Settings.copy(Blocks.GLASS_PANE).mapColor(MapColor.LIME)));
+        SINOPIA_STAINED_GLASS = register("sinopia_stained_glass", new StainedGlassBlock(VADyeColors.SINOPIA, Settings.copy(Blocks.GLASS).mapColor(MapColor.LIME)));
+        SINOPIA_STAINED_GLASS_PANE = register("sinopia_stained_glass_pane", new StainedGlassPaneBlock(VADyeColors.SINOPIA, Settings.copy(Blocks.GLASS_PANE).mapColor(MapColor.LIME)));
         SINOPIA_SILKBULB = register("sinopia_silkbulb", new Block(Settings.copy(SILKBULB).mapColor(MapColor.LIME)));
         SINOPIA_CANDLE = register("sinopia_candle", new CandleBlock(Settings.copy(Blocks.CANDLE).mapColor(MapColor.LIME)));
         SINOPIA_CANDLE_CAKE = register("sinopia_candle_cake", new CandleCakeBlock(SINOPIA_CANDLE, Settings.copy(Blocks.CANDLE_CAKE).mapColor(MapColor.LIME)));
