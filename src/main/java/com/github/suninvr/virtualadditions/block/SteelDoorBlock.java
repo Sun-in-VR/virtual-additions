@@ -51,7 +51,7 @@ public class SteelDoorBlock extends DoorBlock {
     }
 
     private static boolean toggleShutter(World world, BlockState state, BlockPos pos, @Nullable Entity source) {
-        if (state.isOf(VABlocks.STEEL_DOOR) && state.get(HALF) == DoubleBlockHalf.UPPER) {
+        if (state.getBlock() instanceof SteelDoorBlock && state.get(HALF) == DoubleBlockHalf.UPPER) {
             state = state.cycle(SHUTTER_OPEN);
             world.setBlockState(pos, state, Block.NOTIFY_LISTENERS | Block.REDRAW_ON_MAIN_THREAD);
             playOpenCloseShutterSound(source, world, pos, state.get(SHUTTER_OPEN));

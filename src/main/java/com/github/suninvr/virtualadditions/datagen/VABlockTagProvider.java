@@ -47,7 +47,7 @@ public final class VABlockTagProvider {
             getOrCreateTagBuilder(BlockTags.COMBINATION_STEP_SOUND_BLOCKS).add(VABlocks.WEBBED_SILK);
             getOrCreateTagBuilder(BlockTags.CROPS).add(VABlocks.CORN_CROP, VABlocks.COTTON);
             getOrCreateTagBuilder(BlockTags.DEEPSLATE_ORE_REPLACEABLES).add(VABlocks.HORNFELS, VABlocks.BLUESCHIST, VABlocks.SYENITE);
-            getOrCreateTagBuilder(BlockTags.DOORS).add(VABlocks.STEEL_DOOR);
+            getOrCreateTagBuilder(BlockTags.DOORS).add(VABlocks.STEEL_DOOR, VABlocks.EXPOSED_STEEL_DOOR, VABlocks.WEATHERED_STEEL_DOOR, VABlocks.OXIDIZED_STEEL_DOOR, VABlocks.WAXED_STEEL_DOOR, VABlocks.WAXED_EXPOSED_STEEL_DOOR, VABlocks.WAXED_WEATHERED_STEEL_DOOR);
             getOrCreateTagBuilder(BlockTags.FENCES).add(VABlocks.STEEL_FENCE);
             getOrCreateTagBuilder(BlockTags.MAINTAINS_FARMLAND).add(VABlocks.CORN_CROP, VABlocks.COTTON);
             getOrCreateTagBuilder(BlockTags.REPLACEABLE).add(VABlocks.ACID, VABlocks.FRAYED_SILK);
@@ -159,7 +159,15 @@ public final class VABlockTagProvider {
                     VABlocks.WAXED_STEEL_GRATE,
                     VABlocks.WAXED_EXPOSED_STEEL_GRATE,
                     VABlocks.WAXED_WEATHERED_STEEL_GRATE,
-                    VABlocks.WAXED_OXIDIZED_STEEL_GRATE
+                    VABlocks.WAXED_OXIDIZED_STEEL_GRATE,
+                    VABlocks.STEEL_DOOR,
+                    VABlocks.EXPOSED_STEEL_DOOR,
+                    VABlocks.WEATHERED_STEEL_DOOR,
+                    VABlocks.OXIDIZED_STEEL_DOOR,
+                    VABlocks.WAXED_STEEL_DOOR,
+                    VABlocks.WAXED_EXPOSED_STEEL_DOOR,
+                    VABlocks.WAXED_WEATHERED_STEEL_DOOR,
+                    VABlocks.WAXED_OXIDIZED_STEEL_DOOR
             );
             
             configureFamily(BlockTags.PICKAXE_MINEABLE, 0,

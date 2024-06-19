@@ -93,6 +93,13 @@ public class VABlocks {
     public static final Block WAXED_WEATHERED_STEEL_FENCE;
     public static final Block WAXED_OXIDIZED_STEEL_FENCE;
     public static final Block STEEL_DOOR;
+    public static final Block EXPOSED_STEEL_DOOR;
+    public static final Block WEATHERED_STEEL_DOOR;
+    public static final Block OXIDIZED_STEEL_DOOR;
+    public static final Block WAXED_STEEL_DOOR;
+    public static final Block WAXED_EXPOSED_STEEL_DOOR;
+    public static final Block WAXED_WEATHERED_STEEL_DOOR;
+    public static final Block WAXED_OXIDIZED_STEEL_DOOR;
     public static final Block STEEL_TRAPDOOR;
     public static final Block REDSTONE_BRIDGE;
     public static final Block SPOTLIGHT;
@@ -382,7 +389,7 @@ public class VABlocks {
         STEEL_GRATE = register("steel_grate", new OxidizableGrateBlock(Oxidizable.OxidationLevel.UNAFFECTED, Settings.copy(CUT_STEEL).strength(2.0F, 300.0F).nonOpaque()));
         CHISELED_STEEL = register("chiseled_steel", new OxidizableBlock(Oxidizable.OxidationLevel.UNAFFECTED, Settings.copy(CUT_STEEL)));
         STEEL_FENCE = register("steel_fence", new OxidizableFenceBlock( Oxidizable.OxidationLevel.UNAFFECTED, Settings.copy(CUT_STEEL)));
-        STEEL_DOOR = register("steel_door", new SteelDoorBlock(Settings.copy(STEEL_BLOCK).nonOpaque().pistonBehavior(PistonBehavior.DESTROY)));
+        STEEL_DOOR = register("steel_door", new OxidizableSteelDoorBlock(Oxidizable.OxidationLevel.UNAFFECTED, Settings.copy(STEEL_BLOCK).nonOpaque().pistonBehavior(PistonBehavior.DESTROY)));
         STEEL_TRAPDOOR = register("steel_trapdoor", new SteelTrapdoorBlock(Settings.copy(STEEL_DOOR)));
 
         EXPOSED_STEEL_BLOCK = register("exposed_steel_block", new OxidizableBlock(Oxidizable.OxidationLevel.EXPOSED, Settings.create().mapColor(MapColor.GRAY).sounds(BlockSoundGroup.NETHERITE).requiresTool().hardness(5.0F).resistance(300.0F)));
@@ -392,6 +399,7 @@ public class VABlocks {
         EXPOSED_STEEL_GRATE = register("exposed_steel_grate", new OxidizableGrateBlock(Oxidizable.OxidationLevel.EXPOSED, Settings.copy(CUT_STEEL).strength(2.0F, 300.0F).nonOpaque()));
         EXPOSED_CHISELED_STEEL = register("exposed_chiseled_steel", new OxidizableBlock(Oxidizable.OxidationLevel.EXPOSED, Settings.copy(CUT_STEEL)));
         EXPOSED_STEEL_FENCE = register("exposed_steel_fence", new OxidizableFenceBlock( Oxidizable.OxidationLevel.EXPOSED, Settings.copy(CUT_STEEL)));
+        EXPOSED_STEEL_DOOR = register("exposed_steel_door", new OxidizableSteelDoorBlock(Oxidizable.OxidationLevel.EXPOSED, Settings.copy(STEEL_BLOCK).nonOpaque().pistonBehavior(PistonBehavior.DESTROY)));
 
         WEATHERED_STEEL_BLOCK = register("weathered_steel_block", new OxidizableBlock(Oxidizable.OxidationLevel.WEATHERED, Settings.create().mapColor(MapColor.GRAY).sounds(BlockSoundGroup.NETHERITE).requiresTool().hardness(5.0F).resistance(300.0F)));
         WEATHERED_CUT_STEEL = register("weathered_cut_steel", new OxidizableBlock(Oxidizable.OxidationLevel.WEATHERED, Settings.copy(STEEL_BLOCK).strength(3.0F, 300.0F)));
@@ -400,6 +408,7 @@ public class VABlocks {
         WEATHERED_STEEL_GRATE = register("weathered_steel_grate", new OxidizableGrateBlock(Oxidizable.OxidationLevel.WEATHERED, Settings.copy(CUT_STEEL).strength(2.0F, 300.0F).nonOpaque()));
         WEATHERED_CHISELED_STEEL = register("weathered_chiseled_steel", new OxidizableBlock(Oxidizable.OxidationLevel.WEATHERED, Settings.copy(CUT_STEEL)));
         WEATHERED_STEEL_FENCE = register("weathered_steel_fence", new OxidizableFenceBlock( Oxidizable.OxidationLevel.WEATHERED, Settings.copy(CUT_STEEL)));
+        WEATHERED_STEEL_DOOR = register("weathered_steel_door", new OxidizableSteelDoorBlock(Oxidizable.OxidationLevel.WEATHERED, Settings.copy(STEEL_BLOCK).nonOpaque().pistonBehavior(PistonBehavior.DESTROY)));
 
         OXIDIZED_STEEL_BLOCK = register("oxidized_steel_block", new OxidizableBlock(Oxidizable.OxidationLevel.OXIDIZED, Settings.create().mapColor(MapColor.GRAY).sounds(BlockSoundGroup.NETHERITE).requiresTool().hardness(5.0F).resistance(300.0F)));
         OXIDIZED_CUT_STEEL = register("oxidized_cut_steel", new OxidizableBlock(Oxidizable.OxidationLevel.OXIDIZED, Settings.copy(STEEL_BLOCK).strength(3.0F, 300.0F)));
@@ -408,6 +417,7 @@ public class VABlocks {
         OXIDIZED_STEEL_GRATE = register("oxidized_steel_grate", new OxidizableGrateBlock(Oxidizable.OxidationLevel.OXIDIZED, Settings.copy(CUT_STEEL).strength(2.0F, 300.0F).nonOpaque()));
         OXIDIZED_CHISELED_STEEL = register("oxidized_chiseled_steel", new OxidizableBlock(Oxidizable.OxidationLevel.OXIDIZED, Settings.copy(CUT_STEEL)));
         OXIDIZED_STEEL_FENCE = register("oxidized_steel_fence", new OxidizableFenceBlock( Oxidizable.OxidationLevel.OXIDIZED, Settings.copy(CUT_STEEL)));
+        OXIDIZED_STEEL_DOOR = register("oxidized_steel_door", new OxidizableSteelDoorBlock(Oxidizable.OxidationLevel.OXIDIZED, Settings.copy(STEEL_BLOCK).nonOpaque().pistonBehavior(PistonBehavior.DESTROY)));
 
         WAXED_STEEL_BLOCK = register("waxed_steel_block", new Block(Settings.create().mapColor(MapColor.GRAY).sounds(BlockSoundGroup.NETHERITE).requiresTool().hardness(5.0F).resistance(300.0F)));
         WAXED_CUT_STEEL = register("waxed_cut_steel", new Block(Settings.copy(STEEL_BLOCK).strength(3.0F, 300.0F)));
@@ -416,6 +426,7 @@ public class VABlocks {
         WAXED_STEEL_GRATE = register("waxed_steel_grate", new GrateBlock(Settings.copy(CUT_STEEL).strength(2.0F, 300.0F).nonOpaque()));
         WAXED_CHISELED_STEEL = register("waxed_chiseled_steel", new Block(Settings.copy(CUT_STEEL)));
         WAXED_STEEL_FENCE = register("waxed_steel_fence", new FenceBlock( Settings.copy(CUT_STEEL)));
+        WAXED_STEEL_DOOR = register("waxed_steel_door", new SteelDoorBlock(Settings.copy(STEEL_BLOCK).nonOpaque().pistonBehavior(PistonBehavior.DESTROY)));
 
         WAXED_EXPOSED_STEEL_BLOCK = register("waxed_exposed_steel_block", new Block(Settings.create().mapColor(MapColor.GRAY).sounds(BlockSoundGroup.NETHERITE).requiresTool().hardness(5.0F).resistance(300.0F)));
         WAXED_EXPOSED_CUT_STEEL = register("waxed_exposed_cut_steel", new Block(Settings.copy(STEEL_BLOCK).strength(3.0F, 300.0F)));
@@ -424,6 +435,7 @@ public class VABlocks {
         WAXED_EXPOSED_STEEL_GRATE = register("waxed_exposed_steel_grate", new GrateBlock(Settings.copy(CUT_STEEL).strength(2.0F, 300.0F).nonOpaque()));
         WAXED_EXPOSED_CHISELED_STEEL = register("waxed_exposed_chiseled_steel", new Block(Settings.copy(CUT_STEEL)));
         WAXED_EXPOSED_STEEL_FENCE = register("waxed_exposed_steel_fence", new FenceBlock( Settings.copy(CUT_STEEL)));
+        WAXED_EXPOSED_STEEL_DOOR = register("waxed_exposed_steel_door", new SteelDoorBlock(Settings.copy(STEEL_BLOCK).nonOpaque().pistonBehavior(PistonBehavior.DESTROY)));
 
         WAXED_WEATHERED_STEEL_BLOCK = register("waxed_weathered_steel_block", new Block(Settings.create().mapColor(MapColor.GRAY).sounds(BlockSoundGroup.NETHERITE).requiresTool().hardness(5.0F).resistance(300.0F)));
         WAXED_WEATHERED_CUT_STEEL = register("waxed_weathered_cut_steel", new Block(Settings.copy(STEEL_BLOCK).strength(3.0F, 300.0F)));
@@ -432,6 +444,7 @@ public class VABlocks {
         WAXED_WEATHERED_STEEL_GRATE = register("waxed_weathered_steel_grate", new GrateBlock(Settings.copy(CUT_STEEL).strength(2.0F, 300.0F).nonOpaque()));
         WAXED_WEATHERED_CHISELED_STEEL = register("waxed_weathered_chiseled_steel", new Block(Settings.copy(CUT_STEEL)));
         WAXED_WEATHERED_STEEL_FENCE = register("waxed_weathered_steel_fence", new FenceBlock( Settings.copy(CUT_STEEL)));
+        WAXED_WEATHERED_STEEL_DOOR = register("waxed_weathered_steel_door", new SteelDoorBlock(Settings.copy(STEEL_BLOCK).nonOpaque().pistonBehavior(PistonBehavior.DESTROY)));
 
         WAXED_OXIDIZED_STEEL_BLOCK = register("waxed_oxidized_steel_block", new Block(Settings.create().mapColor(MapColor.GRAY).sounds(BlockSoundGroup.NETHERITE).requiresTool().hardness(5.0F).resistance(300.0F)));
         WAXED_OXIDIZED_CUT_STEEL = register("waxed_oxidized_cut_steel", new Block(Settings.copy(STEEL_BLOCK).strength(3.0F, 300.0F)));
@@ -440,6 +453,7 @@ public class VABlocks {
         WAXED_OXIDIZED_STEEL_GRATE = register("waxed_oxidized_steel_grate", new GrateBlock(Settings.copy(CUT_STEEL).strength(2.0F, 300.0F).nonOpaque()));
         WAXED_OXIDIZED_CHISELED_STEEL = register("waxed_oxidized_chiseled_steel", new Block(Settings.copy(CUT_STEEL)));
         WAXED_OXIDIZED_STEEL_FENCE = register("waxed_oxidized_steel_fence", new FenceBlock( Settings.copy(CUT_STEEL)));
+        WAXED_OXIDIZED_STEEL_DOOR = register("waxed_oxidized_steel_door", new SteelDoorBlock(Settings.copy(STEEL_BLOCK).nonOpaque().pistonBehavior(PistonBehavior.DESTROY)));
 
 
         REDSTONE_BRIDGE = register("redstone_bridge", new RedstoneBridgeBlock(Settings.copy(STEEL_GRATE)));
@@ -811,23 +825,24 @@ public class VABlocks {
         FlattenableBlockRegistry.register(Blocks.DIRT_PATH, Blocks.DIRT.getDefaultState());
         FlattenableBlockRegistry.register(Blocks.FARMLAND, Blocks.DIRT_PATH.getDefaultState());
         TillableBlockRegistry.register(Blocks.FARMLAND, context -> true, Blocks.DIRT.getDefaultState());
-        registerOxidizedSet(STEEL_BLOCK, EXPOSED_STEEL_BLOCK, WEATHERED_STEEL_BLOCK, OXIDIZED_STEEL_BLOCK, WAXED_STEEL_BLOCK, WAXED_EXPOSED_STEEL_BLOCK, WAXED_WEATHERED_STEEL_BLOCK, WAXED_OXIDIZED_STEEL_BLOCK);
-        registerOxidizedSet(CUT_STEEL, EXPOSED_CUT_STEEL, WEATHERED_CUT_STEEL, OXIDIZED_CUT_STEEL, WAXED_CUT_STEEL, WAXED_EXPOSED_CUT_STEEL, WAXED_WEATHERED_CUT_STEEL, WAXED_OXIDIZED_CUT_STEEL);
-        registerOxidizedSet(CUT_STEEL_STAIRS, EXPOSED_CUT_STEEL_STAIRS, WEATHERED_CUT_STEEL_STAIRS, OXIDIZED_CUT_STEEL_STAIRS, WAXED_CUT_STEEL_STAIRS, WAXED_EXPOSED_CUT_STEEL_STAIRS, WAXED_WEATHERED_CUT_STEEL_STAIRS, WAXED_OXIDIZED_CUT_STEEL_STAIRS);
-        registerOxidizedSet(CUT_STEEL_SLAB, EXPOSED_CUT_STEEL_SLAB, WEATHERED_CUT_STEEL_SLAB, OXIDIZED_CUT_STEEL_SLAB, WAXED_CUT_STEEL_SLAB, WAXED_EXPOSED_CUT_STEEL_SLAB, WAXED_WEATHERED_CUT_STEEL_SLAB, WAXED_OXIDIZED_CUT_STEEL_SLAB);
-        registerOxidizedSet(STEEL_GRATE, EXPOSED_STEEL_GRATE, WEATHERED_STEEL_GRATE, OXIDIZED_STEEL_GRATE, WAXED_STEEL_GRATE, WAXED_EXPOSED_STEEL_GRATE, WAXED_WEATHERED_STEEL_GRATE, WAXED_OXIDIZED_STEEL_GRATE);
-        registerOxidizedSet(CHISELED_STEEL, EXPOSED_CHISELED_STEEL, WEATHERED_CHISELED_STEEL, OXIDIZED_CHISELED_STEEL, WAXED_CHISELED_STEEL, WAXED_EXPOSED_CHISELED_STEEL, WAXED_WEATHERED_CHISELED_STEEL, WAXED_OXIDIZED_CHISELED_STEEL);
-        registerOxidizedSet(STEEL_FENCE, EXPOSED_STEEL_FENCE, WEATHERED_STEEL_FENCE, OXIDIZED_STEEL_FENCE, WAXED_STEEL_FENCE, WAXED_EXPOSED_STEEL_FENCE, WAXED_WEATHERED_STEEL_FENCE, WAXED_OXIDIZED_STEEL_FENCE);
+        registerOxidizingSet(STEEL_BLOCK, EXPOSED_STEEL_BLOCK, WEATHERED_STEEL_BLOCK, OXIDIZED_STEEL_BLOCK, WAXED_STEEL_BLOCK, WAXED_EXPOSED_STEEL_BLOCK, WAXED_WEATHERED_STEEL_BLOCK, WAXED_OXIDIZED_STEEL_BLOCK);
+        registerOxidizingSet(CUT_STEEL, EXPOSED_CUT_STEEL, WEATHERED_CUT_STEEL, OXIDIZED_CUT_STEEL, WAXED_CUT_STEEL, WAXED_EXPOSED_CUT_STEEL, WAXED_WEATHERED_CUT_STEEL, WAXED_OXIDIZED_CUT_STEEL);
+        registerOxidizingSet(CUT_STEEL_STAIRS, EXPOSED_CUT_STEEL_STAIRS, WEATHERED_CUT_STEEL_STAIRS, OXIDIZED_CUT_STEEL_STAIRS, WAXED_CUT_STEEL_STAIRS, WAXED_EXPOSED_CUT_STEEL_STAIRS, WAXED_WEATHERED_CUT_STEEL_STAIRS, WAXED_OXIDIZED_CUT_STEEL_STAIRS);
+        registerOxidizingSet(CUT_STEEL_SLAB, EXPOSED_CUT_STEEL_SLAB, WEATHERED_CUT_STEEL_SLAB, OXIDIZED_CUT_STEEL_SLAB, WAXED_CUT_STEEL_SLAB, WAXED_EXPOSED_CUT_STEEL_SLAB, WAXED_WEATHERED_CUT_STEEL_SLAB, WAXED_OXIDIZED_CUT_STEEL_SLAB);
+        registerOxidizingSet(STEEL_GRATE, EXPOSED_STEEL_GRATE, WEATHERED_STEEL_GRATE, OXIDIZED_STEEL_GRATE, WAXED_STEEL_GRATE, WAXED_EXPOSED_STEEL_GRATE, WAXED_WEATHERED_STEEL_GRATE, WAXED_OXIDIZED_STEEL_GRATE);
+        registerOxidizingSet(CHISELED_STEEL, EXPOSED_CHISELED_STEEL, WEATHERED_CHISELED_STEEL, OXIDIZED_CHISELED_STEEL, WAXED_CHISELED_STEEL, WAXED_EXPOSED_CHISELED_STEEL, WAXED_WEATHERED_CHISELED_STEEL, WAXED_OXIDIZED_CHISELED_STEEL);
+        registerOxidizingSet(STEEL_FENCE, EXPOSED_STEEL_FENCE, WEATHERED_STEEL_FENCE, OXIDIZED_STEEL_FENCE, WAXED_STEEL_FENCE, WAXED_EXPOSED_STEEL_FENCE, WAXED_WEATHERED_STEEL_FENCE, WAXED_OXIDIZED_STEEL_FENCE);
+        registerOxidizingSet(STEEL_DOOR, EXPOSED_STEEL_DOOR, WEATHERED_STEEL_DOOR, OXIDIZED_STEEL_DOOR, WAXED_STEEL_DOOR, WAXED_EXPOSED_STEEL_DOOR, WAXED_WEATHERED_STEEL_DOOR, WAXED_OXIDIZED_STEEL_DOOR);
     }
 
-    private static void registerOxidizedSet(Block unaffected, Block exposed, Block weathered, Block oxidized) {
+    private static void registerOxidizingSet(Block unaffected, Block exposed, Block weathered, Block oxidized) {
         OxidizableBlocksRegistry.registerOxidizableBlockPair(unaffected, exposed);
         OxidizableBlocksRegistry.registerOxidizableBlockPair(exposed, weathered);
         OxidizableBlocksRegistry.registerOxidizableBlockPair(weathered, oxidized);
     }
 
-    private static void registerOxidizedSet(Block unaffected, Block exposed, Block weathered, Block oxidized, Block waxed, Block waxedExposed, Block waxedWeathered, Block waxedOxidized) {
-        registerOxidizedSet(unaffected, exposed, weathered, oxidized);
+    private static void registerOxidizingSet(Block unaffected, Block exposed, Block weathered, Block oxidized, Block waxed, Block waxedExposed, Block waxedWeathered, Block waxedOxidized) {
+        registerOxidizingSet(unaffected, exposed, weathered, oxidized);
         OxidizableBlocksRegistry.registerWaxableBlockPair(unaffected, waxed);
         OxidizableBlocksRegistry.registerWaxableBlockPair(exposed, waxedExposed);
         OxidizableBlocksRegistry.registerWaxableBlockPair(weathered, waxedWeathered);

@@ -193,6 +193,13 @@ public class VAItems {
     public static final Item WAXED_WEATHERED_STEEL_FENCE;
     public static final Item WAXED_OXIDIZED_STEEL_FENCE;
     public static final Item STEEL_DOOR;
+    public static final Item EXPOSED_STEEL_DOOR;
+    public static final Item WEATHERED_STEEL_DOOR;
+    public static final Item OXIDIZED_STEEL_DOOR;
+    public static final Item WAXED_STEEL_DOOR;
+    public static final Item WAXED_EXPOSED_STEEL_DOOR;
+    public static final Item WAXED_WEATHERED_STEEL_DOOR;
+    public static final Item WAXED_OXIDIZED_STEEL_DOOR;
     public static final Item STEEL_TRAPDOOR;
     public static final Item REDSTONE_BRIDGE;
     public static final Item CAGELIGHT;
@@ -636,6 +643,7 @@ public class VAItems {
         EXPOSED_STEEL_GRATE = registerBlockItem("exposed_steel_grate", VABlocks.EXPOSED_STEEL_GRATE, ItemGroups.BUILDING_BLOCKS, prev);
         EXPOSED_CHISELED_STEEL = registerBlockItem("exposed_chiseled_steel", VABlocks.EXPOSED_CHISELED_STEEL, ItemGroups.BUILDING_BLOCKS, prev);
         EXPOSED_STEEL_FENCE = registerBlockItem("exposed_steel_fence", VABlocks.EXPOSED_STEEL_FENCE, ItemGroups.BUILDING_BLOCKS, prev);
+        EXPOSED_STEEL_DOOR = registerBlockItem("exposed_steel_door", VABlocks.EXPOSED_STEEL_DOOR, ItemGroups.BUILDING_BLOCKS, prev);
         
         WEATHERED_STEEL_BLOCK = registerBlockItem("weathered_steel_block", VABlocks.WEATHERED_STEEL_BLOCK, ItemGroups.BUILDING_BLOCKS, prev);
         WEATHERED_CUT_STEEL = registerBlockItem("weathered_cut_steel", VABlocks.WEATHERED_CUT_STEEL, ItemGroups.BUILDING_BLOCKS, prev);
@@ -644,6 +652,7 @@ public class VAItems {
         WEATHERED_STEEL_GRATE = registerBlockItem("weathered_steel_grate", VABlocks.WEATHERED_STEEL_GRATE, ItemGroups.BUILDING_BLOCKS, prev);
         WEATHERED_CHISELED_STEEL = registerBlockItem("weathered_chiseled_steel", VABlocks.WEATHERED_CHISELED_STEEL, ItemGroups.BUILDING_BLOCKS, prev);
         WEATHERED_STEEL_FENCE = registerBlockItem("weathered_steel_fence", VABlocks.WEATHERED_STEEL_FENCE, ItemGroups.BUILDING_BLOCKS, prev);
+        WEATHERED_STEEL_DOOR = registerBlockItem("weathered_steel_door", VABlocks.WEATHERED_STEEL_DOOR, ItemGroups.BUILDING_BLOCKS, prev);
         
         OXIDIZED_STEEL_BLOCK = registerBlockItem("oxidized_steel_block", VABlocks.OXIDIZED_STEEL_BLOCK, ItemGroups.BUILDING_BLOCKS, prev);
         OXIDIZED_CUT_STEEL = registerBlockItem("oxidized_cut_steel", VABlocks.OXIDIZED_CUT_STEEL, ItemGroups.BUILDING_BLOCKS, prev);
@@ -652,6 +661,7 @@ public class VAItems {
         OXIDIZED_STEEL_GRATE = registerBlockItem("oxidized_steel_grate", VABlocks.OXIDIZED_STEEL_GRATE, ItemGroups.BUILDING_BLOCKS, prev);
         OXIDIZED_CHISELED_STEEL = registerBlockItem("oxidized_chiseled_steel", VABlocks.OXIDIZED_CHISELED_STEEL, ItemGroups.BUILDING_BLOCKS, prev);
         OXIDIZED_STEEL_FENCE = registerBlockItem("oxidized_steel_fence", VABlocks.OXIDIZED_STEEL_FENCE, ItemGroups.BUILDING_BLOCKS, prev);
+        OXIDIZED_STEEL_DOOR = registerBlockItem("oxidized_steel_door", VABlocks.OXIDIZED_STEEL_DOOR, ItemGroups.BUILDING_BLOCKS, prev);
 
         WAXED_STEEL_BLOCK = registerBlockItem("waxed_steel_block", VABlocks.WAXED_STEEL_BLOCK, ItemGroups.BUILDING_BLOCKS, prev);
         WAXED_CUT_STEEL = registerBlockItem("waxed_cut_steel", VABlocks.WAXED_CUT_STEEL, ItemGroups.BUILDING_BLOCKS, prev);
@@ -660,6 +670,7 @@ public class VAItems {
         WAXED_STEEL_GRATE = registerBlockItem("waxed_steel_grate", VABlocks.WAXED_STEEL_GRATE, ItemGroups.BUILDING_BLOCKS, prev);
         WAXED_CHISELED_STEEL = registerBlockItem("waxed_chiseled_steel", VABlocks.WAXED_CHISELED_STEEL, ItemGroups.BUILDING_BLOCKS, prev);
         WAXED_STEEL_FENCE = registerBlockItem("waxed_steel_fence", VABlocks.WAXED_STEEL_FENCE, ItemGroups.BUILDING_BLOCKS, prev);
+        WAXED_STEEL_DOOR = registerBlockItem("waxed_steel_door", VABlocks.WAXED_STEEL_DOOR, ItemGroups.BUILDING_BLOCKS, prev);
 
         WAXED_EXPOSED_STEEL_BLOCK = registerBlockItem("waxed_exposed_steel_block", VABlocks.WAXED_EXPOSED_STEEL_BLOCK, ItemGroups.BUILDING_BLOCKS, prev);
         WAXED_EXPOSED_CUT_STEEL = registerBlockItem("waxed_exposed_cut_steel", VABlocks.WAXED_EXPOSED_CUT_STEEL, ItemGroups.BUILDING_BLOCKS, prev);
@@ -668,6 +679,7 @@ public class VAItems {
         WAXED_EXPOSED_STEEL_GRATE = registerBlockItem("waxed_exposed_steel_grate", VABlocks.WAXED_EXPOSED_STEEL_GRATE, ItemGroups.BUILDING_BLOCKS, prev);
         WAXED_EXPOSED_CHISELED_STEEL = registerBlockItem("waxed_exposed_chiseled_steel", VABlocks.WAXED_EXPOSED_CHISELED_STEEL, ItemGroups.BUILDING_BLOCKS, prev);
         WAXED_EXPOSED_STEEL_FENCE = registerBlockItem("waxed_exposed_steel_fence", VABlocks.WAXED_EXPOSED_STEEL_FENCE, ItemGroups.BUILDING_BLOCKS, prev);
+        WAXED_EXPOSED_STEEL_DOOR = registerBlockItem("waxed_exposed_steel_door", VABlocks.WAXED_EXPOSED_STEEL_DOOR, ItemGroups.BUILDING_BLOCKS, prev);
 
         WAXED_WEATHERED_STEEL_BLOCK = registerBlockItem("waxed_weathered_steel_block", VABlocks.WAXED_WEATHERED_STEEL_BLOCK, ItemGroups.BUILDING_BLOCKS, prev);
         WAXED_WEATHERED_CUT_STEEL = registerBlockItem("waxed_weathered_cut_steel", VABlocks.WAXED_WEATHERED_CUT_STEEL, ItemGroups.BUILDING_BLOCKS, prev);
@@ -676,6 +688,7 @@ public class VAItems {
         WAXED_WEATHERED_STEEL_GRATE = registerBlockItem("waxed_weathered_steel_grate", VABlocks.WAXED_WEATHERED_STEEL_GRATE, ItemGroups.BUILDING_BLOCKS, prev);
         WAXED_WEATHERED_CHISELED_STEEL = registerBlockItem("waxed_weathered_chiseled_steel", VABlocks.WAXED_WEATHERED_CHISELED_STEEL, ItemGroups.BUILDING_BLOCKS, prev);
         WAXED_WEATHERED_STEEL_FENCE = registerBlockItem("waxed_weathered_steel_fence", VABlocks.WAXED_WEATHERED_STEEL_FENCE, ItemGroups.BUILDING_BLOCKS, prev);
+        WAXED_WEATHERED_STEEL_DOOR = registerBlockItem("waxed_weathered_steel_door", VABlocks.WAXED_WEATHERED_STEEL_DOOR, ItemGroups.BUILDING_BLOCKS, prev);
 
         WAXED_OXIDIZED_STEEL_BLOCK = registerBlockItem("waxed_oxidized_steel_block", VABlocks.WAXED_OXIDIZED_STEEL_BLOCK, ItemGroups.BUILDING_BLOCKS, prev);
         WAXED_OXIDIZED_CUT_STEEL = registerBlockItem("waxed_oxidized_cut_steel", VABlocks.WAXED_OXIDIZED_CUT_STEEL, ItemGroups.BUILDING_BLOCKS, prev);
@@ -684,6 +697,7 @@ public class VAItems {
         WAXED_OXIDIZED_STEEL_GRATE = registerBlockItem("waxed_oxidized_steel_grate", VABlocks.WAXED_OXIDIZED_STEEL_GRATE, ItemGroups.BUILDING_BLOCKS, prev);
         WAXED_OXIDIZED_CHISELED_STEEL = registerBlockItem("waxed_oxidized_chiseled_steel", VABlocks.WAXED_OXIDIZED_CHISELED_STEEL, ItemGroups.BUILDING_BLOCKS, prev);
         WAXED_OXIDIZED_STEEL_FENCE = registerBlockItem("waxed_oxidized_steel_fence", VABlocks.WAXED_OXIDIZED_STEEL_FENCE, ItemGroups.BUILDING_BLOCKS, prev);
+        WAXED_OXIDIZED_STEEL_DOOR = registerBlockItem("waxed_oxidized_steel_door", VABlocks.WAXED_OXIDIZED_STEEL_DOOR, ItemGroups.BUILDING_BLOCKS, prev);
 
 
         COTTON_SEEDS = register("cotton_seeds", new AliasedBlockItem(VABlocks.COTTON, new Item.Settings()), ItemGroups.NATURAL, Items.BEETROOT_SEEDS);

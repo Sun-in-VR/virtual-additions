@@ -145,6 +145,13 @@ public final class VABlockLootTableProvider {
 
 
             this.addDrop(VABlocks.STEEL_DOOR, this::doorDrops);
+            this.addDrop(VABlocks.EXPOSED_STEEL_DOOR, this::doorDrops);
+            this.addDrop(VABlocks.WEATHERED_STEEL_DOOR, this::doorDrops);
+            this.addDrop(VABlocks.OXIDIZED_STEEL_DOOR, this::doorDrops);
+            this.addDrop(VABlocks.WAXED_STEEL_DOOR, this::doorDrops);
+            this.addDrop(VABlocks.WAXED_EXPOSED_STEEL_DOOR, this::doorDrops);
+            this.addDrop(VABlocks.WAXED_WEATHERED_STEEL_DOOR, this::doorDrops);
+            this.addDrop(VABlocks.WAXED_OXIDIZED_STEEL_DOOR, this::doorDrops);
             this.addDrop(VABlocks.HORNFELS, block -> this.drops(block, VABlocks.COBBLED_HORNFELS));
             this.addDrop(VABlocks.BLUESCHIST, block -> this.drops(block, VABlocks.COBBLED_BLUESCHIST));
             this.addDrop(VABlocks.SYENITE, block -> this.drops(block, VABlocks.COBBLED_SYENITE));
