@@ -48,11 +48,11 @@ public final class VABlockTagProvider {
             getOrCreateTagBuilder(BlockTags.CROPS).add(VABlocks.CORN_CROP, VABlocks.COTTON);
             getOrCreateTagBuilder(BlockTags.DEEPSLATE_ORE_REPLACEABLES).add(VABlocks.HORNFELS, VABlocks.BLUESCHIST, VABlocks.SYENITE);
             getOrCreateTagBuilder(BlockTags.DOORS).add(VABlocks.STEEL_DOOR, VABlocks.EXPOSED_STEEL_DOOR, VABlocks.WEATHERED_STEEL_DOOR, VABlocks.OXIDIZED_STEEL_DOOR, VABlocks.WAXED_STEEL_DOOR, VABlocks.WAXED_EXPOSED_STEEL_DOOR, VABlocks.WAXED_WEATHERED_STEEL_DOOR);
+            getOrCreateTagBuilder(BlockTags.TRAPDOORS).add(VABlocks.STEEL_TRAPDOOR, VABlocks.EXPOSED_STEEL_TRAPDOOR, VABlocks.WEATHERED_STEEL_TRAPDOOR, VABlocks.OXIDIZED_STEEL_TRAPDOOR, VABlocks.WAXED_STEEL_TRAPDOOR, VABlocks.WAXED_EXPOSED_STEEL_TRAPDOOR, VABlocks.WAXED_WEATHERED_STEEL_TRAPDOOR);
             getOrCreateTagBuilder(BlockTags.FENCES).add(VABlocks.STEEL_FENCE);
             getOrCreateTagBuilder(BlockTags.MAINTAINS_FARMLAND).add(VABlocks.CORN_CROP, VABlocks.COTTON);
             getOrCreateTagBuilder(BlockTags.REPLACEABLE).add(VABlocks.ACID, VABlocks.FRAYED_SILK);
             getOrCreateTagBuilder(BlockTags.SCULK_REPLACEABLE).add(VABlocks.SILK_BLOCK, VABlocks.WEBBED_SILK, VABlocks.ROCK_SALT_BLOCK);
-            getOrCreateTagBuilder(BlockTags.TRAPDOORS).add(VABlocks.STEEL_TRAPDOOR);
             getOrCreateTagBuilder(BlockTags.REPLACEABLE).add(VABlocks.SPOTLIGHT_LIGHT);
             getOrCreateTagBuilder(BlockTags.FLOWER_POTS).add(VABlocks.POTTED_AEROBLOOM_SAPLING, VABlocks.POTTED_GREENCAP_MUSHROOM);
 
@@ -97,8 +97,22 @@ public final class VABlockTagProvider {
                     VABlocks.WAXED_WEATHERED_STEEL_BLOCK,
                     VABlocks.WAXED_OXIDIZED_STEEL_BLOCK,
                     VABlocks.RAW_STEEL_BLOCK,
-                    VABlocks.STEEL_TRAPDOOR,
                     VABlocks.STEEL_DOOR,
+                    VABlocks.EXPOSED_STEEL_DOOR,
+                    VABlocks.WEATHERED_STEEL_DOOR,
+                    VABlocks.OXIDIZED_STEEL_DOOR,
+                    VABlocks.WAXED_STEEL_DOOR,
+                    VABlocks.WAXED_EXPOSED_STEEL_DOOR,
+                    VABlocks.WAXED_WEATHERED_STEEL_DOOR,
+                    VABlocks.WAXED_OXIDIZED_STEEL_DOOR,
+                    VABlocks.STEEL_TRAPDOOR,
+                    VABlocks.EXPOSED_STEEL_TRAPDOOR,
+                    VABlocks.WEATHERED_STEEL_TRAPDOOR,
+                    VABlocks.OXIDIZED_STEEL_TRAPDOOR,
+                    VABlocks.WAXED_STEEL_TRAPDOOR,
+                    VABlocks.WAXED_EXPOSED_STEEL_TRAPDOOR,
+                    VABlocks.WAXED_WEATHERED_STEEL_TRAPDOOR,
+                    VABlocks.WAXED_OXIDIZED_STEEL_TRAPDOOR,
                     VABlocks.WARP_ANCHOR,
                     VABlocks.WARP_TETHER,
                     VABlocks.ENTANGLEMENT_DRIVE,
@@ -167,7 +181,15 @@ public final class VABlockTagProvider {
                     VABlocks.WAXED_STEEL_DOOR,
                     VABlocks.WAXED_EXPOSED_STEEL_DOOR,
                     VABlocks.WAXED_WEATHERED_STEEL_DOOR,
-                    VABlocks.WAXED_OXIDIZED_STEEL_DOOR
+                    VABlocks.WAXED_OXIDIZED_STEEL_DOOR,
+                    VABlocks.STEEL_TRAPDOOR,
+                    VABlocks.EXPOSED_STEEL_TRAPDOOR,
+                    VABlocks.WEATHERED_STEEL_TRAPDOOR,
+                    VABlocks.OXIDIZED_STEEL_TRAPDOOR,
+                    VABlocks.WAXED_STEEL_TRAPDOOR,
+                    VABlocks.WAXED_EXPOSED_STEEL_TRAPDOOR,
+                    VABlocks.WAXED_WEATHERED_STEEL_TRAPDOOR,
+                    VABlocks.WAXED_OXIDIZED_STEEL_TRAPDOOR
             );
             
             configureFamily(BlockTags.PICKAXE_MINEABLE, 0,
