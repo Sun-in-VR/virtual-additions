@@ -7,8 +7,7 @@ import net.minecraft.registry.tag.TagKey;
 import static com.github.suninvr.virtualadditions.VirtualAdditions.idOf;
 
 public class VAEnchantmentTags {
-    public static final TagKey<Enchantment> REDUCES_SCULK_GILD_MINING_SPEED = of("reduces_sculk_gild_mining_speed");
-    public static final TagKey<Enchantment> CORRUPTION = of("corruption");
+    public static final TagKey<Enchantment> EFFICIENCY = of("efficiency");
     public static final TagKey<Enchantment> INTELLIGENCE = of("intelligence");
 
     private static TagKey<Enchantment> of(String id) {

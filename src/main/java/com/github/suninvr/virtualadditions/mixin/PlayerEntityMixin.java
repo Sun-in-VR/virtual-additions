@@ -3,14 +3,13 @@ package com.github.suninvr.virtualadditions.mixin;
 import com.github.suninvr.virtualadditions.item.GildTypes;
 import com.github.suninvr.virtualadditions.item.GildedToolUtil;
 import com.github.suninvr.virtualadditions.registry.VADamageTypes;
-import com.github.suninvr.virtualadditions.registry.VAEnchantmentTags;
 import com.llamalad7.mixinextras.sugar.Local;
 import com.llamalad7.mixinextras.sugar.ref.LocalFloatRef;
 import net.minecraft.block.BlockState;
-import net.minecraft.enchantment.EnchantmentHelper;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.LivingEntity;
+import net.minecraft.entity.attribute.EntityAttributes;
 import net.minecraft.entity.damage.DamageSource;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
@@ -30,19 +29,20 @@ public abstract class PlayerEntityMixin extends LivingEntity {
         super(entityType, world);
     }
 
+    @Inject(method = "getBlockBreakingSpeed", at = @At(value = "INVOKE", target = "Lnet/minecraft/entity/effect/StatusEffectUtil;hasHaste(Lnet/minecraft/entity/LivingEntity;)Z", shift = At.Shift.BEFORE))
+    void virtualAdditions$getBlockBreakingSpeedForSculkGildedTools(BlockState block, CallbackInfoReturnable<Float> cir, @Local LocalFloatRef f) {
+        if (f.get() <= 1.0F) return;
+        PlayerEntity player = ((PlayerEntity)(Object)this);
+        ItemStack stack = player.getMainHandStack();
+        if (GildedToolUtil.getGildType(stack).equals(GildTypes.SCULK)) {
+            f.set((float) (f.get() - player.getAttributeValue(EntityAttributes.PLAYER_MINING_EFFICIENCY)));
+        }
+    }
+
     @Inject(method = "getBlockBreakingSpeed", at = @At("RETURN"), cancellable = true)
     public void virtualAdditions$getBlockBreakingSpeed(BlockState block, CallbackInfoReturnable<Float> cir) {
         float r = cir.getReturnValue();
         PlayerEntity player = ((PlayerEntity)(Object)this);
-
-        ItemStack stack = player.getMainHandStack();
-        if (GildedToolUtil.getGildType(stack).equals(GildTypes.SCULK)) {
-            float[] e = {0.0F};
-            EnchantmentHelper.forEachEnchantment(stack, (enchantment, level) -> {
-                if (enchantment.isIn(VAEnchantmentTags.REDUCES_SCULK_GILD_MINING_SPEED)) e[0] += 0.12F * level;
-            });
-            r *= Math.max(1 - e[0], 0.4F);
-        }
 
         Entity entity = player.getRootVehicle();
         boolean bl = entity.isOnGround() || (entity instanceof LivingEntity livingEntity && livingEntity.isClimbing());
