@@ -31,6 +31,10 @@ public class VirtualAdditions implements ModInitializer {
 		areBlocksInitialized = true;
 	}
 
+    public static boolean isFromMod(Identifier id) {
+		return id.getNamespace().equals(NAMESPACE);
+    }
+
     @Override
 	public void onInitialize() {
 		LOGGER.log(Level.INFO, "Virtual Additions is now loading!");
