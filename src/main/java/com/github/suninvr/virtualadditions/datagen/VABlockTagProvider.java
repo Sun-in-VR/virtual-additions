@@ -251,44 +251,6 @@ public final class VABlockTagProvider {
                             VABlocks.ACID_BLOCK)
                     .addOptionalTag(BlockTags.BASE_STONE_OVERWORLD);
 
-            getOrCreateTagBuilder(VABlockTags.SCULK_GILD_EFFECTIVE).add(
-                            Blocks.COBWEB,
-                            Blocks.MAGMA_BLOCK,
-                            Blocks.AMETHYST_BLOCK,
-                            Blocks.SNOW_BLOCK,
-                            Blocks.COBBLESTONE,
-                            Blocks.MOSSY_COBBLESTONE,
-                            Blocks.COBBLED_DEEPSLATE,
-                            VABlocks.COBBLED_HORNFELS,
-                            VABlocks.COBBLED_BLUESCHIST,
-                            VABlocks.COBBLED_SYENITE,
-                            Blocks.INFESTED_STONE,
-                            Blocks.INFESTED_COBBLESTONE,
-                            Blocks.INFESTED_DEEPSLATE)
-                    .addOptionalTag(VABlockTags.SCULK_GILD_STRONGLY_EFFECTIVE)
-                    .addOptionalTag(BlockTags.SCULK_REPLACEABLE);
-
-            getOrCreateTagBuilder(VABlockTags.SCULK_GILD_STRONGLY_EFFECTIVE).add(
-                            Blocks.ICE,
-                            Blocks.PACKED_ICE,
-                            Blocks.BLUE_ICE,
-                            Blocks.MANGROVE_ROOTS,
-                            Blocks.BROWN_MUSHROOM_BLOCK,
-                            Blocks.RED_MUSHROOM_BLOCK,
-                            Blocks.MUSHROOM_STEM,
-                            Blocks.BONE_BLOCK,
-                            Blocks.DEAD_TUBE_CORAL_BLOCK,
-                            Blocks.DEAD_BRAIN_CORAL_BLOCK,
-                            Blocks.DEAD_BUBBLE_CORAL_BLOCK,
-                            Blocks.DEAD_FIRE_CORAL_BLOCK,
-                            Blocks.DEAD_HORN_CORAL_BLOCK
-                    )
-                    .addOptionalTag(ORES)
-                    .addOptionalTag(BlockTags.LOGS)
-                    .addOptionalTag(BlockTags.LEAVES)
-                    .addOptionalTag(BlockTags.WART_BLOCKS)
-                    .addOptionalTag(BlockTags.CORAL_BLOCKS);
-
             getOrCreateTagBuilder(VABlockTags.SILKBULBS).add(
                     VABlocks.SILKBULB,
                     VABlocks.WHITE_SILKBULB,
