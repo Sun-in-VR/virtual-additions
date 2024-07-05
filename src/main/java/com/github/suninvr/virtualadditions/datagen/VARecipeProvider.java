@@ -519,7 +519,7 @@ public final class VARecipeProvider {
             set.ifCandle(block -> offerColoringRecipe(exporter, ItemTags.CANDLES, block, cost, index));
             set.ifSilkbulb(block -> offerColoringRecipe(exporter, VAItemTags.SILKBULBS, block, cost, index));
             set.ifBed(block -> offerColoringRecipe(exporter, ItemTags.BEDS, block, cost, index));
-            set.ifShulkerBox(block -> offerColoringRecipe(exporter, VAItemTags.SHULKER_BOXES, block, cost, index));
+            set.ifShulkerBox(block -> offerColoringRecipe(exporter, Items.SHULKER_BOX, block, cost, index));
         }
 
         @SafeVarargs

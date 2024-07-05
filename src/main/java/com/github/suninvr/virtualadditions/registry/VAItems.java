@@ -9,7 +9,9 @@ import net.fabricmc.fabric.api.loot.v2.LootTableEvents;
 import net.minecraft.block.Blocks;
 import net.minecraft.block.ComposterBlock;
 import net.minecraft.block.DispenserBlock;
+import net.minecraft.block.ShulkerBoxBlock;
 import net.minecraft.block.cauldron.CauldronBehavior;
+import net.minecraft.block.dispenser.BlockPlacementDispenserBehavior;
 import net.minecraft.block.dispenser.DispenserBehavior;
 import net.minecraft.block.dispenser.ItemDispenserBehavior;
 import net.minecraft.block.dispenser.ProjectileDispenserBehavior;
@@ -963,6 +965,15 @@ public class VAItems {
             DispenserBehavior climbingRopeBehavior = new ProjectileDispenserBehavior(item);
             DispenserBlock.registerBehavior(item, climbingRopeBehavior);
         }
+
+        DispenserBlock.registerBehavior(ShulkerBoxBlock.get(VADyeColors.CHARTREUSE).asItem(), new BlockPlacementDispenserBehavior());
+        DispenserBlock.registerBehavior(ShulkerBoxBlock.get(VADyeColors.MAROON).asItem(), new BlockPlacementDispenserBehavior());
+        DispenserBlock.registerBehavior(ShulkerBoxBlock.get(VADyeColors.INDIGO).asItem(), new BlockPlacementDispenserBehavior());
+        DispenserBlock.registerBehavior(ShulkerBoxBlock.get(VADyeColors.PLUM).asItem(), new BlockPlacementDispenserBehavior());
+        DispenserBlock.registerBehavior(ShulkerBoxBlock.get(VADyeColors.VIRIDIAN).asItem(), new BlockPlacementDispenserBehavior());
+        DispenserBlock.registerBehavior(ShulkerBoxBlock.get(VADyeColors.TAN).asItem(), new BlockPlacementDispenserBehavior());
+        DispenserBlock.registerBehavior(ShulkerBoxBlock.get(VADyeColors.SINOPIA).asItem(), new BlockPlacementDispenserBehavior());
+        DispenserBlock.registerBehavior(ShulkerBoxBlock.get(VADyeColors.LILAC).asItem(), new BlockPlacementDispenserBehavior());
 
         DispenserBlock.registerBehavior(ACID_BUCKET, new ItemDispenserBehavior(){
             private final ItemDispenserBehavior fallbackBehavior = new ItemDispenserBehavior();
