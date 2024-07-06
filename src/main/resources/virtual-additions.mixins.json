@@ -11,6 +11,7 @@
     "ClientPlayerInteractionManagerMixin",
     "CrossbowItemMixin",
     "DamageSourcesMixin",
+    "DefaultAttributeRegistryMixin",
     "DyeColorMixin",
     "EnchantmentHelperMixin",
     "EntityMixin",
