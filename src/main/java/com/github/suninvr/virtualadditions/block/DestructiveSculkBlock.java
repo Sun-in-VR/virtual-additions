@@ -30,7 +30,6 @@ import java.util.Collections;
 import java.util.List;
 import java.util.UUID;
 
-@SuppressWarnings("deprecation")
 public class DestructiveSculkBlock extends BlockWithEntity {
     public static final MapCodec<DestructiveSculkBlock> CODEC = createCodec(DestructiveSculkBlock::new);
     public static final BooleanProperty SPREADING = BooleanProperty.of("spreading");
@@ -66,8 +65,9 @@ public class DestructiveSculkBlock extends BlockWithEntity {
     }
 
     public static void placeState(World world, BlockPos pos, BlockState replacedState, UUID playerId, ItemStack tool, int potency) {
-        world.setBlockState(pos, VABlocks.DESTRUCTIVE_SCULK.getDefaultState().with(DestructiveSculkBlock.ORIGIN, true));
-        world.scheduleBlockTick(pos, VABlocks.DESTRUCTIVE_SCULK, 2);
+        boolean spreading = potency > 0;
+        world.setBlockState(pos, VABlocks.DESTRUCTIVE_SCULK.getDefaultState().with(DestructiveSculkBlock.ORIGIN, true).with(SPREADING, spreading));
+        world.scheduleBlockTick(pos, VABlocks.DESTRUCTIVE_SCULK, spreading ? 2 : 10);
         DestructiveSculkBlock.setData(world, pos, replacedState, playerId, tool, potency);
     }
 
@@ -114,7 +114,7 @@ public class DestructiveSculkBlock extends BlockWithEntity {
 
         boolean bl = false;
         if (!validPos.isEmpty()) {
-            BlockPos blockPos = validPos.get(0);
+            BlockPos blockPos = validPos.getFirst();
             BlockState stateToReplace = world.getBlockState(blockPos);
             world.setBlockState(blockPos, VABlocks.DESTRUCTIVE_SCULK.getDefaultState());
             setData(world, blockPos, stateToReplace, blockEntity.getPlayerId(), blockEntity.getTool(), 0);

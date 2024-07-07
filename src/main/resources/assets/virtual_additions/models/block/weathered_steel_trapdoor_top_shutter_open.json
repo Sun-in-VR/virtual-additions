@@ -1,0 +1,6 @@
+{
+  "parent": "minecraft:block/template_trapdoor_top",
+  "textures": {
+    "texture": "virtual_additions:block/weathered_steel_trapdoor_shutter_open"
+  }
+}

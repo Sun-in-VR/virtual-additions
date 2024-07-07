@@ -37,7 +37,8 @@
   ],
   "client": [
     "ClientPlayNetworkHandlerMixin",
-    "LlamaDecorFeatureRendererMixin"
+    "LlamaDecorFeatureRendererMixin",
+    "WorldRendererMixin"
   ],
   "injectors": {
     "defaultRequire": 1

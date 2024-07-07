@@ -1,5 +1,6 @@
 package com.github.suninvr.virtualadditions.datagen;
 
+import com.github.suninvr.virtualadditions.VirtualAdditions;
 import com.github.suninvr.virtualadditions.block.entity.ColoringStationBlockEntity;
 import com.github.suninvr.virtualadditions.datagen.recipe.ArmorColoringRecipeJsonBuilder;
 import com.github.suninvr.virtualadditions.datagen.recipe.ColoringRecipeJsonBuilder;
@@ -9,14 +10,12 @@ import com.github.suninvr.virtualadditions.registry.collection.ColorfulBlockSet;
 import net.fabricmc.fabric.api.datagen.v1.FabricDataGenerator;
 import net.fabricmc.fabric.api.datagen.v1.FabricDataOutput;
 import net.fabricmc.fabric.api.datagen.v1.provider.FabricRecipeProvider;
+import net.minecraft.advancement.AdvancementCriterion;
 import net.minecraft.block.Block;
 import net.minecraft.block.Blocks;
 import net.minecraft.data.family.BlockFamily;
 import net.minecraft.data.server.recipe.*;
-import net.minecraft.item.DyeItem;
-import net.minecraft.item.Item;
-import net.minecraft.item.ItemConvertible;
-import net.minecraft.item.Items;
+import net.minecraft.item.*;
 import net.minecraft.recipe.CampfireCookingRecipe;
 import net.minecraft.recipe.Ingredient;
 import net.minecraft.recipe.RecipeSerializer;
@@ -27,6 +26,7 @@ import net.minecraft.registry.RegistryWrapper;
 import net.minecraft.registry.tag.ItemTags;
 import net.minecraft.registry.tag.TagKey;
 import net.minecraft.resource.featuretoggle.FeatureFlags;
+import net.minecraft.resource.featuretoggle.FeatureSet;
 import org.apache.commons.lang3.tuple.Pair;
 
 import java.util.List;
@@ -71,24 +71,17 @@ public final class VARecipeProvider {
 
             offerCompactingRecipe(exporter, RecipeCategory.MISC, VABlocks.STEEL_BLOCK, VAItems.STEEL_INGOT, "steel_ingot");
             offerShapelessRecipe(exporter, VAItems.STEEL_INGOT, VABlocks.STEEL_BLOCK, "steel", 9);
+            offerShapelessRecipe(exporter, VAItems.STEEL_INGOT, VABlocks.WAXED_STEEL_BLOCK, "steel", 9);
             offerCompactingRecipe(exporter, RecipeCategory.MISC, VABlocks.RAW_STEEL_BLOCK, VAItems.RAW_STEEL, "steel_ingot");
             offerShapelessRecipe(exporter, VAItems.RAW_STEEL, VABlocks.RAW_STEEL_BLOCK, "raw_steel", 9);
             offerCompactingRecipe(exporter, RecipeCategory.MISC, VABlocks.IOLITE_BLOCK, VAItems.IOLITE, "iolite");
             offerShapelessRecipe(exporter, VAItems.IOLITE, VABlocks.IOLITE_BLOCK, "iolite", 9);
 
             offerShapelessRecipe(exporter, RecipeCategory.MISC, VAItems.RAW_STEEL, 1, Pair.of(Items.RAW_IRON, 3), Pair.of(Items.COAL, 1));
+            
             offerShapelessRecipe(exporter, RecipeCategory.MISC, VAItems.TOOL_GILD_SMITHING_TEMPLATE, 1, Pair.of(VAItems.STEEL_INGOT, 1), Pair.of(Items.DIAMOND, 1));
-            offerStonecuttingRecipe(exporter, RecipeCategory.BUILDING_BLOCKS, VABlocks.CUT_STEEL_STAIRS, VABlocks.CUT_STEEL);
-            offerStonecuttingRecipe(exporter, RecipeCategory.BUILDING_BLOCKS, VABlocks.CUT_STEEL_SLAB, VABlocks.CUT_STEEL, 2);
-            offerStonecuttingRecipe(exporter, RecipeCategory.BUILDING_BLOCKS, VABlocks.STEEL_GRATE, VABlocks.CUT_STEEL, 1);
-            offerStonecuttingRecipe(exporter, RecipeCategory.BUILDING_BLOCKS, VABlocks.CHISELED_STEEL, VABlocks.CUT_STEEL, 1);
-            ShapedRecipeJsonBuilder.create(RecipeCategory.DECORATIONS, VABlocks.CUT_STEEL_STAIRS, 4).input('#', VABlocks.CUT_STEEL).pattern("#  ").pattern("## ").pattern("###").criterion("cut_steel", conditionsFromItem(VABlocks.CUT_STEEL)).offerTo(exporter);
-            ShapedRecipeJsonBuilder.create(RecipeCategory.DECORATIONS, VABlocks.CUT_STEEL_SLAB, 6).input('#', VABlocks.CUT_STEEL).pattern("###").criterion("cut_steel", conditionsFromItem(VABlocks.CUT_STEEL)).offerTo(exporter);
-            ShapedRecipeJsonBuilder.create(RecipeCategory.DECORATIONS, VABlocks.STEEL_FENCE, 6).input('W', VABlocks.CUT_STEEL).input('#', VAItems.STEEL_INGOT).pattern("W#W").pattern("W#W").criterion("cut_steel", conditionsFromItem(VABlocks.CUT_STEEL)).offerTo(exporter);
+
             offer2x2FullRecipe(exporter, RecipeCategory.BUILDING_BLOCKS, VABlocks.CUT_STEEL, VAItems.STEEL_INGOT, 16);
-            offerStonecuttingRecipe(exporter, RecipeCategory.BUILDING_BLOCKS, VABlocks.CUT_STEEL, VABlocks.STEEL_BLOCK, 36);
-            offerStonecuttingRecipe(exporter, RecipeCategory.BUILDING_BLOCKS, VABlocks.STEEL_GRATE, VABlocks.STEEL_BLOCK, 36);
-            offerStonecuttingRecipe(exporter, RecipeCategory.BUILDING_BLOCKS, VABlocks.CHISELED_STEEL, VABlocks.STEEL_BLOCK, 36);
             offerStonecuttingRecipe(exporter, RecipeCategory.BUILDING_BLOCKS, VABlocks.CUT_STEEL, VAItems.STEEL_INGOT, 4);
             offerStonecuttingRecipe(exporter, RecipeCategory.BUILDING_BLOCKS, VABlocks.CUT_STEEL_STAIRS, VAItems.STEEL_INGOT, 4);
             offerStonecuttingRecipe(exporter, RecipeCategory.BUILDING_BLOCKS, VABlocks.CUT_STEEL_SLAB, VAItems.STEEL_INGOT, 8);
@@ -96,7 +89,16 @@ public final class VARecipeProvider {
             offerStonecuttingRecipe(exporter, RecipeCategory.BUILDING_BLOCKS, VABlocks.CHISELED_STEEL, VAItems.STEEL_INGOT, 4);
             createDoorRecipe(VABlocks.STEEL_DOOR, Ingredient.ofItems(VAItems.STEEL_INGOT)).criterion("steel_ingot", conditionsFromItem(VAItems.STEEL_INGOT)).offerTo(exporter);
             createTrapdoorRecipe(VABlocks.STEEL_TRAPDOOR, Ingredient.ofItems(VAItems.STEEL_INGOT)).criterion("steel_ingot", conditionsFromItem(VAItems.STEEL_INGOT)).offerTo(exporter);
-            createChiseledBlockRecipe(RecipeCategory.BUILDING_BLOCKS, VABlocks.CHISELED_STEEL, Ingredient.ofItems(VABlocks.CUT_STEEL_SLAB));
+            ShapedRecipeJsonBuilder.create(RecipeCategory.DECORATIONS, VABlocks.STEEL_FENCE, 6).input('W', VABlocks.CUT_STEEL).input('#', VAItems.STEEL_INGOT).pattern("W#W").pattern("W#W").criterion("cut_steel", conditionsFromItem(VABlocks.CUT_STEEL)).offerTo(exporter);
+
+            offerSteelRecipeSet(exporter, VABlocks.STEEL_BLOCK, VABlocks.CUT_STEEL, VABlocks.CUT_STEEL_STAIRS, VABlocks.CUT_STEEL_SLAB, VABlocks.STEEL_GRATE, VABlocks.CHISELED_STEEL);
+            offerSteelRecipeSet(exporter, VABlocks.EXPOSED_STEEL_BLOCK, VABlocks.EXPOSED_CUT_STEEL, VABlocks.EXPOSED_CUT_STEEL_STAIRS, VABlocks.EXPOSED_CUT_STEEL_SLAB, VABlocks.EXPOSED_STEEL_GRATE, VABlocks.EXPOSED_CHISELED_STEEL);
+            offerSteelRecipeSet(exporter, VABlocks.WEATHERED_STEEL_BLOCK, VABlocks.WEATHERED_CUT_STEEL, VABlocks.WEATHERED_CUT_STEEL_STAIRS, VABlocks.WEATHERED_CUT_STEEL_SLAB, VABlocks.WEATHERED_STEEL_GRATE, VABlocks.WEATHERED_CHISELED_STEEL);
+            offerSteelRecipeSet(exporter, VABlocks.OXIDIZED_STEEL_BLOCK, VABlocks.OXIDIZED_CUT_STEEL, VABlocks.OXIDIZED_CUT_STEEL_STAIRS, VABlocks.OXIDIZED_CUT_STEEL_SLAB, VABlocks.OXIDIZED_STEEL_GRATE, VABlocks.OXIDIZED_CHISELED_STEEL);
+            offerSteelRecipeSet(exporter, VABlocks.WAXED_STEEL_BLOCK, VABlocks.WAXED_CUT_STEEL, VABlocks.WAXED_CUT_STEEL_STAIRS, VABlocks.WAXED_CUT_STEEL_SLAB, VABlocks.WAXED_STEEL_GRATE, VABlocks.WAXED_CHISELED_STEEL);
+            offerSteelRecipeSet(exporter, VABlocks.WAXED_EXPOSED_STEEL_BLOCK, VABlocks.WAXED_EXPOSED_CUT_STEEL, VABlocks.WAXED_EXPOSED_CUT_STEEL_STAIRS, VABlocks.WAXED_EXPOSED_CUT_STEEL_SLAB, VABlocks.WAXED_EXPOSED_STEEL_GRATE, VABlocks.WAXED_EXPOSED_CHISELED_STEEL);
+            offerSteelRecipeSet(exporter, VABlocks.WAXED_WEATHERED_STEEL_BLOCK, VABlocks.WAXED_WEATHERED_CUT_STEEL, VABlocks.WAXED_WEATHERED_CUT_STEEL_STAIRS, VABlocks.WAXED_WEATHERED_CUT_STEEL_SLAB, VABlocks.WAXED_WEATHERED_STEEL_GRATE, VABlocks.WAXED_WEATHERED_CHISELED_STEEL);
+            offerSteelRecipeSet(exporter, VABlocks.WAXED_OXIDIZED_STEEL_BLOCK, VABlocks.WAXED_OXIDIZED_CUT_STEEL, VABlocks.WAXED_OXIDIZED_CUT_STEEL_STAIRS, VABlocks.WAXED_OXIDIZED_CUT_STEEL_SLAB, VABlocks.WAXED_OXIDIZED_STEEL_GRATE, VABlocks.WAXED_OXIDIZED_CHISELED_STEEL);
 
             offerSmelting(exporter, List.of(VABlocks.COBBLED_HORNFELS), RecipeCategory.BUILDING_BLOCKS, VABlocks.HORNFELS, 0.1F, 200, "hornfels");
             offerStonecuttingRecipes(exporter, VABlocks.HORNFELS, VACollections.POLISHED_HORNFELS, VACollections.HORNFELS_TILES);
@@ -308,11 +310,6 @@ public final class VARecipeProvider {
                     .input('#', Items.COPPER_INGOT).input('s', Items.STRING)
                     .criterion("copper_ingot", conditionsFromItem(Items.COPPER_INGOT)).offerTo(exporter);
 
-            ShapelessRecipeJsonBuilder.create(RecipeCategory.TOOLS, VAItems.WAXED_CLIMBING_ROPE, 1).input(VAItems.CLIMBING_ROPE).input(Items.HONEYCOMB).criterion("has_rope", conditionsFromItem(VAItems.CLIMBING_ROPE)).offerTo(exporter);
-            ShapelessRecipeJsonBuilder.create(RecipeCategory.TOOLS, VAItems.WAXED_EXPOSED_CLIMBING_ROPE, 1).input(VAItems.EXPOSED_CLIMBING_ROPE).input(Items.HONEYCOMB).criterion("has_rope", conditionsFromItem(VAItems.EXPOSED_CLIMBING_ROPE)).offerTo(exporter);
-            ShapelessRecipeJsonBuilder.create(RecipeCategory.TOOLS, VAItems.WAXED_WEATHERED_CLIMBING_ROPE, 1).input(VAItems.WEATHERED_CLIMBING_ROPE).input(Items.HONEYCOMB).criterion("has_rope", conditionsFromItem(VAItems.WEATHERED_CLIMBING_ROPE)).offerTo(exporter);
-            ShapelessRecipeJsonBuilder.create(RecipeCategory.TOOLS, VAItems.WAXED_OXIDIZED_CLIMBING_ROPE, 1).input(VAItems.OXIDIZED_CLIMBING_ROPE).input(Items.HONEYCOMB).criterion("has_rope", conditionsFromItem(VAItems.OXIDIZED_CLIMBING_ROPE)).offerTo(exporter);
-
             ShapedRecipeJsonBuilder.create(RecipeCategory.BUILDING_BLOCKS, VABlocks.SILKBULB, 1)
                     .pattern("###")
                     .pattern("#b#")
@@ -381,13 +378,6 @@ public final class VARecipeProvider {
                     .input('s', VAItems.ROCK_SALT).input('b', Items.SNOWBALL).input('m', Items.MILK_BUCKET).input('w', Items.BOWL)
                     .criterion("milk", conditionsFromItem(Items.MILK_BUCKET)).offerTo(exporter);
 
-            ShapedRecipeJsonBuilder.create(RecipeCategory.DECORATIONS, VAItems.STEEL_GRATE, 4)
-                    .pattern(" c ")
-                    .pattern("c c")
-                    .pattern(" c ")
-                    .input('c', VAItems.CUT_STEEL)
-                    .criterion("cut_steel", conditionsFromItem(VAItems.CUT_STEEL)).offerTo(exporter);
-
             ShapedRecipeJsonBuilder.create(RecipeCategory.DECORATIONS, VAItems.ENGRAVING_CHISEL, 1)
                     .pattern("c")
                     .pattern("s")
@@ -439,6 +429,8 @@ public final class VARecipeProvider {
             offerBarkBlockRecipe(exporter, VAItems.STRIPPED_AEROBLOOM_WOOD, VAItems.STRIPPED_AEROBLOOM_LOG);
             offerPlanksRecipe2(exporter, VAItems.AEROBLOOM_PLANKS, VAItemTags.AEROBLOOM_LOGS, 4);
             offerHangingSignRecipe(exporter, VAItems.AEROBLOOM_HANGING_SIGN, VAItems.STRIPPED_AEROBLOOM_LOG);
+            
+            offerWaxingRecipes(exporter);
         }
     }
 
@@ -527,7 +519,7 @@ public final class VARecipeProvider {
             set.ifCandle(block -> offerColoringRecipe(exporter, ItemTags.CANDLES, block, cost, index));
             set.ifSilkbulb(block -> offerColoringRecipe(exporter, VAItemTags.SILKBULBS, block, cost, index));
             set.ifBed(block -> offerColoringRecipe(exporter, ItemTags.BEDS, block, cost, index));
-            set.ifShulkerBox(block -> offerColoringRecipe(exporter, VAItemTags.SHULKER_BOXES, block, cost, index));
+            set.ifShulkerBox(block -> offerColoringRecipe(exporter, Items.SHULKER_BOX, block, cost, index));
         }
 
         @SafeVarargs
@@ -659,6 +651,27 @@ public final class VARecipeProvider {
                     .pattern("###")
                     .pattern("###")
                     .input('#', input).criterion("has_leaves", conditionsFromItem(input)).group("hedges").offerTo(exporter);
+        }
+
+        public static void offerWaxingRecipes(RecipeExporter exporter) {
+            HoneycombItem.UNWAXED_TO_WAXED_BLOCKS.get().forEach((unwaxed, waxed) -> {
+                if (!VirtualAdditions.isFromMod(Registries.BLOCK.getId(unwaxed))) return;
+                ShapelessRecipeJsonBuilder.create(RecipeCategory.BUILDING_BLOCKS, waxed).input(unwaxed).input(Items.HONEYCOMB).group(RecipeProvider.getItemPath(waxed)).criterion(RecipeProvider.hasItem(unwaxed), (AdvancementCriterion)RecipeProvider.conditionsFromItem(unwaxed)).offerTo(exporter, RecipeProvider.convertBetween(waxed, Items.HONEYCOMB));
+            });
+        }
+        
+        public static void offerSteelRecipeSet(RecipeExporter exporter, Block block, Block cut, Block cutStairs, Block cutSlab, Block grate, Block chiseled){
+            offerStonecuttingRecipe(exporter, RecipeCategory.BUILDING_BLOCKS, cutStairs, cut);
+            offerStonecuttingRecipe(exporter, RecipeCategory.BUILDING_BLOCKS, cutSlab, cut, 2);
+            offerStonecuttingRecipe(exporter, RecipeCategory.BUILDING_BLOCKS, grate, cut, 1);
+            offerStonecuttingRecipe(exporter, RecipeCategory.BUILDING_BLOCKS, chiseled, cut, 1);
+            ShapedRecipeJsonBuilder.create(RecipeCategory.DECORATIONS, cutStairs, 4).input('#', cut).pattern("#  ").pattern("## ").pattern("###").criterion("has_item", conditionsFromItem(cut)).offerTo(exporter);
+            ShapedRecipeJsonBuilder.create(RecipeCategory.DECORATIONS, cutSlab, 6).input('#', cut).pattern("###").criterion("has_item", conditionsFromItem(cut)).offerTo(exporter);
+            offerStonecuttingRecipe(exporter, RecipeCategory.BUILDING_BLOCKS, cut, block, 36);
+            offerStonecuttingRecipe(exporter, RecipeCategory.BUILDING_BLOCKS, grate, block, 36);
+            offerStonecuttingRecipe(exporter, RecipeCategory.BUILDING_BLOCKS, chiseled, block, 36);
+            ShapedRecipeJsonBuilder.create(RecipeCategory.DECORATIONS, chiseled, 1).input('#', cutSlab).pattern("#").pattern("#").criterion("has_item", conditionsFromItem(cutSlab)).offerTo(exporter);
+            ShapedRecipeJsonBuilder.create(RecipeCategory.DECORATIONS, grate, 4).pattern(" # ").pattern("# #").pattern(" # ").input('#', cut).criterion("has_item", conditionsFromItem(cut)).offerTo(exporter);
         }
     }
 }

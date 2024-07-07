@@ -4,11 +4,11 @@ import com.github.suninvr.virtualadditions.VirtualAdditions;
 import com.github.suninvr.virtualadditions.block.DestructiveSculkBlock;
 import com.github.suninvr.virtualadditions.registry.VABlockTags;
 import com.github.suninvr.virtualadditions.registry.VABlocks;
-import com.github.suninvr.virtualadditions.registry.VAEnchantmentTags;
+import com.github.suninvr.virtualadditions.registry.VAGameRules;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.ExperienceDroppingBlock;
-import net.minecraft.enchantment.EnchantmentHelper;
 import net.minecraft.entity.EquipmentSlot;
+import net.minecraft.entity.attribute.EntityAttributes;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.particle.ParticleTypes;
@@ -17,8 +17,11 @@ import net.minecraft.sound.SoundCategory;
 import net.minecraft.sound.SoundEvents;
 import net.minecraft.stat.Stats;
 import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.math.Direction;
 import net.minecraft.world.World;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.function.BiFunction;
 
 import static com.github.suninvr.virtualadditions.VirtualAdditions.idOf;
@@ -42,12 +45,11 @@ public class GildTypes {
     public static final GildType SCULK = new GildType(idOf("sculk"), 0x009295, miningSpeedModifier(0.4F, MULTIPLY), attackSpeedModifier(1.2F, MULTIPLY_ROUNDED_TENTHS, GildType.ModifierType.ToolType.SWORD)) {
         @Override
         public boolean isGildEffective(World world, PlayerEntity player, BlockPos pos, BlockState state, ItemStack tool) {
-            return !state.isOf(VABlocks.DESTRUCTIVE_SCULK) && state.isIn(VABlockTags.SCULK_GILD_EFFECTIVE) && super.isGildEffective(world, player, pos, state, tool);
+            return !player.getItemCooldownManager().isCoolingDown(tool.getItem()) && !state.isOf(VABlocks.DESTRUCTIVE_SCULK) && state.getHardness(world, pos) > 0 && world.getBlockEntity(pos) == null && super.isGildEffective(world, player, pos, state, tool);
         }
 
         @Override
         public void emitBlockBreakingEffects(World world, PlayerEntity player, BlockPos pos, ItemStack tool) {
-            if (player.getItemCooldownManager().isCoolingDown(tool.getItem())) return;
             world.playSound(null, pos, SoundEvents.BLOCK_SCULK_SPREAD, SoundCategory.BLOCKS, 1.0F, 1.0F);
             if (world instanceof ServerWorld serverWorld) {
                 serverWorld.spawnParticles(ParticleTypes.SCULK_CHARGE_POP, pos.getX() + 0.5, pos.getY() + 0.5, pos.getZ() + 0.5, 50, 0.4, 0.4, 0.4, 0.02);
@@ -56,19 +58,49 @@ public class GildTypes {
 
         @Override
         public boolean onBlockBroken(World world, PlayerEntity player, BlockPos pos, BlockState state, ItemStack tool) {
-            if (player.getItemCooldownManager().isCoolingDown(tool.getItem())) return true;
-            boolean stronglyEffective = state.isIn(VABlockTags.SCULK_GILD_STRONGLY_EFFECTIVE);
-            int potency = (int) Math.floor( Math.max(30 - (state.getHardness(world, pos) * (stronglyEffective ? 3 : 6) + 1), 0) );
-            int[] corruptionLevel = {0};
-            EnchantmentHelper.forEachEnchantment(tool, (enchantment, level) -> {
-                if (enchantment.isIn(VAEnchantmentTags.CORRUPTION)) corruptionLevel[0] = level;
-            });
-            player.getItemCooldownManager().set(tool.getItem(), potency);
-            potency += (potency * corruptionLevel[0]) / 3;
+            double miningEfficiency = player.getAttributeValue(EntityAttributes.PLAYER_MINING_EFFICIENCY);
+            int potency = (int) (48 / state.getHardness(world, pos));
+            potency += (int) (potency * (miningEfficiency / 13.0));
+            potency = Math.min(Math.min((tool.getMaxDamage() - tool.getDamage()), potency) -1, world.getGameRules().getInt(VAGameRules.SCULK_GILD_BLOCK_SELECTION_MAXIMUM));
+            if (potency <= 0) return true;
+
+            List<BlockPos> posList = selectPositions(world, pos, state, potency);
+            //TODO: Rewrite DestructiveSculkBlock.placeState to use posList.
             DestructiveSculkBlock.placeState(world, pos, state, player.getUuid(), tool, potency);
-            player.incrementStat(Stats.USED.getOrCreateStat(tool.getItem()));
-            tool.damage( potency, player, EquipmentSlot.MAINHAND);
+            int i = posList.size();
+            player.increaseStat(Stats.USED.getOrCreateStat(tool.getItem()), i);
+            tool.damage( i, player, EquipmentSlot.MAINHAND);
+            player.getItemCooldownManager().set(tool.getItem(), (int) ((i * 2) / ((miningEfficiency / 20.0) + 1)));
             return false;
+        }
+
+        private static List<BlockPos> selectPositions(World world, BlockPos pos, BlockState state, int i){
+            ArrayList<BlockPos> activeList = new ArrayList<>();
+            ArrayList<BlockPos> finalList = new ArrayList<>();
+            activeList.add(pos);
+            finalList.add(pos);
+            while (i > 0 && !activeList.isEmpty()) {
+                BlockPos checkAroundPos = activeList.getFirst();
+                for (Direction dir : Direction.values()) {
+                    BlockPos checkAtPos = checkAroundPos.offset(dir);
+                    if (!finalList.contains(checkAtPos) && world.getBlockState(checkAtPos).getBlock().equals(state.getBlock())) {
+                        i -= 1;
+                        activeList.add(checkAtPos);
+                        finalList.add(checkAtPos);
+                    }
+                    for (Direction dirEdge : Direction.values()){
+                        if (dirEdge.getAxis().equals(dir.getAxis())) continue;
+                        checkAtPos = checkAroundPos.offset(dir).offset(dirEdge);
+                        if (!finalList.contains(checkAtPos) && world.getBlockState(checkAtPos).getBlock().equals(state.getBlock())) {
+                            i -= 1;
+                            activeList.add(checkAtPos);
+                            finalList.add(checkAtPos);
+                        }
+                    }
+                }
+                activeList.removeFirst();
+            }
+            return finalList;
         }
     };
     public static final GildType NONE = new GildType(idOf("none"), 0xFFFFFF);

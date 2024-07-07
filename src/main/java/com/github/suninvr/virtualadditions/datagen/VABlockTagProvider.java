@@ -42,17 +42,17 @@ public final class VABlockTagProvider {
 
             getOrCreateTagBuilder(BlockTags.SWORD_EFFICIENT).addOptionalTag(HEDGES);
             getOrCreateTagBuilder(BlockTags.FLOWERS).add(VABlocks.CHERRY_HEDGE, VABlocks.FLOWERING_AZALEA_HEDGE);
-            getOrCreateTagBuilder(BlockTags.BEACON_BASE_BLOCKS).add(VABlocks.STEEL_BLOCK, VABlocks.IOLITE_BLOCK);
+            getOrCreateTagBuilder(BlockTags.BEACON_BASE_BLOCKS).add(VABlocks.STEEL_BLOCK, VABlocks.EXPOSED_STEEL_BLOCK, VABlocks.WEATHERED_STEEL_BLOCK, VABlocks.OXIDIZED_STEEL_BLOCK, VABlocks.WAXED_STEEL_BLOCK, VABlocks.WAXED_EXPOSED_STEEL_BLOCK, VABlocks.WAXED_WEATHERED_STEEL_BLOCK, VABlocks.WAXED_OXIDIZED_STEEL_BLOCK, VABlocks.IOLITE_BLOCK);
             getOrCreateTagBuilder(BlockTags.CLIMBABLE).add(VABlocks.CLIMBING_ROPE, VABlocks.CLIMBING_ROPE_ANCHOR, VABlocks.EXPOSED_CLIMBING_ROPE_ANCHOR, VABlocks.WEATHERED_CLIMBING_ROPE_ANCHOR, VABlocks.OXIDIZED_CLIMBING_ROPE_ANCHOR, VABlocks.WAXED_CLIMBING_ROPE_ANCHOR, VABlocks.WAXED_EXPOSED_CLIMBING_ROPE_ANCHOR, VABlocks.WAXED_WEATHERED_CLIMBING_ROPE_ANCHOR);
             getOrCreateTagBuilder(BlockTags.COMBINATION_STEP_SOUND_BLOCKS).add(VABlocks.WEBBED_SILK);
             getOrCreateTagBuilder(BlockTags.CROPS).add(VABlocks.CORN_CROP, VABlocks.COTTON);
             getOrCreateTagBuilder(BlockTags.DEEPSLATE_ORE_REPLACEABLES).add(VABlocks.HORNFELS, VABlocks.BLUESCHIST, VABlocks.SYENITE);
-            getOrCreateTagBuilder(BlockTags.DOORS).add(VABlocks.STEEL_DOOR);
+            getOrCreateTagBuilder(BlockTags.DOORS).add(VABlocks.STEEL_DOOR, VABlocks.EXPOSED_STEEL_DOOR, VABlocks.WEATHERED_STEEL_DOOR, VABlocks.OXIDIZED_STEEL_DOOR, VABlocks.WAXED_STEEL_DOOR, VABlocks.WAXED_EXPOSED_STEEL_DOOR, VABlocks.WAXED_WEATHERED_STEEL_DOOR);
+            getOrCreateTagBuilder(BlockTags.TRAPDOORS).add(VABlocks.STEEL_TRAPDOOR, VABlocks.EXPOSED_STEEL_TRAPDOOR, VABlocks.WEATHERED_STEEL_TRAPDOOR, VABlocks.OXIDIZED_STEEL_TRAPDOOR, VABlocks.WAXED_STEEL_TRAPDOOR, VABlocks.WAXED_EXPOSED_STEEL_TRAPDOOR, VABlocks.WAXED_WEATHERED_STEEL_TRAPDOOR);
             getOrCreateTagBuilder(BlockTags.FENCES).add(VABlocks.STEEL_FENCE);
             getOrCreateTagBuilder(BlockTags.MAINTAINS_FARMLAND).add(VABlocks.CORN_CROP, VABlocks.COTTON);
             getOrCreateTagBuilder(BlockTags.REPLACEABLE).add(VABlocks.ACID, VABlocks.FRAYED_SILK);
             getOrCreateTagBuilder(BlockTags.SCULK_REPLACEABLE).add(VABlocks.SILK_BLOCK, VABlocks.WEBBED_SILK, VABlocks.ROCK_SALT_BLOCK);
-            getOrCreateTagBuilder(BlockTags.TRAPDOORS).add(VABlocks.STEEL_TRAPDOOR);
             getOrCreateTagBuilder(BlockTags.REPLACEABLE).add(VABlocks.SPOTLIGHT_LIGHT);
             getOrCreateTagBuilder(BlockTags.FLOWER_POTS).add(VABlocks.POTTED_AEROBLOOM_SAPLING, VABlocks.POTTED_GREENCAP_MUSHROOM);
 
@@ -89,15 +89,43 @@ public final class VABlockTagProvider {
 
             configureMinable(BlockTags.PICKAXE_MINEABLE, 1,
                     VABlocks.STEEL_BLOCK,
+                    VABlocks.EXPOSED_STEEL_BLOCK,
+                    VABlocks.WEATHERED_STEEL_BLOCK,
+                    VABlocks.OXIDIZED_STEEL_BLOCK,
+                    VABlocks.WAXED_STEEL_BLOCK,
+                    VABlocks.WAXED_EXPOSED_STEEL_BLOCK,
+                    VABlocks.WAXED_WEATHERED_STEEL_BLOCK,
+                    VABlocks.WAXED_OXIDIZED_STEEL_BLOCK,
                     VABlocks.RAW_STEEL_BLOCK,
-                    VABlocks.STEEL_TRAPDOOR,
                     VABlocks.STEEL_DOOR,
+                    VABlocks.EXPOSED_STEEL_DOOR,
+                    VABlocks.WEATHERED_STEEL_DOOR,
+                    VABlocks.OXIDIZED_STEEL_DOOR,
+                    VABlocks.WAXED_STEEL_DOOR,
+                    VABlocks.WAXED_EXPOSED_STEEL_DOOR,
+                    VABlocks.WAXED_WEATHERED_STEEL_DOOR,
+                    VABlocks.WAXED_OXIDIZED_STEEL_DOOR,
+                    VABlocks.STEEL_TRAPDOOR,
+                    VABlocks.EXPOSED_STEEL_TRAPDOOR,
+                    VABlocks.WEATHERED_STEEL_TRAPDOOR,
+                    VABlocks.OXIDIZED_STEEL_TRAPDOOR,
+                    VABlocks.WAXED_STEEL_TRAPDOOR,
+                    VABlocks.WAXED_EXPOSED_STEEL_TRAPDOOR,
+                    VABlocks.WAXED_WEATHERED_STEEL_TRAPDOOR,
+                    VABlocks.WAXED_OXIDIZED_STEEL_TRAPDOOR,
                     VABlocks.WARP_ANCHOR,
                     VABlocks.WARP_TETHER,
                     VABlocks.ENTANGLEMENT_DRIVE,
                     VABlocks.REDSTONE_BRIDGE,
                     VABlocks.CAGELIGHT,
-                    VABlocks.STEEL_GRATE
+                    VABlocks.STEEL_GRATE,
+                    VABlocks.EXPOSED_STEEL_GRATE,
+                    VABlocks.WEATHERED_STEEL_GRATE,
+                    VABlocks.OXIDIZED_STEEL_GRATE,
+                    VABlocks.WAXED_STEEL_GRATE,
+                    VABlocks.WAXED_EXPOSED_STEEL_GRATE,
+                    VABlocks.WAXED_WEATHERED_STEEL_GRATE,
+                    VABlocks.WAXED_OXIDIZED_STEEL_GRATE
             );
 
             configureMinable(BlockTags.PICKAXE_MINEABLE, 3,
@@ -110,9 +138,61 @@ public final class VABlockTagProvider {
                     );
 
             configureOverworldStone(VABlocks.HORNFELS, VABlocks.BLUESCHIST, VABlocks.SYENITE);
-            configureFamily(BlockTags.PICKAXE_MINEABLE, 1, VACollections.CUT_STEEL);
-            configureFamily(BlockTags.PICKAXE_MINEABLE, 0,
+            configureFamily(BlockTags.PICKAXE_MINEABLE, 1,
                     VACollections.CUT_STEEL,
+                    VACollections.EXPOSED_CUT_STEEL,
+                    VACollections.WEATHERED_CUT_STEEL,
+                    VACollections.OXIDIZED_CUT_STEEL,
+                    VACollections.WAXED_CUT_STEEL,
+                    VACollections.WAXED_EXPOSED_CUT_STEEL,
+                    VACollections.WAXED_WEATHERED_CUT_STEEL,
+                    VACollections.WAXED_OXIDIZED_CUT_STEEL
+            );
+            
+            configureFamily(VACollections.CUT_STEEL, VABlockTags.USES_STEEL_SCRAPE_PARTICLES);
+            configureFamily(VACollections.EXPOSED_CUT_STEEL, VABlockTags.USES_STEEL_SCRAPE_PARTICLES);
+            configureFamily(VACollections.WEATHERED_CUT_STEEL, VABlockTags.USES_STEEL_SCRAPE_PARTICLES);
+            configureFamily(VACollections.OXIDIZED_CUT_STEEL, VABlockTags.USES_STEEL_SCRAPE_PARTICLES);
+            configureFamily(VACollections.WAXED_CUT_STEEL, VABlockTags.USES_STEEL_SCRAPE_PARTICLES);
+            configureFamily(VACollections.WAXED_EXPOSED_CUT_STEEL, VABlockTags.USES_STEEL_SCRAPE_PARTICLES);
+            configureFamily(VACollections.WAXED_WEATHERED_CUT_STEEL, VABlockTags.USES_STEEL_SCRAPE_PARTICLES);
+            configureFamily(VACollections.WAXED_OXIDIZED_CUT_STEEL, VABlockTags.USES_STEEL_SCRAPE_PARTICLES);
+            getOrCreateTagBuilder(VABlockTags.USES_STEEL_SCRAPE_PARTICLES).add(
+                    VABlocks.STEEL_BLOCK,
+                    VABlocks.EXPOSED_STEEL_BLOCK,
+                    VABlocks.WEATHERED_STEEL_BLOCK,
+                    VABlocks.OXIDIZED_STEEL_BLOCK,
+                    VABlocks.WAXED_STEEL_BLOCK,
+                    VABlocks.WAXED_EXPOSED_STEEL_BLOCK,
+                    VABlocks.WAXED_WEATHERED_STEEL_BLOCK,
+                    VABlocks.WAXED_OXIDIZED_STEEL_BLOCK,
+                    VABlocks.STEEL_GRATE,
+                    VABlocks.EXPOSED_STEEL_GRATE,
+                    VABlocks.WEATHERED_STEEL_GRATE,
+                    VABlocks.OXIDIZED_STEEL_GRATE,
+                    VABlocks.WAXED_STEEL_GRATE,
+                    VABlocks.WAXED_EXPOSED_STEEL_GRATE,
+                    VABlocks.WAXED_WEATHERED_STEEL_GRATE,
+                    VABlocks.WAXED_OXIDIZED_STEEL_GRATE,
+                    VABlocks.STEEL_DOOR,
+                    VABlocks.EXPOSED_STEEL_DOOR,
+                    VABlocks.WEATHERED_STEEL_DOOR,
+                    VABlocks.OXIDIZED_STEEL_DOOR,
+                    VABlocks.WAXED_STEEL_DOOR,
+                    VABlocks.WAXED_EXPOSED_STEEL_DOOR,
+                    VABlocks.WAXED_WEATHERED_STEEL_DOOR,
+                    VABlocks.WAXED_OXIDIZED_STEEL_DOOR,
+                    VABlocks.STEEL_TRAPDOOR,
+                    VABlocks.EXPOSED_STEEL_TRAPDOOR,
+                    VABlocks.WEATHERED_STEEL_TRAPDOOR,
+                    VABlocks.OXIDIZED_STEEL_TRAPDOOR,
+                    VABlocks.WAXED_STEEL_TRAPDOOR,
+                    VABlocks.WAXED_EXPOSED_STEEL_TRAPDOOR,
+                    VABlocks.WAXED_WEATHERED_STEEL_TRAPDOOR,
+                    VABlocks.WAXED_OXIDIZED_STEEL_TRAPDOOR
+            );
+            
+            configureFamily(BlockTags.PICKAXE_MINEABLE, 0,
                     VACollections.COBBLED_HORNFELS,
                     VACollections.COBBLED_BLUESCHIST,
                     VACollections.COBBLED_SYENITE,
@@ -170,44 +250,6 @@ public final class VABlockTagProvider {
                             VABlocks.WEBBED_SILK,
                             VABlocks.ACID_BLOCK)
                     .addOptionalTag(BlockTags.BASE_STONE_OVERWORLD);
-
-            getOrCreateTagBuilder(VABlockTags.SCULK_GILD_EFFECTIVE).add(
-                            Blocks.COBWEB,
-                            Blocks.MAGMA_BLOCK,
-                            Blocks.AMETHYST_BLOCK,
-                            Blocks.SNOW_BLOCK,
-                            Blocks.COBBLESTONE,
-                            Blocks.MOSSY_COBBLESTONE,
-                            Blocks.COBBLED_DEEPSLATE,
-                            VABlocks.COBBLED_HORNFELS,
-                            VABlocks.COBBLED_BLUESCHIST,
-                            VABlocks.COBBLED_SYENITE,
-                            Blocks.INFESTED_STONE,
-                            Blocks.INFESTED_COBBLESTONE,
-                            Blocks.INFESTED_DEEPSLATE)
-                    .addOptionalTag(VABlockTags.SCULK_GILD_STRONGLY_EFFECTIVE)
-                    .addOptionalTag(BlockTags.SCULK_REPLACEABLE);
-
-            getOrCreateTagBuilder(VABlockTags.SCULK_GILD_STRONGLY_EFFECTIVE).add(
-                            Blocks.ICE,
-                            Blocks.PACKED_ICE,
-                            Blocks.BLUE_ICE,
-                            Blocks.MANGROVE_ROOTS,
-                            Blocks.BROWN_MUSHROOM_BLOCK,
-                            Blocks.RED_MUSHROOM_BLOCK,
-                            Blocks.MUSHROOM_STEM,
-                            Blocks.BONE_BLOCK,
-                            Blocks.DEAD_TUBE_CORAL_BLOCK,
-                            Blocks.DEAD_BRAIN_CORAL_BLOCK,
-                            Blocks.DEAD_BUBBLE_CORAL_BLOCK,
-                            Blocks.DEAD_FIRE_CORAL_BLOCK,
-                            Blocks.DEAD_HORN_CORAL_BLOCK
-                    )
-                    .addOptionalTag(ORES)
-                    .addOptionalTag(BlockTags.LOGS)
-                    .addOptionalTag(BlockTags.LEAVES)
-                    .addOptionalTag(BlockTags.WART_BLOCKS)
-                    .addOptionalTag(BlockTags.CORAL_BLOCKS);
 
             getOrCreateTagBuilder(VABlockTags.SILKBULBS).add(
                     VABlocks.SILKBULB,
@@ -388,14 +430,24 @@ public final class VABlockTagProvider {
                     case STAIRS -> getOrCreateTagBuilder(BlockTags.STAIRS).add(block);
                     case SLAB -> getOrCreateTagBuilder(BlockTags.SLABS).add(block);
                     case WALL -> getOrCreateTagBuilder(BlockTags.WALLS).add(block);
-                    case FENCE -> getOrCreateTagBuilder(BlockTags.FENCES).add(block);
-                    case FENCE_GATE -> getOrCreateTagBuilder(BlockTags.FENCE_GATES).add(block);
+                    case FENCE, CUSTOM_FENCE -> getOrCreateTagBuilder(BlockTags.FENCES).add(block);
+                    case FENCE_GATE, CUSTOM_FENCE_GATE -> getOrCreateTagBuilder(BlockTags.FENCE_GATES).add(block);
                     case DOOR -> getOrCreateTagBuilder(BlockTags.DOORS).add(block);
                     case TRAPDOOR -> getOrCreateTagBuilder(BlockTags.TRAPDOORS).add(block);
                     case BUTTON -> getOrCreateTagBuilder(BlockTags.BUTTONS).add(block);
                     case PRESSURE_PLATE -> getOrCreateTagBuilder(BlockTags.PRESSURE_PLATES).add(block);
                 }
             });
+        }
+        
+        protected void configureFamily(BlockFamily family, TagKey<Block>... blockTags) {
+            for (TagKey<Block> tag : blockTags) {
+                FabricTagBuilder builder = getOrCreateTagBuilder(tag);
+                builder.add(family.getBaseBlock());
+                family.getVariants().forEach((variant, block) -> {
+                    builder.add(block);
+                });
+            }
         }
 
         protected void configureWoodenFamily(BlockFamily family) {

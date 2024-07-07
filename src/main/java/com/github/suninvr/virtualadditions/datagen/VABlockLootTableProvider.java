@@ -54,6 +54,13 @@ public final class VABlockLootTableProvider {
         public void generate() {
             addFamilyDrops(
                     VACollections.CUT_STEEL,
+                    VACollections.EXPOSED_CUT_STEEL,
+                    VACollections.WEATHERED_CUT_STEEL,
+                    VACollections.OXIDIZED_CUT_STEEL,
+                    VACollections.WAXED_CUT_STEEL,
+                    VACollections.WAXED_EXPOSED_CUT_STEEL,
+                    VACollections.WAXED_WEATHERED_CUT_STEEL,
+                    VACollections.WAXED_OXIDIZED_CUT_STEEL,
                     VACollections.COBBLED_HORNFELS,
                     VACollections.COBBLED_BLUESCHIST,
                     VACollections.COBBLED_SYENITE,
@@ -76,8 +83,22 @@ public final class VABlockLootTableProvider {
                     VABlocks.WAXED_OXIDIZED_CLIMBING_ROPE_ANCHOR,
                     VABlocks.RAW_STEEL_BLOCK,
                     VABlocks.STEEL_BLOCK,
+                    VABlocks.EXPOSED_STEEL_BLOCK,
+                    VABlocks.WEATHERED_STEEL_BLOCK,
+                    VABlocks.OXIDIZED_STEEL_BLOCK,
+                    VABlocks.WAXED_STEEL_BLOCK,
+                    VABlocks.WAXED_EXPOSED_STEEL_BLOCK,
+                    VABlocks.WAXED_WEATHERED_STEEL_BLOCK,
+                    VABlocks.WAXED_OXIDIZED_STEEL_BLOCK,
                     VABlocks.STEEL_FENCE,
                     VABlocks.STEEL_TRAPDOOR,
+                    VABlocks.EXPOSED_STEEL_TRAPDOOR,
+                    VABlocks.WEATHERED_STEEL_TRAPDOOR,
+                    VABlocks.OXIDIZED_STEEL_TRAPDOOR,
+                    VABlocks.WAXED_STEEL_TRAPDOOR,
+                    VABlocks.WAXED_EXPOSED_STEEL_TRAPDOOR,
+                    VABlocks.WAXED_WEATHERED_STEEL_TRAPDOOR,
+                    VABlocks.WAXED_OXIDIZED_STEEL_TRAPDOOR,
                     VABlocks.STEEL_GRATE,
                     VABlocks.REDSTONE_BRIDGE,
                     VABlocks.CAGELIGHT,
@@ -131,6 +152,13 @@ public final class VABlockLootTableProvider {
 
 
             this.addDrop(VABlocks.STEEL_DOOR, this::doorDrops);
+            this.addDrop(VABlocks.EXPOSED_STEEL_DOOR, this::doorDrops);
+            this.addDrop(VABlocks.WEATHERED_STEEL_DOOR, this::doorDrops);
+            this.addDrop(VABlocks.OXIDIZED_STEEL_DOOR, this::doorDrops);
+            this.addDrop(VABlocks.WAXED_STEEL_DOOR, this::doorDrops);
+            this.addDrop(VABlocks.WAXED_EXPOSED_STEEL_DOOR, this::doorDrops);
+            this.addDrop(VABlocks.WAXED_WEATHERED_STEEL_DOOR, this::doorDrops);
+            this.addDrop(VABlocks.WAXED_OXIDIZED_STEEL_DOOR, this::doorDrops);
             this.addDrop(VABlocks.HORNFELS, block -> this.drops(block, VABlocks.COBBLED_HORNFELS));
             this.addDrop(VABlocks.BLUESCHIST, block -> this.drops(block, VABlocks.COBBLED_BLUESCHIST));
             this.addDrop(VABlocks.SYENITE, block -> this.drops(block, VABlocks.COBBLED_SYENITE));

@@ -3,6 +3,7 @@ package com.github.suninvr.virtualadditions.client;
 import com.github.suninvr.virtualadditions.client.particle.AcidSplashEmitterParticle;
 import com.github.suninvr.virtualadditions.client.particle.GreencapSporeParticle;
 import com.github.suninvr.virtualadditions.client.particle.IoliteRingParticle;
+import com.github.suninvr.virtualadditions.client.particle.SteelScrapeFactory;
 import com.github.suninvr.virtualadditions.client.screen.ColoringStationScreen;
 import com.github.suninvr.virtualadditions.client.screen.EntanglementDriveScreen;
 import com.github.suninvr.virtualadditions.registry.VAParticleTypes;
@@ -21,6 +22,7 @@ public class VirtualAdditionsClient implements ClientModInitializer {
         ParticleFactoryRegistry.getInstance().register(VAParticleTypes.ACID_SPLASH_EMITTER, AcidSplashEmitterParticle.Factory::new);
         ParticleFactoryRegistry.getInstance().register(VAParticleTypes.ACID_SPLASH, WaterSplashParticle.Factory::new);
         ParticleFactoryRegistry.getInstance().register(VAParticleTypes.GREENCAP_SPORE, GreencapSporeParticle.Factory::new);
+        ParticleFactoryRegistry.getInstance().register(VAParticleTypes.SCRAPE_STEEL, SteelScrapeFactory::new);
         ParticleFactoryRegistry.getInstance().register(VAParticleTypes.IOLITE_ANCHOR_RING, IoliteRingParticle.Factory::new);
         ParticleFactoryRegistry.getInstance().register(VAParticleTypes.IOLITE_TETHER_RING, IoliteRingParticle.Factory::new);
 

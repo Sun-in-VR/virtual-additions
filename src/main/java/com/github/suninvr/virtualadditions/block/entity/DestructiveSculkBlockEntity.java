@@ -146,7 +146,8 @@ public class DestructiveSculkBlockEntity extends BlockEntity {
         if (force || this.isOrigin()) {
             this.getAffectedPos().forEach( (blockPos) -> {
                 if (this.world.getBlockState(blockPos).isOf(VABlocks.DESTRUCTIVE_SCULK)) this.world.setBlockState(blockPos, this.world.getBlockState(blockPos).with(DestructiveSculkBlock.SPREADING, false));
-                this.world.scheduleBlockTick(blockPos, VABlocks.DESTRUCTIVE_SCULK, world.getRandom().nextBetween(1, 4));
+                int i = this.getAffectedPos().indexOf(blockPos) / 10;
+                this.world.scheduleBlockTick(blockPos, VABlocks.DESTRUCTIVE_SCULK, world.getRandom().nextBetween(1, 4) + i);
             });
         }
         this.world.breakBlock(this.pos, true);
@@ -158,7 +159,7 @@ public class DestructiveSculkBlockEntity extends BlockEntity {
         RegistryEntryLookup<Block> registryEntryLookup = this.world != null ? this.world.createCommandRegistryWrapper(RegistryKeys.BLOCK) : Registries.BLOCK.getReadOnlyWrapper();
         this.replacedState = NbtHelper.toBlockState(registryEntryLookup, nbt.getCompound("blockState"));
         this.playerId = nbt.getUuid("playerId");
-        this.tool = ItemStack.fromNbt(lookup, nbt.getCompound("tool")).orElse(ItemStack.EMPTY);
+        if (nbt.contains("tool")) this.tool = ItemStack.fromNbt(lookup, nbt.getCompound("tool")).orElse(ItemStack.EMPTY);
         this.potency = nbt.getInt("potency");
         this.age = nbt.getInt("age");
         this.activePosIndex = nbt.getInt("activePosIndex");
@@ -173,7 +174,7 @@ public class DestructiveSculkBlockEntity extends BlockEntity {
         nbt.put("blockState", NbtHelper.fromBlockState(this.replacedState));
         nbt.putUuid("playerId", playerId);
         NbtCompound tool = new NbtCompound();
-        this.tool.encode(lookup, tool);
+        if (!this.tool.isEmpty()) this.tool.encode(lookup, tool);
         nbt.put("tool", tool);
         nbt.putInt("potency", this.potency);
         nbt.putInt("age", this.age);

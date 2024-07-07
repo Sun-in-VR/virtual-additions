@@ -17,6 +17,13 @@ import static net.minecraft.block.Blocks.*;
 public class VACollections {
 
     public static final BlockFamily CUT_STEEL;
+    public static final BlockFamily EXPOSED_CUT_STEEL;
+    public static final BlockFamily WEATHERED_CUT_STEEL;
+    public static final BlockFamily OXIDIZED_CUT_STEEL;
+    public static final BlockFamily WAXED_CUT_STEEL;
+    public static final BlockFamily WAXED_EXPOSED_CUT_STEEL;
+    public static final BlockFamily WAXED_WEATHERED_CUT_STEEL;
+    public static final BlockFamily WAXED_OXIDIZED_CUT_STEEL;
     public static final BlockFamily COBBLED_HORNFELS;
     public static final BlockFamily POLISHED_HORNFELS;
     public static final BlockFamily HORNFELS_TILES;
@@ -64,6 +71,13 @@ public class VACollections {
 
     static {
         CUT_STEEL = register(VABlocks.CUT_STEEL).stairs(VABlocks.CUT_STEEL_STAIRS).slab(VABlocks.CUT_STEEL_SLAB).customFence(VABlocks.STEEL_FENCE).chiseled(CHISELED_STEEL).build();
+        EXPOSED_CUT_STEEL = register(VABlocks.EXPOSED_CUT_STEEL).stairs(VABlocks.EXPOSED_CUT_STEEL_STAIRS).slab(VABlocks.EXPOSED_CUT_STEEL_SLAB).chiseled(EXPOSED_CHISELED_STEEL).customFence(VABlocks.EXPOSED_STEEL_FENCE).build();
+        WEATHERED_CUT_STEEL = register(VABlocks.WEATHERED_CUT_STEEL).stairs(VABlocks.WEATHERED_CUT_STEEL_STAIRS).slab(VABlocks.WEATHERED_CUT_STEEL_SLAB).chiseled(WEATHERED_CHISELED_STEEL).customFence(VABlocks.WEATHERED_STEEL_FENCE).build();
+        OXIDIZED_CUT_STEEL = register(VABlocks.OXIDIZED_CUT_STEEL).stairs(VABlocks.OXIDIZED_CUT_STEEL_STAIRS).slab(VABlocks.OXIDIZED_CUT_STEEL_SLAB).chiseled(OXIDIZED_CHISELED_STEEL).customFence(VABlocks.OXIDIZED_STEEL_FENCE).build();
+        WAXED_CUT_STEEL = register(VABlocks.WAXED_CUT_STEEL).stairs(VABlocks.WAXED_CUT_STEEL_STAIRS).slab(VABlocks.WAXED_CUT_STEEL_SLAB).chiseled(WAXED_CHISELED_STEEL).customFence(VABlocks.WAXED_STEEL_FENCE).build();
+        WAXED_EXPOSED_CUT_STEEL = register(VABlocks.WAXED_EXPOSED_CUT_STEEL).stairs(VABlocks.WAXED_EXPOSED_CUT_STEEL_STAIRS).slab(VABlocks.WAXED_EXPOSED_CUT_STEEL_SLAB).chiseled(WAXED_EXPOSED_CHISELED_STEEL).customFence(VABlocks.WAXED_EXPOSED_STEEL_FENCE).build();
+        WAXED_WEATHERED_CUT_STEEL = register(VABlocks.WAXED_WEATHERED_CUT_STEEL).stairs(VABlocks.WAXED_WEATHERED_CUT_STEEL_STAIRS).slab(VABlocks.WAXED_WEATHERED_CUT_STEEL_SLAB).chiseled(WAXED_WEATHERED_CHISELED_STEEL).customFence(VABlocks.WAXED_WEATHERED_STEEL_FENCE).build();
+        WAXED_OXIDIZED_CUT_STEEL = register(VABlocks.WAXED_OXIDIZED_CUT_STEEL).stairs(VABlocks.WAXED_OXIDIZED_CUT_STEEL_STAIRS).slab(VABlocks.WAXED_OXIDIZED_CUT_STEEL_SLAB).chiseled(WAXED_OXIDIZED_CHISELED_STEEL).customFence(VABlocks.WAXED_OXIDIZED_STEEL_FENCE).build();
         COBBLED_HORNFELS = register(VABlocks.COBBLED_HORNFELS).stairs(VABlocks.COBBLED_HORNFELS_STAIRS).slab(VABlocks.COBBLED_HORNFELS_SLAB).wall(VABlocks.COBBLED_HORNFELS_WALL).build();
         POLISHED_HORNFELS = register(VABlocks.POLISHED_HORNFELS).stairs(VABlocks.POLISHED_HORNFELS_STAIRS).slab(VABlocks.POLISHED_HORNFELS_SLAB).chiseled(CHISELED_HORNFELS).build();
         HORNFELS_TILES = register(VABlocks.HORNFELS_TILES).stairs(VABlocks.HORNFELS_TILE_STAIRS).slab(VABlocks.HORNFELS_TILE_SLAB).cracked(VABlocks.CRACKED_HORNFELS_TILES).chiseled(CHISELED_HORNFELS_TILES).build();

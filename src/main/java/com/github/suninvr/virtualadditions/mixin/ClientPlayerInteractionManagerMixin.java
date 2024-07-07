@@ -7,16 +7,9 @@ import com.github.suninvr.virtualadditions.registry.VAEnchantmentTags;
 import net.minecraft.block.BlockState;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.network.ClientPlayerInteractionManager;
-import net.minecraft.enchantment.Enchantment;
 import net.minecraft.enchantment.EnchantmentHelper;
-import net.minecraft.enchantment.Enchantments;
 import net.minecraft.entity.effect.StatusEffects;
 import net.minecraft.item.ItemStack;
-import net.minecraft.predicate.item.EnchantmentPredicate;
-import net.minecraft.registry.BuiltinRegistries;
-import net.minecraft.registry.RegistryEntryLookup;
-import net.minecraft.registry.RegistryKeys;
-import net.minecraft.registry.entry.RegistryEntry;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.GameMode;
 import org.objectweb.asm.Opcodes;
@@ -47,9 +40,9 @@ public abstract class ClientPlayerInteractionManagerMixin {
             ItemStack heldStack = client.player.getMainHandStack();
             GildType gild = GildedToolItem.getGildType(heldStack);
             if (heldStack.isSuitableFor(this.brokenState) && !gild.equals(GildTypes.SCULK)) {
-                int efficiency[] = {0};
+                int[] efficiency = {0};
                 EnchantmentHelper.forEachEnchantment(heldStack, (enchantment, level) -> {
-                    if (enchantment.isIn(VAEnchantmentTags.REDUCES_SCULK_GILD_MINING_SPEED)) efficiency[0] = level;
+                    if (enchantment.isIn(VAEnchantmentTags.EFFICIENCY)) efficiency[0] = level;
                 });
                 int y = (gild.equals(GildTypes.AMETHYST) ? 2 : 0) + Math.max(0, efficiency[0] - 3) + (client.player.hasStatusEffect(StatusEffects.HASTE) ? 1 : 0);
                 x = Math.max(0, x - y);

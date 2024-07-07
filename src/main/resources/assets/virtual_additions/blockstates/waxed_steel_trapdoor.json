@@ -1,0 +1,137 @@
+{
+  "variants": {
+    "facing=east,half=bottom,open=false,shutter_open=false": {
+      "model": "virtual_additions:block/steel_trapdoor_bottom",
+      "y": 90
+    },
+    "facing=east,half=bottom,open=true,shutter_open=false": {
+      "model": "virtual_additions:block/steel_trapdoor_open",
+      "y": 90
+    },
+    "facing=east,half=top,open=false,shutter_open=false": {
+      "model": "virtual_additions:block/steel_trapdoor_top",
+      "y": 90
+    },
+    "facing=east,half=top,open=true,shutter_open=false": {
+      "model": "virtual_additions:block/steel_trapdoor_open",
+      "x": 180,
+      "y": 270
+    },
+    "facing=north,half=bottom,open=false,shutter_open=false": {
+      "model": "virtual_additions:block/steel_trapdoor_bottom"
+    },
+    "facing=north,half=bottom,open=true,shutter_open=false": {
+      "model": "virtual_additions:block/steel_trapdoor_open"
+    },
+    "facing=north,half=top,open=false,shutter_open=false": {
+      "model": "virtual_additions:block/steel_trapdoor_top"
+    },
+    "facing=north,half=top,open=true,shutter_open=false": {
+      "model": "virtual_additions:block/steel_trapdoor_open",
+      "x": 180,
+      "y": 180
+    },
+    "facing=south,half=bottom,open=false,shutter_open=false": {
+      "model": "virtual_additions:block/steel_trapdoor_bottom",
+      "y": 180
+    },
+    "facing=south,half=bottom,open=true,shutter_open=false": {
+      "model": "virtual_additions:block/steel_trapdoor_open",
+      "y": 180
+    },
+    "facing=south,half=top,open=false,shutter_open=false": {
+      "model": "virtual_additions:block/steel_trapdoor_top",
+      "y": 180
+    },
+    "facing=south,half=top,open=true,shutter_open=false": {
+      "model": "virtual_additions:block/steel_trapdoor_open",
+      "x": 180,
+      "y": 0
+    },
+    "facing=west,half=bottom,open=false,shutter_open=false": {
+      "model": "virtual_additions:block/steel_trapdoor_bottom",
+      "y": 270
+    },
+    "facing=west,half=bottom,open=true,shutter_open=false": {
+      "model": "virtual_additions:block/steel_trapdoor_open",
+      "y": 270
+    },
+    "facing=west,half=top,open=false,shutter_open=false": {
+      "model": "virtual_additions:block/steel_trapdoor_top",
+      "y": 270
+    },
+    "facing=west,half=top,open=true,shutter_open=false": {
+      "model": "virtual_additions:block/steel_trapdoor_open",
+      "x": 180,
+      "y": 90
+    },
+
+
+
+    "facing=east,half=bottom,open=false,shutter_open=true": {
+      "model": "virtual_additions:block/steel_trapdoor_bottom_shutter_open",
+      "y": 90
+    },
+    "facing=east,half=bottom,open=true,shutter_open=true": {
+      "model": "virtual_additions:block/steel_trapdoor_open_shutter_open",
+      "y": 90
+    },
+    "facing=east,half=top,open=false,shutter_open=true": {
+      "model": "virtual_additions:block/steel_trapdoor_top_shutter_open",
+      "y": 90
+    },
+    "facing=east,half=top,open=true,shutter_open=true": {
+      "model": "virtual_additions:block/steel_trapdoor_open_shutter_open",
+      "x": 180,
+      "y": 270
+    },
+    "facing=north,half=bottom,open=false,shutter_open=true": {
+      "model": "virtual_additions:block/steel_trapdoor_bottom_shutter_open"
+    },
+    "facing=north,half=bottom,open=true,shutter_open=true": {
+      "model": "virtual_additions:block/steel_trapdoor_open_shutter_open"
+    },
+    "facing=north,half=top,open=false,shutter_open=true": {
+      "model": "virtual_additions:block/steel_trapdoor_top_shutter_open"
+    },
+    "facing=north,half=top,open=true,shutter_open=true": {
+      "model": "virtual_additions:block/steel_trapdoor_open_shutter_open",
+      "x": 180,
+      "y": 180
+    },
+    "facing=south,half=bottom,open=false,shutter_open=true": {
+      "model": "virtual_additions:block/steel_trapdoor_bottom_shutter_open",
+      "y": 180
+    },
+    "facing=south,half=bottom,open=true,shutter_open=true": {
+      "model": "virtual_additions:block/steel_trapdoor_open_shutter_open",
+      "y": 180
+    },
+    "facing=south,half=top,open=false,shutter_open=true": {
+      "model": "virtual_additions:block/steel_trapdoor_top_shutter_open",
+      "y": 180
+    },
+    "facing=south,half=top,open=true,shutter_open=true": {
+      "model": "virtual_additions:block/steel_trapdoor_open_shutter_open",
+      "x": 180,
+      "y": 0
+    },
+    "facing=west,half=bottom,open=false,shutter_open=true": {
+      "model": "virtual_additions:block/steel_trapdoor_bottom_shutter_open",
+      "y": 270
+    },
+    "facing=west,half=bottom,open=true,shutter_open=true": {
+      "model": "virtual_additions:block/steel_trapdoor_open_shutter_open",
+      "y": 270
+    },
+    "facing=west,half=top,open=false,shutter_open=true": {
+      "model": "virtual_additions:block/steel_trapdoor_top_shutter_open",
+      "y": 270
+    },
+    "facing=west,half=top,open=true,shutter_open=true": {
+      "model": "virtual_additions:block/steel_trapdoor_open_shutter_open",
+      "x": 180,
+      "y": 90
+    }
+  }
+}
