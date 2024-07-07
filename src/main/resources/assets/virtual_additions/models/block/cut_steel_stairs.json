@@ -1,8 +1,0 @@
- {
-  "parent": "minecraft:block/stairs",
-  "textures": {
-    "bottom": "virtual_additions:block/cut_steel",
-    "top": "virtual_additions:block/cut_steel",
-    "side": "virtual_additions:block/cut_steel"
-  }
-}
