@@ -63,6 +63,7 @@ public final class VAItemTagProvider {
             getOrCreateTagBuilder(ItemTags.TRAPDOORS).add(VAItems.STEEL_TRAPDOOR);
             getOrCreateTagBuilder(ItemTags.DYEABLE).add(VAItems.ICE_CREAM, VAItems.ENGRAVING_CHISEL);
             getOrCreateTagBuilder(ItemTags.TRIM_TEMPLATES).add(VAItems.EXOSKELETON_ARMOR_TRIM_SMITHING_TEMPLATE);
+            getOrCreateTagBuilder(ItemTags.DURABILITY_ENCHANTABLE).add(VAItems.ENGRAVING_CHISEL);
 
             getOrCreateTagBuilder(INGOTS).add(VAItems.STEEL_INGOT);
             getOrCreateTagBuilder(STEEL_INGOTS).add(VAItems.STEEL_INGOT);

@@ -44,7 +44,7 @@ public abstract class ClientPlayerInteractionManagerMixin {
                 EnchantmentHelper.forEachEnchantment(heldStack, (enchantment, level) -> {
                     if (enchantment.isIn(VAEnchantmentTags.EFFICIENCY)) efficiency[0] = level;
                 });
-                int y = (gild.equals(GildTypes.AMETHYST) ? 2 : 0) + Math.max(0, efficiency[0] - 3) + (client.player.hasStatusEffect(StatusEffects.HASTE) ? 1 : 0);
+                int y = (gild.equals(GildTypes.AMETHYST) ? 3 : 0) + (Math.max(0, efficiency[0] - 3));
                 x = Math.max(0, x - y);
             }
         }
