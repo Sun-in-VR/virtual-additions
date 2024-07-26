@@ -15,3 +15,4 @@ accessible method net/minecraft/enchantment/EnchantmentHelper forEachEnchantment
 accessible class net/minecraft/enchantment/EnchantmentHelper$Consumer
 accessible class net/minecraft/enchantment/EnchantmentHelper$ContextAwareConsumer
 accessible method net/minecraft/client/particle/GlowParticle <init> (Lnet/minecraft/client/world/ClientWorld;DDDDDDLnet/minecraft/client/particle/SpriteProvider;)V
+accessible method net/minecraft/client/particle/TrialSpawnerDetectionParticle <init> (Lnet/minecraft/client/world/ClientWorld;DDDDDDFLnet/minecraft/client/particle/SpriteProvider;)V

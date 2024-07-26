@@ -99,7 +99,7 @@ public class WarpTetherBlock extends BlockWithEntity implements Waterloggable {
                     StatusEffectInstance effect = livingEntity.getStatusEffect(VAStatusEffects.IOLITE_INTERFERENCE);
                     if (effect != null) duration = effect.getDuration();
                     duration = Math.min((int)Math.max(600 * Math.sqrt(squaredDistance) / 256, duration), 72000);
-                    livingEntity.addStatusEffect(new StatusEffectInstance(VAStatusEffects.IOLITE_INTERFERENCE, duration, 0, true, true));
+                    livingEntity.addStatusEffect(new StatusEffectInstance(VAStatusEffects.IOLITE_INTERFERENCE, duration, 0, false, true));
                 }
                 if (entity instanceof ServerPlayerEntity player) {
                     VAAdvancementCriteria.USE_TELEPORTER.trigger(player);
