@@ -86,7 +86,7 @@ public abstract class AcidFluid extends FlowableFluid {
     }
 
     @Override
-    protected int getFlowSpeed(WorldView world) {
+    protected int getMaxFlowDistance(WorldView world) {
         return 7;
     }
 

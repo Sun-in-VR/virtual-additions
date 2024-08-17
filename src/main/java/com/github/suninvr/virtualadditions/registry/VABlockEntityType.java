@@ -37,7 +37,34 @@ public class VABlockEntityType {
         CUSTOM_BED = register("custom_bed", CustomBedBlockEntity::new, VABlocks.CHARTREUSE_BED, VABlocks.MAROON_BED, VABlocks.INDIGO_BED, VABlocks.PLUM_BED, VABlocks.VIRIDIAN_BED, VABlocks.TAN_BED, VABlocks.SINOPIA_BED, VABlocks.LILAC_BED);
         CUSTOM_SHULKER_BOX = register("shulker_box", CustomShulkerBoxBlockEntity::new, VABlocks.CHARTREUSE_SHULKER_BOX, VABlocks.MAROON_SHULKER_BOX, VABlocks.INDIGO_SHULKER_BOX, VABlocks.PLUM_SHULKER_BOX, VABlocks.VIRIDIAN_SHULKER_BOX, VABlocks.TAN_SHULKER_BOX, VABlocks.SINOPIA_SHULKER_BOX, VABlocks.LILAC_SHULKER_BOX);
         CUSTOM_BANNER = register("banner", CustomBannerBlockEntity::new, VABlocks.CHARTREUSE_BANNER, VABlocks.CHARTREUSE_WALL_BANNER, VABlocks.MAROON_BANNER, VABlocks.MAROON_WALL_BANNER, VABlocks.INDIGO_BANNER, VABlocks.INDIGO_WALL_BANNER, VABlocks.PLUM_BANNER, VABlocks.PLUM_WALL_BANNER, VABlocks.VIRIDIAN_BANNER, VABlocks.VIRIDIAN_WALL_BANNER, VABlocks.TAN_BANNER, VABlocks.TAN_WALL_BANNER, VABlocks.SINOPIA_BANNER, VABlocks.SINOPIA_WALL_BANNER, VABlocks.LILAC_BANNER, VABlocks.LILAC_WALL_BANNER);
-
+        BlockEntityType.BED.addSupportedBlock(VABlocks.CHARTREUSE_BED);
+        BlockEntityType.BED.addSupportedBlock(VABlocks.MAROON_BED);
+        BlockEntityType.BED.addSupportedBlock(VABlocks.INDIGO_BED);
+        BlockEntityType.BED.addSupportedBlock(VABlocks.PLUM_BED);
+        BlockEntityType.BED.addSupportedBlock(VABlocks.VIRIDIAN_BED);
+        BlockEntityType.BED.addSupportedBlock(VABlocks.TAN_BED);
+        BlockEntityType.BED.addSupportedBlock(VABlocks.SINOPIA_BED);
+        BlockEntityType.BED.addSupportedBlock(VABlocks.LILAC_BED);
+        BlockEntityType.SHULKER_BOX.addSupportedBlock(VABlocks.CHARTREUSE_SHULKER_BOX);
+        BlockEntityType.SHULKER_BOX.addSupportedBlock(VABlocks.MAROON_SHULKER_BOX);
+        BlockEntityType.SHULKER_BOX.addSupportedBlock(VABlocks.INDIGO_SHULKER_BOX);
+        BlockEntityType.SHULKER_BOX.addSupportedBlock(VABlocks.PLUM_SHULKER_BOX);
+        BlockEntityType.SHULKER_BOX.addSupportedBlock(VABlocks.VIRIDIAN_SHULKER_BOX);
+        BlockEntityType.SHULKER_BOX.addSupportedBlock(VABlocks.TAN_SHULKER_BOX);
+        BlockEntityType.SHULKER_BOX.addSupportedBlock(VABlocks.SINOPIA_SHULKER_BOX);
+        BlockEntityType.SHULKER_BOX.addSupportedBlock(VABlocks.LILAC_SHULKER_BOX);
+        BlockEntityType.BANNER.addSupportedBlock(VABlocks.CHARTREUSE_BANNER);
+        BlockEntityType.BANNER.addSupportedBlock(VABlocks.MAROON_BANNER);
+        BlockEntityType.BANNER.addSupportedBlock(VABlocks.INDIGO_BANNER);
+        BlockEntityType.BANNER.addSupportedBlock(VABlocks.PLUM_BANNER);
+        BlockEntityType.BANNER.addSupportedBlock(VABlocks.VIRIDIAN_BANNER);
+        BlockEntityType.BANNER.addSupportedBlock(VABlocks.TAN_BANNER);
+        BlockEntityType.BANNER.addSupportedBlock(VABlocks.SINOPIA_BANNER);
+        BlockEntityType.BANNER.addSupportedBlock(VABlocks.LILAC_BANNER);
+        BlockEntityType.SIGN.addSupportedBlock(VABlocks.AEROBLOOM_SIGN);
+        BlockEntityType.SIGN.addSupportedBlock(VABlocks.AEROBLOOM_WALL_SIGN);
+        BlockEntityType.HANGING_SIGN.addSupportedBlock(VABlocks.AEROBLOOM_HANGING_SIGN);
+        BlockEntityType.HANGING_SIGN.addSupportedBlock(VABlocks.AEROBLOOM_WALL_HANGING_SIGN);
     }
 
     public static void init(){}
