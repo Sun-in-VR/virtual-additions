@@ -2,6 +2,7 @@ package com.github.suninvr.virtualadditions.registry;
 
 import net.minecraft.item.ArmorItem;
 import net.minecraft.item.ArmorMaterial;
+import net.minecraft.item.ItemStack;
 import net.minecraft.recipe.Ingredient;
 import net.minecraft.registry.Registries;
 import net.minecraft.registry.Registry;
@@ -13,6 +14,8 @@ import net.minecraft.util.Util;
 
 import java.util.EnumMap;
 import java.util.List;
+import java.util.Map;
+import java.util.function.Predicate;
 import java.util.function.Supplier;
 
 import static com.github.suninvr.virtualadditions.VirtualAdditions.idOf;
@@ -27,11 +30,11 @@ public class VAArmorMaterial {
 
     private static RegistryEntry<ArmorMaterial> register(String id, EnumMap<ArmorItem.Type, Integer> defense, int enchantability, RegistryEntry<SoundEvent> equipSound, float toughness, float knockbackResistance, Supplier<Ingredient> repairIngredient) {
         List<ArmorMaterial.Layer> list = List.of(new ArmorMaterial.Layer(Identifier.of(id)));
-        return register(id, defense, enchantability, equipSound, toughness, knockbackResistance, repairIngredient, list);
+        return register(id, defense, enchantability, equipSound, toughness, knockbackResistance, (stack -> repairIngredient.get().test(stack)), list);
     }
 
 
-    private static RegistryEntry<ArmorMaterial> register(String id, EnumMap<ArmorItem.Type, Integer> defense, int enchantability, RegistryEntry<SoundEvent> equipSound, float toughness, float knockbackResistance, Supplier<Ingredient> repairIngredient, List<ArmorMaterial.Layer> layers) {
+    private static RegistryEntry<ArmorMaterial> register(String id, EnumMap<ArmorItem.Type, Integer> defense, int enchantability, RegistryEntry<SoundEvent> equipSound, float toughness, float knockbackResistance, Predicate<ItemStack> repairIngredient, List<ArmorMaterial.Layer> layers) {
         EnumMap<ArmorItem.Type, Integer> enumMap = new EnumMap(ArmorItem.Type.class);
         ArmorItem.Type[] var9 = ArmorItem.Type.values();
         int var10 = var9.length;
@@ -41,6 +44,6 @@ public class VAArmorMaterial {
             enumMap.put(type, defense.get(type));
         }
 
-        return Registry.registerReference(Registries.ARMOR_MATERIAL, idOf(id), new ArmorMaterial(enumMap, enchantability, equipSound, repairIngredient, layers, toughness, knockbackResistance));
+        return Registry.registerReference(Registries.ARMOR_MATERIAL, idOf(id), new ArmorMaterial((Map<ArmorItem.Type, Integer>) enumMap, enchantability, equipSound, repairIngredient, layers, toughness, knockbackResistance));
     }
 }

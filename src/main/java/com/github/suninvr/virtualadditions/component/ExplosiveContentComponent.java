@@ -35,8 +35,8 @@ public record ExplosiveContentComponent(Optional<Integer> explosionStrength, Opt
     static {
         CODEC = RecordCodecBuilder.create(instance -> {
             return instance.group(
-                    Codecs.NONNEGATIVE_INT.optionalFieldOf("explosion_strength").forGetter(ExplosiveContentComponent::explosionStrength),
-                    Codecs.NONNEGATIVE_INT.optionalFieldOf("fuse_length").forGetter(ExplosiveContentComponent::fuseLength),
+                    Codecs.NON_NEGATIVE_INT.optionalFieldOf("explosion_strength").forGetter(ExplosiveContentComponent::explosionStrength),
+                    Codecs.NON_NEGATIVE_INT.optionalFieldOf("fuse_length").forGetter(ExplosiveContentComponent::fuseLength),
                     Codec.BOOL.optionalFieldOf("destroys_blocks").forGetter(c -> c.destroysBlocks)
             ).apply(instance, ExplosiveContentComponent::new);
         });

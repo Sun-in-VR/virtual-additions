@@ -9,15 +9,15 @@ import com.mojang.serialization.codecs.RecordCodecBuilder;
 import net.minecraft.component.type.DyedColorComponent;
 import net.minecraft.inventory.Inventory;
 import net.minecraft.item.DyeItem;
+import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.network.RegistryByteBuf;
 import net.minecraft.network.codec.PacketCodec;
-import net.minecraft.recipe.Ingredient;
-import net.minecraft.recipe.Recipe;
-import net.minecraft.recipe.RecipeSerializer;
-import net.minecraft.recipe.RecipeType;
+import net.minecraft.recipe.*;
 import net.minecraft.recipe.input.RecipeInput;
 import net.minecraft.registry.DynamicRegistryManager;
+import net.minecraft.registry.Registries;
+import net.minecraft.registry.RegistryKey;
 import net.minecraft.registry.RegistryWrapper;
 import net.minecraft.registry.tag.ItemTags;
 import net.minecraft.world.World;
@@ -32,7 +32,8 @@ public class ArmorColoringRecipe implements Recipe<RecipeInput>, ColoringStation
     public ArmorColoringRecipe(Ingredient item, int index) {
         this.item = item;
         this.index = index;
-        this.dyeItem = item.getMatchingStacks()[0].getItem() instanceof DyeItem dyeItem ? dyeItem : null;
+        RegistryKey<Item> key = item.getMatchingStacks().getFirst().getKey().orElse(null);
+        this.dyeItem = key == null ? null : Registries.ITEM.get(key) instanceof DyeItem dyeItem1 ? dyeItem1 : null;
     }
 
     @Override
@@ -99,10 +100,15 @@ public class ArmorColoringRecipe implements Recipe<RecipeInput>, ColoringStation
         return VARecipeType.COLORING;
     }
 
+    @Override
+    public IngredientPlacement getIngredientPlacement() {
+        return null;
+    }
+
     public static class Serializer implements RecipeSerializer<ArmorColoringRecipe> {
         private final MapCodec<ArmorColoringRecipe> CODEC = RecordCodecBuilder.mapCodec(
                 instance -> instance.group(
-                        Ingredient.DISALLOW_EMPTY_CODEC.fieldOf("dye").forGetter(armorColoringRecipe -> armorColoringRecipe.item),
+                        Ingredient.CODEC.fieldOf("dye").forGetter(armorColoringRecipe -> armorColoringRecipe.item),
                         Codec.INT.optionalFieldOf("index", 0).forGetter(recipe -> recipe.index)
                 ).apply(instance, ArmorColoringRecipe::new)
         );
@@ -110,7 +116,7 @@ public class ArmorColoringRecipe implements Recipe<RecipeInput>, ColoringStation
 
         @Override
         public MapCodec<ArmorColoringRecipe> codec() {
-            return (MapCodec<ArmorColoringRecipe>) CODEC;
+            return CODEC;
         }
 
         @Override

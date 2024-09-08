@@ -12,23 +12,14 @@ import java.util.Set;
 
 @Mixin(VillagerEntity.class)
 public class VillagerEntityMixin {
-    @Shadow @Final @Mutable
-    private static Set<Item> GATHERABLE_ITEMS;
 
     @Shadow @Final @Mutable
     private static Map<Item, Integer> ITEM_FOOD_VALUES;
 
     @Unique
-    private static final Set<Item> virtualAddition$GATHERABLE_ITEMS = Set.of(VAItems.CORN_SEEDS, VAItems.CORN);
-
-    @Unique
     private static final Map<Item, Integer> virtualAddition$ITEM_FOOD_VALUES = ImmutableMap.of(VAItems.CORN, 1);
 
     static {
-        ArrayList<Item> newGatherableItems = new ArrayList<>(GATHERABLE_ITEMS);
-        newGatherableItems.addAll(virtualAddition$GATHERABLE_ITEMS);
-        GATHERABLE_ITEMS = Set.of(newGatherableItems.toArray(new Item[0]));
-
         ArrayList<Item> newItemFoodKeys = new ArrayList<>(ITEM_FOOD_VALUES.keySet());
         ArrayList<Integer> newItemFoodValues = new ArrayList<>(ITEM_FOOD_VALUES.values());
         newItemFoodKeys.addAll(virtualAddition$ITEM_FOOD_VALUES.keySet());

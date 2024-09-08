@@ -11,10 +11,7 @@ import net.minecraft.item.BlockItem;
 import net.minecraft.item.ItemStack;
 import net.minecraft.network.RegistryByteBuf;
 import net.minecraft.network.codec.PacketCodec;
-import net.minecraft.recipe.Ingredient;
-import net.minecraft.recipe.Recipe;
-import net.minecraft.recipe.RecipeSerializer;
-import net.minecraft.recipe.RecipeType;
+import net.minecraft.recipe.*;
 import net.minecraft.recipe.input.RecipeInput;
 import net.minecraft.registry.DynamicRegistryManager;
 import net.minecraft.registry.RegistryWrapper;
@@ -81,6 +78,11 @@ public class ColoringRecipe implements Recipe<RecipeInput>, ColoringStationRecip
         return VARecipeType.COLORING;
     }
 
+    @Override
+    public IngredientPlacement getIngredientPlacement() {
+        return null;
+    }
+
     public int getIndex() {
         return this.index;
     }
@@ -97,7 +99,7 @@ public class ColoringRecipe implements Recipe<RecipeInput>, ColoringStationRecip
     public static class Serializer implements RecipeSerializer<ColoringRecipe> {
         private final MapCodec<ColoringRecipe> CODEC = RecordCodecBuilder.mapCodec(
                 instance -> instance.group(
-                        Ingredient.ALLOW_EMPTY_CODEC.fieldOf("ingredient").forGetter(recipe -> recipe.ingredient),
+                        Ingredient.CODEC.fieldOf("ingredient").forGetter(recipe -> recipe.ingredient),
                         ItemStack.CODEC.fieldOf("result").forGetter(recipe -> recipe.result),
                         Codec.INT.optionalFieldOf("red_cost", 0).forGetter(recipe -> recipe.cost.getR()),
                         Codec.INT.optionalFieldOf("green_cost", 0).forGetter(recipe -> recipe.cost.getG()),

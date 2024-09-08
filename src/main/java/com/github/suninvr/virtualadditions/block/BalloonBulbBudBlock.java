@@ -54,7 +54,7 @@ public class BalloonBulbBudBlock extends PlantBlock implements Fertilizable {
 
     @Override
     public VoxelShape getOutlineShape(BlockState state, BlockView world, BlockPos pos, ShapeContext context) {
-        Vec3d offset = state.getModelOffset(world, pos);
+        Vec3d offset = state.getModelOffset(pos);
         return SHAPE.offset(offset.x, 0, offset.z);
     }
 }

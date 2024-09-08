@@ -19,12 +19,12 @@ public class WorldRendererMixin {
 
     @Shadow private @Nullable ClientWorld world;
 
-    @Inject(method = "processWorldEvent", at = @At(value = "INVOKE", target = "Lnet/minecraft/particle/ParticleUtil;spawnParticle(Lnet/minecraft/world/World;Lnet/minecraft/util/math/BlockPos;Lnet/minecraft/particle/ParticleEffect;Lnet/minecraft/util/math/intprovider/IntProvider;)V", ordinal = 4, shift = At.Shift.BEFORE), cancellable = true)
-    void virtualAdditions$spawnSteelScrapeParticles(int eventId, BlockPos pos, int data, CallbackInfo ci) {
-        if (this.world != null && this.world.getBlockState(pos).isIn(VABlockTags.USES_STEEL_SCRAPE_PARTICLES)) {
-            ParticleUtil.spawnParticle(this.world, pos, VAParticleTypes.SCRAPE_STEEL, UniformIntProvider.create(3, 5));
-            ci.cancel();
-        }
-    }
+    //@Inject(method = "processWorldEvent", at = @At(value = "INVOKE", target = "Lnet/minecraft/particle/ParticleUtil;spawnParticle(Lnet/minecraft/world/World;Lnet/minecraft/util/math/BlockPos;Lnet/minecraft/particle/ParticleEffect;Lnet/minecraft/util/math/intprovider/IntProvider;)V", ordinal = 4, shift = At.Shift.BEFORE), cancellable = true)
+    //void virtualAdditions$spawnSteelScrapeParticles(int eventId, BlockPos pos, int data, CallbackInfo ci) {
+    //    if (this.world != null && this.world.getBlockState(pos).isIn(VABlockTags.USES_STEEL_SCRAPE_PARTICLES)) {
+    //        ParticleUtil.spawnParticle(this.world, pos, VAParticleTypes.SCRAPE_STEEL, UniformIntProvider.create(3, 5));
+    //        ci.cancel();
+    //    }
+    //}
 
 }

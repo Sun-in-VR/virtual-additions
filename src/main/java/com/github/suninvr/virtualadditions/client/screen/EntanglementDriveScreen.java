@@ -12,6 +12,7 @@ import net.minecraft.client.gui.screen.narration.NarrationMessageBuilder;
 import net.minecraft.client.gui.tooltip.Tooltip;
 import net.minecraft.client.gui.widget.PressableWidget;
 import net.minecraft.client.render.GameRenderer;
+import net.minecraft.client.render.RenderLayer;
 import net.minecraft.entity.player.PlayerInventory;
 import net.minecraft.screen.slot.Slot;
 import net.minecraft.screen.slot.SlotActionType;
@@ -46,14 +47,14 @@ public class EntanglementDriveScreen extends HandledScreen<EntanglementDriveScre
         RenderSystem.setShaderTexture(0, BACKGROUND_TEXTURE);
         int i = this.x;
         int j = this.y;
-        context.drawTexture(BACKGROUND_TEXTURE, i, j, 0, 0, this.backgroundWidth, this.backgroundHeight);
+        context.drawTexture(RenderLayer::getGuiTextured, BACKGROUND_TEXTURE, i, j, 0, 0, this.backgroundWidth, this.backgroundHeight, 256, 256);
         if (this.handler.isSelectingSlot() && this.handler.isSlotSelected()) {
             Slot slot = this.handler.getSelectedSlot();
-            context.drawTexture(BACKGROUND_TEXTURE, i + slot.x - 1, j + slot.y - 1, 196, 0, 18, 18);
+            context.drawTexture(RenderLayer::getGuiTextured, BACKGROUND_TEXTURE, i + slot.x - 1, j + slot.y - 1, 196, 0, 18, 18, 256, 256);
         }
         if (this.handler.isActive() && this.handler.isSamePlayer()) {
             Slot slot = this.handler.getActiveSlot();
-            context.drawTexture(BACKGROUND_TEXTURE, i + slot.x - 1, j + slot.y - 1, 178, 0, 18, 18);
+            context.drawTexture(RenderLayer::getGuiTextured, BACKGROUND_TEXTURE, i + slot.x - 1, j + slot.y - 1, 178, 0, 18, 18, 256, 256);
         }
         if (this.client != null && this.client.player != null) {
             InventoryScreen.drawEntity(context, i + 26, j + 8, i + 75, j + 78, 30, 0.0625F, this.mouseX, this.mouseY, this.client.player);
@@ -115,7 +116,7 @@ public class EntanglementDriveScreen extends HandledScreen<EntanglementDriveScre
                 j += this.width;
             }
 
-            context.drawTexture(BACKGROUND_TEXTURE, this.getX(), this.getY(), j, 18, this.width, this.height);
+            context.drawTexture(RenderLayer::getGuiTextured, BACKGROUND_TEXTURE, this.getX(), this.getY(), j, 18, this.width, this.height, 256, 256);
         }
 
         @Override

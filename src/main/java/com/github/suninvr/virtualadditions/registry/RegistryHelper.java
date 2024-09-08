@@ -33,7 +33,7 @@ public class RegistryHelper {
 
     public static class ItemRegistryHelper {
 
-        public record ToolSet(Item SWORD, Item SHOVEL, Item PICKAXE, Item AXE, Item HOE, String NAME){
+        public record ToolSet(Item SWORD, Item SHOVEL, Item PICKAXE, Item AXE, Item HOE, ToolMaterial MATERIAL, String NAME){
             public Item[] getItems() {
                 return new Item[]{AXE, HOE, PICKAXE, SHOVEL, SWORD};
             }
@@ -200,11 +200,12 @@ public class RegistryHelper {
         public static ToolSet registerGildedToolSet(ToolSet baseSet, GildType type) {
             String newName = type.getId().getPath() +"_"+ baseSet.NAME;
             return new ToolSet(
-                    register(newName +"_sword", new GildedSwordItem(type, (SwordItem) baseSet.SWORD, GildedToolUtil.settingsOf(baseSet.SWORD, type))),
-                    register(newName +"_shovel", new GildedShovelItem(type, (ShovelItem) baseSet.SHOVEL, GildedToolUtil.settingsOf(baseSet.SHOVEL, type))),
-                    register(newName +"_pickaxe", new GildedPickaxeItem(type, (PickaxeItem) baseSet.PICKAXE, GildedToolUtil.settingsOf(baseSet.PICKAXE, type))),
-                    register(newName +"_axe", new GildedAxeItem(type, (AxeItem) baseSet.AXE, GildedToolUtil.settingsOf(baseSet.AXE, type))),
-                    register(newName +"_hoe", new GildedHoeItem(type, (HoeItem) baseSet.HOE, GildedToolUtil.settingsOf(baseSet.HOE, type))),
+                    register(newName +"_sword", new GildedSwordItem(type, baseSet.MATERIAL, (SwordItem) baseSet.SWORD, GildedToolUtil.settingsOf(baseSet.SWORD, type))),
+                    register(newName +"_shovel", new GildedShovelItem(type, baseSet.MATERIAL, (ShovelItem) baseSet.SHOVEL, GildedToolUtil.settingsOf(baseSet.SHOVEL, type))),
+                    register(newName +"_pickaxe", new GildedPickaxeItem(type, baseSet.MATERIAL, (PickaxeItem) baseSet.PICKAXE, GildedToolUtil.settingsOf(baseSet.PICKAXE, type))),
+                    register(newName +"_axe", new GildedAxeItem(type, baseSet.MATERIAL, (AxeItem) baseSet.AXE, GildedToolUtil.settingsOf(baseSet.AXE, type))),
+                    register(newName +"_hoe", new GildedHoeItem(type, baseSet.MATERIAL, (HoeItem) baseSet.HOE, GildedToolUtil.settingsOf(baseSet.HOE, type))),
+                    type.getModifiedMaterial(baseSet.MATERIAL).asToolMaterial(),
                     newName
             );
         }

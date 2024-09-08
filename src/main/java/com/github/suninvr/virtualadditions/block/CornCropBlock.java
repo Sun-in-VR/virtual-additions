@@ -50,7 +50,7 @@ public class CornCropBlock extends CropBlock {
 
     @Override
     public VoxelShape getOutlineShape(BlockState state, BlockView world, BlockPos pos, ShapeContext context) {
-        Vec3d offset = state.getModelOffset(world, pos);
+        Vec3d offset = state.getModelOffset(pos);
         return state.get(SEGMENT).getShape(state.get(AGE)).offset(offset.x, offset.y, offset.z);
     }
 

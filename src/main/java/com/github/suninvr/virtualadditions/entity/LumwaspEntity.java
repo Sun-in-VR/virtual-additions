@@ -45,11 +45,11 @@ public class LumwaspEntity extends HostileEntity implements RangedAttackMob, Flu
 
     public static DefaultAttributeContainer createLumwaspAttributes() {
         return MobEntity.createMobAttributes()
-                .add(EntityAttributes.GENERIC_MAX_HEALTH, 16.0)
-                .add(EntityAttributes.GENERIC_FLYING_SPEED, 1.55)
-                .add(EntityAttributes.GENERIC_MOVEMENT_SPEED, 0.25)
-                .add(EntityAttributes.GENERIC_ATTACK_DAMAGE, 4.0)
-                .add(EntityAttributes.GENERIC_FOLLOW_RANGE, 32.0)
+                .add(EntityAttributes.MAX_HEALTH, 16.0)
+                .add(EntityAttributes.FLYING_SPEED, 1.55)
+                .add(EntityAttributes.MOVEMENT_SPEED, 0.25)
+                .add(EntityAttributes.ATTACK_DAMAGE, 4.0)
+                .add(EntityAttributes.FOLLOW_RANGE, 32.0)
                 .build();
     }
 

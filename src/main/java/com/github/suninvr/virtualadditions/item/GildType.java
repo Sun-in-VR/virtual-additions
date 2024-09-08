@@ -1,16 +1,19 @@
 package com.github.suninvr.virtualadditions.item;
 
+import com.github.suninvr.virtualadditions.VirtualAdditions;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.component.DataComponentTypes;
 import net.minecraft.component.type.AttributeModifierSlot;
 import net.minecraft.component.type.AttributeModifiersComponent;
+import net.minecraft.component.type.ToolComponent;
 import net.minecraft.entity.attribute.EntityAttribute;
 import net.minecraft.entity.attribute.EntityAttributeModifier;
 import net.minecraft.entity.attribute.EntityAttributes;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.*;
-import net.minecraft.recipe.Ingredient;
+import net.minecraft.registry.Registries;
+import net.minecraft.registry.RegistryEntryLookup;
 import net.minecraft.registry.RegistryKeys;
 import net.minecraft.registry.entry.RegistryEntry;
 import net.minecraft.registry.tag.TagKey;
@@ -21,10 +24,13 @@ import org.jetbrains.annotations.Nullable;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.List;
 import java.util.UUID;
 import java.util.function.BiFunction;
 
 public class GildType {
+    public static final Identifier GILDED_TOOL_BLOCK_INTERACTION_RANGE_MODIFIER_ID = VirtualAdditions.idOf("gilded_tool_block_interaction_range");
+    public static final Identifier GILDED_TOOL_ENTITY_INTERACTION_RANGE_MODIFIER_ID = VirtualAdditions.idOf("gilded_tool_entity_interaction_range");
     private final ArrayList<Modifier> modifiers = new ArrayList<>();
     private final Identifier id;
     private final int color;
@@ -129,29 +135,11 @@ public class GildType {
     /**
      * Modifies a given tool material with the modifications provided at the gild type's creation.
      *
-     * @return a new tool material with modifiers applied
-     *
      * @param baseMaterial the tool material to apply this gild type's modifications to
-     *
-     * **/
-    public final ToolMaterial getModifiedMaterial(ToolMaterial baseMaterial, ToolItem baseItem) {
-        if (this.modifiers.isEmpty() || !this.shouldModifyBaseMaterial()) return baseMaterial;
-
-        int durability = baseMaterial.getDurability();
-        float miningSpeed = baseMaterial.getMiningSpeedMultiplier();
-        float attackDamage = baseMaterial.getAttackDamage();
-        int enchantability = baseMaterial.getEnchantability();
-
-        for (Modifier modifier : this.modifiers) {
-            switch (modifier.type) {
-                case DURABILITY -> durability = modifier.apply(durability, baseItem);
-                case MINING_SPEED -> miningSpeed = modifier.apply(miningSpeed, baseItem);
-                case ATTACK_DAMAGE -> attackDamage = modifier.apply(attackDamage, baseItem);
-                case ENCHANTABILITY -> enchantability = modifier.apply(enchantability, baseItem);
-            }
-        }
-
-        return new ModifiedToolMaterial(baseMaterial.getInverseTag(), durability, miningSpeed, attackDamage, enchantability, baseMaterial.getRepairIngredient());
+     * @return a new tool material with modifiers applied
+     **/
+    public final ModifiedToolMaterial getModifiedMaterial(ToolMaterial baseMaterial) {
+        return new ModifiedToolMaterial(baseMaterial, this.modifiers);
     }
 
     public AttributeModifiersComponent createAttributeModifiers(Item baseItem) {
@@ -159,7 +147,7 @@ public class GildType {
 
         baseItem.getComponents().get(DataComponentTypes.ATTRIBUTE_MODIFIERS).modifiers().forEach(entry -> {
             EntityAttributeModifier modifier = entry.modifier();
-            if (entry.attribute().equals(EntityAttributes.GENERIC_ATTACK_SPEED) || entry.attribute().equals(EntityAttributes.GENERIC_ATTACK_DAMAGE)) {
+            if (entry.attribute().equals(EntityAttributes.ATTACK_SPEED) || entry.attribute().equals(EntityAttributes.ATTACK_DAMAGE)) {
                 double[] value = {modifier.value()};
                 this.modifiers.forEach(gildModifier -> {
                     if (gildModifier.modifiesAttribute(entry.attribute()) && gildModifier.shouldApplyToTool(baseItem)) {
@@ -183,10 +171,6 @@ public class GildType {
                 builder.add(attribute, new EntityAttributeModifier(modifier.id, modifier.value, EntityAttributeModifier.Operation.ADD_VALUE), AttributeModifierSlot.MAINHAND);
             }
         } );
-    }
-
-    public ToolMaterial getModifiedMaterial(ToolItem item) {
-        return getModifiedMaterial(item.getMaterial(), item);
     }
 
     public final String buildTooltipTranslationKey() {
@@ -321,10 +305,10 @@ public class GildType {
         @Nullable
         public RegistryEntry<EntityAttribute> getAttributeType() {
             return switch (this) {
-                case BLOCK_INTERACTION_RANGE -> EntityAttributes.PLAYER_BLOCK_INTERACTION_RANGE;
-                case ENTITY_INTERACTION_RANGE -> EntityAttributes.PLAYER_ENTITY_INTERACTION_RANGE;
-                case ATTACK_SPEED -> EntityAttributes.GENERIC_ATTACK_SPEED;
-                case ATTACK_DAMAGE -> EntityAttributes.GENERIC_ATTACK_DAMAGE;
+                case BLOCK_INTERACTION_RANGE -> EntityAttributes.BLOCK_INTERACTION_RANGE;
+                case ENTITY_INTERACTION_RANGE -> EntityAttributes.ENTITY_INTERACTION_RANGE;
+                case ATTACK_SPEED -> EntityAttributes.ATTACK_SPEED;
+                case ATTACK_DAMAGE -> EntityAttributes.ATTACK_DAMAGE;
                 default -> null;
             };
         }
@@ -348,51 +332,67 @@ public class GildType {
         }
     }
 
-    public static class ModifiedToolMaterial implements ToolMaterial {
+    public static class ModifiedToolMaterial {
+        private final ToolMaterial baseMaterial;
         private final TagKey<Block> inverseTag;
-        private final int itemDurability;
-        private final float miningSpeed;
-        private final float attackDamage;
-        private final int enchantability;
-        private final Ingredient repairIngredient;
+        private int itemDurability;
+        private float miningSpeed;
+        private float attackDamageBonus;
+        private int enchantability;
+        private float blockInteractionRange = 0.0f;
+        private float entityInteractionRange = 0.0f;
+        private float attackSpeed = 0.0f;
+        private final TagKey<Item> repairItems;
         
-        public ModifiedToolMaterial(TagKey<Block> inverseTag, int itemDurability, float miningSpeed, float attackDamage, int enchantability, Ingredient repairIngredient) {
-            this.inverseTag = inverseTag;
-            this.itemDurability = itemDurability;
-            this.miningSpeed = miningSpeed;
-            this.attackDamage = attackDamage;
-            this.enchantability = enchantability;
-            this.repairIngredient = repairIngredient;
+        public ModifiedToolMaterial(ToolMaterial baseMaterial, List<Modifier> modifiers) {
+            this.baseMaterial = baseMaterial;
+            this.inverseTag = baseMaterial.incorrectBlocksForDrops();
+            this.itemDurability = baseMaterial.durability();
+            this.miningSpeed = baseMaterial.speed();
+            this.attackDamageBonus = baseMaterial.attackDamageBonus();
+            this.enchantability = baseMaterial.enchantmentValue();
+            this.repairItems = baseMaterial.repairItems();
+            this.applyModifiers(modifiers);
         }
 
-        @Override
-        public int getDurability() {
-            return this.itemDurability;
+        private void applyModifiers(List<Modifier> modifiers) {
+            modifiers.forEach(modifier -> {
+                switch (modifier.type()) {
+                    case DURABILITY -> itemDurability = modifier.apply(itemDurability);
+                    case MINING_SPEED -> miningSpeed = modifier.apply(miningSpeed);
+                    case ATTACK_DAMAGE -> attackDamageBonus = modifier.apply(attackDamageBonus);
+                    case ENCHANTABILITY -> enchantability = modifier.apply(enchantability);
+                    case BLOCK_INTERACTION_RANGE -> blockInteractionRange = modifier.apply(blockInteractionRange);
+                    case ENTITY_INTERACTION_RANGE -> entityInteractionRange = modifier.apply(entityInteractionRange);
+                    case ATTACK_SPEED -> attackSpeed = modifier.apply(attackSpeed);
+                }
+            });
         }
 
-        @Override
-        public float getMiningSpeedMultiplier() {
-            return this.miningSpeed;
+        public ToolMaterial asToolMaterial() {
+            return new ToolMaterial(this.inverseTag, this.itemDurability, this.miningSpeed, this.attackDamageBonus, this.enchantability, this.repairItems);
         }
 
-        @Override
-        public float getAttackDamage() {
-            return this.attackDamage;
+        public ToolMaterial getBaseMaterial() {
+            return baseMaterial;
         }
 
-        @Override
-        public TagKey<Block> getInverseTag() {
-            return this.inverseTag;
+        private Item.Settings applyBaseSettings(Item.Settings settings) {
+            return settings.maxDamage(this.itemDurability).repairable(this.repairItems).enchantable(this.enchantability);
         }
 
-        @Override
-        public int getEnchantability() {
-            return this.enchantability;
+        public Item.Settings applyToolSettings(Item.Settings settings, TagKey<Block> effectiveBlocks, float attackDamage, float attackSpeed) {
+            RegistryEntryLookup<Block> registryEntryLookup = Registries.createEntryLookup(Registries.BLOCK);
+            return this.applyBaseSettings(settings).component(DataComponentTypes.TOOL, new ToolComponent(List.of(ToolComponent.Rule.ofNeverDropping(registryEntryLookup.getOrThrow(baseMaterial.incorrectBlocksForDrops())), ToolComponent.Rule.ofAlwaysDropping(registryEntryLookup.getOrThrow(effectiveBlocks), this.miningSpeed)), 1.0F, 1)).attributeModifiers(this.createToolAttributeModifiers(attackDamage, attackSpeed));
         }
 
-        @Override
-        public Ingredient getRepairIngredient() {
-            return this.repairIngredient;
+        private AttributeModifiersComponent createToolAttributeModifiers(float attackDamage, float attackSpeed) {
+            AttributeModifiersComponent.Builder builder = AttributeModifiersComponent.builder();
+            builder.add(EntityAttributes.ATTACK_DAMAGE, new EntityAttributeModifier(Item.BASE_ATTACK_DAMAGE_MODIFIER_ID, attackDamage + this.attackDamageBonus, EntityAttributeModifier.Operation.ADD_VALUE), AttributeModifierSlot.MAINHAND);
+            builder.add(EntityAttributes.ATTACK_SPEED, new EntityAttributeModifier(Item.BASE_ATTACK_SPEED_MODIFIER_ID, attackSpeed + this.attackSpeed, EntityAttributeModifier.Operation.ADD_VALUE), AttributeModifierSlot.MAINHAND);
+            if (!(this.blockInteractionRange == 0)) builder.add(EntityAttributes.BLOCK_INTERACTION_RANGE, new EntityAttributeModifier(GILDED_TOOL_BLOCK_INTERACTION_RANGE_MODIFIER_ID, this.blockInteractionRange, EntityAttributeModifier.Operation.ADD_VALUE), AttributeModifierSlot.MAINHAND);
+            if (!(this.entityInteractionRange == 0)) builder.add(EntityAttributes.ENTITY_INTERACTION_RANGE, new EntityAttributeModifier(GILDED_TOOL_ENTITY_INTERACTION_RANGE_MODIFIER_ID, this.entityInteractionRange, EntityAttributeModifier.Operation.ADD_VALUE), AttributeModifierSlot.MAINHAND);
+            return builder.build();
         }
     }
 }

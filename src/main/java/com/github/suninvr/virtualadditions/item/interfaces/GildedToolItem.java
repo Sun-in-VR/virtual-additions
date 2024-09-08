@@ -10,8 +10,6 @@ import net.minecraft.item.ToolMaterial;
 @SuppressWarnings("unused")
 public interface GildedToolItem extends ItemConvertible {
 
-    ToolMaterial getBaseMaterial();
-
     GildType getGildType();
 
     Item getBaseItem();

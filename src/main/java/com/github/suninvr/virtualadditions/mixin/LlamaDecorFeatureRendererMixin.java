@@ -4,6 +4,7 @@ import net.minecraft.client.render.entity.feature.FeatureRenderer;
 import net.minecraft.client.render.entity.feature.FeatureRendererContext;
 import net.minecraft.client.render.entity.feature.LlamaDecorFeatureRenderer;
 import net.minecraft.client.render.entity.model.LlamaEntityModel;
+import net.minecraft.client.render.entity.state.LlamaEntityRenderState;
 import net.minecraft.entity.passive.LlamaEntity;
 import net.minecraft.util.Identifier;
 import org.spongepowered.asm.mixin.Final;
@@ -17,11 +18,11 @@ import java.util.Arrays;
 import static com.github.suninvr.virtualadditions.VirtualAdditions.idOf;
 
 @Mixin(LlamaDecorFeatureRenderer.class)
-public abstract class LlamaDecorFeatureRendererMixin extends FeatureRenderer<LlamaEntity, LlamaEntityModel<LlamaEntity>> {
+public abstract class LlamaDecorFeatureRendererMixin extends FeatureRenderer<LlamaEntityRenderState, LlamaEntityModel> {
     @Final
     @Shadow @Mutable private static Identifier[] LLAMA_DECOR;
 
-    public LlamaDecorFeatureRendererMixin(FeatureRendererContext<LlamaEntity, LlamaEntityModel<LlamaEntity>> context) {
+    public LlamaDecorFeatureRendererMixin(FeatureRendererContext<LlamaEntityRenderState, LlamaEntityModel> context) {
         super(context);
     }
 

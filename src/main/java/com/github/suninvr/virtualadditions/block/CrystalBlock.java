@@ -20,6 +20,7 @@ import net.minecraft.util.math.Vec3d;
 import net.minecraft.util.math.random.Random;
 import net.minecraft.util.shape.VoxelShape;
 import net.minecraft.world.*;
+import net.minecraft.world.block.WireOrientation;
 import org.jetbrains.annotations.Nullable;
 
 @SuppressWarnings("deprecation")
@@ -95,13 +96,12 @@ public class CrystalBlock extends Block implements Waterloggable {
     }
 
     @Override
-    public void neighborUpdate(BlockState state, World world, BlockPos pos, Block sourceBlock, BlockPos sourcePos, boolean notify) {
+    public void neighborUpdate(BlockState state, World world, BlockPos pos, Block sourceBlock, @Nullable WireOrientation wireOrientation, boolean notify) {
         if (state.get(WATERLOGGED)) world.scheduleFluidTick(pos, Fluids.WATER, Fluids.WATER.getTickRate(world));
         Direction pointing = state.get(POINTING);
         if (!canPlaceOn(world, new BlockPos(pos.offset(pointing.getOpposite())), pointing)) {
             world.scheduleBlockTick(pos, this, 1);
         }
-        super.neighborUpdate(state, world, pos, sourceBlock, sourcePos, notify);
     }
 
     @Override
@@ -126,7 +126,7 @@ public class CrystalBlock extends Block implements Waterloggable {
     @Override
     public VoxelShape getOutlineShape(BlockState state, BlockView world, BlockPos pos, ShapeContext context) {
         boolean isBody = state.get(SHAPE) == CrystalShape.BODY;
-        Vec3d vec3d = state.getModelOffset(world, pos);
+        Vec3d vec3d = state.getModelOffset(pos);
         return switch (state.get(POINTING)) {
             case UP -> isBody ? BODY_Y_SHAPE.offset(vec3d.x, vec3d.y, vec3d.z) : TIP_UP_SHAPE.offset(vec3d.x, vec3d.y, vec3d.z);
             case DOWN -> isBody ? BODY_Y_SHAPE.offset(vec3d.x, vec3d.y, vec3d.z) : TIP_DOWN_SHAPE.offset(vec3d.x, vec3d.y, vec3d.z);

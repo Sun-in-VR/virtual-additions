@@ -17,6 +17,8 @@ import net.minecraft.util.shape.VoxelShapes;
 import net.minecraft.world.BlockView;
 import net.minecraft.world.World;
 import net.minecraft.world.WorldView;
+import net.minecraft.world.block.WireOrientation;
+import org.jetbrains.annotations.Nullable;
 
 public class BalloonBulbBlock extends Block implements Fertilizable {
     public static final MapCodec<BalloonBulbBlock> CODEC = createCodec(BalloonBulbBlock::new);
@@ -48,7 +50,7 @@ public class BalloonBulbBlock extends Block implements Fertilizable {
     }
 
     @Override
-    public void neighborUpdate(BlockState state, World world, BlockPos pos, Block sourceBlock, BlockPos sourcePos, boolean notify) {
+    protected void neighborUpdate(BlockState state, World world, BlockPos pos, Block sourceBlock, @Nullable WireOrientation wireOrientation, boolean notify) {
         if (!canPlaceAt(state, world, pos)) world.breakBlock(pos, true);
     }
 
@@ -92,7 +94,7 @@ public class BalloonBulbBlock extends Block implements Fertilizable {
 
     @Override
     public VoxelShape getOutlineShape(BlockState state, BlockView world, BlockPos pos, ShapeContext context) {
-        Vec3d offset = state.getModelOffset(world, pos);
+        Vec3d offset = state.getModelOffset(pos);
         return SHAPE.offset(offset.x, 0, offset.z);
     }
 

@@ -12,7 +12,7 @@ import net.minecraft.client.util.math.MatrixStack;
 import net.minecraft.util.Identifier;
 
 @SuppressWarnings("unchecked")
-public class LumwaspGlowFeatureRenderer<T extends LumwaspEntity, M extends EntityModel<T>> extends EyesFeatureRenderer<T, M> {
+public class LumwaspGlowFeatureRenderer<T extends LumwaspEntityRenderState, M extends EntityModel<T>> extends EyesFeatureRenderer<T, M> {
     private static final RenderLayer SKIN = RenderLayer.getEyes(Identifier.of("virtual_additions","textures/entity/lumwasp/lumwasp_glow.png"));
     public LumwaspGlowFeatureRenderer(FeatureRendererContext featureRendererContext) {
         super(featureRendererContext);

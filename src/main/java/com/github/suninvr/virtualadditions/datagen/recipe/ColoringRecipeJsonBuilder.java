@@ -22,7 +22,7 @@ public class ColoringRecipeJsonBuilder {
     private final int index;
     
     public ColoringRecipeJsonBuilder(@Nullable Ingredient input, ColoringStationBlockEntity.DyeContents dyeCost, ItemConvertible output, int index) {
-        this.input = input == null ? Ingredient.EMPTY : input;
+        this.input = input;
         this.dyeCost = dyeCost;
         this.output = output.asItem();
         this.index = index;

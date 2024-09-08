@@ -20,7 +20,7 @@ public class OxidizableClimbingRopeAnchor extends ClimbingRopeAnchorBlock implem
     }
 
     protected boolean hasRandomTicks(BlockState state) {
-        return Oxidizable.getIncreasedOxidationBlock(state.getBlock()).isPresent();
+        return !this.oxidationLevel.equals(OxidationLevel.OXIDIZED);
     }
 
     @Override

@@ -19,6 +19,7 @@ import net.minecraft.util.shape.VoxelShape;
 import net.minecraft.world.BlockView;
 import net.minecraft.world.World;
 import net.minecraft.world.WorldAccess;
+import net.minecraft.world.block.WireOrientation;
 import org.jetbrains.annotations.Nullable;
 
 @SuppressWarnings("deprecation")
@@ -72,7 +73,7 @@ public class RedstoneBridgeBlock extends Block implements Waterloggable {
     }
 
     @Override
-    public void neighborUpdate(BlockState state, World world, BlockPos pos, Block sourceBlock, BlockPos sourcePos, boolean notify) {
+    public void neighborUpdate(BlockState state, World world, BlockPos pos, Block sourceBlock, @Nullable WireOrientation wireOrientation, boolean notify) {
         if (state.get(WATERLOGGED)) world.scheduleFluidTick(pos, Fluids.WATER, Fluids.WATER.getTickRate(world));
         int power = getPower(world, pos, state);
         if (power == state.get(POWER)) return;
@@ -131,7 +132,7 @@ public class RedstoneBridgeBlock extends Block implements Waterloggable {
     }
 
     private void updateAffectedNeighbors(World world, BlockPos pos, BlockState state) {
-        world.updateNeighborsExcept(pos.offset(state.get(FACING)), this, state.get(FACING).getOpposite());
+        world.updateNeighborsExcept(pos.offset(state.get(FACING)), this, state.get(FACING).getOpposite(), WireOrientation.fromOrdinal(0));
     }
 
     @Override

@@ -40,7 +40,7 @@ public class GreencapMushroomBlock extends PlantBlock implements Fertilizable {
     @Override
     public void randomDisplayTick(BlockState state, World world, BlockPos pos, Random random) {
         if (random.nextInt(3) != 1) return;
-        Vec3d modelOffset = state.getModelOffset(world, pos);
+        Vec3d modelOffset = state.getModelOffset(pos);
         double x = pos.getX() + modelOffset.x;
         double y = pos.getY() + modelOffset.y;
         double z = pos.getZ() + modelOffset.z;

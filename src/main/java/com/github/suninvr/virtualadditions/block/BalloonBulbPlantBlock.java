@@ -15,6 +15,8 @@ import net.minecraft.util.shape.VoxelShape;
 import net.minecraft.world.BlockView;
 import net.minecraft.world.World;
 import net.minecraft.world.WorldView;
+import net.minecraft.world.block.WireOrientation;
+import org.jetbrains.annotations.Nullable;
 
 public class BalloonBulbPlantBlock extends Block implements Fertilizable, LandingBlock {
     public static final MapCodec<BalloonBulbPlantBlock> CODEC = createCodec(BalloonBulbPlantBlock::new);
@@ -31,7 +33,7 @@ public class BalloonBulbPlantBlock extends Block implements Fertilizable, Landin
     }
 
     @Override
-    public void neighborUpdate(BlockState state, World world, BlockPos pos, Block sourceBlock, BlockPos sourcePos, boolean notify) {
+    protected void neighborUpdate(BlockState state, World world, BlockPos pos, Block sourceBlock, @Nullable WireOrientation wireOrientation, boolean notify) {
         world.scheduleBlockTick(pos, this, 2);
     }
 
@@ -96,7 +98,7 @@ public class BalloonBulbPlantBlock extends Block implements Fertilizable, Landin
 
     @Override
     public VoxelShape getOutlineShape(BlockState state, BlockView world, BlockPos pos, ShapeContext context) {
-        Vec3d offset = state.getModelOffset(world, pos);
+        Vec3d offset = state.getModelOffset(pos);
         return SHAPE.offset(offset.x, 0, offset.z);
     }
 }

@@ -92,8 +92,8 @@ public record EffectsOnHitComponent(Optional<PotionContentsComponent> potionCont
         CODEC = RecordCodecBuilder.create( instance -> {
             return instance.group(
                     PotionContentsComponent.CODEC.optionalFieldOf("potion").forGetter(EffectsOnHitComponent::potionContents),
-                    Codecs.NONNEGATIVE_INT.optionalFieldOf("total_uses").forGetter(EffectsOnHitComponent::uses),
-                    Codecs.NONNEGATIVE_INT.optionalFieldOf("remaining_uses").forGetter(EffectsOnHitComponent::remaining)
+                    Codecs.NON_NEGATIVE_INT.optionalFieldOf("total_uses").forGetter(EffectsOnHitComponent::uses),
+                    Codecs.NON_NEGATIVE_INT.optionalFieldOf("remaining_uses").forGetter(EffectsOnHitComponent::remaining)
             ).apply(instance, EffectsOnHitComponent::new);
         });
         PACKET_CODEC = PacketCodec.tuple(PacketCodecs.optional(PotionContentsComponent.PACKET_CODEC), EffectsOnHitComponent::potionContents, PacketCodecs.INTEGER.collect(PacketCodecs::optional), EffectsOnHitComponent::uses, PacketCodecs.INTEGER.collect(PacketCodecs::optional), EffectsOnHitComponent::remaining, EffectsOnHitComponent::new);

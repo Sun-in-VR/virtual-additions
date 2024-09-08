@@ -1,5 +1,6 @@
 package com.github.suninvr.virtualadditions.item;
 
+import com.github.suninvr.virtualadditions.interfaces.MiningToolItemInterface;
 import com.github.suninvr.virtualadditions.item.interfaces.GildedToolItem;
 import net.minecraft.item.tooltip.TooltipType;
 import net.minecraft.item.Item;
@@ -15,28 +16,15 @@ import java.util.List;
 
 public class GildedPickaxeItem extends PickaxeItem implements GildedToolItem {
     private final GildType gildType;
-    private final ToolMaterial toolMaterial;
-    private final ToolMaterial baseMaterial;
     private final Item baseItem;
     private static final Text descriptionHeader = Text.translatable("item.minecraft.smithing_template.upgrade").formatted(Formatting.GRAY);
     private final Text descriptionText;
 
-    public GildedPickaxeItem(GildType gildType, PickaxeItem baseItem, Settings settings) {
-        super(gildType.getModifiedMaterial(baseItem), settings);
+    public GildedPickaxeItem(GildType gildType, ToolMaterial baseMaterial, PickaxeItem baseItem, Settings settings) {
+        super(gildType.getModifiedMaterial(baseMaterial).asToolMaterial(), ((MiningToolItemInterface)baseItem).getAttackDamage(), ((MiningToolItemInterface)baseItem).getAttackSpeed(), settings);
         this.gildType = gildType;
-        this.toolMaterial = gildType.getModifiedMaterial(baseItem);
-        this.baseMaterial = baseItem.getMaterial();
         this.baseItem = baseItem;
         this.descriptionText = ScreenTexts.space().append(Text.translatable(this.gildType.buildTooltipTranslationKey()).setStyle(Style.EMPTY.withColor(this.gildType.getColor())));
-    }
-
-    @Override
-    public ToolMaterial getMaterial() {
-        return toolMaterial;
-    }
-
-    public ToolMaterial getBaseMaterial() {
-        return baseMaterial;
     }
 
     @Override

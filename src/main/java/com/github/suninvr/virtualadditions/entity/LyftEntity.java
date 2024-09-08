@@ -3,10 +3,7 @@ package com.github.suninvr.virtualadditions.entity;
 import com.github.suninvr.virtualadditions.registry.VAEntityType;
 import com.github.suninvr.virtualadditions.registry.VAItems;
 import net.minecraft.block.BlockState;
-import net.minecraft.entity.EntityDimensions;
-import net.minecraft.entity.EntityPose;
-import net.minecraft.entity.EntityType;
-import net.minecraft.entity.LivingEntity;
+import net.minecraft.entity.*;
 import net.minecraft.entity.ai.control.FlightMoveControl;
 import net.minecraft.entity.ai.goal.*;
 import net.minecraft.entity.ai.pathing.BirdNavigation;
@@ -91,9 +88,9 @@ public class LyftEntity extends AnimalEntity {
 
     public static DefaultAttributeContainer createLyftAttributes() {
         return MobEntity.createMobAttributes()
-                .add(EntityAttributes.GENERIC_MAX_HEALTH, 30.0)
-                .add(EntityAttributes.GENERIC_FLYING_SPEED, 2.0)
-                .add(EntityAttributes.GENERIC_MOVEMENT_SPEED, 0.0)
+                .add(EntityAttributes.MAX_HEALTH, 30.0)
+                .add(EntityAttributes.FLYING_SPEED, 2.0)
+                .add(EntityAttributes.MOVEMENT_SPEED, 0.0)
                 .build();
     }
 
@@ -129,7 +126,7 @@ public class LyftEntity extends AnimalEntity {
     @Nullable
     @Override
     public PassiveEntity createChild(ServerWorld world, PassiveEntity entity) {
-        return VAEntityType.LYFT.create(world);
+        return VAEntityType.LYFT.create(world, SpawnReason.BREEDING);
     }
 
     @Override

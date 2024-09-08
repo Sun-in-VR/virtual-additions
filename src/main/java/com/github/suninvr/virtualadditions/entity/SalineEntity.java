@@ -25,11 +25,11 @@ public class SalineEntity extends ZombieEntity {
 
     public static DefaultAttributeContainer createSalineAttributes() {
         return HostileEntity.createHostileAttributes()
-                .add(EntityAttributes.GENERIC_FOLLOW_RANGE, 35.0)
-                .add(EntityAttributes.GENERIC_MOVEMENT_SPEED, 0.19f)
-                .add(EntityAttributes.GENERIC_ATTACK_DAMAGE, 3.5)
-                .add(EntityAttributes.GENERIC_ARMOR, 2.0)
-                .add(EntityAttributes.ZOMBIE_SPAWN_REINFORCEMENTS)
+                .add(EntityAttributes.FOLLOW_RANGE, 35.0)
+                .add(EntityAttributes.MOVEMENT_SPEED, 0.19f)
+                .add(EntityAttributes.ATTACK_DAMAGE, 3.5)
+                .add(EntityAttributes.ARMOR, 2.0)
+                .add(EntityAttributes.SPAWN_REINFORCEMENTS)
                 .build();
     }
 

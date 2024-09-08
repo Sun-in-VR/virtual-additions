@@ -9,6 +9,7 @@ import net.minecraft.block.TrapdoorBlock;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
+import net.minecraft.server.world.ServerWorld;
 import net.minecraft.sound.SoundCategory;
 import net.minecraft.state.StateManager;
 import net.minecraft.state.property.BooleanProperty;
@@ -37,7 +38,7 @@ public class SteelTrapdoorBlock extends TrapdoorBlock {
     }
 
     @Override
-    protected void onExploded(BlockState state, World world, BlockPos pos, Explosion explosion, BiConsumer<ItemStack, BlockPos> stackMerger) {
+    protected void onExploded(BlockState state, ServerWorld world, BlockPos pos, Explosion explosion, BiConsumer<ItemStack, BlockPos> stackMerger) {
         if (explosion.getDestructionType() == Explosion.DestructionType.TRIGGER_BLOCK && !world.isClient) toggleShutter(world, state, pos, null);
         super.onExploded(state, world, pos, explosion, stackMerger);
     }
@@ -45,7 +46,7 @@ public class SteelTrapdoorBlock extends TrapdoorBlock {
     @Override
     public ActionResult onUse(BlockState state, World world, BlockPos pos, PlayerEntity player, BlockHitResult hit) {
         toggleShutter(world, state, pos, player);
-        return ActionResult.success(world.isClient);
+        return ActionResult.SUCCESS;
     }
 
     private static void toggleShutter(World world, BlockState state, BlockPos pos, @Nullable Entity source) {

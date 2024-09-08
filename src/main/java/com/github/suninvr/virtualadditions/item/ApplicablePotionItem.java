@@ -2,18 +2,15 @@ package com.github.suninvr.virtualadditions.item;
 
 import com.github.suninvr.virtualadditions.component.EffectsOnHitComponent;
 import com.github.suninvr.virtualadditions.registry.VADataComponentTypes;
-import net.minecraft.item.tooltip.TooltipType;
 import net.minecraft.component.DataComponentTypes;
 import net.minecraft.component.type.PotionContentsComponent;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.*;
+import net.minecraft.item.tooltip.TooltipType;
 import net.minecraft.screen.slot.Slot;
 import net.minecraft.sound.SoundEvents;
 import net.minecraft.text.Text;
 import net.minecraft.util.ClickType;
-import net.minecraft.util.Hand;
-import net.minecraft.util.TypedActionResult;
-import net.minecraft.world.World;
 
 import java.util.List;
 import java.util.Objects;
@@ -21,11 +18,6 @@ import java.util.Objects;
 public class ApplicablePotionItem extends PotionItem {
     public ApplicablePotionItem(net.minecraft.item.Item.Settings settings) {
         super(settings);
-    }
-
-    @Override
-    public TypedActionResult<ItemStack> use(World world, PlayerEntity user, Hand hand) {
-        return TypedActionResult.pass(user.getStackInHand(hand));
     }
 
     @Override

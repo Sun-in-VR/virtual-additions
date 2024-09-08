@@ -35,7 +35,7 @@ public abstract class PlayerEntityMixin extends LivingEntity {
         PlayerEntity player = ((PlayerEntity)(Object)this);
         ItemStack stack = player.getMainHandStack();
         if (GildedToolUtil.getGildType(stack).equals(GildTypes.SCULK)) {
-            f.set((float) (f.get() - player.getAttributeValue(EntityAttributes.PLAYER_MINING_EFFICIENCY)));
+            f.set((float) (f.get() - player.getAttributeValue(EntityAttributes.MINING_EFFICIENCY)));
         }
     }
 

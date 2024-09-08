@@ -2,6 +2,7 @@ package com.github.suninvr.virtualadditions.client.render.entity;
 
 import net.minecraft.client.render.entity.EntityRendererFactory;
 import net.minecraft.client.render.entity.ZombieEntityRenderer;
+import net.minecraft.client.render.entity.state.ZombieEntityRenderState;
 import net.minecraft.client.util.math.MatrixStack;
 import net.minecraft.entity.mob.ZombieEntity;
 import net.minecraft.util.Identifier;
@@ -16,14 +17,7 @@ public class SalineEntityRenderer extends ZombieEntityRenderer {
     }
 
     @Override
-    protected void scale(ZombieEntity zombieEntity, MatrixStack matrixStack, float f) {
-        float g = 0.9375f;
-        matrixStack.scale(g, g, g);
-        super.scale(zombieEntity, matrixStack, f);
-    }
-
-    @Override
-    public Identifier getTexture(ZombieEntity zombieEntity) {
+    public Identifier getTexture(ZombieEntityRenderState zombieEntityRenderState) {
         return TEXTURE;
     }
 }

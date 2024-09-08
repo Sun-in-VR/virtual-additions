@@ -58,7 +58,7 @@ public class GildTypes {
 
         @Override
         public boolean onBlockBroken(World world, PlayerEntity player, BlockPos pos, BlockState state, ItemStack tool) {
-            double miningEfficiency = player.getAttributeValue(EntityAttributes.PLAYER_MINING_EFFICIENCY);
+            double miningEfficiency = player.getAttributeValue(EntityAttributes.MINING_EFFICIENCY);
             int potency = (int) (48 / state.getHardness(world, pos));
             potency += (int) (potency * (miningEfficiency / 13.0));
             potency = Math.min(Math.min((tool.getMaxDamage() - tool.getDamage()), potency) -1, world.getGameRules().getInt(VAGameRules.SCULK_GILD_BLOCK_SELECTION_MAXIMUM));

@@ -4,6 +4,8 @@ import com.github.suninvr.virtualadditions.entity.LumwaspEntity;
 import net.minecraft.client.model.*;
 import net.minecraft.client.render.VertexConsumer;
 import net.minecraft.client.render.entity.model.EntityModel;
+import net.minecraft.client.render.entity.state.EntityRenderState;
+import net.minecraft.client.render.entity.state.LivingEntityRenderState;
 import net.minecraft.client.util.math.MatrixStack;
 import net.minecraft.util.math.MathHelper;
 
@@ -11,7 +13,7 @@ import net.minecraft.util.math.MathHelper;
 // Exported for Minecraft version 1.17+ for Yarn
 // Paste this class into your mod and generate all required imports
 @SuppressWarnings({"FieldCanBeLocal", "unused"})
-public class LumwaspEntityModel<T extends LumwaspEntity> extends EntityModel<LumwaspEntity> {
+public class LumwaspEntityModel<T extends LumwaspEntity> extends EntityModel<LumwaspEntityRenderState> {
     private final ModelPart body;
     private final ModelPart head;
     private final ModelPart thorax;
@@ -79,13 +81,16 @@ public class LumwaspEntityModel<T extends LumwaspEntity> extends EntityModel<Lum
         ModelPartData antenna_l_r1 = head.addChild("antenna_l_r1", ModelPartBuilder.create().uv(34, 34).cuboid(0.0F, -3.0F, -10.0F, 0.0F, 3.0F, 10.0F, new Dilation(0.0F)), ModelTransform.of(1.0F, -3.0F, -2.0F, 0.0F, -0.3491F, 0.0F));
         return TexturedModelData.of(modelData, 128, 128);
     }
-    @Override
-    public void render(MatrixStack matrices, VertexConsumer vertices, int light, int overlay, int color) {
-        body.render(matrices, vertices, light, overlay);
-    }
 
     @Override
-    public void setAngles(LumwaspEntity entity, float limbAngle, float limbDistance, float animationProgress, float headYaw, float headPitch) {
+    public void setAngles(LumwaspEntityRenderState state) {
+        float animationProgress = state.age;
+        float headYaw = state.yawDegrees;
+        float headPitch = state.pitch;
+        boolean inAir = state.inAir;
+        float limbAngle = state.limbFrequency * 0.6662F;
+        float limbDistance = state.limbAmplitudeMultiplier;
+
         float u = (float) (Math.sin(animationProgress / 19) / 24);
         float v = (float) (Math.sin(animationProgress / 16) / 12);
         float w = (float) (Math.sin(animationProgress / 22) / 24);
@@ -93,7 +98,7 @@ public class LumwaspEntityModel<T extends LumwaspEntity> extends EntityModel<Lum
         this.head.yaw = headYaw * 0.017453292F;
         this.head.pitch = headPitch  * 0.017453292F;
         this.thorax.yaw = u;
-        if (entity.isInAir()) {
+        if (inAir) {
             this.left_wing.pitch = (float) (1.0873F + Math.sin(animationProgress * 1.5) * 0.3);
             this.left_wing.yaw = -0.1745F;
             this.left_wing.roll = 0.8963F;
@@ -121,7 +126,7 @@ public class LumwaspEntityModel<T extends LumwaspEntity> extends EntityModel<Lum
             this.right_wing.yaw = 0.1745F;
             this.right_wing.roll = -1.3963F;
             this.thorax.pitch = v;
-            
+
             this.front_left_leg.yaw = 0.4084F;
             this.front_right_leg.yaw = -0.4084F;
             this.middle_left_leg.yaw = -0.5293F;
@@ -134,7 +139,7 @@ public class LumwaspEntityModel<T extends LumwaspEntity> extends EntityModel<Lum
             this.middle_right_leg.roll = -0.4074F;
             this.back_left_leg.roll = 0.4476F;
             this.back_right_leg.roll = -0.4476F;
-            
+
             float i = -(MathHelper.cos(limbAngle * 0.6662F * 2.0F + 0.0F) * 0.4F) * limbDistance;
             float j = -(MathHelper.cos(limbAngle * 0.6662F * 2.0F + 3.1415927F) * 0.4F) * limbDistance;
             float l = -(MathHelper.cos(limbAngle * 0.6662F * 2.0F + 4.712389F) * 0.4F) * limbDistance;
@@ -155,6 +160,11 @@ public class LumwaspEntityModel<T extends LumwaspEntity> extends EntityModel<Lum
             this.back_left_leg.roll -= m;
             this.back_right_leg.roll += m;
         }
+    }
+
+    @Override
+    public ModelPart getPart() {
+        return this.body;
     }
 }
 

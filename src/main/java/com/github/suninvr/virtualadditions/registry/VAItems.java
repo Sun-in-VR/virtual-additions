@@ -635,11 +635,11 @@ public class VAItems {
         RAW_STEEL = register("raw_steel", ItemGroups.INGREDIENTS, Items.RAW_GOLD);
         STEEL_INGOT = register("steel_ingot", ItemGroups.INGREDIENTS, Items.GOLD_INGOT);
         STEEL_BOMB = register("steel_bomb", new SteelBombItem(new Item.Settings().maxCount(16).component(VADataComponentTypes.EXPLOSIVE_CONTENTS, ExplosiveContentComponent.DEFAULT)), new ItemGroupLocation(ItemGroups.COMBAT, Items.SNOWBALL), new ItemGroupLocation(ItemGroups.TOOLS, WAXED_OXIDIZED_CLIMBING_ROPE));
-        STEEL_SWORD = register("steel_sword", new SwordItem(SteelToolMaterial.INSTANCE, new Item.Settings().maxCount(1).attributeModifiers(SwordItem.createAttributeModifiers(SteelToolMaterial.INSTANCE, 3, -2.4F))), ItemGroups.COMBAT, Items.GOLDEN_SWORD);
-        STEEL_SHOVEL = register("steel_shovel", new ShovelItem(SteelToolMaterial.INSTANCE, new Item.Settings().maxCount(1).attributeModifiers(ShovelItem.createAttributeModifiers(SteelToolMaterial.INSTANCE, 1.5F, -3.0F))), ItemGroups.TOOLS, Items.GOLDEN_HOE);
-        STEEL_PICKAXE = register("steel_pickaxe", new CustomPickaxeItem(SteelToolMaterial.INSTANCE, new Item.Settings().maxCount(1).attributeModifiers(PickaxeItem.createAttributeModifiers(SteelToolMaterial.INSTANCE, 1, -2.8F))), ItemGroups.TOOLS, prev);
-        STEEL_AXE = register("steel_axe", new CustomAxeItem(SteelToolMaterial.INSTANCE, new Item.Settings().maxCount(1).attributeModifiers(AxeItem.createAttributeModifiers(SteelToolMaterial.INSTANCE, 6.0F, -3.1F))), new ItemGroupLocation(ItemGroups.TOOLS, prev), new ItemGroupLocation(ItemGroups.COMBAT, Items.GOLDEN_AXE));
-        STEEL_HOE = register("steel_hoe", new CustomHoeItem(SteelToolMaterial.INSTANCE, new Item.Settings().maxCount(1).attributeModifiers(HoeItem.createAttributeModifiers(SteelToolMaterial.INSTANCE, -2, -1.0F))), ItemGroups.TOOLS, prev);
+        STEEL_SWORD = register("steel_sword", new SwordItem(SteelToolMaterial.INSTANCE, 3, -2.4F, new Item.Settings()), ItemGroups.COMBAT, Items.GOLDEN_SWORD);
+        STEEL_SHOVEL = register("steel_shovel", new ShovelItem(SteelToolMaterial.INSTANCE, 1.5F, -3.0F, new Item.Settings()), ItemGroups.TOOLS, Items.GOLDEN_HOE);
+        STEEL_PICKAXE = register("steel_pickaxe", new PickaxeItem(SteelToolMaterial.INSTANCE, 1, -2.8F, new Item.Settings()), ItemGroups.TOOLS, prev);
+        STEEL_AXE = register("steel_axe", new AxeItem(SteelToolMaterial.INSTANCE, 6.0F, -3.1F, new Item.Settings()), new ItemGroupLocation(ItemGroups.TOOLS, prev), new ItemGroupLocation(ItemGroups.COMBAT, Items.GOLDEN_AXE));
+        STEEL_HOE = register("steel_hoe", new HoeItem(SteelToolMaterial.INSTANCE, -2, -1.0F, new Item.Settings()), ItemGroups.TOOLS, prev);
         STEEL_HELMET = register("steel_helmet", new ArmorItem(VAArmorMaterial.STEEL, ArmorItem.Type.HELMET, new Item.Settings().maxCount(1).maxDamage(ArmorItem.Type.HELMET.getMaxDamage(24))), ItemGroups.COMBAT, Items.GOLDEN_BOOTS);
         STEEL_CHESTPLATE = register("steel_chestplate", new ArmorItem(VAArmorMaterial.STEEL, ArmorItem.Type.CHESTPLATE, new Item.Settings().maxCount(1).maxDamage(ArmorItem.Type.CHESTPLATE.getMaxDamage(24))), ItemGroups.COMBAT, prev);
         STEEL_LEGGINGS = register("steel_leggings", new ArmorItem(VAArmorMaterial.STEEL, ArmorItem.Type.LEGGINGS, new Item.Settings().maxCount(1).maxDamage(ArmorItem.Type.LEGGINGS.getMaxDamage(24))), ItemGroups.COMBAT, prev);
@@ -880,18 +880,18 @@ public class VAItems {
 
         COLORING_STATION = registerBlockItem("coloring_station", VABlocks.COLORING_STATION, ItemGroups.FUNCTIONAL, Items.LOOM);
 
-        DIAMOND_TOOL_SET = new ToolSet(Items.DIAMOND_SWORD, Items.DIAMOND_SHOVEL, Items.DIAMOND_PICKAXE, Items.DIAMOND_AXE, Items.DIAMOND_HOE, "diamond");
-        GOLDEN_TOOL_SET = new ToolSet(Items.GOLDEN_SWORD, Items.GOLDEN_SHOVEL, Items.GOLDEN_PICKAXE, Items.GOLDEN_AXE, Items.GOLDEN_HOE, "golden");
-        IRON_TOOL_SET = new ToolSet(Items.IRON_SWORD, Items.IRON_SHOVEL, Items.IRON_PICKAXE, Items.IRON_AXE, Items.IRON_HOE, "iron");
-        NETHERITE_TOOL_SET = new ToolSet(Items.NETHERITE_SWORD, Items.NETHERITE_SHOVEL, Items.NETHERITE_PICKAXE, Items.NETHERITE_AXE, Items.NETHERITE_HOE, "netherite");
-        STEEL_TOOL_SET = new ToolSet(STEEL_SWORD, STEEL_SHOVEL, STEEL_PICKAXE, STEEL_AXE, STEEL_HOE, "steel");
+        DIAMOND_TOOL_SET = new ToolSet(Items.DIAMOND_SWORD, Items.DIAMOND_SHOVEL, Items.DIAMOND_PICKAXE, Items.DIAMOND_AXE, Items.DIAMOND_HOE, ToolMaterial.DIAMOND, "diamond");
+        GOLDEN_TOOL_SET = new ToolSet(Items.GOLDEN_SWORD, Items.GOLDEN_SHOVEL, Items.GOLDEN_PICKAXE, Items.GOLDEN_AXE, Items.GOLDEN_HOE, ToolMaterial.GOLD, "golden");
+        IRON_TOOL_SET = new ToolSet(Items.IRON_SWORD, Items.IRON_SHOVEL, Items.IRON_PICKAXE, Items.IRON_AXE, Items.IRON_HOE, ToolMaterial.IRON, "iron");
+        NETHERITE_TOOL_SET = new ToolSet(Items.NETHERITE_SWORD, Items.NETHERITE_SHOVEL, Items.NETHERITE_PICKAXE, Items.NETHERITE_AXE, Items.NETHERITE_HOE, ToolMaterial.NETHERITE, "netherite");
+        STEEL_TOOL_SET = new ToolSet(STEEL_SWORD, STEEL_SHOVEL, STEEL_PICKAXE, STEEL_AXE, STEEL_HOE, SteelToolMaterial.INSTANCE, "steel");
 
-        TOOL_GILD_SMITHING_TEMPLATE = register("tool_gild_smithing_template", new SmithingTemplateItem(TOOL_GILD_APPLIES_TO_TEXT, TOOL_GILD_INGREDIENTS_TEXT, TOOL_GILD_TEXT, TOOL_GILD_BASE_SLOT_DESCRIPTION_TEXT, TOOL_GILD_ADDITIONS_SLOT_DESCRIPTION_TEXT,
+        TOOL_GILD_SMITHING_TEMPLATE = register("tool_gild_smithing_template", new SmithingTemplateItem(new Item.Settings(), TOOL_GILD_APPLIES_TO_TEXT, TOOL_GILD_INGREDIENTS_TEXT, TOOL_GILD_BASE_SLOT_DESCRIPTION_TEXT, TOOL_GILD_ADDITIONS_SLOT_DESCRIPTION_TEXT,
                 List.of(EMPTY_SLOT_SWORD_TEXTURE, EMPTY_SLOT_SHOVEL_TEXTURE, EMPTY_SLOT_PICKAXE_TEXTURE, EMPTY_SLOT_AXE_TEXTURE, EMPTY_SLOT_HOE_TEXTURE),
                 List.of(EMPTY_SLOT_AMETHYST_TEXTURE, EMPTY_SLOT_INGOT_TEXTURE, EMPTY_SLOT_EMERALD_TEXTURE, EMPTY_SLOT_IOLITE_TEXTURE, EMPTY_SLOT_QUARTZ_TEXTURE, EMPTY_SLOT_ECHO_SHARD_TEXTURE)
         ), ItemGroups.INGREDIENTS, Items.NETHERITE_UPGRADE_SMITHING_TEMPLATE);
 
-        EXOSKELETON_ARMOR_TRIM_SMITHING_TEMPLATE = register("exoskeleton_armor_trim_smithing_template", SmithingTemplateItem.of(idOf("exoskeleton")), ItemGroups.INGREDIENTS, Items.BOLT_ARMOR_TRIM_SMITHING_TEMPLATE);
+        EXOSKELETON_ARMOR_TRIM_SMITHING_TEMPLATE = register("exoskeleton_armor_trim_smithing_template", SmithingTemplateItem.of(new Item.Settings().rarity(Rarity.UNCOMMON)), ItemGroups.INGREDIENTS, Items.BOLT_ARMOR_TRIM_SMITHING_TEMPLATE);
 
         IOLITE = register("iolite", ItemGroups.INGREDIENTS, Items.ANCIENT_DEBRIS);
         IOLITE_ORE = registerBlockItem("iolite_ore", VABlocks.IOLITE_ORE, ItemGroups.NATURAL, Items.ANCIENT_DEBRIS);
@@ -1021,19 +1021,20 @@ public class VAItems {
             // Grass Drop
             if (Blocks.SHORT_GRASS.getLootTableKey().equals(key)) {
                 RegistryEntryLookup<Enchantment> enchantmentLookup = BuiltinRegistries.createWrapperLookup().createRegistryLookup().getOrThrow(RegistryKeys.ENCHANTMENT);
+                RegistryEntryLookup<Item> itemRegistryEntryLookup = BuiltinRegistries.createWrapperLookup().createRegistryLookup().getOrThrow(RegistryKeys.ITEM);
                 LootPool.Builder cottonBuilder = LootPool.builder()
                         .with(ItemEntry.builder(COTTON_SEEDS)
                                 .apply(ApplyBonusLootFunction.uniformBonusCount(enchantmentLookup.getOrThrow(Enchantments.FORTUNE), 2))
                                 .apply(ExplosionDecayLootFunction.builder())
                                 .conditionally(RandomChanceLootCondition.builder(0.125F))
-                                .conditionally(InvertedLootCondition.builder(MatchToolLootCondition.builder(ItemPredicate.Builder.create().items(Items.SHEARS))))
+                                .conditionally(InvertedLootCondition.builder(MatchToolLootCondition.builder(ItemPredicate.Builder.create().items(itemRegistryEntryLookup, Items.SHEARS))))
                         );
                 LootPool.Builder cornBuilder = LootPool.builder()
                         .with(ItemEntry.builder(CORN_SEEDS)
                                 .apply(ApplyBonusLootFunction.uniformBonusCount(enchantmentLookup.getOrThrow(Enchantments.FORTUNE), 2))
                                 .apply(ExplosionDecayLootFunction.builder())
                                 .conditionally(RandomChanceLootCondition.builder(0.125F))
-                                .conditionally(InvertedLootCondition.builder(MatchToolLootCondition.builder(ItemPredicate.Builder.create().items(Items.SHEARS))))
+                                .conditionally(InvertedLootCondition.builder(MatchToolLootCondition.builder(ItemPredicate.Builder.create().items(itemRegistryEntryLookup, Items.SHEARS))))
                         );
                 tableBuilder.pool(cottonBuilder).pool(cornBuilder);
             }
@@ -1128,24 +1129,24 @@ public class VAItems {
     }
 
     protected static void initCauldronBehaviors() {
-        Map<Item, CauldronBehavior> waterBehaviors = CauldronBehavior.WATER_CAULDRON_BEHAVIOR.map();
-        waterBehaviors.put(VAItems.ENGRAVING_CHISEL, CauldronBehavior.CLEAN_DYEABLE_ITEM);
-        waterBehaviors.put(VAItems.CHARTREUSE_SHULKER_BOX, CauldronBehavior.CLEAN_SHULKER_BOX);
-        waterBehaviors.put(VAItems.MAROON_SHULKER_BOX, CauldronBehavior.CLEAN_SHULKER_BOX);
-        waterBehaviors.put(VAItems.INDIGO_SHULKER_BOX, CauldronBehavior.CLEAN_SHULKER_BOX);
-        waterBehaviors.put(VAItems.PLUM_SHULKER_BOX, CauldronBehavior.CLEAN_SHULKER_BOX);
-        waterBehaviors.put(VAItems.VIRIDIAN_SHULKER_BOX, CauldronBehavior.CLEAN_SHULKER_BOX);
-        waterBehaviors.put(VAItems.TAN_SHULKER_BOX, CauldronBehavior.CLEAN_SHULKER_BOX);
-        waterBehaviors.put(VAItems.SINOPIA_SHULKER_BOX, CauldronBehavior.CLEAN_SHULKER_BOX);
-        waterBehaviors.put(VAItems.LILAC_SHULKER_BOX, CauldronBehavior.CLEAN_SHULKER_BOX);
-        waterBehaviors.put(VAItems.CHARTREUSE_BANNER, CauldronBehavior.CLEAN_BANNER);
-        waterBehaviors.put(VAItems.MAROON_BANNER, CauldronBehavior.CLEAN_BANNER);
-        waterBehaviors.put(VAItems.INDIGO_BANNER, CauldronBehavior.CLEAN_BANNER);
-        waterBehaviors.put(VAItems.PLUM_BANNER, CauldronBehavior.CLEAN_BANNER);
-        waterBehaviors.put(VAItems.VIRIDIAN_BANNER, CauldronBehavior.CLEAN_BANNER);
-        waterBehaviors.put(VAItems.TAN_BANNER, CauldronBehavior.CLEAN_BANNER);
-        waterBehaviors.put(VAItems.SINOPIA_BANNER, CauldronBehavior.CLEAN_BANNER);
-        waterBehaviors.put(VAItems.LILAC_BANNER, CauldronBehavior.CLEAN_BANNER);
+        //Map<Item, CauldronBehavior> waterBehaviors = CauldronBehavior.WATER_CAULDRON_BEHAVIOR.map();
+        //waterBehaviors.put(VAItems.ENGRAVING_CHISEL, CauldronBehavior.CLEAN_DYEABLE_ITEM);
+        //waterBehaviors.put(VAItems.CHARTREUSE_SHULKER_BOX, CauldronBehavior.CLEAN_SHULKER_BOX);
+        //waterBehaviors.put(VAItems.MAROON_SHULKER_BOX, CauldronBehavior.CLEAN_SHULKER_BOX);
+        //waterBehaviors.put(VAItems.INDIGO_SHULKER_BOX, CauldronBehavior.CLEAN_SHULKER_BOX);
+        //waterBehaviors.put(VAItems.PLUM_SHULKER_BOX, CauldronBehavior.CLEAN_SHULKER_BOX);
+        //waterBehaviors.put(VAItems.VIRIDIAN_SHULKER_BOX, CauldronBehavior.CLEAN_SHULKER_BOX);
+        //waterBehaviors.put(VAItems.TAN_SHULKER_BOX, CauldronBehavior.CLEAN_SHULKER_BOX);
+        //waterBehaviors.put(VAItems.SINOPIA_SHULKER_BOX, CauldronBehavior.CLEAN_SHULKER_BOX);
+        //waterBehaviors.put(VAItems.LILAC_SHULKER_BOX, CauldronBehavior.CLEAN_SHULKER_BOX);
+        //waterBehaviors.put(VAItems.CHARTREUSE_BANNER, CauldronBehavior.CLEAN_BANNER);
+        //waterBehaviors.put(VAItems.MAROON_BANNER, CauldronBehavior.CLEAN_BANNER);
+        //waterBehaviors.put(VAItems.INDIGO_BANNER, CauldronBehavior.CLEAN_BANNER);
+        //waterBehaviors.put(VAItems.PLUM_BANNER, CauldronBehavior.CLEAN_BANNER);
+        //waterBehaviors.put(VAItems.VIRIDIAN_BANNER, CauldronBehavior.CLEAN_BANNER);
+        //waterBehaviors.put(VAItems.TAN_BANNER, CauldronBehavior.CLEAN_BANNER);
+        //waterBehaviors.put(VAItems.SINOPIA_BANNER, CauldronBehavior.CLEAN_BANNER);
+        //waterBehaviors.put(VAItems.LILAC_BANNER, CauldronBehavior.CLEAN_BANNER);
     }
 
 }

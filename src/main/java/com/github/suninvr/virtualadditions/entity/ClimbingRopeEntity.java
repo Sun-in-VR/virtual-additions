@@ -69,7 +69,7 @@ public class ClimbingRopeEntity extends PersistentProjectileEntity {
         return null;
     }
 
-    public Oxidizable.OxidationLevel getOxidation() {
+    public Oxidizable.OxidationLevel getOxidationLevel() {
         return switch (this.dataTracker.get(OXIDATION_LEVEL)) {
             case 3 -> Oxidizable.OxidationLevel.OXIDIZED;
             case 2 -> Oxidizable.OxidationLevel.WEATHERED;
@@ -106,7 +106,7 @@ public class ClimbingRopeEntity extends PersistentProjectileEntity {
     }
 
     protected float getSpeedMultipler() {
-        return switch (this.getOxidation()) {
+        return switch (this.getOxidationLevel()) {
             case UNAFFECTED -> 1.0F;
             case EXPOSED -> 0.8F;
             case WEATHERED -> 0.6F;

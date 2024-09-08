@@ -1,18 +1,20 @@
 package com.github.suninvr.virtualadditions.client.render.entity;
 
 import com.github.suninvr.virtualadditions.entity.LyftEntity;
-import com.google.common.collect.ImmutableList;
 import net.minecraft.client.model.*;
-import net.minecraft.client.render.entity.model.AnimalModel;
+import net.minecraft.client.render.entity.model.EntityModel;
+import net.minecraft.client.render.entity.state.LivingEntityRenderState;
 
 // Made with Blockbench 4.5.2
 // Exported for Minecraft version 1.17+ for Yarn
 // Paste this class into your mod and generate all required imports
 @SuppressWarnings({"FieldCanBeLocal", "unused"})
-public class LyftEntityModel<T extends LyftEntity> extends AnimalModel<LyftEntity> {
+public class LyftEntityModel<T extends LyftEntity> extends EntityModel<LivingEntityRenderState> {
+    private final ModelPart root;
     private final ModelPart outer;
     private final ModelPart inner;
     public LyftEntityModel(ModelPart root) {
+        this.root = root;
         this.outer = root.getChild("outer");
         this.inner = root.getChild("inner");
     }
@@ -25,17 +27,12 @@ public class LyftEntityModel<T extends LyftEntity> extends AnimalModel<LyftEntit
     }
 
     @Override
-    protected Iterable<ModelPart> getHeadParts() {
-        return ImmutableList.of();
+    public ModelPart getPart() {
+        return this.root;
     }
 
     @Override
-    protected Iterable<ModelPart> getBodyParts() {
-        return ImmutableList.of(this.outer, this.inner);
-    }
-
-    @Override
-    public void setAngles(LyftEntity entity, float limbAngle, float limbDistance, float animationProgress, float headYaw, float headPitch) {
+    public void setAngles(LivingEntityRenderState state) {
 
     }
 }

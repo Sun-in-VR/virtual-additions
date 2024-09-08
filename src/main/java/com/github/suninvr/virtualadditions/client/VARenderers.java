@@ -262,7 +262,7 @@ public class VARenderers {
         ColorProviderRegistry.BLOCK.register( (state, world, pos, tintIndex) -> tintIndex <= 0 ? -1 : world != null ? BiomeColors.getGrassColor(world, pos) : 5353656, VABlocks.GRASSY_FLOATROCK);
 
         ColorProviderRegistry.ITEM.register( (stack, tintIndex) -> {
-            return tintIndex > 0 ? -1 : ColorHelper.Argb.fullAlpha(stack.getOrDefault(DataComponentTypes.POTION_CONTENTS, PotionContentsComponent.DEFAULT).getColor());
+            return tintIndex > 0 ? -1 : ColorHelper.fullAlpha(stack.getOrDefault(DataComponentTypes.POTION_CONTENTS, PotionContentsComponent.DEFAULT).getColor());
         }, VAItems.APPLICABLE_POTION);
         ColorProviderRegistry.ITEM.register( (stack, tintIndex) -> FoliageColors.getDefaultColor(), VAItems.OAK_HEDGE, VAItems.JUNGLE_HEDGE, VAItems.ACACIA_HEDGE, VAItems.DARK_OAK_HEDGE);
         ColorProviderRegistry.ITEM.register( (stack, tintIndex) -> tintIndex <= 0 ? -1 : 5353656, VAItems.GRASSY_FLOATROCK);
@@ -270,7 +270,7 @@ public class VARenderers {
         ColorProviderRegistry.ITEM.register( (stack, tintIndex) -> FoliageColors.getSpruceColor(), VAItems.SPRUCE_HEDGE);
         ColorProviderRegistry.ITEM.register( (stack, tintIndex) -> FoliageColors.getMangroveColor(), VAItems.MANGROVE_HEDGE);
         ColorProviderRegistry.ITEM.register( (stack, tintIndex) -> {
-            return tintIndex > 0 ? -1 : ColorHelper.Argb.fullAlpha(stack.get(DataComponentTypes.DYED_COLOR) != null ? stack.get(DataComponentTypes.DYED_COLOR).rgb() : 0xFFFFFF);
+            return tintIndex > 0 ? -1 : ColorHelper.fullAlpha(stack.get(DataComponentTypes.DYED_COLOR) != null ? stack.get(DataComponentTypes.DYED_COLOR).rgb() : 0xFFFFFF);
         }, VAItems.ICE_CREAM, VAItems.ENGRAVING_CHISEL);
     }
 }

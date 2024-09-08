@@ -45,11 +45,11 @@ public class SteelBombEntity extends ThrownItemEntity {
     }
 
     public SteelBombEntity(World world, LivingEntity owner) {
-        super(VAEntityType.STEEL_BOMB, owner, world);
+        super(VAEntityType.STEEL_BOMB, owner, world, VAItems.STEEL_BOMB.getDefaultStack());
     }
 
     public SteelBombEntity(World world, double x, double y, double z) {
-        super(VAEntityType.STEEL_BOMB, x, y, z, world);
+        super(VAEntityType.STEEL_BOMB, x, y, z, world, VAItems.STEEL_BOMB.getDefaultStack());
     }
 
     protected void onCollision(HitResult hitResult) {
