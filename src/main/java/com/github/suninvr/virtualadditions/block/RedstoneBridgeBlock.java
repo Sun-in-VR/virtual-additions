@@ -9,7 +9,7 @@ import net.minecraft.item.ItemPlacementContext;
 import net.minecraft.item.ItemStack;
 import net.minecraft.state.StateManager;
 import net.minecraft.state.property.BooleanProperty;
-import net.minecraft.state.property.DirectionProperty;
+import net.minecraft.state.property.EnumProperty;
 import net.minecraft.state.property.IntProperty;
 import net.minecraft.state.property.Properties;
 import net.minecraft.util.BlockRotation;
@@ -26,7 +26,7 @@ import org.jetbrains.annotations.Nullable;
 public class RedstoneBridgeBlock extends Block implements Waterloggable {
     public static final MapCodec<RedstoneBridgeBlock> CODEC = createCodec(RedstoneBridgeBlock::new);
     public static final IntProperty POWER = Properties.POWER;
-    public static final DirectionProperty FACING = Properties.FACING;
+    public static final EnumProperty<Direction> FACING = Properties.FACING;
     public static final BooleanProperty WATERLOGGED = Properties.WATERLOGGED;
     private static final VoxelShape SHAPE_X;
     private static final VoxelShape SHAPE_Y;

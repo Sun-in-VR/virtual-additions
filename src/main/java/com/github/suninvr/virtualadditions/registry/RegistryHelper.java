@@ -164,27 +164,27 @@ public class RegistryHelper {
          * @param block The block to create an item for.
          * **/
         public static net.minecraft.item.Item registerBlockItem(String id, Block block) { // Create and register a block item
-            return register(id, new BlockItem(block, new Item.Settings().registryKey(RegistryKey.of(RegistryKeys.ITEM, idOf(id)))));
+            return register(id, new BlockItem(block, new Item.Settings().translationKey(block.getTranslationKey()).registryKey(RegistryKey.of(RegistryKeys.ITEM, idOf(id)))));
         }
 
         public static net.minecraft.item.Item registerBlockItem(String id, Block block, RegistryKey<ItemGroup> itemGroup) { // Create and register a block item, give a group
-            return register(id, new BlockItem(block, new Item.Settings().registryKey(RegistryKey.of(RegistryKeys.ITEM, idOf(id)))), itemGroup);
+            return register(id, new BlockItem(block, new Item.Settings().translationKey(block.getTranslationKey()).registryKey(RegistryKey.of(RegistryKeys.ITEM, idOf(id)))), itemGroup);
         }
 
         public static net.minecraft.item.Item registerBlockItem(String id, Block block, RegistryKey<ItemGroup> itemGroup, net.minecraft.item.Item itemAfter) { // Create and register a block item, give a location in a group
-            return register(id, new BlockItem(block, new Item.Settings().registryKey(RegistryKey.of(RegistryKeys.ITEM, idOf(id)))), itemGroup, itemAfter);
+            return register(id, new BlockItem(block, new Item.Settings().translationKey(block.getTranslationKey()).registryKey(RegistryKey.of(RegistryKeys.ITEM, idOf(id)))), itemGroup, itemAfter);
         }
 
         public static net.minecraft.item.Item registerBlockItem(String id, Block block, ItemGroupLocation... locations) { // Create and register a block item, give several locations
-            return register(id, new BlockItem(block, new Item.Settings().registryKey(RegistryKey.of(RegistryKeys.ITEM, idOf(id)))), locations);
+            return register(id, new BlockItem(block, new Item.Settings().translationKey(block.getTranslationKey()).registryKey(RegistryKey.of(RegistryKeys.ITEM, idOf(id)))), locations);
         }
 
         public static net.minecraft.item.Item registerBlockItem(String id, Block block, RegistryKey<ItemGroup> itemGroup, net.minecraft.item.Item itemAfter, FeatureFlag... features) { // Create and register a block item, give a location in a group, assign required feature flags
-            return register(id, new BlockItem(block, new Item.Settings().registryKey(RegistryKey.of(RegistryKeys.ITEM, idOf(id))).requires(features)), itemGroup, itemAfter);
+            return register(id, new BlockItem(block, new Item.Settings().translationKey(block.getTranslationKey()).registryKey(RegistryKey.of(RegistryKeys.ITEM, idOf(id))).requires(features)), itemGroup, itemAfter);
         }
 
         public static net.minecraft.item.Item registerBlockItem(String id, Block block, ItemGroupLocation[] locations, FeatureFlag... features) { // Create and register a block item, give several locations, assign required feature flags
-            return register(id, new BlockItem(block, new Item.Settings().registryKey(RegistryKey.of(RegistryKeys.ITEM, idOf(id))).requires(features)), locations);
+            return register(id, new BlockItem(block, new Item.Settings().translationKey(block.getTranslationKey()).registryKey(RegistryKey.of(RegistryKeys.ITEM, idOf(id))).requires(features)), locations);
         }
 
         public static ToolSet registerGildedToolSet(ToolSet baseSet, GildType type) {

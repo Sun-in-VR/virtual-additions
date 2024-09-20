@@ -23,6 +23,7 @@ import net.minecraft.world.World;
 import net.minecraft.world.WorldAccess;
 import net.minecraft.world.WorldView;
 import net.minecraft.world.block.WireOrientation;
+import net.minecraft.world.tick.ScheduledTickView;
 import org.jetbrains.annotations.Nullable;
 
 @SuppressWarnings("deprecation")
@@ -61,10 +62,10 @@ public class HangingBlock extends Block implements Waterloggable {
     }
 
     @Override
-    public BlockState getStateForNeighborUpdate(BlockState state, Direction direction, BlockState neighborState, WorldAccess world, BlockPos pos, BlockPos neighborPos) {
+    protected BlockState getStateForNeighborUpdate(BlockState state, WorldView world, ScheduledTickView tickView, BlockPos pos, Direction direction, BlockPos neighborPos, BlockState neighborState, Random random) {
         if (direction == Direction.UP){
             if (!this.canPlaceAt(state, world, pos)) {
-                world.scheduleBlockTick(pos, this, 1);
+                tickView.scheduleBlockTick(pos, this, 1);
                 return state;
             }
         }
@@ -72,7 +73,7 @@ public class HangingBlock extends Block implements Waterloggable {
         return state;
     }
 
-    private BlockState updateState(BlockState state, WorldAccess world, BlockPos pos) {
+    private BlockState updateState(BlockState state, WorldView world, BlockPos pos) {
         BlockState downState = world.getBlockState(pos.down());
         if (world.getBlockState(pos.up()).isOf(this)) {
             if (downState.isOf(this)) state = state.with(SHAPE, HangingBlockShape.STRAIGHT);

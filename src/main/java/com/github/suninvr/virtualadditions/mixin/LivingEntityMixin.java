@@ -77,11 +77,6 @@ public abstract class LivingEntityMixin extends Entity implements LivingEntityIn
         }
     }
 
-    @Inject(method = "tryUseTotem", at = @At(value = "INVOKE", target = "Lnet/minecraft/entity/LivingEntity;clearStatusEffects()Z", shift = At.Shift.AFTER))
-    void virtualAdditions$applyInterferenceEffectOnTotemUse(DamageSource source, CallbackInfoReturnable<Boolean> cir) {
-        if (this.getWorld().getGameRules().getBoolean(VAGameRules.IOLITE_INTERFERENCE)) this.addStatusEffect(new StatusEffectInstance(VAStatusEffects.IOLITE_INTERFERENCE, 1200, 1, false, true));
-    }
-
     @Override
     public float virtualAdditions$getXpModifier() {
         return this.experienceMultiplier;

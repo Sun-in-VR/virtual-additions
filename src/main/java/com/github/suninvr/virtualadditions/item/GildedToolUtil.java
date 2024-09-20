@@ -8,7 +8,7 @@ import net.minecraft.item.ItemStack;
 public class GildedToolUtil {
     public static Item.Settings settingsOf(Item item, GildType type) {
         Item.Settings settings = new Item.Settings();
-        if (item.getComponents().contains(DataComponentTypes.FIRE_RESISTANT)) settings.fireproof();
+        if (item.getComponents().contains(DataComponentTypes.DAMAGE_RESISTANT)) settings.fireproof();
         return settings.attributeModifiers(type.createAttributeModifiers(item));
     }
 

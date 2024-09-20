@@ -22,7 +22,7 @@ import net.minecraft.screen.ScreenTexts;
 import net.minecraft.sound.SoundCategory;
 import net.minecraft.state.StateManager;
 import net.minecraft.state.property.BooleanProperty;
-import net.minecraft.state.property.DirectionProperty;
+import net.minecraft.state.property.EnumProperty;
 import net.minecraft.state.property.Properties;
 import net.minecraft.text.Text;
 import net.minecraft.util.ActionResult;
@@ -45,7 +45,7 @@ public class WarpAnchorBlock extends BlockWithEntity implements Waterloggable {
     public static final MapCodec<WarpAnchorBlock> CODEC = createCodec(WarpAnchorBlock::new);
     public static final BooleanProperty POWERED = Properties.POWERED;
     public static final BooleanProperty WATERLOGGED = Properties.WATERLOGGED;
-    public static final DirectionProperty FACING = Properties.VERTICAL_DIRECTION;
+    public static final EnumProperty<Direction> FACING = Properties.VERTICAL_DIRECTION;
     private static final VoxelShape HITBOX;
     private static final VoxelShape HITBOX_CEILING;
 

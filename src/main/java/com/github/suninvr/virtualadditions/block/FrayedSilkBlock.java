@@ -8,7 +8,7 @@ import net.minecraft.block.PlantBlock;
 import net.minecraft.block.ShapeContext;
 import net.minecraft.item.ItemPlacementContext;
 import net.minecraft.state.StateManager;
-import net.minecraft.state.property.DirectionProperty;
+import net.minecraft.state.property.EnumProperty;
 import net.minecraft.state.property.Properties;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Direction;
@@ -21,7 +21,7 @@ import org.jetbrains.annotations.Nullable;
 public class FrayedSilkBlock extends PlantBlock {
     public static final MapCodec<FrayedSilkBlock> CODEC = createCodec(FrayedSilkBlock::new);
     protected static final VoxelShape SHAPE = Block.createCuboidShape(2.0, 0.0, 2.0, 14.0, 13.0, 14.0);
-    public static final DirectionProperty VERTICAL_DIRECTION = Properties.VERTICAL_DIRECTION;
+    public static final EnumProperty<Direction> VERTICAL_DIRECTION = Properties.VERTICAL_DIRECTION;
     public FrayedSilkBlock(Settings settings) {
         super(settings);
         this.setDefaultState(getStateManager().getDefaultState()

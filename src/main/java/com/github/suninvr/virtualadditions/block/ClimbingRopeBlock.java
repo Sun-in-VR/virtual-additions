@@ -14,7 +14,7 @@ import net.minecraft.server.world.ServerWorld;
 import net.minecraft.sound.SoundCategory;
 import net.minecraft.state.StateManager;
 import net.minecraft.state.property.BooleanProperty;
-import net.minecraft.state.property.DirectionProperty;
+import net.minecraft.state.property.EnumProperty;
 import net.minecraft.state.property.Properties;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Direction;
@@ -29,7 +29,7 @@ import org.jetbrains.annotations.Nullable;
 @SuppressWarnings("deprecation")
 public class ClimbingRopeBlock extends Block implements Waterloggable {
     public static final MapCodec<ClimbingRopeBlock> CODEC = createCodec(ClimbingRopeBlock::new);
-    public static final DirectionProperty FACING = DirectionProperty.of("facing", Direction.UP, Direction.NORTH, Direction.EAST, Direction.SOUTH, Direction.WEST);
+    public static final EnumProperty<Direction> FACING = EnumProperty.of("facing", Direction.class, Direction.UP, Direction.NORTH, Direction.EAST, Direction.SOUTH, Direction.WEST);
     public static final BooleanProperty WATERLOGGED = Properties.WATERLOGGED;
     public static final BooleanProperty END = BooleanProperty.of("end");
     protected static final VoxelShape EAST_SHAPE;
