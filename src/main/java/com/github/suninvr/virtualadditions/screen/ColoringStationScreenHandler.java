@@ -55,7 +55,7 @@ public class ColoringStationScreenHandler extends ScreenHandler {
         }
 
         @Override
-        public int getSize() {
+        public int size() {
             return 0;
         }
 

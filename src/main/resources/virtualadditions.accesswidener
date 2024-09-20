@@ -16,4 +16,4 @@ accessible class net/minecraft/enchantment/EnchantmentHelper$Consumer
 accessible class net/minecraft/enchantment/EnchantmentHelper$ContextAwareConsumer
 accessible method net/minecraft/client/particle/GlowParticle <init> (Lnet/minecraft/client/world/ClientWorld;DDDDDDLnet/minecraft/client/particle/SpriteProvider;)V
 accessible method net/minecraft/client/particle/TrialSpawnerDetectionParticle <init> (Lnet/minecraft/client/world/ClientWorld;DDDDDDFLnet/minecraft/client/particle/SpriteProvider;)V
-accessible class net/minecraft/client/render/block/entity/ShulkerBoxBlockEntityRenderer$class_9984
+accessible class net/minecraft/client/render/block/entity/ShulkerBoxBlockEntityRenderer$ShulkerBoxBlockModel

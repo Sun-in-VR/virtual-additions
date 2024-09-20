@@ -45,7 +45,7 @@ public class GildTypes {
     public static final GildType SCULK = new GildType(idOf("sculk"), 0x009295, miningSpeedModifier(0.4F, MULTIPLY), attackSpeedModifier(1.2F, MULTIPLY_ROUNDED_TENTHS, GildType.ModifierType.ToolType.SWORD)) {
         @Override
         public boolean isGildEffective(World world, PlayerEntity player, BlockPos pos, BlockState state, ItemStack tool) {
-            return !player.getItemCooldownManager().isCoolingDown(tool.getItem()) && !state.isOf(VABlocks.DESTRUCTIVE_SCULK) && state.getHardness(world, pos) > 0 && world.getBlockEntity(pos) == null && super.isGildEffective(world, player, pos, state, tool);
+            return !player.getItemCooldownManager().isCoolingDown(tool) && !state.isOf(VABlocks.DESTRUCTIVE_SCULK) && state.getHardness(world, pos) > 0 && world.getBlockEntity(pos) == null && super.isGildEffective(world, player, pos, state, tool);
         }
 
         @Override
@@ -70,7 +70,7 @@ public class GildTypes {
             int i = posList.size();
             player.increaseStat(Stats.USED.getOrCreateStat(tool.getItem()), i);
             tool.damage( i, player, EquipmentSlot.MAINHAND);
-            player.getItemCooldownManager().set(tool.getItem(), (int) ((i * 2) / ((miningEfficiency / 20.0) + 1)));
+            player.getItemCooldownManager().set(tool, (int) ((i * 2) / ((miningEfficiency / 20.0) + 1)));
             return false;
         }
 

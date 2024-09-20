@@ -509,7 +509,7 @@ public final class VARecipeProvider {
         
         protected Generator(RegistryWrapper.WrapperLookup registryLookup, RecipeExporter exporter) {
             super(registryLookup, exporter);
-            this.registryLookup = registryLookup.getWrapperOrThrow(RegistryKeys.ITEM);
+            this.registryLookup = registries.getOrThrow(RegistryKeys.ITEM);
         }
 
         protected void offerCookingRecipes(ItemConvertible output, ItemConvertible input, float experience, String group) {

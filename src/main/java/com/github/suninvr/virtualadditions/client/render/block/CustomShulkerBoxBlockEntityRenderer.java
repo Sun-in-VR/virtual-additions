@@ -22,10 +22,10 @@ import net.minecraft.util.math.Direction;
 import java.util.Objects;
 
 public class CustomShulkerBoxBlockEntityRenderer implements BlockEntityRenderer<ShulkerBoxBlockEntity> {
-    private final ShulkerBoxBlockEntityRenderer.class_9984 model;
+    private final ShulkerBoxBlockEntityRenderer.ShulkerBoxBlockModel model;
 
     public CustomShulkerBoxBlockEntityRenderer(BlockEntityRendererFactory.Context ctx) {
-        this.model = new ShulkerBoxBlockEntityRenderer.class_9984(ctx.getLayerModelPart(EntityModelLayers.SHULKER));
+        this.model = new ShulkerBoxBlockEntityRenderer.ShulkerBoxBlockModel(ctx.getLayerModelPart(EntityModelLayers.SHULKER));
     }
     
     @Override
@@ -49,8 +49,8 @@ public class CustomShulkerBoxBlockEntityRenderer implements BlockEntityRenderer<
         matrices.multiply(direction.getRotationQuaternion());
         matrices.scale(1.0F, -1.0F, -1.0F);
         matrices.translate(0.0F, -1.0F, 0.0F);
-        this.model.method_62341(entity, tickDelta);
-        ShulkerBoxBlockEntityRenderer.class_9984 var10002 = this.model;
+        this.model.animateLid(entity, tickDelta);
+        ShulkerBoxBlockEntityRenderer.ShulkerBoxBlockModel var10002 = this.model;
         Objects.requireNonNull(var10002);
         VertexConsumer vertexConsumer = spriteIdentifier.getVertexConsumer(vertexConsumers, var10002::getLayer);
         this.model.render(matrices, vertexConsumer, light, overlay);

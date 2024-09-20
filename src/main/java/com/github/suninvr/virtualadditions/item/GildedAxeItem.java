@@ -21,7 +21,7 @@ public class GildedAxeItem extends AxeItem implements GildedToolItem {
     private final Text descriptionText;
 
     public GildedAxeItem(GildType gildType, ToolMaterial baseMaterial, AxeItem baseItem, Settings settings) {
-        super(gildType.getModifiedMaterial(baseMaterial).asToolMaterial(), ((MiningToolItemInterface)baseItem).getAttackDamage(), ((MiningToolItemInterface)baseItem).getAttackSpeed(), settings);
+        super(gildType.getModifiedMaterial(baseMaterial).asToolMaterial(), ((MiningToolItemInterface)baseItem).getAttackDamage(), ((MiningToolItemInterface)baseItem).getAttackSpeed(), settings.translationKey(baseItem.getTranslationKey()));
         this.gildType = gildType;
         this.baseItem = baseItem;
         this.descriptionText = ScreenTexts.space().append(Text.translatable(this.gildType.buildTooltipTranslationKey()).setStyle(Style.EMPTY.withColor(this.gildType.getColor())));
@@ -37,11 +37,6 @@ public class GildedAxeItem extends AxeItem implements GildedToolItem {
         tooltip.add(descriptionHeader);
         tooltip.add(this.descriptionText);
         super.appendTooltip(stack, context, tooltip, type);
-    }
-
-    @Override
-    public String getTranslationKey() {
-        return baseItem.getTranslationKey();
     }
 
     @Override

@@ -14,6 +14,7 @@ public class LyftEntityModel<T extends LyftEntity> extends EntityModel<LivingEnt
     private final ModelPart outer;
     private final ModelPart inner;
     public LyftEntityModel(ModelPart root) {
+        super(root);
         this.root = root;
         this.outer = root.getChild("outer");
         this.inner = root.getChild("inner");
@@ -24,11 +25,6 @@ public class LyftEntityModel<T extends LyftEntity> extends EntityModel<LivingEnt
         ModelPartData outer = modelPartData.addChild("outer", ModelPartBuilder.create().uv(0, 0).cuboid(-8.0F, -10.0F, -8.0F, 16.0F, 8.0F, 16.0F, new Dilation(0.0F)), ModelTransform.pivot(0.0F, 24.0F, 0.0F));
         ModelPartData inner = modelPartData.addChild("inner", ModelPartBuilder.create().uv(0, 24).cuboid(-6.0F, -8.0F, -6.0F, 12.0F, 8.0F, 12.0F, new Dilation(0.0F)), ModelTransform.pivot(0.0F, 24.0F, 0.0F));
         return TexturedModelData.of(modelData, 64, 64);
-    }
-
-    @Override
-    public ModelPart getPart() {
-        return this.root;
     }
 
     @Override

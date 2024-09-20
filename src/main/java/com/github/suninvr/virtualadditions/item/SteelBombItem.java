@@ -24,7 +24,7 @@ public class SteelBombItem extends Item implements ProjectileItem {
     public ActionResult use(World world, PlayerEntity user, Hand hand) {
         ItemStack itemStack = user.getStackInHand(hand);
         world.playSound(user.getX(), user.getY(), user.getZ(), VASoundEvents.ENTITY_STEEL_BOMB_THROW, SoundCategory.NEUTRAL, 0.5F, 0.4F / (world.getRandom().nextFloat() * 0.4F + 0.8F), true);
-        user.getItemCooldownManager().set(this, 10);
+        user.getItemCooldownManager().set(itemStack, 10);
         if (!world.isClient) {
             SteelBombEntity steelBombEntity = new SteelBombEntity(world, user);
             steelBombEntity.setItem(itemStack);

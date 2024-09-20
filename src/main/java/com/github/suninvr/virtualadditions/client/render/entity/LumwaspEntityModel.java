@@ -9,6 +9,8 @@ import net.minecraft.client.render.entity.state.LivingEntityRenderState;
 import net.minecraft.client.util.math.MatrixStack;
 import net.minecraft.util.math.MathHelper;
 
+import java.util.Optional;
+
 // Made with Blockbench 4.5.2
 // Exported for Minecraft version 1.17+ for Yarn
 // Paste this class into your mod and generate all required imports
@@ -30,6 +32,7 @@ public class LumwaspEntityModel<T extends LumwaspEntity> extends EntityModel<Lum
     private final ModelPart back_right_leg;
 
     public LumwaspEntityModel(ModelPart root) {
+        super(root);
         this.body = root.getChild("body");
         this.head = body.getChild("head");
         this.thorax = body.getChild("thorax_r1");
@@ -160,11 +163,6 @@ public class LumwaspEntityModel<T extends LumwaspEntity> extends EntityModel<Lum
             this.back_left_leg.roll -= m;
             this.back_right_leg.roll += m;
         }
-    }
-
-    @Override
-    public ModelPart getPart() {
-        return this.body;
     }
 }
 

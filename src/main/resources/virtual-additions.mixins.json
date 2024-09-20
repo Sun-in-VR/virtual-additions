@@ -22,7 +22,6 @@
     "ItemMixin",
     "ItemStackMixin",
     "LivingEntityMixin",
-    "MilkBucketItemMixin",
     "MiningToolItemMixin",
     "MobEntityMixin",
     "OxidizableMixin",
@@ -39,7 +38,6 @@
   ],
   "client": [
     "ClientPlayNetworkHandlerMixin",
-    "LlamaDecorFeatureRendererMixin",
     "WorldRendererMixin"
   ],
   "injectors": {

@@ -21,7 +21,7 @@ public class GildedShovelItem extends ShovelItem implements GildedToolItem {
     private final Text descriptionText;
 
     public GildedShovelItem(GildType gildType, ToolMaterial baseMaterial, ShovelItem baseItem, Settings settings) {
-        super(gildType.getModifiedMaterial(baseMaterial).asToolMaterial(), ((MiningToolItemInterface)baseItem).getAttackDamage(), ((MiningToolItemInterface)baseItem).getAttackSpeed(), settings);
+        super(gildType.getModifiedMaterial(baseMaterial).asToolMaterial(), ((MiningToolItemInterface)baseItem).getAttackDamage(), ((MiningToolItemInterface)baseItem).getAttackSpeed(), settings.translationKey(baseItem.getTranslationKey()));
         this.gildType = gildType;
         this.baseItem = baseItem;
         this.descriptionText = ScreenTexts.space().append(Text.translatable(this.gildType.buildTooltipTranslationKey()).setStyle(Style.EMPTY.withColor(this.gildType.getColor())));
@@ -38,11 +38,6 @@ public class GildedShovelItem extends ShovelItem implements GildedToolItem {
         tooltip.add(descriptionHeader);
         tooltip.add(this.descriptionText);
         super.appendTooltip(stack, context, tooltip, type);
-    }
-
-    @Override
-    public String getTranslationKey() {
-        return baseItem.getTranslationKey();
     }
 
     @Override

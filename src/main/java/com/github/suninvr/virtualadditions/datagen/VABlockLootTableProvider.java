@@ -29,6 +29,8 @@ import net.minecraft.loot.function.SetCountLootFunction;
 import net.minecraft.loot.provider.number.ConstantLootNumberProvider;
 import net.minecraft.loot.provider.number.UniformLootNumberProvider;
 import net.minecraft.predicate.StatePredicate;
+import net.minecraft.registry.Registries;
+import net.minecraft.registry.RegistryEntryLookup;
 import net.minecraft.registry.RegistryKeys;
 import net.minecraft.registry.RegistryWrapper;
 
@@ -222,8 +224,11 @@ public final class VABlockLootTableProvider {
     }
 
     private static abstract class Provider extends FabricBlockLootTableProvider {
+        protected final RegistryEntryLookup<Enchantment> registryLookup;
+
         protected Provider(FabricDataOutput dataOutput, CompletableFuture<RegistryWrapper.WrapperLookup> registryLookup) {
             super(dataOutput, registryLookup);
+            this.registryLookup = registries.getOrThrow(RegistryKeys.ENCHANTMENT);
         }
 
         protected void addFamilyDrops(BlockFamily... blockFamilies) {
@@ -242,11 +247,11 @@ public final class VABlockLootTableProvider {
             set.ifStainedGlass(this::addDropWithSilkTouch);
             set.ifStainedGlassPane(this::addDropWithSilkTouch);
             set.ifSilkbulb(this::addDrop);
-            set.ifCandle(block -> this.lootTables.put(block.getLootTableKey(), this.candleDrops(block)));
-            set.ifCandleCake(block -> this.lootTables.put(block.getLootTableKey(), BlockLootTableGenerator.candleCakeDrops(block)));
-            set.ifBed(block -> this.lootTables.put(block.getLootTableKey(), this.dropsWithProperty(block, BedBlock.PART, BedPart.HEAD)));
-            set.ifShulkerBox(block -> this.lootTables.put(block.getLootTableKey(), this.shulkerBoxDrops(block)));
-            set.ifBanner(block -> this.lootTables.put(block.getLootTableKey(), this.bannerDrops(block)));
+            set.ifCandle(block -> this.lootTables.put(block.getLootTableKey().get(), this.candleDrops(block)));
+            set.ifCandleCake(block -> this.lootTables.put(block.getLootTableKey().get(), BlockLootTableGenerator.candleCakeDrops(block)));
+            set.ifBed(block -> this.lootTables.put(block.getLootTableKey().get(), this.dropsWithProperty(block, BedBlock.PART, BedPart.HEAD)));
+            set.ifShulkerBox(block -> this.lootTables.put(block.getLootTableKey().get(), this.shulkerBoxDrops(block)));
+            set.ifBanner(block -> this.lootTables.put(block.getLootTableKey().get(), this.bannerDrops(block)));
             set.ifGlazedTerracotta(this::addDrop);
         }
 
@@ -276,16 +281,15 @@ public final class VABlockLootTableProvider {
 
         @Override
         public void addDrop(Block block, LootTable.Builder lootTable) {
-            this.lootTables.put(block.getLootTableKey(), lootTable.randomSequenceId(block.getLootTableKey().getValue()));
+            this.lootTables.put(block.getLootTableKey().get(), lootTable.randomSequenceId(block.getLootTableKey().get().getValue()));
         }
 
         @Override
         public LootTable.Builder oreDrops(Block dropWithSilkTouch, Item drop) {
-            RegistryWrapper.Impl<Enchantment> impl = ((BlockLootTableGenerator)(this)).registryLookup.getWrapperOrThrow(RegistryKeys.ENCHANTMENT);
             return this.dropsWithSilkTouch(dropWithSilkTouch,
                             this.applyExplosionDecay(dropWithSilkTouch, ItemEntry.builder(drop)
-                                    .apply(ApplyBonusLootFunction.oreDrops(impl.getOrThrow(Enchantments.FORTUNE)))))
-                    .randomSequenceId(dropWithSilkTouch.getLootTableKey().getValue());
+                                    .apply(ApplyBonusLootFunction.oreDrops(this.registryLookup.getOrThrow(Enchantments.FORTUNE)))))
+                    .randomSequenceId(dropWithSilkTouch.getLootTableKey().get().getValue());
         }
     }
 }

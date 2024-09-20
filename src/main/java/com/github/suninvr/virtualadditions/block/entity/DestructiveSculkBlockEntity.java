@@ -156,7 +156,7 @@ public class DestructiveSculkBlockEntity extends BlockEntity {
     @Override
     public void readNbt(NbtCompound nbt, RegistryWrapper.WrapperLookup lookup) {
         super.readNbt(nbt, lookup);
-        RegistryEntryLookup<Block> registryEntryLookup = this.world != null ? this.world.createCommandRegistryWrapper(RegistryKeys.BLOCK) : Registries.BLOCK.getReadOnlyWrapper();
+        RegistryEntryLookup<Block> registryEntryLookup = this.world != null ? this.world.createCommandRegistryWrapper(RegistryKeys.BLOCK) : Registries.createEntryLookup(Registries.BLOCK);
         this.replacedState = NbtHelper.toBlockState(registryEntryLookup, nbt.getCompound("blockState"));
         this.playerId = nbt.getUuid("playerId");
         if (nbt.contains("tool")) this.tool = ItemStack.fromNbt(lookup, nbt.getCompound("tool")).orElse(ItemStack.EMPTY);
@@ -174,7 +174,7 @@ public class DestructiveSculkBlockEntity extends BlockEntity {
         nbt.put("blockState", NbtHelper.fromBlockState(this.replacedState));
         nbt.putUuid("playerId", playerId);
         NbtCompound tool = new NbtCompound();
-        if (!this.tool.isEmpty()) this.tool.encode(lookup, tool);
+        if (!this.tool.isEmpty()) this.tool.toNbt(lookup, tool);
         nbt.put("tool", tool);
         nbt.putInt("potency", this.potency);
         nbt.putInt("age", this.age);

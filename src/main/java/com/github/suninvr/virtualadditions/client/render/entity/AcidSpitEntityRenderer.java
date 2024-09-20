@@ -1,6 +1,7 @@
 package com.github.suninvr.virtualadditions.client.render.entity;
 
 import com.github.suninvr.virtualadditions.entity.AcidSpitEntity;
+import com.sun.jna.platform.win32.WinDef;
 import net.minecraft.client.render.OverlayTexture;
 import net.minecraft.client.render.RenderLayer;
 import net.minecraft.client.render.VertexConsumer;
@@ -19,11 +20,6 @@ public class AcidSpitEntityRenderer extends EntityRenderer<AcidSpitEntity, Entit
 
     public AcidSpitEntityRenderer(EntityRendererFactory.Context ctx) {
         super(ctx);
-    }
-
-    @Override
-    public Identifier getTexture(EntityRenderState state) {
-        return TEXTURE;
     }
 
     @Override

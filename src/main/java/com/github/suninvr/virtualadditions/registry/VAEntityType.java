@@ -7,6 +7,8 @@ import net.minecraft.entity.attribute.DefaultAttributeContainer;
 import net.minecraft.entity.mob.HostileEntity;
 import net.minecraft.registry.Registries;
 import net.minecraft.registry.Registry;
+import net.minecraft.registry.RegistryKey;
+import net.minecraft.registry.RegistryKeys;
 import net.minecraft.world.Heightmap;
 
 import java.util.Map;
@@ -28,30 +30,30 @@ public class VAEntityType {
         CLIMBING_ROPE = Registry.register(Registries.ENTITY_TYPE, VirtualAdditions.idOf("climbing_rope"), EntityType.Builder.<ClimbingRopeEntity>create(ClimbingRopeEntity::new, SpawnGroup.MISC)
                 .dimensions(0.25F, 0.25F)
                 .maxTrackingRange(4).trackingTickInterval(10)
-                .build());
+                .build(RegistryKey.of(RegistryKeys.ENTITY_TYPE, VirtualAdditions.idOf("climbing_rope"))));
 
         STEEL_BOMB = Registry.register(Registries.ENTITY_TYPE, idOf("steel_bomb"), EntityType.Builder.<SteelBombEntity>create(SteelBombEntity::new, SpawnGroup.MISC)
                 .dimensions(0.25F, 0.25F)
                 .maxTrackingRange(4).trackingTickInterval(10)
-                .build());
+                .build(RegistryKey.of(RegistryKeys.ENTITY_TYPE, VirtualAdditions.idOf("steel_bomb"))));
 
         ACID_SPIT = Registry.register(Registries.ENTITY_TYPE, idOf("acid_spit"), EntityType.Builder.<AcidSpitEntity>create(AcidSpitEntity::new, SpawnGroup.MISC)
                 .dimensions(0.25F, 0.25F)
                 .maxTrackingRange(4).trackingTickInterval(10)
-                .build());
+                .build(RegistryKey.of(RegistryKeys.ENTITY_TYPE, VirtualAdditions.idOf("acid_spit"))));
 
         LUMWASP = Registry.register(Registries.ENTITY_TYPE, idOf("lumwasp"), EntityType.Builder.create(LumwaspEntity::new, SpawnGroup.MONSTER)
                 .dimensions(1.5F, 0.75F)
-                .build());
+                .build(RegistryKey.of(RegistryKeys.ENTITY_TYPE, VirtualAdditions.idOf("lumwasp"))));
 
         LYFT = Registry.register(Registries.ENTITY_TYPE, idOf("lyft"), EntityType.Builder.create(LyftEntity::new, SpawnGroup.CREATURE)
                 .dimensions(1.0F, 0.7F)
                 .requires(VirtualAdditions.PREVIEW)
-                .build());
+                .build(RegistryKey.of(RegistryKeys.ENTITY_TYPE, VirtualAdditions.idOf("lyft"))));
 
         SALINE = Registry.register(Registries.ENTITY_TYPE, idOf("saline"), EntityType.Builder.create(SalineEntity::new, SpawnGroup.MONSTER)
                 .dimensions(0.6F, 1.95F).maxTrackingRange(8)
-                .build());
+                .build(RegistryKey.of(RegistryKeys.ENTITY_TYPE, VirtualAdditions.idOf("saline"))));
 
         ENTITY_ATTRIBUTES.put(LUMWASP, LumwaspEntity.createLumwaspAttributes());
         ENTITY_ATTRIBUTES.put(LYFT, LyftEntity.createLyftAttributes());

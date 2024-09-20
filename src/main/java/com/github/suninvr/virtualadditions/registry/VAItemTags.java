@@ -19,6 +19,7 @@ public class VAItemTags {
     public static final TagKey<Item> COLORABLE_GLASS_PANE = TagKey.of(RegistryKeys.ITEM, idOf("colorable_glass_pane"));
     public static final TagKey<Item> SHULKER_BOXES = TagKey.of(RegistryKeys.ITEM, idOf("shulker_box"));
     public static final TagKey<Item> CLIMBING_ROPES = TagKey.of(RegistryKeys.ITEM, idOf("climbing_ropes"));
+    public static final TagKey<Item> REPAIRS_STEEL_ARMOR = TagKey.of(RegistryKeys.ITEM, idOf("repairs_steel_armor"));
 
     private static TagKey<Item> register(String id) {
         return TagKey.of(Registries.ITEM.getKey(), idOf(id));
