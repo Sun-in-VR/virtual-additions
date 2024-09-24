@@ -8,6 +8,7 @@
     "AnvilScreenHandlerMixin",
     "AxeItemMixin",
     "BlockMixin",
+    "BundleContentsComponentMixin",
     "ClientPlayerInteractionManagerMixin",
     "CrossbowItemMixin",
     "DamageSourcesMixin",
@@ -38,6 +39,7 @@
   ],
   "client": [
     "ClientPlayNetworkHandlerMixin",
+    "ClientRecipeBookMixin",
     "WorldRendererMixin"
   ],
   "injectors": {

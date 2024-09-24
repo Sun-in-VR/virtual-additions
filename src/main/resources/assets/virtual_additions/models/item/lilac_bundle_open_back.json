@@ -1,0 +1,6 @@
+ {
+    "parent": "minecraft:item/generated",
+    "textures": {
+        "layer0": "virtual_additions:item/lilac_bundle_open_back"
+    }
+ }

@@ -204,6 +204,49 @@ public final class VARecipeProvider {
             generateColorfulBlockSetRecipes(VACollections.SINOPIA, VAItems.SINOPIA_DYE);
             generateColorfulBlockSetRecipes(VACollections.LILAC, VAItems.LILAC_DYE);
 
+            TransmuteRecipeJsonBuilder.create(RecipeCategory.TOOLS, Ingredient.fromTag(this.registryLookup.getOrThrow(ItemTags.BUNDLES)), Ingredient.ofItems(VAItems.CHARTREUSE_DYE), VAItems.CHARTREUSE_BUNDLE).criterion("has_bundle", this.conditionsFromItem(Items.BUNDLE)).offerTo(exporter);
+            TransmuteRecipeJsonBuilder.create(RecipeCategory.TOOLS, Ingredient.fromTag(this.registryLookup.getOrThrow(ItemTags.BUNDLES)), Ingredient.ofItems(VAItems.MAROON_DYE), VAItems.MAROON_BUNDLE).criterion("has_bundle", this.conditionsFromItem(Items.BUNDLE)).offerTo(exporter);
+            TransmuteRecipeJsonBuilder.create(RecipeCategory.TOOLS, Ingredient.fromTag(this.registryLookup.getOrThrow(ItemTags.BUNDLES)), Ingredient.ofItems(VAItems.INDIGO_DYE), VAItems.INDIGO_BUNDLE).criterion("has_bundle", this.conditionsFromItem(Items.BUNDLE)).offerTo(exporter);
+            TransmuteRecipeJsonBuilder.create(RecipeCategory.TOOLS, Ingredient.fromTag(this.registryLookup.getOrThrow(ItemTags.BUNDLES)), Ingredient.ofItems(VAItems.PLUM_DYE), VAItems.PLUM_BUNDLE).criterion("has_bundle", this.conditionsFromItem(Items.BUNDLE)).offerTo(exporter);
+            TransmuteRecipeJsonBuilder.create(RecipeCategory.TOOLS, Ingredient.fromTag(this.registryLookup.getOrThrow(ItemTags.BUNDLES)), Ingredient.ofItems(VAItems.VIRIDIAN_DYE), VAItems.VIRIDIAN_BUNDLE).criterion("has_bundle", this.conditionsFromItem(Items.BUNDLE)).offerTo(exporter);
+            TransmuteRecipeJsonBuilder.create(RecipeCategory.TOOLS, Ingredient.fromTag(this.registryLookup.getOrThrow(ItemTags.BUNDLES)), Ingredient.ofItems(VAItems.TAN_DYE), VAItems.TAN_BUNDLE).criterion("has_bundle", this.conditionsFromItem(Items.BUNDLE)).offerTo(exporter);
+            TransmuteRecipeJsonBuilder.create(RecipeCategory.TOOLS, Ingredient.fromTag(this.registryLookup.getOrThrow(ItemTags.BUNDLES)), Ingredient.ofItems(VAItems.SINOPIA_DYE), VAItems.SINOPIA_BUNDLE).criterion("has_bundle", this.conditionsFromItem(Items.BUNDLE)).offerTo(exporter);
+            TransmuteRecipeJsonBuilder.create(RecipeCategory.TOOLS, Ingredient.fromTag(this.registryLookup.getOrThrow(ItemTags.BUNDLES)), Ingredient.ofItems(VAItems.LILAC_DYE), VAItems.LILAC_BUNDLE).criterion("has_bundle", this.conditionsFromItem(Items.BUNDLE)).offerTo(exporter);
+
+            TransmuteRecipeJsonBuilder.create(RecipeCategory.TOOLS, Ingredient.ofItems(Items.SHULKER_BOX), Ingredient.ofItems(VAItems.CHARTREUSE_DYE), VAItems.CHARTREUSE_SHULKER_BOX).criterion("has_shulker_box", this.conditionsFromItem(Items.SHULKER_BOX)).offerTo(exporter);
+            TransmuteRecipeJsonBuilder.create(RecipeCategory.TOOLS, Ingredient.ofItems(Items.SHULKER_BOX), Ingredient.ofItems(VAItems.MAROON_DYE), VAItems.MAROON_SHULKER_BOX).criterion("has_shulker_box", this.conditionsFromItem(Items.SHULKER_BOX)).offerTo(exporter);
+            TransmuteRecipeJsonBuilder.create(RecipeCategory.TOOLS, Ingredient.ofItems(Items.SHULKER_BOX), Ingredient.ofItems(VAItems.INDIGO_DYE), VAItems.INDIGO_SHULKER_BOX).criterion("has_shulker_box", this.conditionsFromItem(Items.SHULKER_BOX)).offerTo(exporter);
+            TransmuteRecipeJsonBuilder.create(RecipeCategory.TOOLS, Ingredient.ofItems(Items.SHULKER_BOX), Ingredient.ofItems(VAItems.PLUM_DYE), VAItems.PLUM_SHULKER_BOX).criterion("has_shulker_box", this.conditionsFromItem(Items.SHULKER_BOX)).offerTo(exporter);
+            TransmuteRecipeJsonBuilder.create(RecipeCategory.TOOLS, Ingredient.ofItems(Items.SHULKER_BOX), Ingredient.ofItems(VAItems.VIRIDIAN_DYE), VAItems.VIRIDIAN_SHULKER_BOX).criterion("has_shulker_box", this.conditionsFromItem(Items.SHULKER_BOX)).offerTo(exporter);
+            TransmuteRecipeJsonBuilder.create(RecipeCategory.TOOLS, Ingredient.ofItems(Items.SHULKER_BOX), Ingredient.ofItems(VAItems.TAN_DYE), VAItems.TAN_SHULKER_BOX).criterion("has_shulker_box", this.conditionsFromItem(Items.SHULKER_BOX)).offerTo(exporter);
+            TransmuteRecipeJsonBuilder.create(RecipeCategory.TOOLS, Ingredient.ofItems(Items.SHULKER_BOX), Ingredient.ofItems(VAItems.SINOPIA_DYE), VAItems.SINOPIA_SHULKER_BOX).criterion("has_shulker_box", this.conditionsFromItem(Items.SHULKER_BOX)).offerTo(exporter);
+            TransmuteRecipeJsonBuilder.create(RecipeCategory.TOOLS, Ingredient.ofItems(Items.SHULKER_BOX), Ingredient.ofItems(VAItems.LILAC_DYE), VAItems.LILAC_SHULKER_BOX).criterion("has_shulker_box", this.conditionsFromItem(Items.SHULKER_BOX)).offerTo(exporter);
+
+            ColoringRecipeJsonBuilder.create(Ingredient.fromTag(this.registryLookup.getOrThrow(ItemTags.BUNDLES)), WHITE_COST, Items.WHITE_BUNDLE, 0).offerTo(exporter);
+            ColoringRecipeJsonBuilder.create(Ingredient.fromTag(this.registryLookup.getOrThrow(ItemTags.BUNDLES)), LIGHT_GRAY_COST, Items.LIGHT_GRAY_BUNDLE, 1).offerTo(exporter);
+            ColoringRecipeJsonBuilder.create(Ingredient.fromTag(this.registryLookup.getOrThrow(ItemTags.BUNDLES)), GRAY_COST, Items.GRAY_BUNDLE, 2).offerTo(exporter);
+            ColoringRecipeJsonBuilder.create(Ingredient.fromTag(this.registryLookup.getOrThrow(ItemTags.BUNDLES)), BLACK_COST, Items.BLACK_BUNDLE, 3).offerTo(exporter);
+            ColoringRecipeJsonBuilder.create(Ingredient.fromTag(this.registryLookup.getOrThrow(ItemTags.BUNDLES)), TAN_COST, VAItems.TAN_BUNDLE, 4).offerTo(exporter);
+            ColoringRecipeJsonBuilder.create(Ingredient.fromTag(this.registryLookup.getOrThrow(ItemTags.BUNDLES)), BROWN_COST, Items.BROWN_BUNDLE, 5).offerTo(exporter);
+            ColoringRecipeJsonBuilder.create(Ingredient.fromTag(this.registryLookup.getOrThrow(ItemTags.BUNDLES)), MAROON_COST, VAItems.MAROON_BUNDLE, 6).offerTo(exporter);
+            ColoringRecipeJsonBuilder.create(Ingredient.fromTag(this.registryLookup.getOrThrow(ItemTags.BUNDLES)), RED_COST, Items.RED_BUNDLE, 7).offerTo(exporter);
+            ColoringRecipeJsonBuilder.create(Ingredient.fromTag(this.registryLookup.getOrThrow(ItemTags.BUNDLES)), SINOPIA_COST, VAItems.SINOPIA_BUNDLE, 8).offerTo(exporter);
+            ColoringRecipeJsonBuilder.create(Ingredient.fromTag(this.registryLookup.getOrThrow(ItemTags.BUNDLES)), ORANGE_COST, Items.ORANGE_BUNDLE, 9).offerTo(exporter);
+            ColoringRecipeJsonBuilder.create(Ingredient.fromTag(this.registryLookup.getOrThrow(ItemTags.BUNDLES)), YELLOW_COST, Items.YELLOW_BUNDLE, 10).offerTo(exporter);
+            ColoringRecipeJsonBuilder.create(Ingredient.fromTag(this.registryLookup.getOrThrow(ItemTags.BUNDLES)), CHARTREUSE_COST, VAItems.CHARTREUSE_BUNDLE, 11).offerTo(exporter);
+            ColoringRecipeJsonBuilder.create(Ingredient.fromTag(this.registryLookup.getOrThrow(ItemTags.BUNDLES)), LIME_COST, Items.LIME_BUNDLE, 12).offerTo(exporter);
+            ColoringRecipeJsonBuilder.create(Ingredient.fromTag(this.registryLookup.getOrThrow(ItemTags.BUNDLES)), GREEN_COST, Items.GREEN_BUNDLE, 13).offerTo(exporter);
+            ColoringRecipeJsonBuilder.create(Ingredient.fromTag(this.registryLookup.getOrThrow(ItemTags.BUNDLES)), VIRIDIAN_COST, VAItems.VIRIDIAN_BUNDLE, 14).offerTo(exporter);
+            ColoringRecipeJsonBuilder.create(Ingredient.fromTag(this.registryLookup.getOrThrow(ItemTags.BUNDLES)), CYAN_COST, Items.CYAN_BUNDLE, 15).offerTo(exporter);
+            ColoringRecipeJsonBuilder.create(Ingredient.fromTag(this.registryLookup.getOrThrow(ItemTags.BUNDLES)), LIGHT_BLUE_COST, Items.LIGHT_BLUE_BUNDLE, 16).offerTo(exporter);
+            ColoringRecipeJsonBuilder.create(Ingredient.fromTag(this.registryLookup.getOrThrow(ItemTags.BUNDLES)), BLUE_COST, Items.BLUE_BUNDLE, 17).offerTo(exporter);
+            ColoringRecipeJsonBuilder.create(Ingredient.fromTag(this.registryLookup.getOrThrow(ItemTags.BUNDLES)), INDIGO_COST, VAItems.INDIGO_BUNDLE, 18).offerTo(exporter);
+            ColoringRecipeJsonBuilder.create(Ingredient.fromTag(this.registryLookup.getOrThrow(ItemTags.BUNDLES)), PURPLE_COST, Items.PURPLE_BUNDLE, 19).offerTo(exporter);
+            ColoringRecipeJsonBuilder.create(Ingredient.fromTag(this.registryLookup.getOrThrow(ItemTags.BUNDLES)), PLUM_COST, VAItems.PLUM_BUNDLE, 20).offerTo(exporter);
+            ColoringRecipeJsonBuilder.create(Ingredient.fromTag(this.registryLookup.getOrThrow(ItemTags.BUNDLES)), MAGENTA_COST, Items.MAGENTA_BUNDLE, 21).offerTo(exporter);
+            ColoringRecipeJsonBuilder.create(Ingredient.fromTag(this.registryLookup.getOrThrow(ItemTags.BUNDLES)), PINK_COST, Items.PINK_BUNDLE, 22).offerTo(exporter);
+            ColoringRecipeJsonBuilder.create(Ingredient.fromTag(this.registryLookup.getOrThrow(ItemTags.BUNDLES)), LILAC_COST, VAItems.LILAC_BUNDLE, 23).offerTo(exporter);
+
             offerColoringStationRecipes(
                     VACollections.WHITE,
                     VACollections.LIGHT_GRAY,

@@ -15,13 +15,15 @@ import net.minecraft.registry.Registries;
 import net.minecraft.util.Identifier;
 import org.jetbrains.annotations.Nullable;
 
+import java.util.Optional;
+
 public class ColoringRecipeJsonBuilder {
     private final ColoringStationBlockEntity.DyeContents dyeCost;
     private final Ingredient input;
     private final Item output;
     private final int index;
     
-    public ColoringRecipeJsonBuilder(@Nullable Ingredient input, ColoringStationBlockEntity.DyeContents dyeCost, ItemConvertible output, int index) {
+    public ColoringRecipeJsonBuilder(Ingredient input, ColoringStationBlockEntity.DyeContents dyeCost, ItemConvertible output, int index) {
         this.input = input;
         this.dyeCost = dyeCost;
         this.output = output.asItem();
@@ -37,8 +39,8 @@ public class ColoringRecipeJsonBuilder {
     }
     
     public void offerTo(RecipeExporter exporter, Identifier recipeId) {
-        ColoringRecipe recipe = new ColoringRecipe(this.input, new ItemStack(this.output), this.dyeCost, this.index);
+        ColoringRecipe coloringRecipe = new ColoringRecipe(Optional.ofNullable(this.input), new ItemStack(this.output), this.dyeCost, this.index);
         Advancement.Builder builder = exporter.getAdvancementBuilder().criterion("has_the_recipe", RecipeUnlockedCriterion.create(recipeId)).rewards(AdvancementRewards.Builder.recipe(recipeId)).criteriaMerger(AdvancementRequirements.CriterionMerger.OR);
-        exporter.accept(recipeId, recipe, builder.build(recipeId.withPrefixedPath("recipes/")));
+        exporter.accept(recipeId, coloringRecipe, builder.build(recipeId.withPrefixedPath("recipes/")));
     }
 }

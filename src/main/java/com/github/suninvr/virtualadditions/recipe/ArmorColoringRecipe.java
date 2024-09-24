@@ -23,11 +23,13 @@ import net.minecraft.registry.tag.ItemTags;
 import net.minecraft.world.World;
 
 import java.util.List;
+import java.util.Optional;
 
 public class ArmorColoringRecipe implements Recipe<RecipeInput>, ColoringStationRecipe {
     public final Ingredient item;
     public final int index;
     public final DyeItem dyeItem;
+    private IngredientPlacement ingredientPlacement;
 
     public ArmorColoringRecipe(Ingredient item, int index) {
         this.item = item;
@@ -102,7 +104,11 @@ public class ArmorColoringRecipe implements Recipe<RecipeInput>, ColoringStation
 
     @Override
     public IngredientPlacement getIngredientPlacement() {
-        return null;
+        if (this.ingredientPlacement == null) {
+            this.ingredientPlacement = IngredientPlacement.forMultipleSlots(List.of(Optional.of(this.item)));
+        }
+
+        return this.ingredientPlacement;
     }
 
     public static class Serializer implements RecipeSerializer<ArmorColoringRecipe> {

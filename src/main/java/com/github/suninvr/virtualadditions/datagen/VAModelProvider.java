@@ -105,6 +105,17 @@ class VAModelProvider extends FabricModelProvider {
         itemModelGenerator.register(VAItems.SINOPIA_DYE, Models.GENERATED);
         itemModelGenerator.register(VAItems.LILAC_DYE, Models.GENERATED);
 
+        itemModelGenerator.register(VAItems.CHARTREUSE_BUNDLE, Models.GENERATED);
+        itemModelGenerator.register(VAItems.MAROON_BUNDLE, Models.GENERATED);
+        itemModelGenerator.register(VAItems.INDIGO_BUNDLE, Models.GENERATED);
+        itemModelGenerator.register(VAItems.PLUM_BUNDLE, Models.GENERATED);
+        itemModelGenerator.register(VAItems.VIRIDIAN_BUNDLE, Models.GENERATED);
+        itemModelGenerator.register(VAItems.TAN_BUNDLE, Models.GENERATED);
+        itemModelGenerator.register(VAItems.SINOPIA_BUNDLE, Models.GENERATED);
+        itemModelGenerator.register(VAItems.LILAC_BUNDLE, Models.GENERATED);
+
+        Models.GENERATED.upload(idOf("chartreuse_bundle_open_front"), TextureMap.layer0(idOf("chartreuse_bundle_open_front")), itemModelGenerator.writer);
+
         itemModelGenerator.register(VAItems.CORN_SEEDS, Models.GENERATED);
         itemModelGenerator.register(VAItems.SWEET_BERRY_PIE, Models.GENERATED);
 

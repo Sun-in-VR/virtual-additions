@@ -8,6 +8,7 @@ import com.mojang.serialization.codecs.RecordCodecBuilder;
 import net.minecraft.block.ShulkerBoxBlock;
 import net.minecraft.inventory.Inventory;
 import net.minecraft.item.BlockItem;
+import net.minecraft.item.BundleItem;
 import net.minecraft.item.ItemStack;
 import net.minecraft.network.RegistryByteBuf;
 import net.minecraft.network.codec.PacketCodec;
@@ -17,20 +18,24 @@ import net.minecraft.registry.DynamicRegistryManager;
 import net.minecraft.registry.RegistryWrapper;
 import net.minecraft.world.World;
 
+import java.util.List;
+import java.util.Optional;
+
 public class ColoringRecipe implements Recipe<RecipeInput>, ColoringStationRecipe {
     public final ColoringStationBlockEntity.DyeContents cost;
     public final int index;
-    protected final Ingredient ingredient;
+    protected final Optional<Ingredient> ingredient;
     protected final ItemStack result;
+    private IngredientPlacement ingredientPlacement;
 
-    public ColoringRecipe(Ingredient ingredient, ItemStack result, ColoringStationBlockEntity.DyeContents cost, int index) {
+    public ColoringRecipe(Optional<Ingredient> ingredient, ItemStack result, ColoringStationBlockEntity.DyeContents cost, int index) {
         this.ingredient = ingredient;
         this.result = result;
         this.cost = cost;
         this.index = index;
     }
 
-    public ColoringRecipe(Ingredient ingredient, ItemStack result, int r, int g, int b, int y, int k, int w, int index) {
+    public ColoringRecipe(Optional<Ingredient> ingredient, ItemStack result, int r, int g, int b, int y, int k, int w, int index) {
         this.ingredient = ingredient;
         this.result = result;
         this.cost = new ColoringStationBlockEntity.DyeContents(r, g, b, y, k, w);
@@ -39,13 +44,13 @@ public class ColoringRecipe implements Recipe<RecipeInput>, ColoringStationRecip
 
     @Override
     public boolean matches(RecipeInput inventory, World world) {
-        return this.ingredient.test(inventory.getStackInSlot(0));
+        return this.ingredient.map(value -> value.test(inventory.getStackInSlot(0))).orElseGet(() -> inventory.getStackInSlot(0).isEmpty());
     }
 
     @Override
     public ItemStack craft(RecipeInput inventory, RegistryWrapper.WrapperLookup wrapperLookup) {
         ItemStack stack = inventory.getStackInSlot(1);
-        if (stack.getItem() instanceof BlockItem blockItem && blockItem.getBlock() instanceof ShulkerBoxBlock) {
+        if ((stack.getItem() instanceof BlockItem blockItem && blockItem.getBlock() instanceof ShulkerBoxBlock) || stack.getItem() instanceof BundleItem) {
             return stack.copyComponentsToNewStack(this.result.getItem(), this.result.getCount());
         }
         return this.result.copy();
@@ -80,7 +85,11 @@ public class ColoringRecipe implements Recipe<RecipeInput>, ColoringStationRecip
 
     @Override
     public IngredientPlacement getIngredientPlacement() {
-        return null;
+        if (this.ingredientPlacement == null) {
+            this.ingredientPlacement = IngredientPlacement.forMultipleSlots(List.of(this.ingredient));
+        }
+
+        return this.ingredientPlacement;
     }
 
     public int getIndex() {
@@ -99,7 +108,7 @@ public class ColoringRecipe implements Recipe<RecipeInput>, ColoringStationRecip
     public static class Serializer implements RecipeSerializer<ColoringRecipe> {
         private final MapCodec<ColoringRecipe> CODEC = RecordCodecBuilder.mapCodec(
                 instance -> instance.group(
-                        Ingredient.CODEC.fieldOf("ingredient").forGetter(recipe -> recipe.ingredient),
+                        Ingredient.CODEC.optionalFieldOf("ingredient").forGetter(recipe -> recipe.ingredient),
                         ItemStack.CODEC.fieldOf("result").forGetter(recipe -> recipe.result),
                         Codec.INT.optionalFieldOf("red_cost", 0).forGetter(recipe -> recipe.cost.getR()),
                         Codec.INT.optionalFieldOf("green_cost", 0).forGetter(recipe -> recipe.cost.getG()),
@@ -114,7 +123,7 @@ public class ColoringRecipe implements Recipe<RecipeInput>, ColoringStationRecip
 
         @Override
         public MapCodec<ColoringRecipe> codec() {
-            return (MapCodec<ColoringRecipe>) this.CODEC;
+            return this.CODEC;
         }
 
         @Override
@@ -123,7 +132,7 @@ public class ColoringRecipe implements Recipe<RecipeInput>, ColoringStationRecip
         }
 
         private static ColoringRecipe read(RegistryByteBuf buf) {
-            Ingredient ingredient = Ingredient.PACKET_CODEC.decode(buf);
+            Optional<Ingredient> ingredient = Ingredient.OPTIONAL_PACKET_CODEC.decode(buf);
             ItemStack stack = ItemStack.PACKET_CODEC.decode(buf);
             ColoringStationBlockEntity.DyeContents cost = ColoringStationBlockEntity.DyeContents.PACKET_CODEC.decode(buf);
             int index = buf.readInt();
@@ -131,7 +140,7 @@ public class ColoringRecipe implements Recipe<RecipeInput>, ColoringStationRecip
         }
 
         private static void write(RegistryByteBuf buf, ColoringRecipe recipe) {
-            Ingredient.PACKET_CODEC.encode(buf, recipe.ingredient);
+            Ingredient.OPTIONAL_PACKET_CODEC.encode(buf, recipe.ingredient);
             ItemStack.PACKET_CODEC.encode(buf, recipe.result);
             ColoringStationBlockEntity.DyeContents.PACKET_CODEC.encode(buf, recipe.cost);
             buf.writeInt(recipe.index);

@@ -10,7 +10,6 @@ accessible field net/minecraft/block/Blocks SHULKER_BOX_SUFFOCATES_PREDICATE Lne
 accessible method net/minecraft/block/AbstractBlock canPlaceAt (Lnet/minecraft/block/BlockState;Lnet/minecraft/world/WorldView;Lnet/minecraft/util/math/BlockPos;)Z
 accessible method net/minecraft/block/ComposterBlock registerCompostableItem (FLnet/minecraft/item/ItemConvertible;)V
 accessible method net/minecraft/item/ItemGroups addPotions (Lnet/minecraft/item/ItemGroup$Entries;Lnet/minecraft/registry/RegistryWrapper;Lnet/minecraft/item/Item;Lnet/minecraft/item/ItemGroup$StackVisibility;Lnet/minecraft/resource/featuretoggle/FeatureSet;)V
-accessible field net/minecraft/data/server/loottable/BlockLootTableGenerator registryLookup Lnet/minecraft/registry/RegistryWrapper$WrapperLookup;
 accessible method net/minecraft/enchantment/EnchantmentHelper forEachEnchantment (Lnet/minecraft/item/ItemStack;Lnet/minecraft/enchantment/EnchantmentHelper$Consumer;)V
 accessible class net/minecraft/enchantment/EnchantmentHelper$Consumer
 accessible class net/minecraft/enchantment/EnchantmentHelper$ContextAwareConsumer

@@ -86,6 +86,17 @@ public final class VAItemTagProvider {
                     VACollections.LILAC
             );
 
+            getOrCreateTagBuilder(ItemTags.BUNDLES).add(
+                    VAItems.CHARTREUSE_BUNDLE,
+                    VAItems.MAROON_BUNDLE,
+                    VAItems.INDIGO_BUNDLE,
+                    VAItems.PLUM_BUNDLE,
+                    VAItems.VIRIDIAN_BUNDLE,
+                    VAItems.TAN_BUNDLE,
+                    VAItems.SINOPIA_BUNDLE,
+                    VAItems.LILAC_BUNDLE
+            );
+
             getOrCreateTagBuilder(VAItemTags.SILKBULBS).add(
                     VAItems.SILKBULB,
                     VAItems.WHITE_SILKBULB,
