@@ -25,7 +25,7 @@ public class DyeColorMixin {
             virtualAdditions$addVariant("CHARTREUSE", "chartreuse", 0xA3C115, MapColor.LIME, 0xA3C115, 0xA3C115);
             virtualAdditions$addVariant("MAROON", "maroon", 0x641003, MapColor.DARK_RED, 0x641003, 0x641003);
             virtualAdditions$addVariant("INDIGO", "indigo", 0x5C21CC, MapColor.BLUE, 0x5C21CC, 0x5C21CC);
-            virtualAdditions$addVariant("PLUM", "plum", 0x792D56, MapColor.DULL_PINK, 0x792D56, 0x792D56);
+            virtualAdditions$addVariant("PLUM", "plum", 0xA24058, MapColor.DULL_PINK, 0xA24058, 0xA24058);
             virtualAdditions$addVariant("VIRIDIAN", "viridian", 0x406C5F, MapColor.PALE_GREEN, 0x406C5F, 0x406C5F);
             virtualAdditions$addVariant("TAN", "tan", 0xC1906F, MapColor.TERRACOTTA_WHITE, 0xC1906F, 0xC1906F);
             virtualAdditions$addVariant("SINOPIA", "sinopia", 0xB1390A, MapColor.ORANGE, 0xB1390A, 0xB1390A);

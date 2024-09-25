@@ -242,8 +242,8 @@ public final class VARecipeProvider {
             ColoringRecipeJsonBuilder.create(Ingredient.fromTag(this.registryLookup.getOrThrow(ItemTags.BUNDLES)), BLUE_COST, Items.BLUE_BUNDLE, 17).offerTo(exporter);
             ColoringRecipeJsonBuilder.create(Ingredient.fromTag(this.registryLookup.getOrThrow(ItemTags.BUNDLES)), INDIGO_COST, VAItems.INDIGO_BUNDLE, 18).offerTo(exporter);
             ColoringRecipeJsonBuilder.create(Ingredient.fromTag(this.registryLookup.getOrThrow(ItemTags.BUNDLES)), PURPLE_COST, Items.PURPLE_BUNDLE, 19).offerTo(exporter);
-            ColoringRecipeJsonBuilder.create(Ingredient.fromTag(this.registryLookup.getOrThrow(ItemTags.BUNDLES)), PLUM_COST, VAItems.PLUM_BUNDLE, 20).offerTo(exporter);
-            ColoringRecipeJsonBuilder.create(Ingredient.fromTag(this.registryLookup.getOrThrow(ItemTags.BUNDLES)), MAGENTA_COST, Items.MAGENTA_BUNDLE, 21).offerTo(exporter);
+            ColoringRecipeJsonBuilder.create(Ingredient.fromTag(this.registryLookup.getOrThrow(ItemTags.BUNDLES)), MAGENTA_COST, Items.MAGENTA_BUNDLE, 20).offerTo(exporter);
+            ColoringRecipeJsonBuilder.create(Ingredient.fromTag(this.registryLookup.getOrThrow(ItemTags.BUNDLES)), PLUM_COST, VAItems.PLUM_BUNDLE, 21).offerTo(exporter);
             ColoringRecipeJsonBuilder.create(Ingredient.fromTag(this.registryLookup.getOrThrow(ItemTags.BUNDLES)), PINK_COST, Items.PINK_BUNDLE, 22).offerTo(exporter);
             ColoringRecipeJsonBuilder.create(Ingredient.fromTag(this.registryLookup.getOrThrow(ItemTags.BUNDLES)), LILAC_COST, VAItems.LILAC_BUNDLE, 23).offerTo(exporter);
 
@@ -268,8 +268,8 @@ public final class VARecipeProvider {
                     VACollections.BLUE,
                     VACollections.INDIGO,
                     VACollections.PURPLE,
-                    VACollections.PLUM,
                     VACollections.MAGENTA,
+                    VACollections.PLUM,
                     VACollections.PINK,
                     VACollections.LILAC
             );
