@@ -10,6 +10,7 @@ import net.minecraft.fluid.Fluid;
 import net.minecraft.fluid.FluidState;
 import net.minecraft.fluid.Fluids;
 import net.minecraft.item.Item;
+import net.minecraft.server.world.ServerWorld;
 import net.minecraft.sound.SoundCategory;
 import net.minecraft.sound.SoundEvent;
 import net.minecraft.sound.SoundEvents;
@@ -42,7 +43,7 @@ public abstract class AcidFluid extends FlowableFluid {
     }
 
     @Override
-    protected boolean isInfinite(World world) {
+    protected boolean isInfinite(ServerWorld serverWorld) {
         return false;
     }
 
@@ -58,14 +59,13 @@ public abstract class AcidFluid extends FlowableFluid {
     }
 
     @Override
-    protected void onRandomTick(World world, BlockPos pos, FluidState state, Random random) {
-        if (world.isClient) return;
-        if (world.isRaining() && world.isSkyVisible(pos.up())) {
-            world.setBlockState(pos, Blocks.WATER.getStateWithProperties(state.getBlockState()));
+    protected void onRandomTick(ServerWorld serverWorld, BlockPos pos, FluidState state, Random random) {
+        if (serverWorld.isRaining() && serverWorld.isSkyVisible(pos.up())) {
+            serverWorld.setBlockState(pos, Blocks.WATER.getStateWithProperties(state.getBlockState()));
         }
 
-        if (state.getLevel() > 6 && world.getBlockState(pos.down()).isOf(Blocks.MAGMA_BLOCK)) {
-            world.setBlockState(pos, VABlocks.ACID_BLOCK.getDefaultState());
+        if (state.getLevel() > 6 && serverWorld.getBlockState(pos.down()).isOf(Blocks.MAGMA_BLOCK)) {
+            serverWorld.setBlockState(pos, VABlocks.ACID_BLOCK.getDefaultState());
         }
     }
 

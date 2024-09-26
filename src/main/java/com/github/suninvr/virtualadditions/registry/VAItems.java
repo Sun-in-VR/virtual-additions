@@ -1123,7 +1123,7 @@ public class VAItems {
             }
 
             // Zombie Loot
-            if (EntityType.ZOMBIE.getLootTable().get().equals(key) || EntityType.HUSK.getLootTable().get().equals(key)) {
+            if (EntityType.ZOMBIE.getLootTableKey().get().equals(key) || EntityType.HUSK.getLootTableKey().get().equals(key)) {
                 final int[] i = {0};
                 tableBuilder.modifyPools(builder -> {
                     if (i[0] == 1) {

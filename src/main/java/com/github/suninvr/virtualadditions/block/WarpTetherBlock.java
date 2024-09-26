@@ -79,7 +79,7 @@ public class WarpTetherBlock extends BlockWithEntity implements Waterloggable {
     }
 
     public void teleportEntity(World world, BlockState state, BlockPos pos, Entity entity) {
-        if (!world.isClient()){
+        if (!world.isClient() && world instanceof ServerWorld serverWorld){
             BlockPos destPos = getBlockDestination(world, pos);
             if (destPos == null) return;
             BlockState destState = world.getBlockState(destPos);
@@ -95,7 +95,7 @@ public class WarpTetherBlock extends BlockWithEntity implements Waterloggable {
                 world.emitGameEvent(entity, GameEvent.TELEPORT, destPos);
                 if (!state.get(WATERLOGGED)) world.playSound(null, pos, VASoundEvents.BLOCK_WARP_TETHER_WARP, SoundCategory.BLOCKS, 1.0F, 1.0F);
                 if (!destState.get(Properties.WATERLOGGED)) world.playSound(null, destPos, VASoundEvents.BLOCK_WARP_ANCHOR_WARP, SoundCategory.BLOCKS, 1.0F, 1.0F);
-                if (world.getGameRules().getBoolean(VAGameRules.IOLITE_INTERFERENCE) && entity instanceof LivingEntity livingEntity) {
+                if (serverWorld.getGameRules().getBoolean(VAGameRules.IOLITE_INTERFERENCE) && entity instanceof LivingEntity livingEntity) {
                     int duration = 0;
                     StatusEffectInstance effect = livingEntity.getStatusEffect(VAStatusEffects.IOLITE_INTERFERENCE);
                     if (effect != null) duration = effect.getDuration();

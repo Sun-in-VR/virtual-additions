@@ -24,6 +24,7 @@ import net.minecraft.entity.mob.PathAwareEntity;
 import net.minecraft.entity.passive.BeeEntity;
 import net.minecraft.entity.passive.IronGolemEntity;
 import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.server.world.ServerWorld;
 import net.minecraft.sound.SoundEvent;
 import net.minecraft.sound.SoundEvents;
 import net.minecraft.util.math.BlockPos;
@@ -134,8 +135,8 @@ public class LumwaspEntity extends HostileEntity implements RangedAttackMob, Flu
     }
 
     @Override
-    public boolean isInvulnerableTo(DamageSource damageSource) {
-        return damageSource.isIn(VADamageTypes.ACID_TAG) || super.isInvulnerableTo(damageSource);
+    public boolean isInvulnerableTo(ServerWorld world, DamageSource source) {
+        return source.isIn(VADamageTypes.ACID_TAG) || super.isInvulnerableTo(world, source);
     }
 
     protected void fall(double heightDifference, boolean onGround, BlockState state, BlockPos landedPosition) {
@@ -173,9 +174,9 @@ public class LumwaspEntity extends HostileEntity implements RangedAttackMob, Flu
     }
 
     @Override
-    protected void mobTick() {
+    protected void mobTick(ServerWorld world) {
         if (this.isInsideWaterOrBubbleColumn() && !((EntityInterface)this).virtualAdditions$isInAcid() ) {
-            this.damage(this.getDamageSources().drown(), 1.0F);
+            this.damage(world, this.getDamageSources().drown(), 1.0F);
         }
     }
 
@@ -188,9 +189,9 @@ public class LumwaspEntity extends HostileEntity implements RangedAttackMob, Flu
     }
 
     @Override
-    public boolean tryAttack(Entity target) {
-        boolean bl = super.tryAttack(target);
-        if (bl && this.getWorld().getDifficulty().compareTo(Difficulty.EASY) > 0 && target instanceof LivingEntity livingEntity) {
+    public boolean tryAttack(ServerWorld world, Entity target) {
+        boolean bl = super.tryAttack(world, target);
+        if (bl && world.getDifficulty().compareTo(Difficulty.EASY) > 0 && target instanceof LivingEntity livingEntity) {
             if (!this.getStatusEffects().isEmpty()) {
                 for (StatusEffectInstance statusEffect : this.getStatusEffects()) {
                     livingEntity.addStatusEffect(statusEffect, this);

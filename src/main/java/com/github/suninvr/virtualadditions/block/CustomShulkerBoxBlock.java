@@ -13,6 +13,7 @@ import net.minecraft.entity.mob.PiglinBrain;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.registry.tag.BlockTags;
+import net.minecraft.server.world.ServerWorld;
 import net.minecraft.util.DyeColor;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
@@ -51,8 +52,8 @@ public class CustomShulkerBoxBlock extends ShulkerBoxBlock {
 
     private BlockState finishBreak(World world, BlockPos pos, BlockState state, PlayerEntity player) {
         this.spawnBreakParticles(world, player, pos, state);
-        if (state.isIn(BlockTags.GUARDED_BY_PIGLINS)) {
-            PiglinBrain.onGuardedBlockInteracted(player, false);
+        if (state.isIn(BlockTags.GUARDED_BY_PIGLINS) && world instanceof ServerWorld serverWorld) {
+            PiglinBrain.onGuardedBlockInteracted(serverWorld, player, false);
         }
         world.emitGameEvent(GameEvent.BLOCK_DESTROY, pos, GameEvent.Emitter.of(player, state));
         return state;

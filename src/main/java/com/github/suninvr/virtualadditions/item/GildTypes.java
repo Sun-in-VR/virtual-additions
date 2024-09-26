@@ -58,19 +58,21 @@ public class GildTypes {
 
         @Override
         public boolean onBlockBroken(World world, PlayerEntity player, BlockPos pos, BlockState state, ItemStack tool) {
-            double miningEfficiency = player.getAttributeValue(EntityAttributes.MINING_EFFICIENCY);
-            int potency = (int) (48 / state.getHardness(world, pos));
-            potency += (int) (potency * (miningEfficiency / 13.0));
-            potency = Math.min(Math.min((tool.getMaxDamage() - tool.getDamage()), potency) -1, world.getGameRules().getInt(VAGameRules.SCULK_GILD_BLOCK_SELECTION_MAXIMUM));
-            if (potency <= 0) return true;
+            if (world instanceof ServerWorld serverWorld) {
+                double miningEfficiency = player.getAttributeValue(EntityAttributes.MINING_EFFICIENCY);
+                int potency = (int) (48 / state.getHardness(world, pos));
+                potency += (int) (potency * (miningEfficiency / 13.0));
+                potency = Math.min(Math.min((tool.getMaxDamage() - tool.getDamage()), potency) - 1, serverWorld.getGameRules().getInt(VAGameRules.SCULK_GILD_BLOCK_SELECTION_MAXIMUM));
+                if (potency <= 0) return true;
 
-            List<BlockPos> posList = selectPositions(world, pos, state, potency);
-            //TODO: Rewrite DestructiveSculkBlock.placeState to use posList.
-            DestructiveSculkBlock.placeState(world, pos, state, player.getUuid(), tool, potency);
-            int i = posList.size();
-            player.increaseStat(Stats.USED.getOrCreateStat(tool.getItem()), i);
-            tool.damage( i, player, EquipmentSlot.MAINHAND);
-            player.getItemCooldownManager().set(tool, (int) ((i * 2) / ((miningEfficiency / 20.0) + 1)));
+                List<BlockPos> posList = selectPositions(world, pos, state, potency);
+                //TODO: Rewrite DestructiveSculkBlock.placeState to use posList.
+                DestructiveSculkBlock.placeState(world, pos, state, player.getUuid(), tool, potency);
+                int i = posList.size();
+                player.increaseStat(Stats.USED.getOrCreateStat(tool.getItem()), i);
+                tool.damage(i, player, EquipmentSlot.MAINHAND);
+                player.getItemCooldownManager().set(tool, (int) ((i * 2) / ((miningEfficiency / 20.0) + 1)));
+            }
             return false;
         }
 

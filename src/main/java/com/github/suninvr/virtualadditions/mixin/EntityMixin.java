@@ -14,6 +14,7 @@ import net.minecraft.entity.damage.DamageSources;
 import net.minecraft.fluid.Fluid;
 import net.minecraft.registry.tag.TagKey;
 import net.minecraft.server.command.CommandOutput;
+import net.minecraft.server.world.ServerWorld;
 import net.minecraft.util.Nameable;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Vec3d;
@@ -32,8 +33,6 @@ import java.util.Optional;
 
 @Mixin(Entity.class)
 public abstract class EntityMixin implements Nameable, EntityLike, CommandOutput, EntityInterface {
-
-    @Shadow public abstract boolean damage(DamageSource source, float amount);
 
     @Shadow protected boolean firstUpdate;
 
@@ -56,6 +55,9 @@ public abstract class EntityMixin implements Nameable, EntityLike, CommandOutput
 
     @Shadow public abstract void addVelocity(Vec3d velocity);
 
+    @Shadow public abstract boolean damage(ServerWorld world, DamageSource source, float amount);
+
+    @Shadow private World world;
     private int ticksInAcid;
 
     @Inject(method = "getPosWithYOffset", at = @At("RETURN"), locals = LocalCapture.CAPTURE_FAILHARD, cancellable = true)
@@ -71,8 +73,8 @@ public abstract class EntityMixin implements Nameable, EntityLike, CommandOutput
 
     @Inject(method = "baseTick", at = @At(value = "INVOKE", target = "Lnet/minecraft/util/profiler/Profiler;pop()V", shift = At.Shift.BEFORE))
     void virtualAdditions$baseTickInAcid(CallbackInfo ci) {
-        if(this.virtualAdditions$isInAcid() && (!( (Entity)(Object)this instanceof ItemEntity itemEntity) || !itemEntity.getStack().isIn(VAItemTags.ACID_RESISTANT))) {
-            if (this.ticksInAcid >= 20) this.damage( ((DamageSourcesInterface)this.getDamageSources()).virtualAdditions$acid() , 4.0F);
+        if(this.world instanceof ServerWorld serverWorld && this.virtualAdditions$isInAcid() && (!( (Entity)(Object)this instanceof ItemEntity itemEntity) || !itemEntity.getStack().isIn(VAItemTags.ACID_RESISTANT))) {
+            if (this.ticksInAcid >= 20) this.damage(serverWorld, ((DamageSourcesInterface)this.getDamageSources()).virtualAdditions$acid() , 4.0F);
             this.ticksInAcid = Math.min(this.ticksInAcid + 1, 20);
         } else {
             this.ticksInAcid = Math.max(this.ticksInAcid - 1, 0);

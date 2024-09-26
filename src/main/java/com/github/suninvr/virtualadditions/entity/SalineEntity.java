@@ -12,6 +12,7 @@ import net.minecraft.entity.effect.StatusEffectInstance;
 import net.minecraft.entity.mob.HostileEntity;
 import net.minecraft.entity.mob.ZombieEntity;
 import net.minecraft.item.ItemStack;
+import net.minecraft.server.world.ServerWorld;
 import net.minecraft.sound.SoundEvent;
 import net.minecraft.sound.SoundEvents;
 import net.minecraft.world.Difficulty;
@@ -54,8 +55,8 @@ public class SalineEntity extends ZombieEntity {
     }
 
     @Override
-    public boolean tryAttack(Entity target) {
-        boolean bl = super.tryAttack(target);
+    public boolean tryAttack(ServerWorld world, Entity target) {
+        boolean bl = super.tryAttack(world, target);
         if (bl && this.getMainHandStack().isEmpty() && target instanceof LivingEntity) {
             Difficulty diff = this.getWorld().getDifficulty();
             float f = this.getWorld().getLocalDifficulty(this.getBlockPos()).getLocalDifficulty();

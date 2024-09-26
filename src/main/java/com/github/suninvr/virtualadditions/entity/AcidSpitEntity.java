@@ -9,6 +9,7 @@ import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.data.DataTracker;
 import net.minecraft.entity.projectile.ProjectileEntity;
 import net.minecraft.entity.projectile.ProjectileUtil;
+import net.minecraft.server.world.ServerWorld;
 import net.minecraft.util.hit.BlockHitResult;
 import net.minecraft.util.hit.EntityHitResult;
 import net.minecraft.util.hit.HitResult;
@@ -68,7 +69,7 @@ public class AcidSpitEntity extends ProjectileEntity {
         if (entityHitResult.getEntity() instanceof LumwaspEntity) return;
         Entity entity = entityHitResult.getEntity();
         World world = entity.getWorld();
-        entity.damage(((DamageSourcesInterface)this.getDamageSources()).virtualAdditions$acidSpit(this, this.getOwner() instanceof LivingEntity livingOwner ? livingOwner : this ), 2.0F + (world.getDifficulty().ordinal() - 1));
+        if (world instanceof ServerWorld serverWorld) entity.damage(serverWorld, ((DamageSourcesInterface)this.getDamageSources()).virtualAdditions$acidSpit(this, this.getOwner() instanceof LivingEntity livingOwner ? livingOwner : this ), 2.0F + (world.getDifficulty().ordinal() - 1));
         this.discard();
     }
 
