@@ -7,6 +7,7 @@ import net.minecraft.component.type.PotionContentsComponent;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.*;
 import net.minecraft.item.tooltip.TooltipType;
+import net.minecraft.registry.tag.ItemTags;
 import net.minecraft.screen.slot.Slot;
 import net.minecraft.sound.SoundEvents;
 import net.minecraft.text.Text;
@@ -25,7 +26,7 @@ public class ApplicablePotionItem extends PotionItem {
         if(clickType == ClickType.RIGHT) {
             ItemStack clickedStack = slot.getStack();
             boolean bl = false;
-            if(clickedStack.getItem() instanceof SwordItem || clickedStack.getItem() instanceof AxeItem) {
+            if(clickedStack.isIn(ItemTags.SWORDS)) {
                 PotionContentsComponent potionComponent = stack.get(DataComponentTypes.POTION_CONTENTS);
                 if (potionComponent != null) {
                     int maxUses = 30; //potionComponent.potion().isPresent() ? potionComponent.potion().get().

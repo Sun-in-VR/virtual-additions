@@ -29,34 +29,6 @@ public class VACallbacks{
                 stack.set(VADataComponentTypes.EFFECTS_ON_HIT, component.decrementRemainingUses());
             }
 
-            //if (!world.isClient() && stack.getItem() instanceof SwordItem && GildedToolUtil.getGildType(stack).equals(GildTypes.SCULK) && player.getAttackCooldownProgress(0.0F) >= 1.0F && entity instanceof LivingEntity livingEntity && !hitEntities.contains(entity)) {
-            //    TODO: Better Sculk Gilded Sword funcitonality
-            //
-            //    hitEntities.add(livingEntity);
-            //    Box box = Box.of(entity.getPos(), 8, 8, 8);
-            //    List<LivingEntity> entities = Lists.newArrayList();
-            //    world.collectEntitiesByType(TypeFilter.instanceOf(livingEntity.getClass()), box,  entity1 -> !entity1.equals(entity), entities, 9);
-            //    int lastAttackedTicks = ((PlayerEntityInterface)player).virtualAdditions$getLastAttackTicks();
-            //    for (Object obj : entities) {
-            //        if (obj instanceof LivingEntity nearbyEntity) {
-            //            int remaining = entities.size() - entities.indexOf(nearbyEntity);
-            //            int mul = entities.size() - remaining + 1;
-            //            EntityAttributeInstance attributes = player.getAttributeInstance(EntityAttributes.GENERIC_ATTACK_DAMAGE);
-            //            if (attributes != null) attributes.addTemporaryModifier(new EntityAttributeModifier(UUID.fromString("1630266f-00db-4198-bd70-840420f673a2"), "sculkgild", -2.0F * mul, EntityAttributeModifier.Operation.ADDITION));
-            //            hitEntities.add(nearbyEntity);
-            //            player.attack(nearbyEntity);
-            //            ((PlayerEntityInterface)player).virtualAdditions$setLastAttackTicks(lastAttackedTicks);
-            //            nearbyEntity.damage(player.getDamageSources().playerAttack(player), 5.0F);
-            //            if (world instanceof ServerWorld serverWorld) {
-            //                Vec3d pos = nearbyEntity.getBoundingBox().getCenter();
-            //                float mul1 = nearbyEntity.getWidth();
-            //                serverWorld.spawnParticles(ParticleTypes.SCULK_CHARGE_POP, pos.getX(), pos.getY(), pos.getZ(), 30, 0.33 * mul1, 0.33 * mul1, 0.33 * mul1, 0.02);
-            //            }
-            //            if (attributes != null) attributes.removeModifier(UUID.fromString("1630266f-00db-4198-bd70-840420f673a2"));
-            //        }
-            //    }
-            //    hitEntities.clear();
-            //}
             return ActionResult.PASS;
         } ) );
 

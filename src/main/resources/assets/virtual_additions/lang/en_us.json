@@ -404,8 +404,8 @@
     "item.virtual_additions.steel_chestplate": "Steel Chestplate",
     "item.virtual_additions.steel_leggings": "Steel Leggings",
     "item.virtual_additions.steel_boots": "Steel Boots",
-    "item.virtual_additions.tool_gild_smithing_template": "Smithing Template",
-    "item.virtual_additions.exoskeleton_armor_trim_smithing_template": "Smithing Template",
+    "item.virtual_additions.tool_gild_smithing_template": "Tool Gild Upgrade",
+    "item.virtual_additions.exoskeleton_armor_trim_smithing_template": "Exoskeleton Armor Trim",
     "item.virtual_additions.balloon_fruit": "Balloon Fruit",
     "item.virtual_additions.fried_egg": "Fried Egg",
     "item.virtual_additions.ice_cream": "Ice Cream",
@@ -503,9 +503,7 @@
 
     "gamerule.ioliteInterference": "Iolite interference effects",
 
-    "upgrade.virtual_additions.tool_gild": "Tool Gild",
-
-    "item.virtual_additions.smithing_template.tool_gild.applies_to": "Tools",
+    "item.virtual_additions.smithing_template.tool_gild.applies_to": "Tools & Weapons",
     "item.virtual_additions.smithing_template.tool_gild.ingredients": "Tool Gild Materials",
     "item.virtual_additions.smithing_template.tool_gild.base_slot_description": "Add metal or gemstone tool",
     "item.virtual_additions.smithing_template.tool_gild.additions_slot_description": "Add gild material",

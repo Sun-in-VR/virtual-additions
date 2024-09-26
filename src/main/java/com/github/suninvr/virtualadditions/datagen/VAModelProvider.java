@@ -158,24 +158,25 @@ class VAModelProvider extends FabricModelProvider {
 
     private void generateGildedToolItemModels(ItemModelGenerator itemModelGenerator, RegistryHelper.ItemRegistryHelper.ToolSet... toolSets) {
         for (RegistryHelper.ItemRegistryHelper.ToolSet set : toolSets) {
-            for (Item item : set.getItems()) {
-                if (item instanceof GildedToolItem gildedToolItem) {
-                    uploadGildedToolModel(itemModelGenerator, item, gildedToolItem);
-                }
-            }
+            uploadGildedToolModels(itemModelGenerator, set);
         }
     }
 
-    public static void uploadGildedToolModel(ItemModelGenerator itemModelGenerator, Item item, GildedToolItem gildedToolItem) {
-        Identifier base = ModelIds.getItemModelId(gildedToolItem.getBaseItem());
-        String TOOL_TYPE_SUFFIX = "";
-        if (item instanceof AxeItem) TOOL_TYPE_SUFFIX = "_axe";
-        else if (item instanceof HoeItem) TOOL_TYPE_SUFFIX = "_hoe";
-        else if (item instanceof PickaxeItem) TOOL_TYPE_SUFFIX = "_pickaxe";
-        else if (item instanceof ShovelItem) TOOL_TYPE_SUFFIX = "_shovel";
-        else if (item instanceof SwordItem) TOOL_TYPE_SUFFIX = "_sword";
-        Identifier gild = gildedToolItem.getGildType().getId().withSuffixedPath(TOOL_TYPE_SUFFIX).withPrefixedPath("item/gilded_tools/");
-        Models.HANDHELD.upload(ModelIds.getItemModelId(item), TextureMap.layered(base, base), itemModelGenerator.writer, (id, textures) -> Models.HANDHELD.createJson(ModelIds.getItemModelId(item), Map.of(TextureKey.LAYER0, base, TextureKey.LAYER1, gild)));
+    public static void uploadGildedToolModels(ItemModelGenerator itemModelGenerator, RegistryHelper.ItemRegistryHelper.ToolSet set) {
+        uploadGildedToolModel(itemModelGenerator, set.SWORD(), "_sword");
+        uploadGildedToolModel(itemModelGenerator, set.SHOVEL(), "_shovel");
+        uploadGildedToolModel(itemModelGenerator, set.PICKAXE(), "_pickaxe");
+        uploadGildedToolModel(itemModelGenerator, set.AXE(), "_axe");
+        uploadGildedToolModel(itemModelGenerator, set.HOE(), "_hoe");
+    }
+
+    public static void uploadGildedToolModel(ItemModelGenerator itemModelGenerator, Item item, String suffix) {
+        GildedToolItem gildedToolItem = item instanceof GildedToolItem ? (GildedToolItem) item : null;
+        if (gildedToolItem == null) return;
+        Item baseItem = gildedToolItem.getBaseItem();
+        Identifier base = ModelIds.getItemModelId(baseItem);
+        Identifier gild = gildedToolItem.getGildType().getId().withSuffixedPath(suffix).withPrefixedPath("item/gilded_tools/");
+        Models.HANDHELD.upload(ModelIds.getItemModelId(baseItem), TextureMap.layered(base, base), itemModelGenerator.writer, (id, textures) -> Models.HANDHELD.createJson(ModelIds.getItemModelId(baseItem), Map.of(TextureKey.LAYER0, base, TextureKey.LAYER1, gild)));
     }
 
     private void registerSpotlight(BlockStateModelGenerator generator) {

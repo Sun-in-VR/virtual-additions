@@ -10,7 +10,7 @@ import net.minecraft.entity.Entity;
 import net.minecraft.util.Identifier;
 
 @SuppressWarnings({"unchecked", "rawtypes"})
-public class LumwaspEntityRenderer extends LivingEntityRenderer<LumwaspEntity, LumwaspEntityRenderState, LumwaspEntityModel<LumwaspEntity>> {
+public class LumwaspEntityRenderer extends MobEntityRenderer<LumwaspEntity, LumwaspEntityRenderState, LumwaspEntityModel<LumwaspEntity>> {
     private static final Identifier TEXTURE = Identifier.of("virtual_additions", "textures/entity/lumwasp/lumwasp.png");
 
     public LumwaspEntityRenderer(EntityRendererFactory.Context context) {
@@ -22,6 +22,12 @@ public class LumwaspEntityRenderer extends LivingEntityRenderer<LumwaspEntity, L
     @Override
     public Identifier getTexture(LumwaspEntityRenderState state) {
         return TEXTURE;
+    }
+
+    @Override
+    public void updateRenderState(LumwaspEntity livingEntity, LumwaspEntityRenderState livingEntityRenderState, float f) {
+        super.updateRenderState(livingEntity, livingEntityRenderState, f);
+        livingEntityRenderState.inAir = livingEntity.isInAir();
     }
 
     @Override

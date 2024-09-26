@@ -145,6 +145,7 @@ public class GildType {
     public AttributeModifiersComponent createAttributeModifiers(Item baseItem) {
         AttributeModifiersComponent.Builder builder = AttributeModifiersComponent.builder();
 
+        AttributeModifiersComponent.Builder builderCopy = builder;
         baseItem.getComponents().get(DataComponentTypes.ATTRIBUTE_MODIFIERS).modifiers().forEach(entry -> {
             EntityAttributeModifier modifier = entry.modifier();
             if (entry.attribute().equals(EntityAttributes.ATTACK_SPEED) || entry.attribute().equals(EntityAttributes.ATTACK_DAMAGE)) {
@@ -156,21 +157,22 @@ public class GildType {
                 });
                 modifier = new EntityAttributeModifier(entry.modifier().id(), value[0], modifier.operation());
             }
-            builder.add(entry.attribute(), modifier, entry.slot());
+            builderCopy.add(entry.attribute(), modifier, entry.slot());
         });
 
-        this.appendAttributeModifiers(builder, baseItem);
+        builder = this.appendAttributeModifiers(builderCopy, baseItem);
         return builder.build();
     }
 
-    public final void appendAttributeModifiers(AttributeModifiersComponent.Builder builder, Item baseItem) {
+    public final AttributeModifiersComponent.Builder appendAttributeModifiers(AttributeModifiersComponent.Builder builder, Item baseItem) {
         this.modifiers.forEach( modifier -> {
             if (!modifier.shouldBeAppended() || !modifier.shouldApplyToTool(baseItem)) return;
             RegistryEntry<EntityAttribute> attribute = modifier.type.getAttributeType();
             if (attribute != null) {
                 builder.add(attribute, new EntityAttributeModifier(modifier.id, modifier.value, EntityAttributeModifier.Operation.ADD_VALUE), AttributeModifierSlot.MAINHAND);
             }
-        } );
+        });
+        return builder;
     }
 
     public final String buildTooltipTranslationKey() {
