@@ -1015,7 +1015,7 @@ public class VAItems {
     protected static void initLootTableModifiers() {
         LootTableEvents.MODIFY.register( ((key, tableBuilder, source) -> {
 
-            if (!source.isBuiltin()) return;
+            //if (!source.isBuiltin()) return;
 
             // Ominous Trial Spawner Throwables
             if (LootTables.TRIAL_CHAMBER_ITEMS_TO_DROP_WHEN_OMINOUS_SPAWNER.equals(key)) {
@@ -1032,7 +1032,7 @@ public class VAItems {
             }
 
             // Grass Drop
-            if (Blocks.SHORT_GRASS.getLootTableKey().equals(key)) {
+            if (Blocks.SHORT_GRASS.getLootTableKey().isPresent() && Blocks.SHORT_GRASS.getLootTableKey().get().equals(key)) {
                 RegistryEntryLookup<Enchantment> enchantmentLookup = BuiltinRegistries.createWrapperLookup().getOrThrow(RegistryKeys.ENCHANTMENT);
                 RegistryEntryLookup<Item> itemRegistryEntryLookup = BuiltinRegistries.createWrapperLookup().getOrThrow(RegistryKeys.ITEM);
                 LootPool.Builder cottonBuilder = LootPool.builder()
@@ -1057,7 +1057,11 @@ public class VAItems {
                 final int[] i = {0};
                 tableBuilder.modifyPools(builder -> {
                     if (i[0] == 2) {
-                        builder.with(ItemEntry.builder(CLIMBING_ROPE).weight(5).apply(SetCountLootFunction.builder(UniformLootNumberProvider.create(2, 16))));
+                        builder
+                                .with(ItemEntry.builder(CLIMBING_ROPE).weight(7).apply(SetCountLootFunction.builder(UniformLootNumberProvider.create(2, 16))))
+                                .with(ItemEntry.builder(EXPOSED_CLIMBING_ROPE).weight(7).apply(SetCountLootFunction.builder(UniformLootNumberProvider.create(2, 16))))
+                                .with(ItemEntry.builder(WEATHERED_CLIMBING_ROPE).weight(7).apply(SetCountLootFunction.builder(UniformLootNumberProvider.create(2, 16))))
+                                .with(ItemEntry.builder(OXIDIZED_CLIMBING_ROPE).weight(7).apply(SetCountLootFunction.builder(UniformLootNumberProvider.create(2, 16))));
                     }
                     i[0]++;
                 });
