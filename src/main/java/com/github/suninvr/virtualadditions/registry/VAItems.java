@@ -10,6 +10,7 @@ import net.minecraft.block.Blocks;
 import net.minecraft.block.ComposterBlock;
 import net.minecraft.block.DispenserBlock;
 import net.minecraft.block.ShulkerBoxBlock;
+import net.minecraft.block.cauldron.CauldronBehavior;
 import net.minecraft.block.dispenser.BlockPlacementDispenserBehavior;
 import net.minecraft.block.dispenser.DispenserBehavior;
 import net.minecraft.block.dispenser.ItemDispenserBehavior;
@@ -38,8 +39,6 @@ import net.minecraft.predicate.item.ItemPredicate;
 import net.minecraft.registry.BuiltinRegistries;
 import net.minecraft.registry.RegistryEntryLookup;
 import net.minecraft.registry.RegistryKeys;
-import net.minecraft.resource.featuretoggle.FeatureFlag;
-import net.minecraft.resource.featuretoggle.FeatureFlags;
 import net.minecraft.text.Text;
 import net.minecraft.util.Formatting;
 import net.minecraft.util.Identifier;
@@ -50,6 +49,7 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 
 import java.util.List;
+import java.util.Map;
 
 import static com.github.suninvr.virtualadditions.VirtualAdditions.idOf;
 import static com.github.suninvr.virtualadditions.registry.RegistryHelper.ItemRegistryHelper.*;
@@ -472,7 +472,6 @@ public class VAItems {
     private static final Text TOOL_GILD_INGREDIENTS_TEXT;
     private static final Text TOOL_GILD_BASE_SLOT_DESCRIPTION_TEXT;
     private static final Text TOOL_GILD_ADDITIONS_SLOT_DESCRIPTION_TEXT;
-    private static final Text TOOL_GILD_TEXT;
     private static final Identifier EMPTY_SLOT_HOE_TEXTURE;
     private static final Identifier EMPTY_SLOT_AXE_TEXTURE;
     private static final Identifier EMPTY_SLOT_SWORD_TEXTURE;
@@ -491,7 +490,6 @@ public class VAItems {
         TOOL_GILD_INGREDIENTS_TEXT = Text.translatable(Util.createTranslationKey("item", idOf("smithing_template.tool_gild.ingredients"))).formatted(Formatting.BLUE);
         TOOL_GILD_BASE_SLOT_DESCRIPTION_TEXT = Text.translatable(Util.createTranslationKey("item", idOf("smithing_template.tool_gild.base_slot_description")));
         TOOL_GILD_ADDITIONS_SLOT_DESCRIPTION_TEXT = Text.translatable(Util.createTranslationKey("item", idOf("smithing_template.tool_gild.additions_slot_description")));
-        TOOL_GILD_TEXT = Text.translatable(Util.createTranslationKey("upgrade", idOf("tool_gild"))).formatted(Formatting.GRAY);
 
         EMPTY_SLOT_HOE_TEXTURE = Identifier.ofVanilla("item/empty_slot_hoe");
         EMPTY_SLOT_AXE_TEXTURE = Identifier.ofVanilla("item/empty_slot_axe");
@@ -638,7 +636,7 @@ public class VAItems {
         CAGELIGHT = registerBlockItem("cagelight", VABlocks.CAGELIGHT, ItemGroups.BUILDING_BLOCKS, STEEL_TRAPDOOR);
         RAW_STEEL = register("raw_steel", ItemGroups.INGREDIENTS, Items.RAW_GOLD);
         STEEL_INGOT = register("steel_ingot", ItemGroups.INGREDIENTS, Items.GOLD_INGOT);
-        STEEL_BOMB = register("steel_bomb", settings -> new SteelBombItem(settings), new Item.Settings().maxCount(16).component(VADataComponentTypes.EXPLOSIVE_CONTENTS, ExplosiveContentComponent.DEFAULT), new ItemGroupLocation(ItemGroups.COMBAT, Items.SNOWBALL), new ItemGroupLocation(ItemGroups.TOOLS, WAXED_OXIDIZED_CLIMBING_ROPE));
+        STEEL_BOMB = register("steel_bomb", SteelBombItem::new, new Item.Settings().maxCount(16).component(VADataComponentTypes.EXPLOSIVE_CONTENTS, ExplosiveContentComponent.DEFAULT), new ItemGroupLocation(ItemGroups.COMBAT, Items.SNOWBALL), new ItemGroupLocation(ItemGroups.TOOLS, WAXED_OXIDIZED_CLIMBING_ROPE));
         STEEL_SWORD = register("steel_sword", settings -> new SwordItem(SteelToolMaterial.INSTANCE, 3, -2.4F, settings), new Item.Settings(), ItemGroups.COMBAT, Items.GOLDEN_SWORD);
         STEEL_SHOVEL = register("steel_shovel", settings -> new ShovelItem(SteelToolMaterial.INSTANCE, 1.5F, -3.0F, settings), new Item.Settings(), ItemGroups.TOOLS, Items.GOLDEN_HOE);
         STEEL_PICKAXE = register("steel_pickaxe", settings -> new PickaxeItem(SteelToolMaterial.INSTANCE, 1, -2.8F, settings), new Item.Settings(), ItemGroups.TOOLS, prev);
@@ -904,7 +902,7 @@ public class VAItems {
                 settings
         ),new Item.Settings(), ItemGroups.INGREDIENTS, Items.NETHERITE_UPGRADE_SMITHING_TEMPLATE);
 
-        EXOSKELETON_ARMOR_TRIM_SMITHING_TEMPLATE = register("exoskeleton_armor_trim_smithing_template", settings -> SmithingTemplateItem.of(settings), new Item.Settings().rarity(Rarity.UNCOMMON), ItemGroups.INGREDIENTS, Items.BOLT_ARMOR_TRIM_SMITHING_TEMPLATE);
+        EXOSKELETON_ARMOR_TRIM_SMITHING_TEMPLATE = register("exoskeleton_armor_trim_smithing_template", SmithingTemplateItem::of, new Item.Settings().rarity(Rarity.UNCOMMON), ItemGroups.INGREDIENTS, Items.BOLT_ARMOR_TRIM_SMITHING_TEMPLATE);
 
         IOLITE = register("iolite", ItemGroups.INGREDIENTS, Items.ANCIENT_DEBRIS);
         IOLITE_ORE = registerBlockItem("iolite_ore", VABlocks.IOLITE_ORE, ItemGroups.NATURAL, Items.ANCIENT_DEBRIS);
@@ -1146,24 +1144,24 @@ public class VAItems {
     }
 
     protected static void initCauldronBehaviors() {
-        //Map<Item, CauldronBehavior> waterBehaviors = CauldronBehavior.WATER_CAULDRON_BEHAVIOR.map();
-        //waterBehaviors.put(VAItems.ENGRAVING_CHISEL, CauldronBehavior.CLEAN_DYEABLE_ITEM);
-        //waterBehaviors.put(VAItems.CHARTREUSE_SHULKER_BOX, CauldronBehavior.CLEAN_SHULKER_BOX);
-        //waterBehaviors.put(VAItems.MAROON_SHULKER_BOX, CauldronBehavior.CLEAN_SHULKER_BOX);
-        //waterBehaviors.put(VAItems.INDIGO_SHULKER_BOX, CauldronBehavior.CLEAN_SHULKER_BOX);
-        //waterBehaviors.put(VAItems.PLUM_SHULKER_BOX, CauldronBehavior.CLEAN_SHULKER_BOX);
-        //waterBehaviors.put(VAItems.VIRIDIAN_SHULKER_BOX, CauldronBehavior.CLEAN_SHULKER_BOX);
-        //waterBehaviors.put(VAItems.TAN_SHULKER_BOX, CauldronBehavior.CLEAN_SHULKER_BOX);
-        //waterBehaviors.put(VAItems.SINOPIA_SHULKER_BOX, CauldronBehavior.CLEAN_SHULKER_BOX);
-        //waterBehaviors.put(VAItems.LILAC_SHULKER_BOX, CauldronBehavior.CLEAN_SHULKER_BOX);
-        //waterBehaviors.put(VAItems.CHARTREUSE_BANNER, CauldronBehavior.CLEAN_BANNER);
-        //waterBehaviors.put(VAItems.MAROON_BANNER, CauldronBehavior.CLEAN_BANNER);
-        //waterBehaviors.put(VAItems.INDIGO_BANNER, CauldronBehavior.CLEAN_BANNER);
-        //waterBehaviors.put(VAItems.PLUM_BANNER, CauldronBehavior.CLEAN_BANNER);
-        //waterBehaviors.put(VAItems.VIRIDIAN_BANNER, CauldronBehavior.CLEAN_BANNER);
-        //waterBehaviors.put(VAItems.TAN_BANNER, CauldronBehavior.CLEAN_BANNER);
-        //waterBehaviors.put(VAItems.SINOPIA_BANNER, CauldronBehavior.CLEAN_BANNER);
-        //waterBehaviors.put(VAItems.LILAC_BANNER, CauldronBehavior.CLEAN_BANNER);
+        Map<Item, CauldronBehavior> waterBehaviors = CauldronBehavior.WATER_CAULDRON_BEHAVIOR.map();
+        waterBehaviors.put(VAItems.ENGRAVING_CHISEL, CauldronBehavior::cleanArmor);
+        waterBehaviors.put(VAItems.CHARTREUSE_SHULKER_BOX, CauldronBehavior::cleanShulkerBox);
+        waterBehaviors.put(VAItems.MAROON_SHULKER_BOX, CauldronBehavior::cleanShulkerBox);
+        waterBehaviors.put(VAItems.INDIGO_SHULKER_BOX, CauldronBehavior::cleanShulkerBox);
+        waterBehaviors.put(VAItems.PLUM_SHULKER_BOX, CauldronBehavior::cleanShulkerBox);
+        waterBehaviors.put(VAItems.VIRIDIAN_SHULKER_BOX, CauldronBehavior::cleanShulkerBox);
+        waterBehaviors.put(VAItems.TAN_SHULKER_BOX, CauldronBehavior::cleanShulkerBox);
+        waterBehaviors.put(VAItems.SINOPIA_SHULKER_BOX, CauldronBehavior::cleanShulkerBox);
+        waterBehaviors.put(VAItems.LILAC_SHULKER_BOX, CauldronBehavior::cleanShulkerBox);
+        waterBehaviors.put(VAItems.CHARTREUSE_BANNER, CauldronBehavior::cleanBanner);
+        waterBehaviors.put(VAItems.MAROON_BANNER, CauldronBehavior::cleanBanner);
+        waterBehaviors.put(VAItems.INDIGO_BANNER, CauldronBehavior::cleanBanner);
+        waterBehaviors.put(VAItems.PLUM_BANNER, CauldronBehavior::cleanBanner);
+        waterBehaviors.put(VAItems.VIRIDIAN_BANNER, CauldronBehavior::cleanBanner);
+        waterBehaviors.put(VAItems.TAN_BANNER, CauldronBehavior::cleanBanner);
+        waterBehaviors.put(VAItems.SINOPIA_BANNER, CauldronBehavior::cleanBanner);
+        waterBehaviors.put(VAItems.LILAC_BANNER, CauldronBehavior::cleanBanner);
     }
 
 }
