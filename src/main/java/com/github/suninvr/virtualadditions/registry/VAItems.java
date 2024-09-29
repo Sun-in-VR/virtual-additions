@@ -55,6 +55,8 @@ import static com.github.suninvr.virtualadditions.VirtualAdditions.idOf;
 import static com.github.suninvr.virtualadditions.registry.RegistryHelper.ItemRegistryHelper.*;
 
 public class VAItems {
+    //region Declarations
+
     public static final ToolSet DIAMOND_TOOL_SET;
     public static final ToolSet GOLDEN_TOOL_SET;
     public static final ToolSet IRON_TOOL_SET;
@@ -484,7 +486,10 @@ public class VAItems {
     private static final Identifier EMPTY_SLOT_ECHO_SHARD_TEXTURE;
     private static final Identifier EMPTY_SLOT_IOLITE_TEXTURE;
 
+    //endregion
+
     static {
+        //region Identifiers
 
         TOOL_GILD_APPLIES_TO_TEXT = Text.translatable(Util.createTranslationKey("item", idOf("smithing_template.tool_gild.applies_to"))).formatted(Formatting.BLUE);
         TOOL_GILD_INGREDIENTS_TEXT = Text.translatable(Util.createTranslationKey("item", idOf("smithing_template.tool_gild.ingredients"))).formatted(Formatting.BLUE);
@@ -503,16 +508,11 @@ public class VAItems {
         EMPTY_SLOT_ECHO_SHARD_TEXTURE = Identifier.of("virtual_additions:item/empty_slot_echo_shard");
         EMPTY_SLOT_IOLITE_TEXTURE = Identifier.of("virtual_additions:item/empty_slot_iolite");
 
-        CLIMBING_ROPE = register("climbing_rope", settings ->  new ClimbingRopeItem(VABlocks.CLIMBING_ROPE_ANCHOR, settings), new Item.Settings().maxCount(16).useItemPrefixedTranslationKey(), ItemGroups.TOOLS, Items.LEAD);
-        EXPOSED_CLIMBING_ROPE = register("exposed_climbing_rope", settings -> new ClimbingRopeItem(VABlocks.EXPOSED_CLIMBING_ROPE_ANCHOR, settings), new Item.Settings().maxCount(16).useItemPrefixedTranslationKey(), ItemGroups.TOOLS, prev);
-        WEATHERED_CLIMBING_ROPE = register("weathered_climbing_rope", settings -> new ClimbingRopeItem(VABlocks.WEATHERED_CLIMBING_ROPE_ANCHOR, settings), new Item.Settings().maxCount(16).useItemPrefixedTranslationKey(), ItemGroups.TOOLS, prev);
-        OXIDIZED_CLIMBING_ROPE = register("oxidized_climbing_rope", settings -> new ClimbingRopeItem(VABlocks.OXIDIZED_CLIMBING_ROPE_ANCHOR, settings), new Item.Settings().maxCount(16).useItemPrefixedTranslationKey(), ItemGroups.TOOLS, prev);
-        WAXED_CLIMBING_ROPE = register("waxed_climbing_rope", settings -> new ClimbingRopeItem(VABlocks.WAXED_CLIMBING_ROPE_ANCHOR, settings), new Item.Settings().maxCount(16).useItemPrefixedTranslationKey(), ItemGroups.TOOLS, prev);
-        WAXED_EXPOSED_CLIMBING_ROPE = register("waxed_exposed_climbing_rope", settings -> new ClimbingRopeItem(VABlocks.WAXED_EXPOSED_CLIMBING_ROPE_ANCHOR, settings), new Item.Settings().maxCount(16).useItemPrefixedTranslationKey(), ItemGroups.TOOLS, prev);
-        WAXED_WEATHERED_CLIMBING_ROPE = register("waxed_weathered_climbing_rope", settings -> new ClimbingRopeItem(VABlocks.WAXED_WEATHERED_CLIMBING_ROPE_ANCHOR, settings), new Item.Settings().maxCount(16).useItemPrefixedTranslationKey(), ItemGroups.TOOLS, prev);
-        WAXED_OXIDIZED_CLIMBING_ROPE = register("waxed_oxidized_climbing_rope", settings -> new ClimbingRopeItem(VABlocks.WAXED_OXIDIZED_CLIMBING_ROPE_ANCHOR, settings), new Item.Settings().maxCount(16).useItemPrefixedTranslationKey(), ItemGroups.TOOLS, prev);
+        //endregion
 
-        ENGRAVING_CHISEL = register("engraving_chisel", new Item.Settings().maxCount(1).maxDamage(64), ItemGroups.TOOLS, Items.NAME_TAG);
+        //region Deep Stone Variants
+
+        //region Hornfels
 
         HORNFELS = registerBlockItem("hornfels", VABlocks.HORNFELS, new ItemGroupLocation(ItemGroups.NATURAL, Items.DEEPSLATE), new ItemGroupLocation(ItemGroups.BUILDING_BLOCKS, Items.DEEPSLATE_TILE_WALL));
         COBBLED_HORNFELS = registerBlockItem("cobbled_hornfels", VABlocks.COBBLED_HORNFELS, ItemGroups.BUILDING_BLOCKS, HORNFELS);
@@ -529,6 +529,10 @@ public class VAItems {
         CHISELED_HORNFELS = registerBlockItem("chiseled_hornfels", VABlocks.CHISELED_HORNFELS, ItemGroups.BUILDING_BLOCKS, COBBLED_HORNFELS_WALL);
         CHISELED_HORNFELS_TILES = registerBlockItem("chiseled_hornfels_tiles", VABlocks.CHISELED_HORNFELS_TILES, ItemGroups.BUILDING_BLOCKS, HORNFELS_TILE_SLAB);
 
+        //endregion
+
+        //region Blueschist
+
         BLUESCHIST = registerBlockItem("blueschist", VABlocks.BLUESCHIST, new ItemGroupLocation(ItemGroups.NATURAL, HORNFELS), new ItemGroupLocation(ItemGroups.BUILDING_BLOCKS, prev));
         COBBLED_BLUESCHIST = registerBlockItem("cobbled_blueschist", VABlocks.COBBLED_BLUESCHIST, ItemGroups.BUILDING_BLOCKS, BLUESCHIST);
         COBBLED_BLUESCHIST_STAIRS = registerBlockItem("cobbled_blueschist_stairs", VABlocks.COBBLED_BLUESCHIST_STAIRS, ItemGroups.BUILDING_BLOCKS, COBBLED_BLUESCHIST);
@@ -543,6 +547,10 @@ public class VAItems {
         BLUESCHIST_BRICK_SLAB = registerBlockItem("blueschist_brick_slab", VABlocks.BLUESCHIST_BRICK_SLAB, ItemGroups.BUILDING_BLOCKS, BLUESCHIST_BRICK_STAIRS);
         BLUESCHIST_BRICK_WALL = registerBlockItem("blueschist_brick_wall", VABlocks.BLUESCHIST_BRICK_WALL, ItemGroups.BUILDING_BLOCKS, BLUESCHIST_BRICK_SLAB);
         CHISELED_BLUESCHIST = registerBlockItem("chiseled_blueschist", VABlocks.CHISELED_BLUESCHIST, ItemGroups.BUILDING_BLOCKS, prev);
+
+        //endregion
+
+        //region Syenite
 
         SYENITE = registerBlockItem("syenite", VABlocks.SYENITE, new ItemGroupLocation(ItemGroups.NATURAL, BLUESCHIST), new ItemGroupLocation(ItemGroups.BUILDING_BLOCKS, prev));
         COBBLED_SYENITE = registerBlockItem("cobbled_syenite", VABlocks.COBBLED_SYENITE, ItemGroups.BUILDING_BLOCKS, SYENITE);
@@ -559,6 +567,14 @@ public class VAItems {
         SYENITE_BRICK_WALL = registerBlockItem("syenite_brick_wall", VABlocks.SYENITE_BRICK_WALL, ItemGroups.BUILDING_BLOCKS, SYENITE_BRICK_SLAB);
         CHISELED_SYENITE = registerBlockItem("chiseled_syenite", VABlocks.CHISELED_SYENITE, ItemGroups.BUILDING_BLOCKS, prev);
 
+        //endregion
+
+        //endregion
+
+        //region Skylands
+
+        //region Floatrock
+
         FLOATROCK = registerBlockItem("floatrock", VABlocks.FLOATROCK, new ItemGroupLocation(ItemGroups.BUILDING_BLOCKS, Items.DEEPSLATE_TILE_WALL), new ItemGroupLocation(ItemGroups.NATURAL, Items.DEEPSLATE));
         FLOATROCK_STAIRS = registerBlockItem("floatrock_stairs", VABlocks.FLOATROCK_STAIRS, ItemGroups.BUILDING_BLOCKS, prev);
         FLOATROCK_SLAB = registerBlockItem("floatrock_slab", VABlocks.FLOATROCK_SLAB, ItemGroups.BUILDING_BLOCKS, prev);
@@ -572,7 +588,9 @@ public class VAItems {
         POLISHED_FLOATROCK_SLAB = registerBlockItem("polished_floatrock_slab", VABlocks.POLISHED_FLOATROCK_SLAB, ItemGroups.BUILDING_BLOCKS, prev);
         POLISHED_FLOATROCK_WALL = registerBlockItem("polished_floatrock_wall", VABlocks.POLISHED_FLOATROCK_WALL, ItemGroups.BUILDING_BLOCKS, prev);
         GRASSY_FLOATROCK = registerBlockItem("grassy_floatrock", VABlocks.GRASSY_FLOATROCK, ItemGroups.NATURAL, FLOATROCK);
-        
+
+        //region Floatrock Ores
+
         FLOATROCK_COAL_ORE = registerBlockItem("floatrock_coal_ore", VABlocks.FLOATROCK_COAL_ORE, ItemGroups.NATURAL, Items.DEEPSLATE_COAL_ORE);
         FLOATROCK_COPPER_ORE = registerBlockItem("floatrock_copper_ore", VABlocks.FLOATROCK_COPPER_ORE, ItemGroups.NATURAL, Items.DEEPSLATE_COPPER_ORE);
         FLOATROCK_IRON_ORE = registerBlockItem("floatrock_iron_ore", VABlocks.FLOATROCK_IRON_ORE, ItemGroups.NATURAL, Items.DEEPSLATE_IRON_ORE);
@@ -582,7 +600,11 @@ public class VAItems {
         FLOATROCK_LAPIS_ORE = registerBlockItem("floatrock_lapis_ore", VABlocks.FLOATROCK_LAPIS_ORE, ItemGroups.NATURAL, Items.DEEPSLATE_LAPIS_ORE);
         FLOATROCK_DIAMOND_ORE = registerBlockItem("floatrock_diamond_ore", VABlocks.FLOATROCK_DIAMOND_ORE, ItemGroups.NATURAL, Items.DEEPSLATE_DIAMOND_ORE);
 
-        SPRINGSOIL = registerBlockItem("springsoil", VABlocks.SPRINGSOIL, ItemGroups.NATURAL, Items.RED_SANDSTONE);
+        //endregion
+
+        //endregion
+
+        //region Aerobloom
 
         AEROBLOOM_LOG = registerBlockItem("aerobloom_log", VABlocks.AEROBLOOM_LOG, new ItemGroupLocation(ItemGroups.BUILDING_BLOCKS, Items.CHERRY_BUTTON), new ItemGroupLocation(ItemGroups.NATURAL, Items.CHERRY_LOG));
         AEROBLOOM_WOOD = registerBlockItem("aerobloom_wood", VABlocks.AEROBLOOM_WOOD, ItemGroups.BUILDING_BLOCKS, prev);
@@ -602,25 +624,23 @@ public class VAItems {
         AEROBLOOM_LEAVES = registerBlockItem("aerobloom_leaves", VABlocks.AEROBLOOM_LEAVES, ItemGroups.NATURAL, Items.CHERRY_LEAVES);
         AEROBLOOM_SAPLING = registerBlockItem("aerobloom_sapling", VABlocks.AEROBLOOM_SAPLING, ItemGroups.NATURAL, Items.CHERRY_SAPLING);
 
+        //endregion
+
+        SPRINGSOIL = registerBlockItem("springsoil", VABlocks.SPRINGSOIL, ItemGroups.NATURAL, Items.RED_SANDSTONE);
+
         BALLOON_FRUIT = register("balloon_fruit", settings -> new BalloonFruitItem(VABlocks.BALLOON_BULB_BUD, settings), new Item.Settings().food(BALLOON_FRUIT_FOOD), ItemGroups.FOOD_AND_DRINK, Items.CHORUS_FRUIT);
 
-        OAK_HEDGE = registerBlockItem("oak_hedge", VABlocks.OAK_HEDGE, ItemGroups.BUILDING_BLOCKS, Items.WARPED_BUTTON);
-        SPRUCE_HEDGE = registerBlockItem("spruce_hedge", VABlocks.SPRUCE_HEDGE, ItemGroups.BUILDING_BLOCKS, prev);
-        BIRCH_HEDGE = registerBlockItem("birch_hedge", VABlocks.BIRCH_HEDGE, ItemGroups.BUILDING_BLOCKS, prev);
-        JUNGLE_HEDGE = registerBlockItem("jungle_hedge", VABlocks.JUNGLE_HEDGE, ItemGroups.BUILDING_BLOCKS, prev);
-        ACACIA_HEDGE = registerBlockItem("acacia_hedge", VABlocks.ACACIA_HEDGE, ItemGroups.BUILDING_BLOCKS, prev);
-        DARK_OAK_HEDGE = registerBlockItem("dark_oak_hedge", VABlocks.DARK_OAK_HEDGE, ItemGroups.BUILDING_BLOCKS, prev);
-        MANGROVE_HEDGE = registerBlockItem("mangrove_hedge", VABlocks.MANGROVE_HEDGE, ItemGroups.BUILDING_BLOCKS, prev);
-        AZALEA_HEDGE = registerBlockItem("azalea_hedge", VABlocks.AZALEA_HEDGE, ItemGroups.BUILDING_BLOCKS, prev);
-        FLOWERING_AZALEA_HEDGE = registerBlockItem("flowering_azalea_hedge", VABlocks.FLOWERING_AZALEA_HEDGE, ItemGroups.BUILDING_BLOCKS, prev);
-        CHERRY_HEDGE = registerBlockItem("cherry_hedge", VABlocks.CHERRY_HEDGE, ItemGroups.BUILDING_BLOCKS, MANGROVE_HEDGE);
-        AEROBLOOM_HEDGE = registerBlockItem("aerobloom_hedge", VABlocks.AEROBLOOM_HEDGE, ItemGroups.BUILDING_BLOCKS, prev);
+        //endregion
+
+        //region Salty Caves
 
         ROCK_SALT_BLOCK = registerBlockItem("rock_salt_block", VABlocks.ROCK_SALT_BLOCK, ItemGroups.NATURAL, Items.POINTED_DRIPSTONE);
         ROCK_SALT_CRYSTAL = registerBlockItem("rock_salt_crystal", VABlocks.ROCK_SALT_CRYSTAL, ItemGroups.NATURAL, prev);
         ROCK_SALT = register("rock_salt", ItemGroups.INGREDIENTS, Items.SUGAR);
 
-        SPOTLIGHT = registerBlockItem("spotlight", VABlocks.SPOTLIGHT, ItemGroups.REDSTONE, Items.REDSTONE_LAMP);
+        //endregion
+
+        //region Steel
 
         RAW_STEEL_BLOCK = registerBlockItem("raw_steel_block", VABlocks.RAW_STEEL_BLOCK, ItemGroups.NATURAL, Items.RAW_GOLD_BLOCK);
         STEEL_BLOCK = registerBlockItem("steel_block", VABlocks.STEEL_BLOCK, ItemGroups.BUILDING_BLOCKS, Items.GOLD_BLOCK);
@@ -634,9 +654,10 @@ public class VAItems {
         STEEL_TRAPDOOR = registerBlockItem("steel_trapdoor", VABlocks.STEEL_TRAPDOOR, ItemGroups.BUILDING_BLOCKS, prev);
         REDSTONE_BRIDGE = registerBlockItem("redstone_bridge", VABlocks.REDSTONE_BRIDGE, ItemGroups.REDSTONE, Items.COMPARATOR);
         CAGELIGHT = registerBlockItem("cagelight", VABlocks.CAGELIGHT, ItemGroups.BUILDING_BLOCKS, STEEL_TRAPDOOR);
+        SPOTLIGHT = registerBlockItem("spotlight", VABlocks.SPOTLIGHT, ItemGroups.REDSTONE, Items.REDSTONE_LAMP);
         RAW_STEEL = register("raw_steel", ItemGroups.INGREDIENTS, Items.RAW_GOLD);
         STEEL_INGOT = register("steel_ingot", ItemGroups.INGREDIENTS, Items.GOLD_INGOT);
-        STEEL_BOMB = register("steel_bomb", SteelBombItem::new, new Item.Settings().maxCount(16).component(VADataComponentTypes.EXPLOSIVE_CONTENTS, ExplosiveContentComponent.DEFAULT), new ItemGroupLocation(ItemGroups.COMBAT, Items.SNOWBALL), new ItemGroupLocation(ItemGroups.TOOLS, WAXED_OXIDIZED_CLIMBING_ROPE));
+        STEEL_BOMB = register("steel_bomb", SteelBombItem::new, new Item.Settings().maxCount(16).component(VADataComponentTypes.EXPLOSIVE_CONTENTS, ExplosiveContentComponent.DEFAULT), new ItemGroupLocation(ItemGroups.COMBAT, Items.SNOWBALL), new ItemGroupLocation(ItemGroups.TOOLS, Items.LEAD));
         STEEL_SWORD = register("steel_sword", settings -> new SwordItem(SteelToolMaterial.INSTANCE, 3, -2.4F, settings), new Item.Settings(), ItemGroups.COMBAT, Items.GOLDEN_SWORD);
         STEEL_SHOVEL = register("steel_shovel", settings -> new ShovelItem(SteelToolMaterial.INSTANCE, 1.5F, -3.0F, settings), new Item.Settings(), ItemGroups.TOOLS, Items.GOLDEN_HOE);
         STEEL_PICKAXE = register("steel_pickaxe", settings -> new PickaxeItem(SteelToolMaterial.INSTANCE, 1, -2.8F, settings), new Item.Settings(), ItemGroups.TOOLS, prev);
@@ -647,6 +668,8 @@ public class VAItems {
         STEEL_LEGGINGS = register("steel_leggings", settings -> new ArmorItem(VAArmorMaterial.STEEL, EquipmentType.LEGGINGS, settings), new Item.Settings().maxCount(1).maxDamage(EquipmentType.LEGGINGS.getMaxDamage(24)), ItemGroups.COMBAT, prev);
         STEEL_BOOTS = register("steel_boots", settings -> new ArmorItem(VAArmorMaterial.STEEL, EquipmentType.BOOTS, settings), new Item.Settings().maxCount(1).maxDamage(EquipmentType.BOOTS.getMaxDamage(24)), ItemGroups.COMBAT, prev);
 
+        //region Exposed Blocks
+
         EXPOSED_STEEL_BLOCK = registerBlockItem("exposed_steel_block", VABlocks.EXPOSED_STEEL_BLOCK, ItemGroups.BUILDING_BLOCKS, CAGELIGHT);
         EXPOSED_CUT_STEEL = registerBlockItem("exposed_cut_steel", VABlocks.EXPOSED_CUT_STEEL, ItemGroups.BUILDING_BLOCKS, prev);
         EXPOSED_CUT_STEEL_STAIRS = registerBlockItem("exposed_cut_steel_stairs", VABlocks.EXPOSED_CUT_STEEL_STAIRS, ItemGroups.BUILDING_BLOCKS, prev);
@@ -656,7 +679,11 @@ public class VAItems {
         EXPOSED_STEEL_FENCE = registerBlockItem("exposed_steel_fence", VABlocks.EXPOSED_STEEL_FENCE, ItemGroups.BUILDING_BLOCKS, prev);
         EXPOSED_STEEL_DOOR = registerBlockItem("exposed_steel_door", VABlocks.EXPOSED_STEEL_DOOR, ItemGroups.BUILDING_BLOCKS, prev);
         EXPOSED_STEEL_TRAPDOOR = registerBlockItem("exposed_steel_trapdoor", VABlocks.EXPOSED_STEEL_TRAPDOOR, ItemGroups.BUILDING_BLOCKS, prev);
-        
+
+        //endregion
+
+        //region Weathered Blocks
+
         WEATHERED_STEEL_BLOCK = registerBlockItem("weathered_steel_block", VABlocks.WEATHERED_STEEL_BLOCK, ItemGroups.BUILDING_BLOCKS, prev);
         WEATHERED_CUT_STEEL = registerBlockItem("weathered_cut_steel", VABlocks.WEATHERED_CUT_STEEL, ItemGroups.BUILDING_BLOCKS, prev);
         WEATHERED_CUT_STEEL_STAIRS = registerBlockItem("weathered_cut_steel_stairs", VABlocks.WEATHERED_CUT_STEEL_STAIRS, ItemGroups.BUILDING_BLOCKS, prev);
@@ -666,7 +693,11 @@ public class VAItems {
         WEATHERED_STEEL_FENCE = registerBlockItem("weathered_steel_fence", VABlocks.WEATHERED_STEEL_FENCE, ItemGroups.BUILDING_BLOCKS, prev);
         WEATHERED_STEEL_DOOR = registerBlockItem("weathered_steel_door", VABlocks.WEATHERED_STEEL_DOOR, ItemGroups.BUILDING_BLOCKS, prev);
         WEATHERED_STEEL_TRAPDOOR = registerBlockItem("weathered_steel_trapdoor", VABlocks.WEATHERED_STEEL_TRAPDOOR, ItemGroups.BUILDING_BLOCKS, prev);
-        
+
+        //endregion
+
+        //region Oxidized Blocks
+
         OXIDIZED_STEEL_BLOCK = registerBlockItem("oxidized_steel_block", VABlocks.OXIDIZED_STEEL_BLOCK, ItemGroups.BUILDING_BLOCKS, prev);
         OXIDIZED_CUT_STEEL = registerBlockItem("oxidized_cut_steel", VABlocks.OXIDIZED_CUT_STEEL, ItemGroups.BUILDING_BLOCKS, prev);
         OXIDIZED_CUT_STEEL_STAIRS = registerBlockItem("oxidized_cut_steel_stairs", VABlocks.OXIDIZED_CUT_STEEL_STAIRS, ItemGroups.BUILDING_BLOCKS, prev);
@@ -676,6 +707,10 @@ public class VAItems {
         OXIDIZED_STEEL_FENCE = registerBlockItem("oxidized_steel_fence", VABlocks.OXIDIZED_STEEL_FENCE, ItemGroups.BUILDING_BLOCKS, prev);
         OXIDIZED_STEEL_DOOR = registerBlockItem("oxidized_steel_door", VABlocks.OXIDIZED_STEEL_DOOR, ItemGroups.BUILDING_BLOCKS, prev);
         OXIDIZED_STEEL_TRAPDOOR = registerBlockItem("oxidized_steel_trapdoor", VABlocks.OXIDIZED_STEEL_TRAPDOOR, ItemGroups.BUILDING_BLOCKS, prev);
+
+        //endregion
+
+        //region Waxed Blocks
 
         WAXED_STEEL_BLOCK = registerBlockItem("waxed_steel_block", VABlocks.WAXED_STEEL_BLOCK, ItemGroups.BUILDING_BLOCKS, prev);
         WAXED_CUT_STEEL = registerBlockItem("waxed_cut_steel", VABlocks.WAXED_CUT_STEEL, ItemGroups.BUILDING_BLOCKS, prev);
@@ -687,6 +722,10 @@ public class VAItems {
         WAXED_STEEL_DOOR = registerBlockItem("waxed_steel_door", VABlocks.WAXED_STEEL_DOOR, ItemGroups.BUILDING_BLOCKS, prev);
         WAXED_STEEL_TRAPDOOR = registerBlockItem("waxed_steel_trapdoor", VABlocks.WAXED_STEEL_TRAPDOOR, ItemGroups.BUILDING_BLOCKS, prev);
 
+        //endregion
+
+        //region Waxed Exposed Blocks
+
         WAXED_EXPOSED_STEEL_BLOCK = registerBlockItem("waxed_exposed_steel_block", VABlocks.WAXED_EXPOSED_STEEL_BLOCK, ItemGroups.BUILDING_BLOCKS, prev);
         WAXED_EXPOSED_CUT_STEEL = registerBlockItem("waxed_exposed_cut_steel", VABlocks.WAXED_EXPOSED_CUT_STEEL, ItemGroups.BUILDING_BLOCKS, prev);
         WAXED_EXPOSED_CUT_STEEL_STAIRS = registerBlockItem("waxed_exposed_cut_steel_stairs", VABlocks.WAXED_EXPOSED_CUT_STEEL_STAIRS, ItemGroups.BUILDING_BLOCKS, prev);
@@ -696,6 +735,10 @@ public class VAItems {
         WAXED_EXPOSED_STEEL_FENCE = registerBlockItem("waxed_exposed_steel_fence", VABlocks.WAXED_EXPOSED_STEEL_FENCE, ItemGroups.BUILDING_BLOCKS, prev);
         WAXED_EXPOSED_STEEL_DOOR = registerBlockItem("waxed_exposed_steel_door", VABlocks.WAXED_EXPOSED_STEEL_DOOR, ItemGroups.BUILDING_BLOCKS, prev);
         WAXED_EXPOSED_STEEL_TRAPDOOR = registerBlockItem("waxed_exposed_steel_trapdoor", VABlocks.WAXED_EXPOSED_STEEL_TRAPDOOR, ItemGroups.BUILDING_BLOCKS, prev);
+
+        //endregion
+
+        //region Waxed Weathered Blocks
 
         WAXED_WEATHERED_STEEL_BLOCK = registerBlockItem("waxed_weathered_steel_block", VABlocks.WAXED_WEATHERED_STEEL_BLOCK, ItemGroups.BUILDING_BLOCKS, prev);
         WAXED_WEATHERED_CUT_STEEL = registerBlockItem("waxed_weathered_cut_steel", VABlocks.WAXED_WEATHERED_CUT_STEEL, ItemGroups.BUILDING_BLOCKS, prev);
@@ -707,6 +750,10 @@ public class VAItems {
         WAXED_WEATHERED_STEEL_DOOR = registerBlockItem("waxed_weathered_steel_door", VABlocks.WAXED_WEATHERED_STEEL_DOOR, ItemGroups.BUILDING_BLOCKS, prev);
         WAXED_WEATHERED_STEEL_TRAPDOOR = registerBlockItem("waxed_weathered_steel_trapdoor", VABlocks.WAXED_WEATHERED_STEEL_TRAPDOOR, ItemGroups.BUILDING_BLOCKS, prev);
 
+        //endregion
+
+        //region Waxed Oxidized Blocks
+
         WAXED_OXIDIZED_STEEL_BLOCK = registerBlockItem("waxed_oxidized_steel_block", VABlocks.WAXED_OXIDIZED_STEEL_BLOCK, ItemGroups.BUILDING_BLOCKS, prev);
         WAXED_OXIDIZED_CUT_STEEL = registerBlockItem("waxed_oxidized_cut_steel", VABlocks.WAXED_OXIDIZED_CUT_STEEL, ItemGroups.BUILDING_BLOCKS, prev);
         WAXED_OXIDIZED_CUT_STEEL_STAIRS = registerBlockItem("waxed_oxidized_cut_steel_stairs", VABlocks.WAXED_OXIDIZED_CUT_STEEL_STAIRS, ItemGroups.BUILDING_BLOCKS, prev);
@@ -717,15 +764,11 @@ public class VAItems {
         WAXED_OXIDIZED_STEEL_DOOR = registerBlockItem("waxed_oxidized_steel_door", VABlocks.WAXED_OXIDIZED_STEEL_DOOR, ItemGroups.BUILDING_BLOCKS, prev);
         WAXED_OXIDIZED_STEEL_TRAPDOOR = registerBlockItem("waxed_oxidized_steel_trapdoor", VABlocks.WAXED_OXIDIZED_STEEL_TRAPDOOR, ItemGroups.BUILDING_BLOCKS, prev);
 
+        //endregion
 
-        COTTON_SEEDS = register("cotton_seeds", settings -> new BlockItem(VABlocks.COTTON, settings),new Item.Settings().useItemPrefixedTranslationKey(), ItemGroups.NATURAL, Items.BEETROOT_SEEDS);
-        COTTON = register("cotton", ItemGroups.INGREDIENTS, Items.WHEAT);
-        CORN = register("corn", new Item.Settings().food(CORN_FOOD), ItemGroups.FOOD_AND_DRINK, Items.BEETROOT);
-        ROASTED_CORN = register("roasted_corn", new Item.Settings().food(ROASTED_CORN_FOOD), ItemGroups.FOOD_AND_DRINK, prev);
-        CORN_SEEDS = register("corn_seeds", settings -> new BlockItem(VABlocks.CORN_CROP, settings),new Item.Settings().useItemPrefixedTranslationKey(), ItemGroups.NATURAL, COTTON_SEEDS);
-        FRIED_EGG = register("fried_egg", new Item.Settings().food(FRIED_EGG_FOOD), ItemGroups.FOOD_AND_DRINK, Items.COOKED_CHICKEN);
-        ICE_CREAM = register("ice_cream", new Item.Settings().food(ICE_CREAM_FOOD).maxCount(1), ItemGroups.FOOD_AND_DRINK, Items.COOKIE);
-        SWEET_BERRY_PIE = register("sweet_berry_pie", new Item.Settings().food(SWEET_BERRY_PIE_FOOD), ItemGroups.FOOD_AND_DRINK, Items.PUMPKIN_PIE);
+        //endregion
+
+        //region Wasp Den
 
         SILK_BLOCK = registerBlockItem("silk_block", VABlocks.SILK_BLOCK, ItemGroups.NATURAL, Items.SHROOMLIGHT);
         LUMWASP_NEST = registerBlockItem("lumwasp_nest", VABlocks.LUMWASP_NEST, ItemGroups.NATURAL, prev);
@@ -738,6 +781,8 @@ public class VAItems {
         LUMWASP_MANDIBLE = register("lumwasp_mandible", ItemGroups.INGREDIENTS, Items.FERMENTED_SPIDER_EYE);
         SILKBULB = registerBlockItem("silkbulb", VABlocks.SILKBULB, new ItemGroupLocation(ItemGroups.FUNCTIONAL, Items.GLOWSTONE), new ItemGroupLocation(ItemGroups.COLORED_BLOCKS, Items.PINK_BANNER), new ItemGroupLocation(ItemGroups.NATURAL, WEBBED_SILK));
         ACID_BLOCK = registerBlockItem("acid_block", VABlocks.ACID_BLOCK, ItemGroups.NATURAL, prev);
+
+        //region Colorful Silkbulbs
 
         WHITE_SILKBULB = registerBlockItem("white_silkbulb", VABlocks.WHITE_SILKBULB, ItemGroups.COLORED_BLOCKS, prev);
         LIGHT_GRAY_SILKBULB = registerBlockItem("light_gray_silkbulb", VABlocks.LIGHT_GRAY_SILKBULB, ItemGroups.COLORED_BLOCKS, prev);
@@ -756,9 +801,17 @@ public class VAItems {
         MAGENTA_SILKBULB = registerBlockItem("magenta_silkbulb", VABlocks.MAGENTA_SILKBULB, ItemGroups.COLORED_BLOCKS, prev);
         PINK_SILKBULB = registerBlockItem("pink_silkbulb", VABlocks.PINK_SILKBULB, ItemGroups.COLORED_BLOCKS, prev);
 
+        //endregion
+
         ACID_BUCKET = register("acid_bucket", AcidBucketItem::new, new Item.Settings().recipeRemainder(Items.BUCKET).maxCount(1), ItemGroups.TOOLS, Items.LAVA_BUCKET);
 
         APPLICABLE_POTION = register("applicable_potion", ApplicablePotionItem::new, new Item.Settings().maxCount(16).component(DataComponentTypes.POTION_CONTENTS, PotionContentsComponent.DEFAULT));
+
+        //endregion
+
+        //region Dyes
+
+        //region Chartreuse Dyables
 
         CHARTREUSE_DYE = register("chartreuse_dye", settings ->  new DyeItem(VADyeColors.CHARTREUSE, settings), new Item.Settings(), ItemGroups.INGREDIENTS, Items.YELLOW_DYE);
         CHARTREUSE_WOOL = registerBlockItem("chartreuse_wool", VABlocks.CHARTREUSE_WOOL, ItemGroups.COLORED_BLOCKS, Blocks.YELLOW_WOOL.asItem());
@@ -775,7 +828,11 @@ public class VAItems {
         CHARTREUSE_SHULKER_BOX = register("chartreuse_shulker_box", settings ->  new BlockItem(VABlocks.CHARTREUSE_SHULKER_BOX, settings), new Item.Settings().translationKey(VABlocks.CHARTREUSE_SHULKER_BOX.getTranslationKey()).maxCount(1).component(DataComponentTypes.CONTAINER, ContainerComponent.DEFAULT), new ItemGroupLocation(ItemGroups.COLORED_BLOCKS, Items.YELLOW_SHULKER_BOX), new ItemGroupLocation(ItemGroups.FUNCTIONAL, Items.YELLOW_SHULKER_BOX));
         CHARTREUSE_BANNER = register("chartreuse_banner", settings ->  new BannerItem(VABlocks.CHARTREUSE_BANNER, VABlocks.CHARTREUSE_WALL_BANNER, settings), new Item.Settings().translationKey(VABlocks.CHARTREUSE_BANNER.getTranslationKey()).maxCount(16).component(DataComponentTypes.BANNER_PATTERNS, BannerPatternsComponent.DEFAULT), new ItemGroupLocation(ItemGroups.COLORED_BLOCKS, Items.YELLOW_BANNER), new ItemGroupLocation(ItemGroups.FUNCTIONAL, Items.YELLOW_BANNER));
         CHARTREUSE_BUNDLE = register("chartreuse_bundle", settings -> new BundleItem(idOf("chartreuse_bundle_open_front"), idOf("chartreuse_bundle_open_back"), settings), new Item.Settings().maxCount(1).component(DataComponentTypes.BUNDLE_CONTENTS, BundleContentsComponent.DEFAULT), ItemGroups.TOOLS, Items.YELLOW_BUNDLE);
-        
+
+        //endregion
+
+        //region Maroon Dyables
+
         MAROON_DYE = register("maroon_dye", settings ->  new DyeItem(VADyeColors.MAROON, settings), new Item.Settings(), ItemGroups.INGREDIENTS, Items.BROWN_DYE);
         MAROON_WOOL = registerBlockItem("maroon_wool", VABlocks.MAROON_WOOL, ItemGroups.COLORED_BLOCKS, Blocks.BROWN_WOOL.asItem());
         MAROON_CARPET = registerBlockItem("maroon_carpet", VABlocks.MAROON_CARPET, ItemGroups.COLORED_BLOCKS, Blocks.BROWN_CARPET.asItem());
@@ -791,6 +848,10 @@ public class VAItems {
         MAROON_SHULKER_BOX = register("maroon_shulker_box", settings ->  new BlockItem(VABlocks.MAROON_SHULKER_BOX, settings), new Item.Settings().translationKey(VABlocks.MAROON_SHULKER_BOX.getTranslationKey()).maxCount(1).component(DataComponentTypes.CONTAINER, ContainerComponent.DEFAULT), new ItemGroupLocation(ItemGroups.COLORED_BLOCKS, Items.BROWN_SHULKER_BOX), new ItemGroupLocation(ItemGroups.FUNCTIONAL, Items.BROWN_SHULKER_BOX));
         MAROON_BANNER = register("maroon_banner", settings ->  new BannerItem(VABlocks.MAROON_BANNER, VABlocks.MAROON_WALL_BANNER, settings), new Item.Settings().translationKey(VABlocks.MAROON_BANNER.getTranslationKey()).maxCount(16).component(DataComponentTypes.BANNER_PATTERNS, BannerPatternsComponent.DEFAULT), new ItemGroupLocation(ItemGroups.COLORED_BLOCKS, Items.BROWN_BANNER), new ItemGroupLocation(ItemGroups.FUNCTIONAL, Items.BROWN_BANNER));
         MAROON_BUNDLE = register("maroon_bundle", settings -> new BundleItem(idOf("maroon_bundle_open_front"), idOf("maroon_bundle_open_back"), settings), new Item.Settings().maxCount(1).component(DataComponentTypes.BUNDLE_CONTENTS, BundleContentsComponent.DEFAULT), ItemGroups.TOOLS, Items.BROWN_BUNDLE);
+
+        //endregion
+
+        //region Indigo Dyables
 
         INDIGO_DYE = register("indigo_dye", settings ->  new DyeItem(VADyeColors.INDIGO, settings), new Item.Settings(), ItemGroups.INGREDIENTS, Items.BLUE_DYE);
         INDIGO_WOOL = registerBlockItem("indigo_wool", VABlocks.INDIGO_WOOL, ItemGroups.COLORED_BLOCKS, Blocks.BLUE_WOOL.asItem());
@@ -808,6 +869,10 @@ public class VAItems {
         INDIGO_BANNER = register("indigo_banner", settings ->  new BannerItem(VABlocks.INDIGO_BANNER, VABlocks.INDIGO_WALL_BANNER, settings), new Item.Settings().translationKey(VABlocks.INDIGO_BANNER.getTranslationKey()).maxCount(16).component(DataComponentTypes.BANNER_PATTERNS, BannerPatternsComponent.DEFAULT), new ItemGroupLocation(ItemGroups.COLORED_BLOCKS, Items.BLUE_BANNER), new ItemGroupLocation(ItemGroups.FUNCTIONAL, Items.BLUE_BANNER));
         INDIGO_BUNDLE = register("indigo_bundle", settings -> new BundleItem(idOf("indigo_bundle_open_front"), idOf("indigo_bundle_open_back"), settings), new Item.Settings().maxCount(1).component(DataComponentTypes.BUNDLE_CONTENTS, BundleContentsComponent.DEFAULT), ItemGroups.TOOLS, Items.BLUE_BUNDLE);
 
+        //endregion
+
+        //region Plum Dyables
+
         PLUM_DYE = register("plum_dye", settings ->  new DyeItem(VADyeColors.PLUM, settings), new Item.Settings(), ItemGroups.INGREDIENTS, Items.MAGENTA_DYE);
         PLUM_WOOL = registerBlockItem("plum_wool", VABlocks.PLUM_WOOL, ItemGroups.COLORED_BLOCKS, Blocks.MAGENTA_WOOL.asItem());
         PLUM_CARPET = registerBlockItem("plum_carpet", VABlocks.PLUM_CARPET, ItemGroups.COLORED_BLOCKS, Blocks.MAGENTA_CARPET.asItem());
@@ -823,6 +888,10 @@ public class VAItems {
         PLUM_SHULKER_BOX = register("plum_shulker_box", settings ->  new BlockItem(VABlocks.PLUM_SHULKER_BOX, settings), new Item.Settings().translationKey(VABlocks.PLUM_SHULKER_BOX.getTranslationKey()).maxCount(1).component(DataComponentTypes.CONTAINER, ContainerComponent.DEFAULT), new ItemGroupLocation(ItemGroups.COLORED_BLOCKS, Items.MAGENTA_SHULKER_BOX), new ItemGroupLocation(ItemGroups.FUNCTIONAL, Items.MAGENTA_SHULKER_BOX));
         PLUM_BANNER = register("plum_banner", settings ->  new BannerItem(VABlocks.PLUM_BANNER, VABlocks.PLUM_WALL_BANNER, settings), new Item.Settings().translationKey(VABlocks.PLUM_BANNER.getTranslationKey()).maxCount(16).component(DataComponentTypes.BANNER_PATTERNS, BannerPatternsComponent.DEFAULT), new ItemGroupLocation(ItemGroups.COLORED_BLOCKS, Items.MAGENTA_BANNER), new ItemGroupLocation(ItemGroups.FUNCTIONAL, Items.MAGENTA_BANNER));
         PLUM_BUNDLE = register("plum_bundle", settings -> new BundleItem(idOf("plum_bundle_open_front"), idOf("plum_bundle_open_back"), settings), new Item.Settings().maxCount(1).component(DataComponentTypes.BUNDLE_CONTENTS, BundleContentsComponent.DEFAULT), ItemGroups.TOOLS, Items.MAGENTA_BUNDLE);
+
+        //endregion
+
+        //region Viridian Dyables
 
         VIRIDIAN_DYE = register("viridian_dye", settings ->  new DyeItem(VADyeColors.VIRIDIAN, settings), new Item.Settings(), ItemGroups.INGREDIENTS, Items.GREEN_DYE);
         VIRIDIAN_WOOL = registerBlockItem("viridian_wool", VABlocks.VIRIDIAN_WOOL, ItemGroups.COLORED_BLOCKS, Blocks.GREEN_WOOL.asItem());
@@ -840,6 +909,10 @@ public class VAItems {
         VIRIDIAN_BANNER = register("viridian_banner", settings ->  new BannerItem(VABlocks.VIRIDIAN_BANNER, VABlocks.VIRIDIAN_WALL_BANNER, settings), new Item.Settings().translationKey(VABlocks.VIRIDIAN_BANNER.getTranslationKey()).maxCount(16).component(DataComponentTypes.BANNER_PATTERNS, BannerPatternsComponent.DEFAULT), new ItemGroupLocation(ItemGroups.COLORED_BLOCKS, Items.GREEN_BANNER), new ItemGroupLocation(ItemGroups.FUNCTIONAL, Items.GREEN_BANNER));
         VIRIDIAN_BUNDLE = register("viridian_bundle", settings -> new BundleItem(idOf("viridian_bundle_open_front"), idOf("viridian_bundle_open_back"), settings), new Item.Settings().maxCount(1).component(DataComponentTypes.BUNDLE_CONTENTS, BundleContentsComponent.DEFAULT), ItemGroups.TOOLS, Items.GREEN_BUNDLE);
 
+        //endregion
+
+        //region Tan Dyables
+
         TAN_DYE = register("tan_dye", settings ->  new DyeItem(VADyeColors.TAN, settings), new Item.Settings(), ItemGroups.INGREDIENTS, Items.BLACK_DYE);
         TAN_WOOL = registerBlockItem("tan_wool", VABlocks.TAN_WOOL, ItemGroups.COLORED_BLOCKS, Blocks.BLACK_WOOL.asItem());
         TAN_CARPET = registerBlockItem("tan_carpet", VABlocks.TAN_CARPET, ItemGroups.COLORED_BLOCKS, Blocks.BLACK_CARPET.asItem());
@@ -855,6 +928,10 @@ public class VAItems {
         TAN_SHULKER_BOX = register("tan_shulker_box", settings ->  new BlockItem(VABlocks.TAN_SHULKER_BOX, settings), new Item.Settings().translationKey(VABlocks.TAN_SHULKER_BOX.getTranslationKey()).maxCount(1).component(DataComponentTypes.CONTAINER, ContainerComponent.DEFAULT), new ItemGroupLocation(ItemGroups.COLORED_BLOCKS, Items.BLACK_SHULKER_BOX), new ItemGroupLocation(ItemGroups.FUNCTIONAL, Items.BLACK_SHULKER_BOX));
         TAN_BANNER = register("tan_banner", settings ->  new BannerItem(VABlocks.TAN_BANNER, VABlocks.TAN_WALL_BANNER, settings), new Item.Settings().translationKey(VABlocks.TAN_BANNER.getTranslationKey()).maxCount(16).component(DataComponentTypes.BANNER_PATTERNS, BannerPatternsComponent.DEFAULT), new ItemGroupLocation(ItemGroups.COLORED_BLOCKS, Items.BLACK_BANNER), new ItemGroupLocation(ItemGroups.FUNCTIONAL, Items.BLACK_BANNER));
         TAN_BUNDLE = register("tan_bundle", settings -> new BundleItem(idOf("tan_bundle_open_front"), idOf("tan_bundle_open_back"), settings), new Item.Settings().maxCount(1).component(DataComponentTypes.BUNDLE_CONTENTS, BundleContentsComponent.DEFAULT), ItemGroups.TOOLS, Items.BLACK_BUNDLE);
+
+        //endregion
+
+        //region Sinopia Dyables
 
         SINOPIA_DYE = register("sinopia_dye", settings ->  new DyeItem(VADyeColors.SINOPIA, settings), new Item.Settings(), ItemGroups.INGREDIENTS, Items.RED_DYE);
         SINOPIA_WOOL = registerBlockItem("sinopia_wool", VABlocks.SINOPIA_WOOL, ItemGroups.COLORED_BLOCKS, Blocks.RED_WOOL.asItem());
@@ -872,6 +949,10 @@ public class VAItems {
         SINOPIA_BANNER = register("sinopia_banner", settings ->  new BannerItem(VABlocks.SINOPIA_BANNER, VABlocks.SINOPIA_WALL_BANNER, settings), new Item.Settings().translationKey(VABlocks.SINOPIA_BANNER.getTranslationKey()).maxCount(16).component(DataComponentTypes.BANNER_PATTERNS, BannerPatternsComponent.DEFAULT), new ItemGroupLocation(ItemGroups.COLORED_BLOCKS, Items.RED_BANNER), new ItemGroupLocation(ItemGroups.FUNCTIONAL, Items.RED_BANNER));
         SINOPIA_BUNDLE = register("sinopia_bundle", settings -> new BundleItem(idOf("sinopia_bundle_open_front"), idOf("sinopia_bundle_open_back"), settings), new Item.Settings().maxCount(1).component(DataComponentTypes.BUNDLE_CONTENTS, BundleContentsComponent.DEFAULT), ItemGroups.TOOLS, Items.RED_BUNDLE);
 
+        //endregion
+
+        //region Lilac Dyables
+
         LILAC_DYE = register("lilac_dye", settings ->  new DyeItem(VADyeColors.LILAC, settings), new Item.Settings(), ItemGroups.INGREDIENTS, Items.PINK_DYE);
         LILAC_WOOL = registerBlockItem("lilac_wool", VABlocks.LILAC_WOOL, ItemGroups.COLORED_BLOCKS, Blocks.PINK_WOOL.asItem());
         LILAC_CARPET = registerBlockItem("lilac_carpet", VABlocks.LILAC_CARPET, ItemGroups.COLORED_BLOCKS, Blocks.PINK_CARPET.asItem());
@@ -888,21 +969,13 @@ public class VAItems {
         LILAC_BANNER = register("lilac_banner", settings ->  new BannerItem(VABlocks.LILAC_BANNER, VABlocks.LILAC_WALL_BANNER, settings), new Item.Settings().translationKey(VABlocks.LILAC_BANNER.getTranslationKey()).maxCount(16).component(DataComponentTypes.BANNER_PATTERNS, BannerPatternsComponent.DEFAULT), new ItemGroupLocation(ItemGroups.COLORED_BLOCKS, Items.PINK_BANNER), new ItemGroupLocation(ItemGroups.FUNCTIONAL, Items.PINK_BANNER));
         LILAC_BUNDLE = register("lilac_bundle", settings -> new BundleItem(idOf("lilac_bundle_open_front"), idOf("lilac_bundle_open_back"), settings), new Item.Settings().maxCount(1).component(DataComponentTypes.BUNDLE_CONTENTS, BundleContentsComponent.DEFAULT), ItemGroups.TOOLS, Items.PINK_BUNDLE);
 
+        //endregion
+
         COLORING_STATION = registerBlockItem("coloring_station", VABlocks.COLORING_STATION, ItemGroups.FUNCTIONAL, Items.LOOM);
 
-        DIAMOND_TOOL_SET = new ToolSet(Items.DIAMOND_SWORD, Items.DIAMOND_SHOVEL, Items.DIAMOND_PICKAXE, Items.DIAMOND_AXE, Items.DIAMOND_HOE, ToolMaterial.DIAMOND, "diamond");
-        GOLDEN_TOOL_SET = new ToolSet(Items.GOLDEN_SWORD, Items.GOLDEN_SHOVEL, Items.GOLDEN_PICKAXE, Items.GOLDEN_AXE, Items.GOLDEN_HOE, ToolMaterial.GOLD, "golden");
-        IRON_TOOL_SET = new ToolSet(Items.IRON_SWORD, Items.IRON_SHOVEL, Items.IRON_PICKAXE, Items.IRON_AXE, Items.IRON_HOE, ToolMaterial.IRON, "iron");
-        NETHERITE_TOOL_SET = new ToolSet(Items.NETHERITE_SWORD, Items.NETHERITE_SHOVEL, Items.NETHERITE_PICKAXE, Items.NETHERITE_AXE, Items.NETHERITE_HOE, ToolMaterial.NETHERITE, "netherite");
-        STEEL_TOOL_SET = new ToolSet(STEEL_SWORD, STEEL_SHOVEL, STEEL_PICKAXE, STEEL_AXE, STEEL_HOE, SteelToolMaterial.INSTANCE, "steel");
+        //endregion
 
-        TOOL_GILD_SMITHING_TEMPLATE = register("tool_gild_smithing_template", settings -> new SmithingTemplateItem(TOOL_GILD_APPLIES_TO_TEXT, TOOL_GILD_INGREDIENTS_TEXT, TOOL_GILD_BASE_SLOT_DESCRIPTION_TEXT, TOOL_GILD_ADDITIONS_SLOT_DESCRIPTION_TEXT,
-                List.of(EMPTY_SLOT_SWORD_TEXTURE, EMPTY_SLOT_SHOVEL_TEXTURE, EMPTY_SLOT_PICKAXE_TEXTURE, EMPTY_SLOT_AXE_TEXTURE, EMPTY_SLOT_HOE_TEXTURE),
-                List.of(EMPTY_SLOT_AMETHYST_TEXTURE, EMPTY_SLOT_INGOT_TEXTURE, EMPTY_SLOT_EMERALD_TEXTURE, EMPTY_SLOT_IOLITE_TEXTURE, EMPTY_SLOT_QUARTZ_TEXTURE, EMPTY_SLOT_ECHO_SHARD_TEXTURE),
-                settings
-        ),new Item.Settings(), ItemGroups.INGREDIENTS, Items.NETHERITE_UPGRADE_SMITHING_TEMPLATE);
-
-        EXOSKELETON_ARMOR_TRIM_SMITHING_TEMPLATE = register("exoskeleton_armor_trim_smithing_template", SmithingTemplateItem::of, new Item.Settings().rarity(Rarity.UNCOMMON), ItemGroups.INGREDIENTS, Items.BOLT_ARMOR_TRIM_SMITHING_TEMPLATE);
+        //region Iolite
 
         IOLITE = register("iolite", ItemGroups.INGREDIENTS, Items.ANCIENT_DEBRIS);
         IOLITE_ORE = registerBlockItem("iolite_ore", VABlocks.IOLITE_ORE, ItemGroups.NATURAL, Items.ANCIENT_DEBRIS);
@@ -910,6 +983,20 @@ public class VAItems {
         WARP_ANCHOR = register("warp_anchor", settings ->  new BlockItem(VABlocks.WARP_ANCHOR, settings), new Item.Settings().rarity(Rarity.RARE).translationKey(VABlocks.WARP_TETHER.getTranslationKey()), ItemGroups.REDSTONE, Items.CAULDRON);
         WARP_TETHER = register("warp_tether", settings -> new BlockItem(VABlocks.WARP_TETHER, settings), new Item.Settings().rarity(Rarity.RARE).translationKey(VABlocks.WARP_ANCHOR.getTranslationKey()).component(VADataComponentTypes.WARP_TETHER_LOCATION, WarpTetherLocationComponent.DEFAULT), ItemGroups.REDSTONE, prev);
         ENTANGLEMENT_DRIVE = register("entanglement_drive", settings ->  new BlockItem(VABlocks.ENTANGLEMENT_DRIVE, settings), new Item.Settings().rarity(Rarity.RARE).translationKey(VABlocks.ENTANGLEMENT_DRIVE.getTranslationKey()), ItemGroups.REDSTONE, prev);
+
+        //endregion
+
+        //region Base Tool Sets
+
+        DIAMOND_TOOL_SET = new ToolSet(Items.DIAMOND_SWORD, Items.DIAMOND_SHOVEL, Items.DIAMOND_PICKAXE, Items.DIAMOND_AXE, Items.DIAMOND_HOE, ToolMaterial.DIAMOND, "diamond");
+        GOLDEN_TOOL_SET = new ToolSet(Items.GOLDEN_SWORD, Items.GOLDEN_SHOVEL, Items.GOLDEN_PICKAXE, Items.GOLDEN_AXE, Items.GOLDEN_HOE, ToolMaterial.GOLD, "golden");
+        IRON_TOOL_SET = new ToolSet(Items.IRON_SWORD, Items.IRON_SHOVEL, Items.IRON_PICKAXE, Items.IRON_AXE, Items.IRON_HOE, ToolMaterial.IRON, "iron");
+        NETHERITE_TOOL_SET = new ToolSet(Items.NETHERITE_SWORD, Items.NETHERITE_SHOVEL, Items.NETHERITE_PICKAXE, Items.NETHERITE_AXE, Items.NETHERITE_HOE, ToolMaterial.NETHERITE, "netherite");
+        STEEL_TOOL_SET = new ToolSet(STEEL_SWORD, STEEL_SHOVEL, STEEL_PICKAXE, STEEL_AXE, STEEL_HOE, SteelToolMaterial.INSTANCE, "steel");
+
+        //endregion
+
+        //region Gilded Tool Sets
 
         AMETHYST_DIAMOND_TOOL_SET = registerGildedToolSet(DIAMOND_TOOL_SET, GildTypes.AMETHYST);
         COPPER_DIAMOND_TOOL_SET = registerGildedToolSet(DIAMOND_TOOL_SET, GildTypes.COPPER);
@@ -949,9 +1036,76 @@ public class VAItems {
         QUARTZ_TOOL_SETS = new ToolSet[]{QUARTZ_DIAMOND_TOOL_SET, QUARTZ_IRON_TOOL_SET, QUARTZ_GOLDEN_TOOL_SET, QUARTZ_STEEL_TOOL_SET, QUARTZ_NETHERITE_TOOL_SET};
         SCULK_TOOL_SETS = new ToolSet[]{SCULK_DIAMOND_TOOL_SET, SCULK_IRON_TOOL_SET, SCULK_GOLDEN_TOOL_SET, SCULK_STEEL_TOOL_SET, SCULK_NETHERITE_TOOL_SET};
 
+        //endregion
+
+        //region Misc
+
+        //region Climbing Ropes
+
+        CLIMBING_ROPE = register("climbing_rope", settings ->  new ClimbingRopeItem(VABlocks.CLIMBING_ROPE_ANCHOR, settings), new Item.Settings().maxCount(16).useItemPrefixedTranslationKey(), ItemGroups.TOOLS, Items.LEAD);
+        EXPOSED_CLIMBING_ROPE = register("exposed_climbing_rope", settings -> new ClimbingRopeItem(VABlocks.EXPOSED_CLIMBING_ROPE_ANCHOR, settings), new Item.Settings().maxCount(16).useItemPrefixedTranslationKey(), ItemGroups.TOOLS, prev);
+        WEATHERED_CLIMBING_ROPE = register("weathered_climbing_rope", settings -> new ClimbingRopeItem(VABlocks.WEATHERED_CLIMBING_ROPE_ANCHOR, settings), new Item.Settings().maxCount(16).useItemPrefixedTranslationKey(), ItemGroups.TOOLS, prev);
+        OXIDIZED_CLIMBING_ROPE = register("oxidized_climbing_rope", settings -> new ClimbingRopeItem(VABlocks.OXIDIZED_CLIMBING_ROPE_ANCHOR, settings), new Item.Settings().maxCount(16).useItemPrefixedTranslationKey(), ItemGroups.TOOLS, prev);
+        WAXED_CLIMBING_ROPE = register("waxed_climbing_rope", settings -> new ClimbingRopeItem(VABlocks.WAXED_CLIMBING_ROPE_ANCHOR, settings), new Item.Settings().maxCount(16).useItemPrefixedTranslationKey(), ItemGroups.TOOLS, prev);
+        WAXED_EXPOSED_CLIMBING_ROPE = register("waxed_exposed_climbing_rope", settings -> new ClimbingRopeItem(VABlocks.WAXED_EXPOSED_CLIMBING_ROPE_ANCHOR, settings), new Item.Settings().maxCount(16).useItemPrefixedTranslationKey(), ItemGroups.TOOLS, prev);
+        WAXED_WEATHERED_CLIMBING_ROPE = register("waxed_weathered_climbing_rope", settings -> new ClimbingRopeItem(VABlocks.WAXED_WEATHERED_CLIMBING_ROPE_ANCHOR, settings), new Item.Settings().maxCount(16).useItemPrefixedTranslationKey(), ItemGroups.TOOLS, prev);
+        WAXED_OXIDIZED_CLIMBING_ROPE = register("waxed_oxidized_climbing_rope", settings -> new ClimbingRopeItem(VABlocks.WAXED_OXIDIZED_CLIMBING_ROPE_ANCHOR, settings), new Item.Settings().maxCount(16).useItemPrefixedTranslationKey(), ItemGroups.TOOLS, prev);
+
+        //endregion
+
+        //region Hedges
+
+        OAK_HEDGE = registerBlockItem("oak_hedge", VABlocks.OAK_HEDGE, ItemGroups.BUILDING_BLOCKS, Items.WARPED_BUTTON);
+        SPRUCE_HEDGE = registerBlockItem("spruce_hedge", VABlocks.SPRUCE_HEDGE, ItemGroups.BUILDING_BLOCKS, prev);
+        BIRCH_HEDGE = registerBlockItem("birch_hedge", VABlocks.BIRCH_HEDGE, ItemGroups.BUILDING_BLOCKS, prev);
+        JUNGLE_HEDGE = registerBlockItem("jungle_hedge", VABlocks.JUNGLE_HEDGE, ItemGroups.BUILDING_BLOCKS, prev);
+        ACACIA_HEDGE = registerBlockItem("acacia_hedge", VABlocks.ACACIA_HEDGE, ItemGroups.BUILDING_BLOCKS, prev);
+        DARK_OAK_HEDGE = registerBlockItem("dark_oak_hedge", VABlocks.DARK_OAK_HEDGE, ItemGroups.BUILDING_BLOCKS, prev);
+        MANGROVE_HEDGE = registerBlockItem("mangrove_hedge", VABlocks.MANGROVE_HEDGE, ItemGroups.BUILDING_BLOCKS, prev);
+        AZALEA_HEDGE = registerBlockItem("azalea_hedge", VABlocks.AZALEA_HEDGE, ItemGroups.BUILDING_BLOCKS, prev);
+        FLOWERING_AZALEA_HEDGE = registerBlockItem("flowering_azalea_hedge", VABlocks.FLOWERING_AZALEA_HEDGE, ItemGroups.BUILDING_BLOCKS, prev);
+        CHERRY_HEDGE = registerBlockItem("cherry_hedge", VABlocks.CHERRY_HEDGE, ItemGroups.BUILDING_BLOCKS, MANGROVE_HEDGE);
+        AEROBLOOM_HEDGE = registerBlockItem("aerobloom_hedge", VABlocks.AEROBLOOM_HEDGE, ItemGroups.BUILDING_BLOCKS, prev);
+
+        //endregion
+
+        //region Smithing Templates
+
+        TOOL_GILD_SMITHING_TEMPLATE = register("tool_gild_smithing_template", settings -> new SmithingTemplateItem(TOOL_GILD_APPLIES_TO_TEXT, TOOL_GILD_INGREDIENTS_TEXT, TOOL_GILD_BASE_SLOT_DESCRIPTION_TEXT, TOOL_GILD_ADDITIONS_SLOT_DESCRIPTION_TEXT,
+                List.of(EMPTY_SLOT_SWORD_TEXTURE, EMPTY_SLOT_SHOVEL_TEXTURE, EMPTY_SLOT_PICKAXE_TEXTURE, EMPTY_SLOT_AXE_TEXTURE, EMPTY_SLOT_HOE_TEXTURE),
+                List.of(EMPTY_SLOT_AMETHYST_TEXTURE, EMPTY_SLOT_INGOT_TEXTURE, EMPTY_SLOT_EMERALD_TEXTURE, EMPTY_SLOT_IOLITE_TEXTURE, EMPTY_SLOT_QUARTZ_TEXTURE, EMPTY_SLOT_ECHO_SHARD_TEXTURE),
+                settings
+        ),new Item.Settings(), ItemGroups.INGREDIENTS, Items.NETHERITE_UPGRADE_SMITHING_TEMPLATE);
+
+        EXOSKELETON_ARMOR_TRIM_SMITHING_TEMPLATE = register("exoskeleton_armor_trim_smithing_template", SmithingTemplateItem::of, new Item.Settings().rarity(Rarity.UNCOMMON), ItemGroups.INGREDIENTS, Items.BOLT_ARMOR_TRIM_SMITHING_TEMPLATE);
+
+        //endregion
+
+        //region Food & Crops
+
+        COTTON_SEEDS = register("cotton_seeds", settings -> new BlockItem(VABlocks.COTTON, settings),new Item.Settings().useItemPrefixedTranslationKey(), ItemGroups.NATURAL, Items.BEETROOT_SEEDS);
+        COTTON = register("cotton", ItemGroups.INGREDIENTS, Items.WHEAT);
+        CORN = register("corn", new Item.Settings().food(CORN_FOOD), ItemGroups.FOOD_AND_DRINK, Items.BEETROOT);
+        ROASTED_CORN = register("roasted_corn", new Item.Settings().food(ROASTED_CORN_FOOD), ItemGroups.FOOD_AND_DRINK, prev);
+        CORN_SEEDS = register("corn_seeds", settings -> new BlockItem(VABlocks.CORN_CROP, settings),new Item.Settings().useItemPrefixedTranslationKey(), ItemGroups.NATURAL, COTTON_SEEDS);
+        FRIED_EGG = register("fried_egg", new Item.Settings().food(FRIED_EGG_FOOD), ItemGroups.FOOD_AND_DRINK, Items.COOKED_CHICKEN);
+        ICE_CREAM = register("ice_cream", new Item.Settings().food(ICE_CREAM_FOOD).maxCount(1), ItemGroups.FOOD_AND_DRINK, Items.COOKIE);
+        SWEET_BERRY_PIE = register("sweet_berry_pie", new Item.Settings().food(SWEET_BERRY_PIE_FOOD), ItemGroups.FOOD_AND_DRINK, Items.PUMPKIN_PIE);
+
+        //endregion
+
+        ENGRAVING_CHISEL = register("engraving_chisel", new Item.Settings().maxCount(1).maxDamage(64), ItemGroups.TOOLS, Items.NAME_TAG);
+
+
+        //endregion
+
+        //region Spawn Eggs
+
         SALINE_SPAWN_EGG = register("saline_spawn_egg", settings -> new SpawnEggItem(VAEntityType.SALINE, 0x924C2E, 0xE49A6C, settings), new Item.Settings(), ItemGroups.SPAWN_EGGS, Items.RAVAGER_SPAWN_EGG);
         LUMWASP_SPAWN_EGG = register("lumwasp_spawn_egg", settings -> new SpawnEggItem(VAEntityType.LUMWASP, 0x00d67a, 0x214132, settings), new Item.Settings(), ItemGroups.SPAWN_EGGS, Items.LLAMA_SPAWN_EGG);
         LYFT_SPAWN_EGG = register("lyft_spawn_egg", settings -> new SpawnEggItem(VAEntityType.LYFT, 0xB1C1DC, 0x88A1C0, settings), new Item.Settings(), ItemGroups.SPAWN_EGGS, prev);
+
+        //endregion
     }
 
     public static void init(){
@@ -966,6 +1120,8 @@ public class VAItems {
             ItemGroups.displayContext.lookup().getOptional(RegistryKeys.POTION).ifPresent((wrapper) -> ItemGroups.addPotions(content, wrapper, VAItems.APPLICABLE_POTION, ItemGroup.StackVisibility.PARENT_AND_SEARCH_TABS, ItemGroups.displayContext.enabledFeatures()));
         } );
     }
+
+    //region Initializers
 
     protected static void initDispenserBehaviors() {
         DispenserBlock.registerBehavior(STEEL_BOMB, new ProjectileDispenserBehavior(STEEL_BOMB));
@@ -1164,4 +1320,5 @@ public class VAItems {
         waterBehaviors.put(VAItems.LILAC_BANNER, CauldronBehavior::cleanBanner);
     }
 
+    //endregion
 }
