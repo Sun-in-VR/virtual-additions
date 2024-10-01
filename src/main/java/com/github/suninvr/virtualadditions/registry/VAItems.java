@@ -5,7 +5,7 @@ import com.github.suninvr.virtualadditions.component.WarpTetherLocationComponent
 import com.github.suninvr.virtualadditions.item.*;
 import com.github.suninvr.virtualadditions.item.materials.SteelToolMaterial;
 import net.fabricmc.fabric.api.itemgroup.v1.ItemGroupEvents;
-import net.fabricmc.fabric.api.loot.v2.LootTableEvents;
+import net.fabricmc.fabric.api.loot.v3.LootTableEvents;
 import net.minecraft.block.Blocks;
 import net.minecraft.block.ComposterBlock;
 import net.minecraft.block.DispenserBlock;
@@ -36,7 +36,6 @@ import net.minecraft.loot.provider.number.UniformLootNumberProvider;
 import net.minecraft.predicate.entity.EntityFlagsPredicate;
 import net.minecraft.predicate.entity.EntityPredicate;
 import net.minecraft.predicate.item.ItemPredicate;
-import net.minecraft.registry.BuiltinRegistries;
 import net.minecraft.registry.RegistryEntryLookup;
 import net.minecraft.registry.RegistryKeys;
 import net.minecraft.text.Text;
@@ -1167,9 +1166,15 @@ public class VAItems {
     }
 
     protected static void initLootTableModifiers() {
-        LootTableEvents.MODIFY.register( ((key, tableBuilder, source) -> {
+        LootTableEvents.MODIFY.register( ((key, tableBuilder, source, registries) -> {
 
-            //if (!source.isBuiltin()) return;
+            if (!source.isBuiltin()) return;
+
+            if (LootTables.SPAWN_BONUS_CHEST.equals(key)) {
+                LootPool.Builder bundleBuilder = LootPool.builder()
+                        .with(ItemEntry.builder(Items.BUNDLE));
+                tableBuilder.pool(bundleBuilder);
+            }
 
             // Ominous Trial Spawner Throwables
             if (LootTables.TRIAL_CHAMBER_ITEMS_TO_DROP_WHEN_OMINOUS_SPAWNER.equals(key)) {
@@ -1187,8 +1192,8 @@ public class VAItems {
 
             // Grass Drop
             if (Blocks.SHORT_GRASS.getLootTableKey().isPresent() && Blocks.SHORT_GRASS.getLootTableKey().get().equals(key)) {
-                RegistryEntryLookup<Enchantment> enchantmentLookup = BuiltinRegistries.createWrapperLookup().getOrThrow(RegistryKeys.ENCHANTMENT);
-                RegistryEntryLookup<Item> itemRegistryEntryLookup = BuiltinRegistries.createWrapperLookup().getOrThrow(RegistryKeys.ITEM);
+                RegistryEntryLookup<Enchantment> enchantmentLookup = registries.getOrThrow(RegistryKeys.ENCHANTMENT);
+                RegistryEntryLookup<Item> itemRegistryEntryLookup = registries.getOrThrow(RegistryKeys.ITEM);
                 LootPool.Builder cottonBuilder = LootPool.builder()
                         .with(ItemEntry.builder(COTTON_SEEDS)
                                 .apply(ApplyBonusLootFunction.uniformBonusCount(enchantmentLookup.getOrThrow(Enchantments.FORTUNE), 2))
