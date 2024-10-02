@@ -24,7 +24,6 @@
     "ItemStackMixin",
     "LivingEntityMixin",
     "MiningToolItemMixin",
-    "MobEntityMixin",
     "OxidizableMixin",
     "PlayerEntityMixin",
     "RangedWeaponItemMixin",

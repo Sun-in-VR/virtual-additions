@@ -420,6 +420,7 @@ public class VAItems {
     public static final Item WARP_ANCHOR;
     public static final Item WARP_TETHER;
     public static final Item ENTANGLEMENT_DRIVE;
+    public static final Item REMOTE_NOTIFIER;
     public static final Item SALINE_SPAWN_EGG;
     public static final Item LUMWASP_SPAWN_EGG;
     public static final Item LYFT_SPAWN_EGG;
@@ -982,6 +983,7 @@ public class VAItems {
         WARP_ANCHOR = register("warp_anchor", settings ->  new BlockItem(VABlocks.WARP_ANCHOR, settings), new Item.Settings().rarity(Rarity.RARE).translationKey(VABlocks.WARP_TETHER.getTranslationKey()), ItemGroups.REDSTONE, Items.CAULDRON);
         WARP_TETHER = register("warp_tether", settings -> new BlockItem(VABlocks.WARP_TETHER, settings), new Item.Settings().rarity(Rarity.RARE).translationKey(VABlocks.WARP_ANCHOR.getTranslationKey()).component(VADataComponentTypes.WARP_TETHER_LOCATION, WarpTetherLocationComponent.DEFAULT), ItemGroups.REDSTONE, prev);
         ENTANGLEMENT_DRIVE = register("entanglement_drive", settings ->  new BlockItem(VABlocks.ENTANGLEMENT_DRIVE, settings), new Item.Settings().rarity(Rarity.RARE).translationKey(VABlocks.ENTANGLEMENT_DRIVE.getTranslationKey()), ItemGroups.REDSTONE, prev);
+        REMOTE_NOTIFIER = register("remote_notifier", settings ->  new BlockItem(VABlocks.REMOTE_NOTIFIER, settings), new Item.Settings().translationKey(VABlocks.REMOTE_NOTIFIER.getTranslationKey()), ItemGroups.REDSTONE, prev);
 
         //endregion
 

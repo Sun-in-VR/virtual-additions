@@ -20,11 +20,6 @@ public class EnchantmentHelperMixin {
     private static void virtualAdditions$getBlockExperienceForGildedTool(ServerWorld world, ItemStack stack, int baseBlockExperience, CallbackInfoReturnable<Integer> cir, @Local LocalRef<MutableFloat> mutableFloat) {
         if (!GildedToolUtil.getGildType(stack).equals(GildTypes.EMERALD)) return;
         float f = mutableFloat.get().floatValue();
-        int[] intelligenceLevel = {0};
-        EnchantmentHelper.forEachEnchantment(stack, (enchantment, level) -> {
-            if (enchantment.isIn(VAEnchantmentTags.INTELLIGENCE)) intelligenceLevel[0] = level;
-        });
-        float mul = intelligenceLevel[0] > 0 ? 1.6F + (1.6F * (1.0F / intelligenceLevel[0])) : 1.6F;
-        mutableFloat.set(new MutableFloat(Math.ceil(f * (mul))));
+        mutableFloat.set(new MutableFloat(Math.ceil(f * 1.6F)));
     }
 }
