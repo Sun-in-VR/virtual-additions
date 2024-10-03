@@ -6,8 +6,8 @@ import com.github.suninvr.virtualadditions.registry.VARecipeType;
 import com.mojang.serialization.Codec;
 import com.mojang.serialization.MapCodec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
+import net.minecraft.client.recipebook.RecipeBookGroup;
 import net.minecraft.component.type.DyedColorComponent;
-import net.minecraft.inventory.Inventory;
 import net.minecraft.item.DyeItem;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
@@ -83,22 +83,12 @@ public class ArmorColoringRecipe implements Recipe<RecipeInput>, ColoringStation
     }
 
     @Override
-    public boolean fits(int width, int height) {
-        return true;
-    }
-
-    @Override
-    public ItemStack getResult(RegistryWrapper.WrapperLookup wrapperLookup) {
-        return ItemStack.EMPTY;
-    }
-
-    @Override
-    public RecipeSerializer<?> getSerializer() {
+    public RecipeSerializer<? extends Recipe<RecipeInput>> getSerializer() {
         return VARecipeType.ARMOR_COLORING_SERIALIZER;
     }
 
     @Override
-    public RecipeType<?> getType() {
+    public RecipeType<? extends Recipe<RecipeInput>> getType() {
         return VARecipeType.COLORING;
     }
 
@@ -109,6 +99,11 @@ public class ArmorColoringRecipe implements Recipe<RecipeInput>, ColoringStation
         }
 
         return this.ingredientPlacement;
+    }
+
+    @Override
+    public RecipeBookGroup getRecipeBookTab() {
+        return null;
     }
 
     public static class Serializer implements RecipeSerializer<ArmorColoringRecipe> {

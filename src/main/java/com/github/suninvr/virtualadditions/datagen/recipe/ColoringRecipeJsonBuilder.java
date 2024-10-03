@@ -11,7 +11,10 @@ import net.minecraft.item.Item;
 import net.minecraft.item.ItemConvertible;
 import net.minecraft.item.ItemStack;
 import net.minecraft.recipe.Ingredient;
+import net.minecraft.recipe.Recipe;
 import net.minecraft.registry.Registries;
+import net.minecraft.registry.RegistryKey;
+import net.minecraft.registry.RegistryKeys;
 import net.minecraft.util.Identifier;
 import org.jetbrains.annotations.Nullable;
 
@@ -39,8 +42,9 @@ public class ColoringRecipeJsonBuilder {
     }
     
     public void offerTo(RecipeExporter exporter, Identifier recipeId) {
+        RegistryKey<Recipe<?>> registryKey = RegistryKey.of(RegistryKeys.RECIPE, recipeId);
         ColoringRecipe coloringRecipe = new ColoringRecipe(Optional.ofNullable(this.input), new ItemStack(this.output), this.dyeCost, this.index);
-        Advancement.Builder builder = exporter.getAdvancementBuilder().criterion("has_the_recipe", RecipeUnlockedCriterion.create(recipeId)).rewards(AdvancementRewards.Builder.recipe(recipeId)).criteriaMerger(AdvancementRequirements.CriterionMerger.OR);
-        exporter.accept(recipeId, coloringRecipe, builder.build(recipeId.withPrefixedPath("recipes/")));
+        Advancement.Builder builder = exporter.getAdvancementBuilder().criterion("has_the_recipe", RecipeUnlockedCriterion.create(registryKey)).rewards(AdvancementRewards.Builder.recipe(registryKey)).criteriaMerger(AdvancementRequirements.CriterionMerger.OR);
+        exporter.accept(registryKey, coloringRecipe, builder.build(recipeId.withPrefixedPath("recipes/")));
     }
 }

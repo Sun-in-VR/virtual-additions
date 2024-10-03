@@ -208,6 +208,7 @@ public class VABlocks {
     public static final Block JUNGLE_HEDGE;
     public static final Block ACACIA_HEDGE;
     public static final Block DARK_OAK_HEDGE;
+    public static final Block PALE_OAK_HEDGE;
     public static final Block MANGROVE_HEDGE;
     public static final Block CHERRY_HEDGE;
     public static final Block AEROBLOOM_HEDGE;
@@ -585,6 +586,7 @@ public class VABlocks {
         JUNGLE_HEDGE = register("jungle_hedge", HedgeBlock::new, Settings.copy(Blocks.JUNGLE_LEAVES));
         ACACIA_HEDGE = register("acacia_hedge", HedgeBlock::new, Settings.copy(Blocks.ACACIA_LEAVES));
         DARK_OAK_HEDGE = register("dark_oak_hedge", HedgeBlock::new, Settings.copy(Blocks.DARK_OAK_LEAVES));
+        PALE_OAK_HEDGE = register("pale_oak_hedge", HedgeBlock::new, Settings.copy(Blocks.PALE_OAK_LEAVES));
         MANGROVE_HEDGE = register("mangrove_hedge", HedgeBlock::new, Settings.copy(Blocks.MANGROVE_LEAVES));
         CHERRY_HEDGE = register("cherry_hedge", HedgeBlock::new, Settings.copy(Blocks.CHERRY_LEAVES));
         AEROBLOOM_HEDGE = register("aerobloom_hedge", HedgeBlock::new, Settings.copy(VABlocks.AEROBLOOM_LEAVES));
@@ -785,6 +787,7 @@ public class VABlocks {
         fire.registerFlammableBlock(JUNGLE_HEDGE, 30, 60);
         fire.registerFlammableBlock(ACACIA_HEDGE, 30, 60);
         fire.registerFlammableBlock(DARK_OAK_HEDGE, 30, 60);
+        fire.registerFlammableBlock(PALE_OAK_HEDGE, 30, 60);
         fire.registerFlammableBlock(MANGROVE_HEDGE, 30, 60);
         fire.registerFlammableBlock(CHERRY_HEDGE, 30, 60);
         fire.registerFlammableBlock(AZALEA_HEDGE, 30, 60);

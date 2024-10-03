@@ -20,10 +20,7 @@ import net.minecraft.recipe.Ingredient;
 import net.minecraft.recipe.RecipeSerializer;
 import net.minecraft.recipe.SmokingRecipe;
 import net.minecraft.recipe.book.RecipeCategory;
-import net.minecraft.registry.Registries;
-import net.minecraft.registry.RegistryEntryLookup;
-import net.minecraft.registry.RegistryKeys;
-import net.minecraft.registry.RegistryWrapper;
+import net.minecraft.registry.*;
 import net.minecraft.registry.tag.ItemTags;
 import net.minecraft.registry.tag.TagKey;
 import net.minecraft.resource.featuretoggle.FeatureFlags;
@@ -98,6 +95,7 @@ public final class VARecipeProvider {
             offerHedgeRecipe(VABlocks.JUNGLE_HEDGE, Blocks.JUNGLE_LEAVES);
             offerHedgeRecipe(VABlocks.ACACIA_HEDGE, Blocks.ACACIA_LEAVES);
             offerHedgeRecipe(VABlocks.DARK_OAK_HEDGE, Blocks.DARK_OAK_LEAVES);
+            offerHedgeRecipe(VABlocks.PALE_OAK_HEDGE, Blocks.PALE_OAK_LEAVES);
             offerHedgeRecipe(VABlocks.MANGROVE_HEDGE, Blocks.MANGROVE_LEAVES);
             offerHedgeRecipe(VABlocks.CHERRY_HEDGE, Blocks.CHERRY_LEAVES);
             offerHedgeRecipe(VABlocks.AZALEA_HEDGE, Blocks.AZALEA_LEAVES);
@@ -289,7 +287,7 @@ public final class VARecipeProvider {
                     .input(Ingredient.ofItems(Items.GREEN_DYE), 1)
                     .input(Ingredient.ofItems(Items.WHITE_DYE), 1)
                     .input(Ingredient.ofItems(Items.YELLOW_DYE), 1)
-                    .criterion("has_dye", conditionsFromItem(Items.YELLOW_DYE)).offerTo(this.exporter, idOf("chartreuse_dye_from_green_white_yellow_dye"));
+                    .criterion("has_dye", conditionsFromItem(Items.YELLOW_DYE)).offerTo(this.exporter, idOf("chartreuse_dye_from_green_white_yellow_dye").toString());
 
 
             ShapelessRecipeJsonBuilder.create(this.registryLookup, RecipeCategory.MISC, VAItems.INDIGO_DYE, 2).group("indigo_dye")
@@ -300,7 +298,7 @@ public final class VARecipeProvider {
             ShapelessRecipeJsonBuilder.create(this.registryLookup, RecipeCategory.MISC, VAItems.INDIGO_DYE, 3).group("indigo_dye")
                     .input(Ingredient.ofItems(Items.BLUE_DYE), 2)
                     .input(Ingredient.ofItems(Items.RED_DYE), 1)
-                    .criterion("has_dye", conditionsFromItem(Items.BLUE_DYE)).offerTo(this.exporter, idOf("indigo_dye_from_blue_blue_red_dye"));
+                    .criterion("has_dye", conditionsFromItem(Items.BLUE_DYE)).offerTo(this.exporter, idOf("indigo_dye_from_blue_blue_red_dye").toString());
 
 
             ShapelessRecipeJsonBuilder.create(this.registryLookup, RecipeCategory.MISC, VAItems.PLUM_DYE, 2).group("plum_dye")
@@ -312,13 +310,13 @@ public final class VARecipeProvider {
                     .input(Ingredient.ofItems(Items.BLUE_DYE), 1)
                     .input(Ingredient.ofItems(Items.RED_DYE), 1)
                     .input(Ingredient.ofItems(VAItems.MAROON_DYE), 1)
-                    .criterion("has_dye", conditionsFromItem(VAItems.MAROON_DYE)).offerTo(this.exporter, idOf("plum_from_blue_red_maroon_dye"));
+                    .criterion("has_dye", conditionsFromItem(VAItems.MAROON_DYE)).offerTo(this.exporter, idOf("plum_from_blue_red_maroon_dye").toString());
 
             ShapelessRecipeJsonBuilder.create(this.registryLookup, RecipeCategory.MISC, VAItems.PLUM_DYE, 4).group("plum_dye")
                     .input(Ingredient.ofItems(Items.BLUE_DYE), 1)
                     .input(Ingredient.ofItems(Items.RED_DYE), 2)
                     .input(Ingredient.ofItems(Items.BLACK_DYE), 1)
-                    .criterion("has_dye", conditionsFromItem(Items.RED_DYE)).offerTo(this.exporter, idOf("plum_from_blue_red_red_black_dye"));
+                    .criterion("has_dye", conditionsFromItem(Items.RED_DYE)).offerTo(this.exporter, idOf("plum_from_blue_red_red_black_dye").toString());
 
 
             ShapelessRecipeJsonBuilder.create(this.registryLookup, RecipeCategory.MISC, VAItems.VIRIDIAN_DYE, 2).group("viridian_dye")
@@ -329,7 +327,7 @@ public final class VARecipeProvider {
             ShapelessRecipeJsonBuilder.create(this.registryLookup, RecipeCategory.MISC, VAItems.VIRIDIAN_DYE, 3).group("viridian_dye")
                     .input(Ingredient.ofItems(Items.GREEN_DYE), 2)
                     .input(Ingredient.ofItems(Items.BLUE_DYE), 1)
-                    .criterion("has_dye", conditionsFromItem(Items.GREEN_DYE)).offerTo(this.exporter, idOf("viridian_from_green_green_blue_dye"));
+                    .criterion("has_dye", conditionsFromItem(Items.GREEN_DYE)).offerTo(this.exporter, idOf("viridian_from_green_green_blue_dye").toString());
 
 
             ShapelessRecipeJsonBuilder.create(this.registryLookup, RecipeCategory.MISC, VAItems.TAN_DYE, 2).group("tan_dye")
@@ -341,14 +339,14 @@ public final class VARecipeProvider {
                     .input(Ingredient.ofItems(Items.RED_DYE), 1)
                     .input(Ingredient.ofItems(Items.YELLOW_DYE), 1)
                     .input(Ingredient.ofItems(Items.GRAY_DYE), 1)
-                    .criterion("has_dye", conditionsFromItem(Items.GRAY_DYE)).offerTo(this.exporter, idOf("tan_from_red_yellow_gray_dye"));
+                    .criterion("has_dye", conditionsFromItem(Items.GRAY_DYE)).offerTo(this.exporter, idOf("tan_from_red_yellow_gray_dye").toString());
 
             ShapelessRecipeJsonBuilder.create(this.registryLookup, RecipeCategory.MISC, VAItems.TAN_DYE, 4).group("tan_dye")
                     .input(Ingredient.ofItems(Items.RED_DYE), 1)
                     .input(Ingredient.ofItems(Items.YELLOW_DYE), 1)
                     .input(Ingredient.ofItems(Items.WHITE_DYE), 1)
                     .input(Ingredient.ofItems(Items.BLACK_DYE), 1)
-                    .criterion("has_dye", conditionsFromItem(Items.RED_DYE)).offerTo(this.exporter, idOf("tan_from_red_yellow_black_white_dye"));
+                    .criterion("has_dye", conditionsFromItem(Items.RED_DYE)).offerTo(this.exporter, idOf("tan_from_red_yellow_black_white_dye").toString());
 
 
             ShapelessRecipeJsonBuilder.create(this.registryLookup, RecipeCategory.MISC, VAItems.SINOPIA_DYE, 2).group("sinopia_dye")
@@ -359,7 +357,7 @@ public final class VARecipeProvider {
             ShapelessRecipeJsonBuilder.create(this.registryLookup, RecipeCategory.MISC, VAItems.SINOPIA_DYE, 3).group("sinopia_dye")
                     .input(Ingredient.ofItems(Items.RED_DYE), 2)
                     .input(Ingredient.ofItems(Items.YELLOW_DYE), 1)
-                    .criterion("has_dye", conditionsFromItem(Items.RED_DYE)).offerTo(this.exporter, idOf("sinopia_from_red_red_yellow_dye"));
+                    .criterion("has_dye", conditionsFromItem(Items.RED_DYE)).offerTo(this.exporter, idOf("sinopia_from_red_red_yellow_dye").toString());
 
 
             ShapelessRecipeJsonBuilder.create(this.registryLookup, RecipeCategory.MISC, VAItems.LILAC_DYE, 2).group("lilac_dye")
@@ -371,7 +369,7 @@ public final class VARecipeProvider {
                     .input(Ingredient.ofItems(Items.WHITE_DYE), 1)
                     .input(Ingredient.ofItems(Items.RED_DYE), 1)
                     .input(Ingredient.ofItems(Items.BLUE_DYE), 1)
-                    .criterion("has_dye", conditionsFromItem(Items.WHITE_DYE)).offerTo(this.exporter, idOf("lilac_from_white_red_blue_dye"));
+                    .criterion("has_dye", conditionsFromItem(Items.WHITE_DYE)).offerTo(this.exporter, idOf("lilac_from_white_red_blue_dye").toString());
 
             ShapelessRecipeJsonBuilder.create(this.registryLookup, RecipeCategory.FOOD, VAItems.SWEET_BERRY_PIE, 1)
                     .input(Items.SWEET_BERRIES, 3)
@@ -472,7 +470,7 @@ public final class VARecipeProvider {
                     .criterion("floatrock", conditionsFromItem(VAItems.FLOATROCK)).offerTo(this.exporter);
 
 
-            offerSmithingTrimRecipe(VAItems.EXOSKELETON_ARMOR_TRIM_SMITHING_TEMPLATE, idOf("exoskeleton_armor_trim_smithing_template_smithing_trim"));
+            offerSmithingTrimRecipe(VAItems.EXOSKELETON_ARMOR_TRIM_SMITHING_TEMPLATE, RegistryKey.of(RegistryKeys.RECIPE, idOf("exoskeleton_armor_trim_smithing_template_smithing_trim")));
             offerSmithingTemplateCopyingRecipe(VAItems.EXOSKELETON_ARMOR_TRIM_SMITHING_TEMPLATE, VAItems.SILK_BLOCK);
 
             offerSmelting(List.of(VAItems.FLOATROCK_COAL_ORE), RecipeCategory.MISC, Items.COAL, 0.1F, 200, "coal");
@@ -626,7 +624,7 @@ public final class VARecipeProvider {
                 set.ifBanner(banner -> offerBannerRecipe(banner, wool));
                 set.ifCarpet(carpet -> offerCarpetRecipe(carpet, wool));
             });
-            set.ifCarpet(block -> ShapelessRecipeJsonBuilder.create(this.registryLookup, RecipeCategory.BUILDING_BLOCKS, block).input(ItemTags.WOOL_CARPETS).input(dye).criterion("has_dye", conditionsFromItem(dye)).offerTo(this.exporter, CraftingRecipeJsonBuilder.getItemId(block).withSuffixedPath("_dyeing")));
+            set.ifCarpet(block -> ShapelessRecipeJsonBuilder.create(this.registryLookup, RecipeCategory.BUILDING_BLOCKS, block).input(ItemTags.WOOL_CARPETS).input(dye).criterion("has_dye", conditionsFromItem(dye)).offerTo(this.exporter, CraftingRecipeJsonBuilder.getItemId(block).withSuffixedPath("_dyeing").toString()));
             set.ifConcretePowder( block -> offerConcretePowderDyeingRecipe(block, dye));
             set.ifTerracotta(block -> offerTerracottaDyeingRecipe(block, dye));
             set.ifStainedGlass(block -> {
@@ -678,7 +676,7 @@ public final class VARecipeProvider {
                     Ingredient.ofItems(addition),
                     RecipeCategory.TOOLS,
                     result.asItem()
-            ).criterion("has_smithing_template", conditionsFromItem(VAItems.TOOL_GILD_SMITHING_TEMPLATE)).offerTo(this.exporter, idOf("smithing/" + getItemPath(result)));
+            ).criterion("has_smithing_template", conditionsFromItem(VAItems.TOOL_GILD_SMITHING_TEMPLATE)).offerTo(this.exporter, idOf("smithing/" + getItemPath(result)).toString());
         }
 
         protected void offerToolGildRecipes(Item addition, RegistryHelper.ItemRegistryHelper.ToolSet... sets) {
@@ -705,7 +703,7 @@ public final class VARecipeProvider {
                             RecipeCategory.TOOLS,
                             result)
                     .criterion("has_netherite_ingot", conditionsFromItem(Items.NETHERITE_INGOT))
-                    .offerTo(this.exporter, idOf("smithing/" + getItemPath(result) + "_upgrade"));
+                    .offerTo(this.exporter, idOf("smithing/" + getItemPath(result) + "_upgrade").toString());
         }
 
         @SafeVarargs

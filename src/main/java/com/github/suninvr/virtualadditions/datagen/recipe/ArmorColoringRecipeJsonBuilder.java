@@ -9,8 +9,10 @@ import net.minecraft.data.server.recipe.RecipeExporter;
 import net.minecraft.item.DyeItem;
 import net.minecraft.item.Item;
 import net.minecraft.recipe.Ingredient;
+import net.minecraft.recipe.Recipe;
 import net.minecraft.registry.Registries;
 import net.minecraft.registry.RegistryKey;
+import net.minecraft.registry.RegistryKeys;
 import net.minecraft.util.Identifier;
 import org.jetbrains.annotations.Nullable;
 
@@ -40,8 +42,9 @@ public class ArmorColoringRecipeJsonBuilder {
 
     public void offerTo(RecipeExporter exporter, Identifier recipeId) {
         if (this.dye == null) return;
+        RegistryKey<Recipe<?>> registryKey = RegistryKey.of(RegistryKeys.RECIPE, recipeId);
         ArmorColoringRecipe recipe = new ArmorColoringRecipe(this.dye, this.index);
-        Advancement.Builder builder = exporter.getAdvancementBuilder().criterion("has_the_recipe", RecipeUnlockedCriterion.create(recipeId)).rewards(AdvancementRewards.Builder.recipe(recipeId)).criteriaMerger(AdvancementRequirements.CriterionMerger.OR);
-        exporter.accept(recipeId, recipe, builder.build(recipeId.withPrefixedPath("recipes/")));
+        Advancement.Builder builder = exporter.getAdvancementBuilder().criterion("has_the_recipe", RecipeUnlockedCriterion.create(registryKey)).rewards(AdvancementRewards.Builder.recipe(registryKey)).criteriaMerger(AdvancementRequirements.CriterionMerger.OR);
+        exporter.accept(registryKey, recipe, builder.build(recipeId.withPrefixedPath("recipes/")));
     }
 }

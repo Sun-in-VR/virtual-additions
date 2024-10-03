@@ -159,6 +159,7 @@ public class VAItems {
     public static final Item JUNGLE_HEDGE;
     public static final Item ACACIA_HEDGE;
     public static final Item DARK_OAK_HEDGE;
+    public static final Item PALE_OAK_HEDGE;
     public static final Item MANGROVE_HEDGE;
     public static final Item CHERRY_HEDGE;
     public static final Item AZALEA_HEDGE;
@@ -1056,17 +1057,18 @@ public class VAItems {
 
         //region Hedges
 
-        OAK_HEDGE = registerBlockItem("oak_hedge", VABlocks.OAK_HEDGE, ItemGroups.BUILDING_BLOCKS, Items.WARPED_BUTTON);
-        SPRUCE_HEDGE = registerBlockItem("spruce_hedge", VABlocks.SPRUCE_HEDGE, ItemGroups.BUILDING_BLOCKS, prev);
-        BIRCH_HEDGE = registerBlockItem("birch_hedge", VABlocks.BIRCH_HEDGE, ItemGroups.BUILDING_BLOCKS, prev);
-        JUNGLE_HEDGE = registerBlockItem("jungle_hedge", VABlocks.JUNGLE_HEDGE, ItemGroups.BUILDING_BLOCKS, prev);
-        ACACIA_HEDGE = registerBlockItem("acacia_hedge", VABlocks.ACACIA_HEDGE, ItemGroups.BUILDING_BLOCKS, prev);
-        DARK_OAK_HEDGE = registerBlockItem("dark_oak_hedge", VABlocks.DARK_OAK_HEDGE, ItemGroups.BUILDING_BLOCKS, prev);
-        MANGROVE_HEDGE = registerBlockItem("mangrove_hedge", VABlocks.MANGROVE_HEDGE, ItemGroups.BUILDING_BLOCKS, prev);
-        AZALEA_HEDGE = registerBlockItem("azalea_hedge", VABlocks.AZALEA_HEDGE, ItemGroups.BUILDING_BLOCKS, prev);
-        FLOWERING_AZALEA_HEDGE = registerBlockItem("flowering_azalea_hedge", VABlocks.FLOWERING_AZALEA_HEDGE, ItemGroups.BUILDING_BLOCKS, prev);
-        CHERRY_HEDGE = registerBlockItem("cherry_hedge", VABlocks.CHERRY_HEDGE, ItemGroups.BUILDING_BLOCKS, MANGROVE_HEDGE);
-        AEROBLOOM_HEDGE = registerBlockItem("aerobloom_hedge", VABlocks.AEROBLOOM_HEDGE, ItemGroups.BUILDING_BLOCKS, prev);
+        OAK_HEDGE = registerBlockItem("oak_hedge", VABlocks.OAK_HEDGE, ItemGroups.NATURAL, Items.OAK_LEAVES);
+        SPRUCE_HEDGE = registerBlockItem("spruce_hedge", VABlocks.SPRUCE_HEDGE, ItemGroups.NATURAL, Items.SPRUCE_LEAVES);
+        BIRCH_HEDGE = registerBlockItem("birch_hedge", VABlocks.BIRCH_HEDGE, ItemGroups.NATURAL, Items.BIRCH_LEAVES);
+        JUNGLE_HEDGE = registerBlockItem("jungle_hedge", VABlocks.JUNGLE_HEDGE, ItemGroups.NATURAL, Items.JUNGLE_LEAVES);
+        ACACIA_HEDGE = registerBlockItem("acacia_hedge", VABlocks.ACACIA_HEDGE, ItemGroups.NATURAL, Items.ACACIA_LEAVES);
+        DARK_OAK_HEDGE = registerBlockItem("dark_oak_hedge", VABlocks.DARK_OAK_HEDGE, ItemGroups.NATURAL, Items.DARK_OAK_LEAVES);
+        PALE_OAK_HEDGE = registerBlockItem("pale_oak_hedge", VABlocks.PALE_OAK_HEDGE, ItemGroups.NATURAL, Items.field_54605);
+        MANGROVE_HEDGE = registerBlockItem("mangrove_hedge", VABlocks.MANGROVE_HEDGE, ItemGroups.NATURAL, Items.MANGROVE_LEAVES);
+        AZALEA_HEDGE = registerBlockItem("azalea_hedge", VABlocks.AZALEA_HEDGE, ItemGroups.NATURAL, Items.AZALEA_LEAVES);
+        FLOWERING_AZALEA_HEDGE = registerBlockItem("flowering_azalea_hedge", VABlocks.FLOWERING_AZALEA_HEDGE, ItemGroups.NATURAL, Items.FLOWERING_AZALEA_LEAVES);
+        CHERRY_HEDGE = registerBlockItem("cherry_hedge", VABlocks.CHERRY_HEDGE, ItemGroups.NATURAL, Items.CHERRY_LEAVES);
+        AEROBLOOM_HEDGE = registerBlockItem("aerobloom_hedge", VABlocks.AEROBLOOM_HEDGE, ItemGroups.NATURAL, VAItems.AEROBLOOM_LEAVES);
 
         //endregion
 

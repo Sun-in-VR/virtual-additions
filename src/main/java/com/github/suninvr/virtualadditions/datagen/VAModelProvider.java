@@ -176,7 +176,7 @@ class VAModelProvider extends FabricModelProvider {
         Item baseItem = gildedToolItem.getBaseItem();
         Identifier base = ModelIds.getItemModelId(baseItem);
         Identifier gild = gildedToolItem.getGildType().getId().withSuffixedPath(suffix).withPrefixedPath("item/gilded_tools/");
-        Models.HANDHELD.upload(ModelIds.getItemModelId(baseItem), TextureMap.layered(base, base), itemModelGenerator.writer, (id, textures) -> Models.HANDHELD.createJson(ModelIds.getItemModelId(baseItem), Map.of(TextureKey.LAYER0, base, TextureKey.LAYER1, gild)));
+        Models.HANDHELD.upload(ModelIds.getItemModelId(item), TextureMap.layered(base, base), itemModelGenerator.writer, (id, textures) -> Models.HANDHELD.createJson(ModelIds.getItemModelId(baseItem), Map.of(TextureKey.LAYER0, base, TextureKey.LAYER1, gild)));
     }
 
     private void registerSpotlight(BlockStateModelGenerator generator) {

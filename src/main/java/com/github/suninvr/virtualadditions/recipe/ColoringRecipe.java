@@ -6,7 +6,7 @@ import com.mojang.serialization.Codec;
 import com.mojang.serialization.MapCodec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
 import net.minecraft.block.ShulkerBoxBlock;
-import net.minecraft.inventory.Inventory;
+import net.minecraft.client.recipebook.RecipeBookGroup;
 import net.minecraft.item.BlockItem;
 import net.minecraft.item.BundleItem;
 import net.minecraft.item.ItemStack;
@@ -63,23 +63,17 @@ public class ColoringRecipe implements Recipe<RecipeInput>, ColoringStationRecip
         return ItemStack.EMPTY;
     }
 
-    @Override
-    public boolean fits(int width, int height) {
-        return true;
-    }
-
-    @Override
     public ItemStack getResult(RegistryWrapper.WrapperLookup wrapperLookup) {
         return this.result;
     }
 
     @Override
-    public RecipeSerializer<?> getSerializer() {
+    public RecipeSerializer<? extends Recipe<RecipeInput>> getSerializer() {
         return VARecipeType.COLORING_SERIALIZER;
     }
 
     @Override
-    public RecipeType<?> getType() {
+    public RecipeType<? extends Recipe<RecipeInput>> getType() {
         return VARecipeType.COLORING;
     }
 
@@ -90,6 +84,11 @@ public class ColoringRecipe implements Recipe<RecipeInput>, ColoringStationRecip
         }
 
         return this.ingredientPlacement;
+    }
+
+    @Override
+    public RecipeBookGroup getRecipeBookTab() {
+        return RecipeBookGroup.STONECUTTER;
     }
 
     public int getIndex() {

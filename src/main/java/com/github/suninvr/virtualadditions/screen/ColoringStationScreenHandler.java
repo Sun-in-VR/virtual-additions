@@ -18,6 +18,7 @@ import net.minecraft.recipe.input.RecipeInput;
 import net.minecraft.recipe.input.SingleStackRecipeInput;
 import net.minecraft.screen.*;
 import net.minecraft.screen.slot.Slot;
+import net.minecraft.server.world.ServerWorld;
 import net.minecraft.sound.SoundCategory;
 import net.minecraft.sound.SoundEvents;
 import net.minecraft.world.World;
@@ -28,7 +29,7 @@ import java.util.List;
 public class ColoringStationScreenHandler extends ScreenHandler {
     private final ColoringStationBlockEntity.DyeContents dyeContents;
     private ColoringStationBlockEntity.DyeContents dyeContentsAdder;
-    private final World world;
+    private final ServerWorld world;
     private List<RecipeEntry<ColoringStationRecipe>> availableRecipes = Lists.newArrayList();
     private ItemStack inputStack = ItemStack.EMPTY;
     private final Property selectedRecipe = Property.create();
@@ -131,7 +132,7 @@ public class ColoringStationScreenHandler extends ScreenHandler {
             }
         };
         this.dyeContentsAdder = new ColoringStationBlockEntity.DyeContents();
-        this.world = playerInventory.player.getWorld();
+        this.world = playerInventory.player.getWorld().isClient ? null : (ServerWorld) playerInventory.player.getWorld();
         this.context = context;
 
         int i;
@@ -217,10 +218,8 @@ public class ColoringStationScreenHandler extends ScreenHandler {
                     return ItemStack.EMPTY;
                 }
                 clickedSlot.onQuickTransfer(itemStack2, itemStack);
-            } else if (
-                    slot <= 1
-                            ? !this.insertItem(itemStack2, 3, 39, false)
-                            : (this.world.getRecipeManager().getFirstMatch(VARecipeType.COLORING, new SingleStackRecipeInput(itemStack2), this.world).isPresent()
+            } else if (slot <= 1 ? !this.insertItem(itemStack2, 3, 39, false)
+                            : (this.world.getServer().getRecipeManager().getFirstMatch(VARecipeType.COLORING, new SingleStackRecipeInput(itemStack2), this.world).isPresent()
                                 ? !this.insertItem(itemStack2, 1, 2, false)
                                 : itemStack2.getItem() instanceof DyeItem ? !this.insertItem(itemStack2, 0, 1, false) : (slot >= 3 && slot < 30
                                     ? !this.insertItem(itemStack2, 30, 39, false)
@@ -280,8 +279,8 @@ public class ColoringStationScreenHandler extends ScreenHandler {
         this.availableRecipes.clear();
         this.selectedRecipe.set(-1);
         this.outputSlot.setStackNoCallbacks(ItemStack.EMPTY);
-        this.availableRecipes = this.world.getRecipeManager().getAllMatches(VARecipeType.COLORING, this.recipeInput, this.world);
-        this.availableRecipes.sort(Comparator.comparingInt(o -> o.value().getIndex()));
+        //this.availableRecipes = this.world.getServer().getRecipeManager().getAllMatches(VARecipeType.COLORING, this.recipeInput, this.world);
+        //this.availableRecipes.sort(Comparator.comparingInt(o -> o.value().getIndex()));
     }
 
     void populateResult() {

@@ -239,6 +239,7 @@ public final class VABlockTagProvider {
                     VABlocks.JUNGLE_HEDGE,
                     VABlocks.ACACIA_HEDGE,
                     VABlocks.DARK_OAK_HEDGE,
+                    VABlocks.PALE_OAK_HEDGE,
                     VABlocks.MANGROVE_HEDGE,
                     VABlocks.CHERRY_HEDGE,
                     VABlocks.AZALEA_HEDGE,
