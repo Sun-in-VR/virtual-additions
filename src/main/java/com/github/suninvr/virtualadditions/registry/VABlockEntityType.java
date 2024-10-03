@@ -31,7 +31,7 @@ public class VABlockEntityType {
         ENTANGLEMENT_DRIVE = register("entanglement_drive", EntanglementDriveBlockEntity::new, VABlocks.ENTANGLEMENT_DRIVE);
         DESTRUCTIVE_SCULK = register("destructive_sculk", DestructiveSculkBlockEntity::new, VABlocks.DESTRUCTIVE_SCULK);
         WIND = register("wind", WindBlockEntity::new, VABlocks.WIND);
-        COLORING_STATION = register("coloring_station", ColoringStationBlockEntity::new);
+        COLORING_STATION = register("coloring_station", ColoringStationBlockEntity::new, VABlocks.COLORING_STATION);
         CUSTOM_SIGN = register("custom_sign", CustomSignBlockEntity::new, VABlocks.AEROBLOOM_SIGN, VABlocks.AEROBLOOM_WALL_SIGN);
         CUSTOM_HANGING_SIGN = register("custom_hanging_sign", CustomHangingSignBlockEntity::new, VABlocks.AEROBLOOM_HANGING_SIGN, VABlocks.AEROBLOOM_WALL_HANGING_SIGN);
         CUSTOM_BED = register("custom_bed", CustomBedBlockEntity::new, VABlocks.CHARTREUSE_BED, VABlocks.MAROON_BED, VABlocks.INDIGO_BED, VABlocks.PLUM_BED, VABlocks.VIRIDIAN_BED, VABlocks.TAN_BED, VABlocks.SINOPIA_BED, VABlocks.LILAC_BED);
@@ -61,6 +61,14 @@ public class VABlockEntityType {
         BlockEntityType.BANNER.addSupportedBlock(VABlocks.TAN_BANNER);
         BlockEntityType.BANNER.addSupportedBlock(VABlocks.SINOPIA_BANNER);
         BlockEntityType.BANNER.addSupportedBlock(VABlocks.LILAC_BANNER);
+        BlockEntityType.BANNER.addSupportedBlock(VABlocks.CHARTREUSE_WALL_BANNER);
+        BlockEntityType.BANNER.addSupportedBlock(VABlocks.MAROON_WALL_BANNER);
+        BlockEntityType.BANNER.addSupportedBlock(VABlocks.INDIGO_WALL_BANNER);
+        BlockEntityType.BANNER.addSupportedBlock(VABlocks.PLUM_WALL_BANNER);
+        BlockEntityType.BANNER.addSupportedBlock(VABlocks.VIRIDIAN_WALL_BANNER);
+        BlockEntityType.BANNER.addSupportedBlock(VABlocks.TAN_WALL_BANNER);
+        BlockEntityType.BANNER.addSupportedBlock(VABlocks.SINOPIA_WALL_BANNER);
+        BlockEntityType.BANNER.addSupportedBlock(VABlocks.LILAC_WALL_BANNER);
         BlockEntityType.SIGN.addSupportedBlock(VABlocks.AEROBLOOM_SIGN);
         BlockEntityType.SIGN.addSupportedBlock(VABlocks.AEROBLOOM_WALL_SIGN);
         BlockEntityType.HANGING_SIGN.addSupportedBlock(VABlocks.AEROBLOOM_HANGING_SIGN);
