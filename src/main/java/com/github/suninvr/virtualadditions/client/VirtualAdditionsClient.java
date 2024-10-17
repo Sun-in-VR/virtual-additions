@@ -35,6 +35,14 @@ public class VirtualAdditionsClient implements ClientModInitializer {
         ClientPlayNetworking.registerGlobalReceiver(VAPackets.REMOTE_NOTIFIER_S2C_ID, ((payload, context) -> {
             if (context != null) context.client().getToastManager().add(new RemoteNotifierToast(payload.STACK(), Text.of(payload.TEXT())));
         }));
+
+        ClientPlayNetworking.registerGlobalReceiver(VAPackets.COLORING_STATION_S2C_ID, (payload, context) -> {
+            if (context != null) {
+                if (context.client().currentScreen instanceof ColoringStationScreen coloringStationScreen) {
+                    coloringStationScreen.getScreenHandler().setRecipeData(payload.list());
+                }
+            }
+        });
     }
 
 }

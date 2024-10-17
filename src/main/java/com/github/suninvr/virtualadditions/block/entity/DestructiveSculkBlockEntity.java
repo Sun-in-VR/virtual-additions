@@ -113,8 +113,8 @@ public class DestructiveSculkBlockEntity extends BlockEntity {
     public void modifyLootContext(LootContextParameterSet.Builder builder) {
         if (this.getWorld() instanceof ServerWorld serverWorld) {
             PlayerEntity player = serverWorld.getPlayerByUuid(this.getPlayerId());
-            if (player != null) builder.add(LootContextParameters.THIS_ENTITY, player);
-            builder.add(LootContextParameters.TOOL, getTool());
+            if (player != null) builder.add(LootContextParameters.field_1226, player);
+            builder.add(LootContextParameters.field_1229, getTool());
         }
     }
 

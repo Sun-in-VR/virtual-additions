@@ -1,10 +1,13 @@
 package com.github.suninvr.virtualadditions.screen;
 
 import com.github.suninvr.virtualadditions.block.entity.ColoringStationBlockEntity;
+import com.github.suninvr.virtualadditions.interfaces.RecipeManagerInterface;
+import com.github.suninvr.virtualadditions.network.ColoringStationS2CPayload;
+import com.github.suninvr.virtualadditions.recipe.ColoringRecipeDisplay;
 import com.github.suninvr.virtualadditions.recipe.ColoringStationRecipe;
 import com.github.suninvr.virtualadditions.registry.VARecipeType;
 import com.github.suninvr.virtualadditions.registry.VAScreenHandler;
-import com.google.common.collect.Lists;
+import net.fabricmc.fabric.api.networking.v1.ServerPlayNetworking;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.PlayerInventory;
 import net.minecraft.inventory.CraftingResultInventory;
@@ -13,24 +16,32 @@ import net.minecraft.inventory.SimpleInventory;
 import net.minecraft.item.DyeItem;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
+import net.minecraft.network.RegistryByteBuf;
+import net.minecraft.network.codec.PacketCodec;
+import net.minecraft.network.codec.PacketCodecs;
 import net.minecraft.recipe.RecipeEntry;
 import net.minecraft.recipe.input.RecipeInput;
 import net.minecraft.recipe.input.SingleStackRecipeInput;
 import net.minecraft.screen.*;
 import net.minecraft.screen.slot.Slot;
-import net.minecraft.server.world.ServerWorld;
+import net.minecraft.server.network.ServerPlayerEntity;
 import net.minecraft.sound.SoundCategory;
 import net.minecraft.sound.SoundEvents;
 import net.minecraft.world.World;
 
+import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
+import java.util.Optional;
 
 public class ColoringStationScreenHandler extends ScreenHandler {
     private final ColoringStationBlockEntity.DyeContents dyeContents;
     private ColoringStationBlockEntity.DyeContents dyeContentsAdder;
-    private final ServerWorld world;
-    private List<RecipeEntry<ColoringStationRecipe>> availableRecipes = Lists.newArrayList();
+    private final World world;
+    private final PlayerInventory playerInventory;
+    private ColoringRecipeDisplay.Grouping<ColoringStationRecipe> coloringRecipes = ColoringRecipeDisplay.Grouping.empty();
+    private List<ColoringRecipeData> recipeData = new ArrayList<>();
+    private List<RecipeEntry<ColoringStationRecipe>> recipeEntries = new ArrayList<>();
     private ItemStack inputStack = ItemStack.EMPTY;
     private final Property selectedRecipe = Property.create();
     private final PropertyDelegate propertyDelegate;
@@ -132,7 +143,8 @@ public class ColoringStationScreenHandler extends ScreenHandler {
             }
         };
         this.dyeContentsAdder = new ColoringStationBlockEntity.DyeContents();
-        this.world = playerInventory.player.getWorld().isClient ? null : (ServerWorld) playerInventory.player.getWorld();
+        this.world = playerInventory.player.getWorld();
+        this.playerInventory = playerInventory;
         this.context = context;
 
         int i;
@@ -170,7 +182,7 @@ public class ColoringStationScreenHandler extends ScreenHandler {
         for (i = 0; i < 9; ++i) {
             this.addSlot(new Slot(playerInventory, i, 8 + i * 18, 142));
         }
-        this.updateInput();
+        this.updateInput(ItemStack.EMPTY);
         this.populateResult();
     }
 
@@ -188,12 +200,12 @@ public class ColoringStationScreenHandler extends ScreenHandler {
         return this.selectedRecipe.get();
     }
 
-    public List<RecipeEntry<ColoringStationRecipe>> getAvailableRecipes() {
-        return this.availableRecipes;
-    }
+    public ColoringRecipeData getRecipeData(int i) {
+      return this.recipeData.get(i);
+    };
 
     public int getAvailableRecipeCount() {
-        return this.availableRecipes.size();
+        return this.recipeData.size();
     }
 
     public void setContentsChangedListener(Runnable contentsChangedListener) {
@@ -201,7 +213,7 @@ public class ColoringStationScreenHandler extends ScreenHandler {
     }
 
     public boolean canCraft() {
-        return !this.availableRecipes.isEmpty();
+        return this.recipeData != null && !this.recipeData.isEmpty();
     }
 
     @Override
@@ -219,11 +231,11 @@ public class ColoringStationScreenHandler extends ScreenHandler {
                 }
                 clickedSlot.onQuickTransfer(itemStack2, itemStack);
             } else if (slot <= 1 ? !this.insertItem(itemStack2, 3, 39, false)
-                            : (this.world.getServer().getRecipeManager().getFirstMatch(VARecipeType.COLORING, new SingleStackRecipeInput(itemStack2), this.world).isPresent()
+                            : !(itemStack2.getItem() instanceof DyeItem)
                                 ? !this.insertItem(itemStack2, 1, 2, false)
                                 : itemStack2.getItem() instanceof DyeItem ? !this.insertItem(itemStack2, 0, 1, false) : (slot >= 3 && slot < 30
                                     ? !this.insertItem(itemStack2, 30, 39, false)
-                                    : slot >= 30 && slot < 39 && !this.insertItem(itemStack2, 3, 30, false)))) {
+                                    : slot >= 30 && slot < 39 && !this.insertItem(itemStack2, 3, 30, false))) {
                 return ItemStack.EMPTY;
             }
             if (itemStack2.isEmpty()) {
@@ -254,7 +266,7 @@ public class ColoringStationScreenHandler extends ScreenHandler {
     }
 
     private boolean isInBounds(int id) {
-        return id >= 0 && id < this.availableRecipes.size();
+        return id >= 0 && id < this.recipeData.size();
     }
 
     @Override
@@ -262,7 +274,7 @@ public class ColoringStationScreenHandler extends ScreenHandler {
         ItemStack itemStack = this.inputSlot.getStack();
         if (!itemStack.isOf(this.inputStack.getItem())) {
             this.inputStack = itemStack.copy();
-            this.updateInput();
+            this.updateInput(itemStack);
         }
         this.updateDyeInput();
     }
@@ -275,32 +287,72 @@ public class ColoringStationScreenHandler extends ScreenHandler {
         }
     }
 
-    private void updateInput() {
-        this.availableRecipes.clear();
+    private void updateInput(ItemStack stack) {
         this.selectedRecipe.set(-1);
         this.outputSlot.setStackNoCallbacks(ItemStack.EMPTY);
-        //this.availableRecipes = this.world.getServer().getRecipeManager().getAllMatches(VARecipeType.COLORING, this.recipeInput, this.world);
-        //this.availableRecipes.sort(Comparator.comparingInt(o -> o.value().getIndex()));
+        if (!this.world.isClient) {
+            List<ColoringRecipeData> recipeDataList = new ArrayList<>();
+            List<RecipeEntry<ColoringStationRecipe>> recipeEntries = new ArrayList<>();
+            this.coloringRecipes = ((RecipeManagerInterface) this.world.getRecipeManager()).virtualAdditions$getColoringRecipes().filter(stack);
+            this.coloringRecipes.entries().forEach(entry -> {
+                if (entry.recipe().recipeEntry().isPresent()) {
+                    RecipeEntry<ColoringStationRecipe> recipe = entry.recipe().recipeEntry().get();
+                    recipeDataList.add(new ColoringRecipeData(recipe.value().getIndex(), recipe.value().getResultStack(stack), recipe.value().getDyeCost()));
+                    recipeEntries.add(recipe);
+                }
+            });
+            this.setRecipeData(recipeDataList);
+            this.setRecipeEntries(recipeEntries);
+            ColoringStationS2CPayload payload = new ColoringStationS2CPayload(this.recipeData);
+            ServerPlayNetworking.send((ServerPlayerEntity)playerInventory.player, payload);
+        }
+    }
+
+    public void setRecipeData(List<ColoringRecipeData> data) {
+        this.recipeData.clear();
+        this.recipeData = new ArrayList<>(data);
+        this.recipeData.sort(Comparator.comparingInt(o -> o.index));
+    }
+
+    private void setRecipeEntries(List<RecipeEntry<ColoringStationRecipe>> entries) {
+        this.recipeEntries.clear();
+        this.recipeEntries = new ArrayList<>(entries);
+        this.recipeEntries.sort(Comparator.comparingInt(o -> o.value().getIndex()));
     }
 
     void populateResult() {
-        if (!this.availableRecipes.isEmpty() && this.isInBounds(this.selectedRecipe.get())) {
-            RecipeEntry<ColoringStationRecipe> recipeEntry = this.availableRecipes.get(this.selectedRecipe.get());
-            ItemStack itemStack = recipeEntry.value().craftWithDye(this.recipeInput, this.world.getRegistryManager(), this.dyeContents);
-            this.dyeContentsAdder = recipeEntry.value().getDyeCost();
+        if (this.world.isClient) return;
+        Optional<RecipeEntry<ColoringStationRecipe>> optional;
+        int i = this.selectedRecipe.get();
+        if (!(this.recipeEntries == null) && !this.recipeEntries.isEmpty() && this.isInBounds(i)) {
+            optional = Optional.of(this.recipeEntries.get(i));
+        } else {
+            optional = Optional.empty();
+        }
+
+        if (optional.isPresent()) {
+            ColoringStationRecipe recipe = optional.get().value();
+            ItemStack itemStack = recipe.craftWithDye(this.recipeInput, this.world.getRegistryManager(), this.dyeContents);
+            this.dyeContentsAdder = recipe.getDyeCost();
             if (itemStack.isItemEnabled(this.world.getEnabledFeatures())) {
-                this.output.setLastRecipe(recipeEntry);
+                this.output.setLastRecipe(optional.get());
                 this.outputSlot.setStackNoCallbacks(itemStack);
             } else {
                 this.outputSlot.setStackNoCallbacks(ItemStack.EMPTY);
             }
-        } else {
-            this.outputSlot.setStackNoCallbacks(ItemStack.EMPTY);
         }
-        this.sendContentUpdates();
     }
 
     public ColoringStationBlockEntity.DyeContents getDyeContents() {
         return this.dyeContents;
+    }
+
+    public record ColoringRecipeData(int index, ItemStack stack, ColoringStationBlockEntity.DyeContents dyeCost) {
+        public static final PacketCodec<RegistryByteBuf, ColoringRecipeData> CODEC = PacketCodec.tuple(
+                PacketCodecs.INTEGER, ColoringRecipeData::index,
+                ItemStack.OPTIONAL_PACKET_CODEC, ColoringRecipeData::stack,
+                ColoringStationBlockEntity.DyeContents.PACKET_CODEC, ColoringRecipeData::dyeCost,
+                ColoringRecipeData::new
+        );
     }
 }

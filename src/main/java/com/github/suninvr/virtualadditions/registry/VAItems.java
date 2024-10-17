@@ -1063,7 +1063,7 @@ public class VAItems {
         JUNGLE_HEDGE = registerBlockItem("jungle_hedge", VABlocks.JUNGLE_HEDGE, ItemGroups.NATURAL, Items.JUNGLE_LEAVES);
         ACACIA_HEDGE = registerBlockItem("acacia_hedge", VABlocks.ACACIA_HEDGE, ItemGroups.NATURAL, Items.ACACIA_LEAVES);
         DARK_OAK_HEDGE = registerBlockItem("dark_oak_hedge", VABlocks.DARK_OAK_HEDGE, ItemGroups.NATURAL, Items.DARK_OAK_LEAVES);
-        PALE_OAK_HEDGE = registerBlockItem("pale_oak_hedge", VABlocks.PALE_OAK_HEDGE, ItemGroups.NATURAL, Items.field_54605);
+        PALE_OAK_HEDGE = registerBlockItem("pale_oak_hedge", VABlocks.PALE_OAK_HEDGE, ItemGroups.NATURAL, Items.PALE_OAK_LEAVES);
         MANGROVE_HEDGE = registerBlockItem("mangrove_hedge", VABlocks.MANGROVE_HEDGE, ItemGroups.NATURAL, Items.MANGROVE_LEAVES);
         AZALEA_HEDGE = registerBlockItem("azalea_hedge", VABlocks.AZALEA_HEDGE, ItemGroups.NATURAL, Items.AZALEA_LEAVES);
         FLOWERING_AZALEA_HEDGE = registerBlockItem("flowering_azalea_hedge", VABlocks.FLOWERING_AZALEA_HEDGE, ItemGroups.NATURAL, Items.FLOWERING_AZALEA_LEAVES);

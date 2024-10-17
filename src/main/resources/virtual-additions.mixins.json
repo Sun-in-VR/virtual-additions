@@ -28,6 +28,7 @@
     "PlayerEntityMixin",
     "RangedWeaponItemMixin",
     "RedstoneWireBlockMixin",
+    "ServerRecipeManagerMixin",
     "ShulkerBoxBlockMixin",
     "SwordItemMixin",
     "TradeOffersMixin",

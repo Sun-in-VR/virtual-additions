@@ -6,13 +6,15 @@ import com.mojang.serialization.Codec;
 import com.mojang.serialization.MapCodec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
 import net.minecraft.block.ShulkerBoxBlock;
-import net.minecraft.client.recipebook.RecipeBookGroup;
+import net.minecraft.class_10355;
 import net.minecraft.item.BlockItem;
 import net.minecraft.item.BundleItem;
 import net.minecraft.item.ItemStack;
 import net.minecraft.network.RegistryByteBuf;
 import net.minecraft.network.codec.PacketCodec;
 import net.minecraft.recipe.*;
+import net.minecraft.recipe.book.RecipeBookGroup;
+import net.minecraft.recipe.display.SlotDisplay;
 import net.minecraft.recipe.input.RecipeInput;
 import net.minecraft.registry.DynamicRegistryManager;
 import net.minecraft.registry.RegistryWrapper;
@@ -63,7 +65,7 @@ public class ColoringRecipe implements Recipe<RecipeInput>, ColoringStationRecip
         return ItemStack.EMPTY;
     }
 
-    public ItemStack getResult(RegistryWrapper.WrapperLookup wrapperLookup) {
+    public ItemStack getResult() {
         return this.result;
     }
 
@@ -87,7 +89,7 @@ public class ColoringRecipe implements Recipe<RecipeInput>, ColoringStationRecip
     }
 
     @Override
-    public RecipeBookGroup getRecipeBookTab() {
+    public class_10355 getRecipeBookTab() {
         return RecipeBookGroup.STONECUTTER;
     }
 
@@ -99,9 +101,22 @@ public class ColoringRecipe implements Recipe<RecipeInput>, ColoringStationRecip
         return inverted ? this.cost : this.cost.copyAndMultiply(-1);
     }
 
+    public Optional<Ingredient> getIngredient() {
+        return ingredient;
+    }
+
+    public SlotDisplay.StackSlotDisplay getStackSlotDisplay() {
+        return new SlotDisplay.StackSlotDisplay(this.result);
+    };
+
     @Override
     public ItemStack getResultStack(DynamicRegistryManager registryManager, ItemStack input) {
-        return this.getResult(registryManager);
+        return this.getResult();
+    }
+
+    @Override
+    public ItemStack getResultStack(ItemStack input) {
+        return this.getResult();
     }
 
     public static class Serializer implements RecipeSerializer<ColoringRecipe> {

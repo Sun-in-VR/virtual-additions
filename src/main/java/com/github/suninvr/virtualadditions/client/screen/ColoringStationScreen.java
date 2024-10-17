@@ -11,7 +11,6 @@ import net.minecraft.client.render.RenderLayer;
 import net.minecraft.client.sound.PositionedSoundInstance;
 import net.minecraft.entity.player.PlayerInventory;
 import net.minecraft.item.ItemStack;
-import net.minecraft.recipe.RecipeEntry;
 import net.minecraft.screen.slot.Slot;
 import net.minecraft.sound.SoundEvents;
 import net.minecraft.text.Text;
@@ -20,7 +19,6 @@ import net.minecraft.util.Identifier;
 import net.minecraft.util.math.MathHelper;
 
 import java.util.ArrayList;
-import java.util.List;
 
 import static com.github.suninvr.virtualadditions.VirtualAdditions.idOf;
 
@@ -131,18 +129,19 @@ public class ColoringStationScreen extends HandledScreen<ColoringStationScreenHa
         super.drawMouseoverTooltip(context, x, y);
         if (this.client == null) return;
         boolean advanced = this.client.options.advancedItemTooltips;
-        if (this.canCraft && this.client.world != null) {
+        if (this.handler.canCraft() && this.client.world != null) {
             int i = this.x + 52;
             int j = this.y + 14;
             int k = this.scrollOffset + 12;
-            List<RecipeEntry<ColoringStationRecipe>> list = (this.handler).getAvailableRecipes();
-            for (int l = this.scrollOffset; l < k && l < (this.handler).getAvailableRecipeCount(); ++l) {
+            for (int l = this.scrollOffset; l < k && l < this.handler.getAvailableRecipeCount(); ++l) {
+                if (this.handler.getRecipeData(l) == null) continue;
+                ColoringStationScreenHandler.ColoringRecipeData data = this.handler.getRecipeData(l);
                 int m = l - this.scrollOffset;
                 int n = i + m % 4 * 16;
                 int o = j + m / 4 * 18 + 2;
                 if (x < n || x >= n + 16 || y < o || y >= o + 18) continue;
-                ItemStack stack = list.get(l).value().getResultStack(this.client.world.getRegistryManager(), this.handler.getSlot(1).getStack());
-                ColoringStationBlockEntity.DyeContents cost = list.get(l).value().getDyeCost(true);
+                ItemStack stack = data.stack();
+                ColoringStationBlockEntity.DyeContents cost = data.dyeCost().copyAndMultiply(-1);
                 ArrayList<Text> tooltip = new ArrayList<>(Screen.getTooltipFromItem(this.client, stack));
                 if (advanced) {
                     int K = cost.getK();
@@ -203,23 +202,26 @@ public class ColoringStationScreen extends HandledScreen<ColoringStationScreenHa
 
     private void renderRecipeBackground(DrawContext context, int mouseX, int mouseY, int x, int y, int scrollOffset) {
         for (int i = this.scrollOffset; i < scrollOffset && i < (this.handler).getAvailableRecipeCount(); ++i) {
+            if (this.handler.getRecipeData(i) == null) continue;
             int j = i - this.scrollOffset;
             int k = x + j % 4 * 16;
             int l = j / 4;
             int m = y + l * 18 + 2;
-            Identifier identifier = this.dyeContents.canAdd(this.handler.getAvailableRecipes().get(i).value().getDyeCost(false)) ? (i == (this.handler).getSelectedRecipe() ? RECIPE_SELECTED_TEXTURE : mouseX >= k && mouseY >= m && mouseX < k + 16 && mouseY < m + 18 ? RECIPE_HIGHLIGHTED_TEXTURE : RECIPE_TEXTURE) : RECIPE_UNCRAFTABLE_TEXTURE;
+            ColoringStationScreenHandler.ColoringRecipeData data = this.handler.getRecipeData(i);
+            Identifier identifier = this.dyeContents.canAdd(data.dyeCost()) ? (i == (this.handler).getSelectedRecipe() ? RECIPE_SELECTED_TEXTURE : mouseX >= k && mouseY >= m && mouseX < k + 16 && mouseY < m + 18 ? RECIPE_HIGHLIGHTED_TEXTURE : RECIPE_TEXTURE) : RECIPE_UNCRAFTABLE_TEXTURE;
             context.drawGuiTexture(RenderLayer::getGuiTextured, identifier, k, m - 1, 16, 18);
         }
     }
 
     private void renderRecipeIcons(DrawContext context, int x, int y, int scrollOffset) {
-        List<RecipeEntry<ColoringStationRecipe>> list = (this.handler).getAvailableRecipes();
         for (int i = this.scrollOffset; i < scrollOffset && i < (this.handler).getAvailableRecipeCount(); ++i) {
+            if (this.handler.getRecipeData(i) == null) continue;
             int j = i - this.scrollOffset;
             int k = x + j % 4 * 16;
             int l = j / 4;
             int m = y + l * 18 + 2;
-            context.drawItem(list.get(i).value().getResultStack(this.client.world.getRegistryManager(), this.handler.getSlot(1).getStack()), k, m);
+            ColoringStationScreenHandler.ColoringRecipeData data = this.handler.getRecipeData(i);
+            context.drawItem(data.stack(), k, m);
         }
     }
 
@@ -227,7 +229,7 @@ public class ColoringStationScreen extends HandledScreen<ColoringStationScreenHa
     @Override
     public boolean mouseClicked(double mouseX, double mouseY, int button) {
         this.mouseClicked = false;
-        if (this.client != null && this.canCraft) {
+        if (this.client != null && this.handler.canCraft()) {
             int i = this.x + 52;
             int j = this.y + 14;
             int k = this.scrollOffset + 12;
@@ -279,7 +281,7 @@ public class ColoringStationScreen extends HandledScreen<ColoringStationScreenHa
     }
 
     private boolean shouldScroll() {
-        return this.canCraft && (this.handler).getAvailableRecipeCount() > 12;
+        return this.handler.canCraft() && (this.handler).getAvailableRecipeCount() > 12;
     }
 
     protected int getMaxScroll() {

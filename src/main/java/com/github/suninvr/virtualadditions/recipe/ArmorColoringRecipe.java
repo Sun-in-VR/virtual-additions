@@ -6,7 +6,7 @@ import com.github.suninvr.virtualadditions.registry.VARecipeType;
 import com.mojang.serialization.Codec;
 import com.mojang.serialization.MapCodec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
-import net.minecraft.client.recipebook.RecipeBookGroup;
+import net.minecraft.class_10355;
 import net.minecraft.component.type.DyedColorComponent;
 import net.minecraft.item.DyeItem;
 import net.minecraft.item.Item;
@@ -14,6 +14,8 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.network.RegistryByteBuf;
 import net.minecraft.network.codec.PacketCodec;
 import net.minecraft.recipe.*;
+import net.minecraft.recipe.book.RecipeBookGroup;
+import net.minecraft.recipe.display.SlotDisplay;
 import net.minecraft.recipe.input.RecipeInput;
 import net.minecraft.registry.DynamicRegistryManager;
 import net.minecraft.registry.Registries;
@@ -26,15 +28,15 @@ import java.util.List;
 import java.util.Optional;
 
 public class ArmorColoringRecipe implements Recipe<RecipeInput>, ColoringStationRecipe {
-    public final Ingredient item;
+    public final Ingredient ingredient;
     public final int index;
     public final DyeItem dyeItem;
     private IngredientPlacement ingredientPlacement;
 
-    public ArmorColoringRecipe(Ingredient item, int index) {
-        this.item = item;
+    public ArmorColoringRecipe(Ingredient ingredient, int index) {
+        this.ingredient = ingredient;
         this.index = index;
-        RegistryKey<Item> key = item.getMatchingStacks().getFirst().getKey().orElse(null);
+        RegistryKey<Item> key = ingredient.getMatchingStacks().getFirst().getKey().orElse(null);
         this.dyeItem = key == null ? null : Registries.ITEM.get(key) instanceof DyeItem dyeItem1 ? dyeItem1 : null;
     }
 
@@ -45,6 +47,16 @@ public class ArmorColoringRecipe implements Recipe<RecipeInput>, ColoringStation
 
     public int getIndex() {
         return this.index;
+    }
+
+    @Override
+    public Optional<Ingredient> getIngredient() {
+        return Optional.of(this.ingredient);
+    }
+
+    @Override
+    public SlotDisplay.StackSlotDisplay getStackSlotDisplay() {
+        return new SlotDisplay.StackSlotDisplay(this.dyeItem.getDefaultStack());
     }
 
     @Override
@@ -95,21 +107,21 @@ public class ArmorColoringRecipe implements Recipe<RecipeInput>, ColoringStation
     @Override
     public IngredientPlacement getIngredientPlacement() {
         if (this.ingredientPlacement == null) {
-            this.ingredientPlacement = IngredientPlacement.forMultipleSlots(List.of(Optional.of(this.item)));
+            this.ingredientPlacement = IngredientPlacement.forMultipleSlots(List.of(Optional.of(this.ingredient)));
         }
 
         return this.ingredientPlacement;
     }
 
     @Override
-    public RecipeBookGroup getRecipeBookTab() {
-        return null;
+    public class_10355 getRecipeBookTab() {
+        return RecipeBookGroup.STONECUTTER;
     }
 
     public static class Serializer implements RecipeSerializer<ArmorColoringRecipe> {
         private final MapCodec<ArmorColoringRecipe> CODEC = RecordCodecBuilder.mapCodec(
                 instance -> instance.group(
-                        Ingredient.CODEC.fieldOf("dye").forGetter(armorColoringRecipe -> armorColoringRecipe.item),
+                        Ingredient.CODEC.fieldOf("dye").forGetter(armorColoringRecipe -> armorColoringRecipe.ingredient),
                         Codec.INT.optionalFieldOf("index", 0).forGetter(recipe -> recipe.index)
                 ).apply(instance, ArmorColoringRecipe::new)
         );
@@ -132,7 +144,7 @@ public class ArmorColoringRecipe implements Recipe<RecipeInput>, ColoringStation
         }
 
         private static void write(RegistryByteBuf buf, ArmorColoringRecipe recipe) {
-            Ingredient.PACKET_CODEC.encode(buf, recipe.item);
+            Ingredient.PACKET_CODEC.encode(buf, recipe.ingredient);
             buf.writeInt(recipe.index);
         }
     }

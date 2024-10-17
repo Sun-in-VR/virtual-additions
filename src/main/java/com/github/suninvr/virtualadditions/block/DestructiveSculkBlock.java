@@ -149,7 +149,7 @@ public class DestructiveSculkBlock extends BlockWithEntity {
 
     @Override
     public List<ItemStack> getDroppedStacks(BlockState state, LootContextParameterSet.Builder builder) {
-        DestructiveSculkBlockEntity blockEntity = builder.get(LootContextParameters.BLOCK_ENTITY) instanceof DestructiveSculkBlockEntity destructiveSculkBlockEntity ? destructiveSculkBlockEntity : null;
+        DestructiveSculkBlockEntity blockEntity = builder.get(LootContextParameters.field_1228) instanceof DestructiveSculkBlockEntity destructiveSculkBlockEntity ? destructiveSculkBlockEntity : null;
         if (blockEntity != null) {
             blockEntity.modifyLootContext(builder);
             return blockEntity.getReplacedState().getDroppedStacks(builder);

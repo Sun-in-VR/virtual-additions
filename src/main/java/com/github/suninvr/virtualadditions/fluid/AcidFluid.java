@@ -4,6 +4,7 @@ import com.github.suninvr.virtualadditions.registry.*;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.Blocks;
+import net.minecraft.block.Oxidizable;
 import net.minecraft.block.entity.BlockEntity;
 import net.minecraft.fluid.FlowableFluid;
 import net.minecraft.fluid.Fluid;
@@ -66,6 +67,12 @@ public abstract class AcidFluid extends FlowableFluid {
 
         if (state.getLevel() > 6 && serverWorld.getBlockState(pos.down()).isOf(Blocks.MAGMA_BLOCK)) {
             serverWorld.setBlockState(pos, VABlocks.ACID_BLOCK.getDefaultState());
+        }
+
+        BlockPos offsetPos = pos.offset(Direction.random(random));
+        BlockState offsetState = serverWorld.getBlockState(offsetPos);
+        if (offsetState.getBlock() instanceof Oxidizable) {
+            serverWorld.setBlockState(offsetPos, Oxidizable.getDecreasedOxidationState(offsetState).orElse(offsetState));
         }
     }
 
