@@ -16,7 +16,7 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
 @Mixin(EnchantmentHelper.class)
 public class EnchantmentHelperMixin {
-    @Inject(method = "getBlockExperience", at = @At(value = "INVOKE", target = "Lorg/apache/commons/lang3/mutable/MutableFloat;intValue()I", shift = At.Shift.BEFORE))
+    @Inject(method = "getBlockExperience", at = @At(value = "RETURN"))
     private static void virtualAdditions$getBlockExperienceForGildedTool(ServerWorld world, ItemStack stack, int baseBlockExperience, CallbackInfoReturnable<Integer> cir, @Local LocalRef<MutableFloat> mutableFloat) {
         if (!GildedToolUtil.getGildType(stack).equals(GildTypes.EMERALD)) return;
         float f = mutableFloat.get().floatValue();
