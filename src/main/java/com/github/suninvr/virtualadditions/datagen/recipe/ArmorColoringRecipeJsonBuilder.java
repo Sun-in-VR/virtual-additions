@@ -33,7 +33,7 @@ public class ArmorColoringRecipeJsonBuilder {
 
     public void offerTo(RecipeExporter exporter) {
         if (this.dye == null) return;
-        RegistryKey<Item> dye = this.dye.getMatchingStacks().getFirst().getKey().get();
+        RegistryKey<Item> dye = this.dye.getMatchingItems().getFirst().getKey().get();
         if (dye != null && Registries.ITEM.get(dye) instanceof DyeItem dyeItem) {
             Identifier id = idOf(dyeItem.getColor().asString()).withSuffixedPath("_armor_coloring");
             offerTo(exporter, id);

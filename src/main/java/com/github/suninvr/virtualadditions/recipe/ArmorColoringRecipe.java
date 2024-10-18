@@ -6,7 +6,6 @@ import com.github.suninvr.virtualadditions.registry.VARecipeType;
 import com.mojang.serialization.Codec;
 import com.mojang.serialization.MapCodec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
-import net.minecraft.class_10355;
 import net.minecraft.component.type.DyedColorComponent;
 import net.minecraft.item.DyeItem;
 import net.minecraft.item.Item;
@@ -14,7 +13,8 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.network.RegistryByteBuf;
 import net.minecraft.network.codec.PacketCodec;
 import net.minecraft.recipe.*;
-import net.minecraft.recipe.book.RecipeBookGroup;
+import net.minecraft.recipe.book.RecipeBookCategories;
+import net.minecraft.recipe.book.RecipeBookCategory;
 import net.minecraft.recipe.display.SlotDisplay;
 import net.minecraft.recipe.input.RecipeInput;
 import net.minecraft.registry.DynamicRegistryManager;
@@ -36,7 +36,7 @@ public class ArmorColoringRecipe implements Recipe<RecipeInput>, ColoringStation
     public ArmorColoringRecipe(Ingredient ingredient, int index) {
         this.ingredient = ingredient;
         this.index = index;
-        RegistryKey<Item> key = ingredient.getMatchingStacks().getFirst().getKey().orElse(null);
+        RegistryKey<Item> key = ingredient.getMatchingItems().getFirst().getKey().orElse(null);
         this.dyeItem = key == null ? null : Registries.ITEM.get(key) instanceof DyeItem dyeItem1 ? dyeItem1 : null;
     }
 
@@ -114,8 +114,8 @@ public class ArmorColoringRecipe implements Recipe<RecipeInput>, ColoringStation
     }
 
     @Override
-    public class_10355 getRecipeBookTab() {
-        return RecipeBookGroup.STONECUTTER;
+    public RecipeBookCategory getRecipeBookCategory() {
+        return RecipeBookCategories.STONECUTTER;
     }
 
     public static class Serializer implements RecipeSerializer<ArmorColoringRecipe> {

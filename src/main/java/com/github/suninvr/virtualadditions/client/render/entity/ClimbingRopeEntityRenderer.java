@@ -17,6 +17,11 @@ public class ClimbingRopeEntityRenderer extends ProjectileEntityRenderer<Climbin
     }
 
     @Override
+    public ClimbingRopeEntityRenderState createRenderState() {
+        return new ClimbingRopeEntityRenderState();
+    }
+
+    @Override
     public Identifier getTexture(ClimbingRopeEntityRenderState state) {
         return switch (state.oxidationLevel) {
             case UNAFFECTED -> UNAFFECTED_TEXTURE;
@@ -24,11 +29,6 @@ public class ClimbingRopeEntityRenderer extends ProjectileEntityRenderer<Climbin
             case WEATHERED -> WEATHERED_TEXTURE;
             case OXIDIZED -> OXIDIZED_TEXTURE;
         };
-    }
-
-    @Override
-    public ClimbingRopeEntityRenderState getRenderState() {
-        return new ClimbingRopeEntityRenderState();
     }
 
     @Override

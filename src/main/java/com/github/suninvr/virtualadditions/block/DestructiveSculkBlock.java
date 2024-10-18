@@ -11,8 +11,8 @@ import net.minecraft.block.entity.BlockEntityTicker;
 import net.minecraft.block.entity.BlockEntityType;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
-import net.minecraft.loot.context.LootContextParameterSet;
 import net.minecraft.loot.context.LootContextParameters;
+import net.minecraft.loot.context.LootWorldContext;
 import net.minecraft.particle.ParticleTypes;
 import net.minecraft.server.world.ServerWorld;
 import net.minecraft.sound.SoundCategory;
@@ -148,8 +148,8 @@ public class DestructiveSculkBlock extends BlockWithEntity {
     }
 
     @Override
-    public List<ItemStack> getDroppedStacks(BlockState state, LootContextParameterSet.Builder builder) {
-        DestructiveSculkBlockEntity blockEntity = builder.get(LootContextParameters.field_1228) instanceof DestructiveSculkBlockEntity destructiveSculkBlockEntity ? destructiveSculkBlockEntity : null;
+    protected List<ItemStack> getDroppedStacks(BlockState state, LootWorldContext.Builder builder) {
+        DestructiveSculkBlockEntity blockEntity = builder.get(LootContextParameters.BLOCK_ENTITY) instanceof DestructiveSculkBlockEntity destructiveSculkBlockEntity ? destructiveSculkBlockEntity : null;
         if (blockEntity != null) {
             blockEntity.modifyLootContext(builder);
             return blockEntity.getReplacedState().getDroppedStacks(builder);

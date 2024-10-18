@@ -23,11 +23,6 @@ public class AcidSpitEntityRenderer extends EntityRenderer<AcidSpitEntity, Entit
     }
 
     @Override
-    public EntityRenderState getRenderState() {
-        return new EntityRenderState();
-    }
-
-    @Override
     public void render(EntityRenderState state, MatrixStack matrices, VertexConsumerProvider vertexConsumers, int light) {
         matrices.push();
         matrices.scale(0.5F, 0.5F, 0.5F);
@@ -42,6 +37,11 @@ public class AcidSpitEntityRenderer extends EntityRenderer<AcidSpitEntity, Entit
         produceVertex(vertexConsumer, entry, light, 0.0F, 1, 0, 0);
         matrices.pop();
         super.render(state, matrices, vertexConsumers, light);
+    }
+
+    @Override
+    public EntityRenderState createRenderState() {
+        return new EntityRenderState();
     }
 
     private static void produceVertex(VertexConsumer vertexConsumer, MatrixStack.Entry matrix, int light, float x, int z, int textureU, int textureV) {

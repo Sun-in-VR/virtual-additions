@@ -6,14 +6,14 @@ import com.mojang.serialization.Codec;
 import com.mojang.serialization.MapCodec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
 import net.minecraft.block.ShulkerBoxBlock;
-import net.minecraft.class_10355;
 import net.minecraft.item.BlockItem;
 import net.minecraft.item.BundleItem;
 import net.minecraft.item.ItemStack;
 import net.minecraft.network.RegistryByteBuf;
 import net.minecraft.network.codec.PacketCodec;
 import net.minecraft.recipe.*;
-import net.minecraft.recipe.book.RecipeBookGroup;
+import net.minecraft.recipe.book.RecipeBookCategories;
+import net.minecraft.recipe.book.RecipeBookCategory;
 import net.minecraft.recipe.display.SlotDisplay;
 import net.minecraft.recipe.input.RecipeInput;
 import net.minecraft.registry.DynamicRegistryManager;
@@ -89,8 +89,8 @@ public class ColoringRecipe implements Recipe<RecipeInput>, ColoringStationRecip
     }
 
     @Override
-    public class_10355 getRecipeBookTab() {
-        return RecipeBookGroup.STONECUTTER;
+    public RecipeBookCategory getRecipeBookCategory() {
+        return RecipeBookCategories.STONECUTTER;
     }
 
     public int getIndex() {

@@ -20,7 +20,7 @@ public class LyftEntityRenderer extends MobEntityRenderer<LyftEntity, LivingEnti
     }
 
     @Override
-    public LivingEntityRenderState getRenderState() {
+    public LivingEntityRenderState createRenderState() {
         return new LivingEntityRenderState();
     }
 }

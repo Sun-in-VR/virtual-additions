@@ -31,7 +31,7 @@ public class LumwaspEntityRenderer extends MobEntityRenderer<LumwaspEntity, Lumw
     }
 
     @Override
-    public LumwaspEntityRenderState getRenderState() {
+    public LumwaspEntityRenderState createRenderState() {
         return new LumwaspEntityRenderState();
     }
 }

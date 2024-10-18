@@ -757,7 +757,7 @@ public class VABlocks {
         WARP_ANCHOR = register("warp_anchor", WarpAnchorBlock::new, Settings.create().nonOpaque().sounds(BlockSoundGroup.NETHERITE).luminance(state -> 3).emissiveLighting( (state, world, pos) -> !state.get(WarpAnchorBlock.POWERED) ).hardness(22.5F).requiresTool().resistance(600.0F));
         WARP_TETHER = register("warp_tether", WarpTetherBlock::new, Settings.create().nonOpaque().sounds(BlockSoundGroup.NETHERITE).luminance(state -> 3).emissiveLighting( (state, world, pos) -> !state.get(WarpTetherBlock.COOLDOWN) ).hardness(22.5F).requiresTool().resistance(600.0F));
         ENTANGLEMENT_DRIVE = register("entanglement_drive", EntanglementDriveBlock::new, Settings.create().nonOpaque().sounds(BlockSoundGroup.NETHERITE).luminance(state -> 3).emissiveLighting( (state, world, pos) -> !state.get(Properties.POWERED) ).hardness(22.5F).requiresTool().resistance(600.0F));
-        REMOTE_NOTIFIER = register("remote_notifier", RemoteNotifierBlock::new, Settings.create().nonOpaque().sounds(BlockSoundGroup.NETHERITE).hardness(22.5F).requiresTool().resistance(600.0F));
+        REMOTE_NOTIFIER = register("remote_notifier", RemoteNotifierBlock::new, Settings.create().nonOpaque().sounds(BlockSoundGroup.NETHERITE).hardness(22.5F).requiresTool().resistance(600.0F).requires(VirtualAdditions.PREVIEW));
 
         DESTRUCTIVE_SCULK = register("destructive_sculk", DestructiveSculkBlock::new, Settings.copy(Blocks.SCULK));
         WIND = register("wind", WindBlock::new, Settings.copy(Blocks.AIR));

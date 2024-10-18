@@ -1,5 +1,6 @@
 package com.github.suninvr.virtualadditions.registry;
 
+import com.github.suninvr.virtualadditions.VirtualAdditions;
 import com.github.suninvr.virtualadditions.component.ExplosiveContentComponent;
 import com.github.suninvr.virtualadditions.component.WarpTetherLocationComponent;
 import com.github.suninvr.virtualadditions.item.*;
@@ -984,7 +985,7 @@ public class VAItems {
         WARP_ANCHOR = register("warp_anchor", settings ->  new BlockItem(VABlocks.WARP_ANCHOR, settings), new Item.Settings().rarity(Rarity.RARE).translationKey(VABlocks.WARP_TETHER.getTranslationKey()), ItemGroups.REDSTONE, Items.CAULDRON);
         WARP_TETHER = register("warp_tether", settings -> new BlockItem(VABlocks.WARP_TETHER, settings), new Item.Settings().rarity(Rarity.RARE).translationKey(VABlocks.WARP_ANCHOR.getTranslationKey()).component(VADataComponentTypes.WARP_TETHER_LOCATION, WarpTetherLocationComponent.DEFAULT), ItemGroups.REDSTONE, prev);
         ENTANGLEMENT_DRIVE = register("entanglement_drive", settings ->  new BlockItem(VABlocks.ENTANGLEMENT_DRIVE, settings), new Item.Settings().rarity(Rarity.RARE).translationKey(VABlocks.ENTANGLEMENT_DRIVE.getTranslationKey()), ItemGroups.REDSTONE, prev);
-        REMOTE_NOTIFIER = register("remote_notifier", settings ->  new BlockItem(VABlocks.REMOTE_NOTIFIER, settings), new Item.Settings().translationKey(VABlocks.REMOTE_NOTIFIER.getTranslationKey()), ItemGroups.REDSTONE, prev);
+        REMOTE_NOTIFIER = register("remote_notifier", settings ->  new BlockItem(VABlocks.REMOTE_NOTIFIER, settings), new Item.Settings().translationKey(VABlocks.REMOTE_NOTIFIER.getTranslationKey()).requires(VirtualAdditions.PREVIEW), ItemGroups.REDSTONE, prev);
 
         //endregion
 

@@ -9,8 +9,8 @@ import net.minecraft.block.Blocks;
 import net.minecraft.block.entity.BlockEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
-import net.minecraft.loot.context.LootContextParameterSet;
 import net.minecraft.loot.context.LootContextParameters;
+import net.minecraft.loot.context.LootWorldContext;
 import net.minecraft.nbt.NbtCompound;
 import net.minecraft.nbt.NbtElement;
 import net.minecraft.nbt.NbtHelper;
@@ -110,11 +110,11 @@ public class DestructiveSculkBlockEntity extends BlockEntity {
         this.markDirty();
     }
 
-    public void modifyLootContext(LootContextParameterSet.Builder builder) {
+    public void modifyLootContext(LootWorldContext.Builder builder) {
         if (this.getWorld() instanceof ServerWorld serverWorld) {
             PlayerEntity player = serverWorld.getPlayerByUuid(this.getPlayerId());
-            if (player != null) builder.add(LootContextParameters.field_1226, player);
-            builder.add(LootContextParameters.field_1229, getTool());
+            if (player != null) builder.add(LootContextParameters.THIS_ENTITY, player);
+            builder.add(LootContextParameters.TOOL, getTool());
         }
     }
 
