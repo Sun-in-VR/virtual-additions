@@ -7,6 +7,7 @@ import com.github.suninvr.virtualadditions.client.toast.RemoteNotifierToast;
 import com.github.suninvr.virtualadditions.registry.VAPackets;
 import com.github.suninvr.virtualadditions.registry.VAParticleTypes;
 import com.github.suninvr.virtualadditions.registry.VAScreenHandler;
+import com.github.suninvr.virtualadditions.screen.ColoringStationScreenHandler;
 import net.fabricmc.api.ClientModInitializer;
 import net.fabricmc.fabric.api.client.networking.v1.ClientPlayNetworking;
 import net.fabricmc.fabric.api.client.particle.v1.ParticleFactoryRegistry;
@@ -40,6 +41,8 @@ public class VirtualAdditionsClient implements ClientModInitializer {
             if (context != null) {
                 if (context.client().currentScreen instanceof ColoringStationScreen coloringStationScreen) {
                     coloringStationScreen.getScreenHandler().setRecipeData(payload.list());
+                } else {
+                    ColoringStationScreenHandler.recipeDataOnLoad = payload.list();
                 }
             }
         });

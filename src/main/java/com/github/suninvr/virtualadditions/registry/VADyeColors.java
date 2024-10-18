@@ -1,6 +1,6 @@
 package com.github.suninvr.virtualadditions.registry;
 
-import com.github.suninvr.virtualadditions.block.entity.ColoringStationBlockEntity;
+import com.github.suninvr.virtualadditions.block.entity.DyeContents;
 import com.github.suninvr.virtualadditions.client.VARenderers;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
@@ -18,30 +18,30 @@ public class VADyeColors {
     public static final DyeColor SINOPIA = DyeColor.byName("sinopia", DyeColor.WHITE);
     public static final DyeColor LILAC = DyeColor.byName("lilac", DyeColor.WHITE);
 
-    public static final ColoringStationBlockEntity.DyeContents WHITE_CONTENT = new ColoringStationBlockEntity.DyeContents(0, 0, 0, 0, 0, 4);
-    public static final ColoringStationBlockEntity.DyeContents LIGHT_GRAY_CONTENT = new ColoringStationBlockEntity.DyeContents(0, 0, 0, 0, 1, 3); // 3rd's
-    public static final ColoringStationBlockEntity.DyeContents GRAY_CONTENT = new ColoringStationBlockEntity.DyeContents(0, 0, 0, 0, 2, 2);
-    public static final ColoringStationBlockEntity.DyeContents BLACK_CONTENT = new ColoringStationBlockEntity.DyeContents(0, 0, 0, 0, 4, 0);
-    public static final ColoringStationBlockEntity.DyeContents TAN_CONTENT = new ColoringStationBlockEntity.DyeContents(1, 0, 0, 1, 1, 1);
-    public static final ColoringStationBlockEntity.DyeContents BROWN_CONTENT = new ColoringStationBlockEntity.DyeContents(1, 0, 0, 1, 2, 0);
-    public static final ColoringStationBlockEntity.DyeContents MAROON_CONTENT = new ColoringStationBlockEntity.DyeContents(2, 0, 0, 0, 2, 0);
-    public static final ColoringStationBlockEntity.DyeContents RED_CONTENT = new ColoringStationBlockEntity.DyeContents(4, 0, 0, 0, 0, 0);
-    public static final ColoringStationBlockEntity.DyeContents SINOPIA_CONTENT = new ColoringStationBlockEntity.DyeContents(3, 0, 0, 1, 0, 0); // 3rd's
-    public static final ColoringStationBlockEntity.DyeContents ORANGE_CONTENT = new ColoringStationBlockEntity.DyeContents(2, 0, 0, 2, 0, 0);
-    public static final ColoringStationBlockEntity.DyeContents YELLOW_CONTENT = new ColoringStationBlockEntity.DyeContents(0, 0, 0, 4, 0, 0);
-    public static final ColoringStationBlockEntity.DyeContents CHARTREUSE_CONTENT = new ColoringStationBlockEntity.DyeContents(0, 2, 0, 1, 0, 1);
-    public static final ColoringStationBlockEntity.DyeContents LIME_CONTENT = new ColoringStationBlockEntity.DyeContents(0, 2, 0, 0, 0, 2);
-    public static final ColoringStationBlockEntity.DyeContents GREEN_CONTENT = new ColoringStationBlockEntity.DyeContents(0, 4, 0, 0, 0, 0);
-    public static final ColoringStationBlockEntity.DyeContents VIRIDIAN_CONTENT = new ColoringStationBlockEntity.DyeContents(0, 3, 1, 0, 0, 0); // 3rd's
-    public static final ColoringStationBlockEntity.DyeContents CYAN_CONTENT = new ColoringStationBlockEntity.DyeContents(0, 2, 2, 0, 0, 0);
-    public static final ColoringStationBlockEntity.DyeContents LIGHT_BLUE_CONTENT = new ColoringStationBlockEntity.DyeContents(0, 0, 2, 0, 0, 2);
-    public static final ColoringStationBlockEntity.DyeContents BLUE_CONTENT = new ColoringStationBlockEntity.DyeContents(0, 0, 4, 0, 0, 0);
-    public static final ColoringStationBlockEntity.DyeContents INDIGO_CONTENT = new ColoringStationBlockEntity.DyeContents(1, 0, 3, 0, 0, 0); // 3rd's
-    public static final ColoringStationBlockEntity.DyeContents PURPLE_CONTENT = new ColoringStationBlockEntity.DyeContents(2, 0, 2, 0, 0, 0);
-    public static final ColoringStationBlockEntity.DyeContents PLUM_CONTENT = new ColoringStationBlockEntity.DyeContents(2, 0, 1, 0, 1, 0);
-    public static final ColoringStationBlockEntity.DyeContents MAGENTA_CONTENT = new ColoringStationBlockEntity.DyeContents(2, 0, 1, 0, 0, 1);
-    public static final ColoringStationBlockEntity.DyeContents PINK_CONTENT = new ColoringStationBlockEntity.DyeContents(2, 0, 0, 0, 0, 2);
-    public static final ColoringStationBlockEntity.DyeContents LILAC_CONTENT = new ColoringStationBlockEntity.DyeContents(1, 0, 1, 0, 0, 2);
+    public static final DyeContents WHITE_CONTENT = new DyeContents(0, 0, 0, 0, 0, 4);
+    public static final DyeContents LIGHT_GRAY_CONTENT = new DyeContents(0, 0, 0, 0, 1, 3); // 3rd's
+    public static final DyeContents GRAY_CONTENT = new DyeContents(0, 0, 0, 0, 2, 2);
+    public static final DyeContents BLACK_CONTENT = new DyeContents(0, 0, 0, 0, 4, 0);
+    public static final DyeContents TAN_CONTENT = new DyeContents(1, 0, 0, 1, 1, 1);
+    public static final DyeContents BROWN_CONTENT = new DyeContents(1, 0, 0, 1, 2, 0);
+    public static final DyeContents MAROON_CONTENT = new DyeContents(2, 0, 0, 0, 2, 0);
+    public static final DyeContents RED_CONTENT = new DyeContents(4, 0, 0, 0, 0, 0);
+    public static final DyeContents SINOPIA_CONTENT = new DyeContents(3, 0, 0, 1, 0, 0); // 3rd's
+    public static final DyeContents ORANGE_CONTENT = new DyeContents(2, 0, 0, 2, 0, 0);
+    public static final DyeContents YELLOW_CONTENT = new DyeContents(0, 0, 0, 4, 0, 0);
+    public static final DyeContents CHARTREUSE_CONTENT = new DyeContents(0, 2, 0, 1, 0, 1);
+    public static final DyeContents LIME_CONTENT = new DyeContents(0, 2, 0, 0, 0, 2);
+    public static final DyeContents GREEN_CONTENT = new DyeContents(0, 4, 0, 0, 0, 0);
+    public static final DyeContents VIRIDIAN_CONTENT = new DyeContents(0, 3, 1, 0, 0, 0); // 3rd's
+    public static final DyeContents CYAN_CONTENT = new DyeContents(0, 2, 2, 0, 0, 0);
+    public static final DyeContents LIGHT_BLUE_CONTENT = new DyeContents(0, 0, 2, 0, 0, 2);
+    public static final DyeContents BLUE_CONTENT = new DyeContents(0, 0, 4, 0, 0, 0);
+    public static final DyeContents INDIGO_CONTENT = new DyeContents(1, 0, 3, 0, 0, 0); // 3rd's
+    public static final DyeContents PURPLE_CONTENT = new DyeContents(2, 0, 2, 0, 0, 0);
+    public static final DyeContents PLUM_CONTENT = new DyeContents(2, 0, 1, 0, 1, 0);
+    public static final DyeContents MAGENTA_CONTENT = new DyeContents(2, 0, 1, 0, 0, 1);
+    public static final DyeContents PINK_CONTENT = new DyeContents(2, 0, 0, 0, 0, 2);
+    public static final DyeContents LILAC_CONTENT = new DyeContents(1, 0, 1, 0, 0, 2);
 
 
     @Environment(EnvType.CLIENT)
@@ -70,11 +70,11 @@ public class VADyeColors {
         return VARenderers.CHARTREUSE_BED_TEXTURE;
     }
 
-    public static ColoringStationBlockEntity.DyeContents getContents(DyeItem item, int multiplier) {
+    public static DyeContents getContents(DyeItem item, int multiplier) {
         return getContents(item.getColor(), multiplier);
     }
 
-    public static ColoringStationBlockEntity.DyeContents getContents(DyeColor color, int multiplier) {
+    public static DyeContents getContents(DyeColor color, int multiplier) {
         if (color == DyeColor.WHITE) return WHITE_CONTENT.copyAndMultiply(multiplier);
         if (color == DyeColor.LIGHT_GRAY) return LIGHT_GRAY_CONTENT.copyAndMultiply(multiplier);
         if (color == DyeColor.GRAY) return GRAY_CONTENT.copyAndMultiply(multiplier);

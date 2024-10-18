@@ -61,10 +61,6 @@ public abstract class AcidFluid extends FlowableFluid {
 
     @Override
     protected void onRandomTick(ServerWorld serverWorld, BlockPos pos, FluidState state, Random random) {
-        if (serverWorld.isRaining() && serverWorld.isSkyVisible(pos.up())) {
-            serverWorld.setBlockState(pos, Blocks.WATER.getStateWithProperties(state.getBlockState()));
-        }
-
         if (state.getLevel() > 6 && serverWorld.getBlockState(pos.down()).isOf(Blocks.MAGMA_BLOCK)) {
             serverWorld.setBlockState(pos, VABlocks.ACID_BLOCK.getDefaultState());
         }

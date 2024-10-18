@@ -1,6 +1,6 @@
 package com.github.suninvr.virtualadditions.recipe;
 
-import com.github.suninvr.virtualadditions.block.entity.ColoringStationBlockEntity;
+import com.github.suninvr.virtualadditions.block.entity.DyeContents;
 import net.minecraft.item.ItemStack;
 import net.minecraft.network.RegistryByteBuf;
 import net.minecraft.network.codec.PacketCodec;
@@ -8,8 +8,8 @@ import net.minecraft.network.codec.PacketCodecs;
 import net.minecraft.recipe.Ingredient;
 import net.minecraft.recipe.RecipeEntry;
 import net.minecraft.recipe.display.SlotDisplay;
+import net.minecraft.registry.tag.ItemTags;
 
-import java.util.Comparator;
 import java.util.List;
 import java.util.Optional;
 
@@ -35,7 +35,9 @@ public record ColoringRecipeDisplay<T extends ColoringStationRecipe>(SlotDisplay
         }
 
         public ColoringRecipeDisplay.Grouping<T> filter(ItemStack stack) {
-            return new ColoringRecipeDisplay.Grouping<>(this.entries.stream().filter(tGroupEntry -> tGroupEntry.input.map(ingredient -> ingredient.test(stack)).orElseGet(stack::isEmpty)).toList());
+            Grouping<T> grouping = new ColoringRecipeDisplay.Grouping<>(this.entries.stream().filter(tGroupEntry -> tGroupEntry.input.map(ingredient -> ingredient.test(stack)).orElseGet(stack::isEmpty)).toList());
+            if (grouping.isEmpty()) grouping = new ColoringRecipeDisplay.Grouping<>(this.entries.stream().filter(tGroupEntry -> tGroupEntry.recipe.recipeEntry.isPresent() && tGroupEntry.recipe.recipeEntry.get().value() instanceof ArmorColoringRecipe && stack.isIn(ItemTags.DYEABLE)).toList());
+            return grouping;
         }
 
         public boolean isEmpty() {
@@ -52,8 +54,8 @@ public record ColoringRecipeDisplay<T extends ColoringStationRecipe>(SlotDisplay
             return PacketCodec.tuple(Ingredient.OPTIONAL_PACKET_CODEC, ColoringRecipeDisplay.GroupEntry::input, ColoringRecipeDisplay.codec(), ColoringRecipeDisplay.GroupEntry::recipe, ColoringRecipeDisplay.GroupEntry::new);
         }
 
-        public ColoringStationBlockEntity.DyeContents getDyeContents() {
-            return this.recipe.recipeEntry.isPresent() && this.recipe.recipeEntry.get().value() instanceof ColoringRecipe coloringRecipe ? coloringRecipe.getDyeCost() : ColoringStationBlockEntity.DyeContents.empty();
+        public DyeContents getDyeContents() {
+            return this.recipe.recipeEntry.isPresent() && this.recipe.recipeEntry.get().value() instanceof ColoringRecipe coloringRecipe ? coloringRecipe.getDyeCost() : DyeContents.empty();
         }
     }
 }

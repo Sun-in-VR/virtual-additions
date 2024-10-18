@@ -1,11 +1,11 @@
 package com.github.suninvr.virtualadditions.screen;
 
 import com.github.suninvr.virtualadditions.block.entity.ColoringStationBlockEntity;
+import com.github.suninvr.virtualadditions.block.entity.DyeContents;
 import com.github.suninvr.virtualadditions.interfaces.RecipeManagerInterface;
 import com.github.suninvr.virtualadditions.network.ColoringStationS2CPayload;
 import com.github.suninvr.virtualadditions.recipe.ColoringRecipeDisplay;
 import com.github.suninvr.virtualadditions.recipe.ColoringStationRecipe;
-import com.github.suninvr.virtualadditions.registry.VARecipeType;
 import com.github.suninvr.virtualadditions.registry.VAScreenHandler;
 import net.fabricmc.fabric.api.networking.v1.ServerPlayNetworking;
 import net.minecraft.entity.player.PlayerEntity;
@@ -21,7 +21,6 @@ import net.minecraft.network.codec.PacketCodec;
 import net.minecraft.network.codec.PacketCodecs;
 import net.minecraft.recipe.RecipeEntry;
 import net.minecraft.recipe.input.RecipeInput;
-import net.minecraft.recipe.input.SingleStackRecipeInput;
 import net.minecraft.screen.*;
 import net.minecraft.screen.slot.Slot;
 import net.minecraft.server.network.ServerPlayerEntity;
@@ -35,12 +34,13 @@ import java.util.List;
 import java.util.Optional;
 
 public class ColoringStationScreenHandler extends ScreenHandler {
-    private final ColoringStationBlockEntity.DyeContents dyeContents;
-    private ColoringStationBlockEntity.DyeContents dyeContentsAdder;
+    private final DyeContents dyeContents;
+    private DyeContents dyeContentsAdder;
     private final World world;
     private final PlayerInventory playerInventory;
     private ColoringRecipeDisplay.Grouping<ColoringStationRecipe> coloringRecipes = ColoringRecipeDisplay.Grouping.empty();
     private List<ColoringRecipeData> recipeData = new ArrayList<>();
+    public static List<ColoringRecipeData> recipeDataOnLoad = new ArrayList<>();
     private List<RecipeEntry<ColoringStationRecipe>> recipeEntries = new ArrayList<>();
     private ItemStack inputStack = ItemStack.EMPTY;
     private final Property selectedRecipe = Property.create();
@@ -52,7 +52,6 @@ public class ColoringStationScreenHandler extends ScreenHandler {
     final Slot outputSlot;
     Runnable contentsChangedListener = () -> {};
     public final Inventory input = new SimpleInventory(2){
-
         @Override
         public void markDirty() {
             super.markDirty();
@@ -86,7 +85,7 @@ public class ColoringStationScreenHandler extends ScreenHandler {
         super(VAScreenHandler.COLORING_STATION, syncId);
         this.propertyDelegate = propertyDelegate;
         this.addProperties(propertyDelegate);
-        this.dyeContents = new ColoringStationBlockEntity.DyeContents(propertyDelegate){
+        this.dyeContents = new DyeContents(propertyDelegate){
             @Override
             public int getR() {
                 return ColoringStationScreenHandler.this.propertyDelegate.get(0);
@@ -142,7 +141,7 @@ public class ColoringStationScreenHandler extends ScreenHandler {
                 ColoringStationScreenHandler.this.propertyDelegate.set(5, r);
             }
         };
-        this.dyeContentsAdder = new ColoringStationBlockEntity.DyeContents();
+        this.dyeContentsAdder = new DyeContents();
         this.world = playerInventory.player.getWorld();
         this.playerInventory = playerInventory;
         this.context = context;
@@ -163,12 +162,13 @@ public class ColoringStationScreenHandler extends ScreenHandler {
                 ColoringStationScreenHandler.this.addDyeContents();
                 ColoringStationScreenHandler.this.updateDyeInput();
                 ColoringStationScreenHandler.this.populateResult();
-                context.run((world, pos) -> {
+                ColoringStationScreenHandler.this.context.run((world, pos) -> {
                     long l = world.getTime();
                     if (ColoringStationScreenHandler.this.lastTakeTime != l) {
                         world.playSound(null, pos, SoundEvents.ITEM_DYE_USE, SoundCategory.BLOCKS, 1.0f, 1.0f);
                         ColoringStationScreenHandler.this.lastTakeTime = l;
                     }
+                    ColoringStationScreenHandler.this.markBlockEntityDirty();
                 });
                 super.onTakeItem(player, stack);
             }
@@ -183,11 +183,13 @@ public class ColoringStationScreenHandler extends ScreenHandler {
             this.addSlot(new Slot(playerInventory, i, 8 + i * 18, 142));
         }
         this.updateInput(ItemStack.EMPTY);
+        if (this.recipeData.isEmpty() && !recipeDataOnLoad.isEmpty()) this.setRecipeData(recipeDataOnLoad);
         this.populateResult();
     }
 
     private void addDyeContents() {
         this.dyeContents.add(this.dyeContentsAdder);
+        ColoringStationScreenHandler.this.markBlockEntityDirty();
     }
 
     @Override
@@ -220,7 +222,7 @@ public class ColoringStationScreenHandler extends ScreenHandler {
     public ItemStack quickMove(PlayerEntity player, int slot) {
         ItemStack itemStack = ItemStack.EMPTY;
         Slot clickedSlot = this.slots.get(slot);
-        if (clickedSlot != null && clickedSlot.hasStack()) {
+        if (clickedSlot.hasStack()) {
             ItemStack itemStack2 = clickedSlot.getStack();
             Item item = itemStack2.getItem();
             itemStack = itemStack2.copy();
@@ -272,9 +274,12 @@ public class ColoringStationScreenHandler extends ScreenHandler {
     @Override
     public void onContentChanged(Inventory inventory) {
         ItemStack itemStack = this.inputSlot.getStack();
-        if (!itemStack.isOf(this.inputStack.getItem())) {
+        if (!itemStack.equals(this.inputStack)) {
+            if (!(itemStack.isOf(this.inputStack.getItem()))) {
+                this.updateInput(itemStack);
+            }
+            this.populateResult();
             this.inputStack = itemStack.copy();
-            this.updateInput(itemStack);
         }
         this.updateDyeInput();
     }
@@ -284,6 +289,7 @@ public class ColoringStationScreenHandler extends ScreenHandler {
         if (this.dyeSlot.hasStack()) {
             this.dyeContents.addDye(dyeStack);
             this.populateResult();
+            ColoringStationScreenHandler.this.markBlockEntityDirty();
         }
     }
 
@@ -297,8 +303,11 @@ public class ColoringStationScreenHandler extends ScreenHandler {
             this.coloringRecipes.entries().forEach(entry -> {
                 if (entry.recipe().recipeEntry().isPresent()) {
                     RecipeEntry<ColoringStationRecipe> recipe = entry.recipe().recipeEntry().get();
-                    recipeDataList.add(new ColoringRecipeData(recipe.value().getIndex(), recipe.value().getResultStack(stack), recipe.value().getDyeCost()));
-                    recipeEntries.add(recipe);
+                    ItemStack resultStack;
+                    if (!(resultStack = recipe.value().getResultStack(stack)).isEmpty()) {
+                        recipeDataList.add(new ColoringRecipeData(recipe.value().getIndex(), resultStack, recipe.value().getDyeCost()));
+                        recipeEntries.add(recipe);
+                    }
                 }
             });
             this.setRecipeData(recipeDataList);
@@ -343,15 +352,21 @@ public class ColoringStationScreenHandler extends ScreenHandler {
         }
     }
 
-    public ColoringStationBlockEntity.DyeContents getDyeContents() {
+    private void markBlockEntityDirty() {
+        this.context.run((world1, pos) -> {
+            if (world1.getBlockEntity(pos) instanceof ColoringStationBlockEntity blockEntity) blockEntity.markDirty();
+        });
+    }
+
+    public DyeContents getDyeContents() {
         return this.dyeContents;
     }
 
-    public record ColoringRecipeData(int index, ItemStack stack, ColoringStationBlockEntity.DyeContents dyeCost) {
+    public record ColoringRecipeData(int index, ItemStack stack, DyeContents dyeCost) {
         public static final PacketCodec<RegistryByteBuf, ColoringRecipeData> CODEC = PacketCodec.tuple(
                 PacketCodecs.INTEGER, ColoringRecipeData::index,
                 ItemStack.OPTIONAL_PACKET_CODEC, ColoringRecipeData::stack,
-                ColoringStationBlockEntity.DyeContents.PACKET_CODEC, ColoringRecipeData::dyeCost,
+                DyeContents.PACKET_CODEC, ColoringRecipeData::dyeCost,
                 ColoringRecipeData::new
         );
     }

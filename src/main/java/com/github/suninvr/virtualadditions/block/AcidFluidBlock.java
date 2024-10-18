@@ -15,6 +15,7 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Direction;
 import net.minecraft.util.math.random.Random;
 import net.minecraft.world.World;
+import net.minecraft.world.biome.Biome;
 
 @SuppressWarnings("deprecation")
 public class AcidFluidBlock extends FluidBlock {
@@ -26,6 +27,13 @@ public class AcidFluidBlock extends FluidBlock {
     @Override
     public void scheduledTick(BlockState state, ServerWorld world, BlockPos pos, Random random) {
         world.setBlockState(pos, Blocks.WATER.getDefaultState().with(LEVEL, world.getBlockState(pos).get(LEVEL)));
+    }
+
+    @Override
+    public void precipitationTick(BlockState state, World world, BlockPos pos, Biome.Precipitation precipitation) {
+        if (precipitation == Biome.Precipitation.RAIN) {
+            world.setBlockState(pos, Blocks.WATER.getStateWithProperties(state));
+        }
     }
 
     public void onBlockAdded(BlockState state, World world, BlockPos pos, BlockState oldState, boolean notify) {

@@ -1,6 +1,6 @@
 package com.github.suninvr.virtualadditions.datagen.recipe;
 
-import com.github.suninvr.virtualadditions.block.entity.ColoringStationBlockEntity;
+import com.github.suninvr.virtualadditions.block.entity.DyeContents;
 import com.github.suninvr.virtualadditions.recipe.ColoringRecipe;
 import net.minecraft.advancement.Advancement;
 import net.minecraft.advancement.AdvancementRequirements;
@@ -21,19 +21,19 @@ import org.jetbrains.annotations.Nullable;
 import java.util.Optional;
 
 public class ColoringRecipeJsonBuilder {
-    private final ColoringStationBlockEntity.DyeContents dyeCost;
+    private final DyeContents dyeCost;
     private final Ingredient input;
     private final Item output;
     private final int index;
     
-    public ColoringRecipeJsonBuilder(Ingredient input, ColoringStationBlockEntity.DyeContents dyeCost, ItemConvertible output, int index) {
+    public ColoringRecipeJsonBuilder(Ingredient input, DyeContents dyeCost, ItemConvertible output, int index) {
         this.input = input;
         this.dyeCost = dyeCost;
         this.output = output.asItem();
         this.index = index;
     }
     
-    public static ColoringRecipeJsonBuilder create(@Nullable Ingredient input, ColoringStationBlockEntity.DyeContents dyeCost, ItemConvertible output, int index) {
+    public static ColoringRecipeJsonBuilder create(@Nullable Ingredient input, DyeContents dyeCost, ItemConvertible output, int index) {
         return new ColoringRecipeJsonBuilder(input, dyeCost, output, index);
     }
 

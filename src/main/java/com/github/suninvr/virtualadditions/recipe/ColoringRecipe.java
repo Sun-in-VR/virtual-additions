@@ -1,6 +1,6 @@
 package com.github.suninvr.virtualadditions.recipe;
 
-import com.github.suninvr.virtualadditions.block.entity.ColoringStationBlockEntity;
+import com.github.suninvr.virtualadditions.block.entity.DyeContents;
 import com.github.suninvr.virtualadditions.registry.VARecipeType;
 import com.mojang.serialization.Codec;
 import com.mojang.serialization.MapCodec;
@@ -24,13 +24,13 @@ import java.util.List;
 import java.util.Optional;
 
 public class ColoringRecipe implements Recipe<RecipeInput>, ColoringStationRecipe {
-    public final ColoringStationBlockEntity.DyeContents cost;
+    public final DyeContents cost;
     public final int index;
     protected final Optional<Ingredient> ingredient;
     protected final ItemStack result;
     private IngredientPlacement ingredientPlacement;
 
-    public ColoringRecipe(Optional<Ingredient> ingredient, ItemStack result, ColoringStationBlockEntity.DyeContents cost, int index) {
+    public ColoringRecipe(Optional<Ingredient> ingredient, ItemStack result, DyeContents cost, int index) {
         this.ingredient = ingredient;
         this.result = result;
         this.cost = cost;
@@ -40,7 +40,7 @@ public class ColoringRecipe implements Recipe<RecipeInput>, ColoringStationRecip
     public ColoringRecipe(Optional<Ingredient> ingredient, ItemStack result, int r, int g, int b, int y, int k, int w, int index) {
         this.ingredient = ingredient;
         this.result = result;
-        this.cost = new ColoringStationBlockEntity.DyeContents(r, g, b, y, k, w);
+        this.cost = new DyeContents(r, g, b, y, k, w);
         this.index = index;
     }
 
@@ -58,7 +58,7 @@ public class ColoringRecipe implements Recipe<RecipeInput>, ColoringStationRecip
         return this.result.copy();
     }
 
-    public ItemStack craftWithDye(RecipeInput inventory, DynamicRegistryManager registryManager, ColoringStationBlockEntity.DyeContents contents) {
+    public ItemStack craftWithDye(RecipeInput inventory, DynamicRegistryManager registryManager, DyeContents contents) {
         if (contents.getR() - this.cost.getR() >= 0 && contents.getG() - this.cost.getG() >= 0 && contents.getB() - this.cost.getB() >= 0 && contents.getY() - this.cost.getY() >= 0 && contents.getK() - this.cost.getK() >= 0 && contents.getW() - this.cost.getW() >= 0) {
             return craft(inventory, registryManager);
         }
@@ -97,7 +97,7 @@ public class ColoringRecipe implements Recipe<RecipeInput>, ColoringStationRecip
         return this.index;
     }
 
-    public ColoringStationBlockEntity.DyeContents getDyeCost(boolean inverted) {
+    public DyeContents getDyeCost(boolean inverted) {
         return inverted ? this.cost : this.cost.copyAndMultiply(-1);
     }
 
@@ -148,7 +148,7 @@ public class ColoringRecipe implements Recipe<RecipeInput>, ColoringStationRecip
         private static ColoringRecipe read(RegistryByteBuf buf) {
             Optional<Ingredient> ingredient = Ingredient.OPTIONAL_PACKET_CODEC.decode(buf);
             ItemStack stack = ItemStack.PACKET_CODEC.decode(buf);
-            ColoringStationBlockEntity.DyeContents cost = ColoringStationBlockEntity.DyeContents.PACKET_CODEC.decode(buf);
+            DyeContents cost = DyeContents.PACKET_CODEC.decode(buf);
             int index = buf.readInt();
             return new ColoringRecipe(ingredient, stack, cost, index);
         }
@@ -156,7 +156,7 @@ public class ColoringRecipe implements Recipe<RecipeInput>, ColoringStationRecip
         private static void write(RegistryByteBuf buf, ColoringRecipe recipe) {
             Ingredient.OPTIONAL_PACKET_CODEC.encode(buf, recipe.ingredient);
             ItemStack.PACKET_CODEC.encode(buf, recipe.result);
-            ColoringStationBlockEntity.DyeContents.PACKET_CODEC.encode(buf, recipe.cost);
+            DyeContents.PACKET_CODEC.encode(buf, recipe.cost);
             buf.writeInt(recipe.index);
         }
     }

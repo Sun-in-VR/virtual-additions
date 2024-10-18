@@ -1,7 +1,6 @@
 package com.github.suninvr.virtualadditions.recipe;
 
-import com.github.suninvr.virtualadditions.block.entity.ColoringStationBlockEntity;
-import net.minecraft.inventory.Inventory;
+import com.github.suninvr.virtualadditions.block.entity.DyeContents;
 import net.minecraft.item.ItemStack;
 import net.minecraft.recipe.Ingredient;
 import net.minecraft.recipe.Recipe;
@@ -18,11 +17,11 @@ public interface ColoringStationRecipe extends Recipe<RecipeInput> {
 
     SlotDisplay.StackSlotDisplay getStackSlotDisplay();
 
-    ItemStack craftWithDye(RecipeInput input, DynamicRegistryManager registryManager, ColoringStationBlockEntity.DyeContents dyeContents);
+    ItemStack craftWithDye(RecipeInput input, DynamicRegistryManager registryManager, DyeContents dyeContents);
 
-    ColoringStationBlockEntity.DyeContents getDyeCost(boolean inverted);
+    DyeContents getDyeCost(boolean inverted);
 
-    default ColoringStationBlockEntity.DyeContents getDyeCost() {
+    default DyeContents getDyeCost() {
         return this.getDyeCost(false);
     }
 

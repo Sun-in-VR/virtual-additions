@@ -1,7 +1,7 @@
 package com.github.suninvr.virtualadditions.datagen;
 
 import com.github.suninvr.virtualadditions.VirtualAdditions;
-import com.github.suninvr.virtualadditions.block.entity.ColoringStationBlockEntity;
+import com.github.suninvr.virtualadditions.block.entity.DyeContents;
 import com.github.suninvr.virtualadditions.datagen.recipe.ArmorColoringRecipeJsonBuilder;
 import com.github.suninvr.virtualadditions.datagen.recipe.ColoringRecipeJsonBuilder;
 import com.github.suninvr.virtualadditions.item.interfaces.GildedToolItem;
@@ -521,30 +521,30 @@ public final class VARecipeProvider {
         }
     }
     private abstract static class Generator extends RecipeGenerator {
-        protected static final ColoringStationBlockEntity.DyeContents WHITE_COST = VADyeColors.WHITE_CONTENT;
-        protected static final ColoringStationBlockEntity.DyeContents LIGHT_GRAY_COST = VADyeColors.LIGHT_GRAY_CONTENT;
-        protected static final ColoringStationBlockEntity.DyeContents GRAY_COST = VADyeColors.GRAY_CONTENT;
-        protected static final ColoringStationBlockEntity.DyeContents BLACK_COST = VADyeColors.BLACK_CONTENT;
-        protected static final ColoringStationBlockEntity.DyeContents TAN_COST = VADyeColors.TAN_CONTENT;
-        protected static final ColoringStationBlockEntity.DyeContents BROWN_COST = VADyeColors.BROWN_CONTENT;
-        protected static final ColoringStationBlockEntity.DyeContents MAROON_COST = VADyeColors.MAROON_CONTENT;
-        protected static final ColoringStationBlockEntity.DyeContents RED_COST = VADyeColors.RED_CONTENT;
-        protected static final ColoringStationBlockEntity.DyeContents SINOPIA_COST = VADyeColors.SINOPIA_CONTENT;
-        protected static final ColoringStationBlockEntity.DyeContents ORANGE_COST = VADyeColors.ORANGE_CONTENT;
-        protected static final ColoringStationBlockEntity.DyeContents YELLOW_COST = VADyeColors.YELLOW_CONTENT;
-        protected static final ColoringStationBlockEntity.DyeContents CHARTREUSE_COST = VADyeColors.CHARTREUSE_CONTENT;
-        protected static final ColoringStationBlockEntity.DyeContents LIME_COST = VADyeColors.LIME_CONTENT;
-        protected static final ColoringStationBlockEntity.DyeContents GREEN_COST = VADyeColors.GREEN_CONTENT;
-        protected static final ColoringStationBlockEntity.DyeContents VIRIDIAN_COST = VADyeColors.VIRIDIAN_CONTENT;
-        protected static final ColoringStationBlockEntity.DyeContents CYAN_COST = VADyeColors.CYAN_CONTENT;
-        protected static final ColoringStationBlockEntity.DyeContents LIGHT_BLUE_COST = VADyeColors.LIGHT_BLUE_CONTENT;
-        protected static final ColoringStationBlockEntity.DyeContents BLUE_COST = VADyeColors.BLUE_CONTENT;
-        protected static final ColoringStationBlockEntity.DyeContents INDIGO_COST = VADyeColors.INDIGO_CONTENT;
-        protected static final ColoringStationBlockEntity.DyeContents PURPLE_COST = VADyeColors.PURPLE_CONTENT;
-        protected static final ColoringStationBlockEntity.DyeContents PLUM_COST = VADyeColors.PLUM_CONTENT;
-        protected static final ColoringStationBlockEntity.DyeContents MAGENTA_COST = VADyeColors.MAGENTA_CONTENT;
-        protected static final ColoringStationBlockEntity.DyeContents PINK_COST = VADyeColors.PINK_CONTENT;
-        protected static final ColoringStationBlockEntity.DyeContents LILAC_COST = VADyeColors.LILAC_CONTENT;
+        protected static final DyeContents WHITE_COST = VADyeColors.WHITE_CONTENT;
+        protected static final DyeContents LIGHT_GRAY_COST = VADyeColors.LIGHT_GRAY_CONTENT;
+        protected static final DyeContents GRAY_COST = VADyeColors.GRAY_CONTENT;
+        protected static final DyeContents BLACK_COST = VADyeColors.BLACK_CONTENT;
+        protected static final DyeContents TAN_COST = VADyeColors.TAN_CONTENT;
+        protected static final DyeContents BROWN_COST = VADyeColors.BROWN_CONTENT;
+        protected static final DyeContents MAROON_COST = VADyeColors.MAROON_CONTENT;
+        protected static final DyeContents RED_COST = VADyeColors.RED_CONTENT;
+        protected static final DyeContents SINOPIA_COST = VADyeColors.SINOPIA_CONTENT;
+        protected static final DyeContents ORANGE_COST = VADyeColors.ORANGE_CONTENT;
+        protected static final DyeContents YELLOW_COST = VADyeColors.YELLOW_CONTENT;
+        protected static final DyeContents CHARTREUSE_COST = VADyeColors.CHARTREUSE_CONTENT;
+        protected static final DyeContents LIME_COST = VADyeColors.LIME_CONTENT;
+        protected static final DyeContents GREEN_COST = VADyeColors.GREEN_CONTENT;
+        protected static final DyeContents VIRIDIAN_COST = VADyeColors.VIRIDIAN_CONTENT;
+        protected static final DyeContents CYAN_COST = VADyeColors.CYAN_CONTENT;
+        protected static final DyeContents LIGHT_BLUE_COST = VADyeColors.LIGHT_BLUE_CONTENT;
+        protected static final DyeContents BLUE_COST = VADyeColors.BLUE_CONTENT;
+        protected static final DyeContents INDIGO_COST = VADyeColors.INDIGO_CONTENT;
+        protected static final DyeContents PURPLE_COST = VADyeColors.PURPLE_CONTENT;
+        protected static final DyeContents PLUM_COST = VADyeColors.PLUM_CONTENT;
+        protected static final DyeContents MAGENTA_COST = VADyeColors.MAGENTA_CONTENT;
+        protected static final DyeContents PINK_COST = VADyeColors.PINK_CONTENT;
+        protected static final DyeContents LILAC_COST = VADyeColors.LILAC_CONTENT;
 
         protected final RegistryEntryLookup<Item> registryLookup;
         
@@ -559,15 +559,15 @@ public final class VARecipeProvider {
             offerFoodCookingRecipe("campfire_cooking", RecipeSerializer.CAMPFIRE_COOKING, CampfireCookingRecipe::new, 600, input, output, experience);
         }
 
-        protected void offerColoringRecipe(ItemConvertible input, ItemConvertible output, ColoringStationBlockEntity.DyeContents cost, int index) {
+        protected void offerColoringRecipe(ItemConvertible input, ItemConvertible output, DyeContents cost, int index) {
             ColoringRecipeJsonBuilder.create(Ingredient.ofItems(input), cost, output, index).offerTo(this.exporter);
         }
 
-        protected void offerColoringRecipe(ItemConvertible output, ColoringStationBlockEntity.DyeContents cost, int index) {
+        protected void offerColoringRecipe(ItemConvertible output, DyeContents cost, int index) {
             ColoringRecipeJsonBuilder.create(null, cost, output, index).offerTo(this.exporter);
         }
 
-        protected void offerColoringRecipe(TagKey<Item> input, ItemConvertible output, ColoringStationBlockEntity.DyeContents cost, int index) {
+        protected void offerColoringRecipe(TagKey<Item> input, ItemConvertible output, DyeContents cost, int index) {
             ColoringRecipeJsonBuilder.create(Ingredient.fromTag(this.registryLookup.getOrThrow(input)), cost, output, index).offerTo(this.exporter);
         }
 
@@ -587,7 +587,7 @@ public final class VARecipeProvider {
             }
         }
 
-        protected void offerColoringRecipes(ColorfulBlockSet set, ColoringStationBlockEntity.DyeContents cost, int index) {
+        protected void offerColoringRecipes(ColorfulBlockSet set, DyeContents cost, int index) {
             offerColoringRecipe(set.dye(), cost.copyAndMultiply(8), index);
             offerArmorColoringRecipe(set.dye(), index);
             set.ifWool(block -> offerColoringRecipe(ItemTags.WOOL, block, cost, index));

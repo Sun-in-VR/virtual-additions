@@ -8,13 +8,11 @@ import net.fabricmc.fabric.api.networking.v1.PayloadTypeRegistry;
 import net.fabricmc.fabric.api.networking.v1.ServerPlayNetworking;
 import net.minecraft.network.packet.CustomPayload;
 import net.minecraft.sound.SoundCategory;
-import net.minecraft.util.Identifier;
 
 import static com.github.suninvr.virtualadditions.VirtualAdditions.idOf;
 
 public class VAPackets {
 
-    public static Identifier WIND_UPDATE_VELOCITY = idOf("wind_update_velocity");
     public static CustomPayload.Id<EntanglementDriveC2SPayload> ENTANGLEMENT_DRIVE_C2S_ID = new CustomPayload.Id<>(idOf("entanglement_drive_c2s"));
     public static CustomPayload.Id<RemoteNotifierS2CPayload> REMOTE_NOTIFIER_S2C_ID = new CustomPayload.Id<>(idOf("remote_notifier_s2c"));
     public static CustomPayload.Id<ColoringStationS2CPayload> COLORING_STATION_S2C_ID = new CustomPayload.Id<>(idOf("coloring_station_s2c"));

@@ -1,7 +1,6 @@
 package com.github.suninvr.virtualadditions.client.screen;
 
-import com.github.suninvr.virtualadditions.block.entity.ColoringStationBlockEntity;
-import com.github.suninvr.virtualadditions.recipe.ColoringStationRecipe;
+import com.github.suninvr.virtualadditions.block.entity.DyeContents;
 import com.github.suninvr.virtualadditions.screen.ColoringStationScreenHandler;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.gui.DrawContext;
@@ -47,8 +46,8 @@ public class ColoringStationScreen extends HandledScreen<ColoringStationScreenHa
     private static final String INDICATOR_ADVANCED_GREEN = "container.virtual_additions.coloring_station.indicator.advanced.green";
     private static final String INDICATOR_ADVANCED_BLUE = "container.virtual_additions.coloring_station.indicator.advanced.blue";
     private static final String INDICATOR_ADVANCED_YELLOW = "container.virtual_additions.coloring_station.indicator.advanced.yellow";
-    private ColoringStationBlockEntity.DyeContents dyeContents;
-    private ColoringStationBlockEntity.DyeContents cachedDyeContents;
+    private DyeContents dyeContents;
+    private DyeContents cachedDyeContents;
     private float scrollAmount;
     private boolean mouseClicked;
     private int scrollOffset;
@@ -71,6 +70,11 @@ public class ColoringStationScreen extends HandledScreen<ColoringStationScreenHa
         super(handler, inventory, title);
         handler.setContentsChangedListener(this::onInventoryChange);
         this.dyeContents = handler.getDyeContents();
+    }
+
+    @Override
+    protected void init() {
+        super.init();
         this.updateCaches();
         --this.titleY;
     }
@@ -141,7 +145,7 @@ public class ColoringStationScreen extends HandledScreen<ColoringStationScreenHa
                 int o = j + m / 4 * 18 + 2;
                 if (x < n || x >= n + 16 || y < o || y >= o + 18) continue;
                 ItemStack stack = data.stack();
-                ColoringStationBlockEntity.DyeContents cost = data.dyeCost().copyAndMultiply(-1);
+                DyeContents cost = data.dyeCost().copyAndMultiply(-1);
                 ArrayList<Text> tooltip = new ArrayList<>(Screen.getTooltipFromItem(this.client, stack));
                 if (advanced) {
                     int K = cost.getK();
@@ -296,7 +300,7 @@ public class ColoringStationScreen extends HandledScreen<ColoringStationScreenHa
         }
     }
 
-    public void setDyeContent(ColoringStationBlockEntity.DyeContents from) {
+    public void setDyeContent(DyeContents from) {
         this.dyeContents = from;
     }
 }

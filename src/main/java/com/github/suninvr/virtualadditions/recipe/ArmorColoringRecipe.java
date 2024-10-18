@@ -1,6 +1,6 @@
 package com.github.suninvr.virtualadditions.recipe;
 
-import com.github.suninvr.virtualadditions.block.entity.ColoringStationBlockEntity;
+import com.github.suninvr.virtualadditions.block.entity.DyeContents;
 import com.github.suninvr.virtualadditions.registry.VADyeColors;
 import com.github.suninvr.virtualadditions.registry.VARecipeType;
 import com.mojang.serialization.Codec;
@@ -60,8 +60,8 @@ public class ArmorColoringRecipe implements Recipe<RecipeInput>, ColoringStation
     }
 
     @Override
-    public ItemStack craftWithDye(RecipeInput input, DynamicRegistryManager registryManager, ColoringStationBlockEntity.DyeContents dyeContents) {
-        ColoringStationBlockEntity.DyeContents cost = this.getDyeCost(true);
+    public ItemStack craftWithDye(RecipeInput input, DynamicRegistryManager registryManager, DyeContents dyeContents) {
+        DyeContents cost = this.getDyeCost(true);
         if (dyeContents.getR() - cost.getR() >= 0 && dyeContents.getG() - cost.getG() >= 0 && dyeContents.getB() - cost.getB() >= 0 && dyeContents.getY() - cost.getY() >= 0 && dyeContents.getK() - cost.getK() >= 0 && dyeContents.getW() - cost.getW() >= 0) {
             return craft(input, registryManager);
         }
@@ -69,8 +69,8 @@ public class ArmorColoringRecipe implements Recipe<RecipeInput>, ColoringStation
     }
 
     @Override
-    public ColoringStationBlockEntity.DyeContents getDyeCost(boolean inverted) {
-        ColoringStationBlockEntity.DyeContents contents = this.dyeItem != null ? VADyeColors.getContents(this.dyeItem, 4) : ColoringStationBlockEntity.DyeContents.empty();
+    public DyeContents getDyeCost(boolean inverted) {
+        DyeContents contents = this.dyeItem != null ? VADyeColors.getContents(this.dyeItem, 4) : DyeContents.empty();
         if (!inverted) contents.multiply(-1);
         return contents;
     }
