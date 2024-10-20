@@ -347,6 +347,7 @@
     "container.virtual_additions.entanglement_drive.confirm_button": "Confirm selection",
     "container.virtual_additions.coloring_station": "Color Blocks & Items",
     "container.virtual_additions.coloring_station.not_enough_dye_warning": "Not Enough Dye!",
+    "container.virtual_additions.coloring_station.cant_craft_same_item_warning": "Can't dye the same color!",
     "container.virtual_additions.coloring_station.dye_slot_hint": "Insert Dye here",
     "container.virtual_additions.coloring_station.item_slot_hint": "Place Block or Item to dye here",
     "container.virtual_additions.coloring_station.indicator.black": "Black Dye: %s / 256",

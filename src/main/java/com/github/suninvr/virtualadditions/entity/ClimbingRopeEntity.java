@@ -1,6 +1,7 @@
 package com.github.suninvr.virtualadditions.entity;
 
 import com.github.suninvr.virtualadditions.block.ClimbingRopeAnchorBlock;
+import com.github.suninvr.virtualadditions.registry.VAAdvancementCriteria;
 import com.github.suninvr.virtualadditions.registry.VAEntityType;
 import com.github.suninvr.virtualadditions.registry.VAItemTags;
 import com.github.suninvr.virtualadditions.registry.VAItems;
@@ -15,6 +16,7 @@ import net.minecraft.entity.data.TrackedDataHandlerRegistry;
 import net.minecraft.entity.projectile.PersistentProjectileEntity;
 import net.minecraft.item.BlockItem;
 import net.minecraft.item.ItemStack;
+import net.minecraft.server.network.ServerPlayerEntity;
 import net.minecraft.util.hit.BlockHitResult;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Direction;
@@ -44,6 +46,9 @@ public class ClimbingRopeEntity extends PersistentProjectileEntity {
         BlockState state = this.getRopeState(blockHitResult);
         if (state != null) {
             BlockPos placePos = new BlockPos(blockHitResult.getBlockPos().offset(blockHitResult.getSide()));
+            if (this.getOwner() instanceof ServerPlayerEntity serverPlayerEntity) {
+                VAAdvancementCriteria.FIRE_CLIMBING_ROPE_FROM_CROSSBOW.trigger(serverPlayerEntity);
+            }
             this.getWorld().setBlockState(placePos, state);
             this.getWorld().scheduleBlockTick(placePos, state.getBlock(), 1);
             this.discard();

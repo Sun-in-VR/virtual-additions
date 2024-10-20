@@ -22,6 +22,7 @@ public abstract class CrossbowItemMixin {
         if (projectileStack.isIn(VAItemTags.CLIMBING_ROPES)) {
             ClimbingRopeEntity projectileEntity = new ClimbingRopeEntity(shooter.getX(), shooter.getEyeY(), shooter.getZ(), world, projectileStack, weaponStack);
             projectileEntity.pickupType = shooter.isPlayer() && !shooter.isInCreativeMode() ? PersistentProjectileEntity.PickupPermission.ALLOWED : PersistentProjectileEntity.PickupPermission.CREATIVE_ONLY;
+            projectileEntity.setOwner(shooter);
             cir.setReturnValue(projectileEntity);
         }
     }

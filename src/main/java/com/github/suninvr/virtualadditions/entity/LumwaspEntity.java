@@ -73,9 +73,9 @@ public class LumwaspEntity extends HostileEntity implements RangedAttackMob, Flu
 
     @Override
     protected void initGoals() {
+        this.goalSelector.add(1, new AlwaysEscapeSunlightGoal(this, 1.2D));
         this.goalSelector.add(2, new MeleeCloseRangeGoal(this, 1.0D, 4, true));
         this.goalSelector.add(3, new ProjectileAttackGoal(this, 1.0D, 45, 8));
-        this.goalSelector.add(4, new AlwaysEscapeSunlightGoal(this, 1.2D));
         this.goalSelector.add(5, new FlyGoal(this, 1.0D));
         this.goalSelector.add(6, new LookAtEntityGoal(this, PlayerEntity.class, 8.0F));
         this.goalSelector.add(6, new LookAroundGoal(this));

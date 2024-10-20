@@ -2,6 +2,7 @@
   "display": {
     "icon": {
       "id": "minecraft:crossbow",
+      "count": 1,
       "components": {
         "minecraft:charged_projectiles": [
           {
@@ -22,23 +23,15 @@
   },
   "parent": "virtual_additions:adventure/craft_climbing_rope",
   "criteria": {
-    "climbing_rope": {
-      "trigger": "minecraft:shot_crossbow",
-      "conditions": {
-        "item": {
-          "items": [
-            "minecraft:crossbow"
-          ],
-          "components": {
-            "minecraft:charged_projectiles": [
-              {
-                "id": "virtual_additions:climbing_rope"
-              }
-            ]
-          }
-        }
-      }
+    "fire_climbing_rope_with_crossbow": {
+      "trigger": "virtual_additions:fire_climbing_rope_with_crossbow",
+      "conditions": {}
     }
   },
+  "requirements": [
+    [
+      "fire_climbing_rope_with_crossbow"
+    ]
+  ],
   "sends_telemetry_event": false
 }

@@ -59,7 +59,7 @@ public class ColoringRecipe implements Recipe<RecipeInput>, ColoringStationRecip
     }
 
     public ItemStack craftWithDye(RecipeInput inventory, DynamicRegistryManager registryManager, DyeContents contents) {
-        if (contents.getR() - this.cost.getR() >= 0 && contents.getG() - this.cost.getG() >= 0 && contents.getB() - this.cost.getB() >= 0 && contents.getY() - this.cost.getY() >= 0 && contents.getK() - this.cost.getK() >= 0 && contents.getW() - this.cost.getW() >= 0) {
+        if (contents.canAdd(this.cost.copyAndMultiply(-1)) && !inventory.getStackInSlot(0).isOf(this.result.getItem())) {
             return craft(inventory, registryManager);
         }
         return ItemStack.EMPTY;

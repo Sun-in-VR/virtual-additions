@@ -10,6 +10,7 @@ import net.minecraft.client.render.RenderLayer;
 import net.minecraft.client.sound.PositionedSoundInstance;
 import net.minecraft.entity.player.PlayerInventory;
 import net.minecraft.item.ItemStack;
+import net.minecraft.registry.tag.ItemTags;
 import net.minecraft.screen.slot.Slot;
 import net.minecraft.sound.SoundEvents;
 import net.minecraft.text.Text;
@@ -31,6 +32,7 @@ public class ColoringStationScreen extends HandledScreen<ColoringStationScreenHa
     private static final Identifier DYE_SLOT_TEXTURE = Identifier.of("container/loom/dye_slot");
     private static final Identifier TEXTURE = idOf("textures/gui/container/coloring_station.png");
     private static final Text NOT_ENOUGH_DYE_WARNING = Text.translatable("container.virtual_additions.coloring_station.not_enough_dye_warning").formatted(Formatting.RED);
+    private static final Text CANT_CRAFT_SAME_ITEM_WARNING = Text.translatable("container.virtual_additions.coloring_station.cant_craft_same_item_warning").formatted(Formatting.RED);
     private static final Text DYE_SLOT_HINT = Text.translatable("container.virtual_additions.coloring_station.dye_slot_hint");
     private static final Text ITEM_SLOT_HINT = Text.translatable("container.virtual_additions.coloring_station.item_slot_hint");
     private static int K = 0, W = 0, R = 0, G = 0, B = 0, Y = 0;
@@ -145,9 +147,14 @@ public class ColoringStationScreen extends HandledScreen<ColoringStationScreenHa
                 int o = j + m / 4 * 18 + 2;
                 if (x < n || x >= n + 16 || y < o || y >= o + 18) continue;
                 ItemStack stack = data.stack();
-                DyeContents cost = data.dyeCost().copyAndMultiply(-1);
                 ArrayList<Text> tooltip = new ArrayList<>(Screen.getTooltipFromItem(this.client, stack));
+                if (!data.isInputValid(this.handler.input.getStack(1))) {
+                    tooltip.add(CANT_CRAFT_SAME_ITEM_WARNING);
+                } else if (!data.isDyeContentSufficient(this.dyeContents)) {
+                    tooltip.add(NOT_ENOUGH_DYE_WARNING);
+                }
                 if (advanced) {
+                    DyeContents cost = data.dyeCost().copyAndMultiply(-1);
                     int K = cost.getK();
                     int W = cost.getW();
                     int R = cost.getR();
@@ -160,9 +167,6 @@ public class ColoringStationScreen extends HandledScreen<ColoringStationScreenHa
                     if (G > 0) tooltip.add(Text.of("Green Cost: " + G).copy().formatted(G > this.dyeContents.getG() ? Formatting.RED : Formatting.GRAY));
                     if (B > 0) tooltip.add(Text.of("Blue Cost: " + B).copy().formatted(B > this.dyeContents.getB() ? Formatting.RED : Formatting.GRAY));
                     if (Y > 0) tooltip.add(Text.of("Yellow Cost: " + Y).copy().formatted(Y > this.dyeContents.getY() ? Formatting.RED : Formatting.GRAY));
-                }
-                else if (!this.dyeContents.canAdd(cost.copyAndMultiply(-1))) {
-                    tooltip.add(NOT_ENOUGH_DYE_WARNING);
                 }
                 context.drawTooltip(textRenderer, tooltip, stack.getTooltipData(), x, y);
             }
@@ -212,7 +216,8 @@ public class ColoringStationScreen extends HandledScreen<ColoringStationScreenHa
             int l = j / 4;
             int m = y + l * 18 + 2;
             ColoringStationScreenHandler.ColoringRecipeData data = this.handler.getRecipeData(i);
-            Identifier identifier = this.dyeContents.canAdd(data.dyeCost()) ? (i == (this.handler).getSelectedRecipe() ? RECIPE_SELECTED_TEXTURE : mouseX >= k && mouseY >= m && mouseX < k + 16 && mouseY < m + 18 ? RECIPE_HIGHLIGHTED_TEXTURE : RECIPE_TEXTURE) : RECIPE_UNCRAFTABLE_TEXTURE;
+            ItemStack stack = this.handler.input.getStack(1);
+            Identifier identifier = data.isDyeContentSufficient(this.dyeContents) && data.isInputValid(stack) ? (i == (this.handler).getSelectedRecipe() ? RECIPE_SELECTED_TEXTURE : mouseX >= k && mouseY >= m && mouseX < k + 16 && mouseY < m + 18 ? RECIPE_HIGHLIGHTED_TEXTURE : RECIPE_TEXTURE) : RECIPE_UNCRAFTABLE_TEXTURE;
             context.drawGuiTexture(RenderLayer::getGuiTextured, identifier, k, m - 1, 16, 18);
         }
     }
@@ -300,7 +305,4 @@ public class ColoringStationScreen extends HandledScreen<ColoringStationScreenHa
         }
     }
 
-    public void setDyeContent(DyeContents from) {
-        this.dyeContents = from;
-    }
 }

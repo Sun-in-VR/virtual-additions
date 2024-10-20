@@ -247,8 +247,10 @@ public final class VABlockLootTableProvider {
             set.ifStainedGlass(this::addDropWithSilkTouch);
             set.ifStainedGlassPane(this::addDropWithSilkTouch);
             set.ifSilkbulb(this::addDrop);
-            set.ifCandle(block -> this.lootTables.put(block.getLootTableKey().get(), this.candleDrops(block)));
-            //set.ifCandleCake(block -> this.lootTables.put(block.getLootTableKey().get(), BlockLootTableGenerator.candleCakeDrops(block)));
+            set.ifCandle(block -> {
+                this.lootTables.put(block.getLootTableKey().get(), this.candleDrops(block));
+                set.ifCandleCake(candleCakeBlock -> this.lootTables.put(candleCakeBlock.getLootTableKey().get(), BlockLootTableGenerator.candleCakeDrops(block)));
+            });
             set.ifBed(block -> this.lootTables.put(block.getLootTableKey().get(), this.dropsWithProperty(block, BedBlock.PART, BedPart.HEAD)));
             set.ifShulkerBox(block -> this.lootTables.put(block.getLootTableKey().get(), this.shulkerBoxDrops(block)));
             set.ifBanner(block -> this.lootTables.put(block.getLootTableKey().get(), this.bannerDrops(block)));

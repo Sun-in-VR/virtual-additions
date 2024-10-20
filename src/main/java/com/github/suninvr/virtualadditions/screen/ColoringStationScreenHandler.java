@@ -21,6 +21,7 @@ import net.minecraft.network.codec.PacketCodec;
 import net.minecraft.network.codec.PacketCodecs;
 import net.minecraft.recipe.RecipeEntry;
 import net.minecraft.recipe.input.RecipeInput;
+import net.minecraft.registry.tag.ItemTags;
 import net.minecraft.screen.*;
 import net.minecraft.screen.slot.Slot;
 import net.minecraft.server.network.ServerPlayerEntity;
@@ -369,5 +370,13 @@ public class ColoringStationScreenHandler extends ScreenHandler {
                 DyeContents.PACKET_CODEC, ColoringRecipeData::dyeCost,
                 ColoringRecipeData::new
         );
+
+        public boolean isInputValid(ItemStack stack) {
+            return !stack.isOf(this.stack().getItem()) || stack.isIn(ItemTags.DYEABLE);
+        }
+
+        public boolean isDyeContentSufficient(DyeContents contents) {
+            return contents.canAdd(this.dyeCost());
+        }
     }
 }

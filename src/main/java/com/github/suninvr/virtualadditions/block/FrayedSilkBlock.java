@@ -57,13 +57,17 @@ public class FrayedSilkBlock extends PlantBlock {
 
     @Override
     protected boolean canPlantOnTop(BlockState floor, BlockView world, BlockPos pos) {
-        return super.canPlantOnTop(floor, world, pos) || floor.isOf(VABlocks.SILK_BLOCK);
+        return floor.isSideSolidFullSquare(world, pos, Direction.UP);
+    }
+
+    protected boolean canPlantOnBottom(BlockState ceiling, BlockView world, BlockPos pos) {
+        return ceiling.isSideSolidFullSquare(world, pos, Direction.DOWN);
     }
 
     @Override
     public boolean canPlaceAt(BlockState state, WorldView world, BlockPos pos) {
         Direction direction = state.get(VERTICAL_DIRECTION);
         BlockPos placeOnPos = pos.offset(direction, -1);
-        return this.canPlantOnTop(world.getBlockState(placeOnPos), world, placeOnPos);
+        return direction == Direction.UP ? this.canPlantOnTop(world.getBlockState(placeOnPos), world, placeOnPos) : this.canPlantOnBottom(world.getBlockState(placeOnPos), world, placeOnPos);
     }
 }
