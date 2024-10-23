@@ -4,15 +4,13 @@ import com.github.suninvr.virtualadditions.interfaces.MiningToolItemInterface;
 import com.github.suninvr.virtualadditions.item.interfaces.GildedToolItem;
 import net.minecraft.entity.EquipmentSlot;
 import net.minecraft.entity.LivingEntity;
+import net.minecraft.item.*;
 import net.minecraft.item.tooltip.TooltipType;
-import net.minecraft.item.Item;
-import net.minecraft.item.ItemStack;
-import net.minecraft.item.ShovelItem;
-import net.minecraft.item.ToolMaterial;
 import net.minecraft.registry.tag.BlockTags;
 import net.minecraft.screen.ScreenTexts;
 import net.minecraft.text.Style;
 import net.minecraft.text.Text;
+import net.minecraft.util.ActionResult;
 import net.minecraft.util.Formatting;
 
 import java.util.List;
@@ -28,6 +26,11 @@ public class GildedShovelItem extends Item implements GildedToolItem {
         this.gildType = gildType;
         this.baseItem = baseItem;
         this.descriptionText = ScreenTexts.space().append(Text.translatable(this.gildType.buildTooltipTranslationKey()).setStyle(Style.EMPTY.withColor(this.gildType.getColor())));
+    }
+
+    @Override
+    public ActionResult useOnBlock(ItemUsageContext context) {
+        return this.baseItem.useOnBlock(context);
     }
 
     @Override
