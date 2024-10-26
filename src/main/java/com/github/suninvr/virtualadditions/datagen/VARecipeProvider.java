@@ -88,6 +88,10 @@ public final class VARecipeProvider {
             offerBlasting(List.of(VAItems.RAW_STEEL), RecipeCategory.MISC, VAItems.STEEL_INGOT, 1.0F, 100, "steel_ingot");
             offerBlasting(List.of(VAItems.IOLITE_ORE), RecipeCategory.MISC, VAItems.IOLITE, 1.0F, 100, "iolite");
             offerSmelting(List.of(VAItems.IOLITE_ORE), RecipeCategory.MISC, VAItems.IOLITE, 1.0F, 200, "iolite");
+            offerBlasting(List.of(VAItems.ROCK_SALT_ORE), RecipeCategory.MISC, VAItems.ROCK_SALT, 1.0F, 100, "rock_salt");
+            offerSmelting(List.of(VAItems.ROCK_SALT_ORE), RecipeCategory.MISC, VAItems.ROCK_SALT, 1.0F, 200, "rock_salt");
+            offerBlasting(List.of(VAItems.DEEPSLATE_ROCK_SALT_ORE), RecipeCategory.MISC, VAItems.ROCK_SALT, 1.0F, 100, "rock_salt");
+            offerSmelting(List.of(VAItems.DEEPSLATE_ROCK_SALT_ORE), RecipeCategory.MISC, VAItems.ROCK_SALT, 1.0F, 200, "rock_salt");
 
             offerHedgeRecipe(VABlocks.OAK_HEDGE, Blocks.OAK_LEAVES);
             offerHedgeRecipe(VABlocks.SPRUCE_HEDGE, Blocks.SPRUCE_LEAVES);
@@ -160,6 +164,19 @@ public final class VARecipeProvider {
 
             offerCookingRecipes(VAItems.FRIED_EGG, Items.EGG, 0.35F, "fried_egg");
             offerCookingRecipes(VAItems.ROASTED_CORN, VAItems.CORN, 0.35F, "corn");
+
+            offerSaltedFoodRecipe(VAItems.ROASTED_CORN, VAItems.SALTED_ROASTED_CORN);
+            offerSaltedFoodRecipe(Items.COOKED_BEEF, VAItems.SALTED_COOKED_BEEF);
+            offerSaltedFoodRecipe(Items.COOKED_PORKCHOP, VAItems.SALTED_COOKED_PORKCHOP);
+            offerSaltedFoodRecipe(Items.COOKED_CHICKEN, VAItems.SALTED_COOKED_CHICKEN);
+            offerSaltedFoodRecipe(Items.COOKED_MUTTON, VAItems.SALTED_COOKED_MUTTON);
+
+            ShapedRecipeJsonBuilder.create(this.registryLookup, RecipeCategory.FOOD, VAItems.CHEESE_WEDGE, 8)
+                            .pattern("###")
+                            .pattern("#M#")
+                            .pattern("###")
+                            .input('#', VAItems.ROCK_SALT).input('M', Items.MILK_BUCKET)
+                                    .criterion("has_item", conditionsFromItem(Items.MILK_BUCKET)).offerTo(this.exporter);
 
             offer2x2CompactingRecipe(RecipeCategory.BUILDING_BLOCKS, VAItems.ROCK_SALT_BLOCK, VAItems.ROCK_SALT);
 
@@ -750,6 +767,10 @@ public final class VARecipeProvider {
             offerStonecuttingRecipe(RecipeCategory.BUILDING_BLOCKS, chiseled, block, 36);
             ShapedRecipeJsonBuilder.create(this.registryLookup,RecipeCategory.DECORATIONS, chiseled, 1).input('#', cutSlab).pattern("#").pattern("#").criterion("has_item", conditionsFromItem(cutSlab)).offerTo(this.exporter);
             ShapedRecipeJsonBuilder.create(this.registryLookup,RecipeCategory.DECORATIONS, grate, 4).pattern(" # ").pattern("# #").pattern(" # ").input('#', cut).criterion("has_item", conditionsFromItem(cut)).offerTo(this.exporter);
+        }
+
+        public void offerSaltedFoodRecipe(Item food, Item saltedFood) {
+            ShapelessRecipeJsonBuilder.create(this.registryLookup, RecipeCategory.FOOD, saltedFood).input(food).input(VAItems.ROCK_SALT).criterion("has_item", conditionsFromItem(food)).offerTo(exporter);
         }
     }
 

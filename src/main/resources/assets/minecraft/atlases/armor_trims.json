@@ -44,14 +44,15 @@
             "permutations": {
                 "steel": "virtual_additions:trims/color_palettes/steel",
                 "steel_darker": "virtual_additions:trims/color_palettes/steel_darker",
+                "rock_salt": "virtual_additions:trims/color_palettes/rock_salt",
                 "iolite": "virtual_additions:trims/color_palettes/iolite"
             }
         },
         {
             "type": "paletted_permutations",
             "textures": [
-                "virtual_additions:trims/models/armor/exoskeleton",
-                "virtual_additions:trims/models/armor/exoskeleton_leggings"
+                "virtual_additions:trims/entity/humanoid/exoskeleton",
+                "virtual_additions:trims/entity/humanoid_leggings/exoskeleton"
             ],
             "palette_key": "minecraft:trims/color_palettes/trim_palette",
             "permutations": {
@@ -66,6 +67,7 @@
                 "lapis": "minecraft:trims/color_palettes/lapis",
                 "amethyst": "minecraft:trims/color_palettes/amethyst",
                 "steel": "virtual_additions:trims/color_palettes/steel",
+                "rock_salt": "virtual_additions:trims/color_palettes/rock_salt",
                 "iolite": "virtual_additions:trims/color_palettes/iolite",
                 "iron_darker": "minecraft:trims/color_palettes/iron_darker",
                 "gold_darker": "minecraft:trims/color_palettes/gold_darker",

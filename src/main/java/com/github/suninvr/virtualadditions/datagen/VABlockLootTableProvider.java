@@ -24,6 +24,7 @@ import net.minecraft.loot.LootPool;
 import net.minecraft.loot.LootTable;
 import net.minecraft.loot.condition.BlockStatePropertyLootCondition;
 import net.minecraft.loot.entry.ItemEntry;
+import net.minecraft.loot.entry.LootPoolEntry;
 import net.minecraft.loot.function.ApplyBonusLootFunction;
 import net.minecraft.loot.function.SetCountLootFunction;
 import net.minecraft.loot.provider.number.ConstantLootNumberProvider;
@@ -171,6 +172,8 @@ public final class VABlockLootTableProvider {
 
             this.addDrop(VABlocks.ROCK_SALT_BLOCK, (block) -> this.drops(block, VAItems.ROCK_SALT, ConstantLootNumberProvider.create(4.0F)));
             this.addDrop(VABlocks.ROCK_SALT_CRYSTAL, (block) -> this.drops(block, VAItems.ROCK_SALT, ConstantLootNumberProvider.create(2.0F)));
+            this.addDrop(VABlocks.ROCK_SALT_ORE, this::rockSaltOreDrops);
+            this.addDrop(VABlocks.DEEPSLATE_ROCK_SALT_ORE, this::rockSaltOreDrops);
 
             this.addDrop(VABlocks.REDSTONE_BRIDGE);
 
@@ -292,6 +295,20 @@ public final class VABlockLootTableProvider {
                             this.applyExplosionDecay(dropWithSilkTouch, ItemEntry.builder(drop)
                                     .apply(ApplyBonusLootFunction.oreDrops(this.registryLookup.getOrThrow(Enchantments.FORTUNE)))))
                     .randomSequenceId(dropWithSilkTouch.getLootTableKey().get().getValue());
+        }
+
+
+        public LootTable.Builder rockSaltOreDrops(Block drop) {
+            RegistryWrapper.Impl<Enchantment> impl = this.registries.getOrThrow(RegistryKeys.ENCHANTMENT);
+            return this.dropsWithSilkTouch(
+                    drop,
+                    this.applyExplosionDecay(
+                            drop,
+                            ItemEntry.builder(VAItems.ROCK_SALT)
+                                    .apply(SetCountLootFunction.builder(UniformLootNumberProvider.create(2.0F, 5.0F)))
+                                    .apply(ApplyBonusLootFunction.oreDrops(impl.getOrThrow(Enchantments.FORTUNE)))
+                    )
+            );
         }
     }
 }

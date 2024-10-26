@@ -20,6 +20,7 @@ public class VABlockTags {
     public static final TagKey<Block> NO_FOLIAGE_WORLDGEN = register("no_foliage_worldgen");
     public static final TagKey<Block> INCORRECT_FOR_STEEL_TOOL = register("incorrect_for_steel_tool");
     public static final TagKey<Block> USES_STEEL_SCRAPE_PARTICLES = register("uses_steel_scrape_particles");
+    public static final TagKey<Block> ROCK_SALT_ORES = register("rock_salt_ores");
 
     private static TagKey<Block> register(String id) {
         return TagKey.of(Registries.BLOCK.getKey(), idOf(id));

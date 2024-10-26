@@ -23,6 +23,8 @@ import static com.github.suninvr.virtualadditions.VirtualAdditions.idOf;
 public class VAFeatures {
     public static final RegistryKey<PlacedFeature> ORE_IOLITE;
     public static final RegistryKey<PlacedFeature> ORE_FLOATROCK;
+    public static final RegistryKey<PlacedFeature> ORE_ROCK_SALT;
+    public static final RegistryKey<PlacedFeature> ORE_ROCK_SALT_OCEANS;
     public static final RegistryKey<ConfiguredFeature<?, ?>> AEROBLOOM_TREE;
     public static Feature<DefaultFeatureConfig> LUMWASP_NEST;
     public static Feature<DefaultFeatureConfig> BALLOON_BULB;
@@ -30,6 +32,8 @@ public class VAFeatures {
     static {
         ORE_IOLITE = registerPlaced(idOf("ore_iolite"));
         ORE_FLOATROCK = registerPlaced(idOf("ore_floatrock"));
+        ORE_ROCK_SALT = registerPlaced(idOf("ore_rock_salt"));
+        ORE_ROCK_SALT_OCEANS = registerPlaced(idOf("ore_rock_salt_oceans"));
         AEROBLOOM_TREE = registerConfigured(idOf("aerobloom_tree"));
     }
 
@@ -43,6 +47,16 @@ public class VAFeatures {
                 BiomeSelectors.tag(BiomeTags.IS_HILL),
                 GenerationStep.Feature.UNDERGROUND_ORES,
                 ORE_FLOATROCK
+        );
+        BiomeModifications.addFeature(
+                BiomeSelectors.foundInOverworld(),
+                GenerationStep.Feature.UNDERGROUND_ORES,
+                ORE_ROCK_SALT
+        );
+        BiomeModifications.addFeature(
+                BiomeSelectors.tag(BiomeTags.IS_OCEAN),
+                GenerationStep.Feature.UNDERGROUND_ORES,
+                ORE_ROCK_SALT_OCEANS
         );
         TrunkPlacerTypes.init();
         BALLOON_BULB = Registry.register(Registries.FEATURE, idOf("balloon_bulb"), new BalloonBulbFeature(DefaultFeatureConfig.CODEC));

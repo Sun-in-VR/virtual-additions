@@ -167,6 +167,8 @@ public class VAItems {
     public static final Item FLOWERING_AZALEA_HEDGE;
     public static final Item ROCK_SALT_BLOCK;
     public static final Item ROCK_SALT_CRYSTAL;
+    public static final Item ROCK_SALT_ORE;
+    public static final Item DEEPSLATE_ROCK_SALT_ORE;
     public static final Item ROCK_SALT;
     public static final Item SPOTLIGHT;
     public static final Item RAW_STEEL;
@@ -263,7 +265,13 @@ public class VAItems {
     public static final Item ROASTED_CORN;
     public static final Item FRIED_EGG;
     public static final Item ICE_CREAM;
+    public static final Item CHEESE_WEDGE;
     public static final Item SWEET_BERRY_PIE;
+    public static final Item SALTED_ROASTED_CORN;
+    public static final Item SALTED_COOKED_BEEF;
+    public static final Item SALTED_COOKED_PORKCHOP;
+    public static final Item SALTED_COOKED_CHICKEN;
+    public static final Item SALTED_COOKED_MUTTON;
     public static final Item GLOWING_SILK;
     public static final Item FRAYED_SILK;
     public static final Item TALL_GREENCAP_MUSHROOMS;
@@ -426,13 +434,6 @@ public class VAItems {
     public static final Item SALINE_SPAWN_EGG;
     public static final Item LUMWASP_SPAWN_EGG;
     public static final Item LYFT_SPAWN_EGG;
-
-    public static final FoodComponent FRIED_EGG_FOOD = (new FoodComponent.Builder().nutrition(4).saturationModifier(0.4F).build());
-    public static final FoodComponent CORN_FOOD = (new FoodComponent.Builder()).nutrition(1).saturationModifier(0.3F).build();
-    public static final FoodComponent ROASTED_CORN_FOOD = (new FoodComponent.Builder()).nutrition(5).saturationModifier(0.6F).build();
-    public static final FoodComponent ICE_CREAM_FOOD = new FoodComponent.Builder().nutrition(7).saturationModifier(0.1F).build();
-    public static final FoodComponent BALLOON_FRUIT_FOOD = (new FoodComponent.Builder().nutrition(2).saturationModifier(0.1F).alwaysEdible().build());
-    public static final FoodComponent SWEET_BERRY_PIE_FOOD = (new FoodComponent.Builder().nutrition(8).saturationModifier(0.3F).build());
 
     public static final ToolSet AMETHYST_DIAMOND_TOOL_SET;
     public static final ToolSet COPPER_DIAMOND_TOOL_SET;
@@ -630,7 +631,7 @@ public class VAItems {
 
         SPRINGSOIL = registerBlockItem("springsoil", VABlocks.SPRINGSOIL, ItemGroups.NATURAL, Items.RED_SANDSTONE);
 
-        BALLOON_FRUIT = register("balloon_fruit", settings -> new BalloonFruitItem(VABlocks.BALLOON_BULB_BUD, settings), new Item.Settings().food(BALLOON_FRUIT_FOOD), ItemGroups.FOOD_AND_DRINK, Items.CHORUS_FRUIT);
+        BALLOON_FRUIT = register("balloon_fruit", settings -> new BalloonFruitItem(VABlocks.BALLOON_BULB_BUD, settings), new Item.Settings().food(VAFoodComponents.BALLOON_FRUIT), ItemGroups.FOOD_AND_DRINK, Items.CHORUS_FRUIT);
 
         //endregion
 
@@ -638,7 +639,9 @@ public class VAItems {
 
         ROCK_SALT_BLOCK = registerBlockItem("rock_salt_block", VABlocks.ROCK_SALT_BLOCK, ItemGroups.NATURAL, Items.POINTED_DRIPSTONE);
         ROCK_SALT_CRYSTAL = registerBlockItem("rock_salt_crystal", VABlocks.ROCK_SALT_CRYSTAL, ItemGroups.NATURAL, prev);
-        ROCK_SALT = register("rock_salt", ItemGroups.INGREDIENTS, Items.SUGAR);
+        ROCK_SALT_ORE = registerBlockItem("rock_salt_ore", VABlocks.ROCK_SALT_ORE, ItemGroups.NATURAL, FLOATROCK_COPPER_ORE);
+        DEEPSLATE_ROCK_SALT_ORE = registerBlockItem("deepslate_rock_salt_ore", VABlocks.DEEPSLATE_ROCK_SALT_ORE, ItemGroups.NATURAL, prev);
+        ROCK_SALT = register("rock_salt", new Item.Settings().food(VAFoodComponents.ROCK_SALT, VAFoodComponents.ROCK_SALT_CONSUMABLE), ItemGroups.INGREDIENTS, Items.SUGAR);
 
         //endregion
 
@@ -1089,13 +1092,24 @@ public class VAItems {
 
         COTTON_SEEDS = register("cotton_seeds", settings -> new BlockItem(VABlocks.COTTON, settings),new Item.Settings().useItemPrefixedTranslationKey(), ItemGroups.NATURAL, Items.BEETROOT_SEEDS);
         COTTON = register("cotton", ItemGroups.INGREDIENTS, Items.WHEAT);
-        CORN = register("corn", new Item.Settings().food(CORN_FOOD), ItemGroups.FOOD_AND_DRINK, Items.BEETROOT);
-        ROASTED_CORN = register("roasted_corn", new Item.Settings().food(ROASTED_CORN_FOOD), ItemGroups.FOOD_AND_DRINK, prev);
+        CORN = register("corn", new Item.Settings().food(VAFoodComponents.CORN), ItemGroups.FOOD_AND_DRINK, Items.BEETROOT);
+        ROASTED_CORN = register("roasted_corn", new Item.Settings().food(VAFoodComponents.ROASTED_CORN), ItemGroups.FOOD_AND_DRINK, prev);
         CORN_SEEDS = register("corn_seeds", settings -> new BlockItem(VABlocks.CORN_CROP, settings),new Item.Settings().useItemPrefixedTranslationKey(), ItemGroups.NATURAL, COTTON_SEEDS);
-        FRIED_EGG = register("fried_egg", new Item.Settings().food(FRIED_EGG_FOOD), ItemGroups.FOOD_AND_DRINK, Items.COOKED_CHICKEN);
-        ICE_CREAM = register("ice_cream", new Item.Settings().food(ICE_CREAM_FOOD).maxCount(1), ItemGroups.FOOD_AND_DRINK, Items.COOKIE);
-        SWEET_BERRY_PIE = register("sweet_berry_pie", new Item.Settings().food(SWEET_BERRY_PIE_FOOD), ItemGroups.FOOD_AND_DRINK, Items.PUMPKIN_PIE);
+        FRIED_EGG = register("fried_egg", new Item.Settings().food(VAFoodComponents.FRIED_EGG), ItemGroups.FOOD_AND_DRINK, Items.COOKED_CHICKEN);
+        ICE_CREAM = register("ice_cream", new Item.Settings().food(VAFoodComponents.ICE_CREAM).maxCount(1), ItemGroups.FOOD_AND_DRINK, Items.COOKIE);
+        CHEESE_WEDGE = register("cheese_wedge", new Item.Settings().food(VAFoodComponents.CHEESE_WEDGE), ItemGroups.FOOD_AND_DRINK, Items.MILK_BUCKET);
+        SWEET_BERRY_PIE = register("sweet_berry_pie", new Item.Settings().food(VAFoodComponents.SWEET_BERRY_PIE), ItemGroups.FOOD_AND_DRINK, Items.PUMPKIN_PIE);
 
+        //region Salted Foods
+        
+        SALTED_ROASTED_CORN = register("salted_roasted_corn", new Item.Settings().food(VAFoodComponents.SALTED_ROASTED_CORN), ItemGroups.FOOD_AND_DRINK, ROASTED_CORN);
+        SALTED_COOKED_BEEF = register("salted_cooked_beef", new Item.Settings().food(VAFoodComponents.SALTED_COOKED_BEEF), ItemGroups.FOOD_AND_DRINK, Items.COOKED_BEEF);
+        SALTED_COOKED_PORKCHOP = register("salted_cooked_porkchop", new Item.Settings().food(VAFoodComponents.SALTED_COOKED_PORKCHOP), ItemGroups.FOOD_AND_DRINK, Items.COOKED_PORKCHOP);
+        SALTED_COOKED_CHICKEN = register("salted_cooked_chicken", new Item.Settings().food(VAFoodComponents.SALTED_COOKED_CHICKEN), ItemGroups.FOOD_AND_DRINK, Items.COOKED_CHICKEN);
+        SALTED_COOKED_MUTTON = register("salted_cooked_mutton", new Item.Settings().food(VAFoodComponents.SALTED_COOKED_MUTTON), ItemGroups.FOOD_AND_DRINK, Items.COOKED_MUTTON);
+        
+        //endregion
+        
         //endregion
 
         ENGRAVING_CHISEL = register("engraving_chisel", new Item.Settings().maxCount(1).maxDamage(64), ItemGroups.TOOLS, Items.NAME_TAG);

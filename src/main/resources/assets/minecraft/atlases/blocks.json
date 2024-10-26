@@ -12,6 +12,7 @@
       "permutations": {
         "virtual_additions_iolite": "virtual_additions:trims/color_palettes/iolite",
         "virtual_additions_steel": "virtual_additions:trims/color_palettes/steel",
+        "virtual_additions_rock_salt": "virtual_additions:trims/color_palettes/rock_salt",
         "virtual_additions_steel_darker": "virtual_additions:trims/color_palettes/steel_darker"
       }
     }

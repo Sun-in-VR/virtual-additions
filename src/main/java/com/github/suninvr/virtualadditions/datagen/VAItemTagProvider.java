@@ -48,7 +48,7 @@ public final class VAItemTagProvider {
             getOrCreateTagBuilder(ItemTags.BEACON_PAYMENT_ITEMS).add(VAItems.STEEL_INGOT, VAItems.IOLITE);
             getOrCreateTagBuilder(ItemTags.STONE_CRAFTING_MATERIALS).add(VAItems.COBBLED_HORNFELS, VAItems.COBBLED_BLUESCHIST, VAItems.COBBLED_SYENITE);
             getOrCreateTagBuilder(ItemTags.STONE_TOOL_MATERIALS).add(VAItems.COBBLED_HORNFELS, VAItems.COBBLED_BLUESCHIST, VAItems.COBBLED_SYENITE);
-            getOrCreateTagBuilder(ItemTags.TRIM_MATERIALS).add(VAItems.STEEL_INGOT, VAItems.IOLITE);
+            getOrCreateTagBuilder(ItemTags.TRIM_MATERIALS).add(VAItems.STEEL_INGOT, VAItems.IOLITE, VAItems.ROCK_SALT);
             getOrCreateTagBuilder(ItemTags.TRIMMABLE_ARMOR).add(VAItems.STEEL_HELMET, VAItems.STEEL_CHESTPLATE, VAItems.STEEL_LEGGINGS, VAItems.STEEL_BOOTS);
             getOrCreateTagBuilder(ItemTags.HEAD_ARMOR_ENCHANTABLE).add(VAItems.STEEL_HELMET);
             getOrCreateTagBuilder(ItemTags.CHEST_ARMOR_ENCHANTABLE).add(VAItems.STEEL_CHESTPLATE);
@@ -70,8 +70,9 @@ public final class VAItemTagProvider {
             getOrCreateTagBuilder(RAW_ORES).add(VAItems.RAW_STEEL);
             getOrCreateTagBuilder(IOLITE).add(VAItems.IOLITE);
             getOrCreateTagBuilder(IOLITE_ORES).add(VAItems.IOLITE_ORE);
+            getOrCreateTagBuilder(VAItemTags.ROCK_SALT_ORES).add(VAItems.ROCK_SALT_ORE, VAItems.DEEPSLATE_ROCK_SALT_ORE);
             getOrCreateTagBuilder(GEMS).addOptionalTag(IOLITE);
-            getOrCreateTagBuilder(ORES).addOptionalTag(IOLITE_ORES);
+            getOrCreateTagBuilder(ORES).addOptionalTag(IOLITE_ORES).addOptionalTag(VAItemTags.ROCK_SALT_ORES);
             getOrCreateTagBuilder(FOODS).add(VAItems.FRIED_EGG, VAItems.CORN, VAItems.ROASTED_CORN, VAItems.ICE_CREAM, VAItems.SWEET_BERRY_PIE);
             getOrCreateTagBuilder(POTIONS).add(VAItems.APPLICABLE_POTION);
 
@@ -334,14 +335,13 @@ public final class VAItemTagProvider {
     private abstract static class Provider extends FabricTagProvider.ItemTagProvider {
         protected static final TagKey<Item> INGOTS = TagKey.of(RegistryKeys.ITEM, Identifier.of("c:ingots"));
         protected static final TagKey<Item> STEEL_INGOTS = TagKey.of(RegistryKeys.ITEM, Identifier.of("c:steel_ingots"));
-        protected static final TagKey<Item> RAW_ORES = TagKey.of(RegistryKeys.ITEM, Identifier.of("c:raw_ores"));
+        protected static final TagKey<Item> RAW_ORES = TagKey.of(RegistryKeys.ITEM, Identifier.of("c:raw_materials"));
         protected static final TagKey<Item> GEMS = TagKey.of(RegistryKeys.ITEM, Identifier.of("c:gems"));
         protected static final TagKey<Item> FOODS = TagKey.of(RegistryKeys.ITEM, Identifier.of("c:foods"));
         protected static final TagKey<Item> IOLITE = TagKey.of(RegistryKeys.ITEM, Identifier.of("c:iolite"));
         protected static final TagKey<Item> IOLITE_ORES = TagKey.of(RegistryKeys.ITEM, Identifier.of("c:iolite_ores"));
         protected static final TagKey<Item> ORES = TagKey.of(RegistryKeys.ITEM, Identifier.of("c:ores"));
         protected static final TagKey<Item> POTIONS = TagKey.of(RegistryKeys.ITEM, Identifier.of("c:potions"));
-        protected static final TagKey<Item> CRYSTALS = TagKey.of(RegistryKeys.ITEM, idOf("crystals"));
 
         public Provider(FabricDataOutput output, CompletableFuture<RegistryWrapper.WrapperLookup> completableFuture) {
             super(output, completableFuture);

@@ -39,6 +39,8 @@ class VAModelProvider extends FabricModelProvider {
         blockStateModelGenerator.registerCubeAllModelTexturePool(VABlocks.OXIDIZED_CUT_STEEL).family(VACollections.OXIDIZED_CUT_STEEL).parented(VABlocks.OXIDIZED_CUT_STEEL, VABlocks.WAXED_OXIDIZED_CUT_STEEL).parented(VABlocks.OXIDIZED_CHISELED_STEEL, VABlocks.WAXED_OXIDIZED_CHISELED_STEEL).family(VACollections.WAXED_OXIDIZED_CUT_STEEL);
 
         blockStateModelGenerator.registerMirrorable(VABlocks.ROCK_SALT_BLOCK);
+        blockStateModelGenerator.registerSimpleCubeAll(VABlocks.ROCK_SALT_ORE);
+        blockStateModelGenerator.registerSimpleCubeAll(VABlocks.DEEPSLATE_ROCK_SALT_ORE);
 
         registerColorfulBlockSetModels( blockStateModelGenerator,VACollections.CHARTREUSE);
         registerColorfulBlockSetModels( blockStateModelGenerator,VACollections.MAROON);
@@ -118,6 +120,12 @@ class VAModelProvider extends FabricModelProvider {
 
         itemModelGenerator.register(VAItems.CORN_SEEDS, Models.GENERATED);
         itemModelGenerator.register(VAItems.SWEET_BERRY_PIE, Models.GENERATED);
+        itemModelGenerator.register(VAItems.CHEESE_WEDGE, Models.GENERATED);
+        itemModelGenerator.register(VAItems.SALTED_ROASTED_CORN, Models.GENERATED);
+        itemModelGenerator.register(VAItems.SALTED_COOKED_BEEF, Models.GENERATED);
+        itemModelGenerator.register(VAItems.SALTED_COOKED_PORKCHOP, Models.GENERATED);
+        itemModelGenerator.register(VAItems.SALTED_COOKED_CHICKEN, Models.GENERATED);
+        itemModelGenerator.register(VAItems.SALTED_COOKED_MUTTON, Models.GENERATED);
 
         itemModelGenerator.register(VAItems.EXPOSED_CLIMBING_ROPE, Models.GENERATED);
         itemModelGenerator.register(VAItems.WEATHERED_CLIMBING_ROPE, Models.GENERATED);

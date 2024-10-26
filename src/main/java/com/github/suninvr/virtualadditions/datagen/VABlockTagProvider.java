@@ -65,7 +65,9 @@ public final class VABlockTagProvider {
             configureColorfulBlockSet(VACollections.SINOPIA);
             configureColorfulBlockSet(VACollections.LILAC);
 
-            getOrCreateTagBuilder(ORES).add(VABlocks.IOLITE_ORE);
+            getOrCreateTagBuilder(ORES).add(VABlocks.IOLITE_ORE, VABlocks.ROCK_SALT_ORE, VABlocks.DEEPSLATE_ROCK_SALT_ORE);
+            getOrCreateTagBuilder(VABlockTags.ROCK_SALT_ORES).add(VABlocks.ROCK_SALT_ORE, VABlocks.DEEPSLATE_ROCK_SALT_ORE);
+            getOrCreateTagBuilder(BlockTags.OVERWORLD_CARVER_REPLACEABLES).add(VABlocks.ROCK_SALT_ORE, VABlocks.DEEPSLATE_ROCK_SALT_ORE);
 
             getOrCreateTagBuilder(BlockTags.HOE_MINEABLE).add(
                             VABlocks.SILK_BLOCK,
@@ -125,7 +127,9 @@ public final class VABlockTagProvider {
                     VABlocks.WAXED_STEEL_GRATE,
                     VABlocks.WAXED_EXPOSED_STEEL_GRATE,
                     VABlocks.WAXED_WEATHERED_STEEL_GRATE,
-                    VABlocks.WAXED_OXIDIZED_STEEL_GRATE
+                    VABlocks.WAXED_OXIDIZED_STEEL_GRATE,
+                    VABlocks.ROCK_SALT_ORE,
+                    VABlocks.DEEPSLATE_ROCK_SALT_ORE
             );
 
             configureMinable(BlockTags.PICKAXE_MINEABLE, 3,
