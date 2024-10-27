@@ -178,7 +178,8 @@ public final class VARecipeProvider {
                             .input('#', VAItems.ROCK_SALT).input('M', Items.MILK_BUCKET)
                                     .criterion("has_item", conditionsFromItem(Items.MILK_BUCKET)).offerTo(this.exporter);
 
-            offer2x2CompactingRecipe(RecipeCategory.BUILDING_BLOCKS, VAItems.ROCK_SALT_BLOCK, VAItems.ROCK_SALT);
+            offerCompactingRecipe(RecipeCategory.BUILDING_BLOCKS, VAItems.ROCK_SALT_BLOCK, VAItems.ROCK_SALT);
+            offerShapelessRecipe(VAItems.ROCK_SALT, VAItems.ROCK_SALT_BLOCK, "rock_salt", 9);
 
             offer2x2CompactingRecipe(RecipeCategory.BUILDING_BLOCKS, VABlocks.WEBBED_SILK, VAItems.SILK_THREAD);
             offerCompactingRecipe(RecipeCategory.BUILDING_BLOCKS, VABlocks.SILK_BLOCK, VAItems.SILK_THREAD);

@@ -1,0 +1,10 @@
+{
+    "pack": {
+        "pack_format": 57,
+        "supported_formats": [
+            57,
+            42
+        ],
+        "description": "Changes to better integrate VA content into Minecraft"
+    }
+}

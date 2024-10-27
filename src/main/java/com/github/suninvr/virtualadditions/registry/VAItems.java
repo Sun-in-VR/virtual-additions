@@ -1304,6 +1304,20 @@ public class VAItems {
                 });
             }
 
+            if (LootTables.SHIPWRECK_SUPPLY_CHEST.equals(key)) {
+                final int[] i = {0};
+                tableBuilder.modifyPools(builder -> {
+                    if (i[0] == 0) {
+                        builder.with(ItemEntry.builder(ROCK_SALT)
+                                .weight(5)
+                                .apply(SetCountLootFunction.builder(UniformLootNumberProvider.create(7, 24))));
+                        builder.with(ItemEntry.builder(CHEESE_WEDGE)
+                                .weight(5)
+                                .apply(SetCountLootFunction.builder(UniformLootNumberProvider.create(3, 12))));
+                    }
+                });
+            }
+
             // Zombie Loot
             if (EntityType.ZOMBIE.getLootTableKey().get().equals(key) || EntityType.HUSK.getLootTableKey().get().equals(key)) {
                 final int[] i = {0};

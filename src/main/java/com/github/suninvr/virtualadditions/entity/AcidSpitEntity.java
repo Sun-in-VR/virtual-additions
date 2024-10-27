@@ -69,7 +69,7 @@ public class AcidSpitEntity extends ProjectileEntity {
         if (entityHitResult.getEntity() instanceof LumwaspEntity) return;
         Entity entity = entityHitResult.getEntity();
         World world = entity.getWorld();
-        if (world instanceof ServerWorld serverWorld) entity.damage(serverWorld, ((DamageSourcesInterface)this.getDamageSources()).virtualAdditions$acidSpit(this, this.getOwner() instanceof LivingEntity livingOwner ? livingOwner : this ), 2.0F + (world.getDifficulty().ordinal() - 1));
+        if (world instanceof ServerWorld serverWorld) entity.damage(serverWorld, ((DamageSourcesInterface)this.getDamageSources()).virtualAdditions$acidSpit(this, this.getOwner() instanceof LivingEntity livingOwner ? livingOwner : this ), 1.0F + (world.getDifficulty().ordinal() - 1));
         this.discard();
     }
 

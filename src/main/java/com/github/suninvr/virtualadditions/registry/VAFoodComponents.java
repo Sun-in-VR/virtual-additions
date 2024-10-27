@@ -11,7 +11,7 @@ import java.util.List;
 
 public class VAFoodComponents {
     public static final FoodComponent FRIED_EGG = (new FoodComponent.Builder().nutrition(4).saturationModifier(0.4F).build());
-    public static final FoodComponent CHEESE_WEDGE = (new FoodComponent.Builder().nutrition(5).saturationModifier(0.4F).build());
+    public static final FoodComponent CHEESE_WEDGE = (new FoodComponent.Builder().nutrition(5).saturationModifier(0.6F).build());
     public static final FoodComponent CORN = (new FoodComponent.Builder()).nutrition(1).saturationModifier(0.3F).build();
     public static final FoodComponent ROASTED_CORN = (new FoodComponent.Builder()).nutrition(5).saturationModifier(0.6F).build();
     public static final FoodComponent ICE_CREAM = new FoodComponent.Builder().nutrition(7).saturationModifier(0.1F).build();
