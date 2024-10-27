@@ -142,6 +142,9 @@ public final class VABlockTagProvider {
                     );
 
             configureOverworldStone(VABlocks.HORNFELS, VABlocks.BLUESCHIST, VABlocks.SYENITE);
+
+
+
             configureFamily(BlockTags.PICKAXE_MINEABLE, 1,
                     VACollections.CUT_STEEL,
                     VACollections.EXPOSED_CUT_STEEL,
@@ -205,7 +208,8 @@ public final class VABlockTagProvider {
                     VACollections.POLISHED_SYENITE,
                     VACollections.HORNFELS_TILES,
                     VACollections.BLUESCHIST_BRICKS,
-                    VACollections.SYENITE_BRICKS
+                    VACollections.SYENITE_BRICKS,
+                    VACollections.ROCK_SALT_BRICKS
             );
 
             getOrCreateTagBuilder(VABlockTags.INCORRECT_FOR_STEEL_TOOL).addOptionalTag(BlockTags.NEEDS_DIAMOND_TOOL);

@@ -276,7 +276,8 @@ public final class VAItemTagProvider {
                     VACollections.POLISHED_SYENITE,
                     VACollections.HORNFELS_TILES,
                     VACollections.BLUESCHIST_BRICKS,
-                    VACollections.SYENITE_BRICKS
+                    VACollections.SYENITE_BRICKS,
+                    VACollections.ROCK_SALT_BRICKS
             );
 
             configureToolSet(VAItems.STEEL_TOOL_SET);

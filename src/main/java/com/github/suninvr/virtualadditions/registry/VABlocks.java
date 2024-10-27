@@ -154,6 +154,10 @@ public class VABlocks {
     public static final Block SYENITE_BRICK_WALL;
     public static final Block CHISELED_SYENITE;
     public static final Block ROCK_SALT_BLOCK;
+    public static final Block ROCK_SALT_BRICKS;
+    public static final Block ROCK_SALT_BRICK_STAIRS;
+    public static final Block ROCK_SALT_BRICK_SLAB;
+    public static final Block ROCK_SALT_BRICK_WALL;
     public static final Block ROCK_SALT_CRYSTAL;
     public static final Block ROCK_SALT_ORE;
     public static final Block DEEPSLATE_ROCK_SALT_ORE;
@@ -525,6 +529,11 @@ public class VABlocks {
         ROCK_SALT_CRYSTAL = register("rock_salt_crystal", CrystalBlock::new, Settings.copy(Blocks.AMETHYST_CLUSTER).luminance(state -> 0).sounds(BlockSoundGroup.CALCITE).pistonBehavior(PistonBehavior.DESTROY));
         ROCK_SALT_ORE = register("rock_salt_ore", settings -> new ExperienceDroppingBlock(UniformIntProvider.create(0, 2), settings), AbstractBlock.Settings.copy(Blocks.IRON_ORE));
         DEEPSLATE_ROCK_SALT_ORE = register("deepslate_rock_salt_ore", settings -> new ExperienceDroppingBlock(UniformIntProvider.create(0, 2), settings), AbstractBlock.Settings.copy(Blocks.DEEPSLATE_IRON_ORE));
+
+        ROCK_SALT_BRICKS = register("rock_salt_bricks", Block::new, Settings.copy(Blocks.RED_NETHER_BRICKS).mapColor(MapColor.PINK));
+        ROCK_SALT_BRICK_STAIRS = register("rock_salt_brick_stairs", settings -> new StairsBlock(ROCK_SALT_BRICKS.getDefaultState(), settings), Settings.copy(ROCK_SALT_BRICKS));
+        ROCK_SALT_BRICK_SLAB = register("rock_salt_brick_slab", SlabBlock::new, Settings.copy(ROCK_SALT_BRICKS));
+        ROCK_SALT_BRICK_WALL = register("rock_salt_brick_wall", WallBlock::new, Settings.copy(ROCK_SALT_BRICKS));
 
         SPOTLIGHT = register("spotlight", SpotlightBlock::new, Settings.copy(STEEL_BLOCK).nonOpaque().luminance((state) -> state.get(SpotlightBlock.POWERED) ? 6 : 0).emissiveLighting((state, world, pos) -> state.get(Properties.POWERED)));
         SPOTLIGHT_LIGHT = register("spotlight_light", SpotlightLightBlock::new, Settings.create().sounds(BlockSoundGroup.INTENTIONALLY_EMPTY).replaceable().noCollision().dropsNothing().luminance((state) -> state.get(SpotlightLightBlock.LIT) ? 15 : 0).pistonBehavior(PistonBehavior.DESTROY));

@@ -45,7 +45,8 @@ public class RegistryHelper {
                 consumer.accept(SWORD);
             }
         }
-        public record ItemGroupLocation(RegistryKey<ItemGroup> GROUP, Item AFTER){}
+
+        public record ItemGroupLocation(RegistryKey<ItemGroup> GROUP, Item AFTER){ }
         public static Item prev;
 
         private static <T extends net.minecraft.item.Item> net.minecraft.item.Item register(String id, T item) { // Register a given item
@@ -82,6 +83,11 @@ public class RegistryHelper {
             return register(id, new Item(settings), itemGroup, itemAfter);
         }
 
+        public static Item register(String id, Item.Settings settings, ItemGroupLocation... locations) {
+            settings = settings.registryKey(RegistryKey.of(RegistryKeys.ITEM, idOf(id)));
+            return register(id, new Item(settings), locations);
+        }
+
         public static Item register(String id, Function<Item.Settings, Item> factory, Item.Settings settings) {
             settings = settings.registryKey(RegistryKey.of(RegistryKeys.ITEM, idOf(id)));
             return register(id, factory.apply(settings));
@@ -96,6 +102,10 @@ public class RegistryHelper {
             settings = settings.registryKey(RegistryKey.of(RegistryKeys.ITEM, idOf(id)));
             return register(id, factory.apply(settings), itemGroupLocations);
         }
+
+        public static ItemGroupLocation at(RegistryKey<ItemGroup> group, Item after) {
+            return new ItemGroupLocation(group, after);
+        };
 
 
         /**

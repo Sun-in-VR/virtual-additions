@@ -517,6 +517,10 @@ public final class VARecipeProvider {
             generateCuttableFamilyChain(VACollections.FLOATROCK_BRICKS);
             offer2x2ConversionChain(VABlocks.FLOATROCK, VABlocks.POLISHED_FLOATROCK, VABlocks.FLOATROCK_BRICKS);
 
+            offerStonecuttingRecipes(VABlocks.ROCK_SALT_BLOCK, VACollections.ROCK_SALT_BRICKS);
+            generateCuttableFamilyChain(VACollections.ROCK_SALT_BRICKS);
+            offer2x2ConversionChain(VABlocks.ROCK_SALT_BLOCK, VABlocks.ROCK_SALT_BRICKS);
+
             generateFamily(VACollections.AEROBLOOM, FeatureFlags.VANILLA_FEATURES);
             offerBarkBlockRecipe(VAItems.AEROBLOOM_WOOD, VAItems.AEROBLOOM_LOG);
             offerBarkBlockRecipe(VAItems.STRIPPED_AEROBLOOM_WOOD, VAItems.STRIPPED_AEROBLOOM_LOG);

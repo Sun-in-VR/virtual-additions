@@ -37,6 +37,7 @@ class VAModelProvider extends FabricModelProvider {
         blockStateModelGenerator.registerCubeAllModelTexturePool(VABlocks.EXPOSED_CUT_STEEL).family(VACollections.EXPOSED_CUT_STEEL).parented(VABlocks.EXPOSED_CUT_STEEL, VABlocks.WAXED_EXPOSED_CUT_STEEL).parented(VABlocks.EXPOSED_CHISELED_STEEL, VABlocks.WAXED_EXPOSED_CHISELED_STEEL).family(VACollections.WAXED_EXPOSED_CUT_STEEL);
         blockStateModelGenerator.registerCubeAllModelTexturePool(VABlocks.WEATHERED_CUT_STEEL).family(VACollections.WEATHERED_CUT_STEEL).parented(VABlocks.WEATHERED_CUT_STEEL, VABlocks.WAXED_WEATHERED_CUT_STEEL).parented(VABlocks.WEATHERED_CHISELED_STEEL, VABlocks.WAXED_WEATHERED_CHISELED_STEEL).family(VACollections.WAXED_WEATHERED_CUT_STEEL);
         blockStateModelGenerator.registerCubeAllModelTexturePool(VABlocks.OXIDIZED_CUT_STEEL).family(VACollections.OXIDIZED_CUT_STEEL).parented(VABlocks.OXIDIZED_CUT_STEEL, VABlocks.WAXED_OXIDIZED_CUT_STEEL).parented(VABlocks.OXIDIZED_CHISELED_STEEL, VABlocks.WAXED_OXIDIZED_CHISELED_STEEL).family(VACollections.WAXED_OXIDIZED_CUT_STEEL);
+        blockStateModelGenerator.registerCubeAllModelTexturePool(VABlocks.ROCK_SALT_BRICKS).family(VACollections.ROCK_SALT_BRICKS);
 
         blockStateModelGenerator.registerMirrorable(VABlocks.ROCK_SALT_BLOCK);
         blockStateModelGenerator.registerSimpleCubeAll(VABlocks.ROCK_SALT_ORE);
