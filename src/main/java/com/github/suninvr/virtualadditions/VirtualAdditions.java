@@ -43,7 +43,8 @@ public class VirtualAdditions implements ModInitializer {
 				modContainer -> {
 					ResourceManagerHelper.registerBuiltinResourcePack(idOf("preview"), modContainer, Text.translatable("datapack.virtual_additions.preview"), ResourcePackActivationType.NORMAL);
 					ResourceManagerHelper.registerBuiltinResourcePack(idOf("worldgen"), modContainer, Text.translatable("datapack.virtual_additions.worldgen"), ResourcePackActivationType.NORMAL);
-					ResourceManagerHelper.registerBuiltinResourcePack(idOf("enhancements"), modContainer, Text.translatable("datapack.virtual_additions.enhancements"), ResourcePackActivationType.DEFAULT_ENABLED);
+					ResourceManagerHelper.registerBuiltinResourcePack(idOf("enhancements_data"), modContainer, Text.translatable("datapack.virtual_additions.enhancements"), ResourcePackActivationType.DEFAULT_ENABLED);
+					ResourceManagerHelper.registerBuiltinResourcePack(idOf("enhancements_resources"), modContainer, Text.translatable("datapack.virtual_additions.enhancements"), ResourcePackActivationType.DEFAULT_ENABLED);
 				}
 		);
 
