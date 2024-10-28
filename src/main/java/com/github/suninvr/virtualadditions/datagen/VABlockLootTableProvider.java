@@ -307,7 +307,7 @@ public final class VABlockLootTableProvider {
                     this.applyExplosionDecay(
                             drop,
                             ItemEntry.builder(VAItems.ROCK_SALT)
-                                    .apply(SetCountLootFunction.builder(UniformLootNumberProvider.create(2.0F, 5.0F)))
+                                    .apply(SetCountLootFunction.builder(UniformLootNumberProvider.create(1.0F, 3.0F)))
                                     .apply(ApplyBonusLootFunction.oreDrops(impl.getOrThrow(Enchantments.FORTUNE)))
                     )
             );

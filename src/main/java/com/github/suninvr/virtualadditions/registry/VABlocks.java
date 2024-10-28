@@ -855,9 +855,9 @@ public class VABlocks {
         fire.registerFlammableBlock(LILAC_SILKBULB, 5, 20);
         StrippableBlockRegistry.register(AEROBLOOM_LOG, STRIPPED_AEROBLOOM_LOG);
         StrippableBlockRegistry.register(AEROBLOOM_WOOD, STRIPPED_AEROBLOOM_WOOD);
-        FlattenableBlockRegistry.register(Blocks.DIRT_PATH, Blocks.DIRT.getDefaultState());
+        //FlattenableBlockRegistry.register(Blocks.DIRT_PATH, Blocks.DIRT.getDefaultState());
         FlattenableBlockRegistry.register(Blocks.FARMLAND, Blocks.DIRT_PATH.getDefaultState());
-        TillableBlockRegistry.register(Blocks.FARMLAND, context -> true, Blocks.DIRT.getDefaultState());
+        //TillableBlockRegistry.register(Blocks.FARMLAND, context -> true, Blocks.DIRT.getDefaultState());
         registerOxidizingSet(STEEL_BLOCK, EXPOSED_STEEL_BLOCK, WEATHERED_STEEL_BLOCK, OXIDIZED_STEEL_BLOCK, WAXED_STEEL_BLOCK, WAXED_EXPOSED_STEEL_BLOCK, WAXED_WEATHERED_STEEL_BLOCK, WAXED_OXIDIZED_STEEL_BLOCK);
         registerOxidizingSet(CUT_STEEL, EXPOSED_CUT_STEEL, WEATHERED_CUT_STEEL, OXIDIZED_CUT_STEEL, WAXED_CUT_STEEL, WAXED_EXPOSED_CUT_STEEL, WAXED_WEATHERED_CUT_STEEL, WAXED_OXIDIZED_CUT_STEEL);
         registerOxidizingSet(CUT_STEEL_STAIRS, EXPOSED_CUT_STEEL_STAIRS, WEATHERED_CUT_STEEL_STAIRS, OXIDIZED_CUT_STEEL_STAIRS, WAXED_CUT_STEEL_STAIRS, WAXED_EXPOSED_CUT_STEEL_STAIRS, WAXED_WEATHERED_CUT_STEEL_STAIRS, WAXED_OXIDIZED_CUT_STEEL_STAIRS);
