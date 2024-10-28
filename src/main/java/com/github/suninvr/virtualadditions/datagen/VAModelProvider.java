@@ -42,6 +42,7 @@ class VAModelProvider extends FabricModelProvider {
         blockStateModelGenerator.registerMirrorable(VABlocks.ROCK_SALT_BLOCK);
         blockStateModelGenerator.registerSimpleCubeAll(VABlocks.ROCK_SALT_ORE);
         blockStateModelGenerator.registerSimpleCubeAll(VABlocks.DEEPSLATE_ROCK_SALT_ORE);
+        blockStateModelGenerator.registerSingleton(VABlocks.CHISELED_ROCK_SALT_BRICKS, TexturedModel.CUBE_COLUMN);
 
         registerColorfulBlockSetModels( blockStateModelGenerator,VACollections.CHARTREUSE);
         registerColorfulBlockSetModels( blockStateModelGenerator,VACollections.MAROON);

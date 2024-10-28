@@ -139,6 +139,7 @@ public final class VABlockLootTableProvider {
                     VABlocks.PINK_SILKBULB,
                     VABlocks.ACID_BLOCK,
                     VABlocks.ROCK_SALT_BLOCK,
+                    VABlocks.CHISELED_ROCK_SALT_BRICKS,
                     VABlocks.COLORING_STATION,
                     VABlocks.IOLITE_BLOCK,
                     VABlocks.WARP_ANCHOR,

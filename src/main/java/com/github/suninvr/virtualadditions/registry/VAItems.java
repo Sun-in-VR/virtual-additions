@@ -170,6 +170,7 @@ public class VAItems {
     public static final Item ROCK_SALT_BRICK_STAIRS;
     public static final Item ROCK_SALT_BRICK_SLAB;
     public static final Item ROCK_SALT_BRICK_WALL;
+    public static final Item CHISELED_ROCK_SALT_BRICKS;
     public static final Item ROCK_SALT_CRYSTAL;
     public static final Item ROCK_SALT_ORE;
     public static final Item DEEPSLATE_ROCK_SALT_ORE;
@@ -646,6 +647,7 @@ public class VAItems {
         ROCK_SALT_BRICK_STAIRS = registerBlockItem("rock_salt_brick_stairs", VABlocks.ROCK_SALT_BRICK_STAIRS, ItemGroups.BUILDING_BLOCKS, prev);
         ROCK_SALT_BRICK_SLAB = registerBlockItem("rock_salt_brick_slab", VABlocks.ROCK_SALT_BRICK_SLAB, ItemGroups.BUILDING_BLOCKS, prev);
         ROCK_SALT_BRICK_WALL = registerBlockItem("rock_salt_brick_wall", VABlocks.ROCK_SALT_BRICK_WALL, ItemGroups.BUILDING_BLOCKS, prev);
+        CHISELED_ROCK_SALT_BRICKS = registerBlockItem("chiseled_rock_salt_bricks", VABlocks.CHISELED_ROCK_SALT_BRICKS, ItemGroups.BUILDING_BLOCKS, prev);
         ROCK_SALT_CRYSTAL = registerBlockItem("rock_salt_crystal", VABlocks.ROCK_SALT_CRYSTAL, ItemGroups.NATURAL, ROCK_SALT_BLOCK);
         ROCK_SALT_ORE = registerBlockItem("rock_salt_ore", VABlocks.ROCK_SALT_ORE, ItemGroups.NATURAL, FLOATROCK_COPPER_ORE);
         DEEPSLATE_ROCK_SALT_ORE = registerBlockItem("deepslate_rock_salt_ore", VABlocks.DEEPSLATE_ROCK_SALT_ORE, ItemGroups.NATURAL, prev);

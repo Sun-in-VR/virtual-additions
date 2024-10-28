@@ -87,7 +87,8 @@ public final class VABlockTagProvider {
                     .add(VABlocks.WAXED_OXIDIZED_CLIMBING_ROPE_ANCHOR)
                     .add(VABlocks.SPOTLIGHT)
                     .add(VABlocks.ROCK_SALT_BLOCK)
-                    .add(VABlocks.ROCK_SALT_CRYSTAL);
+                    .add(VABlocks.ROCK_SALT_CRYSTAL)
+                    .add(VABlocks.CHISELED_ROCK_SALT_BRICKS);
 
             configureMinable(BlockTags.PICKAXE_MINEABLE, 1,
                     VABlocks.STEEL_BLOCK,
