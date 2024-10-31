@@ -33,7 +33,7 @@ public class EntanglementDriveScreenHandler extends ScreenHandler {
 
     public static final Identifier ENTANGLEMENT_DRIVE_ACTIVE_SLOT_SYNC_ID = VirtualAdditions.idOf("entanglement_drive_active_slot_sync");
     public static final Identifier ENTANGLEMENT_DRIVE_SELECTED_SLOT_SYNC_ID = VirtualAdditions.idOf("entanglement_drive_selected_slot_sync");
-    public static final Identifier EMPTY_IOLITE_SLOT = VirtualAdditions.idOf("item/empty_slot_iolite_dark");
+    public static final Identifier EMPTY_IOLITE_SLOT = VirtualAdditions.idOf("container/slot/iolite_dark");
     static final Identifier[] EMPTY_ARMOR_SLOT_TEXTURES;
     private static final EquipmentSlot[] EQUIPMENT_SLOT_ORDER;
     private final Inventory inventory;
@@ -107,15 +107,15 @@ public class EntanglementDriveScreenHandler extends ScreenHandler {
                     return (itemStack.isEmpty() || playerEntity.isCreative() || !EnchantmentHelper.hasAnyEnchantmentsWith(itemStack, EnchantmentEffectComponentTypes.PREVENT_ARMOR_CHANGE)) && super.canTakeItems(playerEntity);
                 }
 
-                public Pair<Identifier, Identifier> getBackgroundSprite() {
-                    return Pair.of(PlayerScreenHandler.BLOCK_ATLAS_TEXTURE, EMPTY_ARMOR_SLOT_TEXTURES[equipmentSlot.getEntitySlotId()]);
+                public Identifier getBackgroundSprite() {
+                    return EMPTY_ARMOR_SLOT_TEXTURES[equipmentSlot.getEntitySlotId()];
                 }
             });
         } // Equipment slots ( 36 - 39 )
 
         this.addSlot(new Slot(inventory, 40, 77, 62) {
-            public Pair<Identifier, Identifier> getBackgroundSprite() {
-                return Pair.of(PlayerScreenHandler.BLOCK_ATLAS_TEXTURE, PlayerScreenHandler.EMPTY_OFFHAND_ARMOR_SLOT);
+            public Identifier getBackgroundSprite() {
+                return PlayerScreenHandler.EMPTY_OFFHAND_ARMOR_SLOT;
             }
         }); // Offhand Slot ( 40 )
 
@@ -125,8 +125,8 @@ public class EntanglementDriveScreenHandler extends ScreenHandler {
                 return stack.isOf(VAItems.IOLITE);
             }
 
-            public Pair<Identifier, Identifier> getBackgroundSprite() {
-                return Pair.of(PlayerScreenHandler.BLOCK_ATLAS_TEXTURE, EMPTY_IOLITE_SLOT);
+            public Identifier getBackgroundSprite() {
+                return EMPTY_IOLITE_SLOT;
             }
         }); // Payment Slot ( 42 )
     }

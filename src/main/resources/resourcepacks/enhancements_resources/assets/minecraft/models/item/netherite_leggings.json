@@ -1,86 +1,92 @@
 {
   "parent": "minecraft:item/generated",
-  "overrides": [
-    {
-      "model": "minecraft:item/netherite_leggings_quartz_trim",
-      "predicate": {
-        "trim_type": 0.1
-      }
-    },
-    {
-      "model": "minecraft:item/netherite_leggings_iolite_trim",
-      "predicate": {
-        "trim_type": 0.15
-      }
-    },
-    {
-      "model": "minecraft:item/netherite_leggings_iron_trim",
-      "predicate": {
-        "trim_type": 0.2
-      }
-    },
-    {
-      "model": "minecraft:item/netherite_leggings_rock_salt_trim",
-      "predicate": {
-        "trim_type": 0.25
-      }
-    },
-    {
-      "model": "minecraft:item/netherite_leggings_netherite_darker_trim",
-      "predicate": {
-        "trim_type": 0.3
-      }
-    },
-    {
-      "model": "minecraft:item/netherite_leggings_steel_trim",
-      "predicate": {
-        "trim_type": 0.35
-      }
-    },
-    {
-      "model": "minecraft:item/netherite_leggings_redstone_trim",
-      "predicate": {
-        "trim_type": 0.4
-      }
-    },
-    {
-      "model": "minecraft:item/netherite_leggings_copper_trim",
-      "predicate": {
-        "trim_type": 0.5
-      }
-    },
-    {
-      "model": "minecraft:item/netherite_leggings_gold_trim",
-      "predicate": {
-        "trim_type": 0.6
-      }
-    },
-    {
-      "model": "minecraft:item/netherite_leggings_emerald_trim",
-      "predicate": {
-        "trim_type": 0.7
-      }
-    },
-    {
-      "model": "minecraft:item/netherite_leggings_diamond_trim",
-      "predicate": {
-        "trim_type": 0.8
-      }
-    },
-    {
-      "model": "minecraft:item/netherite_leggings_lapis_trim",
-      "predicate": {
-        "trim_type": 0.9
-      }
-    },
-    {
-      "model": "minecraft:item/netherite_leggings_amethyst_trim",
-      "predicate": {
-        "trim_type": 1.0
-      }
-    }
-  ],
   "textures": {
     "layer0": "minecraft:item/netherite_leggings"
-  }
+  },
+  "overrides": [
+    {
+      "predicate": {
+        "trim_type": 0.01
+      },
+      "model": "minecraft:item/netherite_leggings_quartz_trim"
+    },
+    {
+      "predicate": {
+        "trim_type": 0.02
+      },
+      "model": "minecraft:item/netherite_leggings_iron_trim"
+    },
+    {
+      "predicate": {
+        "trim_type": 0.03
+      },
+      "model": "minecraft:item/netherite_leggings_netherite_darker_trim"
+    },
+    {
+      "predicate": {
+        "trim_type": 0.04
+      },
+      "model": "minecraft:item/netherite_leggings_redstone_trim"
+    },
+    {
+      "predicate": {
+        "trim_type": 0.05
+      },
+      "model": "minecraft:item/netherite_leggings_copper_trim"
+    },
+    {
+      "predicate": {
+        "trim_type": 0.06
+      },
+      "model": "minecraft:item/netherite_leggings_gold_trim"
+    },
+    {
+      "predicate": {
+        "trim_type": 0.07
+      },
+      "model": "minecraft:item/netherite_leggings_emerald_trim"
+    },
+    {
+      "predicate": {
+        "trim_type": 0.08
+      },
+      "model": "minecraft:item/netherite_leggings_diamond_trim"
+    },
+    {
+      "predicate": {
+        "trim_type": 0.09
+      },
+      "model": "minecraft:item/netherite_leggings_lapis_trim"
+    },
+    {
+      "predicate": {
+        "trim_type": 0.1
+      },
+      "model": "minecraft:item/netherite_leggings_amethyst_trim"
+    },
+    {
+      "predicate": {
+        "trim_type": 0.11
+      },
+      "model": "minecraft:item/netherite_leggings_resin_trim"
+    },
+    {
+      "predicate": {
+        "trim_type": 0.55
+      },
+      "model": "minecraft:item/netherite_leggings_iolite_trim"
+    },
+    {
+      "predicate": {
+        "trim_type": 0.56
+      },
+      "model": "minecraft:item/netherite_leggings_rock_salt_trim"
+    },
+    {
+      "predicate": {
+        "trim_type": 0.57
+      },
+      "model": "minecraft:item/netherite_leggings_steel_trim"
+    }
+  ]
 }

@@ -73,7 +73,8 @@
                 "gold_darker": "minecraft:trims/color_palettes/gold_darker",
                 "diamond_darker": "minecraft:trims/color_palettes/diamond_darker",
                 "netherite_darker": "minecraft:trims/color_palettes/netherite_darker",
-                "steel_darker": "virtual_additions:trims/color_palettes/steel_darker"
+                "steel_darker": "virtual_additions:trims/color_palettes/steel_darker",
+                "resin": "minecraft:trims/color_palettes/resin"
             }
         }
     ]

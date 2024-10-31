@@ -122,7 +122,7 @@ public class DestructiveSculkBlock extends BlockWithEntity {
             originEntity.setPotency(originEntity.getPotency() - 1);
             world.playSound(null, blockPos, SoundEvents.BLOCK_SCULK_SPREAD, SoundCategory.BLOCKS, 0.5F, 1.0F);
             if (world instanceof ServerWorld serverWorld) {
-                serverWorld.spawnParticles(ParticleTypes.SCULK_CHARGE_POP, blockPos.getX() + 0.5, blockPos.getY() + 0.5, blockPos.getZ() + 0.5, 20, 0.4, 0.4, 0.4, 0.02);
+                serverWorld.spawnParticles(ParticleTypes.SCULK_CHARGE_POP, false, false, blockPos.getX() + 0.5, blockPos.getY() + 0.5, blockPos.getZ() + 0.5, 20, 0.4, 0.4, 0.4, 0.02);
             }
             bl = true;
         }

@@ -52,7 +52,7 @@ public class GildTypes {
         public void emitBlockBreakingEffects(World world, PlayerEntity player, BlockPos pos, ItemStack tool) {
             world.playSound(null, pos, SoundEvents.BLOCK_SCULK_SPREAD, SoundCategory.BLOCKS, 1.0F, 1.0F);
             if (world instanceof ServerWorld serverWorld) {
-                serverWorld.spawnParticles(ParticleTypes.SCULK_CHARGE_POP, pos.getX() + 0.5, pos.getY() + 0.5, pos.getZ() + 0.5, 50, 0.4, 0.4, 0.4, 0.02);
+                serverWorld.spawnParticles(ParticleTypes.SCULK_CHARGE_POP, false, false, pos.getX() + 0.5, pos.getY() + 0.5, pos.getZ() + 0.5, 50, 0.4, 0.4, 0.4, 0.02);
             }
         }
 

@@ -97,11 +97,9 @@
     "water_creature": []
   },
   "spawn_costs": {},
-  "carvers": {
-    "air": [
-      "virtual_additions:cave_skylands"
-    ]
-  },
+  "carvers": [
+    "virtual_additions:cave_skylands"
+  ],
   "features": [
     [],
     [

@@ -29,7 +29,7 @@ public class ColoringStationScreen extends HandledScreen<ColoringStationScreenHa
     private static final Identifier RECIPE_HIGHLIGHTED_TEXTURE = Identifier.of("container/stonecutter/recipe_highlighted");
     private static final Identifier RECIPE_UNCRAFTABLE_TEXTURE = idOf("container/coloring_station/recipe_uncraftable");
     private static final Identifier RECIPE_TEXTURE = Identifier.of("container/stonecutter/recipe");
-    private static final Identifier DYE_SLOT_TEXTURE = Identifier.of("container/loom/dye_slot");
+    private static final Identifier DYE_SLOT_TEXTURE = Identifier.of("container/slot/dye");
     private static final Identifier TEXTURE = idOf("textures/gui/container/coloring_station.png");
     private static final Text NOT_ENOUGH_DYE_WARNING = Text.translatable("container.virtual_additions.coloring_station.not_enough_dye_warning").formatted(Formatting.RED);
     private static final Text CANT_CRAFT_SAME_ITEM_WARNING = Text.translatable("container.virtual_additions.coloring_station.cant_craft_same_item_warning").formatted(Formatting.RED);

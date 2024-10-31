@@ -1,5 +1,5 @@
 {
-  "replace": "false",
+  "replace": false,
   "values": [
     "virtual_additions:sparse_aerobloom_forest",
     "virtual_additions:aerobloom_forest"

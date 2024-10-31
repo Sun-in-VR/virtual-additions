@@ -504,17 +504,17 @@ public class VAItems {
         TOOL_GILD_BASE_SLOT_DESCRIPTION_TEXT = Text.translatable(Util.createTranslationKey("item", idOf("smithing_template.tool_gild.base_slot_description")));
         TOOL_GILD_ADDITIONS_SLOT_DESCRIPTION_TEXT = Text.translatable(Util.createTranslationKey("item", idOf("smithing_template.tool_gild.additions_slot_description")));
 
-        EMPTY_SLOT_HOE_TEXTURE = Identifier.ofVanilla("item/empty_slot_hoe");
-        EMPTY_SLOT_AXE_TEXTURE = Identifier.ofVanilla("item/empty_slot_axe");
-        EMPTY_SLOT_SWORD_TEXTURE = Identifier.ofVanilla("item/empty_slot_sword");
-        EMPTY_SLOT_SHOVEL_TEXTURE = Identifier.ofVanilla("item/empty_slot_shovel");
-        EMPTY_SLOT_PICKAXE_TEXTURE = Identifier.ofVanilla("item/empty_slot_pickaxe");
-        EMPTY_SLOT_INGOT_TEXTURE = Identifier.ofVanilla("item/empty_slot_ingot");
-        EMPTY_SLOT_QUARTZ_TEXTURE = Identifier.ofVanilla("item/empty_slot_quartz");
-        EMPTY_SLOT_EMERALD_TEXTURE = Identifier.ofVanilla("item/empty_slot_emerald");
-        EMPTY_SLOT_AMETHYST_TEXTURE = Identifier.ofVanilla("item/empty_slot_amethyst_shard");
-        EMPTY_SLOT_ECHO_SHARD_TEXTURE = Identifier.of("virtual_additions:item/empty_slot_echo_shard");
-        EMPTY_SLOT_IOLITE_TEXTURE = Identifier.of("virtual_additions:item/empty_slot_iolite");
+        EMPTY_SLOT_HOE_TEXTURE = Identifier.ofVanilla("container/slot/hoe");
+        EMPTY_SLOT_AXE_TEXTURE = Identifier.ofVanilla("container/slot/axe");
+        EMPTY_SLOT_SWORD_TEXTURE = Identifier.ofVanilla("container/slot/sword");
+        EMPTY_SLOT_SHOVEL_TEXTURE = Identifier.ofVanilla("container/slot/shovel");
+        EMPTY_SLOT_PICKAXE_TEXTURE = Identifier.ofVanilla("container/slot/pickaxe");
+        EMPTY_SLOT_INGOT_TEXTURE = Identifier.ofVanilla("container/slot/ingot");
+        EMPTY_SLOT_QUARTZ_TEXTURE = Identifier.ofVanilla("container/slot/quartz");
+        EMPTY_SLOT_EMERALD_TEXTURE = Identifier.ofVanilla("container/slot/emerald");
+        EMPTY_SLOT_AMETHYST_TEXTURE = Identifier.ofVanilla("container/slot/amethyst_shard");
+        EMPTY_SLOT_ECHO_SHARD_TEXTURE = idOf("container/slot/echo_shard");
+        EMPTY_SLOT_IOLITE_TEXTURE = idOf("container/slot/iolite");
 
         //endregion
 
@@ -642,7 +642,7 @@ public class VAItems {
 
         //region Salty Caves
 
-        ROCK_SALT_BLOCK = registerBlockItem("rock_salt_block", VABlocks.ROCK_SALT_BLOCK, at(ItemGroups.NATURAL, Items.POINTED_DRIPSTONE), at(ItemGroups.BUILDING_BLOCKS, Items.MUD_BRICK_WALL));
+        ROCK_SALT_BLOCK = registerBlockItem("rock_salt_block", VABlocks.ROCK_SALT_BLOCK, at(ItemGroups.NATURAL, Items.AMETHYST_CLUSTER), at(ItemGroups.BUILDING_BLOCKS, Items.MUD_BRICK_WALL));
         ROCK_SALT_BRICKS = registerBlockItem("rock_salt_bricks", VABlocks.ROCK_SALT_BRICKS, ItemGroups.BUILDING_BLOCKS, prev);
         ROCK_SALT_BRICK_STAIRS = registerBlockItem("rock_salt_brick_stairs", VABlocks.ROCK_SALT_BRICK_STAIRS, ItemGroups.BUILDING_BLOCKS, prev);
         ROCK_SALT_BRICK_SLAB = registerBlockItem("rock_salt_brick_slab", VABlocks.ROCK_SALT_BRICK_SLAB, ItemGroups.BUILDING_BLOCKS, prev);
@@ -1117,7 +1117,7 @@ public class VAItems {
         SALTED_COOKED_PORKCHOP = register("salted_cooked_porkchop", new Item.Settings().food(VAFoodComponents.SALTED_COOKED_PORKCHOP), ItemGroups.FOOD_AND_DRINK, Items.COOKED_PORKCHOP);
         SALTED_COOKED_CHICKEN = register("salted_cooked_chicken", new Item.Settings().food(VAFoodComponents.SALTED_COOKED_CHICKEN), ItemGroups.FOOD_AND_DRINK, Items.COOKED_CHICKEN);
         SALTED_COOKED_MUTTON = register("salted_cooked_mutton", new Item.Settings().food(VAFoodComponents.SALTED_COOKED_MUTTON), ItemGroups.FOOD_AND_DRINK, Items.COOKED_MUTTON);
-        
+
         //endregion
         
         //endregion

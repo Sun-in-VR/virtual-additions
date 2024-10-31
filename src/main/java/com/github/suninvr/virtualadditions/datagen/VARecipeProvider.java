@@ -171,10 +171,10 @@ public final class VARecipeProvider {
             offerSaltedFoodRecipe(Items.COOKED_CHICKEN, VAItems.SALTED_COOKED_CHICKEN);
             offerSaltedFoodRecipe(Items.COOKED_MUTTON, VAItems.SALTED_COOKED_MUTTON);
 
-            ShapedRecipeJsonBuilder.create(this.registryLookup, RecipeCategory.FOOD, VAItems.CHEESE_WEDGE, 8)
-                            .pattern("###")
+            ShapedRecipeJsonBuilder.create(this.registryLookup, RecipeCategory.FOOD, VAItems.CHEESE_WEDGE, 4)
+                            .pattern(" # ")
                             .pattern("#M#")
-                            .pattern("###")
+                            .pattern(" # ")
                             .input('#', VAItems.ROCK_SALT).input('M', Items.MILK_BUCKET)
                                     .criterion("has_item", conditionsFromItem(Items.MILK_BUCKET)).offerTo(this.exporter);
 
