@@ -123,11 +123,9 @@ class VAModelProvider extends FabricModelProvider {
         itemModelGenerator.register(VAItems.CORN_SEEDS, Models.GENERATED);
         itemModelGenerator.register(VAItems.SWEET_BERRY_PIE, Models.GENERATED);
         itemModelGenerator.register(VAItems.CHEESE_WEDGE, Models.GENERATED);
-        itemModelGenerator.register(VAItems.SALTED_ROASTED_CORN, Models.GENERATED);
-        itemModelGenerator.register(VAItems.SALTED_COOKED_BEEF, Models.GENERATED);
-        itemModelGenerator.register(VAItems.SALTED_COOKED_PORKCHOP, Models.GENERATED);
-        itemModelGenerator.register(VAItems.SALTED_COOKED_CHICKEN, Models.GENERATED);
-        itemModelGenerator.register(VAItems.SALTED_COOKED_MUTTON, Models.GENERATED);
+        itemModelGenerator.register(VAItems.BEEF_JERKY, Models.GENERATED);
+        itemModelGenerator.register(VAItems.PORK_JERKY, Models.GENERATED);
+        itemModelGenerator.register(VAItems.CHICKEN_JERKY, Models.GENERATED);
 
         itemModelGenerator.register(VAItems.EXPOSED_CLIMBING_ROPE, Models.GENERATED);
         itemModelGenerator.register(VAItems.WEATHERED_CLIMBING_ROPE, Models.GENERATED);

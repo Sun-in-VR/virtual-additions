@@ -165,11 +165,9 @@ public final class VARecipeProvider {
             offerCookingRecipes(VAItems.FRIED_EGG, Items.EGG, 0.35F, "fried_egg");
             offerCookingRecipes(VAItems.ROASTED_CORN, VAItems.CORN, 0.35F, "corn");
 
-            offerSaltedFoodRecipe(VAItems.ROASTED_CORN, VAItems.SALTED_ROASTED_CORN);
-            offerSaltedFoodRecipe(Items.COOKED_BEEF, VAItems.SALTED_COOKED_BEEF);
-            offerSaltedFoodRecipe(Items.COOKED_PORKCHOP, VAItems.SALTED_COOKED_PORKCHOP);
-            offerSaltedFoodRecipe(Items.COOKED_CHICKEN, VAItems.SALTED_COOKED_CHICKEN);
-            offerSaltedFoodRecipe(Items.COOKED_MUTTON, VAItems.SALTED_COOKED_MUTTON);
+            offerJerkyFoodRecipe(Items.COOKED_BEEF, VAItems.BEEF_JERKY);
+            offerJerkyFoodRecipe(Items.COOKED_PORKCHOP, VAItems.PORK_JERKY);
+            offerJerkyFoodRecipe(Items.COOKED_CHICKEN, VAItems.CHICKEN_JERKY);
 
             ShapedRecipeJsonBuilder.create(this.registryLookup, RecipeCategory.FOOD, VAItems.CHEESE_WEDGE, 4)
                             .pattern(" # ")
@@ -220,14 +218,14 @@ public final class VARecipeProvider {
             generateColorfulBlockSetRecipes(VACollections.SINOPIA, VAItems.SINOPIA_DYE);
             generateColorfulBlockSetRecipes(VACollections.LILAC, VAItems.LILAC_DYE);
 
-            TransmuteRecipeJsonBuilder.create(RecipeCategory.TOOLS, Ingredient.fromTag(this.registryLookup.getOrThrow(ItemTags.BUNDLES)), Ingredient.ofItems(VAItems.CHARTREUSE_DYE), VAItems.CHARTREUSE_BUNDLE).criterion("has_bundle", this.conditionsFromItem(Items.BUNDLE)).offerTo(exporter);
-            TransmuteRecipeJsonBuilder.create(RecipeCategory.TOOLS, Ingredient.fromTag(this.registryLookup.getOrThrow(ItemTags.BUNDLES)), Ingredient.ofItems(VAItems.MAROON_DYE), VAItems.MAROON_BUNDLE).criterion("has_bundle", this.conditionsFromItem(Items.BUNDLE)).offerTo(exporter);
-            TransmuteRecipeJsonBuilder.create(RecipeCategory.TOOLS, Ingredient.fromTag(this.registryLookup.getOrThrow(ItemTags.BUNDLES)), Ingredient.ofItems(VAItems.INDIGO_DYE), VAItems.INDIGO_BUNDLE).criterion("has_bundle", this.conditionsFromItem(Items.BUNDLE)).offerTo(exporter);
-            TransmuteRecipeJsonBuilder.create(RecipeCategory.TOOLS, Ingredient.fromTag(this.registryLookup.getOrThrow(ItemTags.BUNDLES)), Ingredient.ofItems(VAItems.PLUM_DYE), VAItems.PLUM_BUNDLE).criterion("has_bundle", this.conditionsFromItem(Items.BUNDLE)).offerTo(exporter);
-            TransmuteRecipeJsonBuilder.create(RecipeCategory.TOOLS, Ingredient.fromTag(this.registryLookup.getOrThrow(ItemTags.BUNDLES)), Ingredient.ofItems(VAItems.VIRIDIAN_DYE), VAItems.VIRIDIAN_BUNDLE).criterion("has_bundle", this.conditionsFromItem(Items.BUNDLE)).offerTo(exporter);
-            TransmuteRecipeJsonBuilder.create(RecipeCategory.TOOLS, Ingredient.fromTag(this.registryLookup.getOrThrow(ItemTags.BUNDLES)), Ingredient.ofItems(VAItems.TAN_DYE), VAItems.TAN_BUNDLE).criterion("has_bundle", this.conditionsFromItem(Items.BUNDLE)).offerTo(exporter);
-            TransmuteRecipeJsonBuilder.create(RecipeCategory.TOOLS, Ingredient.fromTag(this.registryLookup.getOrThrow(ItemTags.BUNDLES)), Ingredient.ofItems(VAItems.SINOPIA_DYE), VAItems.SINOPIA_BUNDLE).criterion("has_bundle", this.conditionsFromItem(Items.BUNDLE)).offerTo(exporter);
-            TransmuteRecipeJsonBuilder.create(RecipeCategory.TOOLS, Ingredient.fromTag(this.registryLookup.getOrThrow(ItemTags.BUNDLES)), Ingredient.ofItems(VAItems.LILAC_DYE), VAItems.LILAC_BUNDLE).criterion("has_bundle", this.conditionsFromItem(Items.BUNDLE)).offerTo(exporter);
+            TransmuteRecipeJsonBuilder.create(RecipeCategory.TOOLS, Ingredient.fromTag(this.registryLookup.getOrThrow(ItemTags.BUNDLES)), Ingredient.ofItems(VAItems.CHARTREUSE_DYE), VAItems.CHARTREUSE_BUNDLE).criterion(hasItem(VAItems.CHARTREUSE_DYE), this.conditionsFromItem(VAItems.CHARTREUSE_DYE)).group("bundle_dye").offerTo(exporter);
+            TransmuteRecipeJsonBuilder.create(RecipeCategory.TOOLS, Ingredient.fromTag(this.registryLookup.getOrThrow(ItemTags.BUNDLES)), Ingredient.ofItems(VAItems.MAROON_DYE), VAItems.MAROON_BUNDLE).criterion(hasItem(VAItems.MAROON_DYE), this.conditionsFromItem(VAItems.MAROON_DYE)).group("bundle_dye").offerTo(exporter);
+            TransmuteRecipeJsonBuilder.create(RecipeCategory.TOOLS, Ingredient.fromTag(this.registryLookup.getOrThrow(ItemTags.BUNDLES)), Ingredient.ofItems(VAItems.INDIGO_DYE), VAItems.INDIGO_BUNDLE).criterion(hasItem(VAItems.INDIGO_DYE), this.conditionsFromItem(VAItems.INDIGO_DYE)).group("bundle_dye").offerTo(exporter);
+            TransmuteRecipeJsonBuilder.create(RecipeCategory.TOOLS, Ingredient.fromTag(this.registryLookup.getOrThrow(ItemTags.BUNDLES)), Ingredient.ofItems(VAItems.PLUM_DYE), VAItems.PLUM_BUNDLE).criterion(hasItem(VAItems.PLUM_DYE), this.conditionsFromItem(VAItems.PLUM_DYE)).group("bundle_dye").offerTo(exporter);
+            TransmuteRecipeJsonBuilder.create(RecipeCategory.TOOLS, Ingredient.fromTag(this.registryLookup.getOrThrow(ItemTags.BUNDLES)), Ingredient.ofItems(VAItems.VIRIDIAN_DYE), VAItems.VIRIDIAN_BUNDLE).criterion(hasItem(VAItems.VIRIDIAN_DYE), this.conditionsFromItem(VAItems.VIRIDIAN_DYE)).group("bundle_dye").offerTo(exporter);
+            TransmuteRecipeJsonBuilder.create(RecipeCategory.TOOLS, Ingredient.fromTag(this.registryLookup.getOrThrow(ItemTags.BUNDLES)), Ingredient.ofItems(VAItems.TAN_DYE), VAItems.TAN_BUNDLE).criterion(hasItem(VAItems.TAN_DYE), this.conditionsFromItem(VAItems.TAN_DYE)).group("bundle_dye").offerTo(exporter);
+            TransmuteRecipeJsonBuilder.create(RecipeCategory.TOOLS, Ingredient.fromTag(this.registryLookup.getOrThrow(ItemTags.BUNDLES)), Ingredient.ofItems(VAItems.SINOPIA_DYE), VAItems.SINOPIA_BUNDLE).criterion(hasItem(VAItems.SINOPIA_DYE), this.conditionsFromItem(VAItems.SINOPIA_DYE)).group("bundle_dye").offerTo(exporter);
+            TransmuteRecipeJsonBuilder.create(RecipeCategory.TOOLS, Ingredient.fromTag(this.registryLookup.getOrThrow(ItemTags.BUNDLES)), Ingredient.ofItems(VAItems.LILAC_DYE), VAItems.LILAC_BUNDLE).criterion(hasItem(VAItems.LILAC_DYE), this.conditionsFromItem(VAItems.LILAC_DYE)).group("bundle_dye").offerTo(exporter);
 
             TransmuteRecipeJsonBuilder.create(RecipeCategory.TOOLS, Ingredient.ofItems(Items.SHULKER_BOX), Ingredient.ofItems(VAItems.CHARTREUSE_DYE), VAItems.CHARTREUSE_SHULKER_BOX).criterion("has_shulker_box", this.conditionsFromItem(Items.SHULKER_BOX)).offerTo(exporter);
             TransmuteRecipeJsonBuilder.create(RecipeCategory.TOOLS, Ingredient.ofItems(Items.SHULKER_BOX), Ingredient.ofItems(VAItems.MAROON_DYE), VAItems.MAROON_SHULKER_BOX).criterion("has_shulker_box", this.conditionsFromItem(Items.SHULKER_BOX)).offerTo(exporter);
@@ -777,8 +775,11 @@ public final class VARecipeProvider {
             ShapedRecipeJsonBuilder.create(this.registryLookup,RecipeCategory.DECORATIONS, grate, 4).pattern(" # ").pattern("# #").pattern(" # ").input('#', cut).criterion("has_item", conditionsFromItem(cut)).offerTo(this.exporter);
         }
 
-        public void offerSaltedFoodRecipe(Item food, Item saltedFood) {
-            ShapelessRecipeJsonBuilder.create(this.registryLookup, RecipeCategory.FOOD, saltedFood).input(food).input(VAItems.ROCK_SALT).criterion("has_item", conditionsFromItem(food)).offerTo(exporter);
+        public void offerJerkyFoodRecipe(Item input, Item jerky) {
+            ShapelessRecipeJsonBuilder.create(this.registryLookup, RecipeCategory.FOOD, jerky, 2)
+                    .input(input)
+                    .input(VAItems.ROCK_SALT, 3)
+                    .criterion("has_item", conditionsFromItem(input)).offerTo(exporter);
         }
     }
 

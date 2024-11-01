@@ -272,11 +272,9 @@ public class VAItems {
     public static final Item ICE_CREAM;
     public static final Item CHEESE_WEDGE;
     public static final Item SWEET_BERRY_PIE;
-    public static final Item SALTED_ROASTED_CORN;
-    public static final Item SALTED_COOKED_BEEF;
-    public static final Item SALTED_COOKED_PORKCHOP;
-    public static final Item SALTED_COOKED_CHICKEN;
-    public static final Item SALTED_COOKED_MUTTON;
+    public static final Item BEEF_JERKY;
+    public static final Item PORK_JERKY;
+    public static final Item CHICKEN_JERKY;
     public static final Item GLOWING_SILK;
     public static final Item FRAYED_SILK;
     public static final Item TALL_GREENCAP_MUSHROOMS;
@@ -1110,16 +1108,10 @@ public class VAItems {
         CHEESE_WEDGE = register("cheese_wedge", new Item.Settings().food(VAFoodComponents.CHEESE_WEDGE), ItemGroups.FOOD_AND_DRINK, Items.MILK_BUCKET);
         SWEET_BERRY_PIE = register("sweet_berry_pie", new Item.Settings().food(VAFoodComponents.SWEET_BERRY_PIE), ItemGroups.FOOD_AND_DRINK, Items.PUMPKIN_PIE);
 
-        //region Salted Foods
-        
-        SALTED_ROASTED_CORN = register("salted_roasted_corn", new Item.Settings().food(VAFoodComponents.SALTED_ROASTED_CORN), ItemGroups.FOOD_AND_DRINK, ROASTED_CORN);
-        SALTED_COOKED_BEEF = register("salted_cooked_beef", new Item.Settings().food(VAFoodComponents.SALTED_COOKED_BEEF), ItemGroups.FOOD_AND_DRINK, Items.COOKED_BEEF);
-        SALTED_COOKED_PORKCHOP = register("salted_cooked_porkchop", new Item.Settings().food(VAFoodComponents.SALTED_COOKED_PORKCHOP), ItemGroups.FOOD_AND_DRINK, Items.COOKED_PORKCHOP);
-        SALTED_COOKED_CHICKEN = register("salted_cooked_chicken", new Item.Settings().food(VAFoodComponents.SALTED_COOKED_CHICKEN), ItemGroups.FOOD_AND_DRINK, Items.COOKED_CHICKEN);
-        SALTED_COOKED_MUTTON = register("salted_cooked_mutton", new Item.Settings().food(VAFoodComponents.SALTED_COOKED_MUTTON), ItemGroups.FOOD_AND_DRINK, Items.COOKED_MUTTON);
+        BEEF_JERKY = register("beef_jerky", new Item.Settings().food(VAFoodComponents.BEEF_JERKY, VAFoodComponents.JERKY_CONSUMABLE).maxCount(96), ItemGroups.FOOD_AND_DRINK, Items.COOKED_BEEF);
+        PORK_JERKY = register("pork_jerky", new Item.Settings().food(VAFoodComponents.PORK_JERKY, VAFoodComponents.JERKY_CONSUMABLE).maxCount(96), ItemGroups.FOOD_AND_DRINK, Items.COOKED_PORKCHOP);
+        CHICKEN_JERKY = register("chicken_jerky", new Item.Settings().food(VAFoodComponents.CHICKEN_JERKY, VAFoodComponents.JERKY_CONSUMABLE).maxCount(96), ItemGroups.FOOD_AND_DRINK, Items.COOKED_CHICKEN);
 
-        //endregion
-        
         //endregion
 
         ENGRAVING_CHISEL = register("engraving_chisel", new Item.Settings().maxCount(1).maxDamage(64), ItemGroups.TOOLS, Items.NAME_TAG);
