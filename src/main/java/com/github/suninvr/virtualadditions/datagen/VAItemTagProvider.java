@@ -227,32 +227,15 @@ public final class VAItemTagProvider {
                     Items.PINK_STAINED_GLASS_PANE
             );
 
-            getOrCreateTagBuilder(VAItemTags.SHULKER_BOXES).add(
-                    Items.SHULKER_BOX,
-                    Items.WHITE_SHULKER_BOX,
-                    Items.LIGHT_GRAY_SHULKER_BOX,
-                    Items.GRAY_SHULKER_BOX,
-                    Items.BLACK_SHULKER_BOX,
-                    Items.BROWN_SHULKER_BOX,
+            getOrCreateTagBuilder(ItemTags.SHULKER_BOXES).add(
                     VAItems.LILAC_SHULKER_BOX,
                     VAItems.MAROON_SHULKER_BOX,
-                    Items.RED_SHULKER_BOX,
                     VAItems.SINOPIA_SHULKER_BOX,
-                    Items.ORANGE_SHULKER_BOX,
                     VAItems.TAN_SHULKER_BOX,
-                    Items.YELLOW_SHULKER_BOX,
                     VAItems.CHARTREUSE_SHULKER_BOX,
-                    Items.LIME_SHULKER_BOX,
-                    Items.GREEN_SHULKER_BOX,
                     VAItems.VIRIDIAN_SHULKER_BOX,
-                    Items.CYAN_SHULKER_BOX,
-                    Items.LIGHT_BLUE_SHULKER_BOX,
-                    Items.BLUE_SHULKER_BOX,
                     VAItems.INDIGO_SHULKER_BOX,
-                    Items.PURPLE_SHULKER_BOX,
-                    VAItems.PLUM_SHULKER_BOX,
-                    Items.MAGENTA_SHULKER_BOX,
-                    Items.PINK_SHULKER_BOX
+                    VAItems.PLUM_SHULKER_BOX
             );
 
             getOrCreateTagBuilder(VAItemTags.CLIMBING_ROPES).add(

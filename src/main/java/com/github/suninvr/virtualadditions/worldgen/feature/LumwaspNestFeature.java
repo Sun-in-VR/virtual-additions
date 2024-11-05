@@ -245,10 +245,10 @@ public class LumwaspNestFeature extends Feature<DefaultFeatureConfig> {
     }
 
     private void setRandomNestState(StructureWorldAccess world, BlockPos pos, Random random) {
-        boolean bl = random.nextInt(3) == 1;
+        boolean bl = random.nextInt(3) >= 1;
         BlockState state = bl ? NEST_LARVAE : NEST;
         setBlockStateIfReplaceable(world, pos, state);
-        if (bl && random.nextInt(2) == 1) setBlockStateIfReplaceable(world, pos.down(), GLOWING_SILK);
+        if (bl && random.nextInt(2) == 0) setBlockStateIfReplaceable(world, pos.down(), GLOWING_SILK);
     }
 
     private boolean isValidSpace(StructureWorldAccess worldAccess, BlockPos origin, boolean large) {

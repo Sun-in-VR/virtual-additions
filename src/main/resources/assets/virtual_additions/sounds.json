@@ -181,5 +181,21 @@
       "block/iron_trapdoor/close3",
       "block/iron_trapdoor/close4"
     ]
+  },
+  "block.frayed_silk.idle": {
+    "subtitle": "subtitles.block.frayed_silk.idle",
+    "sounds": [
+      "virtual_additions:block/frayed_silk/idle01",
+      "virtual_additions:block/frayed_silk/idle02",
+      "virtual_additions:block/frayed_silk/idle03",
+      "virtual_additions:block/frayed_silk/idle04"
+    ]
+  },
+  "block.lumwasp_nest.idle": {
+    "subtitle": "subtitles.block.lumwasp_nest.idle",
+    "sounds": [
+      "virtual_additions:block/lumwasp_nest/idle01",
+      "virtual_additions:block/lumwasp_nest/idle02"
+    ]
   }
 }

@@ -17,7 +17,6 @@ public class VAItemTags {
     public static final TagKey<Item> BASE_DYE = TagKey.of(RegistryKeys.ITEM, idOf("base_dye"));
     public static final TagKey<Item> COLORABLE_GLASS = TagKey.of(RegistryKeys.ITEM, idOf("colorable_glass"));
     public static final TagKey<Item> COLORABLE_GLASS_PANE = TagKey.of(RegistryKeys.ITEM, idOf("colorable_glass_pane"));
-    public static final TagKey<Item> SHULKER_BOXES = TagKey.of(RegistryKeys.ITEM, idOf("shulker_box"));
     public static final TagKey<Item> CLIMBING_ROPES = TagKey.of(RegistryKeys.ITEM, idOf("climbing_ropes"));
     public static final TagKey<Item> REPAIRS_STEEL_ARMOR = TagKey.of(RegistryKeys.ITEM, idOf("repairs_steel_armor"));
     public static final TagKey<Item> ROCK_SALT_ORES = TagKey.of(RegistryKeys.ITEM, idOf("rock_salt_ores"));

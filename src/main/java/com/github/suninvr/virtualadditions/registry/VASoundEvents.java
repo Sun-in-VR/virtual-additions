@@ -32,6 +32,8 @@ public class VASoundEvents {
     public static final SoundEvent BLOCK_ENTANGLEMENT_DRIVE_USE;
     public static final SoundEvent BLOCK_STEEL_DOOR_SHUTTER_OPEN;
     public static final SoundEvent BLOCK_STEEL_DOOR_SHUTTER_CLOSE;
+    public static final SoundEvent BLOCK_FRAYED_SILK_IDLE;
+    public static final SoundEvent BLOCK_LUMWASP_NEST_IDLE;
 
     static {
         BLOCK_ROPE_BREAK = register("block.rope.break");
@@ -58,6 +60,8 @@ public class VASoundEvents {
         BLOCK_ENTANGLEMENT_DRIVE_USE = register("block.entanglement_drive.use");
         BLOCK_STEEL_DOOR_SHUTTER_OPEN = register("block.steel_door.shutter_open");
         BLOCK_STEEL_DOOR_SHUTTER_CLOSE = register("block.steel_door.shutter_close");
+        BLOCK_FRAYED_SILK_IDLE = register("block.frayed_silk.idle");
+        BLOCK_LUMWASP_NEST_IDLE = register("block.lumwasp_nest.idle");
     }
 
     public static void init(){}

@@ -1,18 +1,25 @@
 package com.github.suninvr.virtualadditions.block;
 
+import com.github.suninvr.virtualadditions.registry.VABlocks;
+import com.github.suninvr.virtualadditions.registry.VASoundEvents;
 import com.mojang.serialization.MapCodec;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.PlantBlock;
 import net.minecraft.block.ShapeContext;
 import net.minecraft.item.ItemPlacementContext;
+import net.minecraft.sound.SoundCategory;
+import net.minecraft.sound.SoundEvent;
+import net.minecraft.sound.SoundEvents;
 import net.minecraft.state.StateManager;
 import net.minecraft.state.property.EnumProperty;
 import net.minecraft.state.property.Properties;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Direction;
+import net.minecraft.util.math.random.Random;
 import net.minecraft.util.shape.VoxelShape;
 import net.minecraft.world.BlockView;
+import net.minecraft.world.World;
 import net.minecraft.world.WorldView;
 import org.jetbrains.annotations.Nullable;
 
@@ -68,5 +75,12 @@ public class FrayedSilkBlock extends PlantBlock {
         Direction direction = state.get(VERTICAL_DIRECTION);
         BlockPos placeOnPos = pos.offset(direction, -1);
         return direction == Direction.UP ? this.canPlantOnTop(world.getBlockState(placeOnPos), world, placeOnPos) : this.canPlantOnBottom(world.getBlockState(placeOnPos), world, placeOnPos);
+    }
+
+    @Override
+    public void randomDisplayTick(BlockState state, World world, BlockPos pos, Random random) {
+        if (random.nextInt(500) <= 1 && world.getBlockState(pos.offset(state.get(VERTICAL_DIRECTION).getOpposite())).isOf(VABlocks.SILK_BLOCK)) {
+            world.playSound(pos.getX(), pos.getY(), pos.getZ(), VASoundEvents.BLOCK_FRAYED_SILK_IDLE, SoundCategory.BLOCKS, 1.0F, 0.7F, false);
+        }
     }
 }

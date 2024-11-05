@@ -19,9 +19,17 @@ public class VAFoodComponents {
     public static final FoodComponent ROCK_SALT = (new FoodComponent.Builder().nutrition(1).saturationModifier(0.1F).build());
     public static final FoodComponent BEEF_JERKY = (new FoodComponent.Builder().nutrition(4).saturationModifier(0.6F).build());
     public static final FoodComponent PORK_JERKY = (new FoodComponent.Builder().nutrition(4).saturationModifier(0.6F).build());
-    public static final FoodComponent CHICKEN_JERKY = (new FoodComponent.Builder().nutrition(3).saturationModifier(0.4F).build());
+    public static final FoodComponent CHICKEN_JERKY = (new FoodComponent.Builder().nutrition(3).saturationModifier(0.45F).build());
+    public static final FoodComponent MUTTON_JERKY = (new FoodComponent.Builder().nutrition(3).saturationModifier(0.6F).build());
 
     public static final ConsumableComponent JERKY_CONSUMABLE = ConsumableComponent.builder().consumeSeconds(1.2F).build();
+    public static final ConsumableComponent BALLOON_FRUIT_CONSUMABLE = ConsumableComponent.builder().consumeEffect(
+            new ApplyEffectsConsumeEffect(
+                    List.of(
+                            new StatusEffectInstance(StatusEffects.LEVITATION, 100)
+                    )
+            )
+    ).build();
     public static final ConsumableComponent ROCK_SALT_CONSUMABLE = ConsumableComponent.builder().consumeEffect(
             new ApplyEffectsConsumeEffect(
                     List.of(

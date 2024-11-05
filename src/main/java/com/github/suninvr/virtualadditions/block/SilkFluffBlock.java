@@ -1,6 +1,5 @@
 package com.github.suninvr.virtualadditions.block;
 
-import com.github.suninvr.virtualadditions.registry.VAEntityType;
 import com.github.suninvr.virtualadditions.registry.VAEntityTypeTags;
 import com.mojang.serialization.MapCodec;
 import net.minecraft.block.Block;
@@ -37,15 +36,15 @@ public class SilkFluffBlock extends Block {
 
     @Override
     public void onEntityCollision(BlockState state, World world, BlockPos pos, Entity entity) {
-        if (entity.getType() == VAEntityType.LUMWASP) return;
-        entity.slowMovement(state, movement);
+        if (entity.getType().isIn(VAEntityTypeTags.PASSES_THROUGH_WEBBED_SILK)) entity.slowMovement(state, movement);
     }
 
     @Override
     public VoxelShape getCollisionShape(BlockState state, BlockView world, BlockPos pos, ShapeContext context) {
         if (context instanceof EntityShapeContext entityContext) {
             if (entityContext.getEntity() != null) {
-                if (!(entityContext.getEntity().getType().isIn(VAEntityTypeTags.COLLIDES_WITH_WEBBED_SILK) || (entityContext.getEntity().isSneaking() && entityContext.isAbove(VoxelShapes.fullCube(), pos, false)))) return VoxelShapes.empty();
+                Entity entity = entityContext.getEntity();
+                if (entity.getType().isIn(VAEntityTypeTags.PASSES_THROUGH_WEBBED_SILK)) return VoxelShapes.empty();
             }
         }
         return VoxelShapes.fullCube();

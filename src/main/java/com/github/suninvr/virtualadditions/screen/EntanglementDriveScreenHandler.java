@@ -58,7 +58,11 @@ public class EntanglementDriveScreenHandler extends ScreenHandler {
         this.isSamePlayer = Property.create();
         this.addProperty(this.isSamePlayer);
         this.playerId = inventory.player.getUuid();
-        this.isSamePlayer.set( getActivePlayerId().equals(this.playerId) ? 1 : 0 );
+        if (!inventory.player.isSpectator()) {
+            this.isSamePlayer.set(getActivePlayerId().equals(this.playerId) ? 1 : 0);
+        } else {
+            this.isSamePlayer.set(0);
+        }
         this.playerInventory = inventory;
         this.inventory = new SimpleInventory(1) {
             @Override

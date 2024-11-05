@@ -3,6 +3,7 @@ package com.github.suninvr.virtualadditions.block;
 import com.github.suninvr.virtualadditions.registry.VABlocks;
 import com.github.suninvr.virtualadditions.registry.VAFluids;
 import com.github.suninvr.virtualadditions.registry.VAItemTags;
+import com.github.suninvr.virtualadditions.registry.VASoundEvents;
 import com.mojang.serialization.MapCodec;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
@@ -11,6 +12,7 @@ import net.minecraft.entity.Entity;
 import net.minecraft.entity.ItemEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.server.world.ServerWorld;
+import net.minecraft.sound.SoundCategory;
 import net.minecraft.state.StateManager;
 import net.minecraft.state.property.BooleanProperty;
 import net.minecraft.util.math.BlockPos;
@@ -45,6 +47,13 @@ public class LumwaspNestBlock extends TransparentBlock {
     public void randomTick(BlockState state, ServerWorld world, BlockPos pos, Random random) {
         if (!world.getFluidState(pos.up()).isOf(VAFluids.ACID) && !world.getBlockState(pos.up()).isOf(VABlocks.ACID_BLOCK)) {
             world.setBlockState(pos, state.with(LARVAE, false));
+        }
+    }
+
+    @Override
+    public void randomDisplayTick(BlockState state, World world, BlockPos pos, Random random) {
+        if (random.nextInt(250) == 0 && state.get(LARVAE)) {
+            world.playSound(pos.getX(), pos.getY(), pos.getZ(), VASoundEvents.BLOCK_LUMWASP_NEST_IDLE, SoundCategory.BLOCKS, 1.0F, 1.2F, false);
         }
     }
 

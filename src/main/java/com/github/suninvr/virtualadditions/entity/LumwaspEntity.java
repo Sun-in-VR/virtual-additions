@@ -50,7 +50,7 @@ public class LumwaspEntity extends HostileEntity implements RangedAttackMob, Flu
                 .add(EntityAttributes.FLYING_SPEED, 1.55)
                 .add(EntityAttributes.MOVEMENT_SPEED, 0.25)
                 .add(EntityAttributes.ATTACK_DAMAGE, 4.0)
-                .add(EntityAttributes.FOLLOW_RANGE, 32.0)
+                .add(EntityAttributes.FOLLOW_RANGE, 16.0)
                 .build();
     }
 
@@ -154,7 +154,7 @@ public class LumwaspEntity extends HostileEntity implements RangedAttackMob, Flu
 
     @Override
     public boolean canSpawn(WorldView world) {
-        return world.doesNotIntersectEntities(this);
+        return super.canSpawn(world);
     }
 
     public static boolean canSpawnInDark(EntityType<? extends HostileEntity> type, ServerWorldAccess world, SpawnReason spawnReason, BlockPos pos, Random random) {

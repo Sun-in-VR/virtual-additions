@@ -133,6 +133,7 @@ public class VABlocks {
     public static final Block POLISHED_BLUESCHIST;
     public static final Block POLISHED_BLUESCHIST_STAIRS;
     public static final Block POLISHED_BLUESCHIST_SLAB;
+    public static final Block POLISHED_BLUESCHIST_WALL;
     public static final Block BLUESCHIST_BRICKS;
     public static final Block CRACKED_BLUESCHIST_BRICKS;
     public static final Block BLUESCHIST_BRICK_STAIRS;
@@ -147,6 +148,7 @@ public class VABlocks {
     public static final Block POLISHED_SYENITE;
     public static final Block POLISHED_SYENITE_STAIRS;
     public static final Block POLISHED_SYENITE_SLAB;
+    public static final Block POLISHED_SYENITE_WALL;
     public static final Block SYENITE_BRICKS;
     public static final Block CRACKED_SYENITE_BRICKS;
     public static final Block SYENITE_BRICK_STAIRS;
@@ -504,6 +506,7 @@ public class VABlocks {
         POLISHED_BLUESCHIST = register("polished_blueschist", Block::new, Settings.copy(Blocks.POLISHED_DEEPSLATE));
         POLISHED_BLUESCHIST_STAIRS = register("polished_blueschist_stairs", (settings) -> new CustomStairsBlock(POLISHED_BLUESCHIST.getDefaultState(), settings), Settings.copy(Blocks.POLISHED_DEEPSLATE_STAIRS));
         POLISHED_BLUESCHIST_SLAB = register("polished_blueschist_slab", SlabBlock::new, Settings.copy(Blocks.POLISHED_DEEPSLATE_SLAB));
+        POLISHED_BLUESCHIST_WALL = register("polished_blueschist_wall", WallBlock::new, Settings.copy(Blocks.POLISHED_DEEPSLATE_WALL));
         BLUESCHIST_BRICKS = register("blueschist_bricks", Block::new, Settings.copy(Blocks.DEEPSLATE_BRICKS));
         CRACKED_BLUESCHIST_BRICKS = register("cracked_blueschist_bricks", Block::new, Settings.copy(Blocks.DEEPSLATE_BRICKS));
         BLUESCHIST_BRICK_STAIRS = register("blueschist_brick_stairs", (settings) -> new CustomStairsBlock(BLUESCHIST_BRICKS.getDefaultState(), settings), Settings.copy(Blocks.DEEPSLATE_BRICK_STAIRS));
@@ -519,6 +522,7 @@ public class VABlocks {
         POLISHED_SYENITE = register("polished_syenite", Block::new, Settings.copy(Blocks.POLISHED_DEEPSLATE));
         POLISHED_SYENITE_STAIRS = register("polished_syenite_stairs", (settings) -> new CustomStairsBlock(POLISHED_SYENITE.getDefaultState(), settings), Settings.copy(Blocks.POLISHED_DEEPSLATE_STAIRS));
         POLISHED_SYENITE_SLAB = register("polished_syenite_slab", SlabBlock::new, Settings.copy(Blocks.POLISHED_DEEPSLATE_SLAB));
+        POLISHED_SYENITE_WALL = register("polished_syenite_wall", WallBlock::new, Settings.copy(Blocks.POLISHED_DEEPSLATE_WALL));
         SYENITE_BRICKS = register("syenite_bricks", Block::new, Settings.copy(Blocks.DEEPSLATE_BRICKS));
         CRACKED_SYENITE_BRICKS = register("cracked_syenite_bricks", Block::new, Settings.copy(Blocks.DEEPSLATE_BRICKS));
         SYENITE_BRICK_STAIRS = register("syenite_brick_stairs", (settings) -> new CustomStairsBlock(VABlocks.SYENITE_BRICKS.getDefaultState(), settings), Settings.copy(Blocks.DEEPSLATE_BRICK_STAIRS));
@@ -561,7 +565,7 @@ public class VABlocks {
         BALLOON_BULB_PLANT = register("balloon_bulb_plant", BalloonBulbPlantBlock::new, Settings.copy(BALLOON_BULB).requires(VirtualAdditions.PREVIEW));
         BALLOON_BULB_BUD = register("balloon_bulb_bud", BalloonBulbBudBlock::new, Settings.copy(BALLOON_BULB).requires(VirtualAdditions.PREVIEW));
 
-        Settings floatrockOreSettings = Settings.create().mapColor(MapColor.TERRACOTTA_BROWN).instrument(NoteBlockInstrument.BASS).requiresTool().strength(2.0F, 1.5F).sounds(BlockSoundGroup.TUFF);
+        Settings floatrockOreSettings = Settings.create().mapColor(MapColor.TERRACOTTA_BROWN).instrument(NoteBlockInstrument.BASS).requiresTool().strength(2.0F, 1.5F).sounds(BlockSoundGroup.TUFF).requires(VirtualAdditions.PREVIEW);
 
         FLOATROCK_COAL_ORE = register("floatrock_coal_ore", (settings) -> new ExperienceDroppingBlock(UniformIntProvider.create(0, 2), settings), floatrockOreSettings);
         FLOATROCK_IRON_ORE = register("floatrock_iron_ore", (settings) -> new ExperienceDroppingBlock(ConstantIntProvider.create(0), settings), floatrockOreSettings);

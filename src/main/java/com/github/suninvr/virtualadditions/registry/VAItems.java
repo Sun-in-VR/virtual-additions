@@ -93,6 +93,7 @@ public class VAItems {
     public static final Item POLISHED_BLUESCHIST;
     public static final Item POLISHED_BLUESCHIST_STAIRS;
     public static final Item POLISHED_BLUESCHIST_SLAB;
+    public static final Item POLISHED_BLUESCHIST_WALL;
     public static final Item BLUESCHIST_BRICKS;
     public static final Item CRACKED_BLUESCHIST_BRICKS;
     public static final Item BLUESCHIST_BRICK_STAIRS;
@@ -107,6 +108,7 @@ public class VAItems {
     public static final Item POLISHED_SYENITE;
     public static final Item POLISHED_SYENITE_STAIRS;
     public static final Item POLISHED_SYENITE_SLAB;
+    public static final Item POLISHED_SYENITE_WALL;
     public static final Item SYENITE_BRICKS;
     public static final Item CRACKED_SYENITE_BRICKS;
     public static final Item SYENITE_BRICK_STAIRS;
@@ -275,6 +277,7 @@ public class VAItems {
     public static final Item BEEF_JERKY;
     public static final Item PORK_JERKY;
     public static final Item CHICKEN_JERKY;
+    public static final Item MUTTON_JERKY;
     public static final Item GLOWING_SILK;
     public static final Item FRAYED_SILK;
     public static final Item TALL_GREENCAP_MUSHROOMS;
@@ -547,7 +550,8 @@ public class VAItems {
         POLISHED_BLUESCHIST = registerBlockItem("polished_blueschist", VABlocks.POLISHED_BLUESCHIST, ItemGroups.BUILDING_BLOCKS, COBBLED_BLUESCHIST_WALL);
         POLISHED_BLUESCHIST_STAIRS = registerBlockItem("polished_blueschist_stairs", VABlocks.POLISHED_BLUESCHIST_STAIRS, ItemGroups.BUILDING_BLOCKS, POLISHED_BLUESCHIST);
         POLISHED_BLUESCHIST_SLAB = registerBlockItem("polished_blueschist_slab", VABlocks.POLISHED_BLUESCHIST_SLAB, ItemGroups.BUILDING_BLOCKS, POLISHED_BLUESCHIST_STAIRS);
-        BLUESCHIST_BRICKS = registerBlockItem("blueschist_bricks", VABlocks.BLUESCHIST_BRICKS, ItemGroups.BUILDING_BLOCKS, POLISHED_BLUESCHIST_SLAB);
+        POLISHED_BLUESCHIST_WALL = registerBlockItem("polished_blueschist_wall", VABlocks.POLISHED_BLUESCHIST_WALL, ItemGroups.BUILDING_BLOCKS, prev);
+        BLUESCHIST_BRICKS = registerBlockItem("blueschist_bricks", VABlocks.BLUESCHIST_BRICKS, ItemGroups.BUILDING_BLOCKS, prev);
         CRACKED_BLUESCHIST_BRICKS = registerBlockItem("cracked_blueschist_bricks", VABlocks.CRACKED_BLUESCHIST_BRICKS, ItemGroups.BUILDING_BLOCKS, BLUESCHIST_BRICKS);
         BLUESCHIST_BRICK_STAIRS = registerBlockItem("blueschist_brick_stairs", VABlocks.BLUESCHIST_BRICK_STAIRS, ItemGroups.BUILDING_BLOCKS, CRACKED_BLUESCHIST_BRICKS);
         BLUESCHIST_BRICK_SLAB = registerBlockItem("blueschist_brick_slab", VABlocks.BLUESCHIST_BRICK_SLAB, ItemGroups.BUILDING_BLOCKS, BLUESCHIST_BRICK_STAIRS);
@@ -566,7 +570,8 @@ public class VAItems {
         POLISHED_SYENITE = registerBlockItem("polished_syenite", VABlocks.POLISHED_SYENITE, ItemGroups.BUILDING_BLOCKS, COBBLED_SYENITE_WALL);
         POLISHED_SYENITE_STAIRS = registerBlockItem("polished_syenite_stairs", VABlocks.POLISHED_SYENITE_STAIRS, ItemGroups.BUILDING_BLOCKS, POLISHED_SYENITE);
         POLISHED_SYENITE_SLAB = registerBlockItem("polished_syenite_slab", VABlocks.POLISHED_SYENITE_SLAB, ItemGroups.BUILDING_BLOCKS, POLISHED_SYENITE_STAIRS);
-        SYENITE_BRICKS = registerBlockItem("syenite_bricks", VABlocks.SYENITE_BRICKS, ItemGroups.BUILDING_BLOCKS, POLISHED_SYENITE_SLAB);
+        POLISHED_SYENITE_WALL = registerBlockItem("polished_syenite_wall", VABlocks.POLISHED_SYENITE_WALL, ItemGroups.BUILDING_BLOCKS, prev);
+        SYENITE_BRICKS = registerBlockItem("syenite_bricks", VABlocks.SYENITE_BRICKS, ItemGroups.BUILDING_BLOCKS, prev);
         CRACKED_SYENITE_BRICKS = registerBlockItem("cracked_syenite_bricks", VABlocks.CRACKED_SYENITE_BRICKS, ItemGroups.BUILDING_BLOCKS, SYENITE_BRICKS);
         SYENITE_BRICK_STAIRS = registerBlockItem("syenite_brick_stairs", VABlocks.SYENITE_BRICK_STAIRS, ItemGroups.BUILDING_BLOCKS, CRACKED_SYENITE_BRICKS);
         SYENITE_BRICK_SLAB = registerBlockItem("syenite_brick_slab", VABlocks.SYENITE_BRICK_SLAB, ItemGroups.BUILDING_BLOCKS, SYENITE_BRICK_STAIRS);
@@ -634,7 +639,7 @@ public class VAItems {
 
         SPRINGSOIL = registerBlockItem("springsoil", VABlocks.SPRINGSOIL, ItemGroups.NATURAL, Items.RED_SANDSTONE);
 
-        BALLOON_FRUIT = register("balloon_fruit", settings -> new BalloonFruitItem(VABlocks.BALLOON_BULB_BUD, settings), new Item.Settings().food(VAFoodComponents.BALLOON_FRUIT), ItemGroups.FOOD_AND_DRINK, Items.CHORUS_FRUIT);
+        BALLOON_FRUIT = register("balloon_fruit", settings -> new BalloonFruitItem(VABlocks.BALLOON_BULB_BUD, settings), new Item.Settings().food(VAFoodComponents.BALLOON_FRUIT, VAFoodComponents.BALLOON_FRUIT_CONSUMABLE), ItemGroups.FOOD_AND_DRINK, Items.CHORUS_FRUIT);
 
         //endregion
 
@@ -647,7 +652,7 @@ public class VAItems {
         ROCK_SALT_BRICK_WALL = registerBlockItem("rock_salt_brick_wall", VABlocks.ROCK_SALT_BRICK_WALL, ItemGroups.BUILDING_BLOCKS, prev);
         CHISELED_ROCK_SALT_BRICKS = registerBlockItem("chiseled_rock_salt_bricks", VABlocks.CHISELED_ROCK_SALT_BRICKS, ItemGroups.BUILDING_BLOCKS, prev);
         ROCK_SALT_CRYSTAL = registerBlockItem("rock_salt_crystal", VABlocks.ROCK_SALT_CRYSTAL, ItemGroups.NATURAL, ROCK_SALT_BLOCK);
-        ROCK_SALT_ORE = registerBlockItem("rock_salt_ore", VABlocks.ROCK_SALT_ORE, ItemGroups.NATURAL, FLOATROCK_COPPER_ORE);
+        ROCK_SALT_ORE = registerBlockItem("rock_salt_ore", VABlocks.ROCK_SALT_ORE, ItemGroups.NATURAL, Items.DEEPSLATE_COAL_ORE);
         DEEPSLATE_ROCK_SALT_ORE = registerBlockItem("deepslate_rock_salt_ore", VABlocks.DEEPSLATE_ROCK_SALT_ORE, ItemGroups.NATURAL, prev);
         ROCK_SALT = register("rock_salt", new Item.Settings().food(VAFoodComponents.ROCK_SALT, VAFoodComponents.ROCK_SALT_CONSUMABLE), at(ItemGroups.INGREDIENTS, Items.SUGAR), at(ItemGroups.FOOD_AND_DRINK, Items.SPIDER_EYE));
 
@@ -1111,6 +1116,7 @@ public class VAItems {
         BEEF_JERKY = register("beef_jerky", new Item.Settings().food(VAFoodComponents.BEEF_JERKY, VAFoodComponents.JERKY_CONSUMABLE).maxCount(96), ItemGroups.FOOD_AND_DRINK, Items.COOKED_BEEF);
         PORK_JERKY = register("pork_jerky", new Item.Settings().food(VAFoodComponents.PORK_JERKY, VAFoodComponents.JERKY_CONSUMABLE).maxCount(96), ItemGroups.FOOD_AND_DRINK, Items.COOKED_PORKCHOP);
         CHICKEN_JERKY = register("chicken_jerky", new Item.Settings().food(VAFoodComponents.CHICKEN_JERKY, VAFoodComponents.JERKY_CONSUMABLE).maxCount(96), ItemGroups.FOOD_AND_DRINK, Items.COOKED_CHICKEN);
+        MUTTON_JERKY = register("mutton_jerky", new Item.Settings().food(VAFoodComponents.MUTTON_JERKY, VAFoodComponents.JERKY_CONSUMABLE).maxCount(96), ItemGroups.FOOD_AND_DRINK, Items.COOKED_MUTTON);
 
         //endregion
 

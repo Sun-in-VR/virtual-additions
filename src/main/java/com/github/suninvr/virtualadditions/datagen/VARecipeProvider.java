@@ -86,6 +86,7 @@ public final class VARecipeProvider {
         public void generate() {
             System.out.println("Base Generator is Generating");
             offerBlasting(List.of(VAItems.RAW_STEEL), RecipeCategory.MISC, VAItems.STEEL_INGOT, 1.0F, 100, "steel_ingot");
+            offerSmelting(List.of(VAItems.RAW_STEEL), RecipeCategory.MISC, VAItems.STEEL_INGOT, 1.0F, 200, "steel_ingot");
             offerBlasting(List.of(VAItems.IOLITE_ORE), RecipeCategory.MISC, VAItems.IOLITE, 1.0F, 100, "iolite");
             offerSmelting(List.of(VAItems.IOLITE_ORE), RecipeCategory.MISC, VAItems.IOLITE, 1.0F, 200, "iolite");
             offerBlasting(List.of(VAItems.ROCK_SALT_ORE), RecipeCategory.MISC, VAItems.ROCK_SALT, 1.0F, 100, "rock_salt");
@@ -168,6 +169,7 @@ public final class VARecipeProvider {
             offerJerkyFoodRecipe(Items.COOKED_BEEF, VAItems.BEEF_JERKY);
             offerJerkyFoodRecipe(Items.COOKED_PORKCHOP, VAItems.PORK_JERKY);
             offerJerkyFoodRecipe(Items.COOKED_CHICKEN, VAItems.CHICKEN_JERKY);
+            offerJerkyFoodRecipe(Items.COOKED_MUTTON, VAItems.MUTTON_JERKY);
 
             ShapedRecipeJsonBuilder.create(this.registryLookup, RecipeCategory.FOOD, VAItems.CHEESE_WEDGE, 4)
                             .pattern(" # ")

@@ -1,8 +1,10 @@
 package com.github.suninvr.virtualadditions.datagen;
 
 import com.github.suninvr.virtualadditions.registry.VAEntityType;
+import com.github.suninvr.virtualadditions.registry.VAEntityTypeTags;
 import net.fabricmc.fabric.api.datagen.v1.FabricDataOutput;
 import net.fabricmc.fabric.api.datagen.v1.provider.FabricTagProvider;
+import net.minecraft.entity.EntityType;
 import net.minecraft.registry.RegistryWrapper;
 import net.minecraft.registry.tag.EntityTypeTags;
 
@@ -18,5 +20,8 @@ public class VAEntityTypeTagProvider extends FabricTagProvider.EntityTypeTagProv
         getOrCreateTagBuilder(EntityTypeTags.IMPACT_PROJECTILES).add(VAEntityType.STEEL_BOMB, VAEntityType.CLIMBING_ROPE, VAEntityType.ACID_SPIT);
         getOrCreateTagBuilder(EntityTypeTags.ARTHROPOD).add(VAEntityType.LUMWASP);
         getOrCreateTagBuilder(EntityTypeTags.UNDEAD).add(VAEntityType.SALINE);
+        getOrCreateTagBuilder(VAEntityTypeTags.PASSES_THROUGH_WEBBED_SILK)
+                .add(EntityType.ITEM, EntityType.EXPERIENCE_ORB)
+                .addOptionalTag(EntityTypeTags.IMPACT_PROJECTILES);
     }
 }

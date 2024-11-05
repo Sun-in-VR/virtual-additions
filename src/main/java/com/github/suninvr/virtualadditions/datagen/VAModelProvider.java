@@ -38,6 +38,8 @@ class VAModelProvider extends FabricModelProvider {
         blockStateModelGenerator.registerCubeAllModelTexturePool(VABlocks.WEATHERED_CUT_STEEL).family(VACollections.WEATHERED_CUT_STEEL).parented(VABlocks.WEATHERED_CUT_STEEL, VABlocks.WAXED_WEATHERED_CUT_STEEL).parented(VABlocks.WEATHERED_CHISELED_STEEL, VABlocks.WAXED_WEATHERED_CHISELED_STEEL).family(VACollections.WAXED_WEATHERED_CUT_STEEL);
         blockStateModelGenerator.registerCubeAllModelTexturePool(VABlocks.OXIDIZED_CUT_STEEL).family(VACollections.OXIDIZED_CUT_STEEL).parented(VABlocks.OXIDIZED_CUT_STEEL, VABlocks.WAXED_OXIDIZED_CUT_STEEL).parented(VABlocks.OXIDIZED_CHISELED_STEEL, VABlocks.WAXED_OXIDIZED_CHISELED_STEEL).family(VACollections.WAXED_OXIDIZED_CUT_STEEL);
         blockStateModelGenerator.registerCubeAllModelTexturePool(VABlocks.ROCK_SALT_BRICKS).family(VACollections.ROCK_SALT_BRICKS);
+        blockStateModelGenerator.registerCubeAllModelTexturePool(VABlocks.POLISHED_BLUESCHIST).family(VACollections.POLISHED_BLUESCHIST);
+        blockStateModelGenerator.registerCubeAllModelTexturePool(VABlocks.POLISHED_SYENITE).family(VACollections.POLISHED_SYENITE);
 
         blockStateModelGenerator.registerMirrorable(VABlocks.ROCK_SALT_BLOCK);
         blockStateModelGenerator.registerSimpleCubeAll(VABlocks.ROCK_SALT_ORE);
@@ -77,6 +79,7 @@ class VAModelProvider extends FabricModelProvider {
         blockStateModelGenerator.registerParented(VABlocks.EXPOSED_STEEL_BLOCK, VABlocks.WAXED_EXPOSED_STEEL_BLOCK);
         blockStateModelGenerator.registerParented(VABlocks.WEATHERED_STEEL_BLOCK, VABlocks.WAXED_WEATHERED_STEEL_BLOCK);
         blockStateModelGenerator.registerParented(VABlocks.OXIDIZED_STEEL_BLOCK, VABlocks.WAXED_OXIDIZED_STEEL_BLOCK);
+
     }
 
     private void registerColoringStation(BlockStateModelGenerator blockStateModelGenerator) {
@@ -126,6 +129,7 @@ class VAModelProvider extends FabricModelProvider {
         itemModelGenerator.register(VAItems.BEEF_JERKY, Models.GENERATED);
         itemModelGenerator.register(VAItems.PORK_JERKY, Models.GENERATED);
         itemModelGenerator.register(VAItems.CHICKEN_JERKY, Models.GENERATED);
+        itemModelGenerator.register(VAItems.MUTTON_JERKY, Models.GENERATED);
 
         itemModelGenerator.register(VAItems.EXPOSED_CLIMBING_ROPE, Models.GENERATED);
         itemModelGenerator.register(VAItems.WEATHERED_CLIMBING_ROPE, Models.GENERATED);
