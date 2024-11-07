@@ -7,6 +7,9 @@
     "minecraft:block_open",
     "minecraft:block_close",
     "minecraft:block_activate",
-    "minecraft:block_deactivate"
+    "minecraft:block_deactivate",
+    "minecraft:block_detach",
+    "minecraft:prime_fuse",
+    "minecraft:explode"
   ]
 }

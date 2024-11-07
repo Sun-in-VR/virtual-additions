@@ -54,18 +54,18 @@ public class SpotlightLightBlock extends BlockWithEntity implements Waterloggabl
         );
     }
 
-    public static void updateSources(World world, BlockPos pos, BlockState state) {
+    public static void updateSources(WorldAccess world, BlockPos pos, BlockState state) {
         if (!state.isOf(VABlocks.SPOTLIGHT_LIGHT)) return;
         SpotlightLightBlock.getSources(world, pos, state).forEach(pos2 -> world.scheduleBlockTick(pos2, VABlocks.SPOTLIGHT, 1));
     }
 
-    public static List<BlockPos> getSources(World world, BlockPos pos, BlockState state) {
+    public static List<BlockPos> getSources(WorldAccess world, BlockPos pos, BlockState state) {
         List<BlockPos> posList = new ArrayList<>();
         for (Direction dir : Direction.values()) if (state.get(getDirectionProperty(dir)).hasLight()) posList.add(findSource(world, pos, dir));
         return posList;
     }
 
-    protected static BlockPos findSource(World world, BlockPos pos, Direction dir) {
+    protected static BlockPos findSource(WorldAccess world, BlockPos pos, Direction dir) {
         int i = 0;
         BlockPos blockPos = BlockPos.ORIGIN;
         while (i < 33) {
@@ -78,7 +78,7 @@ public class SpotlightLightBlock extends BlockWithEntity implements Waterloggabl
 
     @Override
     protected void onStateReplaced(BlockState state, World world, BlockPos pos, BlockState newState, boolean moved) {
-        if (!world.isClient() && !state.isOf(newState.getBlock()) && !newState.isAir()) {
+        if (!world.isClient() && !state.isOf(newState.getBlock())) {
             updateSources(world, pos, state);
         }
         super.onStateReplaced(state, world, pos, newState, moved);

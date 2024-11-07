@@ -8,6 +8,8 @@ import com.github.suninvr.virtualadditions.registry.VAItems;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.Oxidizable;
 import net.minecraft.block.enums.BlockHalf;
+import net.minecraft.block.pattern.CachedBlockPosition;
+import net.minecraft.component.DataComponentTypes;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.data.DataTracker;
@@ -62,6 +64,10 @@ public class ClimbingRopeEntity extends PersistentProjectileEntity {
     }
 
     protected BlockState getRopeState(BlockHitResult result) {
+        if (this.getItemStack().contains(DataComponentTypes.CAN_PLACE_ON)) {
+            CachedBlockPosition chachedPos = new CachedBlockPosition(this.getWorld(), result.getBlockPos(), false);
+            if (!this.getItemStack().get(DataComponentTypes.CAN_PLACE_ON).check(chachedPos)) return null;
+        }
         Direction dir = result.getSide();
         BlockPos pos = result.getBlockPos().offset(dir);
         if (dir != Direction.UP && this.getItemStack().isIn(VAItemTags.CLIMBING_ROPES) && this.getItemStack().getItem() instanceof BlockItem blockItem) {

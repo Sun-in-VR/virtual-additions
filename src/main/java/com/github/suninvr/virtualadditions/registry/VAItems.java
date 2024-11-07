@@ -493,7 +493,6 @@ public class VAItems {
     private static final Identifier EMPTY_SLOT_EMERALD_TEXTURE;
     private static final Identifier EMPTY_SLOT_AMETHYST_TEXTURE;
     private static final Identifier EMPTY_SLOT_ECHO_SHARD_TEXTURE;
-    private static final Identifier EMPTY_SLOT_IOLITE_TEXTURE;
 
     //endregion
 
@@ -515,7 +514,6 @@ public class VAItems {
         EMPTY_SLOT_EMERALD_TEXTURE = Identifier.ofVanilla("container/slot/emerald");
         EMPTY_SLOT_AMETHYST_TEXTURE = Identifier.ofVanilla("container/slot/amethyst_shard");
         EMPTY_SLOT_ECHO_SHARD_TEXTURE = idOf("container/slot/echo_shard");
-        EMPTY_SLOT_IOLITE_TEXTURE = idOf("container/slot/iolite");
 
         //endregion
 
@@ -1093,7 +1091,7 @@ public class VAItems {
 
         TOOL_GILD_SMITHING_TEMPLATE = register("tool_gild_smithing_template", settings -> new SmithingTemplateItem(TOOL_GILD_APPLIES_TO_TEXT, TOOL_GILD_INGREDIENTS_TEXT, TOOL_GILD_BASE_SLOT_DESCRIPTION_TEXT, TOOL_GILD_ADDITIONS_SLOT_DESCRIPTION_TEXT,
                 List.of(EMPTY_SLOT_SWORD_TEXTURE, EMPTY_SLOT_SHOVEL_TEXTURE, EMPTY_SLOT_PICKAXE_TEXTURE, EMPTY_SLOT_AXE_TEXTURE, EMPTY_SLOT_HOE_TEXTURE),
-                List.of(EMPTY_SLOT_AMETHYST_TEXTURE, EMPTY_SLOT_INGOT_TEXTURE, EMPTY_SLOT_EMERALD_TEXTURE, EMPTY_SLOT_IOLITE_TEXTURE, EMPTY_SLOT_QUARTZ_TEXTURE, EMPTY_SLOT_ECHO_SHARD_TEXTURE),
+                List.of(EMPTY_SLOT_AMETHYST_TEXTURE, EMPTY_SLOT_INGOT_TEXTURE, EMPTY_SLOT_EMERALD_TEXTURE, VATextureIdentifiers.EMPTY_SLOT_IOLITE_TEXTURE, EMPTY_SLOT_QUARTZ_TEXTURE, EMPTY_SLOT_ECHO_SHARD_TEXTURE),
                 settings
         ),new Item.Settings(), ItemGroups.INGREDIENTS, Items.NETHERITE_UPGRADE_SMITHING_TEMPLATE);
 
