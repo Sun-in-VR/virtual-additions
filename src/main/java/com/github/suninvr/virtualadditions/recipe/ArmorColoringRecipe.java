@@ -36,8 +36,9 @@ public class ArmorColoringRecipe implements Recipe<RecipeInput>, ColoringStation
     public ArmorColoringRecipe(Ingredient ingredient, int index) {
         this.ingredient = ingredient;
         this.index = index;
-        RegistryKey<Item> key = ingredient.getMatchingItems().getFirst().getKey().orElse(null);
-        this.dyeItem = key == null ? null : Registries.ITEM.get(key) instanceof DyeItem dyeItem1 ? dyeItem1 : null;
+        RegistryKey<Item>[] key = new RegistryKey[1];
+        ingredient.getMatchingItems().findFirst().ifPresent(item -> key[0] = item.getKey().get());
+        this.dyeItem = key[0] == null ? null : Registries.ITEM.get(key[0]) instanceof DyeItem dyeItem ? dyeItem : null;
     }
 
     @Override

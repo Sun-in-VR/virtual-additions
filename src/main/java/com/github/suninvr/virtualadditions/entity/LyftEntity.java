@@ -81,7 +81,6 @@ public class LyftEntity extends AnimalEntity {
         BirdNavigation birdNavigation = new BirdNavigation(this, world);
         birdNavigation.setCanPathThroughDoors(false);
         birdNavigation.setCanSwim(true);
-        birdNavigation.setCanEnterOpenDoors(true);
         birdNavigation.setSpeed(0.2F);
         return birdNavigation;
     }

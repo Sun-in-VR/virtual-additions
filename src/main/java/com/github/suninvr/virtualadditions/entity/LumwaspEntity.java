@@ -110,7 +110,6 @@ public class LumwaspEntity extends HostileEntity implements RangedAttackMob, Flu
         };
         birdNavigation.setCanPathThroughDoors(false);
         birdNavigation.setCanSwim(false);
-        birdNavigation.setCanEnterOpenDoors(true);
         return birdNavigation;
     }
 

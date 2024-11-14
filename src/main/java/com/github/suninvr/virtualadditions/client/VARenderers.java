@@ -17,7 +17,6 @@ import net.fabricmc.fabric.api.client.rendering.v1.EntityModelLayerRegistry;
 import net.fabricmc.fabric.api.client.rendering.v1.EntityRendererRegistry;
 import net.minecraft.block.RedstoneWireBlock;
 import net.minecraft.client.color.world.BiomeColors;
-import net.minecraft.client.item.ModelPredicateProviderRegistry;
 import net.minecraft.client.render.RenderLayer;
 import net.minecraft.client.render.TexturedRenderLayers;
 import net.minecraft.client.render.block.entity.BannerBlockEntityRenderer;
@@ -27,13 +26,7 @@ import net.minecraft.client.render.block.entity.SignBlockEntityRenderer;
 import net.minecraft.client.render.entity.FlyingItemEntityRenderer;
 import net.minecraft.client.render.entity.model.EntityModelLayer;
 import net.minecraft.client.util.SpriteIdentifier;
-import net.minecraft.component.DataComponentTypes;
-import net.minecraft.component.type.ChargedProjectilesComponent;
-import net.minecraft.component.type.PotionContentsComponent;
-import net.minecraft.item.ItemStack;
-import net.minecraft.item.Items;
 import net.minecraft.util.Identifier;
-import net.minecraft.util.math.ColorHelper;
 import net.minecraft.world.biome.FoliageColors;
 
 import static com.github.suninvr.virtualadditions.VirtualAdditions.idOf;
@@ -43,14 +36,14 @@ public class VARenderers {
     public static EntityModelLayer LYFT_LAYER = new EntityModelLayer(Identifier.of("virtual_additions", "lyft"), "main");
     public static EntityModelLayer CUSTOM_BED_FOOT_LAYER = new EntityModelLayer(idOf("bed_foot"), "main");
     public static EntityModelLayer CUSTOM_BED_HEAD_LAYER = new EntityModelLayer(idOf("bed_head"), "main");
-    public static final SpriteIdentifier CHARTREUSE_SHULKER_BOX = new SpriteIdentifier(TexturedRenderLayers.SHULKER_BOXES_ATLAS_TEXTURE, VirtualAdditions.idOf("entity/shulker/chartreuse"));
-    public static final SpriteIdentifier MAROON_SHULKER_BOX = new SpriteIdentifier(TexturedRenderLayers.SHULKER_BOXES_ATLAS_TEXTURE, VirtualAdditions.idOf("entity/shulker/maroon"));
-    public static final SpriteIdentifier INDIGO_SHULKER_BOX = new SpriteIdentifier(TexturedRenderLayers.SHULKER_BOXES_ATLAS_TEXTURE, VirtualAdditions.idOf("entity/shulker/indigo"));
-    public static final SpriteIdentifier PLUM_SHULKER_BOX = new SpriteIdentifier(TexturedRenderLayers.SHULKER_BOXES_ATLAS_TEXTURE, VirtualAdditions.idOf("entity/shulker/plum"));
-    public static final SpriteIdentifier VIRIDIAN_SHULKER_BOX = new SpriteIdentifier(TexturedRenderLayers.SHULKER_BOXES_ATLAS_TEXTURE, VirtualAdditions.idOf("entity/shulker/viridian"));
-    public static final SpriteIdentifier TAN_SHULKER_BOX = new SpriteIdentifier(TexturedRenderLayers.SHULKER_BOXES_ATLAS_TEXTURE, VirtualAdditions.idOf("entity/shulker/tan"));
-    public static final SpriteIdentifier SINOPIA_SHULKER_BOX = new SpriteIdentifier(TexturedRenderLayers.SHULKER_BOXES_ATLAS_TEXTURE, VirtualAdditions.idOf("entity/shulker/sinopia"));
-    public static final SpriteIdentifier LILAC_SHULKER_BOX = new SpriteIdentifier(TexturedRenderLayers.SHULKER_BOXES_ATLAS_TEXTURE, VirtualAdditions.idOf("entity/shulker/lilac"));
+    public static final SpriteIdentifier CHARTREUSE_SHULKER_BOX = new SpriteIdentifier(TexturedRenderLayers.SHULKER_BOXES_ATLAS_TEXTURE, VirtualAdditions.idOf("entity/shulker/shulker_chartreuse"));
+    public static final SpriteIdentifier MAROON_SHULKER_BOX = new SpriteIdentifier(TexturedRenderLayers.SHULKER_BOXES_ATLAS_TEXTURE, VirtualAdditions.idOf("entity/shulker/shulker_maroon"));
+    public static final SpriteIdentifier INDIGO_SHULKER_BOX = new SpriteIdentifier(TexturedRenderLayers.SHULKER_BOXES_ATLAS_TEXTURE, VirtualAdditions.idOf("entity/shulker/shulker_indigo"));
+    public static final SpriteIdentifier PLUM_SHULKER_BOX = new SpriteIdentifier(TexturedRenderLayers.SHULKER_BOXES_ATLAS_TEXTURE, VirtualAdditions.idOf("entity/shulker/shulker_plum"));
+    public static final SpriteIdentifier VIRIDIAN_SHULKER_BOX = new SpriteIdentifier(TexturedRenderLayers.SHULKER_BOXES_ATLAS_TEXTURE, VirtualAdditions.idOf("entity/shulker/shulker_viridian"));
+    public static final SpriteIdentifier TAN_SHULKER_BOX = new SpriteIdentifier(TexturedRenderLayers.SHULKER_BOXES_ATLAS_TEXTURE, VirtualAdditions.idOf("entity/shulker/shulker_tan"));
+    public static final SpriteIdentifier SINOPIA_SHULKER_BOX = new SpriteIdentifier(TexturedRenderLayers.SHULKER_BOXES_ATLAS_TEXTURE, VirtualAdditions.idOf("entity/shulker/shulker_sinopia"));
+    public static final SpriteIdentifier LILAC_SHULKER_BOX = new SpriteIdentifier(TexturedRenderLayers.SHULKER_BOXES_ATLAS_TEXTURE, VirtualAdditions.idOf("entity/shulker/shulker_lilac"));
     public static final SpriteIdentifier CHARTREUSE_BED_TEXTURE = new SpriteIdentifier(TexturedRenderLayers.BEDS_ATLAS_TEXTURE, VirtualAdditions.idOf("entity/bed/chartreuse"));
     public static final SpriteIdentifier MAROON_BED_TEXTURE = new SpriteIdentifier(TexturedRenderLayers.BEDS_ATLAS_TEXTURE, VirtualAdditions.idOf("entity/bed/maroon"));
     public static final SpriteIdentifier INDIGO_BED_TEXTURE = new SpriteIdentifier(TexturedRenderLayers.BEDS_ATLAS_TEXTURE, VirtualAdditions.idOf("entity/bed/indigo"));
@@ -215,29 +208,29 @@ public class VARenderers {
         BuiltinItemRendererRegistry.INSTANCE.register(VAItems.SINOPIA_SHULKER_BOX, shulkerBoxItemRenderer);
         BuiltinItemRendererRegistry.INSTANCE.register(VAItems.LILAC_SHULKER_BOX, shulkerBoxItemRenderer);
 
-        ModelPredicateProviderRegistry.register(Items.CROSSBOW, idOf("climbing_rope"), (itemStack, clientWorld, livingEntity, a) -> {
-            if(!itemStack.isOf(Items.CROSSBOW)) return 0.0F;
-            ChargedProjectilesComponent component = itemStack.get(DataComponentTypes.CHARGED_PROJECTILES);
-            float f = 0.0F;
-            if (component != null) {
-                ItemStack stack = component.getProjectiles().isEmpty() ? ItemStack.EMPTY : component.getProjectiles().get(0);
-                if (stack.isOf(VAItems.CLIMBING_ROPE) || stack.isOf(VAItems.WAXED_CLIMBING_ROPE)) f = 0.25F;
-                else if (stack.isOf(VAItems.EXPOSED_CLIMBING_ROPE) || stack.isOf(VAItems.WAXED_EXPOSED_CLIMBING_ROPE)) f = 0.5F;
-                else if (stack.isOf(VAItems.WEATHERED_CLIMBING_ROPE) || stack.isOf(VAItems.WAXED_WEATHERED_CLIMBING_ROPE)) f = 0.75F;
-                else if (stack.isOf(VAItems.OXIDIZED_CLIMBING_ROPE) || stack.isOf(VAItems.WAXED_OXIDIZED_CLIMBING_ROPE)) f = 1.0F;
-            }
-            return f ;
-        });
+        //ModelPredicateProviderRegistry.register(Items.CROSSBOW, idOf("climbing_rope"), (itemStack, clientWorld, livingEntity, a) -> {
+        //    if(!itemStack.isOf(Items.CROSSBOW)) return 0.0F;
+        //    ChargedProjectilesComponent component = itemStack.get(DataComponentTypes.CHARGED_PROJECTILES);
+        //    float f = 0.0F;
+        //    if (component != null) {
+        //        ItemStack stack = component.getProjectiles().isEmpty() ? ItemStack.EMPTY : component.getProjectiles().get(0);
+        //        if (stack.isOf(VAItems.CLIMBING_ROPE) || stack.isOf(VAItems.WAXED_CLIMBING_ROPE)) f = 0.25F;
+        //        else if (stack.isOf(VAItems.EXPOSED_CLIMBING_ROPE) || stack.isOf(VAItems.WAXED_EXPOSED_CLIMBING_ROPE)) f = 0.5F;
+        //        else if (stack.isOf(VAItems.WEATHERED_CLIMBING_ROPE) || stack.isOf(VAItems.WAXED_WEATHERED_CLIMBING_ROPE)) f = 0.75F;
+        //        else if (stack.isOf(VAItems.OXIDIZED_CLIMBING_ROPE) || stack.isOf(VAItems.WAXED_OXIDIZED_CLIMBING_ROPE)) f = 1.0F;
+        //    }
+        //    return f ;
+        //});
 
-        ModelPredicateProviderRegistry.register(VAItems.ICE_CREAM, idOf("colorful"), (stack, world, entity, seed) -> {
-            if (!stack.isOf(VAItems.ICE_CREAM)) return 0.0F;
-            return stack.contains(DataComponentTypes.DYED_COLOR) ? 1.0F : 0.0F;
-        });
+        //ModelPredicateProviderRegistry.register(VAItems.ICE_CREAM, idOf("colorful"), (stack, world, entity, seed) -> {
+        //    if (!stack.isOf(VAItems.ICE_CREAM)) return 0.0F;
+        //    return stack.contains(DataComponentTypes.DYED_COLOR) ? 1.0F : 0.0F;
+        //});
 
-        ModelPredicateProviderRegistry.register(VAItems.ENGRAVING_CHISEL, idOf("colorful"), (stack, world, entity, seed) -> {
-            if (!stack.isOf(VAItems.ENGRAVING_CHISEL)) return 0.0F;
-            return stack.contains(DataComponentTypes.DYED_COLOR) ? 1.0F : 0.0F;
-        });
+        //ModelPredicateProviderRegistry.register(VAItems.ENGRAVING_CHISEL, idOf("colorful"), (stack, world, entity, seed) -> {
+        //    if (!stack.isOf(VAItems.ENGRAVING_CHISEL)) return 0.0F;
+        //    return stack.contains(DataComponentTypes.DYED_COLOR) ? 1.0F : 0.0F;
+        //});
     }
 
     private static void  initFluidRenderers() {
@@ -249,29 +242,29 @@ public class VARenderers {
     }
 
     private static void initColorProviders() {
-        ColorProviderRegistry.BLOCK.register( ((state, world, pos, tintIndex) -> world != null ? BiomeColors.getFoliageColor(world, pos) : FoliageColors.getDefaultColor()),
+        ColorProviderRegistry.BLOCK.register( ((state, world, pos, tintIndex) -> world != null ? BiomeColors.getFoliageColor(world, pos) : FoliageColors.DEFAULT),
                 VABlocks.OAK_HEDGE,
                 VABlocks.JUNGLE_HEDGE,
                 VABlocks.ACACIA_HEDGE,
                 VABlocks.DARK_OAK_HEDGE,
                 VABlocks.MANGROVE_HEDGE
         );
-        ColorProviderRegistry.BLOCK.register( (state, world, pos, tintIndex) -> FoliageColors.getSpruceColor(), VABlocks.SPRUCE_HEDGE);
-        ColorProviderRegistry.BLOCK.register( (state, world, pos, tintIndex) -> FoliageColors.getBirchColor(), VABlocks.BIRCH_HEDGE);
+        ColorProviderRegistry.BLOCK.register( (state, world, pos, tintIndex) -> FoliageColors.SPRUCE, VABlocks.SPRUCE_HEDGE);
+        ColorProviderRegistry.BLOCK.register( (state, world, pos, tintIndex) -> FoliageColors.BIRCH, VABlocks.BIRCH_HEDGE);
         ColorProviderRegistry.BLOCK.register( (state, world, pos, tintIndex) -> 0x00e076, VABlocks.ACID);
         ColorProviderRegistry.BLOCK.register( (state, world, pos, tintIndex) -> tintIndex <= 0 ? -1 : RedstoneWireBlock.getWireColor(state.get(RedstoneBridgeBlock.POWER)), VABlocks.REDSTONE_BRIDGE);
         ColorProviderRegistry.BLOCK.register( (state, world, pos, tintIndex) -> tintIndex <= 0 ? -1 : world != null ? BiomeColors.getGrassColor(world, pos) : 5353656, VABlocks.GRASSY_FLOATROCK);
 
-        ColorProviderRegistry.ITEM.register( (stack, tintIndex) -> {
-            return tintIndex > 0 ? -1 : ColorHelper.fullAlpha(stack.getOrDefault(DataComponentTypes.POTION_CONTENTS, PotionContentsComponent.DEFAULT).getColor());
-        }, VAItems.APPLICABLE_POTION);
-        ColorProviderRegistry.ITEM.register( (stack, tintIndex) -> FoliageColors.getDefaultColor(), VAItems.OAK_HEDGE, VAItems.JUNGLE_HEDGE, VAItems.ACACIA_HEDGE, VAItems.DARK_OAK_HEDGE);
-        ColorProviderRegistry.ITEM.register( (stack, tintIndex) -> tintIndex <= 0 ? -1 : 5353656, VAItems.GRASSY_FLOATROCK);
-        ColorProviderRegistry.ITEM.register( (stack, tintIndex) -> FoliageColors.getBirchColor(), VAItems.BIRCH_HEDGE);
-        ColorProviderRegistry.ITEM.register( (stack, tintIndex) -> FoliageColors.getSpruceColor(), VAItems.SPRUCE_HEDGE);
-        ColorProviderRegistry.ITEM.register( (stack, tintIndex) -> FoliageColors.getMangroveColor(), VAItems.MANGROVE_HEDGE);
-        ColorProviderRegistry.ITEM.register( (stack, tintIndex) -> {
-            return tintIndex > 0 ? -1 : ColorHelper.fullAlpha(stack.get(DataComponentTypes.DYED_COLOR) != null ? stack.get(DataComponentTypes.DYED_COLOR).rgb() : 0xFFFFFF);
-        }, VAItems.ICE_CREAM, VAItems.ENGRAVING_CHISEL);
+        //ColorProviderRegistry.ITEM.register( (stack, tintIndex) -> {
+        //    return tintIndex > 0 ? -1 : ColorHelper.fullAlpha(stack.getOrDefault(DataComponentTypes.POTION_CONTENTS, PotionContentsComponent.DEFAULT).getColor());
+        //}, VAItems.APPLICABLE_POTION);
+        //ColorProviderRegistry.ITEM.register( (stack, tintIndex) -> FoliageColors.getDefaultColor(), VAItems.OAK_HEDGE, VAItems.JUNGLE_HEDGE, VAItems.ACACIA_HEDGE, VAItems.DARK_OAK_HEDGE);
+        //ColorProviderRegistry.ITEM.register( (stack, tintIndex) -> tintIndex <= 0 ? -1 : 5353656, VAItems.GRASSY_FLOATROCK);
+        //ColorProviderRegistry.ITEM.register( (stack, tintIndex) -> FoliageColors.getBirchColor(), VAItems.BIRCH_HEDGE);
+        //ColorProviderRegistry.ITEM.register( (stack, tintIndex) -> FoliageColors.getSpruceColor(), VAItems.SPRUCE_HEDGE);
+        //ColorProviderRegistry.ITEM.register( (stack, tintIndex) -> FoliageColors.getMangroveColor(), VAItems.MANGROVE_HEDGE);
+        //ColorProviderRegistry.ITEM.register( (stack, tintIndex) -> {
+        //    return tintIndex > 0 ? -1 : ColorHelper.fullAlpha(stack.get(DataComponentTypes.DYED_COLOR) != null ? stack.get(DataComponentTypes.DYED_COLOR).rgb() : 0xFFFFFF);
+        //}, VAItems.ICE_CREAM, VAItems.ENGRAVING_CHISEL);
     }
 }

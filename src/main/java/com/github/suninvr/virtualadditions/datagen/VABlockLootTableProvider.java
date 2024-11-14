@@ -14,7 +14,7 @@ import net.minecraft.block.TallPlantBlock;
 import net.minecraft.block.enums.BedPart;
 import net.minecraft.block.enums.DoubleBlockHalf;
 import net.minecraft.data.family.BlockFamily;
-import net.minecraft.data.server.loottable.BlockLootTableGenerator;
+import net.minecraft.data.loottable.BlockLootTableGenerator;
 import net.minecraft.enchantment.Enchantment;
 import net.minecraft.enchantment.Enchantments;
 import net.minecraft.item.Item;

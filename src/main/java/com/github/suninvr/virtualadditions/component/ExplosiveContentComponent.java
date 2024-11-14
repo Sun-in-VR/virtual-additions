@@ -43,7 +43,7 @@ public record ExplosiveContentComponent(Optional<Integer> explosionStrength, Opt
         PACKET_CODEC = PacketCodec.tuple(
                 PacketCodecs.INTEGER.collect(PacketCodecs::optional), ExplosiveContentComponent::explosionStrength,
                 PacketCodecs.INTEGER.collect(PacketCodecs::optional), ExplosiveContentComponent::fuseLength,
-                PacketCodecs.BOOL.collect(PacketCodecs::optional), c -> c.destroysBlocks,
+                PacketCodecs.BOOLEAN.collect(PacketCodecs::optional), c -> c.destroysBlocks,
                 ExplosiveContentComponent::new
         );
     }

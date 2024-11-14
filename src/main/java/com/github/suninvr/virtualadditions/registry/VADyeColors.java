@@ -103,4 +103,8 @@ public class VADyeColors {
     }
 
     public static void init(){}
+
+    public static boolean isFromVirtualAdditions(DyeColor color) {
+        return color == CHARTREUSE || color ==  MAROON || color ==  INDIGO || color ==  PLUM || color ==  VIRIDIAN || color ==  TAN || color ==  SINOPIA || color ==  LILAC;
+    }
 }

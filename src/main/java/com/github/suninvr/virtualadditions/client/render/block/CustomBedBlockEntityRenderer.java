@@ -13,6 +13,7 @@ import net.minecraft.block.enums.BedPart;
 import net.minecraft.client.model.ModelPart;
 import net.minecraft.client.model.TexturedModelData;
 import net.minecraft.client.render.RenderLayer;
+import net.minecraft.client.render.TexturedRenderLayers;
 import net.minecraft.client.render.VertexConsumer;
 import net.minecraft.client.render.VertexConsumerProvider;
 import net.minecraft.client.render.block.entity.BedBlockEntityRenderer;
@@ -39,28 +40,25 @@ public class CustomBedBlockEntityRenderer extends BedBlockEntityRenderer {
 
     @Override
     public void render(BedBlockEntity bedBlockEntity, float f, MatrixStack matrixStack, VertexConsumerProvider vertexConsumerProvider, int i, int j) {
-        SpriteIdentifier spriteIdentifier = VADyeColors.getBedTexture(bedBlockEntity.getColor());
-        World world2 = bedBlockEntity.getWorld();
-        if (world2 != null) {
+        World world = bedBlockEntity.getWorld();
+        if (world != null) {
+            SpriteIdentifier spriteIdentifier = VADyeColors.getBedTexture(bedBlockEntity.getColor());
             BlockState blockState = bedBlockEntity.getCachedState();
-            DoubleBlockProperties.PropertySource<BedBlockEntity> propertySource = DoubleBlockProperties.toPropertySource(BlockEntityType.BED, BedBlock::getBedPart, BedBlock::getOppositePartDirection, ChestBlock.FACING, blockState, world2, bedBlockEntity.getPos(), (world, pos) -> false);
+            DoubleBlockProperties.PropertySource<? extends BedBlockEntity> propertySource = DoubleBlockProperties.toPropertySource(BlockEntityType.BED, BedBlock::getBedPart, BedBlock::getOppositePartDirection, ChestBlock.FACING, blockState, world, bedBlockEntity.getPos(), (worldx, pos) -> false);
             int k = ((Int2IntFunction)propertySource.apply(new LightmapCoordinatesRetriever())).get(i);
-            this.renderPart(matrixStack, vertexConsumerProvider, blockState.get(BedBlock.PART) == BedPart.HEAD ? this.bedHead : this.bedFoot, blockState.get(BedBlock.FACING), spriteIdentifier, k, j, false);
-        } else {
-            this.renderPart(matrixStack, vertexConsumerProvider, this.bedHead, Direction.SOUTH, spriteIdentifier, i, j, false);
-            this.renderPart(matrixStack, vertexConsumerProvider, this.bedFoot, Direction.SOUTH, spriteIdentifier, i, j, true);
+            this.renderPart(matrixStack, vertexConsumerProvider, blockState.get(BedBlock.PART) == BedPart.HEAD ? this.bedHead : this.bedFoot, (Direction)blockState.get(BedBlock.FACING), spriteIdentifier, k, j, false);
         }
     }
 
-    private void renderPart(MatrixStack matrices, VertexConsumerProvider vertexConsumers, ModelPart part, Direction direction, SpriteIdentifier sprite, int light, int overlay, boolean isFoot) {
+    private void renderPart(MatrixStack matrices, VertexConsumerProvider vertexConsumers, ModelPart model, Direction direction, SpriteIdentifier sprite, int light, int overlay, boolean isFoot) {
         matrices.push();
-        matrices.translate(0.0f, 0.5625f, isFoot ? -1.0f : 0.0f);
-        matrices.multiply(RotationAxis.POSITIVE_X.rotationDegrees(90.0f));
-        matrices.translate(0.5f, 0.5f, 0.5f);
-        matrices.multiply(RotationAxis.POSITIVE_Z.rotationDegrees(180.0f + direction.asRotation()));
-        matrices.translate(-0.5f, -0.5f, -0.5f);
+        matrices.translate(0.0F, 0.5625F, isFoot ? -1.0F : 0.0F);
+        matrices.multiply(RotationAxis.POSITIVE_X.rotationDegrees(90.0F));
+        matrices.translate(0.5F, 0.5F, 0.5F);
+        matrices.multiply(RotationAxis.POSITIVE_Z.rotationDegrees(180.0F + direction.getPositiveHorizontalDegrees()));
+        matrices.translate(-0.5F, -0.5F, -0.5F);
         VertexConsumer vertexConsumer = sprite.getVertexConsumer(vertexConsumers, RenderLayer::getEntitySolid);
-        part.render(matrices, vertexConsumer, light, overlay);
+        model.render(matrices, vertexConsumer, light, overlay);
         matrices.pop();
     }
 

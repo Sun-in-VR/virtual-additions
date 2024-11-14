@@ -34,7 +34,6 @@ public class IoliteRingParticle extends SpriteBillboardParticle {
         this.inverse = inverse;
     }
 
-    @Override
     public void buildGeometry(VertexConsumer vertexConsumer, Camera camera, float tickDelta) {
         this.alpha = this.inverse ? MathHelper.clamp(((this.age + tickDelta) / this.maxAge), 0.0F, 1F) : 1 - MathHelper.clamp(((this.age + tickDelta) / this.maxAge), 0.0F, 1.0F);
         this.buildGeometry(vertexConsumer, camera, tickDelta, (quaternion) -> quaternion.mul((new Quaternionf()).rotationX(-1.57079F)));

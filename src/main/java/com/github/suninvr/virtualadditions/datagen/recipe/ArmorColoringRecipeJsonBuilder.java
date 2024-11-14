@@ -5,9 +5,8 @@ import net.minecraft.advancement.Advancement;
 import net.minecraft.advancement.AdvancementRequirements;
 import net.minecraft.advancement.AdvancementRewards;
 import net.minecraft.advancement.criterion.RecipeUnlockedCriterion;
-import net.minecraft.data.server.recipe.RecipeExporter;
+import net.minecraft.data.recipe.RecipeExporter;
 import net.minecraft.item.DyeItem;
-import net.minecraft.item.Item;
 import net.minecraft.recipe.Ingredient;
 import net.minecraft.recipe.Recipe;
 import net.minecraft.registry.Registries;
@@ -29,15 +28,6 @@ public class ArmorColoringRecipeJsonBuilder {
 
     public static ArmorColoringRecipeJsonBuilder create(@Nullable Ingredient input, int index) {
         return new ArmorColoringRecipeJsonBuilder(input, index);
-    }
-
-    public void offerTo(RecipeExporter exporter) {
-        if (this.dye == null) return;
-        RegistryKey<Item> dye = this.dye.getMatchingItems().getFirst().getKey().get();
-        if (dye != null && Registries.ITEM.get(dye) instanceof DyeItem dyeItem) {
-            Identifier id = idOf(dyeItem.getColor().asString()).withSuffixedPath("_armor_coloring");
-            offerTo(exporter, id);
-        }
     }
 
     public void offerTo(RecipeExporter exporter, Identifier recipeId) {

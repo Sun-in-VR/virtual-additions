@@ -96,7 +96,7 @@ public class ClimbingRopeBlock extends Block implements Waterloggable {
     }
 
     @Override
-    public ItemStack getPickStack(WorldView world, BlockPos pos, BlockState state) {
+    protected ItemStack getPickStack(WorldView world, BlockPos pos, BlockState state, boolean bl) {
         return new ItemStack(VAItems.CLIMBING_ROPE);
     }
 

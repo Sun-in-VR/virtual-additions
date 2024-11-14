@@ -28,11 +28,11 @@ public class CustomShulkerBoxItemRenderer implements BuiltinItemRendererRegistry
 
     @Override
     public void render(ItemStack stack, ModelTransformationMode mode, MatrixStack matrices, VertexConsumerProvider vertexConsumers, int light, int overlay) {
-        if (stack.getItem() instanceof BlockItem item && item.getBlock() instanceof CustomShulkerBoxBlock) {
-            BlockEntityRenderDispatcher dispatcher = MinecraftClient.getInstance().getBlockEntityRenderDispatcher();
-            BlockEntity renderer = getRenderer(stack);
-            if (renderer != null) dispatcher.renderEntity(renderer, matrices, vertexConsumers, light, overlay);
-        }
+        //if (stack.getItem() instanceof BlockItem item && item.getBlock() instanceof CustomShulkerBoxBlock) {
+        //    BlockEntityRenderDispatcher dispatcher = MinecraftClient.getInstance().getBlockEntityRenderDispatcher();
+        //    BlockEntity renderer = getRenderer(stack);
+        //    if (renderer != null) dispatcher.renderEntity(renderer, matrices, vertexConsumers, light, overlay);
+        //}
     }
 
     private BlockEntity getRenderer(ItemStack stack) {

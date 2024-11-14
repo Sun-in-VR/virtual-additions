@@ -4,7 +4,6 @@ accessible class net/minecraft/block/entity/BlockEntityType$BlockEntityFactory
 accessible method net/minecraft/sound/SoundEvent of (Lnet/minecraft/util/Identifier;)Lnet/minecraft/sound/SoundEvent;
 accessible field net/minecraft/block/RedstoneWireBlock wiresGivePower Z
 accessible method net/minecraft/block/WoodType register (Lnet/minecraft/block/WoodType;)Lnet/minecraft/block/WoodType;
-accessible field net/minecraft/data/client/BlockStateModelGenerator texturedModels Ljava/util/Map;
 accessible field net/minecraft/item/ItemGroups displayContext Lnet/minecraft/item/ItemGroup$DisplayContext;
 accessible field net/minecraft/block/Blocks SHULKER_BOX_SUFFOCATES_PREDICATE Lnet/minecraft/block/AbstractBlock$ContextPredicate;
 accessible method net/minecraft/block/AbstractBlock canPlaceAt (Lnet/minecraft/block/BlockState;Lnet/minecraft/world/WorldView;Lnet/minecraft/util/math/BlockPos;)Z
@@ -19,5 +18,9 @@ accessible class net/minecraft/client/render/block/entity/ShulkerBoxBlockEntityR
 accessible method net/minecraft/block/cauldron/CauldronBehavior cleanShulkerBox (Lnet/minecraft/block/BlockState;Lnet/minecraft/world/World;Lnet/minecraft/util/math/BlockPos;Lnet/minecraft/entity/player/PlayerEntity;Lnet/minecraft/util/Hand;Lnet/minecraft/item/ItemStack;)Lnet/minecraft/util/ActionResult;
 accessible method net/minecraft/block/cauldron/CauldronBehavior cleanBanner (Lnet/minecraft/block/BlockState;Lnet/minecraft/world/World;Lnet/minecraft/util/math/BlockPos;Lnet/minecraft/entity/player/PlayerEntity;Lnet/minecraft/util/Hand;Lnet/minecraft/item/ItemStack;)Lnet/minecraft/util/ActionResult;
 accessible method net/minecraft/block/cauldron/CauldronBehavior cleanArmor (Lnet/minecraft/block/BlockState;Lnet/minecraft/world/World;Lnet/minecraft/util/math/BlockPos;Lnet/minecraft/entity/player/PlayerEntity;Lnet/minecraft/util/Hand;Lnet/minecraft/item/ItemStack;)Lnet/minecraft/util/ActionResult;
-accessible class net/minecraft/data/client/ItemModelGenerator$TrimMaterial
-accessible method net/minecraft/data/client/ItemModelGenerator$TrimMaterial <init> (Ljava/lang/String;FLjava/util/Map;)V
+accessible field net/minecraft/client/data/ItemModelGenerator modelCollector Ljava/util/function/BiConsumer;
+accessible class net/minecraft/client/data/BlockStateModelGenerator$CrossType
+accessible method net/minecraft/item/equipment/EquipmentAssetKeys register (Ljava/lang/String;)Lnet/minecraft/registry/RegistryKey;
+accessible field net/minecraft/client/data/ItemModelGenerator output Lnet/minecraft/client/data/ItemModelOutput;
+accessible field net/minecraft/client/data/BlockStateModelGenerator itemModelOutput Lnet/minecraft/client/data/ItemModelOutput;
+accessible class net/minecraft/client/data/ModelProvider$ItemAssets

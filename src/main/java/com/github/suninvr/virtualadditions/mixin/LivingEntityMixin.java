@@ -71,7 +71,7 @@ public abstract class LivingEntityMixin extends Entity {
         }
     }
 
-    @Inject(method = "getXpToDrop(Lnet/minecraft/server/world/ServerWorld;Lnet/minecraft/entity/Entity;)I", at = @At("RETURN"), cancellable = true)
+    @Inject(method = "getExperienceToDrop(Lnet/minecraft/server/world/ServerWorld;Lnet/minecraft/entity/Entity;)I", at = @At("RETURN"), cancellable = true)
     void virtualAdditions$getModifiedXpToDrop(ServerWorld world, Entity attacker, CallbackInfoReturnable<Integer> cir) {
         cir.setReturnValue((int) (cir.getReturnValueI() * this.experienceMultiplier));
     }

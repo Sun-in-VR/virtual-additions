@@ -119,7 +119,7 @@ public class EntanglementDriveScreenHandler extends ScreenHandler {
 
         this.addSlot(new Slot(inventory, 40, 77, 62) {
             public Identifier getBackgroundSprite() {
-                return PlayerScreenHandler.EMPTY_OFFHAND_ARMOR_SLOT;
+                return PlayerScreenHandler.EMPTY_OFF_HAND_SLOT_TEXTURE;
             }
         }); // Offhand Slot ( 40 )
 

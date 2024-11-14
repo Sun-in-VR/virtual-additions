@@ -32,27 +32,23 @@ public class CustomShulkerBoxBlockEntityRenderer implements BlockEntityRenderer<
     public void render(ShulkerBoxBlockEntity entity, float tickDelta, MatrixStack matrices, VertexConsumerProvider vertexConsumers, int light, int overlay) {
         SpriteIdentifier spriteIdentifier = entity.getColor() == null ? TexturedRenderLayers.SHULKER_TEXTURE_ID : VADyeColors.getShulkerBoxTexture(entity.getColor());
         spriteIdentifier = spriteIdentifier == null ? TexturedRenderLayers.SHULKER_TEXTURE_ID : spriteIdentifier;
+        Direction direction = entity.getCachedState().get(ShulkerBoxBlock.FACING, Direction.UP);
 
+        float g = entity.getAnimationProgress(tickDelta);
+        this.render(matrices, vertexConsumers, light, overlay, direction, g, spriteIdentifier);
+    }
 
-        Direction direction = Direction.UP;
-        if (entity.hasWorld()) {
-            BlockState blockState = entity.getWorld().getBlockState(entity.getPos());
-            if (blockState.getBlock() instanceof ShulkerBoxBlock) {
-                direction = blockState.get(ShulkerBoxBlock.FACING);
-            }
-        }
-
+    public void render(MatrixStack matrices, VertexConsumerProvider vertexConsumers, int light, int overlay, Direction facing, float openness, SpriteIdentifier textureId) {
         matrices.push();
         matrices.translate(0.5F, 0.5F, 0.5F);
-        float g = 0.9995F;
         matrices.scale(0.9995F, 0.9995F, 0.9995F);
-        matrices.multiply(direction.getRotationQuaternion());
+        matrices.multiply(facing.getRotationQuaternion());
         matrices.scale(1.0F, -1.0F, -1.0F);
         matrices.translate(0.0F, -1.0F, 0.0F);
-        this.model.animateLid(entity, tickDelta);
-        ShulkerBoxBlockEntityRenderer.ShulkerBoxBlockModel var10002 = this.model;
-        Objects.requireNonNull(var10002);
-        VertexConsumer vertexConsumer = spriteIdentifier.getVertexConsumer(vertexConsumers, var10002::getLayer);
+        this.model.animateLid(openness);
+        ShulkerBoxBlockEntityRenderer.ShulkerBoxBlockModel model = this.model;
+        Objects.requireNonNull(model);
+        VertexConsumer vertexConsumer = textureId.getVertexConsumer(vertexConsumers, model::getLayer);
         this.model.render(matrices, vertexConsumer, light, overlay);
         matrices.pop();
     }

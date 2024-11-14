@@ -29,13 +29,13 @@ public record IoliteRingParticleEffect(boolean inverse, double velocity, Particl
             instance -> instance.group(Codec.BOOL.fieldOf("inverse").forGetter(particleEffect -> particleEffect.inverse)).apply(instance, b -> new IoliteRingParticleEffect(b, 0, VAParticleTypes.IOLITE_TETHER_RING))
     );
     public static final PacketCodec<RegistryByteBuf, IoliteRingParticleEffect> TETHER_PACKET_CODEC = PacketCodec.tuple(
-            PacketCodecs.BOOL, effect -> effect.inverse, b -> new IoliteRingParticleEffect(b, 0, VAParticleTypes.IOLITE_TETHER_RING)
+            PacketCodecs.BOOLEAN, effect -> effect.inverse, b -> new IoliteRingParticleEffect(b, 0, VAParticleTypes.IOLITE_TETHER_RING)
     );
     public static final MapCodec<IoliteRingParticleEffect> ANCHOR_CODEC = RecordCodecBuilder.mapCodec(
             instance -> instance.group(Codec.BOOL.fieldOf("inverse").forGetter(particleEffect -> particleEffect.inverse)).apply(instance, b -> new IoliteRingParticleEffect(b, 0, VAParticleTypes.IOLITE_ANCHOR_RING))
     );
     public static final PacketCodec<RegistryByteBuf, IoliteRingParticleEffect> ANCHOR_PACKET_CODEC = PacketCodec.tuple(
-            PacketCodecs.BOOL, effect -> effect.inverse, b -> new IoliteRingParticleEffect(b, 0, VAParticleTypes.IOLITE_ANCHOR_RING)
+            PacketCodecs.BOOLEAN, effect -> effect.inverse, b -> new IoliteRingParticleEffect(b, 0, VAParticleTypes.IOLITE_ANCHOR_RING)
     );
 
     @Override

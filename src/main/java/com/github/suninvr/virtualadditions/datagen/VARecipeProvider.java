@@ -13,7 +13,7 @@ import net.fabricmc.fabric.api.datagen.v1.provider.FabricRecipeProvider;
 import net.minecraft.block.Block;
 import net.minecraft.block.Blocks;
 import net.minecraft.data.family.BlockFamily;
-import net.minecraft.data.server.recipe.*;
+import net.minecraft.data.recipe.*;
 import net.minecraft.item.*;
 import net.minecraft.recipe.CampfireCookingRecipe;
 import net.minecraft.recipe.Ingredient;
@@ -24,6 +24,7 @@ import net.minecraft.registry.*;
 import net.minecraft.registry.tag.ItemTags;
 import net.minecraft.registry.tag.TagKey;
 import net.minecraft.resource.featuretoggle.FeatureFlags;
+import net.minecraft.util.Identifier;
 import org.apache.commons.lang3.tuple.Pair;
 
 import java.util.List;
@@ -597,7 +598,7 @@ public final class VARecipeProvider {
         }
 
         protected void offerArmorColoringRecipe(DyeItem input, int i) {
-            ArmorColoringRecipeJsonBuilder.create(Ingredient.ofItems(input), i).offerTo(this.exporter);
+            ArmorColoringRecipeJsonBuilder.create(Ingredient.ofItems(input), i).offerTo(this.exporter, idOf(input.getColor().asString()).withSuffixedPath("_armor_coloring"));
         }
 
         protected void offer2x2ConversionChain(Block... blocks) {
