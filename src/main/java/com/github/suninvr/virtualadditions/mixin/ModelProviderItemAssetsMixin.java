@@ -1,5 +1,6 @@
 package com.github.suninvr.virtualadditions.mixin;
 
+import com.github.suninvr.virtualadditions.datagen.VAModelProvider;
 import net.minecraft.client.data.ModelProvider;
 import net.minecraft.client.item.ItemAsset;
 import net.minecraft.item.Item;
@@ -19,5 +20,13 @@ public class ModelProviderItemAssetsMixin {
     @Inject(method = "accept(Lnet/minecraft/item/Item;Lnet/minecraft/client/item/ItemAsset;)V", at = @At("HEAD"), cancellable = true)
     void virtualAdditions$acceptConditionally(Item item, ItemAsset asset, CallbackInfo ci) {
         if (this.ITEM_ASSETS.get(item) != null) ci.cancel();
+    }
+
+    @Inject(method = "resolveAndValidate", at = @At("HEAD"), cancellable = true)
+    void virtualAdditions$resolveAndValidateOnce(CallbackInfo ci) {
+        if (VAModelProvider.haltAutomaticGeneration()) {
+            VAModelProvider.setCanAutomaticallyGenerate();
+            ci.cancel();
+        }
     }
 }

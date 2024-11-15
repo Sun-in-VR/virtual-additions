@@ -44,6 +44,7 @@
   "client": [
     "ClientPlayNetworkHandlerMixin",
     "ModelProviderItemAssetsMixin",
+    "NumericPropertiesMixin",
     "TexturedRenderLayersMixin",
     "WorldEventHandlerMixin",
     "WorldRendererMixin"

@@ -90,6 +90,7 @@ public class LyftEntity extends AnimalEntity {
                 .add(EntityAttributes.MAX_HEALTH, 30.0)
                 .add(EntityAttributes.FLYING_SPEED, 2.0)
                 .add(EntityAttributes.MOVEMENT_SPEED, 0.0)
+                .add(EntityAttributes.TEMPT_RANGE, 16.0)
                 .build();
     }
 

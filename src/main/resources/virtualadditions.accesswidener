@@ -24,3 +24,7 @@ accessible method net/minecraft/item/equipment/EquipmentAssetKeys register (Ljav
 accessible field net/minecraft/client/data/ItemModelGenerator output Lnet/minecraft/client/data/ItemModelOutput;
 accessible field net/minecraft/client/data/BlockStateModelGenerator itemModelOutput Lnet/minecraft/client/data/ItemModelOutput;
 accessible class net/minecraft/client/data/ModelProvider$ItemAssets
+accessible class net/minecraft/client/data/ItemModelGenerator$TrimMaterial
+accessible method net/minecraft/client/data/ItemModelGenerator$TrimMaterial <init> (Ljava/lang/String;Lnet/minecraft/registry/RegistryKey;Ljava/util/Map;)V
+accessible field net/minecraft/client/data/ItemModelGenerator$TrimMaterial materialKey Lnet/minecraft/registry/RegistryKey;
+accessible method net/minecraft/client/data/Models item (Ljava/lang/String;[Lnet/minecraft/client/data/TextureKey;)Lnet/minecraft/client/data/Model;

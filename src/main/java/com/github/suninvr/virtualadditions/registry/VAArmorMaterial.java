@@ -17,5 +17,5 @@ public class VAArmorMaterial {
         map.put(EquipmentType.LEGGINGS, 5);
         map.put(EquipmentType.CHESTPLATE, 6);
         map.put(EquipmentType.HELMET, 2);
-    }), 9, SoundEvents.ITEM_ARMOR_EQUIP_IRON, 1.0F, 0.0F, VAItemTags.REPAIRS_STEEL_ARMOR, RegistryKey.of(RegistryKey.of(EquipmentAssetKeys.REGISTRY_KEY.getRegistryRef(), idOf("steel")), idOf("steel")));
+    }), 9, SoundEvents.ITEM_ARMOR_EQUIP_IRON, 1.0F, 0.0F, VAItemTags.REPAIRS_STEEL_ARMOR, RegistryKey.of(EquipmentAssetKeys.REGISTRY_KEY, idOf("steel")));
 }
