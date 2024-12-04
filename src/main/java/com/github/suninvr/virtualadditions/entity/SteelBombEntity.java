@@ -5,10 +5,7 @@ import com.github.suninvr.virtualadditions.registry.VADataComponentTypes;
 import com.github.suninvr.virtualadditions.registry.VAEntityType;
 import com.github.suninvr.virtualadditions.registry.VAItems;
 import net.minecraft.block.BlockState;
-import net.minecraft.entity.Entity;
-import net.minecraft.entity.EntityType;
-import net.minecraft.entity.ItemEntity;
-import net.minecraft.entity.LivingEntity;
+import net.minecraft.entity.*;
 import net.minecraft.entity.projectile.thrown.ThrownItemEntity;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
@@ -36,7 +33,12 @@ public class SteelBombEntity extends ThrownItemEntity {
 
         @Override
         public boolean shouldDamage(Explosion explosion, Entity entity) {
-            return !(entity instanceof ItemEntity);
+            return !(entity instanceof ItemEntity) && !(entity instanceof ExperienceOrbEntity);
+        }
+
+        @Override
+        public float calculateDamage(Explosion explosion, Entity entity, float amount) {
+            return Math.min(super.calculateDamage(explosion, entity, amount) * 1.25F, 12.0F);
         }
     };
 

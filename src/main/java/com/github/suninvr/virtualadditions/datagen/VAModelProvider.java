@@ -12,7 +12,6 @@ import net.fabricmc.fabric.api.datagen.v1.FabricDataOutput;
 import net.minecraft.block.Block;
 import net.minecraft.client.data.*;
 import net.minecraft.client.render.item.model.ItemModel;
-import net.minecraft.client.render.item.model.RangeDispatchItemModel;
 import net.minecraft.client.render.item.model.SelectItemModel;
 import net.minecraft.client.render.item.property.bool.HasComponentProperty;
 import net.minecraft.client.render.item.property.numeric.CrossbowPullProperty;
@@ -35,15 +34,11 @@ import net.minecraft.state.property.Properties;
 import net.minecraft.util.Identifier;
 import net.minecraft.world.biome.FoliageColors;
 
-import java.util.ArrayList;
-import java.util.Iterator;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 import static com.github.suninvr.virtualadditions.VirtualAdditions.idOf;
 
 public class VAModelProvider {
-    private static boolean haltAutomaticGeneration = false;
 
     public static FabricDataGenerator.Pack.Factory<?> base() {
         return BaseProvider::new;
@@ -252,7 +247,7 @@ public class VAModelProvider {
 
         @Override
         public void generateBlockStateModels(BlockStateModelGenerator blockStateModelGenerator) {
-            haltAutomaticGeneration = true;
+            haltModelGeneration = true;
         }
 
         @Override
@@ -306,7 +301,6 @@ public class VAModelProvider {
 
     @SuppressWarnings("SameParameterValue")
     private abstract static class Provider extends FabricModelProvider {
-        private static final Identifier OAK_PLANKS_TEXTURE = Identifier.of("block/oak_planks");
         private static final List<ItemModelGenerator.TrimMaterial> TRIM_MATERIALS_EXTENDED =
                 List.of(
                         new ItemModelGenerator.TrimMaterial("quartz", ArmorTrimMaterials.QUARTZ, Map.of()),
@@ -412,25 +406,25 @@ public class VAModelProvider {
             generator.itemModelOutput.accept(block.asItem(), ItemModels.tinted(parentModelId, sources));
         }
 
-        public static final void registerArmorSetWithExtendedTrimMaterials(ItemModelGenerator generator, Item helmet, Item chestplate, Item leggings, Item boots, RegistryKey<EquipmentAsset> equipmentKey, boolean dyeable) {
+        public static void registerArmorSetWithExtendedTrimMaterials(ItemModelGenerator generator, Item helmet, Item chestplate, Item leggings, Item boots, RegistryKey<EquipmentAsset> equipmentKey, boolean dyeable) {
             registerArmorWithExtendedTrimMaterials(generator, helmet, equipmentKey, "helmet", dyeable);
             registerArmorWithExtendedTrimMaterials(generator, chestplate, equipmentKey, "chestplate", dyeable);
             registerArmorWithExtendedTrimMaterials(generator, leggings, equipmentKey, "leggings", dyeable);
             registerArmorWithExtendedTrimMaterials(generator, boots, equipmentKey, "boots", dyeable);
         }
 
-        public static final void registerArmorWithExtendedTrimMaterials(ItemModelGenerator generator, Item item, RegistryKey<EquipmentAsset> equipmentKey, String type, boolean dyeable) {
+        public static void registerArmorWithExtendedTrimMaterials(ItemModelGenerator generator, Item item, RegistryKey<EquipmentAsset> equipmentKey, String type, boolean dyeable) {
             Identifier identifier = ModelIds.getItemModelId(item);
             Identifier identifier2 = TextureMap.getId(item);
             Identifier identifier3 = TextureMap.getSubId(item, "_overlay");
-            List<SelectItemModel.SwitchCase<RegistryKey<ArmorTrimMaterial>>> list = new ArrayList(TRIM_MATERIALS_EXTENDED.size());
+            List<SelectItemModel.SwitchCase<RegistryKey<ArmorTrimMaterial>>> list = new ArrayList<>(TRIM_MATERIALS_EXTENDED.size());
 
             ItemModelGenerator.TrimMaterial trimMaterial;
             ItemModel.Unbaked unbaked;
             for(Iterator<ItemModelGenerator.TrimMaterial> iterator = TRIM_MATERIALS_EXTENDED.iterator(); iterator.hasNext(); list.add(ItemModels.switchCase(trimMaterial.materialKey, unbaked))) {
                 trimMaterial = iterator.next();
                 Identifier identifier4 = identifier.withSuffixedPath("_" + trimMaterial.name() + "_trim");
-                String a = trimMaterial.materialKey.getValue().getNamespace() == "virtual_additions" ? "virtual_additions_" : "";
+                String a = Objects.equals(trimMaterial.materialKey.getValue().getNamespace(), "virtual_additions") ? "virtual_additions_" : "";
                 Identifier identifier5 = Identifier.ofVanilla("trims/items/" + type + "_trim_" + a + trimMaterial.texture(equipmentKey));
                 if (dyeable) {
                     generator.uploadArmor(identifier4, identifier2, identifier3, identifier5);
@@ -477,11 +471,13 @@ public class VAModelProvider {
         }
     }
 
-    public static boolean haltAutomaticGeneration() {
-        return haltAutomaticGeneration;
+    private static boolean haltModelGeneration = false;
+
+    public static boolean isModelGenerationHalted() {
+        return haltModelGeneration;
     }
 
-    public static void setCanAutomaticallyGenerate() {
-        haltAutomaticGeneration = true;
+    public static void unhaltModelGeneration() {
+        haltModelGeneration = false;
     }
 }

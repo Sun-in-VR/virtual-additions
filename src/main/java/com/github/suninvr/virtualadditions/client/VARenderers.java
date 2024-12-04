@@ -5,13 +5,10 @@ import com.github.suninvr.virtualadditions.block.RedstoneBridgeBlock;
 import com.github.suninvr.virtualadditions.client.render.block.CustomBedBlockEntityRenderer;
 import com.github.suninvr.virtualadditions.client.render.block.CustomShulkerBoxBlockEntityRenderer;
 import com.github.suninvr.virtualadditions.client.render.entity.*;
-import com.github.suninvr.virtualadditions.client.render.item.CustomBedItemRenderer;
-import com.github.suninvr.virtualadditions.client.render.item.CustomShulkerBoxItemRenderer;
 import com.github.suninvr.virtualadditions.registry.*;
 import net.fabricmc.fabric.api.blockrenderlayer.v1.BlockRenderLayerMap;
 import net.fabricmc.fabric.api.client.render.fluid.v1.FluidRenderHandlerRegistry;
 import net.fabricmc.fabric.api.client.render.fluid.v1.SimpleFluidRenderHandler;
-import net.fabricmc.fabric.api.client.rendering.v1.BuiltinItemRendererRegistry;
 import net.fabricmc.fabric.api.client.rendering.v1.ColorProviderRegistry;
 import net.fabricmc.fabric.api.client.rendering.v1.EntityModelLayerRegistry;
 import net.fabricmc.fabric.api.client.rendering.v1.EntityRendererRegistry;
@@ -52,8 +49,6 @@ public class VARenderers {
     public static final SpriteIdentifier TAN_BED_TEXTURE = new SpriteIdentifier(TexturedRenderLayers.BEDS_ATLAS_TEXTURE, VirtualAdditions.idOf("entity/bed/tan"));
     public static final SpriteIdentifier SINOPIA_BED_TEXTURE = new SpriteIdentifier(TexturedRenderLayers.BEDS_ATLAS_TEXTURE, VirtualAdditions.idOf("entity/bed/sinopia"));
     public static final SpriteIdentifier LILAC_BED_TEXTURE = new SpriteIdentifier(TexturedRenderLayers.BEDS_ATLAS_TEXTURE, VirtualAdditions.idOf("entity/bed/lilac"));
-    private static final CustomBedItemRenderer bedItemRenderer = new CustomBedItemRenderer();
-    private static final CustomShulkerBoxItemRenderer shulkerBoxItemRenderer = new CustomShulkerBoxItemRenderer();
 
     public static void init() {
         initBlockRenderLayers();
@@ -190,23 +185,23 @@ public class VARenderers {
     }
 
     private static void initItemRenderers() {
-        BuiltinItemRendererRegistry.INSTANCE.register(VAItems.CHARTREUSE_BED, bedItemRenderer);
-        BuiltinItemRendererRegistry.INSTANCE.register(VAItems.MAROON_BED, bedItemRenderer);
-        BuiltinItemRendererRegistry.INSTANCE.register(VAItems.INDIGO_BED, bedItemRenderer);
-        BuiltinItemRendererRegistry.INSTANCE.register(VAItems.PLUM_BED, bedItemRenderer);
-        BuiltinItemRendererRegistry.INSTANCE.register(VAItems.VIRIDIAN_BED, bedItemRenderer);
-        BuiltinItemRendererRegistry.INSTANCE.register(VAItems.TAN_BED, bedItemRenderer);
-        BuiltinItemRendererRegistry.INSTANCE.register(VAItems.SINOPIA_BED, bedItemRenderer);
-        BuiltinItemRendererRegistry.INSTANCE.register(VAItems.LILAC_BED, bedItemRenderer);
+        //BuiltinItemRendererRegistry.INSTANCE.register(VAItems.CHARTREUSE_BED, bedItemRenderer);
+        //BuiltinItemRendererRegistry.INSTANCE.register(VAItems.MAROON_BED, bedItemRenderer);
+        //BuiltinItemRendererRegistry.INSTANCE.register(VAItems.INDIGO_BED, bedItemRenderer);
+        //BuiltinItemRendererRegistry.INSTANCE.register(VAItems.PLUM_BED, bedItemRenderer);
+        //BuiltinItemRendererRegistry.INSTANCE.register(VAItems.VIRIDIAN_BED, bedItemRenderer);
+        //BuiltinItemRendererRegistry.INSTANCE.register(VAItems.TAN_BED, bedItemRenderer);
+        //BuiltinItemRendererRegistry.INSTANCE.register(VAItems.SINOPIA_BED, bedItemRenderer);
+        //BuiltinItemRendererRegistry.INSTANCE.register(VAItems.LILAC_BED, bedItemRenderer);
 
-        BuiltinItemRendererRegistry.INSTANCE.register(VAItems.CHARTREUSE_SHULKER_BOX, shulkerBoxItemRenderer);
-        BuiltinItemRendererRegistry.INSTANCE.register(VAItems.MAROON_SHULKER_BOX, shulkerBoxItemRenderer);
-        BuiltinItemRendererRegistry.INSTANCE.register(VAItems.INDIGO_SHULKER_BOX, shulkerBoxItemRenderer);
-        BuiltinItemRendererRegistry.INSTANCE.register(VAItems.PLUM_SHULKER_BOX, shulkerBoxItemRenderer);
-        BuiltinItemRendererRegistry.INSTANCE.register(VAItems.VIRIDIAN_SHULKER_BOX, shulkerBoxItemRenderer);
-        BuiltinItemRendererRegistry.INSTANCE.register(VAItems.TAN_SHULKER_BOX, shulkerBoxItemRenderer);
-        BuiltinItemRendererRegistry.INSTANCE.register(VAItems.SINOPIA_SHULKER_BOX, shulkerBoxItemRenderer);
-        BuiltinItemRendererRegistry.INSTANCE.register(VAItems.LILAC_SHULKER_BOX, shulkerBoxItemRenderer);
+        //BuiltinItemRendererRegistry.INSTANCE.register(VAItems.CHARTREUSE_SHULKER_BOX, shulkerBoxItemRenderer);
+        //BuiltinItemRendererRegistry.INSTANCE.register(VAItems.MAROON_SHULKER_BOX, shulkerBoxItemRenderer);
+        //BuiltinItemRendererRegistry.INSTANCE.register(VAItems.INDIGO_SHULKER_BOX, shulkerBoxItemRenderer);
+        //BuiltinItemRendererRegistry.INSTANCE.register(VAItems.PLUM_SHULKER_BOX, shulkerBoxItemRenderer);
+        //BuiltinItemRendererRegistry.INSTANCE.register(VAItems.VIRIDIAN_SHULKER_BOX, shulkerBoxItemRenderer);
+        //BuiltinItemRendererRegistry.INSTANCE.register(VAItems.TAN_SHULKER_BOX, shulkerBoxItemRenderer);
+        //BuiltinItemRendererRegistry.INSTANCE.register(VAItems.SINOPIA_SHULKER_BOX, shulkerBoxItemRenderer);
+        //BuiltinItemRendererRegistry.INSTANCE.register(VAItems.LILAC_SHULKER_BOX, shulkerBoxItemRenderer);
 
         //ModelPredicateProviderRegistry.register(Items.CROSSBOW, idOf("climbing_rope"), (itemStack, clientWorld, livingEntity, a) -> {
         //    if(!itemStack.isOf(Items.CROSSBOW)) return 0.0F;

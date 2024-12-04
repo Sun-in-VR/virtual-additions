@@ -70,7 +70,7 @@
         ]
       }
     },
-    "minecraft:creaking_transient": {
+    "minecraft:creaking": {
       "trigger": "minecraft:player_killed_entity",
       "conditions": {
         "entity": [
@@ -78,7 +78,7 @@
             "condition": "minecraft:entity_properties",
             "entity": "this",
             "predicate": {
-              "type": "minecraft:creaking_transient"
+              "type": "minecraft:creaking"
             }
           }
         ]
@@ -575,7 +575,7 @@
       "minecraft:cave_spider"
     ],
     [
-      "minecraft:creaking_transient"
+      "minecraft:creaking"
     ],
     [
       "minecraft:creeper"
