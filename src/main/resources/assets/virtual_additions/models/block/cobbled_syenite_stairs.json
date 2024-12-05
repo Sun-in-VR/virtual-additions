@@ -1,8 +1,0 @@
-{
-  "parent": "minecraft:block/stairs",
-  "textures": {
-    "bottom": "virtual_additions:block/cobbled_syenite",
-    "top": "virtual_additions:block/cobbled_syenite",
-    "side": "virtual_additions:block/cobbled_syenite"
-  }
-}

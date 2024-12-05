@@ -10,6 +10,7 @@ import net.fabricmc.fabric.api.client.datagen.v1.provider.FabricModelProvider;
 import net.fabricmc.fabric.api.datagen.v1.FabricDataGenerator;
 import net.fabricmc.fabric.api.datagen.v1.FabricDataOutput;
 import net.minecraft.block.Block;
+import net.minecraft.block.Blocks;
 import net.minecraft.client.data.*;
 import net.minecraft.client.render.item.model.ItemModel;
 import net.minecraft.client.render.item.model.SelectItemModel;
@@ -19,6 +20,7 @@ import net.minecraft.client.render.item.property.select.ChargeTypeProperty;
 import net.minecraft.client.render.item.property.select.TrimMaterialProperty;
 import net.minecraft.client.render.item.tint.ConstantTintSource;
 import net.minecraft.client.render.item.tint.DyeTintSource;
+import net.minecraft.client.render.item.tint.GrassTintSource;
 import net.minecraft.client.render.item.tint.TintSource;
 import net.minecraft.component.DataComponentTypes;
 import net.minecraft.item.CrossbowItem;
@@ -71,6 +73,7 @@ public class VAModelProvider {
             blockStateModelGenerator.registerCubeAllModelTexturePool(VABlocks.COBBLED_SYENITE).family(VACollections.COBBLED_SYENITE);
             blockStateModelGenerator.registerCubeAllModelTexturePool(VABlocks.SYENITE_BRICKS).family(VACollections.SYENITE_BRICKS);
             blockStateModelGenerator.registerCubeAllModelTexturePool(VABlocks.POLISHED_SYENITE).family(VACollections.POLISHED_SYENITE);
+            blockStateModelGenerator.registerTintedItemModel(VABlocks.GRASSY_FLOATROCK, ModelIds.getBlockModelId(VABlocks.GRASSY_FLOATROCK), new GrassTintSource());
 
             blockStateModelGenerator.registerItemModel(VAItems.COTTON_SEEDS);
             blockStateModelGenerator.registerItemModel(VAItems.CORN_SEEDS);

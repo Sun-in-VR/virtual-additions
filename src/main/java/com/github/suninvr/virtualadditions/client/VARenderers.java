@@ -248,7 +248,7 @@ public class VARenderers {
         ColorProviderRegistry.BLOCK.register( (state, world, pos, tintIndex) -> FoliageColors.BIRCH, VABlocks.BIRCH_HEDGE);
         ColorProviderRegistry.BLOCK.register( (state, world, pos, tintIndex) -> 0x00e076, VABlocks.ACID);
         ColorProviderRegistry.BLOCK.register( (state, world, pos, tintIndex) -> tintIndex <= 0 ? -1 : RedstoneWireBlock.getWireColor(state.get(RedstoneBridgeBlock.POWER)), VABlocks.REDSTONE_BRIDGE);
-        ColorProviderRegistry.BLOCK.register( (state, world, pos, tintIndex) -> tintIndex <= 0 ? -1 : world != null ? BiomeColors.getGrassColor(world, pos) : 5353656, VABlocks.GRASSY_FLOATROCK);
+        ColorProviderRegistry.BLOCK.register( (state, world, pos, tintIndex) -> tintIndex != 0 ? -1 : world != null ? BiomeColors.getGrassColor(world, pos) : 5353656, VABlocks.GRASSY_FLOATROCK);
 
         //ColorProviderRegistry.ITEM.register( (stack, tintIndex) -> {
         //    return tintIndex > 0 ? -1 : ColorHelper.fullAlpha(stack.getOrDefault(DataComponentTypes.POTION_CONTENTS, PotionContentsComponent.DEFAULT).getColor());
