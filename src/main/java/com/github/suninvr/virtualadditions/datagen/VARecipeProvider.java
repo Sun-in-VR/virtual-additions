@@ -179,6 +179,13 @@ public final class VARecipeProvider {
                             .input('#', VAItems.ROCK_SALT).input('M', Items.MILK_BUCKET)
                                     .criterion("has_item", conditionsFromItem(Items.MILK_BUCKET)).offerTo(this.exporter);
 
+            ShapedRecipeJsonBuilder.create(this.registryLookup, RecipeCategory.FOOD, Items.LEATHER)
+                            .pattern("###")
+                            .pattern("#F#")
+                            .pattern("###")
+                            .input('#', VAItems.ROCK_SALT).input('F', Items.ROTTEN_FLESH)
+                                    .criterion("has_item", conditionsFromItem(Items.ROTTEN_FLESH)).offerTo(this.exporter);
+
             offerCompactingRecipe(RecipeCategory.BUILDING_BLOCKS, VAItems.ROCK_SALT_BLOCK, VAItems.ROCK_SALT);
             offerShapelessRecipe(VAItems.ROCK_SALT, VAItems.ROCK_SALT_BLOCK, "rock_salt", 9);
 
@@ -780,7 +787,7 @@ public final class VARecipeProvider {
         public void offerJerkyFoodRecipe(Item input, Item jerky) {
             ShapelessRecipeJsonBuilder.create(this.registryLookup, RecipeCategory.FOOD, jerky, 2)
                     .input(input)
-                    .input(VAItems.ROCK_SALT, 3)
+                    .input(VAItems.ROCK_SALT, 2)
                     .criterion("has_item", conditionsFromItem(input)).offerTo(exporter);
         }
     }
