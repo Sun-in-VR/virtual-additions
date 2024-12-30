@@ -35,35 +35,35 @@ public class EntanglementDriveBlockEntity extends BlockEntity implements NamedSc
     private static final Text TITLE = Text.translatable("container.virtual_additions.entanglement_drive");
     private int slotIndex;
     private UUID playerId;
+    private int[] playerIdInts;
+    private PlayerEntity player;
     private ItemStack cachedStack;
     private final PropertyDelegate properties = new PropertyDelegate() {
         @Override
         public int get(int index) {
-            int[] playerIdInts = Uuids.toIntArray(EntanglementDriveBlockEntity.this.playerId);
             return switch (index) {
                 case 0 -> EntanglementDriveBlockEntity.this.slotIndex;
-                case 1 -> playerIdInts[0];
-                case 2 -> playerIdInts[1];
-                case 3 -> playerIdInts[2];
-                case 4 -> playerIdInts[3];
+                case 1 -> EntanglementDriveBlockEntity.this.playerIdInts[0];
+                case 2 -> EntanglementDriveBlockEntity.this.playerIdInts[1];
+                case 3 -> EntanglementDriveBlockEntity.this.playerIdInts[2];
+                case 4 -> EntanglementDriveBlockEntity.this.playerIdInts[3];
                 default -> throw new IllegalStateException("Unexpected value: " + index);
             };
         }
 
         @Override
         public void set(int index, int value) {
-            int[] playerIdInts = Uuids.toIntArray(EntanglementDriveBlockEntity.this.playerId);
             switch (index) {
                 case 0 -> EntanglementDriveBlockEntity.this.slotIndex = value;
-                case 1 -> playerIdInts[0] = value;
-                case 2 -> playerIdInts[1] = value;
-                case 3 -> playerIdInts[2] = value;
-                case 4 -> playerIdInts[3] = value;
+                case 1 -> EntanglementDriveBlockEntity.this.playerIdInts[0] = value;
+                case 2 -> EntanglementDriveBlockEntity.this.playerIdInts[1] = value;
+                case 3 -> EntanglementDriveBlockEntity.this.playerIdInts[2] = value;
+                case 4 -> EntanglementDriveBlockEntity.this.playerIdInts[3] = value;
                 default -> throw new IllegalStateException("Unexpected value: " + index);
             }
             UUID uuid;
-            if (!(uuid = Uuids.toUuid(playerIdInts)).equals(EntanglementDriveBlockEntity.this.playerId)) {
-                EntanglementDriveBlockEntity.this.playerId = uuid;
+            if (!(uuid = Uuids.toUuid(EntanglementDriveBlockEntity.this.playerIdInts)).equals(EntanglementDriveBlockEntity.this.playerId)) {
+                EntanglementDriveBlockEntity.this.setPlayerId(uuid);
             }
             EntanglementDriveBlockEntity.this.markDirty();
         }
@@ -79,14 +79,14 @@ public class EntanglementDriveBlockEntity extends BlockEntity implements NamedSc
     public EntanglementDriveBlockEntity(BlockPos pos, BlockState state) {
         super(VABlockEntityType.ENTANGLEMENT_DRIVE, pos, state);
         this.slotIndex = -1;
-        this.playerId = nullId;
+        this.setPlayerId(nullId);
     }
 
     @Override
     public void readNbt(NbtCompound nbt, RegistryWrapper.WrapperLookup lookup) {
         super.readNbt(nbt, lookup);
         if (nbt.contains("SlotIndex")) this.slotIndex = nbt.getInt("SlotIndex");
-        if (nbt.contains("UUID")) this.playerId = nbt.getUuid("UUID"); else this.playerId = null;
+        if (nbt.contains("UUID")) this.setPlayerId(nbt.getUuid("UUID")); else this.setPlayerId(nullId);
     }
 
     @Override
@@ -98,9 +98,15 @@ public class EntanglementDriveBlockEntity extends BlockEntity implements NamedSc
 
     @Nullable
     public PlayerEntity getPlayer() {
-        if (this.getWorld() == null || this.getWorld().isClient()) return null;
-        if (this.playerId != null) return this.getWorld().getServer().getPlayerManager().getPlayer(this.playerId);
-        return null;
+        if (this.player == null && !this.playerId.equals(nullId)) this.setPlayerId(this.playerId);
+        return this.player;
+    }
+
+    private void setPlayerId(UUID playerId) {
+        this.playerId = playerId;
+        this.playerIdInts = Uuids.toIntArray(playerId);
+        if (this.getWorld() == null || this.getWorld().isClient()) return;
+        this.player = this.getWorld().getServer().getPlayerManager().getPlayer(this.playerId);
     }
 
     @Nullable
@@ -116,7 +122,7 @@ public class EntanglementDriveBlockEntity extends BlockEntity implements NamedSc
     public void setPlayerSlot(@Nullable PlayerEntity player, int slotIndex, int slotId) {
         if (player != null) {
             if (this.world != null || this.world.isClient()) return;
-            this.playerId = player.getUuid();
+            this.setPlayerId(player.getUuid());
             this.slotIndex = slotIndex;
             this.markDirty();
         }
