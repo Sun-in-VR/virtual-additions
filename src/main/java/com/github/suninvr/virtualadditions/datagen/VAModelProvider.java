@@ -59,6 +59,7 @@ public class VAModelProvider {
         public void generateBlockStateModels(BlockStateModelGenerator blockStateModelGenerator) {
 
             blockStateModelGenerator.registerCubeAllModelTexturePool(VABlocks.FLOATROCK).family(VACollections.FLOATROCK);
+            blockStateModelGenerator.registerCubeAllModelTexturePool(VABlocks.AEROBLOOM_PLANKS).family(VACollections.AEROBLOOM);
             blockStateModelGenerator.registerCubeAllModelTexturePool(VABlocks.POLISHED_FLOATROCK).family(VACollections.POLISHED_FLOATROCK);
             blockStateModelGenerator.registerCubeAllModelTexturePool(VABlocks.FLOATROCK_BRICKS).family(VACollections.FLOATROCK_BRICKS);
             blockStateModelGenerator.registerCubeAllModelTexturePool(VABlocks.CUT_STEEL).family(VACollections.CUT_STEEL).parented(VABlocks.CUT_STEEL, VABlocks.WAXED_CUT_STEEL).parented(VABlocks.CHISELED_STEEL, VABlocks.WAXED_CHISELED_STEEL).family(VACollections.WAXED_CUT_STEEL);
@@ -114,12 +115,8 @@ public class VAModelProvider {
             blockStateModelGenerator.registerItemModel(VABlocks.TALL_GREENCAP_MUSHROOMS, "_top");
             blockStateModelGenerator.registerItemModel(VABlocks.GLOWING_SILK);
 
-            blockStateModelGenerator.registerParentedItemModel(VABlocks.AEROBLOOM_TRAPDOOR, Registries.BLOCK.getId(VABlocks.AEROBLOOM_TRAPDOOR).withPrefixedPath("block/").withSuffixedPath("_bottom"));
-            blockStateModelGenerator.registerItemModel(VAItems.AEROBLOOM_SIGN);
             blockStateModelGenerator.registerItemModel(VAItems.AEROBLOOM_HANGING_SIGN);
-            blockStateModelGenerator.registerItemModel(VAItems.AEROBLOOM_DOOR);
             blockStateModelGenerator.registerItemModel(VAItems.AEROBLOOM_SAPLING, BlockStateModelGenerator.CrossType.NOT_TINTED.registerItemModel(blockStateModelGenerator, VABlocks.AEROBLOOM_SAPLING));
-            blockStateModelGenerator.registerParentedItemModel(VABlocks.AEROBLOOM_FENCE, Registries.BLOCK.getId(VABlocks.AEROBLOOM_FENCE).withPrefixedPath("block/").withSuffixedPath("_inventory"));
 
             blockStateModelGenerator.registerMirrorable(VABlocks.ROCK_SALT_BLOCK);
             blockStateModelGenerator.registerSimpleCubeAll(VABlocks.ROCK_SALT_ORE);
