@@ -7,6 +7,7 @@ import net.minecraft.fluid.FluidState;
 import net.minecraft.fluid.Fluids;
 import net.minecraft.item.ItemPlacementContext;
 import net.minecraft.item.ItemStack;
+import net.minecraft.server.world.ServerWorld;
 import net.minecraft.state.StateManager;
 import net.minecraft.state.property.BooleanProperty;
 import net.minecraft.state.property.EnumProperty;
@@ -127,8 +128,8 @@ public class RedstoneBridgeBlock extends Block implements Waterloggable {
     }
 
     @Override
-    public void onStateReplaced(BlockState state, World world, BlockPos pos, BlockState newState, boolean moved) {
-        if (state != newState) updateAffectedNeighbors(world, pos, state);
+    protected void onStateReplaced(BlockState blockState, ServerWorld serverWorld, BlockPos blockPos, boolean bl) {
+        updateAffectedNeighbors(serverWorld, blockPos, blockState);
     }
 
     private void updateAffectedNeighbors(World world, BlockPos pos, BlockState state) {

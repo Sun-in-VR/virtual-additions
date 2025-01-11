@@ -1,7 +1,6 @@
 package com.github.suninvr.virtualadditions.block;
 
 import com.github.suninvr.virtualadditions.block.entity.DestructiveSculkBlockEntity;
-import com.github.suninvr.virtualadditions.interfaces.ExperienceDroppingBlockInterface;
 import com.github.suninvr.virtualadditions.registry.VABlockEntityType;
 import com.github.suninvr.virtualadditions.registry.VABlocks;
 import com.mojang.serialization.MapCodec;
@@ -57,10 +56,10 @@ public class DestructiveSculkBlock extends BlockWithEntity {
 
     public static void setData(World world, BlockPos pos, BlockState replacedState, UUID playerId, ItemStack tool, int potency) {
         if(world.getBlockEntity(pos) instanceof DestructiveSculkBlockEntity destructiveSculkBlockEntity) {
-            destructiveSculkBlockEntity.setReplacedState(replacedState);
             destructiveSculkBlockEntity.setPlayerId(playerId);
             destructiveSculkBlockEntity.setTool(tool);
             destructiveSculkBlockEntity.setPotency(potency);
+            destructiveSculkBlockEntity.setReplacedState(replacedState);
         }
     }
 
@@ -76,7 +75,7 @@ public class DestructiveSculkBlock extends BlockWithEntity {
         if (!state.get(SPREADING)) {
             if (world.getBlockEntity(pos) instanceof DestructiveSculkBlockEntity destructiveSculkBlockEntity) {
                 PlayerEntity player = world.getPlayerByUuid(destructiveSculkBlockEntity.getPlayerId());
-                if (player != null) player.incrementStat(Stats.MINED.getOrCreateStat(destructiveSculkBlockEntity.getReplacedState().getBlock()));
+                if (player != null) player.incrementStat(Stats.MINED.getOrCreateStat(destructiveSculkBlockEntity.getReplacedBlock()));
                 destructiveSculkBlockEntity.destroyAll(false);
             }
         }
@@ -98,7 +97,7 @@ public class DestructiveSculkBlock extends BlockWithEntity {
                     int ia = Math.abs(i);
                     int ja = Math.abs(j);
                     int ka = Math.abs(k);
-                    if (stateToReplace.isOf(blockEntity.getReplacedState().getBlock()) && !(ia == ja && ja == ka)) {
+                    if (!(ia == ja && ja == ka) && stateToReplace.isOf(blockEntity.getReplacedBlock())) {
                         if ( (ia + ja + ka) >= 2) {
                             validPosLater.add(blockPos);
                         } else {
@@ -138,21 +137,10 @@ public class DestructiveSculkBlock extends BlockWithEntity {
     }
 
     @Override
-    public void onStateReplaced(BlockState state, World world, BlockPos pos, BlockState newState, boolean moved) {
-        if (world.isClient()) return;
-        if (newState.isOf(state.getBlock())) return;
-        if (world.getBlockEntity(pos) instanceof DestructiveSculkBlockEntity blockEntity) {
-            if (state.get(ORIGIN)) blockEntity.destroyAll(true);
-        }
-        super.onStateReplaced(state, world, pos, newState, moved);
-    }
-
-    @Override
     protected List<ItemStack> getDroppedStacks(BlockState state, LootWorldContext.Builder builder) {
         DestructiveSculkBlockEntity blockEntity = builder.get(LootContextParameters.BLOCK_ENTITY) instanceof DestructiveSculkBlockEntity destructiveSculkBlockEntity ? destructiveSculkBlockEntity : null;
         if (blockEntity != null) {
-            blockEntity.modifyLootContext(builder);
-            return blockEntity.getReplacedState().getDroppedStacks(builder);
+            return blockEntity.getDroppedStacks();
         }
         return Collections.emptyList();
     }
@@ -162,9 +150,9 @@ public class DestructiveSculkBlock extends BlockWithEntity {
         super.onStacksDropped(state, world, pos, tool, dropExperience);
         DestructiveSculkBlockEntity blockEntity = getBlockEntity(world, pos);
         if (blockEntity != null) {
-            Block block = blockEntity.getReplacedState().getBlock();
+            Block block = blockEntity.getReplacedBlock();
             if (block instanceof ExperienceDroppingBlock experienceDroppingBlock) {
-                dropExperienceWhenMined(world, pos, blockEntity.getTool(), ((ExperienceDroppingBlockInterface)experienceDroppingBlock).virtualAdditions$getExperienceDropped() );
+                dropExperienceWhenMined(world, pos, blockEntity.getTool(), experienceDroppingBlock.experienceDropped);
             }
         }
     }

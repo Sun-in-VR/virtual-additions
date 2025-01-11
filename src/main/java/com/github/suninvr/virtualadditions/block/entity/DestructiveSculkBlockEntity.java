@@ -16,20 +16,22 @@ import net.minecraft.nbt.NbtElement;
 import net.minecraft.nbt.NbtHelper;
 import net.minecraft.nbt.NbtList;
 import net.minecraft.registry.Registries;
-import net.minecraft.registry.RegistryEntryLookup;
-import net.minecraft.registry.RegistryKeys;
 import net.minecraft.registry.RegistryWrapper;
 import net.minecraft.server.world.ServerWorld;
+import net.minecraft.util.Identifier;
 import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.World;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.ArrayList;
+import java.util.List;
 import java.util.UUID;
 
 public class DestructiveSculkBlockEntity extends BlockEntity {
-    private BlockState replacedState;
+    private Block replacedBlock;
     private UUID playerId;
+    private List<ItemStack> stacksToDrop;
     private ItemStack tool;
     private int potency;
     private int age;
@@ -38,17 +40,18 @@ public class DestructiveSculkBlockEntity extends BlockEntity {
 
     public DestructiveSculkBlockEntity(BlockPos pos, BlockState state) {
         super(VABlockEntityType.DESTRUCTIVE_SCULK, pos, state);
-        this.replacedState = Blocks.AIR.getDefaultState();
+        this.replacedBlock = Blocks.AIR;
         this.playerId = UUID.fromString("0-0-0-0-0");
         this.tool = ItemStack.EMPTY;
         this.potency = 0;
         this.age = 0;
         this.affectedPos = new ArrayList<>();
         this.activePosIndex = -1;
+        this.stacksToDrop = new ArrayList<>();
     }
 
-    public BlockState getReplacedState() {
-        return replacedState;
+    public Block getReplacedBlock() {
+        return replacedBlock;
     }
 
     public UUID getPlayerId() {
@@ -80,9 +83,20 @@ public class DestructiveSculkBlockEntity extends BlockEntity {
         return this.activePosIndex >= 0 ? this.activePosIndex < this.affectedPos.size() ? this.affectedPos.get(this.activePosIndex) : null : this.getPos();
     }
 
+    @Override
+    public void onStateReplaced(BlockPos pos, BlockState oldState, boolean moved) {
+        if (oldState.isOf(VABlocks.DESTRUCTIVE_SCULK) && oldState.get(DestructiveSculkBlock.ORIGIN)) this.destroyAll(true);
+        super.onStateReplaced(pos, oldState, moved);
+    }
+
     public void setReplacedState(BlockState state) {
-        this.replacedState = state;
-        this.markDirty();
+        if (this.world instanceof ServerWorld serverWorld) {
+            this.replacedBlock = state.getBlock();
+            this.stacksToDrop = state.getDroppedStacks(
+                    this.modifyLootContext(new LootWorldContext.Builder(serverWorld))
+            );
+            this.markDirty();
+        }
     }
 
     public void setPlayerId(UUID playerId) {
@@ -110,12 +124,15 @@ public class DestructiveSculkBlockEntity extends BlockEntity {
         this.markDirty();
     }
 
-    public void modifyLootContext(LootWorldContext.Builder builder) {
+    public LootWorldContext.Builder modifyLootContext(LootWorldContext.Builder builder) {
         if (this.getWorld() instanceof ServerWorld serverWorld) {
+            builder.add(LootContextParameters.ORIGIN, new Vec3d(this.getPos().getX(), this.getPos().getY(), this.getPos().getZ()));
             PlayerEntity player = serverWorld.getPlayerByUuid(this.getPlayerId());
             if (player != null) builder.add(LootContextParameters.THIS_ENTITY, player);
-            builder.add(LootContextParameters.TOOL, getTool());
+            builder.add(LootContextParameters.TOOL, this.tool);
+            builder.add(LootContextParameters.BLOCK_ENTITY, this);
         }
+        return builder;
     }
 
     public static void tick(World world, BlockPos pos, BlockState state, DestructiveSculkBlockEntity blockEntity) {
@@ -156,8 +173,10 @@ public class DestructiveSculkBlockEntity extends BlockEntity {
     @Override
     public void readNbt(NbtCompound nbt, RegistryWrapper.WrapperLookup lookup) {
         super.readNbt(nbt, lookup);
-        RegistryEntryLookup<Block> registryEntryLookup = this.world != null ? this.world.createCommandRegistryWrapper(RegistryKeys.BLOCK) : Registries.createEntryLookup(Registries.BLOCK);
-        this.replacedState = NbtHelper.toBlockState(registryEntryLookup, nbt.getCompound("blockState"));
+        this.replacedBlock = Registries.BLOCK.get(Identifier.of(nbt.getString("block")));
+        NbtList stacksToDrop = nbt.getList("stacksToDrop", NbtElement.COMPOUND_TYPE);
+        this.stacksToDrop.clear();
+        stacksToDrop.forEach(nbtElement -> ItemStack.fromNbt(lookup, nbtElement).ifPresent(this.stacksToDrop::add));
         this.playerId = nbt.getUuid("playerId");
         if (nbt.contains("tool")) this.tool = ItemStack.fromNbt(lookup, nbt.getCompound("tool")).orElse(ItemStack.EMPTY);
         this.potency = nbt.getInt("potency");
@@ -171,11 +190,14 @@ public class DestructiveSculkBlockEntity extends BlockEntity {
     @Override
     protected void writeNbt(NbtCompound nbt, RegistryWrapper.WrapperLookup lookup) {
         super.writeNbt(nbt, lookup);
-        nbt.put("blockState", NbtHelper.fromBlockState(this.replacedState));
+        nbt.putString("block", Registries.BLOCK.getId(this.replacedBlock).toString());
+        NbtList stacksToDrop = new NbtList();
+        for (ItemStack stack : this.stacksToDrop) {
+            stacksToDrop.add(stack.toNbt(lookup));
+        }
+        nbt.put("stacksToDrop", stacksToDrop);
         nbt.putUuid("playerId", playerId);
-        NbtCompound tool = new NbtCompound();
-        if (!this.tool.isEmpty()) this.tool.toNbt(lookup, tool);
-        nbt.put("tool", tool);
+        nbt.put("tool", this.tool.toNbt(lookup));
         nbt.putInt("potency", this.potency);
         nbt.putInt("age", this.age);
         nbt.putInt("activePosIndex", this.activePosIndex);
@@ -186,5 +208,9 @@ public class DestructiveSculkBlockEntity extends BlockEntity {
             affectedPos.add(posNbt);
         }
         nbt.put("affectedPos", affectedPos);
+    }
+
+    public List<ItemStack> getDroppedStacks() {
+        return this.stacksToDrop;
     }
 }

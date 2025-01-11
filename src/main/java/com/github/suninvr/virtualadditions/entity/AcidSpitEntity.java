@@ -47,7 +47,7 @@ public class AcidSpitEntity extends ProjectileEntity {
         float h = -0.06F;
         if (this.getWorld().getStatesInBox(this.getBoundingBox()).noneMatch(AbstractBlock.AbstractBlockState::isAir)) {
             this.discard();
-        } else if (this.isInsideWaterOrBubbleColumn()) {
+        } else if (this.isSubmergedInWater()) {
             this.discard();
         } else {
             this.setVelocity(vec3d.multiply(g));

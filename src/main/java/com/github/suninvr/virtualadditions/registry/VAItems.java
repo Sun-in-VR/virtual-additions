@@ -674,15 +674,15 @@ public class VAItems {
         RAW_STEEL = register("raw_steel", ItemGroups.INGREDIENTS, Items.RAW_GOLD);
         STEEL_INGOT = register("steel_ingot", ItemGroups.INGREDIENTS, Items.GOLD_INGOT);
         STEEL_BOMB = register("steel_bomb", SteelBombItem::new, new Item.Settings().maxCount(16).component(VADataComponentTypes.EXPLOSIVE_CONTENTS, ExplosiveContentComponent.DEFAULT), at(ItemGroups.COMBAT, Items.SNOWBALL), at(ItemGroups.TOOLS, Items.LEAD));
-        STEEL_SWORD = register("steel_sword", settings -> new SwordItem(SteelToolMaterial.INSTANCE, 3, -2.4F, settings), new Item.Settings(), ItemGroups.COMBAT, Items.GOLDEN_SWORD);
+        STEEL_SWORD = register("steel_sword", settings -> new Item(settings.sword(SteelToolMaterial.INSTANCE, 3, -2.4F)), new Item.Settings(), ItemGroups.COMBAT, Items.GOLDEN_SWORD);
         STEEL_SHOVEL = register("steel_shovel", settings -> new ShovelItem(SteelToolMaterial.INSTANCE, 1.5F, -3.0F, settings), new Item.Settings(), ItemGroups.TOOLS, Items.GOLDEN_HOE);
-        STEEL_PICKAXE = register("steel_pickaxe", settings -> new PickaxeItem(SteelToolMaterial.INSTANCE, 1, -2.8F, settings), new Item.Settings(), ItemGroups.TOOLS, prev);
+        STEEL_PICKAXE = register("steel_pickaxe", settings -> new Item(settings.pickaxe(SteelToolMaterial.INSTANCE, 1, -2.8F)), new Item.Settings(), ItemGroups.TOOLS, prev);
         STEEL_AXE = register("steel_axe", settings -> new AxeItem(SteelToolMaterial.INSTANCE, 6.0F, -3.1F, settings), new Item.Settings(), at(ItemGroups.TOOLS, prev), at(ItemGroups.COMBAT, Items.GOLDEN_AXE));
         STEEL_HOE = register("steel_hoe", settings -> new HoeItem(SteelToolMaterial.INSTANCE, -2, -1.0F, settings), new Item.Settings(), ItemGroups.TOOLS, prev);
-        STEEL_HELMET = register("steel_helmet", settings -> new ArmorItem(VAArmorMaterial.STEEL, EquipmentType.HELMET, settings), new Item.Settings().maxCount(1).maxDamage(EquipmentType.HELMET.getMaxDamage(24)), ItemGroups.COMBAT, Items.GOLDEN_BOOTS);
-        STEEL_CHESTPLATE = register("steel_chestplate", settings -> new ArmorItem(VAArmorMaterial.STEEL, EquipmentType.CHESTPLATE, settings), new Item.Settings().maxCount(1).maxDamage(EquipmentType.CHESTPLATE.getMaxDamage(24)), ItemGroups.COMBAT, prev);
-        STEEL_LEGGINGS = register("steel_leggings", settings -> new ArmorItem(VAArmorMaterial.STEEL, EquipmentType.LEGGINGS, settings), new Item.Settings().maxCount(1).maxDamage(EquipmentType.LEGGINGS.getMaxDamage(24)), ItemGroups.COMBAT, prev);
-        STEEL_BOOTS = register("steel_boots", settings -> new ArmorItem(VAArmorMaterial.STEEL, EquipmentType.BOOTS, settings), new Item.Settings().maxCount(1).maxDamage(EquipmentType.BOOTS.getMaxDamage(24)), ItemGroups.COMBAT, prev);
+        STEEL_HELMET = register("steel_helmet", settings -> new Item(settings.armor(VAArmorMaterial.STEEL, EquipmentType.HELMET)), new Item.Settings().maxCount(1).maxDamage(EquipmentType.HELMET.getMaxDamage(24)), ItemGroups.COMBAT, Items.GOLDEN_BOOTS);
+        STEEL_CHESTPLATE = register("steel_chestplate", settings -> new Item(settings.armor(VAArmorMaterial.STEEL, EquipmentType.CHESTPLATE)), new Item.Settings().maxCount(1).maxDamage(EquipmentType.CHESTPLATE.getMaxDamage(24)), ItemGroups.COMBAT, prev);
+        STEEL_LEGGINGS = register("steel_leggings", settings -> new Item(settings.armor(VAArmorMaterial.STEEL, EquipmentType.LEGGINGS)), new Item.Settings().maxCount(1).maxDamage(EquipmentType.LEGGINGS.getMaxDamage(24)), ItemGroups.COMBAT, prev);
+        STEEL_BOOTS = register("steel_boots", settings -> new Item(settings.armor(VAArmorMaterial.STEEL, EquipmentType.BOOTS)), new Item.Settings().maxCount(1).maxDamage(EquipmentType.BOOTS.getMaxDamage(24)), ItemGroups.COMBAT, prev);
 
         //region Exposed Blocks
 

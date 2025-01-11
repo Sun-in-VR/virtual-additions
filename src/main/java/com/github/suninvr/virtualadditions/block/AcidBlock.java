@@ -4,6 +4,7 @@ import com.github.suninvr.virtualadditions.registry.VABlocks;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.FluidFillable;
 import net.minecraft.block.TranslucentBlock;
+import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.fluid.Fluid;
 import net.minecraft.fluid.FluidState;
@@ -20,7 +21,7 @@ public class AcidBlock extends TranslucentBlock implements FluidFillable {
     }
 
     @Override
-    public boolean canFillWithFluid(@Nullable PlayerEntity player, BlockView world, BlockPos pos, BlockState state, Fluid fluid) {
+    public boolean canFillWithFluid(@Nullable LivingEntity livingEntity, BlockView world, BlockPos pos, BlockState state, Fluid fluid) {
         return fluid.matchesType(Fluids.WATER);
     }
 

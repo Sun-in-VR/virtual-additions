@@ -53,7 +53,7 @@ public class LumwaspNestBlock extends TransparentBlock {
     @Override
     public void randomDisplayTick(BlockState state, World world, BlockPos pos, Random random) {
         if (random.nextInt(250) == 0 && state.get(LARVAE)) {
-            world.playSound(pos.getX(), pos.getY(), pos.getZ(), VASoundEvents.BLOCK_LUMWASP_NEST_IDLE, SoundCategory.BLOCKS, 1.0F, 1.2F, false);
+            world.playSound(null, pos.getX(), pos.getY(), pos.getZ(), VASoundEvents.BLOCK_LUMWASP_NEST_IDLE, SoundCategory.BLOCKS, 1.0F, 1.2F);
         }
     }
 

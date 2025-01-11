@@ -1,6 +1,5 @@
 package com.github.suninvr.virtualadditions.item;
 
-import com.github.suninvr.virtualadditions.interfaces.MiningToolItemInterface;
 import com.github.suninvr.virtualadditions.item.interfaces.GildedToolItem;
 import net.minecraft.entity.EquipmentSlot;
 import net.minecraft.entity.LivingEntity;
@@ -22,7 +21,7 @@ public class GildedHoeItem extends Item implements GildedToolItem {
     private final Text descriptionText;
 
     public GildedHoeItem(GildType gildType, ToolMaterial baseMaterial, HoeItem baseItem, Settings settings) {
-        super(GildedToolUtil.settingsOf(gildType.getModifiedMaterial(baseMaterial).asToolMaterial().applyToolSettings(settings, BlockTags.HOE_MINEABLE, ((MiningToolItemInterface)baseItem).getAttackDamage(), ((MiningToolItemInterface)baseItem).getAttackSpeed()), baseItem, gildType));
+        super(GildedToolUtil.settingsOf(gildType.getModifiedMaterial(baseMaterial).asToolMaterial().applyToolSettings(settings, BlockTags.HOE_MINEABLE, baseMaterial.attackDamageBonus(), baseMaterial.speed(), false), baseItem, gildType));
         this.gildType = gildType;
         this.baseItem = baseItem;
         this.descriptionText = ScreenTexts.space().append(Text.translatable(this.gildType.buildTooltipTranslationKey()).setStyle(Style.EMPTY.withColor(this.gildType.getColor())));
@@ -31,11 +30,6 @@ public class GildedHoeItem extends Item implements GildedToolItem {
     @Override
     public ActionResult useOnBlock(ItemUsageContext context) {
         return this.baseItem.useOnBlock(context);
-    }
-
-    @Override
-    public boolean postHit(ItemStack stack, LivingEntity target, LivingEntity attacker) {
-        return true;
     }
 
     @Override

@@ -99,8 +99,8 @@ public class LyftEntity extends AnimalEntity {
         super.tickControlled(controllingPlayer, movementInput);
         Vec2f vec2f = this.getControlledRotation(controllingPlayer);
         this.setRotation(vec2f.y, 0.0F);
-        this.prevYaw = this.bodyYaw = this.headYaw = this.getYaw();
-        if (this.isLogicalSideForUpdatingMovement()) {
+        this.lastYaw = this.bodyYaw = this.headYaw = this.getYaw();
+        if (this.isControlledByPlayer()) {
             double p = Math.abs(Math.cos(Math.toRadians(vec2f.x + 180)));
             double a = Math.cos(Math.toRadians(vec2f.y));
             double x = (controllingPlayer.forwardSpeed * Math.sin(Math.toRadians(vec2f.y + 180)) * p + controllingPlayer.sidewaysSpeed * a);

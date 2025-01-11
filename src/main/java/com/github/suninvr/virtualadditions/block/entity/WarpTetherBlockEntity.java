@@ -40,7 +40,7 @@ public class WarpTetherBlockEntity extends BlockEntity {
         double j = pos.getY();
         double k = pos.getZ() + 0.5;
         if (world.getTime() % 4L == 0L) {
-            world.addParticle(particle, i, j + 0.576, k, 0.0D, 0.0D, 0.0D);
+            world.addParticleClient(particle, i, j + 0.576, k, 0.0D, 0.0D, 0.0D);
         }
     }
 

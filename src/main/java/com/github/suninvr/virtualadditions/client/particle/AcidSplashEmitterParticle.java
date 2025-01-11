@@ -20,7 +20,7 @@ public class AcidSplashEmitterParticle extends NoRenderParticle {
         for(int i = 0; i < 2; ++i) {
             double d = this.x + (this.random.nextDouble() - this.random.nextDouble()) * 0.5;
             double f = this.z + (this.random.nextDouble() - this.random.nextDouble()) * 0.5;
-            this.world.addParticle(VAParticleTypes.ACID_SPLASH, d, this.y, f, 0.0, 0.0, 0.0);
+            this.world.addParticleClient(VAParticleTypes.ACID_SPLASH, d, this.y, f, 0.0, 0.0, 0.0);
         }
 
         ++this.age;

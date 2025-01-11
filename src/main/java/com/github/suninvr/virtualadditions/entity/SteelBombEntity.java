@@ -106,7 +106,7 @@ public class SteelBombEntity extends ThrownItemEntity {
             this.explode();
         }
         if(this.getWorld().isClient() && !this.submergedInWater) {
-            getWorld().addParticle(ParticleTypes.CAMPFIRE_COSY_SMOKE, this.getX(), this.getY(), this.getZ(), 0.0F, 0.05F, 0.0F);
+            getWorld().addParticleClient(ParticleTypes.CAMPFIRE_COSY_SMOKE, this.getX(), this.getY(), this.getZ(), 0.0F, 0.05F, 0.0F);
         }
     }
 }

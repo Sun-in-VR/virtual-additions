@@ -18,7 +18,7 @@ import net.minecraft.world.WorldView;
 import net.minecraft.world.block.WireOrientation;
 import org.jetbrains.annotations.Nullable;
 
-public class BalloonBulbPlantBlock extends Block implements Fertilizable, LandingBlock {
+public class BalloonBulbPlantBlock extends Block implements Fertilizable, Falling {
     public static final MapCodec<BalloonBulbPlantBlock> CODEC = createCodec(BalloonBulbPlantBlock::new);
     public static final IntProperty AGE = Properties.AGE_3;
     private static final VoxelShape SHAPE = Block.createCuboidShape(3.0F, 4.0F, 3.0F, 13.0F, 16.0F, 13.0F);

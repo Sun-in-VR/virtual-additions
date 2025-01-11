@@ -200,9 +200,9 @@ public class RegistryHelper {
         public static ToolSet registerGildedToolSet(ToolSet baseSet, GildType type) {
             String newName = type.getId().getPath() +"_"+ baseSet.NAME;
             return new ToolSet(
-                    register(newName +"_sword", settings -> new GildedSwordItem(type, baseSet.MATERIAL, (SwordItem) baseSet.SWORD, settings), new Item.Settings()),
+                    register(newName +"_sword", settings -> new GildedSwordItem(type, baseSet.MATERIAL, baseSet.SWORD, settings), new Item.Settings()),
                     register(newName +"_shovel", settings -> new GildedShovelItem(type, baseSet.MATERIAL, (ShovelItem) baseSet.SHOVEL, settings), new Item.Settings()),
-                    register(newName +"_pickaxe", settings -> new GildedPickaxeItem(type, baseSet.MATERIAL, (PickaxeItem) baseSet.PICKAXE, settings), new Item.Settings()),
+                    register(newName +"_pickaxe", settings -> new GildedPickaxeItem(type, baseSet.MATERIAL, baseSet.PICKAXE, settings), new Item.Settings()),
                     register(newName +"_axe", settings -> new GildedAxeItem(type, baseSet.MATERIAL, (AxeItem) baseSet.AXE, settings), new Item.Settings()),
                     register(newName +"_hoe", settings -> new GildedHoeItem(type, baseSet.MATERIAL, (HoeItem) baseSet.HOE, settings), new Item.Settings()),
                     type.getModifiedMaterial(baseSet.MATERIAL).asToolMaterial(),
@@ -213,9 +213,9 @@ public class RegistryHelper {
         public static ToolSet registerGildedToolSet(ToolSet baseSet, GildType type, Item.Settings baseSettings) {
             String newName = type.getId().getPath() +"_"+ baseSet.NAME;
             return new ToolSet(
-                    register(newName +"_sword", settings -> new GildedSwordItem(type, baseSet.MATERIAL, (SwordItem) baseSet.SWORD, settings), baseSettings),
+                    register(newName +"_sword", settings -> new GildedSwordItem(type, baseSet.MATERIAL, baseSet.SWORD, settings), baseSettings),
                     register(newName +"_shovel", settings -> new GildedShovelItem(type, baseSet.MATERIAL, (ShovelItem) baseSet.SHOVEL, settings), baseSettings),
-                    register(newName +"_pickaxe", settings -> new GildedPickaxeItem(type, baseSet.MATERIAL, (PickaxeItem) baseSet.PICKAXE, settings), baseSettings),
+                    register(newName +"_pickaxe", settings -> new GildedPickaxeItem(type, baseSet.MATERIAL, baseSet.PICKAXE, settings), baseSettings),
                     register(newName +"_axe", settings -> new GildedAxeItem(type, baseSet.MATERIAL, (AxeItem) baseSet.AXE, settings), baseSettings),
                     register(newName +"_hoe", settings -> new GildedHoeItem(type, baseSet.MATERIAL, (HoeItem) baseSet.HOE, settings), baseSettings),
                     type.getModifiedMaterial(baseSet.MATERIAL).asToolMaterial(),

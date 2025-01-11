@@ -26,8 +26,8 @@ public class WarpAnchorBlockEntity extends BlockEntity {
         double j = pos.getY();
         double k = pos.getZ() + 0.5;
         if (world.getTime() % 4L == 0L) {
-            if (state.get(WarpAnchorBlock.FACING) == Direction.DOWN) world.addParticle(particleCeiling, i, j + 0.624, k, 0.0D, 0.0D, 0.0D);
-            else world.addParticle(particle, i, j + 0.376, k, 0.0D, 0.0D, 0.0D);
+            if (state.get(WarpAnchorBlock.FACING) == Direction.DOWN) world.addParticleClient(particleCeiling, i, j + 0.624, k, 0.0D, 0.0D, 0.0D);
+            else world.addParticleClient(particle, i, j + 0.376, k, 0.0D, 0.0D, 0.0D);
         }
     }
 

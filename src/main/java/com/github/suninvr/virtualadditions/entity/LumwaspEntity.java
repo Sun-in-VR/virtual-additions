@@ -174,17 +174,9 @@ public class LumwaspEntity extends HostileEntity implements RangedAttackMob, Flu
 
     @Override
     protected void mobTick(ServerWorld world) {
-        if (this.isInsideWaterOrBubbleColumn() && !((EntityInterface)this).virtualAdditions$isInAcid() ) {
+        if (this.isSubmergedInWater() && !((EntityInterface)this).virtualAdditions$isInAcid() ) {
             this.damage(world, this.getDamageSources().drown(), 1.0F);
         }
-    }
-
-    @Override
-    public void setTarget(@Nullable LivingEntity target) {
-        if (target instanceof PlayerEntity) {
-            this.setAttacking((PlayerEntity)target);
-        }
-        super.setTarget(target);
     }
 
     @Override

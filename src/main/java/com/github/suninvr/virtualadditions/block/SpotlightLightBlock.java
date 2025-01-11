@@ -9,6 +9,7 @@ import net.minecraft.block.*;
 import net.minecraft.block.entity.BlockEntity;
 import net.minecraft.fluid.FluidState;
 import net.minecraft.fluid.Fluids;
+import net.minecraft.server.world.ServerWorld;
 import net.minecraft.state.StateManager;
 import net.minecraft.state.property.BooleanProperty;
 import net.minecraft.state.property.EnumProperty;
@@ -77,11 +78,9 @@ public class SpotlightLightBlock extends BlockWithEntity implements Waterloggabl
     }
 
     @Override
-    protected void onStateReplaced(BlockState state, World world, BlockPos pos, BlockState newState, boolean moved) {
-        if (!world.isClient() && !state.isOf(newState.getBlock())) {
-            updateSources(world, pos, state);
-        }
-        super.onStateReplaced(state, world, pos, newState, moved);
+    protected void onStateReplaced(BlockState blockState, ServerWorld serverWorld, BlockPos blockPos, boolean bl) {
+        updateSources(serverWorld, blockPos, blockState);
+        super.onStateReplaced(blockState, serverWorld, blockPos, bl);
     }
 
     protected static EnumProperty<LightStatus> getDirectionProperty(Direction dir) {

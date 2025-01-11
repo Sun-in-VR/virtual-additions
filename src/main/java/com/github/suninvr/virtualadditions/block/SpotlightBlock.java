@@ -9,6 +9,7 @@ import net.minecraft.block.*;
 import net.minecraft.block.entity.BlockEntity;
 import net.minecraft.block.enums.Orientation;
 import net.minecraft.entity.LivingEntity;
+import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.fluid.Fluids;
 import net.minecraft.item.ItemPlacementContext;
 import net.minecraft.item.ItemStack;
@@ -53,11 +54,9 @@ public class SpotlightBlock extends BlockWithEntity {
     }
 
     @Override
-    protected void onStateReplaced(BlockState state, World world, BlockPos pos, BlockState newState, boolean moved) {
-        if (!state.isOf(newState.getBlock())) {
-            setLightState(world, pos, state, LightStatus.NONE);
-        }
-        super.onStateReplaced(state, world, pos, newState, moved);
+    protected void onStateReplaced(BlockState blockState, ServerWorld serverWorld, BlockPos blockPos, boolean bl) {
+        setLightState(serverWorld, blockPos, blockState, LightStatus.NONE);
+        super.onStateReplaced(blockState, serverWorld, blockPos, bl);
     }
 
     @Override

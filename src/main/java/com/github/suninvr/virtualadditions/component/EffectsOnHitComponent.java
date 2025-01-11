@@ -81,7 +81,7 @@ public record EffectsOnHitComponent(Optional<PotionContentsComponent> potionCont
     }
 
     public void forEachEffect(Consumer<StatusEffectInstance> effectConsumer) {
-        this.potionContents.ifPresent(component -> component.forEachEffect(effectConsumer));
+        this.potionContents.ifPresent(component -> component.forEachEffect(effectConsumer, 1.0F));
     }
 
     public static ComponentType.Builder<EffectsOnHitComponent> setCodecs(ComponentType.Builder<EffectsOnHitComponent> builder) {

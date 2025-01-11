@@ -289,9 +289,9 @@ public class GildType {
 
             public boolean matches(Item item) {
                 return switch (this) {
-                    case SWORD -> item instanceof SwordItem;
+                    case SWORD -> Registries.ITEM.getId(item).getPath().contains("sword");
                     case SHOVEL -> item instanceof ShovelItem;
-                    case PICKAXE -> item instanceof PickaxeItem;
+                    case PICKAXE -> Registries.ITEM.getId(item).getPath().contains("pickaxe");
                     case AXE -> item instanceof AxeItem;
                     case HOE -> item instanceof HoeItem;
                 };
@@ -383,9 +383,9 @@ public class GildType {
             return settings.maxDamage(this.itemDurability).repairable(this.repairItems).enchantable(this.enchantability);
         }
 
-        public Item.Settings applyToolSettings(Item.Settings settings, TagKey<Block> effectiveBlocks, float attackDamage, float attackSpeed) {
+        public Item.Settings applyToolSettings(Item.Settings settings, TagKey<Block> effectiveBlocks, float attackDamage, float attackSpeed, boolean breaksShield) {
             RegistryEntryLookup<Block> registryEntryLookup = Registries.createEntryLookup(Registries.BLOCK);
-            return this.applyBaseSettings(settings).component(DataComponentTypes.TOOL, new ToolComponent(List.of(ToolComponent.Rule.ofNeverDropping(registryEntryLookup.getOrThrow(baseMaterial.incorrectBlocksForDrops())), ToolComponent.Rule.ofAlwaysDropping(registryEntryLookup.getOrThrow(effectiveBlocks), this.miningSpeed)), 1.0F, 1)).attributeModifiers(this.createToolAttributeModifiers(attackDamage, attackSpeed));
+            return this.applyBaseSettings(settings).component(DataComponentTypes.TOOL, new ToolComponent(List.of(ToolComponent.Rule.ofNeverDropping(registryEntryLookup.getOrThrow(baseMaterial.incorrectBlocksForDrops())), ToolComponent.Rule.ofAlwaysDropping(registryEntryLookup.getOrThrow(effectiveBlocks), this.miningSpeed)), 1.0F, 1, breaksShield)).attributeModifiers(this.createToolAttributeModifiers(attackDamage, attackSpeed));
         }
 
         private AttributeModifiersComponent createToolAttributeModifiers(float attackDamage, float attackSpeed) {

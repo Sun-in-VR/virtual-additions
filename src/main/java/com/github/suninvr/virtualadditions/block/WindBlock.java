@@ -49,7 +49,7 @@ public class WindBlock extends BlockWithEntity {
                 double y = (random.nextDouble() * 10) + pos.getY() - 5;
                 double z = (random.nextDouble() * 10) + pos.getZ() - 5;
                 Vec3d v = windBlockEntity.getWindVector().multiply(5000);
-                world.addParticle(ParticleTypes.CLOUD, x, y, z, v.x, v.y, v.z);
+                world.addParticleClient(ParticleTypes.CLOUD, x, y, z, v.x, v.y, v.z);
                 i++;
             }
         }

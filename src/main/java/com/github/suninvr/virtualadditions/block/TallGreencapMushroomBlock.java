@@ -44,7 +44,7 @@ public class TallGreencapMushroomBlock extends TallPlantBlock implements Fertili
         double y = pos.getY() + modelOffset.y;
         double z = pos.getZ() + modelOffset.z;
         for(int l = 0; l < 4; ++l) {
-            world.addParticle(VAParticleTypes.GREENCAP_SPORE, x + 0.25 + random.nextDouble() / 2, y + 0.25  + random.nextDouble() / 2, z + 0.25 + random.nextDouble() / 2, 0.0, 0.0, 0.0);
+            world.addParticleClient(VAParticleTypes.GREENCAP_SPORE, x + 0.25 + random.nextDouble() / 2, y + 0.25  + random.nextDouble() / 2, z + 0.25 + random.nextDouble() / 2, 0.0, 0.0, 0.0);
         }
     }
 

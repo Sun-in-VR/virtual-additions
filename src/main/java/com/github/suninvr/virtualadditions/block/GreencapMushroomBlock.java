@@ -45,7 +45,7 @@ public class GreencapMushroomBlock extends PlantBlock implements Fertilizable {
         double y = pos.getY() + modelOffset.y;
         double z = pos.getZ() + modelOffset.z;
         for(int l = 0; l < 2; ++l) {
-            world.addParticle(VAParticleTypes.GREENCAP_SPORE, x + 0.25 + random.nextDouble() / 2, y + 0.25  + random.nextDouble() / 3, z + 0.25 + random.nextDouble() / 2, 0.0, 0.0, 0.0);
+            world.addParticleClient(VAParticleTypes.GREENCAP_SPORE, x + 0.25 + random.nextDouble() / 2, y + 0.25  + random.nextDouble() / 3, z + 0.25 + random.nextDouble() / 2, 0.0, 0.0, 0.0);
         }
     }
 
