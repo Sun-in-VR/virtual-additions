@@ -5,12 +5,10 @@ import com.github.suninvr.virtualadditions.component.ExplosiveContentComponent;
 import com.github.suninvr.virtualadditions.component.WarpTetherLocationComponent;
 import com.github.suninvr.virtualadditions.item.*;
 import com.github.suninvr.virtualadditions.item.materials.SteelToolMaterial;
+import net.fabricmc.fabric.api.biome.v1.BiomeSelectors;
 import net.fabricmc.fabric.api.itemgroup.v1.ItemGroupEvents;
 import net.fabricmc.fabric.api.loot.v3.LootTableEvents;
-import net.minecraft.block.Blocks;
-import net.minecraft.block.ComposterBlock;
-import net.minecraft.block.DispenserBlock;
-import net.minecraft.block.ShulkerBoxBlock;
+import net.minecraft.block.*;
 import net.minecraft.block.cauldron.CauldronBehavior;
 import net.minecraft.block.dispenser.BlockPlacementDispenserBehavior;
 import net.minecraft.block.dispenser.DispenserBehavior;
@@ -24,11 +22,9 @@ import net.minecraft.entity.EntityType;
 import net.minecraft.item.*;
 import net.minecraft.item.equipment.EquipmentType;
 import net.minecraft.loot.LootPool;
+import net.minecraft.loot.LootTable;
 import net.minecraft.loot.LootTables;
-import net.minecraft.loot.condition.EntityPropertiesLootCondition;
-import net.minecraft.loot.condition.InvertedLootCondition;
-import net.minecraft.loot.condition.MatchToolLootCondition;
-import net.minecraft.loot.condition.RandomChanceLootCondition;
+import net.minecraft.loot.condition.*;
 import net.minecraft.loot.context.LootContext;
 import net.minecraft.loot.entry.ItemEntry;
 import net.minecraft.loot.function.*;
@@ -36,9 +32,14 @@ import net.minecraft.loot.provider.number.ConstantLootNumberProvider;
 import net.minecraft.loot.provider.number.UniformLootNumberProvider;
 import net.minecraft.predicate.entity.EntityFlagsPredicate;
 import net.minecraft.predicate.entity.EntityPredicate;
+import net.minecraft.predicate.entity.LocationPredicate;
 import net.minecraft.predicate.item.ItemPredicate;
 import net.minecraft.registry.RegistryEntryLookup;
+import net.minecraft.registry.RegistryKey;
 import net.minecraft.registry.RegistryKeys;
+import net.minecraft.registry.RegistryWrapper;
+import net.minecraft.registry.entry.RegistryEntryList;
+import net.minecraft.registry.tag.BiomeTags;
 import net.minecraft.text.Text;
 import net.minecraft.util.Formatting;
 import net.minecraft.util.Identifier;
@@ -47,6 +48,8 @@ import net.minecraft.util.Util;
 import net.minecraft.util.math.BlockPointer;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
+import net.minecraft.world.biome.Biome;
+import net.minecraft.world.biome.BiomeKeys;
 
 import java.util.List;
 import java.util.Map;
@@ -1220,7 +1223,8 @@ public class VAItems {
             }
 
             // Grass Drop
-            if (Blocks.SHORT_GRASS.getLootTableKey().isPresent() && Blocks.SHORT_GRASS.getLootTableKey().get().equals(key)) {
+            if (lootTableKeyMatches(key, Blocks.SHORT_GRASS)) {
+                RegistryWrapper.Impl<Biome> impl = registries.getOrThrow(RegistryKeys.BIOME);
                 RegistryEntryLookup<Enchantment> enchantmentLookup = registries.getOrThrow(RegistryKeys.ENCHANTMENT);
                 RegistryEntryLookup<Item> itemRegistryEntryLookup = registries.getOrThrow(RegistryKeys.ITEM);
                 LootPool.Builder cottonBuilder = LootPool.builder()
@@ -1234,6 +1238,15 @@ public class VAItems {
                         .with(ItemEntry.builder(CORN_SEEDS)
                                 .apply(ApplyBonusLootFunction.uniformBonusCount(enchantmentLookup.getOrThrow(Enchantments.FORTUNE), 2))
                                 .apply(ExplosionDecayLootFunction.builder())
+                                .conditionally(LocationCheckLootCondition.builder(LocationPredicate.Builder.create().biome(RegistryEntryList.of(
+                                        impl.getOrThrow(BiomeKeys.SAVANNA),
+                                        impl.getOrThrow(BiomeKeys.SAVANNA_PLATEAU),
+                                        impl.getOrThrow(BiomeKeys.WINDSWEPT_SAVANNA),
+                                        impl.getOrThrow(BiomeKeys.DESERT),
+                                        impl.getOrThrow(BiomeKeys.BADLANDS),
+                                        impl.getOrThrow(BiomeKeys.ERODED_BADLANDS),
+                                        impl.getOrThrow(BiomeKeys.WOODED_BADLANDS)
+                                ))))
                                 .conditionally(RandomChanceLootCondition.builder(0.125F))
                                 .conditionally(InvertedLootCondition.builder(MatchToolLootCondition.builder(ItemPredicate.Builder.create().items(itemRegistryEntryLookup, Items.SHEARS))))
                         );
@@ -1325,11 +1338,12 @@ public class VAItems {
                                 .weight(5)
                                 .apply(SetCountLootFunction.builder(UniformLootNumberProvider.create(3, 12))));
                     }
+                    i[0]++;
                 });
             }
 
             // Zombie Loot
-            if (EntityType.ZOMBIE.getLootTableKey().get().equals(key) || EntityType.HUSK.getLootTableKey().get().equals(key)) {
+            if (lootTableKeyMatches(key, EntityType.ZOMBIE, EntityType.HUSK)) {
                 final int[] i = {0};
                 tableBuilder.modifyPools(builder -> {
                     if (i[0] == 1) {
@@ -1345,6 +1359,20 @@ public class VAItems {
                 });
             }
         } ));
+    }
+
+    protected static boolean lootTableKeyMatches(RegistryKey<LootTable> key, Block... blocks) {
+        for (Block block : blocks) {
+            if (block.getLootTableKey().isPresent() && block.getLootTableKey().get().equals(key)) return true;
+        }
+        return false;
+    }
+
+    protected static boolean lootTableKeyMatches(RegistryKey<LootTable> key, EntityType<?>... entities) {
+        for (EntityType<?> type : entities) {
+            if (type.getLootTableKey().isPresent() && type.getLootTableKey().get().equals(key)) return true;
+        }
+        return false;
     }
 
     protected static void initCauldronBehaviors() {
