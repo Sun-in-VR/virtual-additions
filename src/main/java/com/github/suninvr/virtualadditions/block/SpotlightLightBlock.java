@@ -14,6 +14,8 @@ import net.minecraft.state.StateManager;
 import net.minecraft.state.property.BooleanProperty;
 import net.minecraft.state.property.EnumProperty;
 import net.minecraft.state.property.Properties;
+import net.minecraft.util.BlockMirror;
+import net.minecraft.util.BlockRotation;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Direction;
 import net.minecraft.util.math.random.Random;
@@ -77,12 +79,6 @@ public class SpotlightLightBlock extends BlockWithEntity implements Waterloggabl
         return blockPos;
     }
 
-    @Override
-    protected void onStateReplaced(BlockState blockState, ServerWorld serverWorld, BlockPos blockPos, boolean bl) {
-        updateSources(serverWorld, blockPos, blockState);
-        super.onStateReplaced(blockState, serverWorld, blockPos, bl);
-    }
-
     protected static EnumProperty<LightStatus> getDirectionProperty(Direction dir) {
         return switch (dir) {
             case DOWN -> DOWN;
@@ -132,6 +128,24 @@ public class SpotlightLightBlock extends BlockWithEntity implements Waterloggabl
             };
         }
         return null;
+    }
+
+    @Override
+    protected BlockState rotate(BlockState state, BlockRotation rotation) {
+        LightStatus north = getStatus(state, rotation.rotate(Direction.SOUTH));
+        LightStatus east = getStatus(state, rotation.rotate(Direction.WEST));
+        LightStatus south = getStatus(state, rotation.rotate(Direction.NORTH));
+        LightStatus west = getStatus(state, rotation.rotate(Direction.EAST));
+        return state.with(NORTH, north).with(EAST, east).with(SOUTH, south).with(WEST, west);
+    }
+
+    @Override
+    protected BlockState mirror(BlockState state, BlockMirror mirror) {
+        LightStatus north = getStatus(state, mirror.getRotation(Direction.NORTH).rotate(Direction.NORTH));
+        LightStatus east = getStatus(state, mirror.getRotation(Direction.EAST).rotate(Direction.EAST));
+        LightStatus south = getStatus(state, mirror.getRotation(Direction.SOUTH).rotate(Direction.SOUTH));
+        LightStatus west = getStatus(state, mirror.getRotation(Direction.WEST).rotate(Direction.WEST));
+        return state.with(NORTH, north).with(EAST, east).with(SOUTH, south).with(WEST, west);
     }
 
     public static boolean isLit(BlockState state) {

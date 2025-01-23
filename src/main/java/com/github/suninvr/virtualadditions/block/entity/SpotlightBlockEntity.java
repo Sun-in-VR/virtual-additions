@@ -1,6 +1,7 @@
 package com.github.suninvr.virtualadditions.block.entity;
 
 import com.github.suninvr.virtualadditions.block.SpotlightBlock;
+import com.github.suninvr.virtualadditions.block.enums.LightStatus;
 import com.github.suninvr.virtualadditions.registry.VABlockEntityType;
 import com.github.suninvr.virtualadditions.registry.VABlocks;
 import com.github.suninvr.virtualadditions.registry.VAGameEventTags;
@@ -40,6 +41,12 @@ public class SpotlightBlockEntity extends BlockEntity implements GameEventListen
     public void readNbt(NbtCompound nbt, RegistryWrapper.WrapperLookup lookup) {
         super.readNbt(nbt, lookup);
         NbtHelper.toBlockPos(nbt, "light_pos").ifPresent(pos -> this.lightPos = pos);
+    }
+
+    @Override
+    public void onStateReplaced(BlockPos pos, BlockState oldState) {
+        SpotlightBlock.setLightState(this.world, pos, oldState, LightStatus.NONE);
+        super.onStateReplaced(pos, oldState);
     }
 
     private boolean canUpdate(long time) {

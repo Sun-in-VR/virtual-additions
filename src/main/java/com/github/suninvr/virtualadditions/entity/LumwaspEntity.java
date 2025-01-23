@@ -129,7 +129,7 @@ public class LumwaspEntity extends HostileEntity implements RangedAttackMob, Flu
     }
 
     @Override
-    public boolean handleFallDamage(float fallDistance, float damageMultiplier, DamageSource damageSource) {
+    public boolean handleFallDamage(double fallDistance, float damageMultiplier, DamageSource damageSource) {
         return false;
     }
 

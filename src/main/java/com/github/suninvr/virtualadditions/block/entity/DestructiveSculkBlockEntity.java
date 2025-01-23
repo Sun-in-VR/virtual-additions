@@ -84,9 +84,9 @@ public class DestructiveSculkBlockEntity extends BlockEntity {
     }
 
     @Override
-    public void onStateReplaced(BlockPos pos, BlockState oldState, boolean moved) {
+    public void onStateReplaced(BlockPos pos, BlockState oldState) {
         if (oldState.isOf(VABlocks.DESTRUCTIVE_SCULK) && oldState.get(DestructiveSculkBlock.ORIGIN)) this.destroyAll(true);
-        super.onStateReplaced(pos, oldState, moved);
+        super.onStateReplaced(pos, oldState);
     }
 
     public void setReplacedState(BlockState state) {

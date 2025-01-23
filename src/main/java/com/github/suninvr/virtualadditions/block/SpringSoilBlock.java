@@ -26,7 +26,7 @@ public class SpringSoilBlock extends Block {
     }
 
     @Override
-    public void onLandedUpon(World world, BlockState state, BlockPos pos, Entity entity, float fallDistance) {
+    public void onLandedUpon(World world, BlockState state, BlockPos pos, Entity entity, double fallDistance) {
         entity.handleFallDamage(fallDistance, 0.0f, world.getDamageSources().fall());
     }
 

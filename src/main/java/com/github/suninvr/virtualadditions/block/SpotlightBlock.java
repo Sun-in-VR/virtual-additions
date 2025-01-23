@@ -18,6 +18,8 @@ import net.minecraft.state.StateManager;
 import net.minecraft.state.property.BooleanProperty;
 import net.minecraft.state.property.EnumProperty;
 import net.minecraft.state.property.Properties;
+import net.minecraft.util.BlockMirror;
+import net.minecraft.util.BlockRotation;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Direction;
 import net.minecraft.util.math.random.Random;
@@ -51,12 +53,6 @@ public class SpotlightBlock extends BlockWithEntity {
     @Override
     public void onPlaced(World world, BlockPos pos, BlockState state, @Nullable LivingEntity placer, ItemStack itemStack) {
         if (state.isOf(this) && state.get(POWERED)) updateLightLocation(world, pos, state);
-    }
-
-    @Override
-    protected void onStateReplaced(BlockState blockState, ServerWorld serverWorld, BlockPos blockPos, boolean bl) {
-        setLightState(serverWorld, blockPos, blockState, LightStatus.NONE);
-        super.onStateReplaced(blockState, serverWorld, blockPos, bl);
     }
 
     @Override
@@ -179,5 +175,15 @@ public class SpotlightBlock extends BlockWithEntity {
             case NORTH, SOUTH, WEST, EAST -> Direction.UP;
         };
         return this.getDefaultState().with(ORIENTATION, Orientation.byDirections(facingDirection, rotationDirection)).with(POWERED, world.isReceivingRedstonePower(pos));
+    }
+
+    @Override
+    protected BlockState rotate(BlockState state, BlockRotation rotation) {
+        return state.with(ORIENTATION, rotation.getDirectionTransformation().mapJigsawOrientation((Orientation)state.get(ORIENTATION)));
+    }
+
+    @Override
+    protected BlockState mirror(BlockState state, BlockMirror mirror) {
+        return state.with(ORIENTATION, mirror.getDirectionTransformation().mapJigsawOrientation((Orientation)state.get(ORIENTATION)));
     }
 }

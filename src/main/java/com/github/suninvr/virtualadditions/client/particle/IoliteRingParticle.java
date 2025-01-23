@@ -37,9 +37,9 @@ public class IoliteRingParticle extends SpriteBillboardParticle {
         this.alpha = inverse ? this.alpha : 1.0F - this.alpha;
         Quaternionf quaternionf = new Quaternionf();
         quaternionf.rotationX(-1.570796327F);
-        this.method_60373(vertexConsumer, camera, quaternionf, tickDelta);
+        this.render(vertexConsumer, camera, quaternionf, tickDelta);
         quaternionf.rotationX(-4.712388981F);
-        this.method_60373(vertexConsumer, camera, quaternionf, tickDelta);
+        this.render(vertexConsumer, camera, quaternionf, tickDelta);
     }
 
     @Override
