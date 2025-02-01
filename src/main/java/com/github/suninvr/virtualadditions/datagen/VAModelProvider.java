@@ -28,6 +28,7 @@ import net.minecraft.item.Item;
 import net.minecraft.item.Items;
 import net.minecraft.item.equipment.EquipmentAsset;
 import net.minecraft.item.equipment.EquipmentAssetKeys;
+import net.minecraft.item.equipment.trim.ArmorTrimAssets;
 import net.minecraft.item.equipment.trim.ArmorTrimMaterial;
 import net.minecraft.item.equipment.trim.ArmorTrimMaterials;
 import net.minecraft.registry.Registries;
@@ -39,6 +40,7 @@ import net.minecraft.world.biome.FoliageColors;
 import java.util.*;
 
 import static com.github.suninvr.virtualadditions.VirtualAdditions.idOf;
+import static net.minecraft.client.data.ItemModelGenerator.*;
 
 public class VAModelProvider {
 
@@ -217,10 +219,10 @@ public class VAModelProvider {
             itemModelGenerator.register(VAItems.STEEL_AXE, Models.HANDHELD);
             itemModelGenerator.register(VAItems.STEEL_HOE, Models.HANDHELD);
 
-            itemModelGenerator.registerArmor(VAItems.STEEL_HELMET, VAArmorMaterial.STEEL.assetId(), "helmet", false);
-            itemModelGenerator.registerArmor(VAItems.STEEL_CHESTPLATE, VAArmorMaterial.STEEL.assetId(), "chestplate", false);
-            itemModelGenerator.registerArmor(VAItems.STEEL_LEGGINGS, VAArmorMaterial.STEEL.assetId(), "leggings", false);
-            itemModelGenerator.registerArmor(VAItems.STEEL_BOOTS, VAArmorMaterial.STEEL.assetId(), "boots", false);
+            itemModelGenerator.registerArmor(VAItems.STEEL_HELMET, VAArmorMaterial.STEEL.assetId(), HELMET_TRIM_ID_PREFIX, false);
+            itemModelGenerator.registerArmor(VAItems.STEEL_CHESTPLATE, VAArmorMaterial.STEEL.assetId(), CHESTPLATE_TRIM_ID_PREFIX, false);
+            itemModelGenerator.registerArmor(VAItems.STEEL_LEGGINGS, VAArmorMaterial.STEEL.assetId(), LEGGINGS_TRIM_ID_PREFIX, false);
+            itemModelGenerator.registerArmor(VAItems.STEEL_BOOTS, VAArmorMaterial.STEEL.assetId(), BOOTS_TRIM_ID_PREFIX, false);
 
             itemModelGenerator.registerBundle(VAItems.CHARTREUSE_BUNDLE);
             itemModelGenerator.registerBundle(VAItems.MAROON_BUNDLE);
@@ -303,20 +305,20 @@ public class VAModelProvider {
     private abstract static class Provider extends FabricModelProvider {
         private static final List<ItemModelGenerator.TrimMaterial> TRIM_MATERIALS_EXTENDED =
                 List.of(
-                        new ItemModelGenerator.TrimMaterial("quartz", ArmorTrimMaterials.QUARTZ, Map.of()),
-                        new ItemModelGenerator.TrimMaterial("iron", ArmorTrimMaterials.IRON, Map.of(EquipmentAssetKeys.IRON, "iron_darker")),
-                        new ItemModelGenerator.TrimMaterial("netherite", ArmorTrimMaterials.NETHERITE, Map.of(EquipmentAssetKeys.NETHERITE, "netherite_darker")),
-                        new ItemModelGenerator.TrimMaterial("redstone", ArmorTrimMaterials.REDSTONE, Map.of()),
-                        new ItemModelGenerator.TrimMaterial("copper", ArmorTrimMaterials.COPPER, Map.of()),
-                        new ItemModelGenerator.TrimMaterial("gold", ArmorTrimMaterials.GOLD, Map.of(EquipmentAssetKeys.GOLD, "gold_darker")),
-                        new ItemModelGenerator.TrimMaterial("emerald", ArmorTrimMaterials.EMERALD, Map.of()),
-                        new ItemModelGenerator.TrimMaterial("diamond", ArmorTrimMaterials.DIAMOND, Map.of(EquipmentAssetKeys.DIAMOND, "diamond_darker")),
-                        new ItemModelGenerator.TrimMaterial("lapis", ArmorTrimMaterials.LAPIS, Map.of()),
-                        new ItemModelGenerator.TrimMaterial("amethyst", ArmorTrimMaterials.AMETHYST, Map.of()),
-                        new ItemModelGenerator.TrimMaterial("resin", ArmorTrimMaterials.RESIN, Map.of()),
-                        new ItemModelGenerator.TrimMaterial("steel", VAArmorTrimMaterials.STEEL, Map.of(VAArmorMaterial.STEEL.assetId(), "steel_darker")),
-                        new ItemModelGenerator.TrimMaterial("rock_salt", VAArmorTrimMaterials.ROCK_SALT, Map.of()),
-                        new ItemModelGenerator.TrimMaterial("iolite", VAArmorTrimMaterials.IOLITE, Map.of())
+                        new ItemModelGenerator.TrimMaterial(ArmorTrimAssets.QUARTZ, ArmorTrimMaterials.QUARTZ),
+                        new ItemModelGenerator.TrimMaterial(ArmorTrimAssets.IRON, ArmorTrimMaterials.IRON),
+                        new ItemModelGenerator.TrimMaterial(ArmorTrimAssets.NETHERITE, ArmorTrimMaterials.NETHERITE),
+                        new ItemModelGenerator.TrimMaterial(ArmorTrimAssets.REDSTONE, ArmorTrimMaterials.REDSTONE),
+                        new ItemModelGenerator.TrimMaterial(ArmorTrimAssets.COPPER, ArmorTrimMaterials.COPPER),
+                        new ItemModelGenerator.TrimMaterial(ArmorTrimAssets.GOLD, ArmorTrimMaterials.GOLD),
+                        new ItemModelGenerator.TrimMaterial(ArmorTrimAssets.EMERALD, ArmorTrimMaterials.EMERALD),
+                        new ItemModelGenerator.TrimMaterial(ArmorTrimAssets.DIAMOND, ArmorTrimMaterials.DIAMOND),
+                        new ItemModelGenerator.TrimMaterial(ArmorTrimAssets.LAPIS, ArmorTrimMaterials.LAPIS),
+                        new ItemModelGenerator.TrimMaterial(ArmorTrimAssets.AMETHYST, ArmorTrimMaterials.AMETHYST),
+                        new ItemModelGenerator.TrimMaterial(ArmorTrimAssets.RESIN, ArmorTrimMaterials.RESIN),
+                        new ItemModelGenerator.TrimMaterial(ArmorTrimAssets.of("virtual_additions_steel", Map.of(VAArmorMaterial.STEEL_ASSET_KEY, "virtual_additions_steel_darker")), VAArmorTrimMaterials.STEEL),
+                        new ItemModelGenerator.TrimMaterial(ArmorTrimAssets.of("virtual_additions_rock_salt"), VAArmorTrimMaterials.ROCK_SALT),
+                        new ItemModelGenerator.TrimMaterial(ArmorTrimAssets.of("virtual_additions_iolite"), VAArmorTrimMaterials.IOLITE)
                 );
 
         public Provider(FabricDataOutput output) {
@@ -407,13 +409,13 @@ public class VAModelProvider {
         }
 
         public static void registerArmorSetWithExtendedTrimMaterials(ItemModelGenerator generator, Item helmet, Item chestplate, Item leggings, Item boots, RegistryKey<EquipmentAsset> equipmentKey, boolean dyeable) {
-            registerArmorWithExtendedTrimMaterials(generator, helmet, equipmentKey, "helmet", dyeable);
-            registerArmorWithExtendedTrimMaterials(generator, chestplate, equipmentKey, "chestplate", dyeable);
-            registerArmorWithExtendedTrimMaterials(generator, leggings, equipmentKey, "leggings", dyeable);
-            registerArmorWithExtendedTrimMaterials(generator, boots, equipmentKey, "boots", dyeable);
+            registerArmorWithExtendedTrimMaterials(generator, helmet, equipmentKey, HELMET_TRIM_ID_PREFIX, dyeable);
+            registerArmorWithExtendedTrimMaterials(generator, chestplate, equipmentKey, CHESTPLATE_TRIM_ID_PREFIX, dyeable);
+            registerArmorWithExtendedTrimMaterials(generator, leggings, equipmentKey, LEGGINGS_TRIM_ID_PREFIX, dyeable);
+            registerArmorWithExtendedTrimMaterials(generator, boots, equipmentKey, BOOTS_TRIM_ID_PREFIX, dyeable);
         }
 
-        public static void registerArmorWithExtendedTrimMaterials(ItemModelGenerator generator, Item item, RegistryKey<EquipmentAsset> equipmentKey, String type, boolean dyeable) {
+        public static void registerArmorWithExtendedTrimMaterials(ItemModelGenerator generator, Item item, RegistryKey<EquipmentAsset> equipmentKey, Identifier trimIdPrefix, boolean dyeable) {
             Identifier identifier = ModelIds.getItemModelId(item);
             Identifier identifier2 = TextureMap.getId(item);
             Identifier identifier3 = TextureMap.getSubId(item, "_overlay");
@@ -423,9 +425,10 @@ public class VAModelProvider {
             ItemModel.Unbaked unbaked;
             for(Iterator<ItemModelGenerator.TrimMaterial> iterator = TRIM_MATERIALS_EXTENDED.iterator(); iterator.hasNext(); list.add(ItemModels.switchCase(trimMaterial.materialKey, unbaked))) {
                 trimMaterial = iterator.next();
-                Identifier identifier4 = identifier.withSuffixedPath("_" + trimMaterial.name() + "_trim");
-                String a = Objects.equals(trimMaterial.materialKey.getValue().getNamespace(), "virtual_additions") ? "virtual_additions_" : "";
-                Identifier identifier5 = Identifier.ofVanilla("trims/items/" + type + "_trim_" + a + trimMaterial.texture(equipmentKey));
+                String namespace = trimMaterial.materialKey().getValue().getNamespace();
+                Identifier identifier4 = identifier.withSuffixedPath("_" + trimMaterial.assets().base().suffix() + "_trim");
+                String var10001 = trimMaterial.assets().getAssetId(equipmentKey).suffix();
+                Identifier identifier5 = trimIdPrefix.withSuffixedPath("_" + var10001);
                 if (dyeable) {
                     generator.uploadArmor(identifier4, identifier2, identifier3, identifier5);
                     unbaked = ItemModels.tinted(identifier4, new DyeTintSource(-6265536));

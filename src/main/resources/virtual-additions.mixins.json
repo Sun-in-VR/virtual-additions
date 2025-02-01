@@ -6,6 +6,7 @@
   "mixins": [
     "AnimalEntityMixin",
     "AnvilScreenHandlerMixin",
+    "ArmorTrimPatternsMixin",
     "AxeItemMixin",
     "BlockMixin",
     "BundleContentsComponentMixin",

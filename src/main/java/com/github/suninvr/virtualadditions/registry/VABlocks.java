@@ -596,7 +596,7 @@ public class VABlocks {
         AEROBLOOM_WALL_SIGN = register("aerobloom_wall_sign", (settings) -> new CustomSignBlocks.CustomWallSignBlock(settings, AEROBLOOM_WOODTYPE), Settings.copy(AEROBLOOM_SIGN).lootTable(AEROBLOOM_SIGN.getLootTableKey()));
         AEROBLOOM_HANGING_SIGN = register("aerobloom_hanging_sign", (settings) -> new CustomSignBlocks.CustomHangingSignBlock(settings, AEROBLOOM_WOODTYPE), Settings.copy(Blocks.CHERRY_HANGING_SIGN));
         AEROBLOOM_WALL_HANGING_SIGN = register("aerobloom_wall_hanging_sign", (settings) -> new CustomSignBlocks.CustomWallHangingSignBlock(settings, AEROBLOOM_WOODTYPE), Settings.copy(Blocks.CHERRY_WALL_HANGING_SIGN).lootTable(AEROBLOOM_HANGING_SIGN.getLootTableKey()));
-        AEROBLOOM_LEAVES = register("aerobloom_leaves", (settings) -> new LeavesBlock(10, ParticleTypes.CHERRY_LEAVES, settings), Settings.copy(Blocks.CHERRY_LEAVES));
+        AEROBLOOM_LEAVES = register("aerobloom_leaves", (settings) -> new TintedParticleLeavesBlock(10, settings), Settings.copy(Blocks.CHERRY_LEAVES));
         AEROBLOOM_SAPLING = register("aerobloom_sapling", (settings) -> new SaplingBlock(CustomSaplingGenerator.AEROBLOOM, settings), Settings.copy(Blocks.CHERRY_SAPLING));
         POTTED_AEROBLOOM_SAPLING = register("potted_aerobloom", (settings) -> new FlowerPotBlock(AEROBLOOM_SAPLING, settings), Settings.copy(Blocks.FLOWER_POT));
 

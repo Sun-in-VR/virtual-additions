@@ -18,6 +18,7 @@ import net.minecraft.client.util.SpriteIdentifier;
 import net.minecraft.client.util.math.MatrixStack;
 import net.minecraft.util.DyeColor;
 import net.minecraft.util.math.Direction;
+import net.minecraft.util.math.Vec3d;
 
 import java.util.Objects;
 
@@ -27,15 +28,16 @@ public class CustomShulkerBoxBlockEntityRenderer implements BlockEntityRenderer<
     public CustomShulkerBoxBlockEntityRenderer(BlockEntityRendererFactory.Context ctx) {
         this.model = new ShulkerBoxBlockEntityRenderer.ShulkerBoxBlockModel(ctx.getLayerModelPart(EntityModelLayers.SHULKER_BOX));
     }
-    
+
     @Override
-    public void render(ShulkerBoxBlockEntity entity, float tickDelta, MatrixStack matrices, VertexConsumerProvider vertexConsumers, int light, int overlay) {
+    public void render(ShulkerBoxBlockEntity entity, float tickProgress, MatrixStack matrices, VertexConsumerProvider vertexConsumers, int light, int overlay, Vec3d cameraPos) {
         SpriteIdentifier spriteIdentifier = entity.getColor() == null ? TexturedRenderLayers.SHULKER_TEXTURE_ID : VADyeColors.getShulkerBoxTexture(entity.getColor());
         spriteIdentifier = spriteIdentifier == null ? TexturedRenderLayers.SHULKER_TEXTURE_ID : spriteIdentifier;
         Direction direction = entity.getCachedState().get(ShulkerBoxBlock.FACING, Direction.UP);
 
-        float g = entity.getAnimationProgress(tickDelta);
+        float g = entity.getAnimationProgress(tickProgress);
         this.render(matrices, vertexConsumers, light, overlay, direction, g, spriteIdentifier);
+
     }
 
     public void render(MatrixStack matrices, VertexConsumerProvider vertexConsumers, int light, int overlay, Direction facing, float openness, SpriteIdentifier textureId) {

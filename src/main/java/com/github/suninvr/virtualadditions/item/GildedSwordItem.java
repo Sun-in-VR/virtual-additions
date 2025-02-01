@@ -1,6 +1,7 @@
 package com.github.suninvr.virtualadditions.item;
 
 import com.github.suninvr.virtualadditions.item.interfaces.GildedToolItem;
+import net.minecraft.component.type.TooltipDisplayComponent;
 import net.minecraft.entity.EquipmentSlot;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.item.tooltip.TooltipType;
@@ -13,6 +14,7 @@ import net.minecraft.text.Text;
 import net.minecraft.util.Formatting;
 
 import java.util.List;
+import java.util.function.Consumer;
 
 public class GildedSwordItem extends Item implements GildedToolItem {
     private final GildType gildType;
@@ -33,10 +35,10 @@ public class GildedSwordItem extends Item implements GildedToolItem {
     }
 
     @Override
-    public void appendTooltip(ItemStack stack, TooltipContext context, List<Text> tooltip, TooltipType type) {
-        tooltip.add(descriptionHeader);
-        tooltip.add(this.descriptionText);
-        super.appendTooltip(stack, context, tooltip, type);
+    public void appendTooltip(ItemStack stack, TooltipContext context, TooltipDisplayComponent displayComponent, Consumer<Text> textConsumer, TooltipType type) {
+        textConsumer.accept(descriptionHeader);
+        textConsumer.accept(this.descriptionText);
+        super.appendTooltip(stack, context, displayComponent, textConsumer, type);
     }
 
     @Override

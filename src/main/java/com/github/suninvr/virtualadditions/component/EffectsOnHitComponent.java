@@ -3,6 +3,7 @@ package com.github.suninvr.virtualadditions.component;
 import com.mojang.serialization.Codec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
 import net.minecraft.component.ComponentType;
+import net.minecraft.component.ComponentsAccess;
 import net.minecraft.component.type.PotionContentsComponent;
 import net.minecraft.entity.effect.StatusEffectInstance;
 import net.minecraft.item.Item;
@@ -58,17 +59,6 @@ public record EffectsOnHitComponent(Optional<PotionContentsComponent> potionCont
         return this.potionContents.isPresent();
     }
 
-    @Override
-    public void appendTooltip(Item.TooltipContext context, Consumer<Text> tooltip, TooltipType type) {
-        if (this.hasEffectsComponent()) {
-            if (type.isAdvanced() && this.getRemainingUses() > 0) {
-                MutableText text = Text.translatable("item.virtual_additions.applied_effect_tooltip.advanced", this.getRemainingUses(), this.getTotalUses()).formatted(Formatting.DARK_PURPLE);
-                tooltip.accept(text);
-            }
-            tooltip.accept(tooltipText);
-            this.potionContents.get().buildTooltip(tooltip, 0.125F, 20);
-        }
-    }
     public EffectsOnHitComponent decrementRemainingUses() {
         if (this.remaining.isEmpty()) return this;
         int remaining = this.remaining.get() - 1;
@@ -99,5 +89,17 @@ public record EffectsOnHitComponent(Optional<PotionContentsComponent> potionCont
                 PacketCodecs.INTEGER.collect(PacketCodecs::optional), EffectsOnHitComponent::uses,
                 PacketCodecs.INTEGER.collect(PacketCodecs::optional), EffectsOnHitComponent::remaining,
                 EffectsOnHitComponent::new);
+    }
+
+    @Override
+    public void appendTooltip(Item.TooltipContext context, Consumer<Text> textConsumer, TooltipType type, ComponentsAccess components) {
+        if (this.hasEffectsComponent()) {
+            if (type.isAdvanced() && this.getRemainingUses() > 0) {
+                MutableText text = Text.translatable("item.virtual_additions.applied_effect_tooltip.advanced", this.getRemainingUses(), this.getTotalUses()).formatted(Formatting.DARK_PURPLE);
+                textConsumer.accept(text);
+            }
+            textConsumer.accept(tooltipText);
+            this.potionContents.get().appendTooltip(context, textConsumer, type, components);
+        }
     }
 }

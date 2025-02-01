@@ -14,4 +14,7 @@ public class VAArmorTrimMaterials {
     private static RegistryKey<ArmorTrimMaterial> of(String id) {
         return RegistryKey.of(RegistryKeys.TRIM_MATERIAL, idOf(id));
     }
+
+    public static void init() {
+    }
 }

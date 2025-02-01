@@ -49,6 +49,8 @@ public class VirtualAdditions implements ModInitializer {
 		);
 
         VAAdvancementCriteria.init();
+        VAArmorTrimMaterials.init();
+        VAArmorTrimPatterns.init();
 		VABlocks.init();
 		VABlockEntityType.init();
 		VABlockTags.init();

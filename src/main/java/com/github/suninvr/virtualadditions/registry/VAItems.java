@@ -655,7 +655,7 @@ public class VAItems {
         ROCK_SALT_CRYSTAL = registerBlockItem("rock_salt_crystal", VABlocks.ROCK_SALT_CRYSTAL, ItemGroups.NATURAL, ROCK_SALT_BLOCK);
         ROCK_SALT_ORE = registerBlockItem("rock_salt_ore", VABlocks.ROCK_SALT_ORE, ItemGroups.NATURAL, Items.DEEPSLATE_COAL_ORE);
         DEEPSLATE_ROCK_SALT_ORE = registerBlockItem("deepslate_rock_salt_ore", VABlocks.DEEPSLATE_ROCK_SALT_ORE, ItemGroups.NATURAL, prev);
-        ROCK_SALT = register("rock_salt", new Item.Settings().food(VAFoodComponents.ROCK_SALT, VAFoodComponents.ROCK_SALT_CONSUMABLE), at(ItemGroups.INGREDIENTS, Items.SUGAR), at(ItemGroups.FOOD_AND_DRINK, Items.SPIDER_EYE));
+        ROCK_SALT = register("rock_salt", new Item.Settings().food(VAFoodComponents.ROCK_SALT, VAFoodComponents.ROCK_SALT_CONSUMABLE).trimMaterial(VAArmorTrimMaterials.ROCK_SALT), at(ItemGroups.INGREDIENTS, Items.SUGAR), at(ItemGroups.FOOD_AND_DRINK, Items.SPIDER_EYE));
 
         //endregion
 
@@ -675,7 +675,7 @@ public class VAItems {
         CAGELIGHT = registerBlockItem("cagelight", VABlocks.CAGELIGHT, ItemGroups.BUILDING_BLOCKS, STEEL_TRAPDOOR);
         SPOTLIGHT = registerBlockItem("spotlight", VABlocks.SPOTLIGHT, ItemGroups.REDSTONE, Items.REDSTONE_LAMP);
         RAW_STEEL = register("raw_steel", ItemGroups.INGREDIENTS, Items.RAW_GOLD);
-        STEEL_INGOT = register("steel_ingot", ItemGroups.INGREDIENTS, Items.GOLD_INGOT);
+        STEEL_INGOT = register("steel_ingot", new Item.Settings().trimMaterial(VAArmorTrimMaterials.STEEL), ItemGroups.INGREDIENTS, Items.GOLD_INGOT);
         STEEL_BOMB = register("steel_bomb", SteelBombItem::new, new Item.Settings().maxCount(16).component(VADataComponentTypes.EXPLOSIVE_CONTENTS, ExplosiveContentComponent.DEFAULT), at(ItemGroups.COMBAT, Items.SNOWBALL), at(ItemGroups.TOOLS, Items.LEAD));
         STEEL_SWORD = register("steel_sword", settings -> new Item(settings.sword(SteelToolMaterial.INSTANCE, 3, -2.4F)), new Item.Settings(), ItemGroups.COMBAT, Items.GOLDEN_SWORD);
         STEEL_SHOVEL = register("steel_shovel", settings -> new ShovelItem(SteelToolMaterial.INSTANCE, 1.5F, -3.0F, settings), new Item.Settings(), ItemGroups.TOOLS, Items.GOLDEN_HOE);
@@ -996,7 +996,7 @@ public class VAItems {
 
         //region Iolite
 
-        IOLITE = register("iolite", ItemGroups.INGREDIENTS, Items.ANCIENT_DEBRIS);
+        IOLITE = register("iolite", new Item.Settings().trimMaterial(VAArmorTrimMaterials.IOLITE), ItemGroups.INGREDIENTS, Items.ANCIENT_DEBRIS);
         IOLITE_ORE = registerBlockItem("iolite_ore", VABlocks.IOLITE_ORE, ItemGroups.NATURAL, Items.ANCIENT_DEBRIS);
         IOLITE_BLOCK = registerBlockItem("iolite_block", VABlocks.IOLITE_BLOCK, ItemGroups.BUILDING_BLOCKS, Items.NETHERITE_BLOCK);
         WARP_ANCHOR = register("warp_anchor", settings ->  new BlockItem(VABlocks.WARP_ANCHOR, settings), new Item.Settings().rarity(Rarity.RARE).translationKey(VABlocks.WARP_TETHER.getTranslationKey()), ItemGroups.REDSTONE, Items.CAULDRON);

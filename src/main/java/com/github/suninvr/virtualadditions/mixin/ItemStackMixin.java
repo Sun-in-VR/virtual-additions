@@ -22,12 +22,12 @@ import java.util.function.Consumer;
 @Mixin(ItemStack.class)
 public abstract class ItemStackMixin {
 
-    @Shadow protected abstract <T extends TooltipAppender> void appendTooltip(ComponentType<T> componentType, Item.TooltipContext context, Consumer<Text> textConsumer, TooltipType type);
-
-    @Inject(method = "getTooltip", at = @At(value = "INVOKE", target = "Lnet/minecraft/item/ItemStack;appendTooltip(Lnet/minecraft/component/ComponentType;Lnet/minecraft/item/Item$TooltipContext;Ljava/util/function/Consumer;Lnet/minecraft/item/tooltip/TooltipType;)V", ordinal = 5, shift = At.Shift.AFTER))
-    void virtualAdditions$getTooltip(Item.TooltipContext context, PlayerEntity player, TooltipType type, CallbackInfoReturnable<List<Text>> cir, @Local LocalRef<List<Text>> list) {
-        List<Text> texts = list.get();
-        this.appendTooltip(VADataComponentTypes.EFFECTS_ON_HIT, context, texts::add, type);
-        list.set(texts);
-    }
+    //@Shadow protected abstract <T extends TooltipAppender> void appendTooltip(ComponentType<T> componentType, Item.TooltipContext context, Consumer<Text> textConsumer, TooltipType type);
+//
+    //@Inject(method = "getTooltip", at = @At(value = "INVOKE", target = "Lnet/minecraft/item/ItemStack;appendTooltip(Lnet/minecraft/component/ComponentType;Lnet/minecraft/item/Item$TooltipContext;Ljava/util/function/Consumer;Lnet/minecraft/item/tooltip/TooltipType;)V", ordinal = 5, shift = At.Shift.AFTER))
+    //void virtualAdditions$getTooltip(Item.TooltipContext context, PlayerEntity player, TooltipType type, CallbackInfoReturnable<List<Text>> cir, @Local LocalRef<List<Text>> list) {
+    //    List<Text> texts = list.get();
+    //    this.appendTooltip(VADataComponentTypes.EFFECTS_ON_HIT, context, texts::add, type);
+    //    list.set(texts);
+    //}
 }

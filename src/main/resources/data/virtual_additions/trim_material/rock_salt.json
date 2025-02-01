@@ -3,7 +3,5 @@
   "description": {
     "color": "#f08597",
     "translate": "trim_material.virtual_additions.rock_salt"
-  },
-  "ingredient": "virtual_additions:rock_salt",
-  "item_model_index": 0.0
+  }
 }
