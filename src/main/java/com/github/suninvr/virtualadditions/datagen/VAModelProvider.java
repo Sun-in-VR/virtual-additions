@@ -10,7 +10,6 @@ import net.fabricmc.fabric.api.client.datagen.v1.provider.FabricModelProvider;
 import net.fabricmc.fabric.api.datagen.v1.FabricDataGenerator;
 import net.fabricmc.fabric.api.datagen.v1.FabricDataOutput;
 import net.minecraft.block.Block;
-import net.minecraft.block.Blocks;
 import net.minecraft.client.data.*;
 import net.minecraft.client.render.item.model.ItemModel;
 import net.minecraft.client.render.item.model.SelectItemModel;
@@ -37,7 +36,10 @@ import net.minecraft.state.property.Properties;
 import net.minecraft.util.Identifier;
 import net.minecraft.world.biome.FoliageColors;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Iterator;
+import java.util.List;
+import java.util.Map;
 
 import static com.github.suninvr.virtualadditions.VirtualAdditions.idOf;
 import static net.minecraft.client.data.ItemModelGenerator.*;
@@ -427,7 +429,6 @@ public class VAModelProvider {
             ItemModel.Unbaked unbaked;
             for(Iterator<ItemModelGenerator.TrimMaterial> iterator = TRIM_MATERIALS_EXTENDED.iterator(); iterator.hasNext(); list.add(ItemModels.switchCase(trimMaterial.materialKey, unbaked))) {
                 trimMaterial = iterator.next();
-                String namespace = trimMaterial.materialKey().getValue().getNamespace();
                 Identifier identifier4 = identifier.withSuffixedPath("_" + trimMaterial.assets().base().suffix() + "_trim");
                 String var10001 = trimMaterial.assets().getAssetId(equipmentKey).suffix();
                 Identifier identifier5 = trimIdPrefix.withSuffixedPath("_" + var10001);
@@ -443,7 +444,7 @@ public class VAModelProvider {
             ItemModel.Unbaked unbaked2;
             if (dyeable) {
                 Models.GENERATED_TWO_LAYERS.upload(identifier, TextureMap.layered(identifier2, identifier3), generator.modelCollector);
-                unbaked2 = ItemModels.tinted(identifier, new TintSource[]{new DyeTintSource(-6265536)});
+                unbaked2 = ItemModels.tinted(identifier, new DyeTintSource(-6265536));
             } else {
                 Models.GENERATED.upload(identifier, TextureMap.layer0(identifier2), generator.modelCollector);
                 unbaked2 = ItemModels.basic(identifier);

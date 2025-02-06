@@ -3,12 +3,10 @@ package com.github.suninvr.virtualadditions.mixin;
 import com.github.suninvr.virtualadditions.registry.VAItems;
 import com.google.common.collect.ImmutableMap;
 import it.unimi.dsi.fastutil.ints.Int2ObjectMap;
-import net.minecraft.item.Items;
 import net.minecraft.village.TradeOffers;
 import org.spongepowered.asm.mixin.*;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 @Mixin(TradeOffers.class)

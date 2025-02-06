@@ -27,15 +27,6 @@ public class LightningBottleEntity extends ThrownItemEntity {
         super(VAEntityType.LIGHTNING_BOTTLE, x, y, z, world, stack);
     }
 
-    public LightningBottleEntity(World world, double x, double y, double z) {
-        super(VAEntityType.LIGHTNING_BOTTLE, x, y, z, world, VAItems.LIGHTNING_BOTTLE.getDefaultStack());
-    }
-
-    public LightningBottleEntity(World world, PlayerEntity user) {
-        super(VAEntityType.LIGHTNING_BOTTLE, world);
-        this.setOwner(user);
-    }
-
     @Override
     protected Item getDefaultItem() {
         return VAItems.LIGHTNING_BOTTLE;
