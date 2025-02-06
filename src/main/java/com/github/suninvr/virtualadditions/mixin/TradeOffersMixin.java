@@ -25,6 +25,7 @@ public abstract class TradeOffersMixin {
     @Unique private static final TradeOffers.Factory TAN_DYE_TRADE_OFFER = new TradeOffers.SellItemFactory(VAItems.TAN_DYE, 1, 3, 12, 1);
     @Unique private static final TradeOffers.Factory SINOPIA_DYE_TRADE_OFFER = new TradeOffers.SellItemFactory(VAItems.SINOPIA_DYE, 1, 3, 12, 1);
     @Unique private static final TradeOffers.Factory LILAC_DYE_TRADE_OFFER = new TradeOffers.SellItemFactory(VAItems.LILAC_DYE, 1, 3, 12, 1);
+    @Unique private static final TradeOffers.Factory LIGHTNING_BOTTLE_TRADE_OFFER = new TradeOffers.SellItemFactory(VAItems.LIGHTNING_BOTTLE, 15, 1, 12, 1);
 
     @Shadow
     private static Int2ObjectMap<TradeOffers.Factory[]> copyToFastUtilMap(ImmutableMap<Integer, TradeOffers.Factory[]> map) {
@@ -52,6 +53,7 @@ public abstract class TradeOffersMixin {
         LEVEL_1_TRADES.add(TAN_DYE_TRADE_OFFER);
         LEVEL_1_TRADES.add(SINOPIA_DYE_TRADE_OFFER);
         LEVEL_1_TRADES.add(LILAC_DYE_TRADE_OFFER);
+        LEVEL_1_TRADES.add(LIGHTNING_BOTTLE_TRADE_OFFER);
 
         WANDERING_TRADER_TRADES = copyToFastUtilMap(ImmutableMap.of(1, LEVEL_1_TRADES.toArray(new TradeOffers.Factory[]{}), 2, LEVEL_2_TRADES.toArray(new TradeOffers.Factory[]{})));
     }

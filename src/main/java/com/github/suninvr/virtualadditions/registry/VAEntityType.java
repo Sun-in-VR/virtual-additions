@@ -23,6 +23,7 @@ public class VAEntityType {
     public static final EntityType<LumwaspEntity> LUMWASP;
     public static final EntityType<LyftEntity> LYFT;
     public static final EntityType<SalineEntity> SALINE;
+    public static final EntityType<LightningBottleEntity> LIGHTNING_BOTTLE;
 
     public static final Map<EntityType<? extends LivingEntity>, DefaultAttributeContainer> ENTITY_ATTRIBUTES = new java.util.HashMap<>();
 
@@ -54,6 +55,11 @@ public class VAEntityType {
         SALINE = Registry.register(Registries.ENTITY_TYPE, idOf("saline"), EntityType.Builder.create(SalineEntity::new, SpawnGroup.MONSTER)
                 .dimensions(0.6F, 1.95F).maxTrackingRange(8)
                 .build(RegistryKey.of(RegistryKeys.ENTITY_TYPE, VirtualAdditions.idOf("saline"))));
+
+        LIGHTNING_BOTTLE = Registry.register(Registries.ENTITY_TYPE, idOf("lightning_bottle"), EntityType.Builder.<LightningBottleEntity>create(LightningBottleEntity::new, SpawnGroup.MISC)
+                .dropsNothing().dimensions(0.25F, 0.25F).maxTrackingRange(4).trackingTickInterval(10)
+                .build(RegistryKey.of(RegistryKeys.ENTITY_TYPE, idOf("lightning_bottle"))));
+
 
         ENTITY_ATTRIBUTES.put(LUMWASP, LumwaspEntity.createLumwaspAttributes());
         ENTITY_ATTRIBUTES.put(LYFT, LyftEntity.createLyftAttributes());

@@ -166,6 +166,7 @@ public class VARenderers {
         EntityRendererRegistry.register(VAEntityType.LUMWASP, LumwaspEntityRenderer::new);
         EntityRendererRegistry.register(VAEntityType.LYFT, LyftEntityRenderer::new);
         EntityRendererRegistry.register(VAEntityType.SALINE, SalineEntityRenderer::new);
+        EntityRendererRegistry.register(VAEntityType.LIGHTNING_BOTTLE, FlyingItemEntityRenderer::new);
     }
 
     private static void initBlockEntityRenderers() {

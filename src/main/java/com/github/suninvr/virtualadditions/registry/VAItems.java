@@ -310,6 +310,7 @@ public class VAItems {
     public static final Item ACID_BUCKET;
     public static final Item ACID_BLOCK;
     public static final Item APPLICABLE_POTION;
+    public static final Item LIGHTNING_BOTTLE;
     public static final Item CHARTREUSE_DYE;
     public static final Item CHARTREUSE_WOOL;
     public static final Item CHARTREUSE_CARPET;
@@ -1122,7 +1123,7 @@ public class VAItems {
         //endregion
 
         ENGRAVING_CHISEL = register("engraving_chisel", new Item.Settings().maxCount(1).maxDamage(64), ItemGroups.TOOLS, Items.NAME_TAG);
-
+        LIGHTNING_BOTTLE = register("lightning_bottle", LightningBottleItem::new, new Item.Settings().component(DataComponentTypes.ENCHANTMENT_GLINT_OVERRIDE, true).rarity(Rarity.RARE).maxCount(16), ItemGroups.INGREDIENTS, Items.EXPERIENCE_BOTTLE);
 
         //endregion
 
@@ -1156,6 +1157,7 @@ public class VAItems {
 
     protected static void initDispenserBehaviors() {
         DispenserBlock.registerBehavior(STEEL_BOMB, new ProjectileDispenserBehavior(STEEL_BOMB));
+        DispenserBlock.registerBehavior(LIGHTNING_BOTTLE, new ProjectileDispenserBehavior(LIGHTNING_BOTTLE));
 
         Item[] climbingRopes = {VAItems.CLIMBING_ROPE, VAItems.WAXED_CLIMBING_ROPE, VAItems.EXPOSED_CLIMBING_ROPE, VAItems.WAXED_EXPOSED_CLIMBING_ROPE, VAItems.WEATHERED_CLIMBING_ROPE, VAItems.WAXED_WEATHERED_CLIMBING_ROPE, VAItems.OXIDIZED_CLIMBING_ROPE, VAItems.WAXED_OXIDIZED_CLIMBING_ROPE};
 

@@ -209,6 +209,8 @@ public class VAModelProvider {
             itemModelGenerator.register(VAItems.SILK_THREAD, Models.GENERATED);
             itemModelGenerator.register(VAItems.LUMWASP_MANDIBLE, Models.GENERATED);
 
+            itemModelGenerator.register(VAItems.LIGHTNING_BOTTLE, Models.GENERATED);
+
             itemModelGenerator.registerSpawnEgg(VAItems.SALINE_SPAWN_EGG, 0x924C2E, 0xE49A6C);
             itemModelGenerator.registerSpawnEgg(VAItems.LUMWASP_SPAWN_EGG, 0x00d67a, 0x214132);
             itemModelGenerator.registerSpawnEgg(VAItems.LYFT_SPAWN_EGG, 0xB1C1DC, 0x88A1C0);
