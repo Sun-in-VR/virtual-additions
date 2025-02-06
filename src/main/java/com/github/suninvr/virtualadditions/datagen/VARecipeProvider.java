@@ -15,10 +15,7 @@ import net.minecraft.block.Blocks;
 import net.minecraft.data.family.BlockFamily;
 import net.minecraft.data.recipe.*;
 import net.minecraft.item.*;
-import net.minecraft.recipe.CampfireCookingRecipe;
-import net.minecraft.recipe.Ingredient;
-import net.minecraft.recipe.RecipeSerializer;
-import net.minecraft.recipe.SmokingRecipe;
+import net.minecraft.recipe.*;
 import net.minecraft.recipe.book.RecipeCategory;
 import net.minecraft.registry.*;
 import net.minecraft.registry.tag.ItemTags;
@@ -164,7 +161,7 @@ public final class VARecipeProvider {
 
             offerShapelessRecipe(VAItems.CORN_SEEDS, VAItems.CORN, "corn_seeds", 1);
 
-            offerCookingRecipes(VAItems.FRIED_EGG, Items.EGG, 0.35F, "fried_egg");
+            offerCookingRecipes(VAItems.FRIED_EGG, List.of(Items.EGG, Items.BROWN_EGG, Items.BLUE_EGG), 0.35F, "fried_egg");
             offerCookingRecipes(VAItems.ROASTED_CORN, VAItems.CORN, 0.35F, "corn");
 
             offerJerkyFoodRecipe(Items.COOKED_BEEF, VAItems.BEEF_JERKY);
@@ -583,6 +580,12 @@ public final class VARecipeProvider {
         protected Generator(RegistryWrapper.WrapperLookup registryLookup, RecipeExporter exporter) {
             super(registryLookup, exporter);
             this.registryLookup = registries.getOrThrow(RegistryKeys.ITEM);
+        }
+
+        protected void offerCookingRecipes(ItemConvertible output, List<ItemConvertible> inputs, float experience, String group) {
+            offerSmelting(inputs, RecipeCategory.FOOD, output, experience, 200, group);
+            this.offerMultipleOptions(RecipeSerializer.SMOKING, SmokingRecipe::new, inputs, RecipeCategory.FOOD, output, experience, 100, group, "_from_smoking");
+            this.offerMultipleOptions(RecipeSerializer.CAMPFIRE_COOKING, CampfireCookingRecipe::new, inputs, RecipeCategory.FOOD, output, experience, 600, group, "_from_campfire_cooking");
         }
 
         protected void offerCookingRecipes(ItemConvertible output, ItemConvertible input, float experience, String group) {
