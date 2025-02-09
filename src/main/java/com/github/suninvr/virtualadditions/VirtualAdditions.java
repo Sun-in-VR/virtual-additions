@@ -23,6 +23,8 @@ public class VirtualAdditions implements ModInitializer {
 
 	public static Logger LOGGER = LogManager.getLogger();
 
+	public static final boolean DEBUG = true;
+
     public static boolean areBlocksInitialized() {
 		return areBlocksInitialized;
     }
@@ -65,6 +67,7 @@ public class VirtualAdditions implements ModInitializer {
 		VAGameEventTags.init();
 		VAGameRules.init();
 		VAItems.init();
+		VAItemGroups.init();
 		VAItemTags.init();
 		VAPackets.init();
 		VAParticleTypes.init();
