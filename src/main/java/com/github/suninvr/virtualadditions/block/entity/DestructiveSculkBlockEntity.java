@@ -84,9 +84,9 @@ public class DestructiveSculkBlockEntity extends BlockEntity {
     }
 
     @Override
-    public void onStateReplaced(BlockPos pos, BlockState oldState) {
+    public void onBlockReplaced(BlockPos pos, BlockState oldState) {
         if (oldState.isOf(VABlocks.DESTRUCTIVE_SCULK) && oldState.get(DestructiveSculkBlock.ORIGIN)) this.destroyAll(true);
-        super.onStateReplaced(pos, oldState);
+        super.onBlockReplaced(pos, oldState);
     }
 
     public void setReplacedState(BlockState state) {
@@ -173,18 +173,20 @@ public class DestructiveSculkBlockEntity extends BlockEntity {
     @Override
     public void readNbt(NbtCompound nbt, RegistryWrapper.WrapperLookup lookup) {
         super.readNbt(nbt, lookup);
-        this.replacedBlock = Registries.BLOCK.get(Identifier.of(nbt.getString("block")));
-        NbtList stacksToDrop = nbt.getList("stacksToDrop", NbtElement.COMPOUND_TYPE);
+        this.replacedBlock = Registries.BLOCK.get(Identifier.of(nbt.getString("block").get()));
+        NbtList stacksToDrop = nbt.getList("stacksToDrop").get();
         this.stacksToDrop.clear();
         stacksToDrop.forEach(nbtElement -> ItemStack.fromNbt(lookup, nbtElement).ifPresent(this.stacksToDrop::add));
-        this.playerId = nbt.getUuid("playerId");
-        if (nbt.contains("tool")) this.tool = ItemStack.fromNbt(lookup, nbt.getCompound("tool")).orElse(ItemStack.EMPTY);
-        this.potency = nbt.getInt("potency");
-        this.age = nbt.getInt("age");
-        this.activePosIndex = nbt.getInt("activePosIndex");
-        NbtList affectedPos = nbt.getList("affectedPos", NbtElement.COMPOUND_TYPE);
+        this.playerId = UUID.fromString(nbt.getString("playerId").orElse("0-0-0-0-0"));
+        if (nbt.contains("tool")) this.tool = ItemStack.fromNbt(lookup, nbt.getCompound("tool").get()).orElse(ItemStack.EMPTY);
+        this.potency = nbt.getInt("potency").orElse(0);
+        this.age = nbt.getInt("age").orElse(0);
+        this.activePosIndex = nbt.getInt("activePosIndex").orElse(0);
+        NbtList affectedPos = nbt.getList("affectedPos").get();
         this.affectedPos.clear();
-        affectedPos.forEach( (nbtElement -> NbtHelper.toBlockPos((NbtCompound)nbtElement, "pos").ifPresent(this.affectedPos::add)));
+        affectedPos.forEach(
+                (nbtElement -> nbtElement.asCompound().ifPresent(nbtCompound -> nbtCompound.get("pos", BlockPos.CODEC).ifPresent(this.affectedPos::add) ))
+        );
     }
 
     @Override
@@ -196,15 +198,15 @@ public class DestructiveSculkBlockEntity extends BlockEntity {
             stacksToDrop.add(stack.toNbt(lookup));
         }
         nbt.put("stacksToDrop", stacksToDrop);
-        nbt.putUuid("playerId", playerId);
-        nbt.put("tool", this.tool.toNbt(lookup));
+        nbt.putString("playerId", playerId.toString());
+        if (!this.tool.isEmpty()) nbt.put("tool", this.tool.toNbt(lookup));
         nbt.putInt("potency", this.potency);
         nbt.putInt("age", this.age);
         nbt.putInt("activePosIndex", this.activePosIndex);
         NbtList affectedPos = new NbtList();
         for (BlockPos pos : this.affectedPos) {
             NbtCompound posNbt = new NbtCompound();
-            posNbt.put("pos", NbtHelper.fromBlockPos(pos));
+            posNbt.putNullable("pos", BlockPos.CODEC, pos);
             affectedPos.add(posNbt);
         }
         nbt.put("affectedPos", affectedPos);

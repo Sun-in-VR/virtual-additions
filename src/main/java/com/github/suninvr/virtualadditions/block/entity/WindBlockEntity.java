@@ -34,10 +34,7 @@ public class WindBlockEntity extends BlockEntity {
     @Override
     public void readNbt(NbtCompound nbt, RegistryWrapper.WrapperLookup lookup) {
         super.readNbt(nbt, lookup);
-        if (nbt.contains("wind_vector")) {
-            NbtCompound vecNbt = nbt.getCompound("wind_vector");
-            this.windVector = new Vec3d(vecNbt.getDouble("x"), vecNbt.getDouble("y") ,vecNbt.getDouble("z"));
-        }
+
     }
 
     @Override

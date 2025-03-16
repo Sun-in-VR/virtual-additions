@@ -32,9 +32,9 @@ public class SpotlightLightBlockEntity extends BlockEntity implements GameEventL
     }
 
     @Override
-    public void onStateReplaced(BlockPos pos, BlockState oldState) {
+    public void onBlockReplaced(BlockPos pos, BlockState oldState) {
         SpotlightLightBlock.updateSources(this.world, pos, oldState);
-        super.onStateReplaced(pos, oldState);
+        super.onBlockReplaced(pos, oldState);
     }
 
     @Override

@@ -34,19 +34,19 @@ public class SpotlightBlockEntity extends BlockEntity implements GameEventListen
     @Override
     protected void writeNbt(NbtCompound nbt, RegistryWrapper.WrapperLookup lookup) {
         super.writeNbt(nbt, lookup);
-        nbt.put("light_pos", NbtHelper.fromBlockPos(this.lightPos));
+        nbt.putNullable("light_pos", BlockPos.CODEC, this.lightPos);
     }
 
     @Override
     public void readNbt(NbtCompound nbt, RegistryWrapper.WrapperLookup lookup) {
         super.readNbt(nbt, lookup);
-        NbtHelper.toBlockPos(nbt, "light_pos").ifPresent(pos -> this.lightPos = pos);
+        nbt.get("light_pos", BlockPos.CODEC).ifPresent(pos -> this.lightPos = pos);
     }
 
     @Override
-    public void onStateReplaced(BlockPos pos, BlockState oldState) {
+    public void onBlockReplaced(BlockPos pos, BlockState oldState) {
         SpotlightBlock.setLightState(this.world, pos, oldState, LightStatus.NONE);
-        super.onStateReplaced(pos, oldState);
+        super.onBlockReplaced(pos, oldState);
     }
 
     private boolean canUpdate(long time) {

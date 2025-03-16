@@ -85,15 +85,15 @@ public class EntanglementDriveBlockEntity extends BlockEntity implements NamedSc
     @Override
     public void readNbt(NbtCompound nbt, RegistryWrapper.WrapperLookup lookup) {
         super.readNbt(nbt, lookup);
-        if (nbt.contains("SlotIndex")) this.slotIndex = nbt.getInt("SlotIndex");
-        if (nbt.contains("UUID")) this.setPlayerId(nbt.getUuid("UUID")); else this.setPlayerId(nullId);
+        if (nbt.contains("SlotIndex")) this.slotIndex = nbt.getInt("SlotIndex").get();
+        if (nbt.contains("UUID")) this.setPlayerId(UUID.fromString(nbt.getString("UUID").get())); else this.setPlayerId(nullId);
     }
 
     @Override
     protected void writeNbt(NbtCompound nbt, RegistryWrapper.WrapperLookup lookup) {
         super.writeNbt(nbt, lookup);
         nbt.putInt("SlotIndex", this.slotIndex);
-        nbt.putUuid("UUID", this.playerId);
+        nbt.putString("UUID", this.playerId.toString());
     }
 
     @Nullable

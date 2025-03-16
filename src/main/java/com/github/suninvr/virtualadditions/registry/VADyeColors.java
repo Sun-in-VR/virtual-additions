@@ -9,14 +9,14 @@ import net.minecraft.item.DyeItem;
 import net.minecraft.util.DyeColor;
 
 public class VADyeColors {
-    public static final DyeColor CHARTREUSE = DyeColor.byName("chartreuse", DyeColor.WHITE);
-    public static final DyeColor MAROON = DyeColor.byName("maroon", DyeColor.WHITE);
-    public static final DyeColor INDIGO = DyeColor.byName("indigo", DyeColor.WHITE);
-    public static final DyeColor PLUM = DyeColor.byName("plum", DyeColor.WHITE);
-    public static final DyeColor VIRIDIAN = DyeColor.byName("viridian", DyeColor.WHITE);
-    public static final DyeColor TAN = DyeColor.byName("tan", DyeColor.WHITE);
-    public static final DyeColor SINOPIA = DyeColor.byName("sinopia", DyeColor.WHITE);
-    public static final DyeColor LILAC = DyeColor.byName("lilac", DyeColor.WHITE);
+    public static final DyeColor CHARTREUSE = DyeColor.byId("chartreuse", DyeColor.WHITE);
+    public static final DyeColor MAROON = DyeColor.byId("maroon", DyeColor.WHITE);
+    public static final DyeColor INDIGO = DyeColor.byId("indigo", DyeColor.WHITE);
+    public static final DyeColor PLUM = DyeColor.byId("plum", DyeColor.WHITE);
+    public static final DyeColor VIRIDIAN = DyeColor.byId("viridian", DyeColor.WHITE);
+    public static final DyeColor TAN = DyeColor.byId("tan", DyeColor.WHITE);
+    public static final DyeColor SINOPIA = DyeColor.byId("sinopia", DyeColor.WHITE);
+    public static final DyeColor LILAC = DyeColor.byId("lilac", DyeColor.WHITE);
 
     public static final DyeContents WHITE_CONTENT = new DyeContents(0, 0, 0, 0, 0, 4);
     public static final DyeContents LIGHT_GRAY_CONTENT = new DyeContents(0, 0, 0, 0, 1, 3); // 3rd's

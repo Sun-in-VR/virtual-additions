@@ -13,6 +13,7 @@ import net.minecraft.screen.PropertyDelegate;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
+import java.util.Optional;
 
 public class DyeContents {
     public static final PacketCodec<RegistryByteBuf, DyeContents> PACKET_CODEC = new PacketCodec<>() {
@@ -56,15 +57,16 @@ public class DyeContents {
     }
 
     public static DyeContents from(NbtCompound nbt) {
-        if (nbt.contains("dye_contents")) {
-            NbtCompound dyeContents = nbt.getCompound("dye_contents");
+        Optional<NbtCompound> optionalDyeContents = nbt.getCompound("dye_contents");
+        if (optionalDyeContents.isPresent()) {
+            NbtCompound dyeContents = optionalDyeContents.get();
             return new DyeContents(
-                    dyeContents.contains("red") ? dyeContents.getInt("red") : 0,
-                    dyeContents.contains("green") ? dyeContents.getInt("green") : 0,
-                    dyeContents.contains("blue") ? dyeContents.getInt("blue") : 0,
-                    dyeContents.contains("yellow") ? dyeContents.getInt("yellow") : 0,
-                    dyeContents.contains("black") ? dyeContents.getInt("black") : 0,
-                    dyeContents.contains("white") ? dyeContents.getInt("white") : 0
+                    dyeContents.getInt("red").orElse(0),
+                    dyeContents.getInt("green").orElse(0),
+                    dyeContents.getInt("blue").orElse(0),
+                    dyeContents.getInt("yellow").orElse(0),
+                    dyeContents.getInt("black").orElse(0),
+                    dyeContents.getInt("white").orElse(0)
             );
         }
         return new DyeContents();

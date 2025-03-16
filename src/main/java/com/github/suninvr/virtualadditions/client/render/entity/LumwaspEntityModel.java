@@ -51,7 +51,7 @@ public class LumwaspEntityModel<T extends LumwaspEntity> extends EntityModel<Lum
     public static TexturedModelData getTexturedModelData() {
         ModelData modelData = new ModelData();
         ModelPartData modelPartData = modelData.getRoot();
-        ModelPartData body = modelPartData.addChild("body", ModelPartBuilder.create(), ModelTransform.pivot(1.0F, 18.0F, -4.0F));
+        ModelPartData body = modelPartData.addChild("body", ModelPartBuilder.create(), ModelTransform.origin(0.0F, 16.0F, -4.0F));
 
         ModelPartData leg_rb_r1 = body.addChild("leg_rb_r1", ModelPartBuilder.create().uv(28, 26).cuboid(-13.0F, -1.0F, -1.0F, 14.0F, 2.0F, 2.0F, new Dilation(0.0F)), ModelTransform.of(-5.0F, 2.0F, 5.0F, -0.3842F, 1.0012F, -0.4476F));
 
@@ -73,7 +73,7 @@ public class LumwaspEntityModel<T extends LumwaspEntity> extends EntityModel<Lum
 
         ModelPartData thorax_r1 = body.addChild("thorax_r1", ModelPartBuilder.create().uv(0, 20).cuboid(-4.0F, -5.0F, -1.0F, 8.0F, 6.0F, 12.0F, new Dilation(0.0F)), ModelTransform.of(-1.0F, 1.0F, 6.0F, -0.2618F, 0.0F, 0.0F));
 
-        ModelPartData head = body.addChild("head", ModelPartBuilder.create().uv(34, 32).cuboid(-5.0F, -3.0F, -5.0F, 8.0F, 5.0F, 6.0F, new Dilation(0.0F)), ModelTransform.pivot(0.0F, 0.0F, -4.0F));
+        ModelPartData head = body.addChild("head", ModelPartBuilder.create().uv(34, 32).cuboid(-5.0F, -3.0F, -5.0F, 8.0F, 5.0F, 6.0F, new Dilation(0.0F)), ModelTransform.origin(0.0F, 0.0F, -4.0F));
 
         ModelPartData mandible_r_r1 = head.addChild("mandible_r_r1", ModelPartBuilder.create().uv(0, 0).cuboid(-4.0F, 0.0F, 0.0F, 4.0F, 4.0F, 0.0F, new Dilation(0.0F)), ModelTransform.of(-1.0F, 1.0F, -5.0F, 0.2317F, 0.3405F, 0.0786F));
 
@@ -88,11 +88,11 @@ public class LumwaspEntityModel<T extends LumwaspEntity> extends EntityModel<Lum
     @Override
     public void setAngles(LumwaspEntityRenderState state) {
         float animationProgress = state.age;
-        float headYaw = state.yawDegrees;
+        float headYaw = state.relativeHeadYaw;
         float headPitch = state.pitch;
         boolean inAir = state.inAir;
-        float limbAngle = state.limbFrequency * 0.6662F;
-        float limbDistance = state.limbAmplitudeMultiplier;
+        float limbAngle = state.limbSwingAnimationProgress * 0.6662F;
+        float limbDistance = state.limbSwingAmplitude;
 
         float u = (float) (Math.sin(animationProgress / 19) / 24);
         float v = (float) (Math.sin(animationProgress / 16) / 12);

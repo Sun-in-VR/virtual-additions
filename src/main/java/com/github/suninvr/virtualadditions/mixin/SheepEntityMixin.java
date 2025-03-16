@@ -28,14 +28,14 @@ public class SheepEntityMixin extends AnimalEntity {
 
     @Inject(method = "getColor", at = @At("RETURN"), cancellable = true)
     void virtualAdditions$getAnySheepColor(CallbackInfoReturnable<DyeColor> cir) {
-        cir.setReturnValue(DyeColor.byId(this.dataTracker.get(COLOR) & 31));
+        cir.setReturnValue(DyeColor.byIndex(this.dataTracker.get(COLOR) & 31));
     }
 
     @Inject(method = "setColor", at = @At("HEAD"), cancellable = true)
     void virtualAdditions$setAnySheepColor(DyeColor color, CallbackInfo ci) {
-        if (24 > color.getId() && color.getId() > 15) {
+        if (24 > color.getIndex() && color.getIndex() > 15) {
             byte b = this.dataTracker.get(COLOR);
-            this.dataTracker.set(COLOR, (byte)(b & 240 | color.getId() & 31));
+            this.dataTracker.set(COLOR, (byte) (b & 240 | color.getIndex() & 31));
             ci.cancel();
         };
     }

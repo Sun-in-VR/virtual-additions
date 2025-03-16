@@ -10,6 +10,8 @@ import net.fabricmc.fabric.api.client.datagen.v1.provider.FabricModelProvider;
 import net.fabricmc.fabric.api.datagen.v1.FabricDataGenerator;
 import net.fabricmc.fabric.api.datagen.v1.FabricDataOutput;
 import net.minecraft.block.Block;
+import net.minecraft.block.Blocks;
+import net.minecraft.block.CrafterBlock;
 import net.minecraft.client.data.*;
 import net.minecraft.client.render.item.model.ItemModel;
 import net.minecraft.client.render.item.model.SelectItemModel;
@@ -21,6 +23,7 @@ import net.minecraft.client.render.item.tint.ConstantTintSource;
 import net.minecraft.client.render.item.tint.DyeTintSource;
 import net.minecraft.client.render.item.tint.GrassTintSource;
 import net.minecraft.client.render.item.tint.TintSource;
+import net.minecraft.client.render.model.json.WeightedVariant;
 import net.minecraft.component.DataComponentTypes;
 import net.minecraft.item.CrossbowItem;
 import net.minecraft.item.Item;
@@ -213,9 +216,9 @@ public class VAModelProvider {
 
             itemModelGenerator.register(VAItems.LIGHTNING_BOTTLE, Models.GENERATED);
 
-            itemModelGenerator.registerSpawnEgg(VAItems.SALINE_SPAWN_EGG, 0x924C2E, 0xE49A6C);
-            itemModelGenerator.registerSpawnEgg(VAItems.LUMWASP_SPAWN_EGG, 0x00d67a, 0x214132);
-            itemModelGenerator.registerSpawnEgg(VAItems.LYFT_SPAWN_EGG, 0xB1C1DC, 0x88A1C0);
+            itemModelGenerator.register(VAItems.SALINE_SPAWN_EGG, Models.GENERATED);
+            itemModelGenerator.register(VAItems.LUMWASP_SPAWN_EGG, Models.GENERATED);
+            itemModelGenerator.register(VAItems.LYFT_SPAWN_EGG, Models.GENERATED);
 
             itemModelGenerator.register(VAItems.STEEL_SWORD, Models.HANDHELD);
             itemModelGenerator.register(VAItems.STEEL_SHOVEL, Models.HANDHELD);
@@ -338,7 +341,7 @@ public class VAModelProvider {
                     .put(TextureKey.SOUTH, TextureMap.getSubId(VABlocks.COLORING_STATION, "_front"))
                     .put(TextureKey.EAST, TextureMap.getSubId(VABlocks.COLORING_STATION, "_side"))
                     .put(TextureKey.WEST, TextureMap.getSubId(VABlocks.COLORING_STATION, "_side"));
-            blockStateModelGenerator.blockStateCollector.accept(BlockStateModelGenerator.createSingletonBlockState(VABlocks.COLORING_STATION, Models.CUBE.upload(VABlocks.COLORING_STATION, textureMap, blockStateModelGenerator.modelCollector)));
+            blockStateModelGenerator.blockStateCollector.accept(BlockStateModelGenerator.createSingletonBlockState(VABlocks.COLORING_STATION, BlockStateModelGenerator.createWeightedVariant(Models.CUBE.upload(VABlocks.COLORING_STATION, textureMap, blockStateModelGenerator.modelCollector))));
         }
 
         protected void registerColorfulBlockSetModels(BlockStateModelGenerator g, ColorfulBlockSet s) {
@@ -387,13 +390,18 @@ public class VAModelProvider {
         }
 
         protected void registerSpotlight(BlockStateModelGenerator generator) {
-            Identifier spotlight = ModelIds.getBlockModelId(VABlocks.SPOTLIGHT);
-            Identifier spotlightActive = ModelIds.getBlockSubModelId(VABlocks.SPOTLIGHT, "_active");
-            generator.blockStateCollector.accept(VariantsBlockStateSupplier.create(VABlocks.SPOTLIGHT)
-                    .coordinate(BlockStateVariantMap.create(Properties.ORIENTATION)
-                            .register(orientation -> generator.addJigsawOrientationToVariant(orientation, BlockStateVariant.create())))
-                    .coordinate(BlockStateVariantMap.create(SpotlightBlock.POWERED)
-                            .register(powered -> powered ? BlockStateVariant.create().put(VariantSettings.MODEL, spotlightActive) : BlockStateVariant.create().put(VariantSettings.MODEL, spotlight))));
+            WeightedVariant spotlight = BlockStateModelGenerator.createWeightedVariant(ModelIds.getBlockModelId(VABlocks.SPOTLIGHT));
+            WeightedVariant spotlightActive = BlockStateModelGenerator.createWeightedVariant(ModelIds.getBlockSubModelId(VABlocks.SPOTLIGHT, "_active"));
+            generator.blockStateCollector
+                    .accept(
+                            VariantsBlockModelDefinitionCreator.of(VABlocks.SPOTLIGHT)
+                                    .with(
+                                            BlockStateVariantMap.models(SpotlightBlock.POWERED)
+                                                    .register(false, spotlight)
+                                                    .register(true, spotlightActive)
+                                    )
+                                    .coordinate(BlockStateVariantMap.operations(Properties.ORIENTATION).generate(BlockStateModelGenerator::addJigsawOrientationToVariant))
+                    );
         }
 
         public final void registerApplicablePotion(ItemModelGenerator generator, Item item) {

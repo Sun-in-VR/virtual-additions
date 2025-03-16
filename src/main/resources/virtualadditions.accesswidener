@@ -25,7 +25,8 @@ accessible field net/minecraft/client/data/ItemModelGenerator output Lnet/minecr
 accessible field net/minecraft/client/data/BlockStateModelGenerator itemModelOutput Lnet/minecraft/client/data/ItemModelOutput;
 accessible class net/minecraft/client/data/ModelProvider$ItemAssets
 accessible class net/minecraft/client/data/ItemModelGenerator$TrimMaterial
-accessible method net/minecraft/client/data/ItemModelGenerator$TrimMaterial <init> (Ljava/lang/String;Lnet/minecraft/registry/RegistryKey;Ljava/util/Map;)V
+#accessible method net/minecraft/client/data/ItemModelGenerator$TrimMaterial <init> (Ljava/lang/String;Lnet/minecraft/registry/RegistryKey;Ljava/util/Map;)V
+accessible method net/minecraft/client/data/ItemModelGenerator$TrimMaterial <init> (Lnet/minecraft/item/equipment/trim/ArmorTrimAssets;Lnet/minecraft/registry/RegistryKey;)V
 accessible field net/minecraft/client/data/ItemModelGenerator$TrimMaterial materialKey Lnet/minecraft/registry/RegistryKey;
 accessible method net/minecraft/client/data/Models item (Ljava/lang/String;[Lnet/minecraft/client/data/TextureKey;)Lnet/minecraft/client/data/Model;
 accessible field net/minecraft/block/ExperienceDroppingBlock experienceDropped Lnet/minecraft/util/math/intprovider/IntProvider;

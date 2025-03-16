@@ -16,13 +16,13 @@ public class TexturedRenderLayersMixin {
     @Inject(method = "createColorId", at = @At("HEAD"), cancellable = true)
     private static void virtualAdditions$createVirtualAdditionsColorId(DyeColor color, CallbackInfoReturnable<Identifier> cir) {
         if (VADyeColors.isFromVirtualAdditions(color)) cir.setReturnValue(
-                idOf(color.getName())
+                idOf(color.getId())
         );
     }
     @Inject(method = "createShulkerId", at = @At("HEAD"), cancellable = true)
     private static void virtualAdditions$createVirtualAdditionsShulkerId(DyeColor color, CallbackInfoReturnable<Identifier> cir) {
         if (VADyeColors.isFromVirtualAdditions(color)) cir.setReturnValue(
-                idOf("shulker_" + color.getName())
+                idOf("shulker_" + color.getId())
         );
     }
 }

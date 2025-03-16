@@ -43,7 +43,7 @@ public class EntanglementDriveScreen extends HandledScreen<EntanglementDriveScre
 
     @Override
     protected void drawBackground(DrawContext context, float delta, int mouseX, int mouseY) {
-        RenderSystem.setShaderTexture(0, BACKGROUND_TEXTURE);
+        //RenderSystem.setShaderTexture(0, BACKGROUND_TEXTURE);
         int i = this.x;
         int j = this.y;
         context.drawTexture(RenderLayer::getGuiTextured, BACKGROUND_TEXTURE, i, j, 0, 0, this.backgroundWidth, this.backgroundHeight, 256, 256);
@@ -102,7 +102,7 @@ public class EntanglementDriveScreen extends HandledScreen<EntanglementDriveScre
         }
 
         public void renderWidget(DrawContext context, int mouseX, int mouseY, float delta) {
-            RenderSystem.setShaderTexture(0, BACKGROUND_TEXTURE);
+            //RenderSystem.setShaderTexture(0, BACKGROUND_TEXTURE);
 
             if (this.isDisabled()) this.setTooltip(null);
             else this.setTooltip(CONFIRM_BUTTON_TOOLTIP);
