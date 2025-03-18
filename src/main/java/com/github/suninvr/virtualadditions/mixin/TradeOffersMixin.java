@@ -3,6 +3,7 @@ package com.github.suninvr.virtualadditions.mixin;
 import com.github.suninvr.virtualadditions.registry.VAItems;
 import com.google.common.collect.ImmutableMap;
 import it.unimi.dsi.fastutil.ints.Int2ObjectMap;
+import net.minecraft.item.Items;
 import net.minecraft.village.TradeOffers;
 import org.apache.commons.lang3.tuple.Pair;
 import org.spongepowered.asm.mixin.*;
@@ -44,15 +45,16 @@ public abstract class TradeOffersMixin {
         SELL_ITEM_TRADES_2.add(TAN_DYE_TRADE_OFFER);
         SELL_ITEM_TRADES_2.add(SINOPIA_DYE_TRADE_OFFER);
         SELL_ITEM_TRADES_2.add(LILAC_DYE_TRADE_OFFER);
+        SELL_ITEM_TRADES_2.add(LIGHTNING_BOTTLE_TRADE_OFFER);
 
-        TRADES.add(Pair.of(BUY_ITEM_TRADES.toArray(new TradeOffers.Factory[]{}), 2));
-        TRADES.add(Pair.of(SELL_ITEM_TRADES.toArray(new TradeOffers.Factory[]{}), 2));
-        TRADES.add(Pair.of(SELL_ITEM_TRADES_2.toArray(new TradeOffers.Factory[]{}), 5));
+        TRADES.add(Pair.of(BUY_ITEM_TRADES.toArray(new TradeOffers.Factory[]{}), WANDERING_TRADER_TRADES.getFirst().getRight()));
+        TRADES.add(Pair.of(SELL_ITEM_TRADES.toArray(new TradeOffers.Factory[]{}), WANDERING_TRADER_TRADES.get(1).getRight()));
+        TRADES.add(Pair.of(SELL_ITEM_TRADES_2.toArray(new TradeOffers.Factory[]{}), WANDERING_TRADER_TRADES.get(2).getRight()));
 
-        TRADES.add(Pair.of(new TradeOffers.Factory[]{
-                LIGHTNING_BOTTLE_TRADE_OFFER
-                }, 1
-        ));
+        //TRADES.add(Pair.of(new TradeOffers.Factory[]{
+        //        LIGHTNING_BOTTLE_TRADE_OFFER
+        //        }, 1
+        //));
 
         WANDERING_TRADER_TRADES = TRADES;
     }

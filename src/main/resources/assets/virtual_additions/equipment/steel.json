@@ -9,6 +9,11 @@
       {
         "texture": "virtual_additions:steel"
       }
+    ],
+    "horse_body": [
+      {
+        "texture": "virtual_additions:steel"
+      }
     ]
   }
 }
