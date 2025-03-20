@@ -6,7 +6,6 @@ import com.github.suninvr.virtualadditions.component.WarpTetherLocationComponent
 import com.github.suninvr.virtualadditions.item.*;
 import com.github.suninvr.virtualadditions.item.materials.SteelToolMaterial;
 import net.fabricmc.fabric.api.itemgroup.v1.ItemGroupEvents;
-import net.fabricmc.fabric.api.loot.v3.LootTableEvents;
 import net.minecraft.block.*;
 import net.minecraft.block.cauldron.CauldronBehavior;
 import net.minecraft.block.dispenser.BlockPlacementDispenserBehavior;
@@ -18,29 +17,12 @@ import net.minecraft.component.type.BannerPatternsComponent;
 import net.minecraft.component.type.BundleContentsComponent;
 import net.minecraft.component.type.ContainerComponent;
 import net.minecraft.component.type.PotionContentsComponent;
-import net.minecraft.enchantment.Enchantment;
-import net.minecraft.enchantment.Enchantments;
 import net.minecraft.entity.EntityType;
 import net.minecraft.item.*;
 import net.minecraft.item.equipment.EquipmentType;
-import net.minecraft.loot.LootPool;
 import net.minecraft.loot.LootTable;
-import net.minecraft.loot.LootTables;
-import net.minecraft.loot.condition.*;
-import net.minecraft.loot.context.LootContext;
-import net.minecraft.loot.entry.ItemEntry;
-import net.minecraft.loot.function.*;
-import net.minecraft.loot.provider.number.ConstantLootNumberProvider;
-import net.minecraft.loot.provider.number.UniformLootNumberProvider;
-import net.minecraft.predicate.entity.EntityFlagsPredicate;
-import net.minecraft.predicate.entity.EntityPredicate;
-import net.minecraft.predicate.entity.LocationPredicate;
-import net.minecraft.predicate.item.ItemPredicate;
-import net.minecraft.registry.RegistryEntryLookup;
 import net.minecraft.registry.RegistryKey;
 import net.minecraft.registry.RegistryKeys;
-import net.minecraft.registry.RegistryWrapper;
-import net.minecraft.registry.entry.RegistryEntryList;
 import net.minecraft.text.Text;
 import net.minecraft.util.Formatting;
 import net.minecraft.util.Identifier;
@@ -49,8 +31,6 @@ import net.minecraft.util.Util;
 import net.minecraft.util.math.BlockPointer;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
-import net.minecraft.world.biome.Biome;
-import net.minecraft.world.biome.BiomeKeys;
 
 import java.util.List;
 import java.util.Map;
@@ -270,11 +250,15 @@ public class VAItems {
     public static final Item WAXED_OXIDIZED_CUT_STEEL_STAIRS;
     public static final Item WAXED_OXIDIZED_CUT_STEEL_SLAB;
     public static final Item WAXED_OXIDIZED_STEEL_GRATE;
+    public static final Item CORN_SEEDS;
+    public static final Item CORN;
+    public static final Item ROASTED_CORN;
+    public static final Item TOMATO_SEEDS;
+    public static final Item TOMATO;
+    public static final Item CABBAGE_SEEDS;
+    public static final Item CABBAGE;
     public static final Item COTTON_SEEDS;
     public static final Item COTTON;
-    public static final Item CORN;
-    public static final Item CORN_SEEDS;
-    public static final Item ROASTED_CORN;
     public static final Item FRIED_EGG;
     public static final Item ICE_CREAM;
     public static final Item CHEESE_WEDGE;
@@ -1108,11 +1092,16 @@ public class VAItems {
 
         //region Food & Crops
 
-        COTTON_SEEDS = register("cotton_seeds", settings -> new BlockItem(VABlocks.COTTON, settings),new Item.Settings().useItemPrefixedTranslationKey(), ItemGroups.NATURAL, Items.BEETROOT_SEEDS);
-        COTTON = register("cotton", ItemGroups.INGREDIENTS, Items.WHEAT);
+        CORN_SEEDS = register("corn_seeds", settings -> new BlockItem(VABlocks.CORN_CROP, settings),new Item.Settings().useItemPrefixedTranslationKey(), ItemGroups.NATURAL, Items.BEETROOT_SEEDS);
         CORN = register("corn", new Item.Settings().food(VAFoodComponents.CORN), ItemGroups.FOOD_AND_DRINK, Items.BEETROOT);
         ROASTED_CORN = register("roasted_corn", new Item.Settings().food(VAFoodComponents.ROASTED_CORN), ItemGroups.FOOD_AND_DRINK, prev);
-        CORN_SEEDS = register("corn_seeds", settings -> new BlockItem(VABlocks.CORN_CROP, settings),new Item.Settings().useItemPrefixedTranslationKey(), ItemGroups.NATURAL, COTTON_SEEDS);
+        TOMATO_SEEDS = register("tomato_seeds", settings -> new BlockItem(VABlocks.TOMATO_CROP, settings),new Item.Settings().useItemPrefixedTranslationKey(), ItemGroups.NATURAL, CORN_SEEDS);
+        TOMATO = register("tomato", TomatoItem::new, new Item.Settings().food(VAFoodComponents.TOMATO),ItemGroups.FOOD_AND_DRINK, Items.BEETROOT);
+        CABBAGE_SEEDS = register("cabbage_seeds", ItemGroups.NATURAL, TOMATO_SEEDS);
+        CABBAGE = register("cabbage", new Item.Settings().food(VAFoodComponents.TOMATO),ItemGroups.FOOD_AND_DRINK, Items.BEETROOT);
+        COTTON_SEEDS = register("cotton_seeds", settings -> new BlockItem(VABlocks.COTTON, settings),new Item.Settings().useItemPrefixedTranslationKey(), ItemGroups.NATURAL, Items.BEETROOT_SEEDS);
+        COTTON = register("cotton", ItemGroups.INGREDIENTS, Items.WHEAT);
+
         FRIED_EGG = register("fried_egg", new Item.Settings().food(VAFoodComponents.FRIED_EGG), ItemGroups.FOOD_AND_DRINK, Items.COOKED_CHICKEN);
         ICE_CREAM = register("ice_cream", new Item.Settings().food(VAFoodComponents.ICE_CREAM).maxCount(1), ItemGroups.FOOD_AND_DRINK, Items.COOKIE);
         CHEESE_WEDGE = register("cheese_wedge", new Item.Settings().food(VAFoodComponents.CHEESE_WEDGE), ItemGroups.FOOD_AND_DRINK, Items.MILK_BUCKET);
@@ -1132,10 +1121,6 @@ public class VAItems {
 
         //region Spawn Eggs
 
-        //SALINE_SPAWN_EGG = register("saline_spawn_egg", settings -> new SpawnEggItem(VAEntityType.SALINE, 0x924C2E, 0xE49A6C, settings), new Item.Settings(), ItemGroups.SPAWN_EGGS, Items.RAVAGER_SPAWN_EGG);
-        //LUMWASP_SPAWN_EGG = register("lumwasp_spawn_egg", settings -> new SpawnEggItem(VAEntityType.LUMWASP, 0x00d67a, 0x214132, settings), new Item.Settings(), ItemGroups.SPAWN_EGGS, Items.LLAMA_SPAWN_EGG);
-        //LYFT_SPAWN_EGG = register("lyft_spawn_egg", settings -> new SpawnEggItem(VAEntityType.LYFT, 0xB1C1DC, 0x88A1C0, settings), new Item.Settings(), ItemGroups.SPAWN_EGGS, prev);
-
         SALINE_SPAWN_EGG = register("saline_spawn_egg", settings -> new SpawnEggItem(VAEntityType.SALINE, settings), new Item.Settings(), ItemGroups.SPAWN_EGGS, Items.RAVAGER_SPAWN_EGG);
         LUMWASP_SPAWN_EGG = register("lumwasp_spawn_egg", settings -> new SpawnEggItem(VAEntityType.LUMWASP, settings), new Item.Settings(), ItemGroups.SPAWN_EGGS, Items.LLAMA_SPAWN_EGG);
         LYFT_SPAWN_EGG = register("lyft_spawn_egg", settings -> new SpawnEggItem(VAEntityType.LYFT, settings), new Item.Settings(), ItemGroups.SPAWN_EGGS, prev);
@@ -1146,8 +1131,8 @@ public class VAItems {
     public static void init(){
         initDispenserBehaviors();
         initCompostables();
-        initLootTableModifiers();
         initCauldronBehaviors();
+        VALootTableModifiers.init();
 
 
         ItemGroupEvents.modifyEntriesEvent(ItemGroups.FOOD_AND_DRINK).register( (content) -> {
@@ -1161,6 +1146,7 @@ public class VAItems {
     protected static void initDispenserBehaviors() {
         DispenserBlock.registerBehavior(STEEL_BOMB, new ProjectileDispenserBehavior(STEEL_BOMB));
         DispenserBlock.registerBehavior(LIGHTNING_BOTTLE, new ProjectileDispenserBehavior(LIGHTNING_BOTTLE));
+        DispenserBlock.registerBehavior(TOMATO, new ProjectileDispenserBehavior(TOMATO));
 
         Item[] climbingRopes = {VAItems.CLIMBING_ROPE, VAItems.WAXED_CLIMBING_ROPE, VAItems.EXPOSED_CLIMBING_ROPE, VAItems.WAXED_EXPOSED_CLIMBING_ROPE, VAItems.WEATHERED_CLIMBING_ROPE, VAItems.WAXED_WEATHERED_CLIMBING_ROPE, VAItems.OXIDIZED_CLIMBING_ROPE, VAItems.WAXED_OXIDIZED_CLIMBING_ROPE};
 
@@ -1200,170 +1186,10 @@ public class VAItems {
         ComposterBlock.registerCompostableItem(0.3F, COTTON);
         ComposterBlock.registerCompostableItem(0.65F, CORN);
         ComposterBlock.registerCompostableItem(0.3F, CORN_SEEDS);
-    }
-
-    protected static void initLootTableModifiers() {
-        LootTableEvents.MODIFY.register( ((key, tableBuilder, source, registries) -> {
-
-            if (!source.isBuiltin()) return;
-
-            if (LootTables.SPAWN_BONUS_CHEST.equals(key)) {
-                LootPool.Builder bundleBuilder = LootPool.builder()
-                        .with(ItemEntry.builder(Items.BUNDLE));
-                tableBuilder.pool(bundleBuilder);
-            }
-
-            // Ominous Trial Spawner Throwables
-            if (LootTables.TRIAL_CHAMBER_ITEMS_TO_DROP_WHEN_OMINOUS_SPAWNER.equals(key)) {
-                final int[] i = {0};
-                tableBuilder.modifyPools(builder -> {
-                    if (i[0] == 0) {
-                        builder.with(ItemEntry.builder(Items.LINGERING_POTION).apply(SetPotionLootFunction.builder(VAPotions.STRONG_FRAILTY)));
-                    }
-                    if (i[0] == 1) {
-                        builder.with(ItemEntry.builder(STEEL_BOMB).apply(SetComponentsLootFunction.builder(VADataComponentTypes.EXPLOSIVE_CONTENTS, ExplosiveContentComponent.KEEP_BLOCKS)));
-                    }
-                    i[0]++;
-                });
-            }
-
-            // Grass Drop
-            if (lootTableKeyMatches(key, Blocks.SHORT_GRASS)) {
-                RegistryWrapper.Impl<Biome> impl = registries.getOrThrow(RegistryKeys.BIOME);
-                RegistryEntryLookup<Enchantment> enchantmentLookup = registries.getOrThrow(RegistryKeys.ENCHANTMENT);
-                RegistryEntryLookup<Item> itemRegistryEntryLookup = registries.getOrThrow(RegistryKeys.ITEM);
-                LootPool.Builder cottonBuilder = LootPool.builder()
-                        .with(ItemEntry.builder(COTTON_SEEDS)
-                                .apply(ApplyBonusLootFunction.uniformBonusCount(enchantmentLookup.getOrThrow(Enchantments.FORTUNE), 2))
-                                .apply(ExplosionDecayLootFunction.builder())
-                                .conditionally(RandomChanceLootCondition.builder(0.125F))
-                                .conditionally(InvertedLootCondition.builder(MatchToolLootCondition.builder(ItemPredicate.Builder.create().items(itemRegistryEntryLookup, Items.SHEARS))))
-                        );
-                LootPool.Builder cornBuilder = LootPool.builder()
-                        .with(ItemEntry.builder(CORN_SEEDS)
-                                .apply(ApplyBonusLootFunction.uniformBonusCount(enchantmentLookup.getOrThrow(Enchantments.FORTUNE), 2))
-                                .apply(ExplosionDecayLootFunction.builder())
-                                .conditionally(LocationCheckLootCondition.builder(LocationPredicate.Builder.create().biome(RegistryEntryList.of(
-                                        impl.getOrThrow(BiomeKeys.SAVANNA),
-                                        impl.getOrThrow(BiomeKeys.SAVANNA_PLATEAU),
-                                        impl.getOrThrow(BiomeKeys.WINDSWEPT_SAVANNA),
-                                        impl.getOrThrow(BiomeKeys.DESERT),
-                                        impl.getOrThrow(BiomeKeys.BADLANDS),
-                                        impl.getOrThrow(BiomeKeys.ERODED_BADLANDS),
-                                        impl.getOrThrow(BiomeKeys.WOODED_BADLANDS)
-                                ))))
-                                .conditionally(RandomChanceLootCondition.builder(0.125F))
-                                .conditionally(InvertedLootCondition.builder(MatchToolLootCondition.builder(ItemPredicate.Builder.create().items(itemRegistryEntryLookup, Items.SHEARS))))
-                        );
-                tableBuilder.pool(cottonBuilder).pool(cornBuilder);
-            }
-
-            // Abandoned Mineshaft Chest
-            if (LootTables.ABANDONED_MINESHAFT_CHEST.equals(key)) {
-                final int[] i = {0};
-                tableBuilder.modifyPools(builder -> {
-                    if (i[0] == 2) {
-                        builder
-                                .with(ItemEntry.builder(CLIMBING_ROPE).weight(7).apply(SetCountLootFunction.builder(UniformLootNumberProvider.create(2, 16))))
-                                .with(ItemEntry.builder(EXPOSED_CLIMBING_ROPE).weight(7).apply(SetCountLootFunction.builder(UniformLootNumberProvider.create(2, 16))))
-                                .with(ItemEntry.builder(WEATHERED_CLIMBING_ROPE).weight(7).apply(SetCountLootFunction.builder(UniformLootNumberProvider.create(2, 16))))
-                                .with(ItemEntry.builder(OXIDIZED_CLIMBING_ROPE).weight(7).apply(SetCountLootFunction.builder(UniformLootNumberProvider.create(2, 16))));
-                    }
-                    i[0]++;
-                });
-            }
-
-            // Village Toolsmith and Weaponsmith Chests
-            if (LootTables.VILLAGE_TOOLSMITH_CHEST.equals(key) || LootTables.VILLAGE_WEAPONSMITH_CHEST.equals(key)) {
-                tableBuilder.modifyPools( builder -> builder
-                        .with(ItemEntry.builder(STEEL_INGOT).weight(3).apply(SetCountLootFunction.builder(UniformLootNumberProvider.create(1, 4))))
-                );
-                LootPool.Builder smithingTemplateBuilder = LootPool.builder()
-                        .with(ItemEntry.builder(TOOL_GILD_SMITHING_TEMPLATE).apply(SetCountLootFunction.builder(UniformLootNumberProvider.create(2, 3))));
-                tableBuilder.pool(smithingTemplateBuilder);
-                LootPool.Builder gildMaterialBuilder = LootPool.builder()
-                        .with(ItemEntry.builder(Items.COPPER_INGOT).apply(SetCountLootFunction.builder(UniformLootNumberProvider.create(2, 4))))
-                        .with(ItemEntry.builder(Items.AMETHYST_SHARD).apply(SetCountLootFunction.builder(UniformLootNumberProvider.create(2, 4))))
-                        .with(ItemEntry.builder(Items.EMERALD).apply(SetCountLootFunction.builder(UniformLootNumberProvider.create(2, 4))));
-                tableBuilder.pool(gildMaterialBuilder);
-
-            }
-
-            // Savannah and Desert Village House Chests
-            if (LootTables.VILLAGE_SAVANNA_HOUSE_CHEST.equals(key) || LootTables.VILLAGE_DESERT_HOUSE_CHEST.equals(key)) {
-                tableBuilder.modifyPools( builder -> builder.with(ItemEntry.builder(CORN).weight(5).apply(SetCountLootFunction.builder(UniformLootNumberProvider.create(1, 4)))));
-            }
-
-            // Jungle Temple Chest
-            if (LootTables.JUNGLE_TEMPLE_CHEST.equals(key)) {
-                final int[] i = {0};
-                tableBuilder.modifyPools(builder -> {
-                    if (i[0] == 0) {
-                        builder.with(ItemEntry.builder(STEEL_INGOT).weight(5).apply(SetCountLootFunction.builder(UniformLootNumberProvider.create(2, 5))));
-                    }
-                    i[0]++;
-                });
-            }
-
-            // End City Chest
-            if (LootTables.END_CITY_TREASURE_CHEST.equals(key)) {
-                final int[] i = {0};
-                tableBuilder.modifyPools(builder -> {
-                    if (i[0] == 0) {
-                        builder.with(ItemEntry.builder(IOLITE).weight(5).apply(SetCountLootFunction.builder(UniformLootNumberProvider.create(1, 4))))
-                                .with(ItemEntry.builder(STEEL_INGOT).weight(10).apply(SetCountLootFunction.builder(UniformLootNumberProvider.create(3, 6))));
-                    }
-                    i[0]++;
-                });
-            }
-
-            // Ancient City Loot
-            if (LootTables.ANCIENT_CITY_CHEST.equals(key)) {
-                final int[] i = {0};
-                tableBuilder.modifyPools(builder -> {
-                    if (i[0] == 0) {
-                        builder.with(ItemEntry.builder(EMERALD_DIAMOND_TOOL_SET.HOE())
-                                .weight(2)
-                                .apply(SetCountLootFunction.builder(ConstantLootNumberProvider.create(1)))
-                                .apply(SetDamageLootFunction.builder(UniformLootNumberProvider.create(0.8F, 1), false))
-                        );
-                    }
-                    i[0]++;
-                });
-            }
-
-            if (LootTables.SHIPWRECK_SUPPLY_CHEST.equals(key)) {
-                final int[] i = {0};
-                tableBuilder.modifyPools(builder -> {
-                    if (i[0] == 0) {
-                        builder.with(ItemEntry.builder(ROCK_SALT)
-                                .weight(5)
-                                .apply(SetCountLootFunction.builder(UniformLootNumberProvider.create(7, 24))));
-                        builder.with(ItemEntry.builder(CHEESE_WEDGE)
-                                .weight(5)
-                                .apply(SetCountLootFunction.builder(UniformLootNumberProvider.create(3, 12))));
-                    }
-                    i[0]++;
-                });
-            }
-
-            // Zombie Loot
-            if (lootTableKeyMatches(key, EntityType.ZOMBIE, EntityType.HUSK)) {
-                final int[] i = {0};
-                tableBuilder.modifyPools(builder -> {
-                    if (i[0] == 1) {
-                        builder.with(ItemEntry.builder(CORN).apply(
-                                FurnaceSmeltLootFunction.builder().conditionally(
-                                        EntityPropertiesLootCondition.builder(
-                                                LootContext.EntityTarget.THIS, EntityPredicate.Builder.create().flags(EntityFlagsPredicate.Builder.create().onFire(true))
-                                        )
-                                )
-                        ));
-                    }
-                    i[0]++;
-                });
-            }
-        } ));
+        ComposterBlock.registerCompostableItem(0.65F, TOMATO);
+        ComposterBlock.registerCompostableItem(0.3F, TOMATO_SEEDS);
+        ComposterBlock.registerCompostableItem(0.65F, CABBAGE);
+        ComposterBlock.registerCompostableItem(0.3F, CABBAGE_SEEDS);
     }
 
     protected static boolean lootTableKeyMatches(RegistryKey<LootTable> key, Block... blocks) {

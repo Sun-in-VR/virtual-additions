@@ -15,13 +15,15 @@ import net.minecraft.block.Blocks;
 import net.minecraft.data.family.BlockFamily;
 import net.minecraft.data.recipe.*;
 import net.minecraft.item.*;
-import net.minecraft.recipe.*;
+import net.minecraft.recipe.CampfireCookingRecipe;
+import net.minecraft.recipe.Ingredient;
+import net.minecraft.recipe.RecipeSerializer;
+import net.minecraft.recipe.SmokingRecipe;
 import net.minecraft.recipe.book.RecipeCategory;
 import net.minecraft.registry.*;
 import net.minecraft.registry.tag.ItemTags;
 import net.minecraft.registry.tag.TagKey;
 import net.minecraft.resource.featuretoggle.FeatureFlags;
-import net.minecraft.util.Identifier;
 import org.apache.commons.lang3.tuple.Pair;
 
 import java.util.List;
@@ -160,6 +162,7 @@ public final class VARecipeProvider {
             offerShapelessRecipe(VAItems.COTTON_SEEDS, VAItems.COTTON, "cotton_seeds", 1);
 
             offerShapelessRecipe(VAItems.CORN_SEEDS, VAItems.CORN, "corn_seeds", 1);
+            offerShapelessRecipe(VAItems.TOMATO_SEEDS, VAItems.TOMATO, "tomato_seeds", 1);
 
             offerCookingRecipes(VAItems.FRIED_EGG, List.of(Items.EGG, Items.BROWN_EGG, Items.BLUE_EGG), 0.35F, "fried_egg");
             offerCookingRecipes(VAItems.ROASTED_CORN, VAItems.CORN, 0.35F, "corn");

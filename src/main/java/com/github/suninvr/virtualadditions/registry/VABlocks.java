@@ -4,13 +4,15 @@ import com.github.suninvr.virtualadditions.VirtualAdditions;
 import com.github.suninvr.virtualadditions.block.*;
 import net.fabricmc.fabric.api.object.builder.v1.block.type.BlockSetTypeBuilder;
 import net.fabricmc.fabric.api.object.builder.v1.block.type.WoodTypeBuilder;
-import net.fabricmc.fabric.api.registry.*;
+import net.fabricmc.fabric.api.registry.FlattenableBlockRegistry;
+import net.fabricmc.fabric.api.registry.LandPathNodeTypesRegistry;
+import net.fabricmc.fabric.api.registry.OxidizableBlocksRegistry;
+import net.fabricmc.fabric.api.registry.StrippableBlockRegistry;
 import net.minecraft.block.*;
 import net.minecraft.block.AbstractBlock.Settings;
 import net.minecraft.block.enums.NoteBlockInstrument;
 import net.minecraft.block.piston.PistonBehavior;
 import net.minecraft.entity.ai.pathing.PathNodeType;
-import net.minecraft.particle.ParticleTypes;
 import net.minecraft.sound.BlockSoundGroup;
 import net.minecraft.sound.SoundEvents;
 import net.minecraft.state.property.Properties;
@@ -167,6 +169,7 @@ public class VABlocks {
     public static final Block DEEPSLATE_ROCK_SALT_ORE;
     public static final Block COTTON;
     public static final Block CORN_CROP;
+    public static final Block TOMATO_CROP;
     public static final Block FLOATROCK;
     public static final Block GRASSY_FLOATROCK;
     public static final Block FLOATROCK_STAIRS;
@@ -547,6 +550,7 @@ public class VABlocks {
 
         COTTON = register("cotton", CottonCropBlock::new, Settings.create().noCollision().ticksRandomly().breakInstantly().sounds(BlockSoundGroup.CROP));
         CORN_CROP = register("corn_crop", CornCropBlock::new, Settings.create().noCollision().ticksRandomly().breakInstantly().sounds(BlockSoundGroup.CROP).offset(AbstractBlock.OffsetType.XZ));
+        TOMATO_CROP = register("tomato", TomatoCropBlock::new, Settings.create().noCollision().ticksRandomly().breakInstantly().sounds(BlockSoundGroup.CROP));
 
         FLOATROCK = register("floatrock", FloatrockBlock::new, Settings.copy(Blocks.TUFF));
         GRASSY_FLOATROCK = register("grassy_floatrock", GrassyFloatrockBlock::new, Settings.copy(Blocks.TUFF).sounds(GRASSY_FLOATROCK_SOUNDGROUP));

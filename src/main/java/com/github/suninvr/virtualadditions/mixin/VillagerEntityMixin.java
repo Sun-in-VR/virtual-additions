@@ -17,7 +17,11 @@ public class VillagerEntityMixin {
     private static Map<Item, Integer> ITEM_FOOD_VALUES;
 
     @Unique
-    private static final Map<Item, Integer> virtualAddition$ITEM_FOOD_VALUES = ImmutableMap.of(VAItems.CORN, 1);
+    private static final Map<Item, Integer> virtualAddition$ITEM_FOOD_VALUES = ImmutableMap.of(
+            VAItems.CORN, 1,
+            VAItems.TOMATO, 1,
+            VAItems.CABBAGE, 1
+    );
 
     static {
         ArrayList<Item> newItemFoodKeys = new ArrayList<>(ITEM_FOOD_VALUES.keySet());

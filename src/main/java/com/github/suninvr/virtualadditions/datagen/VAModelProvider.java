@@ -10,8 +10,7 @@ import net.fabricmc.fabric.api.client.datagen.v1.provider.FabricModelProvider;
 import net.fabricmc.fabric.api.datagen.v1.FabricDataGenerator;
 import net.fabricmc.fabric.api.datagen.v1.FabricDataOutput;
 import net.minecraft.block.Block;
-import net.minecraft.block.Blocks;
-import net.minecraft.block.CrafterBlock;
+import net.minecraft.block.CropBlock;
 import net.minecraft.client.data.*;
 import net.minecraft.client.render.item.model.ItemModel;
 import net.minecraft.client.render.item.model.SelectItemModel;
@@ -83,8 +82,10 @@ public class VAModelProvider {
             blockStateModelGenerator.registerCubeAllModelTexturePool(VABlocks.POLISHED_SYENITE).family(VACollections.POLISHED_SYENITE);
             blockStateModelGenerator.registerTintedItemModel(VABlocks.GRASSY_FLOATROCK, ModelIds.getBlockModelId(VABlocks.GRASSY_FLOATROCK), new GrassTintSource());
 
-            blockStateModelGenerator.registerItemModel(VAItems.COTTON_SEEDS);
+            //blockStateModelGenerator.registerItemModel(VAItems.TOMATO_SEEDS);
+            blockStateModelGenerator.registerItemModel(VAItems.CABBAGE_SEEDS);
             blockStateModelGenerator.registerItemModel(VAItems.CORN_SEEDS);
+            blockStateModelGenerator.registerItemModel(VAItems.COTTON_SEEDS);
             blockStateModelGenerator.registerItemModel(VAItems.BALLOON_FRUIT);
 
             blockStateModelGenerator.registerItemModel(VAItems.CLIMBING_ROPE);
@@ -129,6 +130,8 @@ public class VAModelProvider {
             blockStateModelGenerator.registerSimpleCubeAll(VABlocks.ROCK_SALT_ORE);
             blockStateModelGenerator.registerSimpleCubeAll(VABlocks.DEEPSLATE_ROCK_SALT_ORE);
             blockStateModelGenerator.registerSingleton(VABlocks.CHISELED_ROCK_SALT_BRICKS, TexturedModel.CUBE_COLUMN);
+
+            blockStateModelGenerator.registerCrop(VABlocks.TOMATO_CROP, CropBlock.AGE, 0, 1, 2, 3, 4, 5, 6, 7);
 
             registerColorfulBlockSetModels( blockStateModelGenerator,VACollections.CHARTREUSE);
             registerColorfulBlockSetModels( blockStateModelGenerator,VACollections.MAROON);
@@ -199,9 +202,11 @@ public class VAModelProvider {
             itemModelGenerator.register(VAItems.TOOL_GILD_SMITHING_TEMPLATE, Models.GENERATED);
             itemModelGenerator.register(VAItems.STEEL_BOMB, Models.GENERATED);
             itemModelGenerator.register(VAItems.IOLITE, Models.GENERATED);
-            itemModelGenerator.register(VAItems.COTTON, Models.GENERATED);
+            itemModelGenerator.register(VAItems.TOMATO, Models.GENERATED);
+            itemModelGenerator.register(VAItems.CABBAGE, Models.GENERATED);
             itemModelGenerator.register(VAItems.CORN, Models.GENERATED);
             itemModelGenerator.register(VAItems.ROASTED_CORN, Models.GENERATED);
+            itemModelGenerator.register(VAItems.COTTON, Models.GENERATED);
 
             itemModelGenerator.register(VAItems.FRIED_EGG, Models.GENERATED);
             itemModelGenerator.register(VAItems.CHEESE_WEDGE, Models.GENERATED);

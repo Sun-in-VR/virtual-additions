@@ -58,11 +58,14 @@ public final class VAItemTagProvider {
             getOrCreateTagBuilder(ItemTags.CHEST_ARMOR).add(VAItems.STEEL_CHESTPLATE);
             getOrCreateTagBuilder(ItemTags.LEG_ARMOR).add(VAItems.STEEL_LEGGINGS);
             getOrCreateTagBuilder(ItemTags.FOOT_ARMOR).add(VAItems.STEEL_BOOTS);
-            getOrCreateTagBuilder(ItemTags.VILLAGER_PLANTABLE_SEEDS).add(VAItems.CORN_SEEDS);
+            getOrCreateTagBuilder(ItemTags.VILLAGER_PLANTABLE_SEEDS).add(VAItems.CORN_SEEDS, VAItems.TOMATO_SEEDS, VAItems.CABBAGE_SEEDS);
             getOrCreateTagBuilder(ItemTags.DOORS).add(VAItems.STEEL_DOOR);
             getOrCreateTagBuilder(ItemTags.TRAPDOORS).add(VAItems.STEEL_TRAPDOOR);
             getOrCreateTagBuilder(ItemTags.DYEABLE).add(VAItems.ICE_CREAM, VAItems.ENGRAVING_CHISEL);
             getOrCreateTagBuilder(ItemTags.DURABILITY_ENCHANTABLE).add(VAItems.ENGRAVING_CHISEL);
+            getOrCreateTagBuilder(ItemTags.PIG_FOOD).add(VAItems.TOMATO, VAItems.CORN, VAItems.CABBAGE);
+            getOrCreateTagBuilder(ItemTags.VILLAGER_PICKS_UP).add(VAItems.TOMATO, VAItems.CORN, VAItems.CABBAGE, VAItems.CORN_SEEDS, VAItems.TOMATO_SEEDS, VAItems.CABBAGE_SEEDS);
+            getOrCreateTagBuilder(ItemTags.CHICKEN_FOOD).add(VAItems.CORN_SEEDS, VAItems.TOMATO_SEEDS, VAItems.CABBAGE_SEEDS, VAItems.COTTON_SEEDS);
 
             getOrCreateTagBuilder(INGOTS).add(VAItems.STEEL_INGOT);
             getOrCreateTagBuilder(STEEL_INGOTS).add(VAItems.STEEL_INGOT);

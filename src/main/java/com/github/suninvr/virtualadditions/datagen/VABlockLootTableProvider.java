@@ -10,6 +10,7 @@ import net.fabricmc.fabric.api.datagen.v1.FabricDataOutput;
 import net.fabricmc.fabric.api.datagen.v1.provider.FabricBlockLootTableProvider;
 import net.minecraft.block.BedBlock;
 import net.minecraft.block.Block;
+import net.minecraft.block.CropBlock;
 import net.minecraft.block.TallPlantBlock;
 import net.minecraft.block.enums.BedPart;
 import net.minecraft.block.enums.DoubleBlockHalf;
@@ -23,14 +24,13 @@ import net.minecraft.item.Items;
 import net.minecraft.loot.LootPool;
 import net.minecraft.loot.LootTable;
 import net.minecraft.loot.condition.BlockStatePropertyLootCondition;
+import net.minecraft.loot.condition.LootCondition;
 import net.minecraft.loot.entry.ItemEntry;
-import net.minecraft.loot.entry.LootPoolEntry;
 import net.minecraft.loot.function.ApplyBonusLootFunction;
 import net.minecraft.loot.function.SetCountLootFunction;
 import net.minecraft.loot.provider.number.ConstantLootNumberProvider;
 import net.minecraft.loot.provider.number.UniformLootNumberProvider;
 import net.minecraft.predicate.StatePredicate;
-import net.minecraft.registry.Registries;
 import net.minecraft.registry.RegistryEntryLookup;
 import net.minecraft.registry.RegistryKeys;
 import net.minecraft.registry.RegistryWrapper;
@@ -146,6 +146,10 @@ public final class VABlockLootTableProvider {
                     VABlocks.ENTANGLEMENT_DRIVE,
                     VABlocks.SPOTLIGHT
             );
+
+            LootCondition.Builder builder = BlockStatePropertyLootCondition.builder(VABlocks.TOMATO_CROP)
+                    .properties(StatePredicate.Builder.create().exactMatch(CropBlock.AGE, 7));
+            this.addDrop(VABlocks.TOMATO_CROP, this.cropDrops(VABlocks.TOMATO_CROP, VAItems.TOMATO, VAItems.TOMATO_SEEDS, 1, 3, builder));
 
             addColorfulBlockSetDrops(VACollections.CHARTREUSE);
             addColorfulBlockSetDrops(VACollections.MAROON);
@@ -289,6 +293,26 @@ public final class VABlockLootTableProvider {
         @Override
         public void addDrop(Block block, LootTable.Builder lootTable) {
             this.lootTables.put(block.getLootTableKey().get(), lootTable.randomSequenceId(block.getLootTableKey().get().getValue()));
+        }
+
+        public LootTable.Builder cropDrops(Block crop, Item product, Item seeds, int minYield, int maxYield, LootCondition.Builder condition) {
+            RegistryWrapper.Impl<Enchantment> impl = this.registries.getOrThrow(RegistryKeys.ENCHANTMENT);
+            return this.applyExplosionDecay(
+                    crop,
+                    LootTable.builder()
+                            .pool(LootPool.builder()
+                                    .with(ItemEntry.builder(product)
+                                            .apply(SetCountLootFunction.builder(UniformLootNumberProvider.create(minYield, maxYield)))
+                                            .conditionally(condition)
+                                            .alternatively(ItemEntry.builder(seeds))
+                                    )
+                            )
+                            .pool(
+                                    LootPool.builder()
+                                            .conditionally(condition)
+                                            .with(ItemEntry.builder(seeds).apply(ApplyBonusLootFunction.binomialWithBonusCount(impl.getOrThrow(Enchantments.FORTUNE), 0.5714286F, 3)))
+                            )
+            );
         }
 
         @Override

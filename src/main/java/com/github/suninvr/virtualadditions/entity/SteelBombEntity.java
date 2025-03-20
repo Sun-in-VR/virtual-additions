@@ -10,6 +10,7 @@ import net.minecraft.entity.projectile.thrown.ThrownItemEntity;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.particle.ParticleTypes;
+import net.minecraft.server.world.ServerWorld;
 import net.minecraft.util.hit.EntityHitResult;
 import net.minecraft.util.hit.HitResult;
 import net.minecraft.util.math.BlockPos;
@@ -52,6 +53,10 @@ public class SteelBombEntity extends ThrownItemEntity {
 
     public SteelBombEntity(World world, double x, double y, double z) {
         super(VAEntityType.STEEL_BOMB, x, y, z, world, VAItems.STEEL_BOMB.getDefaultStack());
+    }
+
+    public SteelBombEntity(ServerWorld serverWorld, LivingEntity livingEntity, ItemStack itemStack) {
+        super(VAEntityType.STEEL_BOMB, livingEntity, serverWorld, itemStack);
     }
 
     protected void onCollision(HitResult hitResult) {

@@ -106,6 +106,7 @@ public class VARenderers {
                 VABlocks.ROCK_SALT_CRYSTAL,
                 VABlocks.COTTON,
                 VABlocks.CORN_CROP,
+                VABlocks.TOMATO_CROP,
                 VABlocks.GLOWING_SILK,
                 VABlocks.FRAYED_SILK,
                 VABlocks.TALL_GREENCAP_MUSHROOMS,
