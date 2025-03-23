@@ -22,7 +22,7 @@ import net.minecraft.world.tick.ScheduledTickView;
 public class HedgeBlock extends HorizontalConnectingBlock {
     public static final MapCodec<HedgeBlock> CODEC = createCodec(HedgeBlock::new);
     public HedgeBlock(Settings settings) {
-        super(4.0F, 4.0F, 16.0F, 16.0F, 24.0F, settings);
+        super(8.0F, 16.0F, 8.0F, 16.0F, 24.0F, settings);
         this.setDefaultState(this.stateManager.getDefaultState().with(NORTH, false).with(EAST, false).with(SOUTH, false).with(WEST, false).with(WATERLOGGED, false));
     }
 

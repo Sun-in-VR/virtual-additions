@@ -1,8 +1,0 @@
-{
-  "parent": "minecraft:block/slab",
-  "textures": {
-    "bottom": "virtual_additions:block/aerobloom_planks",
-    "side": "virtual_additions:block/aerobloom_planks",
-    "top": "virtual_additions:block/aerobloom_planks"
-  }
-}

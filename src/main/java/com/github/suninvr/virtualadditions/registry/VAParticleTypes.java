@@ -15,13 +15,13 @@ import net.minecraft.registry.Registry;
 
 import java.util.function.Function;
 
-@SuppressWarnings({"SameParameterValue", "deprecation", "unused"})
 public class VAParticleTypes {
     public static final SimpleParticleType ACID_SPLASH_EMITTER;
     public static final SimpleParticleType ACID_SPLASH;
     public static final SimpleParticleType GREENCAP_SPORE;
     public static final SimpleParticleType SCRAPE_STEEL;
     public static final SimpleParticleType INTERFERENCE;
+    public static final SimpleParticleType AEROBLOOM_LEAVES;
     public static final ParticleType<IoliteRingParticleEffect> IOLITE_TETHER_RING;
     public static final ParticleType<IoliteRingParticleEffect> IOLITE_ANCHOR_RING;
 
@@ -31,6 +31,7 @@ public class VAParticleTypes {
         GREENCAP_SPORE = register("greencap_spore");
         SCRAPE_STEEL = register("scrape_steel", true);
         INTERFERENCE = register("interference");
+        AEROBLOOM_LEAVES = register("aerobloom_leaves");
         IOLITE_TETHER_RING = register("warp_tether_ring", false, type -> IoliteRingParticleEffect.TETHER_CODEC, type -> IoliteRingParticleEffect.TETHER_PACKET_CODEC);
         IOLITE_ANCHOR_RING = register("warp_anchor_ring", false, type -> IoliteRingParticleEffect.ANCHOR_CODEC, type -> IoliteRingParticleEffect.ANCHOR_PACKET_CODEC);
     }
@@ -41,7 +42,7 @@ public class VAParticleTypes {
         return Registry.register(Registries.PARTICLE_TYPE, VirtualAdditions.idOf(name), new ParticleType<T>(alwaysShow) {
             @Override
             public MapCodec<T> getCodec() {
-                return (MapCodec)codecGetter.apply(this) ;
+                return codecGetter.apply(this) ;
             }
 
             @Override
