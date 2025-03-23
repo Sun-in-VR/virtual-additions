@@ -218,6 +218,10 @@ public class VALootTableModifiers {
                                                 .conditionally(LocationCheckLootCondition.builder(LocationPredicate.Builder.create().biome(
                                                         impl.getOrThrow(BiomeTags.SPAWNS_WARM_VARIANT_FARM_ANIMALS)
                                                 ))),
+                                        ItemEntry.builder(CABBAGE_SEEDS)
+                                                .conditionally(LocationCheckLootCondition.builder(LocationPredicate.Builder.create().biome(
+                                                        impl.getOrThrow(BiomeTags.SPAWNS_COLD_VARIANT_FARM_ANIMALS)
+                                                ))),
                                         ItemEntry.builder(TOMATO_SEEDS)
                                 )
                                 .conditionally(InvertedLootCondition.builder(MatchToolLootCondition.builder(ItemPredicate.Builder.create().items(itemRegistryEntryLookup, Items.SHEARS))))

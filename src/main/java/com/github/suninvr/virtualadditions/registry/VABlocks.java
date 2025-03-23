@@ -169,7 +169,8 @@ public class VABlocks {
     public static final Block DEEPSLATE_ROCK_SALT_ORE;
     public static final Block COTTON;
     public static final Block CORN_CROP;
-    public static final Block TOMATO_CROP;
+    public static final Block TOMATO;
+    public static final Block CABBAGE;
     public static final Block FLOATROCK;
     public static final Block GRASSY_FLOATROCK;
     public static final Block FLOATROCK_STAIRS;
@@ -550,7 +551,8 @@ public class VABlocks {
 
         COTTON = register("cotton", CottonCropBlock::new, Settings.create().noCollision().ticksRandomly().breakInstantly().sounds(BlockSoundGroup.CROP));
         CORN_CROP = register("corn_crop", CornCropBlock::new, Settings.create().noCollision().ticksRandomly().breakInstantly().sounds(BlockSoundGroup.CROP).offset(AbstractBlock.OffsetType.XZ));
-        TOMATO_CROP = register("tomato", TomatoCropBlock::new, Settings.create().noCollision().ticksRandomly().breakInstantly().sounds(BlockSoundGroup.CROP));
+        TOMATO = register("tomato", TomatoCropBlock::new, Settings.create().noCollision().ticksRandomly().breakInstantly().sounds(BlockSoundGroup.CROP));
+        CABBAGE = register("cabbage", CabbageCropBlock::new, Settings.create().noCollision().ticksRandomly().breakInstantly().sounds(BlockSoundGroup.CROP));
 
         FLOATROCK = register("floatrock", FloatrockBlock::new, Settings.copy(Blocks.TUFF));
         GRASSY_FLOATROCK = register("grassy_floatrock", GrassyFloatrockBlock::new, Settings.copy(Blocks.TUFF).sounds(GRASSY_FLOATROCK_SOUNDGROUP));

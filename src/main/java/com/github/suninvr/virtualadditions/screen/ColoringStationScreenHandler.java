@@ -158,7 +158,7 @@ public class ColoringStationScreenHandler extends ScreenHandler {
 
             @Override
             public void onTakeItem(PlayerEntity player, ItemStack stack) {
-                stack.onCraftByPlayer(player.getWorld(), player, stack.getCount());
+                stack.onCraftByPlayer(player, stack.getCount());
                 ColoringStationScreenHandler.this.inputSlot.takeStack(1);
                 ColoringStationScreenHandler.this.addDyeContents();
                 ColoringStationScreenHandler.this.updateDyeInput();
@@ -205,7 +205,7 @@ public class ColoringStationScreenHandler extends ScreenHandler {
 
     public ColoringRecipeData getRecipeData(int i) {
       return this.recipeData.get(i);
-    };
+    }
 
     public int getAvailableRecipeCount() {
         return this.recipeData.size();
@@ -228,7 +228,7 @@ public class ColoringStationScreenHandler extends ScreenHandler {
             Item item = itemStack2.getItem();
             itemStack = itemStack2.copy();
             if (slot == 2) {
-                item.onCraftByPlayer(itemStack2, player.getWorld(), player);
+                item.onCraftByPlayer(itemStack2, player);
                 if (!this.insertItem(itemStack2, 3, 39, true)) {
                     return ItemStack.EMPTY;
                 }

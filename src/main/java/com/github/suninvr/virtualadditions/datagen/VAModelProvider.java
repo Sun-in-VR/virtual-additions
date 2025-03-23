@@ -82,7 +82,6 @@ public class VAModelProvider {
             blockStateModelGenerator.registerCubeAllModelTexturePool(VABlocks.POLISHED_SYENITE).family(VACollections.POLISHED_SYENITE);
             blockStateModelGenerator.registerTintedItemModel(VABlocks.GRASSY_FLOATROCK, ModelIds.getBlockModelId(VABlocks.GRASSY_FLOATROCK), new GrassTintSource());
 
-            //blockStateModelGenerator.registerItemModel(VAItems.TOMATO_SEEDS);
             blockStateModelGenerator.registerItemModel(VAItems.CABBAGE_SEEDS);
             blockStateModelGenerator.registerItemModel(VAItems.CORN_SEEDS);
             blockStateModelGenerator.registerItemModel(VAItems.COTTON_SEEDS);
@@ -131,7 +130,7 @@ public class VAModelProvider {
             blockStateModelGenerator.registerSimpleCubeAll(VABlocks.DEEPSLATE_ROCK_SALT_ORE);
             blockStateModelGenerator.registerSingleton(VABlocks.CHISELED_ROCK_SALT_BRICKS, TexturedModel.CUBE_COLUMN);
 
-            blockStateModelGenerator.registerCrop(VABlocks.TOMATO_CROP, CropBlock.AGE, 0, 1, 2, 3, 4, 5, 6, 7);
+            blockStateModelGenerator.registerCrop(VABlocks.TOMATO, CropBlock.AGE, 0, 1, 2, 3, 4, 5, 6, 7);
 
             registerColorfulBlockSetModels( blockStateModelGenerator,VACollections.CHARTREUSE);
             registerColorfulBlockSetModels( blockStateModelGenerator,VACollections.MAROON);

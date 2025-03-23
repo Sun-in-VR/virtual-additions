@@ -163,6 +163,7 @@ public final class VARecipeProvider {
 
             offerShapelessRecipe(VAItems.CORN_SEEDS, VAItems.CORN, "corn_seeds", 1);
             offerShapelessRecipe(VAItems.TOMATO_SEEDS, VAItems.TOMATO, "tomato_seeds", 1);
+            offerShapelessRecipe(VAItems.CABBAGE_SEEDS, VAItems.CABBAGE, "cabbage_seeds", 1);
 
             offerCookingRecipes(VAItems.FRIED_EGG, List.of(Items.EGG, Items.BROWN_EGG, Items.BLUE_EGG), 0.35F, "fried_egg");
             offerCookingRecipes(VAItems.ROASTED_CORN, VAItems.CORN, 0.35F, "corn");
@@ -172,7 +173,7 @@ public final class VARecipeProvider {
             offerJerkyFoodRecipe(Items.COOKED_CHICKEN, VAItems.CHICKEN_JERKY);
             offerJerkyFoodRecipe(Items.COOKED_MUTTON, VAItems.MUTTON_JERKY);
 
-            ShapedRecipeJsonBuilder.create(this.registryLookup, RecipeCategory.FOOD, VAItems.CHEESE_WEDGE, 4)
+            ShapedRecipeJsonBuilder.create(this.registryLookup, RecipeCategory.FOOD, VAItems.CHEESE_WEDGE, 2)
                             .pattern(" # ")
                             .pattern("#M#")
                             .pattern(" # ")

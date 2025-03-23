@@ -65,6 +65,21 @@
       "random/bow"
     ]
   },
+  "entity.tomato.throw": {
+    "subtitle": "subtitles.entity.tomato.throw",
+    "sounds": [
+      "random/bow"
+    ]
+  },
+  "entity.tomato.hit": {
+    "subtitle": "subtitles.entity.tomato.hit",
+    "sounds": [
+      "block/frogspawn/break1",
+      "block/frogspawn/break2",
+      "block/frogspawn/break3",
+      "block/frogspawn/break4"
+    ]
+  },
   "entity.saline.ambient": {
     "subtitle": "subtitles.entity.saline.ambient",
     "sounds": [

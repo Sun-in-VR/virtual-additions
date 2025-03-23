@@ -147,9 +147,13 @@ public final class VABlockLootTableProvider {
                     VABlocks.SPOTLIGHT
             );
 
-            LootCondition.Builder builder = BlockStatePropertyLootCondition.builder(VABlocks.TOMATO_CROP)
+            LootCondition.Builder tomatoBuilder = BlockStatePropertyLootCondition.builder(VABlocks.TOMATO)
                     .properties(StatePredicate.Builder.create().exactMatch(CropBlock.AGE, 7));
-            this.addDrop(VABlocks.TOMATO_CROP, this.cropDrops(VABlocks.TOMATO_CROP, VAItems.TOMATO, VAItems.TOMATO_SEEDS, 1, 3, builder));
+            this.addDrop(VABlocks.TOMATO, this.cropDrops(VABlocks.TOMATO, VAItems.TOMATO, VAItems.TOMATO_SEEDS, 1, 3, tomatoBuilder));
+
+            LootCondition.Builder cabbageBuilder = BlockStatePropertyLootCondition.builder(VABlocks.CABBAGE)
+                    .properties(StatePredicate.Builder.create().exactMatch(CropBlock.AGE, 7));
+            this.addDrop(VABlocks.CABBAGE, this.cropDrops(VABlocks.CABBAGE, VAItems.CABBAGE, VAItems.CABBAGE_SEEDS, cabbageBuilder));
 
             addColorfulBlockSetDrops(VACollections.CHARTREUSE);
             addColorfulBlockSetDrops(VACollections.MAROON);

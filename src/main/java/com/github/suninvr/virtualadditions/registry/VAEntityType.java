@@ -19,6 +19,7 @@ public class VAEntityType {
 
     public static final EntityType<ClimbingRopeEntity> CLIMBING_ROPE;
     public static final EntityType<SteelBombEntity> STEEL_BOMB;
+    public static final EntityType<TomatoEntity> TOMATO;
     public static final EntityType<AcidSpitEntity> ACID_SPIT;
     public static final EntityType<LumwaspEntity> LUMWASP;
     public static final EntityType<LyftEntity> LYFT;
@@ -37,6 +38,11 @@ public class VAEntityType {
                 .dimensions(0.25F, 0.25F)
                 .maxTrackingRange(4).trackingTickInterval(10)
                 .build(RegistryKey.of(RegistryKeys.ENTITY_TYPE, VirtualAdditions.idOf("steel_bomb"))));
+
+        TOMATO = Registry.register(Registries.ENTITY_TYPE, idOf("tomato"), EntityType.Builder.<TomatoEntity>create(TomatoEntity::new, SpawnGroup.MISC)
+                .dimensions(0.25F, 0.25F)
+                .maxTrackingRange(4).trackingTickInterval(10)
+                .build(RegistryKey.of(RegistryKeys.ENTITY_TYPE, VirtualAdditions.idOf("tomato"))));
 
         ACID_SPIT = Registry.register(Registries.ENTITY_TYPE, idOf("acid_spit"), EntityType.Builder.<AcidSpitEntity>create(AcidSpitEntity::new, SpawnGroup.MISC)
                 .dimensions(0.25F, 0.25F)

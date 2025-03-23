@@ -106,7 +106,8 @@ public class VARenderers {
                 VABlocks.ROCK_SALT_CRYSTAL,
                 VABlocks.COTTON,
                 VABlocks.CORN_CROP,
-                VABlocks.TOMATO_CROP,
+                VABlocks.TOMATO,
+                VABlocks.CABBAGE,
                 VABlocks.GLOWING_SILK,
                 VABlocks.FRAYED_SILK,
                 VABlocks.TALL_GREENCAP_MUSHROOMS,
@@ -163,6 +164,7 @@ public class VARenderers {
         EntityModelLayerRegistry.registerModelLayer(LYFT_LAYER, LyftEntityModel::getTexturedModelData);
         EntityRendererRegistry.register(VAEntityType.CLIMBING_ROPE, ClimbingRopeEntityRenderer::new);
         EntityRendererRegistry.register(VAEntityType.STEEL_BOMB, FlyingItemEntityRenderer::new);
+        EntityRendererRegistry.register(VAEntityType.TOMATO, FlyingItemEntityRenderer::new);
         EntityRendererRegistry.register(VAEntityType.ACID_SPIT, AcidSpitEntityRenderer::new);
         EntityRendererRegistry.register(VAEntityType.LUMWASP, LumwaspEntityRenderer::new);
         EntityRendererRegistry.register(VAEntityType.LYFT, LyftEntityRenderer::new);

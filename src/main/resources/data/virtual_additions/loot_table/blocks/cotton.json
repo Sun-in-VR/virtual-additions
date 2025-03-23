@@ -7,18 +7,8 @@
         {
           "type": "minecraft:item",
           "name": "virtual_additions:cotton_seeds",
-          "conditions": [
-            {
-              "condition": "minecraft:inverted",
-              "term": {
-                "condition": "minecraft:block_state_property",
-                "block": "virtual_additions:cotton",
-                "properties": {
-                  "age": "7"
-                }
-              }
-            }
-          ]
+          "functions": [],
+          "conditions": []
         }
       ]
     },

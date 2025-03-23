@@ -1095,10 +1095,10 @@ public class VAItems {
         CORN_SEEDS = register("corn_seeds", settings -> new BlockItem(VABlocks.CORN_CROP, settings),new Item.Settings().useItemPrefixedTranslationKey(), ItemGroups.NATURAL, Items.BEETROOT_SEEDS);
         CORN = register("corn", new Item.Settings().food(VAFoodComponents.CORN), ItemGroups.FOOD_AND_DRINK, Items.BEETROOT);
         ROASTED_CORN = register("roasted_corn", new Item.Settings().food(VAFoodComponents.ROASTED_CORN), ItemGroups.FOOD_AND_DRINK, prev);
-        TOMATO_SEEDS = register("tomato_seeds", settings -> new BlockItem(VABlocks.TOMATO_CROP, settings),new Item.Settings().useItemPrefixedTranslationKey(), ItemGroups.NATURAL, CORN_SEEDS);
+        TOMATO_SEEDS = register("tomato_seeds", settings -> new BlockItem(VABlocks.TOMATO, settings),new Item.Settings().useItemPrefixedTranslationKey(), ItemGroups.NATURAL, CORN_SEEDS);
         TOMATO = register("tomato", TomatoItem::new, new Item.Settings().food(VAFoodComponents.TOMATO),ItemGroups.FOOD_AND_DRINK, Items.BEETROOT);
-        CABBAGE_SEEDS = register("cabbage_seeds", ItemGroups.NATURAL, TOMATO_SEEDS);
-        CABBAGE = register("cabbage", new Item.Settings().food(VAFoodComponents.TOMATO),ItemGroups.FOOD_AND_DRINK, Items.BEETROOT);
+        CABBAGE_SEEDS = register("cabbage_seeds", settings -> new BlockItem(VABlocks.CABBAGE, settings),new Item.Settings().useItemPrefixedTranslationKey(), ItemGroups.NATURAL, CORN_SEEDS);
+        CABBAGE = register("cabbage", new Item.Settings().food(VAFoodComponents.CABBAGE),ItemGroups.FOOD_AND_DRINK, Items.BEETROOT);
         COTTON_SEEDS = register("cotton_seeds", settings -> new BlockItem(VABlocks.COTTON, settings),new Item.Settings().useItemPrefixedTranslationKey(), ItemGroups.NATURAL, Items.BEETROOT_SEEDS);
         COTTON = register("cotton", ItemGroups.INGREDIENTS, Items.WHEAT);
 

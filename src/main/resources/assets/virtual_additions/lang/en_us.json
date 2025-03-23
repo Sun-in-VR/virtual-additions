@@ -529,6 +529,8 @@
     "subtitles.block.steel_door.shutter_open": "Steel Shutter opens",
     "subtitles.block.steel_door.shutter_close": "Steel Shutter closes",
     "subtitles.entity.steel_bomb.throw": "Steel Bomb flies",
+    "subtitles.entity.tomato.throw": "Tomato flies",
+    "subtitles.entity.tomato.hit": "Tomato splats",
     "subtitles.entity.lumwasp.hurt": "Lumwasp hurts",
     "subtitles.entity.lumwasp.death": "Lumwasp dies",
     "subtitles.entity.saline.ambient": "Saline groans",
