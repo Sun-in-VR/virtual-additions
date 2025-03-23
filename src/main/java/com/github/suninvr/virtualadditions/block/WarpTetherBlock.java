@@ -91,6 +91,8 @@ public class WarpTetherBlock extends BlockWithEntity implements Waterloggable {
             if (!bl && destState.getBlock() == VABlocks.WARP_ANCHOR && !destState.get(WarpAnchorBlock.POWERED)) {
                 destY += destState.get(WarpAnchorBlock.FACING).equals(Direction.DOWN) ? (entity.getBoundingBox().getLengthY()) * -1 : 0;
                 entity.requestTeleport(destX, destY, destZ);
+                int i = (int) Math.clamp((entity.getWidth() * entity.getWidth() * entity.getHeight() * 20.0F), 5, 50);
+                ((ServerWorld) world).spawnParticles(VAParticleTypes.INTERFERENCE, destX, destY, destZ, i, entity.getWidth() * 0.45, entity.getHeight() * 0.25, entity.getWidth() * 0.45, 0);
                 world.emitGameEvent(entity, GameEvent.TELEPORT, pos);
                 world.emitGameEvent(entity, GameEvent.TELEPORT, destPos);
                 if (!state.get(WATERLOGGED)) world.playSound(null, pos, VASoundEvents.BLOCK_WARP_TETHER_WARP, SoundCategory.BLOCKS, 1.0F, 1.0F);

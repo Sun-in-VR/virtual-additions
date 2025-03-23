@@ -546,7 +546,7 @@ public class VABlocks {
         ROCK_SALT_BRICK_WALL = register("rock_salt_brick_wall", WallBlock::new, Settings.copy(ROCK_SALT_BRICKS));
         CHISELED_ROCK_SALT_BRICKS = register("chiseled_rock_salt_bricks", Block::new, Settings.copy(ROCK_SALT_BRICKS));
 
-        SPOTLIGHT = register("spotlight", SpotlightBlock::new, Settings.copy(STEEL_BLOCK).nonOpaque().luminance((state) -> state.get(SpotlightBlock.POWERED) ? 6 : 0).emissiveLighting((state, world, pos) -> state.get(Properties.POWERED)));
+        SPOTLIGHT = register("spotlight", SpotlightBlock::new, Settings.copy(STEEL_BLOCK).nonOpaque().luminance((state) -> state.get(SpotlightBlock.POWERED) ? 6 : 0));
         SPOTLIGHT_LIGHT = register("spotlight_light", SpotlightLightBlock::new, Settings.create().sounds(BlockSoundGroup.INTENTIONALLY_EMPTY).replaceable().noCollision().dropsNothing().luminance((state) -> state.get(SpotlightLightBlock.LIT) ? 15 : 0).pistonBehavior(PistonBehavior.DESTROY));
 
         COTTON = register("cotton", CottonCropBlock::new, Settings.create().noCollision().ticksRandomly().breakInstantly().sounds(BlockSoundGroup.CROP));
@@ -782,7 +782,7 @@ public class VABlocks {
         IOLITE_BLOCK = register("iolite_block", Block::new, Settings.create().mapColor(MapColor.MAGENTA).sounds(BlockSoundGroup.METAL).requiresTool().hardness(5.0F).resistance(300.0F));
         WARP_ANCHOR = register("warp_anchor", WarpAnchorBlock::new, Settings.create().nonOpaque().sounds(BlockSoundGroup.NETHERITE).luminance(state -> 3).emissiveLighting( (state, world, pos) -> !state.get(WarpAnchorBlock.POWERED) ).hardness(22.5F).requiresTool().resistance(600.0F));
         WARP_TETHER = register("warp_tether", WarpTetherBlock::new, Settings.create().nonOpaque().sounds(BlockSoundGroup.NETHERITE).luminance(state -> 3).emissiveLighting( (state, world, pos) -> !state.get(WarpTetherBlock.COOLDOWN) ).hardness(22.5F).requiresTool().resistance(600.0F));
-        ENTANGLEMENT_DRIVE = register("entanglement_drive", EntanglementDriveBlock::new, Settings.create().nonOpaque().sounds(BlockSoundGroup.NETHERITE).luminance(state -> 3).emissiveLighting( (state, world, pos) -> !state.get(Properties.POWERED) ).hardness(22.5F).requiresTool().resistance(600.0F));
+        ENTANGLEMENT_DRIVE = register("entanglement_drive", EntanglementDriveBlock::new, Settings.create().nonOpaque().sounds(BlockSoundGroup.NETHERITE).luminance(state -> 3).hardness(22.5F).requiresTool().resistance(600.0F));
         REMOTE_NOTIFIER = register("remote_notifier", RemoteNotifierBlock::new, Settings.create().nonOpaque().sounds(BlockSoundGroup.NETHERITE).hardness(22.5F).requiresTool().resistance(600.0F).requires(VirtualAdditions.PREVIEW));
 
         DESTRUCTIVE_SCULK = register("destructive_sculk", DestructiveSculkBlock::new, Settings.copy(Blocks.SCULK));
