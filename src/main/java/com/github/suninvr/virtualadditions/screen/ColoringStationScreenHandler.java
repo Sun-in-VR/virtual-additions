@@ -159,6 +159,7 @@ public class ColoringStationScreenHandler extends ScreenHandler {
             @Override
             public void onTakeItem(PlayerEntity player, ItemStack stack) {
                 stack.onCraftByPlayer(player, stack.getCount());
+                ColoringStationScreenHandler.this.output.unlockLastRecipe(player, List.of(ColoringStationScreenHandler.this.inputStack));
                 ColoringStationScreenHandler.this.inputSlot.takeStack(1);
                 ColoringStationScreenHandler.this.addDyeContents();
                 ColoringStationScreenHandler.this.updateDyeInput();
