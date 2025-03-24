@@ -80,7 +80,7 @@ public class FrayedSilkBlock extends PlantBlock {
     @Override
     public void randomDisplayTick(BlockState state, World world, BlockPos pos, Random random) {
         if (random.nextInt(500) <= 1 && world.getBlockState(pos.offset(state.get(VERTICAL_DIRECTION).getOpposite())).isOf(VABlocks.SILK_BLOCK)) {
-            world.playSound(null, pos.getX(), pos.getY(), pos.getZ(), VASoundEvents.BLOCK_FRAYED_SILK_IDLE, SoundCategory.BLOCKS, 1.0F, 0.7F);
+            world.playSoundClient(pos.getX(), pos.getY(), pos.getZ(), VASoundEvents.BLOCK_FRAYED_SILK_IDLE, SoundCategory.BLOCKS, 1.0F, 0.7F, true);
         }
     }
 }
