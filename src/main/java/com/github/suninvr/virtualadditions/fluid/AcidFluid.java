@@ -81,7 +81,7 @@ public abstract class AcidFluid extends FlowableFluid {
             if (random.nextInt(200) == 0) {
                 world.playSoundClient(pos.getX(), pos.getY(), pos.getZ(), VASoundEvents.ACID_AMBIENT, SoundCategory.BLOCKS, 0.2F + random.nextFloat() * 0.2F, 0.9F + random.nextFloat() * 0.15F, true);
             } else if (random.nextInt(100) == 0) {
-                world.playSound(null, pos.getX() + 0.5, pos.getY() + 0.5, pos.getZ() + 0.5, VASoundEvents.ACID_SIZZLE, SoundCategory.BLOCKS, 0.6F + random.nextFloat() * 0.2F, 0.8F + random.nextFloat() * 0.3F);
+                world.playSoundClient(pos.getX() + 0.5, pos.getY() + 0.5, pos.getZ() + 0.5, VASoundEvents.ACID_SIZZLE, SoundCategory.BLOCKS, 0.6F + random.nextFloat() * 0.2F, 0.8F + random.nextFloat() * 0.3F, true);
                 world.addParticleClient(VAParticleTypes.ACID_SPLASH_EMITTER, pos.getX() + 0.5, pos.getY() + 1, pos.getZ() + 0.5, 0.0, 0.0, 0.0);
             }
         }
