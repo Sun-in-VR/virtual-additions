@@ -16,6 +16,7 @@ import net.minecraft.world.biome.SpawnSettings;
 import net.minecraft.world.gen.GenerationStep;
 import net.minecraft.world.gen.carver.ConfiguredCarver;
 import net.minecraft.world.gen.feature.DefaultBiomeFeatures;
+import net.minecraft.world.gen.feature.MiscPlacedFeatures;
 import net.minecraft.world.gen.feature.PlacedFeature;
 
 public class VAOverworldBiomeCreator {
@@ -80,7 +81,7 @@ public class VAOverworldBiomeCreator {
         spawners.spawn(SpawnGroup.MONSTER, 500, new SpawnSettings.SpawnEntry(VAEntityType.LUMWASP, 2, 3));
 
         GenerationSettings.LookupBackedBuilder generation = new GenerationSettings.LookupBackedBuilder(featureLookup, carverLookup);
-        addBasicFeatures(generation);
+        addBasicFeaturesWithoutLavaSprings(generation);
         DefaultBiomeFeatures.addPlainsTallGrass(generation);
         DefaultBiomeFeatures.addDefaultOres(generation, true);
         DefaultBiomeFeatures.addDefaultDisks(generation);
@@ -111,6 +112,15 @@ public class VAOverworldBiomeCreator {
         DefaultBiomeFeatures.addDungeons(generationSettings);
         DefaultBiomeFeatures.addMineables(generationSettings);
         DefaultBiomeFeatures.addSprings(generationSettings);
+        DefaultBiomeFeatures.addFrozenTopLayer(generationSettings);
+    }
+
+    private static void addBasicFeaturesWithoutLavaSprings(GenerationSettings.LookupBackedBuilder generationSettings) {
+        DefaultBiomeFeatures.addLandCarvers(generationSettings);
+        DefaultBiomeFeatures.addAmethystGeodes(generationSettings);
+        DefaultBiomeFeatures.addDungeons(generationSettings);
+        DefaultBiomeFeatures.addMineables(generationSettings);
+        generationSettings.feature(GenerationStep.Feature.FLUID_SPRINGS, MiscPlacedFeatures.SPRING_WATER);
         DefaultBiomeFeatures.addFrozenTopLayer(generationSettings);
     }
 }
