@@ -622,7 +622,7 @@ public final class VARecipeProvider {
                 ShapedRecipeJsonBuilder.create(this.registryLookup, RecipeCategory.BUILDING_BLOCKS, output, 4)
                         .pattern("##")
                         .pattern("##")
-                        .input('#', input).criterion(hasItem(input), conditionsFromItem(input)).offerTo(this.exporter, id);
+                        .input('#', input).criterion(hasItem(input), conditionsFromItem(input)).offerTo(this.exporter, idOf(id).toString());
             }
         }
 
@@ -663,7 +663,7 @@ public final class VARecipeProvider {
                 set.ifBanner(banner -> offerBannerRecipe(banner, wool));
                 set.ifCarpet(carpet -> offerCarpetRecipe(carpet, wool));
             });
-            set.ifCarpet(block -> ShapelessRecipeJsonBuilder.create(this.registryLookup, RecipeCategory.BUILDING_BLOCKS, block).input(ItemTags.WOOL_CARPETS).input(dye).criterion("has_dye", conditionsFromItem(dye)).offerTo(this.exporter, CraftingRecipeJsonBuilder.getItemId(block).withSuffixedPath("_dyeing").toString()));
+            set.ifCarpet(block -> ShapelessRecipeJsonBuilder.create(this.registryLookup, RecipeCategory.BUILDING_BLOCKS, block).input(ItemTags.WOOL_CARPETS).input(dye).criterion("has_dye", conditionsFromItem(dye)).offerTo(this.exporter, idOf(CraftingRecipeJsonBuilder.getItemId(block).withSuffixedPath("_dyeing").getPath()).toString()));
             set.ifConcretePowder( block -> offerConcretePowderDyeingRecipe(block, dye));
             set.ifTerracotta(block -> offerTerracottaDyeingRecipe(block, dye));
             set.ifStainedGlass(block -> {
@@ -767,11 +767,11 @@ public final class VARecipeProvider {
         }
 
         protected void offer2x2FullRecipe(RecipeCategory category, ItemConvertible output, ItemConvertible input, int count) {
-            ShapedRecipeJsonBuilder.create(this.registryLookup, category, output, count).input('#', input).pattern("##").pattern("##").criterion(hasItem(input), conditionsFromItem(input)).offerTo(this.exporter);
+            ShapedRecipeJsonBuilder.create(this.registryLookup, category, output, count).input('#', input).pattern("##").pattern("##").criterion(hasItem(input), conditionsFromItem(input)).offerTo(this.exporter, idOf(getItemPath(output) + "_from_" + getItemPath(input)).toString());
         }
 
         protected void offer2x2FullRecipe(RecipeCategory category, ItemConvertible output, ItemConvertible input, int count, String group) {
-            ShapedRecipeJsonBuilder.create(this.registryLookup, category, output, count).input('#', input).pattern("##").pattern("##").group(group).criterion(hasItem(input), conditionsFromItem(input)).offerTo(this.exporter);
+            ShapedRecipeJsonBuilder.create(this.registryLookup, category, output, count).input('#', input).pattern("##").pattern("##").group(group).criterion(hasItem(input), conditionsFromItem(input)).offerTo(this.exporter, idOf(getItemPath(output) + "_from_" + getItemPath(input)).toString());
         }
 
         protected void offerHedgeRecipe(ItemConvertible output, ItemConvertible input) {
@@ -784,7 +784,7 @@ public final class VARecipeProvider {
         public void offerWaxingRecipes(RecipeExporter exporter) {
             HoneycombItem.UNWAXED_TO_WAXED_BLOCKS.get().forEach((unwaxed, waxed) -> {
                 if (!VirtualAdditions.isFromMod(Registries.BLOCK.getId(unwaxed))) return;
-                ShapelessRecipeJsonBuilder.create(this.registryLookup, RecipeCategory.BUILDING_BLOCKS, waxed).input(unwaxed).input(Items.HONEYCOMB).group(RecipeGenerator.getItemPath(waxed)).criterion(RecipeGenerator.hasItem(unwaxed), this.conditionsFromItem(unwaxed)).offerTo(this.exporter, RecipeGenerator.convertBetween(waxed, Items.HONEYCOMB));
+                ShapelessRecipeJsonBuilder.create(this.registryLookup, RecipeCategory.BUILDING_BLOCKS, waxed).input(unwaxed).input(Items.HONEYCOMB).group(RecipeGenerator.getItemPath(waxed)).criterion(RecipeGenerator.hasItem(unwaxed), this.conditionsFromItem(unwaxed)).offerTo(this.exporter, idOf(RecipeGenerator.convertBetween(waxed, Items.HONEYCOMB)).toString());
             });
         }
 

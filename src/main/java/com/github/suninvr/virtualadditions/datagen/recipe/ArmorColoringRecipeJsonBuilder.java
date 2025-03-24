@@ -35,6 +35,6 @@ public class ArmorColoringRecipeJsonBuilder {
         RegistryKey<Recipe<?>> registryKey = RegistryKey.of(RegistryKeys.RECIPE, recipeId);
         ArmorColoringRecipe recipe = new ArmorColoringRecipe(this.dye, this.index);
         Advancement.Builder builder = exporter.getAdvancementBuilder().criterion("has_the_recipe", RecipeUnlockedCriterion.create(registryKey)).rewards(AdvancementRewards.Builder.recipe(registryKey)).criteriaMerger(AdvancementRequirements.CriterionMerger.OR);
-        exporter.accept(registryKey, recipe, builder.build(recipeId.withPrefixedPath("recipes/")));
+        exporter.accept(registryKey, recipe, builder.build(recipeId.withPrefixedPath("recipes/coloring/")));
     }
 }
