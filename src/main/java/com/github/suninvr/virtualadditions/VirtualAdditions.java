@@ -20,6 +20,7 @@ public class VirtualAdditions implements ModInitializer {
 	public static final String MODNAME = "Virtual Additions";
 	public static FeatureFlag PREVIEW;
 	private static boolean areBlocksInitialized = false;
+	public static boolean isDataGenerationActive = false;
 
 	public static Logger LOGGER = LogManager.getLogger();
 

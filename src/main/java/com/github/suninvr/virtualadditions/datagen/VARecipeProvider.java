@@ -159,11 +159,10 @@ public final class VARecipeProvider {
             offer2x2ConversionChain(VABlocks.SYENITE, VABlocks.POLISHED_SYENITE, VABlocks.SYENITE_BRICKS);
 
             offer2x2FullRecipe(RecipeCategory.MISC, Items.STRING, VAItems.COTTON, 2);
-            offerShapelessRecipe(VAItems.COTTON_SEEDS, VAItems.COTTON, "cotton_seeds", 1);
-
-            offerShapelessRecipe(VAItems.CORN_SEEDS, VAItems.CORN, "corn_seeds", 1);
-            offerShapelessRecipe(VAItems.TOMATO_SEEDS, VAItems.TOMATO, "tomato_seeds", 1);
-            offerShapelessRecipe(VAItems.CABBAGE_SEEDS, VAItems.CABBAGE, "cabbage_seeds", 1);
+            offerShapelessRecipe(RecipeCategory.MISC, VAItems.COTTON_SEEDS, 1, Pair.of(VAItems.COTTON, 1));
+            offerShapelessRecipe(RecipeCategory.FOOD, VAItems.CORN_SEEDS, 1, Pair.of(VAItems.CORN, 1));
+            offerShapelessRecipe(RecipeCategory.FOOD, VAItems.TOMATO_SEEDS, 1, Pair.of(VAItems.TOMATO, 1));
+            offerShapelessRecipe(RecipeCategory.FOOD, VAItems.CABBAGE_SEEDS, 1, Pair.of(VAItems.CABBAGE, 1));
 
             offerCookingRecipes(VAItems.FRIED_EGG, List.of(Items.EGG, Items.BROWN_EGG, Items.BLUE_EGG), 0.35F, "fried_egg");
             offerCookingRecipes(VAItems.ROASTED_CORN, VAItems.CORN, 0.35F, "corn");
@@ -753,6 +752,17 @@ public final class VARecipeProvider {
             for (Pair<ItemConvertible, Integer> itemProvider : input) {
                 builder.input(itemProvider.getLeft(), itemProvider.getRight());
             }
+            builder.offerTo(this.exporter);
+        }
+
+        @SafeVarargs
+        protected final void offerShapelessRecipe(RecipeCategory category, ItemConvertible output, int count, String group, Pair<ItemConvertible, Integer>... input) {
+            ShapelessRecipeJsonBuilder builder = ShapelessRecipeJsonBuilder.create(this.registryLookup, category, output, count);
+            builder.criterion(hasItem(input[0].getLeft()), conditionsFromItem(input[0].getLeft()));
+            for (Pair<ItemConvertible, Integer> itemProvider : input) {
+                builder.input(itemProvider.getLeft(), itemProvider.getRight());
+            }
+            builder.group(group);
             builder.offerTo(this.exporter);
         }
 

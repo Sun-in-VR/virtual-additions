@@ -6,10 +6,7 @@ import com.github.suninvr.virtualadditions.worldgen.feature.LumwaspNestFeature;
 import com.mojang.serialization.MapCodec;
 import net.fabricmc.fabric.api.biome.v1.BiomeModifications;
 import net.fabricmc.fabric.api.biome.v1.BiomeSelectors;
-import net.minecraft.registry.Registries;
-import net.minecraft.registry.Registry;
-import net.minecraft.registry.RegistryKey;
-import net.minecraft.registry.RegistryKeys;
+import net.minecraft.registry.*;
 import net.minecraft.registry.tag.BiomeTags;
 import net.minecraft.util.Identifier;
 import net.minecraft.world.biome.BiomeKeys;
@@ -56,6 +53,10 @@ public class VAFeatures {
             ORE_BLUESCHIST = registerPlaced(idOf("ore_blueschist"));
             ORE_SYENITE = registerPlaced(idOf("ore_syenite"));
         }
+
+        //public void bootstrap(Registerable<PlacedFeature> featureRegisterable) {
+        //    PlacedFeatures.register(featureRegisterable, );
+        //}
     }
 
     public static class Configured {

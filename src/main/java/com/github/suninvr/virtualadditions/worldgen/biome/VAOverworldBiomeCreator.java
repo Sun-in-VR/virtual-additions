@@ -1,5 +1,6 @@
 package com.github.suninvr.virtualadditions.worldgen.biome;
 
+import com.github.suninvr.virtualadditions.VirtualAdditions;
 import com.github.suninvr.virtualadditions.registry.VAEntityType;
 import com.github.suninvr.virtualadditions.registry.VAFeatures;
 import net.minecraft.entity.SpawnGroup;
@@ -48,10 +49,12 @@ public class VAOverworldBiomeCreator {
         DefaultBiomeFeatures.addDefaultMushrooms(generation);
         DefaultBiomeFeatures.addDefaultVegetation(generation, false);
 
-        generation.feature(GenerationStep.Feature.UNDERGROUND_ORES, VAFeatures.Placed.ORE_ROCK_SALT_OCEANS);
-        generation.feature(GenerationStep.Feature.UNDERGROUND_ORES, VAFeatures.Placed.ORE_CALCITE);
-        generation.feature(GenerationStep.Feature.UNDERGROUND_DECORATION, VAFeatures.Placed.ROCK_SALT_CEILING);
-        generation.feature(GenerationStep.Feature.UNDERGROUND_DECORATION, VAFeatures.Placed.ROCK_SALT_FLOOR);
+        if (!VirtualAdditions.isDataGenerationActive) {
+            generation.feature(GenerationStep.Feature.UNDERGROUND_ORES, VAFeatures.Placed.ORE_ROCK_SALT_OCEANS);
+            generation.feature(GenerationStep.Feature.UNDERGROUND_ORES, VAFeatures.Placed.ORE_CALCITE);
+            generation.feature(GenerationStep.Feature.UNDERGROUND_DECORATION, VAFeatures.Placed.ROCK_SALT_CEILING);
+            generation.feature(GenerationStep.Feature.UNDERGROUND_DECORATION, VAFeatures.Placed.ROCK_SALT_FLOOR);
+        }
 
         return new Biome.Builder()
                 .precipitation(true)
@@ -85,10 +88,12 @@ public class VAOverworldBiomeCreator {
         DefaultBiomeFeatures.addDefaultMushrooms(generation);
         DefaultBiomeFeatures.addDefaultVegetation(generation, false);
 
-        generation.feature(GenerationStep.Feature.UNDERGROUND_DECORATION, VAFeatures.Placed.WASP_DEN_CEILING);
-        generation.feature(GenerationStep.Feature.UNDERGROUND_DECORATION, VAFeatures.Placed.WASP_DEN_FLOOR);
-        generation.feature(GenerationStep.Feature.VEGETAL_DECORATION, VAFeatures.Placed.GREENCAP_MUSHROOM);
-        generation.feature(GenerationStep.Feature.VEGETAL_DECORATION, VAFeatures.Placed.LUMWASP_NEST);
+        if (!VirtualAdditions.isDataGenerationActive) {
+            generation.feature(GenerationStep.Feature.UNDERGROUND_DECORATION, VAFeatures.Placed.WASP_DEN_CEILING);
+            generation.feature(GenerationStep.Feature.UNDERGROUND_DECORATION, VAFeatures.Placed.WASP_DEN_FLOOR);
+            generation.feature(GenerationStep.Feature.VEGETAL_DECORATION, VAFeatures.Placed.GREENCAP_MUSHROOM);
+            generation.feature(GenerationStep.Feature.VEGETAL_DECORATION, VAFeatures.Placed.LUMWASP_NEST);
+        }
 
         return new Biome.Builder()
                 .precipitation(true)

@@ -1,5 +1,6 @@
 package com.github.suninvr.virtualadditions.mixin;
 
+import com.github.suninvr.virtualadditions.VirtualAdditions;
 import com.github.suninvr.virtualadditions.registry.VABiomeKeys;
 import com.mojang.datafixers.util.Pair;
 import net.minecraft.registry.RegistryKey;

@@ -1,13 +1,17 @@
 package com.github.suninvr.virtualadditions.datagen;
 
+import com.github.suninvr.virtualadditions.VirtualAdditions;
 import net.fabricmc.fabric.api.datagen.v1.DataGeneratorEntrypoint;
 import net.fabricmc.fabric.api.datagen.v1.FabricDataGenerator;
 
 import static com.github.suninvr.virtualadditions.VirtualAdditions.idOf;
 
 public class VirtualAdditionsDataGeneration implements DataGeneratorEntrypoint {
+
     @Override
     public void onInitializeDataGenerator(FabricDataGenerator fabricDataGenerator) {
+        VirtualAdditions.isDataGenerationActive = true;
+
         FabricDataGenerator.Pack pack = fabricDataGenerator.createPack();
         pack.addProvider(VAItemTagProvider.base());
         pack.addProvider(VABlockTagProvider.base());
