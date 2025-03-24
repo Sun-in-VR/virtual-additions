@@ -673,7 +673,7 @@ public class VAItems {
         STEEL_CHESTPLATE = register("steel_chestplate", settings -> new Item(settings.armor(VAArmorMaterial.STEEL, EquipmentType.CHESTPLATE)), new Item.Settings().maxCount(1).maxDamage(EquipmentType.CHESTPLATE.getMaxDamage(24)), ItemGroups.COMBAT, prev);
         STEEL_LEGGINGS = register("steel_leggings", settings -> new Item(settings.armor(VAArmorMaterial.STEEL, EquipmentType.LEGGINGS)), new Item.Settings().maxCount(1).maxDamage(EquipmentType.LEGGINGS.getMaxDamage(24)), ItemGroups.COMBAT, prev);
         STEEL_BOOTS = register("steel_boots", settings -> new Item(settings.armor(VAArmorMaterial.STEEL, EquipmentType.BOOTS)), new Item.Settings().maxCount(1).maxDamage(EquipmentType.BOOTS.getMaxDamage(24)), ItemGroups.COMBAT, prev);
-        STEEL_HORSE_ARMOR = register("steel_horse_armor", new Item.Settings().horseArmor(VAArmorMaterial.STEEL));
+        STEEL_HORSE_ARMOR = register("steel_horse_armor", new Item.Settings().horseArmor(VAArmorMaterial.STEEL), at(ItemGroups.COMBAT, Items.GOLDEN_HORSE_ARMOR));
 
         //region Exposed Blocks
 
