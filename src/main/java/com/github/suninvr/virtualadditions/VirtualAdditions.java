@@ -24,7 +24,7 @@ public class VirtualAdditions implements ModInitializer {
 
 	public static Logger LOGGER = LogManager.getLogger();
 
-	public static final boolean DEBUG = false;
+	public static boolean DEBUG;
 
     public static boolean areBlocksInitialized() {
 		return areBlocksInitialized;
@@ -40,7 +40,8 @@ public class VirtualAdditions implements ModInitializer {
 
     @Override
 	public void onInitialize() {
-		LOGGER.log(Level.INFO, "Virtual Additions is now loading!");
+		DEBUG = "true".equals(System.getenv("VIRTUAL_ADDITIONS_DEBUG"));
+		LOGGER.log(Level.INFO, DEBUG ? "Virtual Additions is in debug mode!" : "Virtual Additions is now loading!");
 
 		FabricLoader.getInstance().getModContainer(MODID).ifPresent(
 				modContainer -> {
