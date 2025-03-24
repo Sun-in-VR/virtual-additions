@@ -36,6 +36,9 @@ public class VAFeatures {
         public static final RegistryKey<PlacedFeature> ROCK_SALT_CEILING;
         public static final RegistryKey<PlacedFeature> ROCK_SALT_FLOOR;
         public static final RegistryKey<PlacedFeature> ORE_CALCITE;
+        public static final RegistryKey<PlacedFeature> ORE_HORNFELS;
+        public static final RegistryKey<PlacedFeature> ORE_BLUESCHIST;
+        public static final RegistryKey<PlacedFeature> ORE_SYENITE;
 
         static {
             ORE_IOLITE = registerPlaced(idOf("ore_iolite"));
@@ -49,6 +52,9 @@ public class VAFeatures {
             ROCK_SALT_CEILING = registerPlaced(idOf("rock_salt_ceiling"));
             ROCK_SALT_FLOOR = registerPlaced(idOf("rock_salt_floor"));
             ORE_CALCITE = registerPlaced(idOf("ore_calcite"));
+            ORE_HORNFELS = registerPlaced(idOf("ore_hornfels"));
+            ORE_BLUESCHIST = registerPlaced(idOf("ore_blueschist"));
+            ORE_SYENITE = registerPlaced(idOf("ore_syenite"));
         }
     }
 
@@ -75,6 +81,21 @@ public class VAFeatures {
                 BiomeSelectors.foundInOverworld(),
                 GenerationStep.Feature.UNDERGROUND_ORES,
                 Placed.ORE_ROCK_SALT
+        );
+        BiomeModifications.addFeature(
+                BiomeSelectors.foundInOverworld(),
+                GenerationStep.Feature.UNDERGROUND_ORES,
+                Placed.ORE_HORNFELS
+        );
+        BiomeModifications.addFeature(
+                BiomeSelectors.foundInOverworld(),
+                GenerationStep.Feature.UNDERGROUND_ORES,
+                Placed.ORE_BLUESCHIST
+        );
+        BiomeModifications.addFeature(
+                BiomeSelectors.foundInOverworld(),
+                GenerationStep.Feature.UNDERGROUND_ORES,
+                Placed.ORE_SYENITE
         );
         BiomeModifications.addFeature(
                 BiomeSelectors.tag(BiomeTags.IS_OCEAN),

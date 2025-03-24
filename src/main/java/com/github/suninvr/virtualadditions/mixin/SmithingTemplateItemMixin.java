@@ -14,9 +14,6 @@ import java.util.List;
 
 @Mixin(SmithingTemplateItem.class)
 public class SmithingTemplateItemMixin {
-    @Unique
-
-
     @Inject(method = "getArmorTrimEmptyAdditionsSlotTextures", at = @At("RETURN"), cancellable = true)
     private static void virtualAdditions$getArmorTrimEmptyAdditionsSlotTextures(CallbackInfoReturnable<List<Identifier>> cir) {
         ArrayList<Identifier> list = new ArrayList<>(cir.getReturnValue());

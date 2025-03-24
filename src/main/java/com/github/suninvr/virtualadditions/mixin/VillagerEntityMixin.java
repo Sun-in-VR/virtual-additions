@@ -14,7 +14,7 @@ import java.util.Set;
 public class VillagerEntityMixin {
 
     @Shadow @Final @Mutable
-    private static Map<Item, Integer> ITEM_FOOD_VALUES;
+    public static Map<Item, Integer> ITEM_FOOD_VALUES;
 
     @Unique
     private static final Map<Item, Integer> virtualAddition$ITEM_FOOD_VALUES = ImmutableMap.of(

@@ -1,6 +1,8 @@
 {
     "pack": {
         "pack_format": 71,
-        "description": "World Generation for Virtual Additions"
+        "description": [
+            {"text":  "DEPRACATED! Will be removed later!", "color":  "red"}
+        ]
     }
 }

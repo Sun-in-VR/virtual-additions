@@ -38,6 +38,7 @@
     "SmithingTemplateItemMixin",
     "TradeOffersMixin",
     "VanillaBiomeParametersMixin",
+    "VanillaSurfaceRulesMixin",
     "VillagerEntityMixin",
     "WallBlockMixin",
     "WaterFluidMixin",
