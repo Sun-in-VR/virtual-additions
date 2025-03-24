@@ -75,11 +75,11 @@ public abstract class AcidFluid extends FlowableFluid {
     public void randomDisplayTick(World world, BlockPos pos, FluidState state, Random random) {
         if (!state.isStill() && !(Boolean)state.get(FALLING)) {
             if (random.nextInt(64) == 0) {
-                world.playSound(null, pos.getX() + 0.5, pos.getY() + 0.5, pos.getZ() + 0.5, SoundEvents.BLOCK_WATER_AMBIENT, SoundCategory.BLOCKS, random.nextFloat() * 0.25F + 0.75F, random.nextFloat() + 0.1F);
+                world.playSoundClient(pos.getX() + 0.5, pos.getY() + 0.5, pos.getZ() + 0.5, SoundEvents.BLOCK_WATER_AMBIENT, SoundCategory.BLOCKS, random.nextFloat() * 0.25F + 0.75F, random.nextFloat() + 0.1F, true);
             }
         } else if ( world.getBlockState(pos.up()).isAir()) {
             if (random.nextInt(200) == 0) {
-                world.playSound(null, pos.getX(), pos.getY(), pos.getZ(), VASoundEvents.ACID_AMBIENT, SoundCategory.BLOCKS, 0.2F + random.nextFloat() * 0.2F, 0.9F + random.nextFloat() * 0.15F);
+                world.playSoundClient(pos.getX(), pos.getY(), pos.getZ(), VASoundEvents.ACID_AMBIENT, SoundCategory.BLOCKS, 0.2F + random.nextFloat() * 0.2F, 0.9F + random.nextFloat() * 0.15F, true);
             } else if (random.nextInt(100) == 0) {
                 world.playSound(null, pos.getX() + 0.5, pos.getY() + 0.5, pos.getZ() + 0.5, VASoundEvents.ACID_SIZZLE, SoundCategory.BLOCKS, 0.6F + random.nextFloat() * 0.2F, 0.8F + random.nextFloat() * 0.3F);
                 world.addParticleClient(VAParticleTypes.ACID_SPLASH_EMITTER, pos.getX() + 0.5, pos.getY() + 1, pos.getZ() + 0.5, 0.0, 0.0, 0.0);
