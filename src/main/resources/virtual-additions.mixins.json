@@ -11,7 +11,6 @@
     "BlockMixin",
     "BuiltinBiomesMixin",
     "BundleContentsComponentMixin",
-    "ClientPlayerInteractionManagerMixin",
     "CrossbowItemMixin",
     "DamageSourcesMixin",
     "DeathProtectionComponentMixin",

@@ -4,6 +4,8 @@ import com.github.suninvr.virtualadditions.item.GildType;
 import com.github.suninvr.virtualadditions.item.GildTypes;
 import com.github.suninvr.virtualadditions.item.interfaces.GildedToolItem;
 import com.github.suninvr.virtualadditions.registry.VAEnchantmentTags;
+import net.fabricmc.api.EnvType;
+import net.fabricmc.api.Environment;
 import net.minecraft.block.BlockState;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.network.ClientPlayerInteractionManager;

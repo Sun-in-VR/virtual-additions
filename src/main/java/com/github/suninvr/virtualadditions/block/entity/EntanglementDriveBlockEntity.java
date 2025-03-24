@@ -26,8 +26,10 @@ import net.minecraft.util.Uuids;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Direction;
 import net.minecraft.world.World;
+import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
+import java.util.Optional;
 import java.util.UUID;
 
 @SuppressWarnings({"unused", "DataFlowIssue"})
@@ -36,7 +38,6 @@ public class EntanglementDriveBlockEntity extends BlockEntity implements NamedSc
     private int slotIndex;
     private UUID playerId;
     private int[] playerIdInts;
-    private PlayerEntity player;
     private ItemStack cachedStack;
     private final PropertyDelegate properties = new PropertyDelegate() {
         @Override
@@ -61,10 +62,6 @@ public class EntanglementDriveBlockEntity extends BlockEntity implements NamedSc
                 case 4 -> EntanglementDriveBlockEntity.this.playerIdInts[3] = value;
                 default -> throw new IllegalStateException("Unexpected value: " + index);
             }
-            UUID uuid;
-            if (!(uuid = Uuids.toUuid(EntanglementDriveBlockEntity.this.playerIdInts)).equals(EntanglementDriveBlockEntity.this.playerId)) {
-                EntanglementDriveBlockEntity.this.setPlayerId(uuid);
-            }
             EntanglementDriveBlockEntity.this.markDirty();
         }
 
@@ -74,7 +71,8 @@ public class EntanglementDriveBlockEntity extends BlockEntity implements NamedSc
         }
     };
     private static final Inventory dummyInventory = new DummyInventory();
-    private static final UUID nullId = UUID.fromString("0-0-0-0-0");
+    private static final String nullIdString = "0-0-0-0-0";
+    private static final UUID nullId = UUID.fromString(nullIdString);
 
     public EntanglementDriveBlockEntity(BlockPos pos, BlockState state) {
         super(VABlockEntityType.ENTANGLEMENT_DRIVE, pos, state);
@@ -85,34 +83,32 @@ public class EntanglementDriveBlockEntity extends BlockEntity implements NamedSc
     @Override
     public void readNbt(NbtCompound nbt, RegistryWrapper.WrapperLookup lookup) {
         super.readNbt(nbt, lookup);
-        if (nbt.contains("SlotIndex")) this.slotIndex = nbt.getInt("SlotIndex").get();
-        if (nbt.contains("UUID")) this.setPlayerId(UUID.fromString(nbt.getString("UUID").get())); else this.setPlayerId(nullId);
+        this.slotIndex = nbt.getInt("SlotIndex").orElse(-1);
+        UUID playerId = nbt.get("UUID", Uuids.CODEC).orElse(nullId);
+        this.setPlayerId(playerId);
     }
 
     @Override
     protected void writeNbt(NbtCompound nbt, RegistryWrapper.WrapperLookup lookup) {
         super.writeNbt(nbt, lookup);
         nbt.putInt("SlotIndex", this.slotIndex);
-        nbt.putString("UUID", this.playerId.toString());
+        nbt.put("UUID", Uuids.CODEC, this.playerId);
     }
 
-    @Nullable
-    public PlayerEntity getPlayer() {
-        if (this.player == null && !this.playerId.equals(nullId)) this.setPlayerId(this.playerId);
-        return this.player;
+    @NotNull
+    public Optional<PlayerEntity> getPlayer() {
+        return Optional.ofNullable(this.getWorld().getServer().getPlayerManager().getPlayer(this.playerId));
     }
 
-    private void setPlayerId(UUID playerId) {
+    public void setPlayerId(UUID playerId) {
         this.playerId = playerId;
         this.playerIdInts = Uuids.toIntArray(playerId);
-        if (this.getWorld() == null || this.getWorld().isClient()) return;
-        this.player = this.getWorld().getServer().getPlayerManager().getPlayer(this.playerId);
     }
 
     @Nullable
     private PlayerInventory getPlayerInventory() {
-        if (this.getPlayer() == null) return null;
-        return this.getPlayer().getInventory();
+        if (this.getPlayer().isEmpty()) return null;
+        return this.getPlayer().get().getInventory();
     }
 
     public int getSlotIndex() {
@@ -222,13 +218,15 @@ public class EntanglementDriveBlockEntity extends BlockEntity implements NamedSc
 
     private boolean canModifyPlayerInventory() {
         if (!canAccessPlayerInventory()) return false;
-        StatusEffectInstance effect = this.getPlayer().getStatusEffect(VAStatusEffects.IOLITE_INTERFERENCE);
+        PlayerEntity player = this.getPlayer().get();
+        StatusEffectInstance effect = player.getStatusEffect(VAStatusEffects.IOLITE_INTERFERENCE);
         boolean bl = effect == null || effect.getAmplifier() < 1;
-        return !this.getPlayer().isDead() && !this.getPlayer().isSpectator() && bl;
+        return !player.isDead() && !player.isSpectator() && bl;
     }
 
     @SuppressWarnings("BooleanMethodIsAlwaysInverted")
     private boolean canAccessPlayerInventory() {
+        if (this.getPlayer().isEmpty()) return false;
         if (this.slotIndex < 0) return false;
         BlockState state = this.getWorld() != null ? this.getWorld().getBlockState(this.getPos()) : Blocks.AIR.getDefaultState();
         return this.getPlayerInventory() != null && state.isOf(VABlocks.ENTANGLEMENT_DRIVE) && !state.get(EntanglementDriveBlock.POWERED);

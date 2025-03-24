@@ -259,6 +259,9 @@ public class EntanglementDriveScreenHandler extends ScreenHandler {
     }
 
     public void setActivePlayerId(UUID uuid) {
+        this.getEntity().ifPresent(entity -> {
+            entity.setPlayerId(uuid);
+        });
         int[] idArray = Uuids.toIntArray(uuid);
         this.propertyDelegate.set(1, idArray[0]);
         this.propertyDelegate.set(2, idArray[1]);
