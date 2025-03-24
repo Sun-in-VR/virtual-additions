@@ -44,7 +44,31 @@ public class VALootTableModifiers {
 
             if (LootTables.SPAWN_BONUS_CHEST.equals(key)) {
                 LootPool.Builder bundleBuilder = LootPool.builder()
-                        .with(ItemEntry.builder(Items.BUNDLE));
+                        .with(ItemEntry.builder(Items.BUNDLE))
+                        .with(ItemEntry.builder(Items.WHITE_BUNDLE))
+                        .with(ItemEntry.builder(Items.LIGHT_GRAY_BUNDLE))
+                        .with(ItemEntry.builder(Items.GRAY_BUNDLE))
+                        .with(ItemEntry.builder(Items.BLACK_BUNDLE))
+                        .with(ItemEntry.builder(VAItems.TAN_BUNDLE))
+                        .with(ItemEntry.builder(Items.BROWN_BUNDLE))
+                        .with(ItemEntry.builder(VAItems.LILAC_BUNDLE))
+                        .with(ItemEntry.builder(VAItems.MAROON_BUNDLE))
+                        .with(ItemEntry.builder(Items.RED_BUNDLE))
+                        .with(ItemEntry.builder(VAItems.SINOPIA_BUNDLE))
+                        .with(ItemEntry.builder(Items.ORANGE_BUNDLE))
+                        .with(ItemEntry.builder(Items.YELLOW_BUNDLE))
+                        .with(ItemEntry.builder(VAItems.CHARTREUSE_BUNDLE))
+                        .with(ItemEntry.builder(Items.LIME_BUNDLE))
+                        .with(ItemEntry.builder(Items.GREEN_BUNDLE))
+                        .with(ItemEntry.builder(VAItems.VIRIDIAN_BUNDLE))
+                        .with(ItemEntry.builder(Items.CYAN_BUNDLE))
+                        .with(ItemEntry.builder(Items.LIGHT_BLUE_BUNDLE))
+                        .with(ItemEntry.builder(Items.BLUE_BUNDLE))
+                        .with(ItemEntry.builder(VAItems.INDIGO_BUNDLE))
+                        .with(ItemEntry.builder(Items.PURPLE_BUNDLE))
+                        .with(ItemEntry.builder(VAItems.PLUM_BUNDLE))
+                        .with(ItemEntry.builder(Items.MAGENTA_BUNDLE))
+                        .with(ItemEntry.builder(Items.PINK_BUNDLE));
                 tableBuilder.pool(bundleBuilder);
             }
 
@@ -105,7 +129,7 @@ public class VALootTableModifiers {
                 });
             }
 
-            // Village Toolsmith and Weaponsmith Chests
+            // Toolsmith and Weaponsmith Chests
             if (LootTables.VILLAGE_TOOLSMITH_CHEST.equals(key) || LootTables.VILLAGE_WEAPONSMITH_CHEST.equals(key)) {
                 tableBuilder.modifyPools( builder -> builder
                         .with(ItemEntry.builder(STEEL_INGOT).weight(3).apply(SetCountLootFunction.builder(UniformLootNumberProvider.create(1, 4))))
@@ -126,7 +150,17 @@ public class VALootTableModifiers {
                 tableBuilder.modifyPools( builder -> builder.with(ItemEntry.builder(CORN).weight(5).apply(SetCountLootFunction.builder(UniformLootNumberProvider.create(1, 4)))));
             }
 
-            // Jungle Temple Chest
+            // Plains Village House Chests
+            if (LootTables.VILLAGE_PLAINS_CHEST.equals(key)) {
+                tableBuilder.modifyPools( builder -> builder.with(ItemEntry.builder(TOMATO).weight(5).apply(SetCountLootFunction.builder(UniformLootNumberProvider.create(1, 4)))));
+            }
+
+            // Taiga and Snowy Village House Chests
+            if (LootTables.VILLAGE_TAIGA_HOUSE_CHEST.equals(key) || LootTables.VILLAGE_SNOWY_HOUSE_CHEST.equals(key)) {
+                tableBuilder.modifyPools( builder -> builder.with(ItemEntry.builder(CABBAGE).weight(5).apply(SetCountLootFunction.builder(UniformLootNumberProvider.create(1, 2)))));
+            }
+
+            // Jungle Temple Loot
             if (LootTables.JUNGLE_TEMPLE_CHEST.equals(key)) {
                 final int[] i = {0};
                 tableBuilder.modifyPools(builder -> {
@@ -137,7 +171,7 @@ public class VALootTableModifiers {
                 });
             }
 
-            // End City Chest
+            // End City Loot
             if (LootTables.END_CITY_TREASURE_CHEST.equals(key)) {
                 final int[] i = {0};
                 tableBuilder.modifyPools(builder -> {
@@ -177,6 +211,7 @@ public class VALootTableModifiers {
                 });
             }
 
+            // Shipwreck Supply Loot
             if (LootTables.SHIPWRECK_SUPPLY_CHEST.equals(key)) {
                 final int[] i = {0};
                 tableBuilder.modifyPools(builder -> {
@@ -193,21 +228,9 @@ public class VALootTableModifiers {
             }
 
             // Zombie Loot
-            if (lootTableKeyMatches(key, EntityType.ZOMBIE, EntityType.HUSK)) {
-                final int[] i = {0};
-                tableBuilder.modifyPools(builder -> {
-                    if (i[0] == 1) {
-                        builder.with(ItemEntry.builder(CORN).apply(
-                                FurnaceSmeltLootFunction.builder().conditionally(
-                                        EntityPropertiesLootCondition.builder(
-                                                LootContext.EntityTarget.THIS, EntityPredicate.Builder.create().flags(EntityFlagsPredicate.Builder.create().onFire(true))
-                                        )
-                                )
-                        ));
-                    }
-                    i[0]++;
-                });
-            }
+            //if (lootTableKeyMatches(key, EntityType.ZOMBIE, EntityType.HUSK)) {
+            //
+            //}
         } ));
     }
 
