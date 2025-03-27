@@ -21,6 +21,7 @@ import net.minecraft.util.shape.VoxelShape;
 import net.minecraft.world.BlockView;
 import net.minecraft.world.World;
 import net.minecraft.world.WorldView;
+import net.minecraft.world.tick.ScheduledTickView;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.Locale;
@@ -52,6 +53,18 @@ public class CornCropBlock extends CropBlock {
     public VoxelShape getOutlineShape(BlockState state, BlockView world, BlockPos pos, ShapeContext context) {
         Vec3d offset = state.getModelOffset(pos);
         return state.get(SEGMENT).getShape(state.get(AGE)).offset(offset.x, offset.y, offset.z);
+    }
+
+    @Override
+    protected void scheduledTick(BlockState state, ServerWorld world, BlockPos pos, Random random) {
+        if (!state.canPlaceAt(world, pos)) world.breakBlock(pos, true);
+        super.scheduledTick(state, world, pos, random);
+    }
+
+    @Override
+    protected BlockState getStateForNeighborUpdate(BlockState state, WorldView world, ScheduledTickView tickView, BlockPos pos, Direction direction, BlockPos neighborPos, BlockState neighborState, Random random) {
+        tickView.scheduleBlockTick(pos, this, 1);
+        return state;
     }
 
     @Override
@@ -197,7 +210,7 @@ public class CornCropBlock extends CropBlock {
     }
 
     static {
-        SHAPE_AGE_1 = Block.createCuboidShape(4, 0, 4, 12, 4, 12);
+        SHAPE_AGE_1 = Block.createCuboidShape(3, 0, 3, 13, 4, 13);
         SHAPE_AGE_2 = Block.createCuboidShape(3, 0, 3, 13, 8, 13);
         SHAPE_AGE_3 = Block.createCuboidShape(3, 0, 3, 13, 16, 13);
     }

@@ -350,6 +350,22 @@
         }
       }
     },
+    "tomato": {
+      "trigger": "minecraft:consume_item",
+      "conditions": {
+        "item": {
+          "items": "virtual_additions:tomato"
+        }
+      }
+    },
+    "cabbage": {
+      "trigger": "minecraft:consume_item",
+      "conditions": {
+        "item": {
+          "items": "virtual_additions:cabbage"
+        }
+      }
+    },
     "fried_egg": {
       "trigger": "minecraft:consume_item",
       "conditions": {
@@ -549,6 +565,12 @@
     ],
     [
       "roasted_corn"
+    ],
+    [
+      "tomato"
+    ],
+    [
+      "cabbage"
     ],
     [
       "fried_egg"

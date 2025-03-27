@@ -1,6 +1,7 @@
 package com.github.suninvr.virtualadditions.datagen;
 
 import com.github.suninvr.virtualadditions.block.BalloonBulbPlantBlock;
+import com.github.suninvr.virtualadditions.block.CornCropBlock;
 import com.github.suninvr.virtualadditions.registry.VABlocks;
 import com.github.suninvr.virtualadditions.registry.VACollections;
 import com.github.suninvr.virtualadditions.registry.VAItems;
@@ -23,17 +24,23 @@ import net.minecraft.item.ItemConvertible;
 import net.minecraft.item.Items;
 import net.minecraft.loot.LootPool;
 import net.minecraft.loot.LootTable;
+import net.minecraft.loot.condition.AnyOfLootCondition;
 import net.minecraft.loot.condition.BlockStatePropertyLootCondition;
+import net.minecraft.loot.condition.LocationCheckLootCondition;
 import net.minecraft.loot.condition.LootCondition;
 import net.minecraft.loot.entry.ItemEntry;
 import net.minecraft.loot.function.ApplyBonusLootFunction;
+import net.minecraft.loot.function.ExplosionDecayLootFunction;
 import net.minecraft.loot.function.SetCountLootFunction;
 import net.minecraft.loot.provider.number.ConstantLootNumberProvider;
 import net.minecraft.loot.provider.number.UniformLootNumberProvider;
+import net.minecraft.predicate.BlockPredicate;
 import net.minecraft.predicate.StatePredicate;
+import net.minecraft.predicate.entity.LocationPredicate;
 import net.minecraft.registry.RegistryEntryLookup;
 import net.minecraft.registry.RegistryKeys;
 import net.minecraft.registry.RegistryWrapper;
+import net.minecraft.util.math.BlockPos;
 
 import java.util.concurrent.CompletableFuture;
 
@@ -154,6 +161,13 @@ public final class VABlockLootTableProvider {
             LootCondition.Builder cabbageBuilder = BlockStatePropertyLootCondition.builder(VABlocks.CABBAGE)
                     .properties(StatePredicate.Builder.create().exactMatch(CropBlock.AGE, 7));
             this.addDrop(VABlocks.CABBAGE, this.cropDrops(VABlocks.CABBAGE, VAItems.CABBAGE, VAItems.CABBAGE_SEEDS, cabbageBuilder));
+
+            LootCondition.Builder cottonBuilder = BlockStatePropertyLootCondition.builder(VABlocks.COTTON)
+                    .properties(StatePredicate.Builder.create().exactMatch(CropBlock.AGE, 7));
+            this.addDrop(VABlocks.COTTON, this.cropDrops(VABlocks.COTTON, VAItems.COTTON, VAItems.COTTON_SEEDS, 1, 2, cottonBuilder));
+
+            this.addDrop(VABlocks.CORN_CROP, this.cornDrops());
+
 
             addColorfulBlockSetDrops(VACollections.CHARTREUSE);
             addColorfulBlockSetDrops(VACollections.MAROON);
@@ -339,6 +353,114 @@ public final class VABlockLootTableProvider {
                                     .apply(ApplyBonusLootFunction.oreDrops(impl.getOrThrow(Enchantments.FORTUNE)))
                     )
             );
+        }
+
+        protected LootTable.Builder cornDrops() {
+            RegistryWrapper.Impl<Enchantment> impl = this.registries.getOrThrow(RegistryKeys.ENCHANTMENT);
+
+            LootPool.Builder seedsLower = LootPool.builder().with(
+                    ItemEntry.builder(VAItems.CORN_SEEDS)
+                            .apply(ApplyBonusLootFunction.binomialWithBonusCount(impl.getOrThrow(Enchantments.FORTUNE), 0.5714286F, 3).conditionally(BlockStatePropertyLootCondition.builder(VABlocks.CORN_CROP).properties(StatePredicate.Builder.create().exactMatch(CornCropBlock.AGE, 7))))
+                            .conditionally(BlockStatePropertyLootCondition.builder(VABlocks.CORN_CROP).properties(StatePredicate.Builder.create().exactMatch(CornCropBlock.SEGMENT, CornCropBlock.CornCropSegment.BOTTOM)))
+                            .conditionally(
+                                    AnyOfLootCondition.builder(
+                                            createCornCropLootCondition(CornCropBlock.CornCropSegment.MIDDLE, 1),
+                                            AnyOfLootCondition.builder(
+                                                    BlockStatePropertyLootCondition.builder(VABlocks.CORN_CROP).properties(StatePredicate.Builder.create().exactMatch(CornCropBlock.AGE, 0)),
+                                                    BlockStatePropertyLootCondition.builder(VABlocks.CORN_CROP).properties(StatePredicate.Builder.create().exactMatch(CornCropBlock.AGE, 1)),
+                                                    BlockStatePropertyLootCondition.builder(VABlocks.CORN_CROP).properties(StatePredicate.Builder.create().exactMatch(CornCropBlock.AGE, 2))
+                                            )
+
+                                    )
+                            ).conditionally(
+                                    AnyOfLootCondition.builder(
+                                            createCornCropLootCondition(CornCropBlock.CornCropSegment.TOP, 2),
+                                            AnyOfLootCondition.builder(
+                                                    BlockStatePropertyLootCondition.builder(VABlocks.CORN_CROP).properties(StatePredicate.Builder.create().exactMatch(CornCropBlock.AGE, 0)),
+                                                    BlockStatePropertyLootCondition.builder(VABlocks.CORN_CROP).properties(StatePredicate.Builder.create().exactMatch(CornCropBlock.AGE, 1)),
+                                                    BlockStatePropertyLootCondition.builder(VABlocks.CORN_CROP).properties(StatePredicate.Builder.create().exactMatch(CornCropBlock.AGE, 2)),
+                                                    BlockStatePropertyLootCondition.builder(VABlocks.CORN_CROP).properties(StatePredicate.Builder.create().exactMatch(CornCropBlock.AGE, 3)),
+                                                    BlockStatePropertyLootCondition.builder(VABlocks.CORN_CROP).properties(StatePredicate.Builder.create().exactMatch(CornCropBlock.AGE, 4)),
+                                                    BlockStatePropertyLootCondition.builder(VABlocks.CORN_CROP).properties(StatePredicate.Builder.create().exactMatch(CornCropBlock.AGE, 5))
+                                            )
+
+                                    )
+                            )
+            );
+            LootPool.Builder seedsMiddle = LootPool.builder().with(
+                    ItemEntry.builder(VAItems.CORN_SEEDS)
+                            .apply(ApplyBonusLootFunction.binomialWithBonusCount(impl.getOrThrow(Enchantments.FORTUNE), 0.5714286F, 3).conditionally(BlockStatePropertyLootCondition.builder(VABlocks.CORN_CROP).properties(StatePredicate.Builder.create().exactMatch(CornCropBlock.AGE, 7))))
+                            .conditionally(BlockStatePropertyLootCondition.builder(VABlocks.CORN_CROP).properties(StatePredicate.Builder.create().exactMatch(CornCropBlock.SEGMENT, CornCropBlock.CornCropSegment.MIDDLE)))
+                            .conditionally(createCornCropLootCondition(CornCropBlock.CornCropSegment.BOTTOM, -1))
+                            .conditionally(
+                                    AnyOfLootCondition.builder(
+                                            createCornCropLootCondition(CornCropBlock.CornCropSegment.TOP, 1),
+                                            AnyOfLootCondition.builder(
+                                                    BlockStatePropertyLootCondition.builder(VABlocks.CORN_CROP).properties(StatePredicate.Builder.create().exactMatch(CornCropBlock.AGE, 0)),
+                                                    BlockStatePropertyLootCondition.builder(VABlocks.CORN_CROP).properties(StatePredicate.Builder.create().exactMatch(CornCropBlock.AGE, 1)),
+                                                    BlockStatePropertyLootCondition.builder(VABlocks.CORN_CROP).properties(StatePredicate.Builder.create().exactMatch(CornCropBlock.AGE, 2)),
+                                                    BlockStatePropertyLootCondition.builder(VABlocks.CORN_CROP).properties(StatePredicate.Builder.create().exactMatch(CornCropBlock.AGE, 3)),
+                                                    BlockStatePropertyLootCondition.builder(VABlocks.CORN_CROP).properties(StatePredicate.Builder.create().exactMatch(CornCropBlock.AGE, 4)),
+                                                    BlockStatePropertyLootCondition.builder(VABlocks.CORN_CROP).properties(StatePredicate.Builder.create().exactMatch(CornCropBlock.AGE, 5))
+                                            )
+
+                                    )
+                            )
+            );
+            LootPool.Builder seedsUpper = LootPool.builder().with(
+                    ItemEntry.builder(VAItems.CORN_SEEDS)
+                            .apply(ApplyBonusLootFunction.binomialWithBonusCount(impl.getOrThrow(Enchantments.FORTUNE), 0.5714286F, 3).conditionally(BlockStatePropertyLootCondition.builder(VABlocks.CORN_CROP).properties(StatePredicate.Builder.create().exactMatch(CornCropBlock.AGE, 7))))
+                            .conditionally(BlockStatePropertyLootCondition.builder(VABlocks.CORN_CROP).properties(StatePredicate.Builder.create().exactMatch(CornCropBlock.SEGMENT, CornCropBlock.CornCropSegment.TOP)))
+                            .conditionally(createCornCropLootCondition(CornCropBlock.CornCropSegment.MIDDLE, -1))
+                            .conditionally(createCornCropLootCondition(CornCropBlock.CornCropSegment.BOTTOM, -2))
+            );
+
+            LootPool.Builder cornLower = LootPool.builder().with(
+                    ItemEntry.builder(VAItems.CORN)
+                            .conditionally(BlockStatePropertyLootCondition.builder(VABlocks.CORN_CROP).properties(
+                                    StatePredicate.Builder.create()
+                                            .exactMatch(CornCropBlock.SEGMENT, CornCropBlock.CornCropSegment.BOTTOM)
+                                            .exactMatch(CornCropBlock.AGE, 7)
+                            ))
+                            .conditionally(createCornCropLootCondition(CornCropBlock.CornCropSegment.TOP, 2))
+                            .conditionally(createCornCropLootCondition(CornCropBlock.CornCropSegment.MIDDLE, 1))
+                            .apply(SetCountLootFunction.builder(UniformLootNumberProvider.create(1.0F, 2.0F)))
+            );
+            LootPool.Builder cornMiddle = LootPool.builder().with(
+                    ItemEntry.builder(VAItems.CORN)
+                            .conditionally(BlockStatePropertyLootCondition.builder(VABlocks.CORN_CROP).properties(
+                                    StatePredicate.Builder.create()
+                                            .exactMatch(CornCropBlock.SEGMENT, CornCropBlock.CornCropSegment.MIDDLE)
+                                            .exactMatch(CornCropBlock.AGE, 7)
+                            ))
+                            .conditionally(createCornCropLootCondition(CornCropBlock.CornCropSegment.TOP, 1))
+                            .conditionally(createCornCropLootCondition(CornCropBlock.CornCropSegment.BOTTOM, -1))
+                            .apply(SetCountLootFunction.builder(UniformLootNumberProvider.create(1.0F, 2.0F)))
+            );
+            LootPool.Builder cornUpper = LootPool.builder().with(
+                    ItemEntry.builder(VAItems.CORN)
+                            .conditionally(BlockStatePropertyLootCondition.builder(VABlocks.CORN_CROP).properties(
+                                    StatePredicate.Builder.create()
+                                            .exactMatch(CornCropBlock.SEGMENT, CornCropBlock.CornCropSegment.TOP)
+                                            .exactMatch(CornCropBlock.AGE, 7)
+                            ))
+                            .conditionally(createCornCropLootCondition(CornCropBlock.CornCropSegment.MIDDLE, -1))
+                            .conditionally(createCornCropLootCondition(CornCropBlock.CornCropSegment.BOTTOM, -2))
+                            .apply(SetCountLootFunction.builder(UniformLootNumberProvider.create(1.0F, 2.0F)))
+            );
+
+            return LootTable.builder()
+                    .pool(seedsUpper)
+                    .pool(seedsMiddle)
+                    .pool(seedsLower)
+                    .pool(cornUpper)
+                    .pool(cornMiddle)
+                    .pool(cornLower)
+                    .apply(ExplosionDecayLootFunction.builder());
+        }
+
+        private LootCondition.Builder createCornCropLootCondition(CornCropBlock.CornCropSegment segment, int offset) {
+            return LocationCheckLootCondition.builder(LocationPredicate.Builder.create().block(BlockPredicate.Builder.create().state(StatePredicate.Builder.create().exactMatch(CornCropBlock.SEGMENT, segment))), new BlockPos(0, offset, 0));
         }
     }
 }
