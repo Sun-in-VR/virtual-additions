@@ -17,6 +17,7 @@ public class VirtualAdditionsDataGeneration implements DataGeneratorEntrypoint {
         pack.addProvider(VABlockTagProvider.base());
         pack.addProvider(VARecipeProvider.base());
         pack.addProvider(VABlockLootTableProvider.base());
+        pack.addProvider(VAEntityLootTableProvider.base());
         pack.addProvider(VAEntityTypeTagProvider::new);
         pack.addProvider(VAModelProvider.base());
 

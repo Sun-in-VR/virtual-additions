@@ -45,7 +45,6 @@ public final class VARecipeProvider {
     private static class BaseProvider extends FabricRecipeProvider {
         public BaseProvider(FabricDataOutput output, CompletableFuture<RegistryWrapper.WrapperLookup> registriesFuture) {
             super(output, registriesFuture);
-            System.out.println("Base Provider");
         }
 
         @Override
@@ -79,12 +78,10 @@ public final class VARecipeProvider {
 
         protected BaseGenerator(RegistryWrapper.WrapperLookup registryLookup, RecipeExporter exporter) {
             super(registryLookup, exporter);
-            System.out.println("Base Generator");
         }
 
         @Override
         public void generate() {
-            System.out.println("Base Generator is Generating");
             offerBlasting(List.of(VAItems.RAW_STEEL), RecipeCategory.MISC, VAItems.STEEL_INGOT, 1.0F, 100, "steel_ingot");
             offerSmelting(List.of(VAItems.RAW_STEEL), RecipeCategory.MISC, VAItems.STEEL_INGOT, 1.0F, 200, "steel_ingot");
             offerBlasting(List.of(VAItems.IOLITE_ORE), RecipeCategory.MISC, VAItems.IOLITE, 1.0F, 100, "iolite");

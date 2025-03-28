@@ -18,7 +18,6 @@ import org.spongepowered.asm.mixin.injection.callback.LocalCapture;
 public class BuiltinBiomesMixin {
     @Inject(method = "bootstrap", at = @At("TAIL"), locals = LocalCapture.CAPTURE_FAILHARD)
     private static void virtualAdditions$bootstrapBiomes(Registerable<Biome> biomeRegisterable, CallbackInfo ci, RegistryEntryLookup<PlacedFeature> registryEntryLookup, RegistryEntryLookup<ConfiguredCarver<?>> registryEntryLookup2) {
-        System.out.println("salty caves is registering now!");
         biomeRegisterable.register(VABiomeKeys.WASP_DEN, VAOverworldBiomeCreator.createWaspDen(registryEntryLookup, registryEntryLookup2));
         biomeRegisterable.register(VABiomeKeys.SALTY_CAVES, VAOverworldBiomeCreator.createSaltyCaves(registryEntryLookup, registryEntryLookup2));
     }

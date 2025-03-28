@@ -154,9 +154,9 @@ public class CornCropBlock extends CropBlock {
     @Override
     public boolean canPlaceAt(BlockState state, WorldView world, BlockPos pos) {
         return switch (state.get(SEGMENT)) {
-            case TOP -> checkSegment(world, pos, CornCropSegment.TOP, Direction.DOWN);
-            case MIDDLE -> checkSegment(world, pos, CornCropSegment.MIDDLE, Direction.DOWN) && (state.get(AGE) <= 5 || checkSegment(world, pos, CornCropSegment.MIDDLE, Direction.UP));
-            case BOTTOM -> ((world.getBaseLightLevel(pos, 0) >= 8 || world.isSkyVisible(pos)) && super.canPlaceAt(state, world, pos)) && (state.get(AGE) <= 2 || checkSegment(world, pos, CornCropSegment.BOTTOM, Direction.UP));
+            case TOP -> checkSegment(world, pos, state, Direction.DOWN);
+            case MIDDLE -> checkSegment(world, pos, state, Direction.DOWN) && (state.get(AGE) <= 5 || checkSegment(world, pos, state, Direction.UP));
+            case BOTTOM -> ((world.getBaseLightLevel(pos, 0) >= 8 || world.isSkyVisible(pos)) && super.canPlaceAt(state, world, pos)) && (state.get(AGE) <= 2 || checkSegment(world, pos, state, Direction.UP));
         };
     }
 
@@ -166,10 +166,12 @@ public class CornCropBlock extends CropBlock {
         return this.getDefaultState().with(SEGMENT, CornCropSegment.BOTTOM);
     }
 
-    private boolean checkSegment(WorldView world, BlockPos pos, CornCropSegment segment, Direction direction) {
+    private boolean checkSegment(WorldView world, BlockPos pos, BlockState state, Direction direction) {
+        CornCropSegment segment = state.get(SEGMENT);
         CornCropSegment expectedSegment = direction.equals(Direction.UP) ? segment.aboveSegment() : segment.belowSegment();
         if (expectedSegment == null) return false;
-        return world.getBlockState(pos.offset(direction)).isOf(this) && world.getBlockState(pos.offset(direction)).get(SEGMENT).equals(expectedSegment);
+        BlockState offsetState = world.getBlockState(pos.offset(direction));
+        return offsetState.isOf(this) && offsetState.get(SEGMENT).equals(expectedSegment) && offsetState.get(AGE).equals(state.get(AGE));
     }
 
     public enum CornCropSegment implements StringIdentifiable {
@@ -183,8 +185,7 @@ public class CornCropBlock extends CropBlock {
         }
 
         public VoxelShape getShape(int age) {
-            if (this.equals(MIDDLE)) age -= 3;
-            if (this.equals(TOP)) age -= 6;
+            age -= this.minAge();
             if (age < 1) return SHAPE_AGE_1;
             if (age > 1) return SHAPE_AGE_3;
             return SHAPE_AGE_2;
@@ -205,6 +206,18 @@ public class CornCropBlock extends CropBlock {
                 case TOP -> MIDDLE;
                 case MIDDLE -> BOTTOM;
                 case BOTTOM -> null;
+            };
+        }
+
+        public int getYOffset(CornCropSegment expectedSegment) {
+            return this.ordinal() - expectedSegment.ordinal();
+        }
+
+        public int minAge() {
+            return switch (this) {
+                case TOP -> 6;
+                case MIDDLE -> 3;
+                case BOTTOM -> 0;
             };
         }
     }
