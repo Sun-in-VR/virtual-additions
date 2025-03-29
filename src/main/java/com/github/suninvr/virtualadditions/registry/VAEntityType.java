@@ -22,7 +22,6 @@ public class VAEntityType {
     public static final EntityType<TomatoEntity> TOMATO;
     public static final EntityType<AcidSpitEntity> ACID_SPIT;
     public static final EntityType<LumwaspEntity> LUMWASP;
-    public static final EntityType<LyftEntity> LYFT;
     public static final EntityType<SalineEntity> SALINE;
     public static final EntityType<LightningBottleEntity> LIGHTNING_BOTTLE;
 
@@ -53,11 +52,6 @@ public class VAEntityType {
                 .dimensions(1.5F, 0.75F)
                 .build(RegistryKey.of(RegistryKeys.ENTITY_TYPE, VirtualAdditions.idOf("lumwasp"))));
 
-        LYFT = Registry.register(Registries.ENTITY_TYPE, idOf("lyft"), EntityType.Builder.create(LyftEntity::new, SpawnGroup.CREATURE)
-                .dimensions(1.0F, 0.7F)
-                .requires(VirtualAdditions.PREVIEW)
-                .build(RegistryKey.of(RegistryKeys.ENTITY_TYPE, VirtualAdditions.idOf("lyft"))));
-
         SALINE = Registry.register(Registries.ENTITY_TYPE, idOf("saline"), EntityType.Builder.create(SalineEntity::new, SpawnGroup.MONSTER)
                 .dimensions(0.6F, 1.95F).maxTrackingRange(8)
                 .build(RegistryKey.of(RegistryKeys.ENTITY_TYPE, VirtualAdditions.idOf("saline"))));
@@ -68,13 +62,11 @@ public class VAEntityType {
 
 
         ENTITY_ATTRIBUTES.put(LUMWASP, LumwaspEntity.createLumwaspAttributes());
-        ENTITY_ATTRIBUTES.put(LYFT, LyftEntity.createLyftAttributes());
         ENTITY_ATTRIBUTES.put(SALINE, SalineEntity.createSalineAttributes());
     }
 
     public static void init(){
         SpawnRestriction.register(SALINE, SpawnRestriction.getLocation(SALINE), Heightmap.Type.MOTION_BLOCKING, HostileEntity::canSpawnInDark);
         SpawnRestriction.register(LUMWASP, SpawnRestriction.getLocation(LUMWASP), Heightmap.Type.MOTION_BLOCKING, LumwaspEntity::canSpawnInDark);
-        SpawnRestriction.register(LYFT, SpawnRestriction.getLocation(LYFT), Heightmap.Type.MOTION_BLOCKING, ((type, world, spawnReason, pos, random) -> SpawnReason.isTrialSpawner(spawnReason)||world.getBlockState(pos.down()).isOf(VABlocks.GRASSY_FLOATROCK)  ));
     }
 }

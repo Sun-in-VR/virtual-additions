@@ -161,13 +161,11 @@ public class VARenderers {
 
     private static void initEntityRenderers() {
         EntityModelLayerRegistry.registerModelLayer(LUMWASP_LAYER, LumwaspEntityModel::getTexturedModelData);
-        EntityModelLayerRegistry.registerModelLayer(LYFT_LAYER, LyftEntityModel::getTexturedModelData);
         EntityRendererRegistry.register(VAEntityType.CLIMBING_ROPE, ClimbingRopeEntityRenderer::new);
         EntityRendererRegistry.register(VAEntityType.STEEL_BOMB, FlyingItemEntityRenderer::new);
         EntityRendererRegistry.register(VAEntityType.TOMATO, FlyingItemEntityRenderer::new);
         EntityRendererRegistry.register(VAEntityType.ACID_SPIT, AcidSpitEntityRenderer::new);
         EntityRendererRegistry.register(VAEntityType.LUMWASP, LumwaspEntityRenderer::new);
-        EntityRendererRegistry.register(VAEntityType.LYFT, LyftEntityRenderer::new);
         EntityRendererRegistry.register(VAEntityType.SALINE, SalineEntityRenderer::new);
         EntityRendererRegistry.register(VAEntityType.LIGHTNING_BOTTLE, FlyingItemEntityRenderer::new);
     }

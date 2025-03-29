@@ -429,7 +429,6 @@ public class VAItems {
     public static final Item REMOTE_NOTIFIER;
     public static final Item SALINE_SPAWN_EGG;
     public static final Item LUMWASP_SPAWN_EGG;
-    public static final Item LYFT_SPAWN_EGG;
 
     public static final ToolSet AMETHYST_DIAMOND_TOOL_SET;
     public static final ToolSet COPPER_DIAMOND_TOOL_SET;
@@ -1123,8 +1122,6 @@ public class VAItems {
 
         SALINE_SPAWN_EGG = register("saline_spawn_egg", settings -> new SpawnEggItem(VAEntityType.SALINE, settings), new Item.Settings(), ItemGroups.SPAWN_EGGS, Items.RAVAGER_SPAWN_EGG);
         LUMWASP_SPAWN_EGG = register("lumwasp_spawn_egg", settings -> new SpawnEggItem(VAEntityType.LUMWASP, settings), new Item.Settings(), ItemGroups.SPAWN_EGGS, Items.LLAMA_SPAWN_EGG);
-        LYFT_SPAWN_EGG = register("lyft_spawn_egg", settings -> new SpawnEggItem(VAEntityType.LYFT, settings), new Item.Settings(), ItemGroups.SPAWN_EGGS, prev);
-
         //endregion
     }
 

@@ -383,7 +383,6 @@ public class VABlocks {
     public static final Block ENTANGLEMENT_DRIVE;
     public static final Block REMOTE_NOTIFIER;
     public static final Block DESTRUCTIVE_SCULK;
-    public static final Block WIND;
 
     public static final BlockSetType AEROBLOOM = BlockSetTypeBuilder.copyOf(BlockSetType.CHERRY).build(idOf("aerobloom"));
     public static final WoodType AEROBLOOM_WOODTYPE = WoodType.register(WoodTypeBuilder.copyOf(WoodType.CHERRY).build(idOf("aerobloom"), AEROBLOOM));
@@ -786,7 +785,6 @@ public class VABlocks {
         REMOTE_NOTIFIER = register("remote_notifier", RemoteNotifierBlock::new, Settings.create().nonOpaque().sounds(BlockSoundGroup.NETHERITE).hardness(22.5F).requiresTool().resistance(600.0F).requires(VirtualAdditions.PREVIEW));
 
         DESTRUCTIVE_SCULK = register("destructive_sculk", DestructiveSculkBlock::new, Settings.copy(Blocks.SCULK));
-        WIND = register("wind", WindBlock::new, Settings.copy(Blocks.AIR));
 
         setBlocksInitialized();
     }

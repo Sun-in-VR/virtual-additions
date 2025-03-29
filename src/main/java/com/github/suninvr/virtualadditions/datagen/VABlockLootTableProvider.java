@@ -356,68 +356,68 @@ public final class VABlockLootTableProvider {
         protected LootTable.Builder cornDrops() {
             RegistryWrapper.Impl<Enchantment> impl = this.registries.getOrThrow(RegistryKeys.ENCHANTMENT);
             return LootTable.builder()
-                    .pool(createCornCropSeedsLoot(impl, CornCropBlock.CornCropSegment.TOP))
-                    .pool(createCornCropSeedsLoot(impl, CornCropBlock.CornCropSegment.MIDDLE))
-                    .pool(createCornCropSeedsLoot(impl, CornCropBlock.CornCropSegment.BOTTOM))
-                    .pool(createCornCropLoot(CornCropBlock.CornCropSegment.TOP))
-                    .pool(createCornCropLoot(CornCropBlock.CornCropSegment.MIDDLE))
-                    .pool(createCornCropLoot(CornCropBlock.CornCropSegment.BOTTOM))
+                    .pool(createCornCropSeedsLoot(impl, CornCropBlock.Segment.TOP))
+                    .pool(createCornCropSeedsLoot(impl, CornCropBlock.Segment.MIDDLE))
+                    .pool(createCornCropSeedsLoot(impl, CornCropBlock.Segment.BOTTOM))
+                    .pool(createCornCropLoot(CornCropBlock.Segment.TOP))
+                    .pool(createCornCropLoot(CornCropBlock.Segment.MIDDLE))
+                    .pool(createCornCropLoot(CornCropBlock.Segment.BOTTOM))
                     .apply(ExplosionDecayLootFunction.builder());
         }
 
-        private LootPool.Builder createCornCropSeedsLoot(RegistryWrapper.Impl<Enchantment> impl, CornCropBlock.CornCropSegment segment) {
+        private LootPool.Builder createCornCropSeedsLoot(RegistryWrapper.Impl<Enchantment> impl, CornCropBlock.Segment segment) {
             LootPool.Builder builder = LootPool.builder();
             builder.with(ItemEntry.builder(VAItems.CORN_SEEDS).apply(ApplyBonusLootFunction.binomialWithBonusCount(impl.getOrThrow(Enchantments.FORTUNE), 0.5714286F, 3).conditionally(BlockStatePropertyLootCondition.builder(VABlocks.CORN_CROP).properties(StatePredicate.Builder.create().exactMatch(CornCropBlock.AGE, 7)))))
                     .conditionally(BlockStatePropertyLootCondition.builder(VABlocks.CORN_CROP).properties(StatePredicate.Builder.create()
                     .exactMatch(CornCropBlock.SEGMENT, segment)
             ));
-            if (segment.equals(CornCropBlock.CornCropSegment.BOTTOM)) {
-                builder.conditionally(createCornCropSeedsLootCondition(segment, CornCropBlock.CornCropSegment.MIDDLE));
-                builder.conditionally(createCornCropSeedsLootCondition(segment, CornCropBlock.CornCropSegment.TOP));
+            if (segment.equals(CornCropBlock.Segment.BOTTOM)) {
+                builder.conditionally(createCornCropSeedsLootCondition(segment, CornCropBlock.Segment.MIDDLE));
+                builder.conditionally(createCornCropSeedsLootCondition(segment, CornCropBlock.Segment.TOP));
             }
-            if (segment.equals(CornCropBlock.CornCropSegment.MIDDLE)) {
-                builder.conditionally(createCornCropSeedsLootCondition(segment, CornCropBlock.CornCropSegment.TOP));
-                builder.conditionally(createCornCropLootCondition(segment, CornCropBlock.CornCropSegment.BOTTOM));
+            if (segment.equals(CornCropBlock.Segment.MIDDLE)) {
+                builder.conditionally(createCornCropSeedsLootCondition(segment, CornCropBlock.Segment.TOP));
+                builder.conditionally(createCornCropLootCondition(segment, CornCropBlock.Segment.BOTTOM));
             }
-            if (segment.equals(CornCropBlock.CornCropSegment.TOP)) {
-                builder.conditionally(createCornCropLootCondition(segment, CornCropBlock.CornCropSegment.MIDDLE));
-                builder.conditionally(createCornCropLootCondition(segment, CornCropBlock.CornCropSegment.BOTTOM));
+            if (segment.equals(CornCropBlock.Segment.TOP)) {
+                builder.conditionally(createCornCropLootCondition(segment, CornCropBlock.Segment.MIDDLE));
+                builder.conditionally(createCornCropLootCondition(segment, CornCropBlock.Segment.BOTTOM));
             }
 
             return builder;
         }
 
-        private LootPool.Builder createCornCropLoot(CornCropBlock.CornCropSegment segment) {
+        private LootPool.Builder createCornCropLoot(CornCropBlock.Segment segment) {
             LootPool.Builder builder = LootPool.builder();
             builder.with(ItemEntry.builder(VAItems.CORN)).conditionally(BlockStatePropertyLootCondition.builder(VABlocks.CORN_CROP).properties(StatePredicate.Builder.create()
                     .exactMatch(CornCropBlock.SEGMENT, segment)
                     .exactMatch(CornCropBlock.AGE, 7)
             ));
-            if (!(segment.equals(CornCropBlock.CornCropSegment.BOTTOM))) builder.conditionally(createCornCropLootCondition(segment, CornCropBlock.CornCropSegment.BOTTOM, true));
-            if (!(segment.equals(CornCropBlock.CornCropSegment.MIDDLE))) builder.conditionally(createCornCropLootCondition(segment, CornCropBlock.CornCropSegment.MIDDLE, true));
-            if (!(segment.equals(CornCropBlock.CornCropSegment.TOP))) builder.conditionally(createCornCropLootCondition(segment, CornCropBlock.CornCropSegment.TOP, true));
+            if (!(segment.equals(CornCropBlock.Segment.BOTTOM))) builder.conditionally(createCornCropLootCondition(segment, CornCropBlock.Segment.BOTTOM, true));
+            if (!(segment.equals(CornCropBlock.Segment.MIDDLE))) builder.conditionally(createCornCropLootCondition(segment, CornCropBlock.Segment.MIDDLE, true));
+            if (!(segment.equals(CornCropBlock.Segment.TOP))) builder.conditionally(createCornCropLootCondition(segment, CornCropBlock.Segment.TOP, true));
             return builder.apply(SetCountLootFunction.builder(UniformLootNumberProvider.create(1.0F, 2.0F)));
         }
 
-        private LootCondition.Builder createCornCropSeedsLootCondition(CornCropBlock.CornCropSegment segment, CornCropBlock.CornCropSegment expectedSegment) {
+        private LootCondition.Builder createCornCropSeedsLootCondition(CornCropBlock.Segment segment, CornCropBlock.Segment expectedSegment) {
             return AnyOfLootCondition.builder(
                     createCornCropLootCondition(segment, expectedSegment),
                     createCornCropSeedsAgeConditions(segment.minAge(), expectedSegment.minAge())
             );
         }
 
-        private LootCondition.Builder createCornCropLootCondition(CornCropBlock.CornCropSegment segment, CornCropBlock.CornCropSegment expectedSegment) {
+        private LootCondition.Builder createCornCropLootCondition(CornCropBlock.Segment segment, CornCropBlock.Segment expectedSegment) {
             int i = segment.getYOffset(expectedSegment);
             return AnyOfLootCondition.builder(createCornCropStateConditions(expectedSegment, i, segment.minAge()));
         }
 
-        private LootCondition.Builder createCornCropLootCondition(CornCropBlock.CornCropSegment segment, CornCropBlock.CornCropSegment expectedSegment, boolean fullyGrown) {
+        private LootCondition.Builder createCornCropLootCondition(CornCropBlock.Segment segment, CornCropBlock.Segment expectedSegment, boolean fullyGrown) {
             if (!fullyGrown) return createCornCropLootCondition(segment, expectedSegment);
             int i = segment.getYOffset(expectedSegment);
             return LocationCheckLootCondition.builder(LocationPredicate.Builder.create().block(BlockPredicate.Builder.create().state(StatePredicate.Builder.create().exactMatch(CornCropBlock.SEGMENT, expectedSegment).exactMatch(CornCropBlock.AGE, 7))), new BlockPos(0, i, 0));
         }
 
-        private LootCondition.Builder[] createCornCropStateConditions(CornCropBlock.CornCropSegment segment, int offset, int minAge) {
+        private LootCondition.Builder[] createCornCropStateConditions(CornCropBlock.Segment segment, int offset, int minAge) {
             LootCondition.Builder[] builders = {};
             ArrayList<LootCondition.Builder> buildersList = new ArrayList<>();
             int i = minAge;

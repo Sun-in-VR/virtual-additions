@@ -176,6 +176,8 @@ public class VAModelProvider {
             blockStateModelGenerator.registerParented(VABlocks.EXPOSED_STEEL_BLOCK, VABlocks.WAXED_EXPOSED_STEEL_BLOCK);
             blockStateModelGenerator.registerParented(VABlocks.WEATHERED_STEEL_BLOCK, VABlocks.WAXED_WEATHERED_STEEL_BLOCK);
             blockStateModelGenerator.registerParented(VABlocks.OXIDIZED_STEEL_BLOCK, VABlocks.WAXED_OXIDIZED_STEEL_BLOCK);
+
+            blockStateModelGenerator.registerParented(VABlocks.STEEL_BLOCK, VABlocks.REMOTE_NOTIFIER);
         }
 
         @Override
@@ -222,7 +224,6 @@ public class VAModelProvider {
 
             itemModelGenerator.register(VAItems.SALINE_SPAWN_EGG, Models.GENERATED);
             itemModelGenerator.register(VAItems.LUMWASP_SPAWN_EGG, Models.GENERATED);
-            itemModelGenerator.register(VAItems.LYFT_SPAWN_EGG, Models.GENERATED);
 
             itemModelGenerator.register(VAItems.STEEL_SWORD, Models.HANDHELD);
             itemModelGenerator.register(VAItems.STEEL_SHOVEL, Models.HANDHELD);

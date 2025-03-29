@@ -28,14 +28,14 @@ import java.util.Locale;
 
 public class CornCropBlock extends CropBlock {
     public static final MapCodec<CornCropBlock> CODEC = createCodec(CornCropBlock::new);
-    public static final EnumProperty<CornCropSegment> SEGMENT = EnumProperty.of("segment", CornCropSegment.class);
+    public static final EnumProperty<Segment> SEGMENT = EnumProperty.of("segment", Segment.class);
     private static final VoxelShape SHAPE_AGE_1;
     private static final VoxelShape SHAPE_AGE_2;
     private static final VoxelShape SHAPE_AGE_3;
 
     public CornCropBlock(Settings settings) {
         super(settings);
-        this.setDefaultState(getStateManager().getDefaultState().with(SEGMENT, CornCropSegment.BOTTOM));
+        this.setDefaultState(getStateManager().getDefaultState().with(SEGMENT, Segment.BOTTOM));
     }
 
     @Override
@@ -85,14 +85,26 @@ public class CornCropBlock extends CropBlock {
         return VAItems.CORN_SEEDS;
     }
 
-    public void applyGrowth(World world, BlockPos pos, BlockState state) {
-        int i = this.getAge(state) + this.getGrowthAmount(world);
-        int j = this.getMaxAge();
-        if (i > j) {
-            i = j;
-        }
+    @Override
+    public boolean isFertilizable(WorldView world, BlockPos pos, BlockState state) {
+        return isSpaceToGrow(world, state, pos) && super.isFertilizable(world, pos, state);
+    }
 
+    public void applyGrowth(World world, BlockPos pos, BlockState state) {
+        int i = Math.min(this.getAge(state) + this.getGrowthAmount(world), this.getMaxAgeForSpace(world, pos, state));
         setAge(world, state, pos, i);
+    }
+
+    private int getMaxAgeForSpace(World world, BlockPos pos, BlockState state) {
+        if (!state.isOf(VABlocks.CORN_CROP)) return 0;
+        Segment segment = state.get(SEGMENT);
+        if (!(segment.equals(Segment.BOTTOM))) {
+            BlockPos offsetPos = pos.up(segment.getYOffset(Segment.BOTTOM));
+            return getMaxAgeForSpace(world, offsetPos, world.getBlockState(offsetPos));
+        }
+        if (canReplaceBlockState(world, pos.up().up())) return 7;
+        if (canReplaceBlockState(world, pos.up())) return 5;
+        return 2;
     }
 
     private void grow(World world, BlockState state, BlockPos pos) {
@@ -100,6 +112,16 @@ public class CornCropBlock extends CropBlock {
         int age = state.get(AGE) + 1;
         setAge(world, state, pos, age);
     }
+
+    private boolean isSpaceToGrow(WorldView world, BlockState state, BlockPos pos) {
+        boolean bl = true;
+        int age = state.get(AGE);
+        Segment segment = state.get(SEGMENT);
+        if (segment.equals(Segment.BOTTOM) && age >= 2) bl = checkForState(world, pos, state, Segment.MIDDLE, true);
+        if (!segment.equals(Segment.TOP) && age >= 5) bl = bl && checkForState(world, pos, state, Segment.TOP, true);
+        return bl;
+    }
+
     private void setAge(World world, BlockState state, BlockPos pos, int age) {
         boolean growMiddle = age > 2;
         boolean growTop = age > 5;
@@ -131,18 +153,26 @@ public class CornCropBlock extends CropBlock {
         }
     }
 
+    private boolean checkForState(WorldView world, BlockPos pos, BlockState state, Segment checkSegment, boolean allowAir) {
+        Segment segment = state.get(SEGMENT);
+        int offset = segment.getYOffset(checkSegment);
+        BlockState checkState = world.getBlockState(pos.offset(Direction.UP, offset));
+        if (checkState.isOf(VABlocks.CORN_CROP)) return checkState.get(SEGMENT).equals(checkSegment) && checkState.get(AGE).equals(state.get(AGE));
+        return allowAir && world.getBlockState(pos.offset(Direction.UP, offset)).isAir();
+    }
+
 
     public BlockState topSegment(int age) {
-        return this.stateOf(age, CornCropSegment.TOP);
+        return this.stateOf(age, Segment.TOP);
     }
     public BlockState middleSegment(int age) {
-        return this.stateOf(age, CornCropSegment.MIDDLE);
+        return this.stateOf(age, Segment.MIDDLE);
     }
     public BlockState bottomSegment(int age) {
-        return this.stateOf(age, CornCropSegment.BOTTOM);
+        return this.stateOf(age, Segment.BOTTOM);
     }
 
-    public BlockState stateOf(int age, CornCropSegment segment) {
+    public BlockState stateOf(int age, Segment segment) {
         return this.withAge(age).with(SEGMENT, segment);
     }
     
@@ -163,18 +193,18 @@ public class CornCropBlock extends CropBlock {
     @Nullable
     @Override
     public BlockState getPlacementState(ItemPlacementContext ctx) {
-        return this.getDefaultState().with(SEGMENT, CornCropSegment.BOTTOM);
+        return this.getDefaultState().with(SEGMENT, Segment.BOTTOM);
     }
 
     private boolean checkSegment(WorldView world, BlockPos pos, BlockState state, Direction direction) {
-        CornCropSegment segment = state.get(SEGMENT);
-        CornCropSegment expectedSegment = direction.equals(Direction.UP) ? segment.aboveSegment() : segment.belowSegment();
+        Segment segment = state.get(SEGMENT);
+        Segment expectedSegment = direction.equals(Direction.UP) ? segment.aboveSegment() : segment.belowSegment();
         if (expectedSegment == null) return false;
         BlockState offsetState = world.getBlockState(pos.offset(direction));
         return offsetState.isOf(this) && offsetState.get(SEGMENT).equals(expectedSegment) && offsetState.get(AGE).equals(state.get(AGE));
     }
 
-    public enum CornCropSegment implements StringIdentifiable {
+    public enum Segment implements StringIdentifiable {
         TOP,
         MIDDLE,
         BOTTOM;
@@ -192,7 +222,7 @@ public class CornCropBlock extends CropBlock {
         }
 
         @Nullable
-        public CornCropSegment aboveSegment() {
+        public CornCropBlock.Segment aboveSegment() {
             return switch (this) {
                 case TOP -> null;
                 case MIDDLE -> TOP;
@@ -201,7 +231,7 @@ public class CornCropBlock extends CropBlock {
         }
 
         @Nullable
-        public CornCropSegment belowSegment() {
+        public CornCropBlock.Segment belowSegment() {
             return switch (this) {
                 case TOP -> MIDDLE;
                 case MIDDLE -> BOTTOM;
@@ -209,7 +239,7 @@ public class CornCropBlock extends CropBlock {
             };
         }
 
-        public int getYOffset(CornCropSegment expectedSegment) {
+        public int getYOffset(Segment expectedSegment) {
             return this.ordinal() - expectedSegment.ordinal();
         }
 
