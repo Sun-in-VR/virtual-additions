@@ -20,6 +20,7 @@ public class VAItemTags {
     public static final TagKey<Item> CLIMBING_ROPES = TagKey.of(RegistryKeys.ITEM, idOf("climbing_ropes"));
     public static final TagKey<Item> REPAIRS_STEEL_ARMOR = TagKey.of(RegistryKeys.ITEM, idOf("repairs_steel_armor"));
     public static final TagKey<Item> ROCK_SALT_ORES = TagKey.of(RegistryKeys.ITEM, idOf("rock_salt_ores"));
+    public static final TagKey<Item> ACCEPTS_APPLIED_EFFECTS = TagKey.of(RegistryKeys.ITEM, idOf("accepts_applied_effects"));
 
     private static TagKey<Item> register(String id) {
         return TagKey.of(Registries.ITEM.getKey(), idOf(id));

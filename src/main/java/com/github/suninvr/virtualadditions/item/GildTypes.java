@@ -40,7 +40,7 @@ public class GildTypes {
             return super.isGildEffective(world, player, pos, state, tool) && state.getBlock() instanceof ExperienceDroppingBlock;
         }
     };
-    public static final GildType IOLITE = new GildType(idOf("iolite"), 0x702bff, blockInteractionRangeModifier(4, ADD), entityInteractionRangeModifier(2, ADD));
+    public static final GildType IOLITE = new GildType(idOf("iolite"), 0x702bff, blockInteractionRangeModifier(3, ADD), entityInteractionRangeModifier(0.5F, ADD));
     public static final GildType QUARTZ = new GildType(idOf("quartz"), 0xE3D4C4, attackDamageModifier(2, ADD));
     public static final GildType SCULK = new GildType(idOf("sculk"), 0x009295, miningSpeedModifier(0.4F, MULTIPLY), attackSpeedModifier(1.2F, MULTIPLY_ROUNDED_TENTHS, GildType.ModifierType.ToolType.SWORD)) {
         @Override
@@ -71,7 +71,7 @@ public class GildTypes {
                 int i = posList.size();
                 player.increaseStat(Stats.USED.getOrCreateStat(tool.getItem()), i);
                 tool.damage(i, player, EquipmentSlot.MAINHAND);
-                player.getItemCooldownManager().set(tool, (int) ((i * 2) / ((miningEfficiency / 20.0) + 1)));
+                player.getItemCooldownManager().set(tool, (int) ((i) / ((miningEfficiency / 20.0) + 1)));
             }
             return false;
         }

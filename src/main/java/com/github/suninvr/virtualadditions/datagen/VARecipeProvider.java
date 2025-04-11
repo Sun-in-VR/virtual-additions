@@ -25,9 +25,11 @@ import net.minecraft.registry.tag.ItemTags;
 import net.minecraft.registry.tag.TagKey;
 import net.minecraft.resource.featuretoggle.FeatureFlags;
 import org.apache.commons.lang3.tuple.Pair;
+import org.jetbrains.annotations.Nullable;
 
 import java.util.List;
 import java.util.concurrent.CompletableFuture;
+import java.util.stream.Stream;
 
 import static com.github.suninvr.virtualadditions.VirtualAdditions.idOf;
 
@@ -169,7 +171,7 @@ public final class VARecipeProvider {
             offerJerkyFoodRecipe(Items.COOKED_CHICKEN, VAItems.CHICKEN_JERKY);
             offerJerkyFoodRecipe(Items.COOKED_MUTTON, VAItems.MUTTON_JERKY);
 
-            ShapedRecipeJsonBuilder.create(this.registryLookup, RecipeCategory.FOOD, VAItems.CHEESE_WEDGE, 2)
+            ShapedRecipeJsonBuilder.create(this.registryLookup, RecipeCategory.FOOD, VAItems.CHEESE_WEDGE, 4)
                             .pattern(" # ")
                             .pattern("#M#")
                             .pattern(" # ")
@@ -188,9 +190,6 @@ public final class VARecipeProvider {
 
             offer2x2CompactingRecipe(RecipeCategory.BUILDING_BLOCKS, VABlocks.WEBBED_SILK, VAItems.SILK_THREAD);
             offerCompactingRecipe(RecipeCategory.BUILDING_BLOCKS, VABlocks.SILK_BLOCK, VAItems.SILK_THREAD);
-            List<Item> dyes = List.of(Items.BLACK_DYE, Items.BLUE_DYE, Items.BROWN_DYE, Items.CYAN_DYE, Items.GRAY_DYE, Items.GREEN_DYE, Items.LIGHT_BLUE_DYE, Items.LIGHT_GRAY_DYE, Items.LIME_DYE, Items.MAGENTA_DYE, Items.ORANGE_DYE, Items.PINK_DYE, Items.PURPLE_DYE, Items.RED_DYE, Items.YELLOW_DYE, Items.WHITE_DYE);
-            List<Item> silkbulbs = List.of(VABlocks.BLACK_SILKBULB.asItem(), VABlocks.BLUE_SILKBULB.asItem(), VABlocks.BROWN_SILKBULB.asItem(), VABlocks.CYAN_SILKBULB.asItem(), VABlocks.GRAY_SILKBULB.asItem(), VABlocks.GREEN_SILKBULB.asItem(), VABlocks.LIGHT_BLUE_SILKBULB.asItem(), VABlocks.LIGHT_GRAY_SILKBULB.asItem(), VABlocks.LIME_SILKBULB.asItem(), VABlocks.MAGENTA_SILKBULB.asItem(), VABlocks.ORANGE_SILKBULB.asItem(), VABlocks.PINK_SILKBULB.asItem(), VABlocks.PURPLE_SILKBULB.asItem(), VABlocks.RED_SILKBULB.asItem(), VABlocks.YELLOW_SILKBULB.asItem(), VABlocks.WHITE_SILKBULB.asItem(), VABlocks.SILKBULB.asItem());
-            offerDyeableRecipes(dyes, silkbulbs, "silkbulbs");
 
             ShapedRecipeJsonBuilder.create(this.registryLookup, RecipeCategory.TOOLS, VAItems.STEEL_AXE).input('#', Items.STICK).input('X', VAItems.STEEL_INGOT).pattern("XX").pattern("X#").pattern(" #").criterion("has_steel_ingot", conditionsFromItem(VAItems.STEEL_INGOT)).offerTo(this.exporter);
             ShapedRecipeJsonBuilder.create(this.registryLookup, RecipeCategory.COMBAT, VAItems.STEEL_BOOTS).input('X', VAItems.STEEL_INGOT).pattern("X X").pattern("X X").criterion("has_steel_ingot", conditionsFromItem(VAItems.STEEL_INGOT)).offerTo(this.exporter);
@@ -226,6 +225,12 @@ public final class VARecipeProvider {
             generateColorfulBlockSetRecipes(VACollections.SINOPIA, VAItems.SINOPIA_DYE);
             generateColorfulBlockSetRecipes(VACollections.LILAC, VAItems.LILAC_DYE);
 
+            completeDyablesRecipes(beds, vanillaBeds, virtualAdditionsBeds, "bed", RecipeCategory.BUILDING_BLOCKS);
+            completeDyablesRecipes(wool, vanillaWool, virtualAdditionsWool, "wool", RecipeCategory.BUILDING_BLOCKS);
+            completeDyablesRecipes(carpets, vanillaCarpets, virtualAdditionsCarpets, "carpet", RecipeCategory.BUILDING_BLOCKS);
+            completeDyablesRecipes(harnesses, vanillaHarnesses, virtualAdditionsHarnesses, "harness", RecipeCategory.BUILDING_BLOCKS);
+            offerDyeablesRecipes(vanillaDyes, silkbulbs, VAItems.SILKBULB, "silkbulb", RecipeCategory.BUILDING_BLOCKS);
+
             TransmuteRecipeJsonBuilder.create(RecipeCategory.TOOLS, Ingredient.ofTag(this.registryLookup.getOrThrow(ItemTags.BUNDLES)), Ingredient.ofItems(VAItems.CHARTREUSE_DYE), VAItems.CHARTREUSE_BUNDLE).criterion(hasItem(VAItems.CHARTREUSE_DYE), this.conditionsFromItem(VAItems.CHARTREUSE_DYE)).group("bundle_dye").offerTo(exporter);
             TransmuteRecipeJsonBuilder.create(RecipeCategory.TOOLS, Ingredient.ofTag(this.registryLookup.getOrThrow(ItemTags.BUNDLES)), Ingredient.ofItems(VAItems.MAROON_DYE), VAItems.MAROON_BUNDLE).criterion(hasItem(VAItems.MAROON_DYE), this.conditionsFromItem(VAItems.MAROON_DYE)).group("bundle_dye").offerTo(exporter);
             TransmuteRecipeJsonBuilder.create(RecipeCategory.TOOLS, Ingredient.ofTag(this.registryLookup.getOrThrow(ItemTags.BUNDLES)), Ingredient.ofItems(VAItems.INDIGO_DYE), VAItems.INDIGO_BUNDLE).criterion(hasItem(VAItems.INDIGO_DYE), this.conditionsFromItem(VAItems.INDIGO_DYE)).group("bundle_dye").offerTo(exporter);
@@ -244,30 +249,12 @@ public final class VARecipeProvider {
             TransmuteRecipeJsonBuilder.create(RecipeCategory.TOOLS, Ingredient.ofItems(Items.SHULKER_BOX), Ingredient.ofItems(VAItems.SINOPIA_DYE), VAItems.SINOPIA_SHULKER_BOX).criterion("has_shulker_box", this.conditionsFromItem(Items.SHULKER_BOX)).offerTo(exporter);
             TransmuteRecipeJsonBuilder.create(RecipeCategory.TOOLS, Ingredient.ofItems(Items.SHULKER_BOX), Ingredient.ofItems(VAItems.LILAC_DYE), VAItems.LILAC_SHULKER_BOX).criterion("has_shulker_box", this.conditionsFromItem(Items.SHULKER_BOX)).offerTo(exporter);
 
-            ColoringRecipeJsonBuilder.create(Ingredient.ofTag(this.registryLookup.getOrThrow(ItemTags.BUNDLES)), WHITE_COST, Items.WHITE_BUNDLE, 0).offerTo(exporter, idOf(getItemPath(Items.WHITE_BUNDLE)).withSuffixedPath("_coloring"));
-            ColoringRecipeJsonBuilder.create(Ingredient.ofTag(this.registryLookup.getOrThrow(ItemTags.BUNDLES)), LIGHT_GRAY_COST, Items.LIGHT_GRAY_BUNDLE, 1).offerTo(exporter, idOf(getItemPath(Items.LIGHT_GRAY_BUNDLE)).withSuffixedPath("_coloring"));
-            ColoringRecipeJsonBuilder.create(Ingredient.ofTag(this.registryLookup.getOrThrow(ItemTags.BUNDLES)), GRAY_COST, Items.GRAY_BUNDLE, 2).offerTo(exporter, idOf(getItemPath(Items.GRAY_BUNDLE)).withSuffixedPath("_coloring"));
-            ColoringRecipeJsonBuilder.create(Ingredient.ofTag(this.registryLookup.getOrThrow(ItemTags.BUNDLES)), BLACK_COST, Items.BLACK_BUNDLE, 3).offerTo(exporter, idOf(getItemPath(Items.BLACK_BUNDLE)).withSuffixedPath("_coloring"));
-            ColoringRecipeJsonBuilder.create(Ingredient.ofTag(this.registryLookup.getOrThrow(ItemTags.BUNDLES)), TAN_COST, VAItems.TAN_BUNDLE, 4).offerTo(exporter, idOf(getItemPath(VAItems.TAN_BUNDLE)).withSuffixedPath("_coloring"));
-            ColoringRecipeJsonBuilder.create(Ingredient.ofTag(this.registryLookup.getOrThrow(ItemTags.BUNDLES)), BROWN_COST, Items.BROWN_BUNDLE, 5).offerTo(exporter, idOf(getItemPath(Items.BROWN_BUNDLE)).withSuffixedPath("_coloring"));
-            ColoringRecipeJsonBuilder.create(Ingredient.ofTag(this.registryLookup.getOrThrow(ItemTags.BUNDLES)), MAROON_COST, VAItems.MAROON_BUNDLE, 6).offerTo(exporter, idOf(getItemPath(VAItems.MAROON_BUNDLE)).withSuffixedPath("_coloring"));
-            ColoringRecipeJsonBuilder.create(Ingredient.ofTag(this.registryLookup.getOrThrow(ItemTags.BUNDLES)), RED_COST, Items.RED_BUNDLE, 7).offerTo(exporter, idOf(getItemPath(Items.RED_BUNDLE)).withSuffixedPath("_coloring"));
-            ColoringRecipeJsonBuilder.create(Ingredient.ofTag(this.registryLookup.getOrThrow(ItemTags.BUNDLES)), SINOPIA_COST, VAItems.SINOPIA_BUNDLE, 8).offerTo(exporter, idOf(getItemPath(VAItems.SINOPIA_BUNDLE)).withSuffixedPath("_coloring"));
-            ColoringRecipeJsonBuilder.create(Ingredient.ofTag(this.registryLookup.getOrThrow(ItemTags.BUNDLES)), ORANGE_COST, Items.ORANGE_BUNDLE, 9).offerTo(exporter, idOf(getItemPath(Items.ORANGE_BUNDLE)).withSuffixedPath("_coloring"));
-            ColoringRecipeJsonBuilder.create(Ingredient.ofTag(this.registryLookup.getOrThrow(ItemTags.BUNDLES)), YELLOW_COST, Items.YELLOW_BUNDLE, 10).offerTo(exporter, idOf(getItemPath(Items.YELLOW_BUNDLE)).withSuffixedPath("_coloring"));
-            ColoringRecipeJsonBuilder.create(Ingredient.ofTag(this.registryLookup.getOrThrow(ItemTags.BUNDLES)), CHARTREUSE_COST, VAItems.CHARTREUSE_BUNDLE, 11).offerTo(exporter, idOf(getItemPath(VAItems.CHARTREUSE_BUNDLE)).withSuffixedPath("_coloring"));
-            ColoringRecipeJsonBuilder.create(Ingredient.ofTag(this.registryLookup.getOrThrow(ItemTags.BUNDLES)), LIME_COST, Items.LIME_BUNDLE, 12).offerTo(exporter, idOf(getItemPath(Items.LIME_BUNDLE)).withSuffixedPath("_coloring"));
-            ColoringRecipeJsonBuilder.create(Ingredient.ofTag(this.registryLookup.getOrThrow(ItemTags.BUNDLES)), GREEN_COST, Items.GREEN_BUNDLE, 13).offerTo(exporter, idOf(getItemPath(Items.GREEN_BUNDLE)).withSuffixedPath("_coloring"));
-            ColoringRecipeJsonBuilder.create(Ingredient.ofTag(this.registryLookup.getOrThrow(ItemTags.BUNDLES)), VIRIDIAN_COST, VAItems.VIRIDIAN_BUNDLE, 14).offerTo(exporter, idOf(getItemPath(VAItems.VIRIDIAN_BUNDLE)).withSuffixedPath("_coloring"));
-            ColoringRecipeJsonBuilder.create(Ingredient.ofTag(this.registryLookup.getOrThrow(ItemTags.BUNDLES)), CYAN_COST, Items.CYAN_BUNDLE, 15).offerTo(exporter, idOf(getItemPath(Items.CYAN_BUNDLE)).withSuffixedPath("_coloring"));
-            ColoringRecipeJsonBuilder.create(Ingredient.ofTag(this.registryLookup.getOrThrow(ItemTags.BUNDLES)), LIGHT_BLUE_COST, Items.LIGHT_BLUE_BUNDLE, 16).offerTo(exporter, idOf(getItemPath(Items.LIGHT_BLUE_BUNDLE)).withSuffixedPath("_coloring"));
-            ColoringRecipeJsonBuilder.create(Ingredient.ofTag(this.registryLookup.getOrThrow(ItemTags.BUNDLES)), BLUE_COST, Items.BLUE_BUNDLE, 17).offerTo(exporter, idOf(getItemPath(Items.BLUE_BUNDLE)).withSuffixedPath("_coloring"));
-            ColoringRecipeJsonBuilder.create(Ingredient.ofTag(this.registryLookup.getOrThrow(ItemTags.BUNDLES)), INDIGO_COST, VAItems.INDIGO_BUNDLE, 18).offerTo(exporter, idOf(getItemPath(VAItems.INDIGO_BUNDLE)).withSuffixedPath("_coloring"));
-            ColoringRecipeJsonBuilder.create(Ingredient.ofTag(this.registryLookup.getOrThrow(ItemTags.BUNDLES)), PURPLE_COST, Items.PURPLE_BUNDLE, 19).offerTo(exporter, idOf(getItemPath(Items.PURPLE_BUNDLE)).withSuffixedPath("_coloring"));
-            ColoringRecipeJsonBuilder.create(Ingredient.ofTag(this.registryLookup.getOrThrow(ItemTags.BUNDLES)), MAGENTA_COST, Items.MAGENTA_BUNDLE, 20).offerTo(exporter, idOf(getItemPath(Items.MAGENTA_BUNDLE)).withSuffixedPath("_coloring"));
-            ColoringRecipeJsonBuilder.create(Ingredient.ofTag(this.registryLookup.getOrThrow(ItemTags.BUNDLES)), PLUM_COST, VAItems.PLUM_BUNDLE, 21).offerTo(exporter, idOf(getItemPath(VAItems.PLUM_BUNDLE)).withSuffixedPath("_coloring"));
-            ColoringRecipeJsonBuilder.create(Ingredient.ofTag(this.registryLookup.getOrThrow(ItemTags.BUNDLES)), PINK_COST, Items.PINK_BUNDLE, 22).offerTo(exporter, idOf(getItemPath(Items.PINK_BUNDLE)).withSuffixedPath("_coloring"));
-            ColoringRecipeJsonBuilder.create(Ingredient.ofTag(this.registryLookup.getOrThrow(ItemTags.BUNDLES)), LILAC_COST, VAItems.LILAC_BUNDLE, 23).offerTo(exporter, idOf(getItemPath(VAItems.LILAC_BUNDLE)).withSuffixedPath("_coloring"));
+            createColoringRecipeSet(ItemTags.BUNDLES, bundles);
+            createColoringRecipeSet(ItemTags.HARNESSES, harnesses);
+
+            for(int i = 0; i < virtualAdditionsHarnesses.size(); ++i) {
+                this.method_70963(virtualAdditionsHarnesses.get(i), virtualAdditionsWool.get(i));
+            }
 
             offerColoringStationRecipes(
                     VACollections.WHITE,
@@ -575,6 +562,31 @@ public final class VARecipeProvider {
         protected static final DyeContents MAGENTA_COST = VADyeColors.MAGENTA_CONTENT;
         protected static final DyeContents PINK_COST = VADyeColors.PINK_CONTENT;
         protected static final DyeContents LILAC_COST = VADyeColors.LILAC_CONTENT;
+        protected static final List<DyeContents> dyeCosts = List.of(BLACK_COST, BLUE_COST, BROWN_COST, CYAN_COST, GRAY_COST, GREEN_COST, LIGHT_BLUE_COST, LIGHT_GRAY_COST, LIME_COST, MAGENTA_COST, ORANGE_COST, PINK_COST, PURPLE_COST, RED_COST, YELLOW_COST, WHITE_COST, CHARTREUSE_COST, MAROON_COST, INDIGO_COST, PLUM_COST, VIRIDIAN_COST, TAN_COST, SINOPIA_COST, LILAC_COST);
+
+        protected static final List<Item> dyes = List.of(Items.BLACK_DYE, Items.BLUE_DYE, Items.BROWN_DYE, Items.CYAN_DYE, Items.GRAY_DYE, Items.GREEN_DYE, Items.LIGHT_BLUE_DYE, Items.LIGHT_GRAY_DYE, Items.LIME_DYE, Items.MAGENTA_DYE, Items.ORANGE_DYE, Items.PINK_DYE, Items.PURPLE_DYE, Items.RED_DYE, Items.YELLOW_DYE, Items.WHITE_DYE, VAItems.CHARTREUSE_DYE, VAItems.MAROON_DYE, VAItems.INDIGO_DYE, VAItems.PLUM_DYE, VAItems.VIRIDIAN_DYE, VAItems.TAN_DYE, VAItems.SINOPIA_DYE, VAItems.LILAC_DYE);
+        protected static final List<Item> vanillaDyes = List.of(Items.BLACK_DYE, Items.BLUE_DYE, Items.BROWN_DYE, Items.CYAN_DYE, Items.GRAY_DYE, Items.GREEN_DYE, Items.LIGHT_BLUE_DYE, Items.LIGHT_GRAY_DYE, Items.LIME_DYE, Items.MAGENTA_DYE, Items.ORANGE_DYE, Items.PINK_DYE, Items.PURPLE_DYE, Items.RED_DYE, Items.YELLOW_DYE, Items.WHITE_DYE);
+        protected static final List<Item> virtualAdditionsDyes = List.of(VAItems.CHARTREUSE_DYE, VAItems.MAROON_DYE, VAItems.INDIGO_DYE, VAItems.PLUM_DYE, VAItems.VIRIDIAN_DYE, VAItems.TAN_DYE, VAItems.SINOPIA_DYE, VAItems.LILAC_DYE);
+
+        protected static final List<Item> harnesses = List.of(Items.BLACK_HARNESS, Items.BLUE_HARNESS, Items.BROWN_HARNESS, Items.CYAN_HARNESS, Items.GRAY_HARNESS, Items.GREEN_HARNESS, Items.LIGHT_BLUE_HARNESS, Items.LIGHT_GRAY_HARNESS, Items.LIME_HARNESS, Items.MAGENTA_HARNESS, Items.ORANGE_HARNESS, Items.PINK_HARNESS, Items.PURPLE_HARNESS, Items.RED_HARNESS, Items.YELLOW_HARNESS, Items.WHITE_HARNESS, VAItems.CHARTREUSE_HARNESS, VAItems.MAROON_HARNESS, VAItems.INDIGO_HARNESS, VAItems.PLUM_HARNESS, VAItems.VIRIDIAN_HARNESS, VAItems.TAN_HARNESS, VAItems.SINOPIA_HARNESS, VAItems.LILAC_HARNESS);
+        protected static final List<Item> vanillaHarnesses = List.of(Items.BLACK_HARNESS, Items.BLUE_HARNESS, Items.BROWN_HARNESS, Items.CYAN_HARNESS, Items.GRAY_HARNESS, Items.GREEN_HARNESS, Items.LIGHT_BLUE_HARNESS, Items.LIGHT_GRAY_HARNESS, Items.LIME_HARNESS, Items.MAGENTA_HARNESS, Items.ORANGE_HARNESS, Items.PINK_HARNESS, Items.PURPLE_HARNESS, Items.RED_HARNESS, Items.YELLOW_HARNESS, Items.WHITE_HARNESS);
+        protected static final List<Item> virtualAdditionsHarnesses = List.of(VAItems.CHARTREUSE_HARNESS, VAItems.MAROON_HARNESS, VAItems.INDIGO_HARNESS, VAItems.PLUM_HARNESS, VAItems.VIRIDIAN_HARNESS, VAItems.TAN_HARNESS, VAItems.SINOPIA_HARNESS, VAItems.LILAC_HARNESS);
+
+        protected static final List<Item> wool = List.of(Items.BLACK_WOOL, Items.BLUE_WOOL, Items.BROWN_WOOL, Items.CYAN_WOOL, Items.GRAY_WOOL, Items.GREEN_WOOL, Items.LIGHT_BLUE_WOOL, Items.LIGHT_GRAY_WOOL, Items.LIME_WOOL, Items.MAGENTA_WOOL, Items.ORANGE_WOOL, Items.PINK_WOOL, Items.PURPLE_WOOL, Items.RED_WOOL, Items.YELLOW_WOOL, Items.WHITE_WOOL, VAItems.CHARTREUSE_WOOL, VAItems.MAROON_WOOL, VAItems.INDIGO_WOOL, VAItems.PLUM_WOOL, VAItems.VIRIDIAN_WOOL, VAItems.TAN_WOOL, VAItems.SINOPIA_WOOL, VAItems.LILAC_WOOL);
+        protected static final List<Item> vanillaWool = List.of(Items.BLACK_WOOL, Items.BLUE_WOOL, Items.BROWN_WOOL, Items.CYAN_WOOL, Items.GRAY_WOOL, Items.GREEN_WOOL, Items.LIGHT_BLUE_WOOL, Items.LIGHT_GRAY_WOOL, Items.LIME_WOOL, Items.MAGENTA_WOOL, Items.ORANGE_WOOL, Items.PINK_WOOL, Items.PURPLE_WOOL, Items.RED_WOOL, Items.YELLOW_WOOL, Items.WHITE_WOOL);
+        protected static final List<Item> virtualAdditionsWool = List.of(VAItems.CHARTREUSE_WOOL, VAItems.MAROON_WOOL, VAItems.INDIGO_WOOL, VAItems.PLUM_WOOL, VAItems.VIRIDIAN_WOOL, VAItems.TAN_WOOL, VAItems.SINOPIA_WOOL, VAItems.LILAC_WOOL);
+
+        protected static final List<Item> carpets = List.of(Items.BLACK_CARPET, Items.BLUE_CARPET, Items.BROWN_CARPET, Items.CYAN_CARPET, Items.GRAY_CARPET, Items.GREEN_CARPET, Items.LIGHT_BLUE_CARPET, Items.LIGHT_GRAY_CARPET, Items.LIME_CARPET, Items.MAGENTA_CARPET, Items.ORANGE_CARPET, Items.PINK_CARPET, Items.PURPLE_CARPET, Items.RED_CARPET, Items.YELLOW_CARPET, Items.WHITE_CARPET, VAItems.CHARTREUSE_CARPET, VAItems.MAROON_CARPET, VAItems.INDIGO_CARPET, VAItems.PLUM_CARPET, VAItems.VIRIDIAN_CARPET, VAItems.TAN_CARPET, VAItems.SINOPIA_CARPET, VAItems.LILAC_CARPET);
+        protected static final List<Item> vanillaCarpets = List.of(Items.BLACK_CARPET, Items.BLUE_CARPET, Items.BROWN_CARPET, Items.CYAN_CARPET, Items.GRAY_CARPET, Items.GREEN_CARPET, Items.LIGHT_BLUE_CARPET, Items.LIGHT_GRAY_CARPET, Items.LIME_CARPET, Items.MAGENTA_CARPET, Items.ORANGE_CARPET, Items.PINK_CARPET, Items.PURPLE_CARPET, Items.RED_CARPET, Items.YELLOW_CARPET, Items.WHITE_CARPET);
+        protected static final List<Item> virtualAdditionsCarpets = List.of(VAItems.CHARTREUSE_CARPET, VAItems.MAROON_CARPET, VAItems.INDIGO_CARPET, VAItems.PLUM_CARPET, VAItems.VIRIDIAN_CARPET, VAItems.TAN_CARPET, VAItems.SINOPIA_CARPET, VAItems.LILAC_CARPET);
+
+        protected static final List<Item> beds = List.of(Items.BLACK_BED, Items.BLUE_BED, Items.BROWN_BED, Items.CYAN_BED, Items.GRAY_BED, Items.GREEN_BED, Items.LIGHT_BLUE_BED, Items.LIGHT_GRAY_BED, Items.LIME_BED, Items.MAGENTA_BED, Items.ORANGE_BED, Items.PINK_BED, Items.PURPLE_BED, Items.RED_BED, Items.YELLOW_BED, Items.WHITE_BED, VAItems.CHARTREUSE_BED, VAItems.MAROON_BED, VAItems.INDIGO_BED, VAItems.PLUM_BED, VAItems.VIRIDIAN_BED, VAItems.TAN_BED, VAItems.SINOPIA_BED, VAItems.LILAC_BED);
+        protected static final List<Item> vanillaBeds = List.of(Items.BLACK_BED, Items.BLUE_BED, Items.BROWN_BED, Items.CYAN_BED, Items.GRAY_BED, Items.GREEN_BED, Items.LIGHT_BLUE_BED, Items.LIGHT_GRAY_BED, Items.LIME_BED, Items.MAGENTA_BED, Items.ORANGE_BED, Items.PINK_BED, Items.PURPLE_BED, Items.RED_BED, Items.YELLOW_BED, Items.WHITE_BED);
+        protected static final List<Item> virtualAdditionsBeds = List.of(VAItems.CHARTREUSE_BED, VAItems.MAROON_BED, VAItems.INDIGO_BED, VAItems.PLUM_BED, VAItems.VIRIDIAN_BED, VAItems.TAN_BED, VAItems.SINOPIA_BED, VAItems.LILAC_BED);
+
+        protected static final List<Item> silkbulbs = List.of(VAItems.BLACK_SILKBULB, VAItems.BLUE_SILKBULB, VAItems.BROWN_SILKBULB, VAItems.CYAN_SILKBULB, VAItems.GRAY_SILKBULB, VAItems.GREEN_SILKBULB, VAItems.LIGHT_BLUE_SILKBULB, VAItems.LIGHT_GRAY_SILKBULB, VAItems.LIME_SILKBULB, VAItems.MAGENTA_SILKBULB, VAItems.ORANGE_SILKBULB, VAItems.PINK_SILKBULB, VAItems.PURPLE_SILKBULB, VAItems.RED_SILKBULB, VAItems.YELLOW_SILKBULB, VAItems.WHITE_SILKBULB, VAItems.CHARTREUSE_SILKBULB, VAItems.MAROON_SILKBULB, VAItems.INDIGO_SILKBULB, VAItems.PLUM_SILKBULB, VAItems.VIRIDIAN_SILKBULB, VAItems.TAN_SILKBULB, VAItems.SINOPIA_SILKBULB, VAItems.LILAC_SILKBULB);
+        protected static final List<Item> bundles = List.of(Items.BLACK_BUNDLE, Items.BLUE_BUNDLE, Items.BROWN_BUNDLE, Items.CYAN_BUNDLE, Items.GRAY_BUNDLE, Items.GREEN_BUNDLE, Items.LIGHT_BLUE_BUNDLE, Items.LIGHT_GRAY_BUNDLE, Items.LIME_BUNDLE, Items.MAGENTA_BUNDLE, Items.ORANGE_BUNDLE, Items.PINK_BUNDLE, Items.PURPLE_BUNDLE, Items.RED_BUNDLE, Items.YELLOW_BUNDLE, Items.WHITE_BUNDLE, VAItems.CHARTREUSE_BUNDLE, VAItems.MAROON_BUNDLE, VAItems.INDIGO_BUNDLE, VAItems.PLUM_BUNDLE, VAItems.VIRIDIAN_BUNDLE, VAItems.TAN_BUNDLE, VAItems.SINOPIA_BUNDLE, VAItems.LILAC_BUNDLE);
+
 
         protected final RegistryEntryLookup<Item> registryLookup;
         
@@ -655,12 +667,10 @@ public final class VARecipeProvider {
 
         protected void generateColorfulBlockSetRecipes(ColorfulBlockSet set, Item dye) {
             set.ifWool(wool -> {
-                ShapelessRecipeJsonBuilder.create(this.registryLookup,RecipeCategory.BUILDING_BLOCKS, wool).input(ItemTags.WOOL).input(dye).criterion("has_dye", conditionsFromItem(dye)).offerTo(this.exporter);
                 set.ifBed( bed -> offerBedRecipe(bed, wool));
                 set.ifBanner(banner -> offerBannerRecipe(banner, wool));
                 set.ifCarpet(carpet -> offerCarpetRecipe(carpet, wool));
             });
-            set.ifCarpet(block -> ShapelessRecipeJsonBuilder.create(this.registryLookup, RecipeCategory.BUILDING_BLOCKS, block).input(ItemTags.WOOL_CARPETS).input(dye).criterion("has_dye", conditionsFromItem(dye)).offerTo(this.exporter, idOf(CraftingRecipeJsonBuilder.getItemId(block).withSuffixedPath("_dyeing").getPath()).toString()));
             set.ifConcretePowder( block -> offerConcretePowderDyeingRecipe(block, dye));
             set.ifTerracotta(block -> offerTerracottaDyeingRecipe(block, dye));
             set.ifStainedGlass(block -> {
@@ -671,7 +681,6 @@ public final class VARecipeProvider {
                 });
             });
             set.ifCandle(block -> offerCandleDyeingRecipe(block, dye));
-            set.ifSilkbulb(block -> ShapelessRecipeJsonBuilder.create(this.registryLookup, RecipeCategory.BUILDING_BLOCKS, block).input(VAItemTags.SILKBULBS).input(dye).criterion("has_dye", conditionsFromItem(dye)).offerTo(this.exporter));
         }
 
         protected void offerStonecuttingRecipes(BlockFamily baseFamily, BlockFamily... resultFamilies) {
@@ -804,6 +813,53 @@ public final class VARecipeProvider {
                     .input(input)
                     .input(VAItems.ROCK_SALT, 2)
                     .criterion("has_item", conditionsFromItem(input)).offerTo(exporter);
+        }
+        
+        public void completeDyablesRecipes(List<Item> allItems, List<Item> vanillaItems, List<Item> moddedItems, String group, RecipeCategory recipeCategory) {
+            offerDyeablesRecipes(vanillaDyes, vanillaItems, moddedItems, null, group, RecipeCategory.BUILDING_BLOCKS);
+            offerDyeablesRecipes(virtualAdditionsDyes, moddedItems, allItems, null, group, RecipeCategory.BUILDING_BLOCKS);
+        }
+
+        public void offerDyeablesRecipes(List<Item> dyes, List<Item> dyeToItem, List<Item> dyeables, @Nullable Item undyed, String group, RecipeCategory category) {
+            for(int i = 0; i < dyes.size(); ++i) {
+                Item dye = dyes.get(i);
+                Item dyedItem = dyeToItem.get(i);
+                Stream<Item> stream = dyeables.stream().filter((itemx) -> !itemx.equals(dyedItem));
+                if (undyed != null) {
+                    stream = Stream.concat(stream, Stream.of(undyed));
+                }
+
+                this.createShapeless(category, dyedItem).input(dye).input(Ingredient.ofItems(stream)).group(group).criterion("has_needed_dye", this.conditionsFromItem(dye)).offerTo(this.exporter, "virtual_additions:dye_" + getItemPath(dyedItem));
+            }
+
+        }
+
+        public void offerDyeablesRecipes(List<Item> dyes, List<Item> dyeables, @Nullable Item undyed, String group, RecipeCategory category) {
+            for(int i = 0; i < dyes.size(); ++i) {
+                Item item = dyes.get(i);
+                Item item2 = dyeables.get(i);
+                Stream<Item> stream = dyeables.stream().filter((itemx) -> !itemx.equals(item2));
+                if (undyed != null) {
+                    stream = Stream.concat(stream, Stream.of(undyed));
+                }
+
+                this.createShapeless(category, item2).input(item).input(Ingredient.ofItems(stream)).group(group).criterion("has_needed_dye", this.conditionsFromItem(item)).offerTo(this.exporter, "virtual_additions:dye_" + getItemPath(item2));
+            }
+
+        }
+        
+        protected void createColoringRecipeSet(TagKey<Item> inputTag, List<Item> items) {
+            for(int i = 0; i < dyeCosts.size(); ++i) {
+                DyeContents cost = dyeCosts.get(i);
+                Item dyedItem = items.get(i);
+                
+                ColoringRecipeJsonBuilder.create(Ingredient.ofTag(this.registryLookup.getOrThrow(inputTag)), 
+                        cost, dyedItem, VADyeColors.getIndex(cost))
+                        .offerTo(exporter, idOf(getItemPath(dyedItem)).withSuffixedPath("_coloring"));
+
+            }
+            
+
         }
     }
 

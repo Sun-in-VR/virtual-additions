@@ -2,6 +2,7 @@ package com.github.suninvr.virtualadditions.item;
 
 import com.github.suninvr.virtualadditions.component.EffectsOnHitComponent;
 import com.github.suninvr.virtualadditions.registry.VADataComponentTypes;
+import com.github.suninvr.virtualadditions.registry.VAItemTags;
 import net.minecraft.component.DataComponentTypes;
 import net.minecraft.component.type.PotionContentsComponent;
 import net.minecraft.component.type.TooltipDisplayComponent;
@@ -28,10 +29,10 @@ public class ApplicablePotionItem extends PotionItem {
         if(clickType == ClickType.RIGHT) {
             ItemStack clickedStack = slot.getStack();
             boolean bl = false;
-            if(clickedStack.isIn(ItemTags.SWORDS)) {
+            if(clickedStack.isIn(VAItemTags.ACCEPTS_APPLIED_EFFECTS)) {
                 PotionContentsComponent potionComponent = stack.get(DataComponentTypes.POTION_CONTENTS);
                 if (potionComponent != null) {
-                    int maxUses = 30; //potionComponent.potion().isPresent() ? potionComponent.potion().get().
+                    int maxUses = 30;
                     clickedStack.set(VADataComponentTypes.EFFECTS_ON_HIT, new EffectsOnHitComponent(potionComponent, maxUses, maxUses));
                     bl = true;
                 }

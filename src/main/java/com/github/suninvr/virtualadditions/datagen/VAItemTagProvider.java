@@ -175,6 +175,14 @@ public final class VAItemTagProvider {
                     VAItems.IOLITE_NETHERITE_TOOL_SET
                     );
 
+            getOrCreateTagBuilder(VAItemTags.ACCEPTS_APPLIED_EFFECTS)
+                    .addOptionalTag(ItemTags.SWORDS)
+                    .addOptionalTag(ItemTags.SHOVELS)
+                    .addOptionalTag(ItemTags.PICKAXES)
+                    .addOptionalTag(ItemTags.AXES)
+                    .addOptionalTag(ItemTags.HOES)
+                    .add(Items.TRIDENT, Items.MACE);
+
             getOrCreateTagBuilder(VAItemTags.BASE_DYE).add(
                     Items.RED_DYE,
                     Items.GREEN_DYE,

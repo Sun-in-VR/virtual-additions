@@ -102,6 +102,34 @@ public class VADyeColors {
         throw new IncompatibleClassChangeError();
     }
 
+    public static int getIndex(DyeContents contents) {
+        if (contents == WHITE_CONTENT) return 0;
+        if (contents == LIGHT_GRAY_CONTENT) return 1;
+        if (contents == GRAY_CONTENT) return 2;
+        if (contents == BLACK_CONTENT) return 3;
+        if (contents == TAN_CONTENT) return 4;
+        if (contents == BROWN_CONTENT) return 5;
+        if (contents == MAROON_CONTENT) return 6;
+        if (contents == RED_CONTENT) return 7;
+        if (contents == SINOPIA_CONTENT) return 8;
+        if (contents == ORANGE_CONTENT) return 9;
+        if (contents == YELLOW_CONTENT) return 10;
+        if (contents == CHARTREUSE_CONTENT) return 11;
+        if (contents == LIME_CONTENT) return 12;
+        if (contents == GREEN_CONTENT) return 13;
+        if (contents == VIRIDIAN_CONTENT) return 14;
+        if (contents == CYAN_CONTENT) return 15;
+        if (contents == LIGHT_BLUE_CONTENT) return 16;
+        if (contents == BLUE_CONTENT) return 17;
+        if (contents == INDIGO_CONTENT) return 18;
+        if (contents == PURPLE_CONTENT) return 19;
+        if (contents == PLUM_CONTENT) return 20;
+        if (contents == MAGENTA_CONTENT) return 21;
+        if (contents == PINK_CONTENT) return 22;
+        if (contents == LILAC_CONTENT) return 23;
+        throw new IncompatibleClassChangeError();
+    }
+
     public static void init(){}
 
     public static boolean isFromVirtualAdditions(DyeColor color) {

@@ -1059,14 +1059,14 @@ public class VAItems {
 
         //region Climbing Ropes
 
-        CLIMBING_ROPE = register("climbing_rope", settings ->  new ClimbingRopeItem(VABlocks.CLIMBING_ROPE_ANCHOR, settings), new Item.Settings().maxCount(16).useItemPrefixedTranslationKey(), ItemGroups.TOOLS, Items.LEAD);
-        EXPOSED_CLIMBING_ROPE = register("exposed_climbing_rope", settings -> new ClimbingRopeItem(VABlocks.EXPOSED_CLIMBING_ROPE_ANCHOR, settings), new Item.Settings().maxCount(16).useItemPrefixedTranslationKey(), ItemGroups.TOOLS, prev);
-        WEATHERED_CLIMBING_ROPE = register("weathered_climbing_rope", settings -> new ClimbingRopeItem(VABlocks.WEATHERED_CLIMBING_ROPE_ANCHOR, settings), new Item.Settings().maxCount(16).useItemPrefixedTranslationKey(), ItemGroups.TOOLS, prev);
-        OXIDIZED_CLIMBING_ROPE = register("oxidized_climbing_rope", settings -> new ClimbingRopeItem(VABlocks.OXIDIZED_CLIMBING_ROPE_ANCHOR, settings), new Item.Settings().maxCount(16).useItemPrefixedTranslationKey(), ItemGroups.TOOLS, prev);
-        WAXED_CLIMBING_ROPE = register("waxed_climbing_rope", settings -> new ClimbingRopeItem(VABlocks.WAXED_CLIMBING_ROPE_ANCHOR, settings), new Item.Settings().maxCount(16).useItemPrefixedTranslationKey(), ItemGroups.TOOLS, prev);
-        WAXED_EXPOSED_CLIMBING_ROPE = register("waxed_exposed_climbing_rope", settings -> new ClimbingRopeItem(VABlocks.WAXED_EXPOSED_CLIMBING_ROPE_ANCHOR, settings), new Item.Settings().maxCount(16).useItemPrefixedTranslationKey(), ItemGroups.TOOLS, prev);
-        WAXED_WEATHERED_CLIMBING_ROPE = register("waxed_weathered_climbing_rope", settings -> new ClimbingRopeItem(VABlocks.WAXED_WEATHERED_CLIMBING_ROPE_ANCHOR, settings), new Item.Settings().maxCount(16).useItemPrefixedTranslationKey(), ItemGroups.TOOLS, prev);
-        WAXED_OXIDIZED_CLIMBING_ROPE = register("waxed_oxidized_climbing_rope", settings -> new ClimbingRopeItem(VABlocks.WAXED_OXIDIZED_CLIMBING_ROPE_ANCHOR, settings), new Item.Settings().maxCount(16).useItemPrefixedTranslationKey(), ItemGroups.TOOLS, prev);
+        CLIMBING_ROPE = register("climbing_rope", settings ->  new ClimbingRopeItem(VABlocks.CLIMBING_ROPE_ANCHOR, settings), new Item.Settings().useItemPrefixedTranslationKey(), ItemGroups.TOOLS, Items.LEAD);
+        EXPOSED_CLIMBING_ROPE = register("exposed_climbing_rope", settings -> new ClimbingRopeItem(VABlocks.EXPOSED_CLIMBING_ROPE_ANCHOR, settings), new Item.Settings().useItemPrefixedTranslationKey(), ItemGroups.TOOLS, prev);
+        WEATHERED_CLIMBING_ROPE = register("weathered_climbing_rope", settings -> new ClimbingRopeItem(VABlocks.WEATHERED_CLIMBING_ROPE_ANCHOR, settings), new Item.Settings().useItemPrefixedTranslationKey(), ItemGroups.TOOLS, prev);
+        OXIDIZED_CLIMBING_ROPE = register("oxidized_climbing_rope", settings -> new ClimbingRopeItem(VABlocks.OXIDIZED_CLIMBING_ROPE_ANCHOR, settings), new Item.Settings().useItemPrefixedTranslationKey(), ItemGroups.TOOLS, prev);
+        WAXED_CLIMBING_ROPE = register("waxed_climbing_rope", settings -> new ClimbingRopeItem(VABlocks.WAXED_CLIMBING_ROPE_ANCHOR, settings), new Item.Settings().useItemPrefixedTranslationKey(), ItemGroups.TOOLS, prev);
+        WAXED_EXPOSED_CLIMBING_ROPE = register("waxed_exposed_climbing_rope", settings -> new ClimbingRopeItem(VABlocks.WAXED_EXPOSED_CLIMBING_ROPE_ANCHOR, settings), new Item.Settings().useItemPrefixedTranslationKey(), ItemGroups.TOOLS, prev);
+        WAXED_WEATHERED_CLIMBING_ROPE = register("waxed_weathered_climbing_rope", settings -> new ClimbingRopeItem(VABlocks.WAXED_WEATHERED_CLIMBING_ROPE_ANCHOR, settings), new Item.Settings().useItemPrefixedTranslationKey(), ItemGroups.TOOLS, prev);
+        WAXED_OXIDIZED_CLIMBING_ROPE = register("waxed_oxidized_climbing_rope", settings -> new ClimbingRopeItem(VABlocks.WAXED_OXIDIZED_CLIMBING_ROPE_ANCHOR, settings), new Item.Settings().useItemPrefixedTranslationKey(), ItemGroups.TOOLS, prev);
 
         //endregion
 

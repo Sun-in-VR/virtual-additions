@@ -1,8 +1,12 @@
 {
     "pack": {
-        "pack_format": 71,
+        "pack_format": 72,
         "description": [
             {"text":  "DEPRACATED! Will be removed later!", "color":  "red"}
-        ]
+        ],
+        "supported_formats": {
+            "min_inclusive": 1,
+            "max_inclusive": 255
+        }
     }
 }

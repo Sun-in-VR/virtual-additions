@@ -34,9 +34,9 @@ public class DestructiveSculkBlockEntity extends BlockEntity {
     private List<ItemStack> stacksToDrop;
     private ItemStack tool;
     private int potency;
-    private int age;
     private final ArrayList<BlockPos> affectedPos;
     private int activePosIndex;
+    private boolean firstTick;
 
     public DestructiveSculkBlockEntity(BlockPos pos, BlockState state) {
         super(VABlockEntityType.DESTRUCTIVE_SCULK, pos, state);
@@ -44,10 +44,10 @@ public class DestructiveSculkBlockEntity extends BlockEntity {
         this.playerId = nullId;
         this.tool = ItemStack.EMPTY;
         this.potency = 0;
-        this.age = 0;
         this.affectedPos = new ArrayList<>();
         this.activePosIndex = -1;
         this.stacksToDrop = new ArrayList<>();
+        this.firstTick = true;
     }
 
     public Block getReplacedBlock() {
@@ -138,22 +138,22 @@ public class DestructiveSculkBlockEntity extends BlockEntity {
     public static void tick(World world, BlockPos pos, BlockState state, DestructiveSculkBlockEntity blockEntity) {
         if (world.isClient()) return;
         if (!state.get(DestructiveSculkBlock.ORIGIN)) return;
-        blockEntity.age += 1;
-        if (blockEntity.age % 2 == 0) {
-            boolean bl = false;
-            while (!bl) {
-                BlockPos activePos = blockEntity.getActivePos();
-                if (activePos == null) {
-                    world.scheduleBlockTick(pos, VABlocks.DESTRUCTIVE_SCULK, 6);
-                    //blockEntity.destroyAll(false);
-                    return;
-                }
-                BlockState activeState = world.getBlockState(activePos);
+        if (blockEntity.firstTick) {
+            blockEntity.firstTick = false;
+            return;
+        }
+        boolean bl = false;
+        while (!bl) {
+            BlockPos activePos = blockEntity.getActivePos();
+            if (activePos == null) {
+                world.scheduleBlockTick(pos, VABlocks.DESTRUCTIVE_SCULK, 6);
+                return;
+            }
+            BlockState activeState = world.getBlockState(activePos);
 
-                bl = DestructiveSculkBlock.trySpread(activeState, world, activePos, blockEntity);
-                if (!bl) {
-                    blockEntity.setActivePosIndex(blockEntity.getActivePosIndex() + 1);
-                }
+            bl = DestructiveSculkBlock.trySpread(activeState, world, activePos, blockEntity);
+            if (!bl) {
+                blockEntity.setActivePosIndex(blockEntity.getActivePosIndex() + 1);
             }
         }
     }
@@ -180,7 +180,6 @@ public class DestructiveSculkBlockEntity extends BlockEntity {
         this.playerId = nbt.get("playerId", Uuids.CODEC).orElse(nullId);
         if (nbt.contains("tool")) this.tool = ItemStack.fromNbt(lookup, nbt.getCompound("tool").get()).orElse(ItemStack.EMPTY);
         this.potency = nbt.getInt("potency").orElse(0);
-        this.age = nbt.getInt("age").orElse(0);
         this.activePosIndex = nbt.getInt("activePosIndex").orElse(0);
         NbtList affectedPos = nbt.getList("affectedPos").get();
         this.affectedPos.clear();
@@ -201,7 +200,6 @@ public class DestructiveSculkBlockEntity extends BlockEntity {
         nbt.put("playerId", Uuids.CODEC, playerId);
         if (!this.tool.isEmpty()) nbt.put("tool", this.tool.toNbt(lookup));
         nbt.putInt("potency", this.potency);
-        nbt.putInt("age", this.age);
         nbt.putInt("activePosIndex", this.activePosIndex);
         NbtList affectedPos = new NbtList();
         for (BlockPos pos : this.affectedPos) {
