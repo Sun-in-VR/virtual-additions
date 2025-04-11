@@ -100,6 +100,17 @@ public final class VAItemTagProvider {
                     VAItems.LILAC_BUNDLE
             );
 
+            getOrCreateTagBuilder(ItemTags.HARNESSES).add(
+                    VAItems.CHARTREUSE_HARNESS,
+                    VAItems.MAROON_HARNESS,
+                    VAItems.INDIGO_HARNESS,
+                    VAItems.PLUM_HARNESS,
+                    VAItems.VIRIDIAN_HARNESS,
+                    VAItems.TAN_HARNESS,
+                    VAItems.SINOPIA_HARNESS,
+                    VAItems.LILAC_HARNESS
+            );
+
             getOrCreateTagBuilder(VAItemTags.SILKBULBS).add(
                     VAItems.SILKBULB,
                     VAItems.WHITE_SILKBULB,

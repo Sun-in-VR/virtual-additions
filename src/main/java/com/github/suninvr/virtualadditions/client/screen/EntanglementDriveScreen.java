@@ -5,6 +5,7 @@ import com.github.suninvr.virtualadditions.network.EntanglementDriveC2SPayload;
 import com.github.suninvr.virtualadditions.screen.EntanglementDriveScreenHandler;
 import com.mojang.blaze3d.systems.RenderSystem;
 import net.fabricmc.fabric.api.client.networking.v1.ClientPlayNetworking;
+import net.minecraft.client.gl.RenderPipelines;
 import net.minecraft.client.gui.DrawContext;
 import net.minecraft.client.gui.screen.ingame.HandledScreen;
 import net.minecraft.client.gui.screen.ingame.InventoryScreen;
@@ -46,14 +47,14 @@ public class EntanglementDriveScreen extends HandledScreen<EntanglementDriveScre
         //RenderSystem.setShaderTexture(0, BACKGROUND_TEXTURE);
         int i = this.x;
         int j = this.y;
-        context.drawTexture(RenderLayer::getGuiTextured, BACKGROUND_TEXTURE, i, j, 0, 0, this.backgroundWidth, this.backgroundHeight, 256, 256);
+        context.drawTexture(RenderPipelines.GUI_TEXTURED, BACKGROUND_TEXTURE, i, j, 0, 0, this.backgroundWidth, this.backgroundHeight, 256, 256);
         if (this.handler.isSelectingSlot() && this.handler.isSlotSelected()) {
             Slot slot = this.handler.getSelectedSlot();
-            context.drawTexture(RenderLayer::getGuiTextured, BACKGROUND_TEXTURE, i + slot.x - 1, j + slot.y - 1, 196, 0, 18, 18, 256, 256);
+            context.drawTexture(RenderPipelines.GUI_TEXTURED, BACKGROUND_TEXTURE, i + slot.x - 1, j + slot.y - 1, 196, 0, 18, 18, 256, 256);
         }
         if (this.handler.isActive() && this.handler.isSamePlayer()) {
             Slot slot = this.handler.getActiveSlot();
-            context.drawTexture(RenderLayer::getGuiTextured, BACKGROUND_TEXTURE, i + slot.x - 1, j + slot.y - 1, 178, 0, 18, 18, 256, 256);
+            context.drawTexture(RenderPipelines.GUI_TEXTURED, BACKGROUND_TEXTURE, i + slot.x - 1, j + slot.y - 1, 178, 0, 18, 18, 256, 256);
         }
         if (this.client != null && this.client.player != null) {
             InventoryScreen.drawEntity(context, i + 26, j + 8, i + 75, j + 78, 30, 0.0625F, this.mouseX, this.mouseY, this.client.player);
@@ -114,7 +115,7 @@ public class EntanglementDriveScreen extends HandledScreen<EntanglementDriveScre
                 j += this.width;
             }
 
-            context.drawTexture(RenderLayer::getGuiTextured, BACKGROUND_TEXTURE, this.getX(), this.getY(), j, 18, this.width, this.height, 256, 256);
+            context.drawTexture(RenderPipelines.GUI_TEXTURED, BACKGROUND_TEXTURE, this.getX(), this.getY(), j, 18, this.width, this.height, 256, 256);
         }
 
         @Override

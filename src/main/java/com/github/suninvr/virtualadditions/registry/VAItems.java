@@ -13,10 +13,7 @@ import net.minecraft.block.dispenser.DispenserBehavior;
 import net.minecraft.block.dispenser.ItemDispenserBehavior;
 import net.minecraft.block.dispenser.ProjectileDispenserBehavior;
 import net.minecraft.component.DataComponentTypes;
-import net.minecraft.component.type.BannerPatternsComponent;
-import net.minecraft.component.type.BundleContentsComponent;
-import net.minecraft.component.type.ContainerComponent;
-import net.minecraft.component.type.PotionContentsComponent;
+import net.minecraft.component.type.*;
 import net.minecraft.entity.EntityType;
 import net.minecraft.item.*;
 import net.minecraft.item.equipment.EquipmentType;
@@ -24,10 +21,7 @@ import net.minecraft.loot.LootTable;
 import net.minecraft.registry.RegistryKey;
 import net.minecraft.registry.RegistryKeys;
 import net.minecraft.text.Text;
-import net.minecraft.util.Formatting;
-import net.minecraft.util.Identifier;
-import net.minecraft.util.Rarity;
-import net.minecraft.util.Util;
+import net.minecraft.util.*;
 import net.minecraft.util.math.BlockPointer;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
@@ -310,8 +304,9 @@ public class VAItems {
     public static final Item CHARTREUSE_BED;
     public static final Item CHARTREUSE_SHULKER_BOX;
     public static final Item CHARTREUSE_BANNER;
-    public static final Item CHARTREUSE_BUNDLE;
     public static final Item CHARTREUSE_GLAZED_TERRACOTTA;
+    public static final Item CHARTREUSE_BUNDLE;
+    public static final Item CHARTREUSE_HARNESS;
     public static final Item MAROON_DYE;
     public static final Item MAROON_WOOL;
     public static final Item MAROON_CARPET;
@@ -325,8 +320,9 @@ public class VAItems {
     public static final Item MAROON_BED;
     public static final Item MAROON_SHULKER_BOX;
     public static final Item MAROON_BANNER;
-    public static final Item MAROON_BUNDLE;
     public static final Item MAROON_GLAZED_TERRACOTTA;
+    public static final Item MAROON_BUNDLE;
+    public static final Item MAROON_HARNESS;
     public static final Item INDIGO_DYE;
     public static final Item INDIGO_WOOL;
     public static final Item INDIGO_CARPET;
@@ -340,8 +336,9 @@ public class VAItems {
     public static final Item INDIGO_BED;
     public static final Item INDIGO_SHULKER_BOX;
     public static final Item INDIGO_BANNER;
-    public static final Item INDIGO_BUNDLE;
     public static final Item INDIGO_GLAZED_TERRACOTTA;
+    public static final Item INDIGO_BUNDLE;
+    public static final Item INDIGO_HARNESS;
     public static final Item PLUM_DYE;
     public static final Item PLUM_WOOL;
     public static final Item PLUM_CARPET;
@@ -355,8 +352,9 @@ public class VAItems {
     public static final Item PLUM_BED;
     public static final Item PLUM_SHULKER_BOX;
     public static final Item PLUM_BANNER;
-    public static final Item PLUM_BUNDLE;
     public static final Item PLUM_GLAZED_TERRACOTTA;
+    public static final Item PLUM_BUNDLE;
+    public static final Item PLUM_HARNESS;
     public static final Item VIRIDIAN_DYE;
     public static final Item VIRIDIAN_WOOL;
     public static final Item VIRIDIAN_CARPET;
@@ -370,8 +368,9 @@ public class VAItems {
     public static final Item VIRIDIAN_BED;
     public static final Item VIRIDIAN_SHULKER_BOX;
     public static final Item VIRIDIAN_BANNER;
-    public static final Item VIRIDIAN_BUNDLE;
     public static final Item VIRIDIAN_GLAZED_TERRACOTTA;
+    public static final Item VIRIDIAN_BUNDLE;
+    public static final Item VIRIDIAN_HARNESS;
     public static final Item TAN_DYE;
     public static final Item TAN_WOOL;
     public static final Item TAN_CARPET;
@@ -385,8 +384,9 @@ public class VAItems {
     public static final Item TAN_BED;
     public static final Item TAN_SHULKER_BOX;
     public static final Item TAN_BANNER;
-    public static final Item TAN_BUNDLE;
     public static final Item TAN_GLAZED_TERRACOTTA;
+    public static final Item TAN_BUNDLE;
+    public static final Item TAN_HARNESS;
     public static final Item SINOPIA_DYE;
     public static final Item SINOPIA_WOOL;
     public static final Item SINOPIA_CARPET;
@@ -400,8 +400,9 @@ public class VAItems {
     public static final Item SINOPIA_BED;
     public static final Item SINOPIA_SHULKER_BOX;
     public static final Item SINOPIA_BANNER;
-    public static final Item SINOPIA_BUNDLE;
     public static final Item SINOPIA_GLAZED_TERRACOTTA;
+    public static final Item SINOPIA_BUNDLE;
+    public static final Item SINOPIA_HARNESS;
     public static final Item LILAC_DYE;
     public static final Item LILAC_WOOL;
     public static final Item LILAC_CARPET;
@@ -415,8 +416,9 @@ public class VAItems {
     public static final Item LILAC_BED;
     public static final Item LILAC_SHULKER_BOX;
     public static final Item LILAC_BANNER;
-    public static final Item LILAC_BUNDLE;
     public static final Item LILAC_GLAZED_TERRACOTTA;
+    public static final Item LILAC_BUNDLE;
+    public static final Item LILAC_HARNESS;
     public static final Item COLORING_STATION;
     public static final Item TOOL_GILD_SMITHING_TEMPLATE;
     public static final Item EXOSKELETON_ARMOR_TRIM_SMITHING_TEMPLATE;
@@ -834,6 +836,7 @@ public class VAItems {
         CHARTREUSE_SHULKER_BOX = register("chartreuse_shulker_box", settings ->  new BlockItem(VABlocks.CHARTREUSE_SHULKER_BOX, settings), new Item.Settings().translationKey(VABlocks.CHARTREUSE_SHULKER_BOX.getTranslationKey()).maxCount(1).component(DataComponentTypes.CONTAINER, ContainerComponent.DEFAULT), at(ItemGroups.COLORED_BLOCKS, Items.YELLOW_SHULKER_BOX), at(ItemGroups.FUNCTIONAL, Items.YELLOW_SHULKER_BOX));
         CHARTREUSE_BANNER = register("chartreuse_banner", settings ->  new BannerItem(VABlocks.CHARTREUSE_BANNER, VABlocks.CHARTREUSE_WALL_BANNER, settings), new Item.Settings().translationKey(VABlocks.CHARTREUSE_BANNER.getTranslationKey()).maxCount(16).component(DataComponentTypes.BANNER_PATTERNS, BannerPatternsComponent.DEFAULT), at(ItemGroups.COLORED_BLOCKS, Items.YELLOW_BANNER), at(ItemGroups.FUNCTIONAL, Items.YELLOW_BANNER));
         CHARTREUSE_BUNDLE = register("chartreuse_bundle", BundleItem::new, new Item.Settings().maxCount(1).component(DataComponentTypes.BUNDLE_CONTENTS, BundleContentsComponent.DEFAULT), ItemGroups.TOOLS, Items.YELLOW_BUNDLE);
+        CHARTREUSE_HARNESS = register("chartreuse_harness", Item::new, new Item.Settings().maxCount(1).component(DataComponentTypes.EQUIPPABLE, EquippableComponent.ofHarness(VADyeColors.CHARTREUSE)), ItemGroups.TOOLS, Items.YELLOW_HARNESS);
 
         //endregion
 
@@ -854,6 +857,7 @@ public class VAItems {
         MAROON_SHULKER_BOX = register("maroon_shulker_box", settings ->  new BlockItem(VABlocks.MAROON_SHULKER_BOX, settings), new Item.Settings().translationKey(VABlocks.MAROON_SHULKER_BOX.getTranslationKey()).maxCount(1).component(DataComponentTypes.CONTAINER, ContainerComponent.DEFAULT), at(ItemGroups.COLORED_BLOCKS, Items.BROWN_SHULKER_BOX), at(ItemGroups.FUNCTIONAL, Items.BROWN_SHULKER_BOX));
         MAROON_BANNER = register("maroon_banner", settings ->  new BannerItem(VABlocks.MAROON_BANNER, VABlocks.MAROON_WALL_BANNER, settings), new Item.Settings().translationKey(VABlocks.MAROON_BANNER.getTranslationKey()).maxCount(16).component(DataComponentTypes.BANNER_PATTERNS, BannerPatternsComponent.DEFAULT), at(ItemGroups.COLORED_BLOCKS, Items.BROWN_BANNER), at(ItemGroups.FUNCTIONAL, Items.BROWN_BANNER));
         MAROON_BUNDLE = register("maroon_bundle", BundleItem::new, new Item.Settings().maxCount(1).component(DataComponentTypes.BUNDLE_CONTENTS, BundleContentsComponent.DEFAULT), ItemGroups.TOOLS, Items.BROWN_BUNDLE);
+        MAROON_HARNESS = register("maroon_harness", Item::new, new Item.Settings().maxCount(1).component(DataComponentTypes.EQUIPPABLE, EquippableComponent.ofHarness(VADyeColors.MAROON)), ItemGroups.TOOLS, Items.BROWN_HARNESS);
 
         //endregion
 
@@ -874,6 +878,7 @@ public class VAItems {
         INDIGO_SHULKER_BOX = register("indigo_shulker_box", settings ->  new BlockItem(VABlocks.INDIGO_SHULKER_BOX, settings), new Item.Settings().translationKey(VABlocks.INDIGO_SHULKER_BOX.getTranslationKey()).maxCount(1).component(DataComponentTypes.CONTAINER, ContainerComponent.DEFAULT), at(ItemGroups.COLORED_BLOCKS, Items.BLUE_SHULKER_BOX), at(ItemGroups.FUNCTIONAL, Items.BLUE_SHULKER_BOX));
         INDIGO_BANNER = register("indigo_banner", settings ->  new BannerItem(VABlocks.INDIGO_BANNER, VABlocks.INDIGO_WALL_BANNER, settings), new Item.Settings().translationKey(VABlocks.INDIGO_BANNER.getTranslationKey()).maxCount(16).component(DataComponentTypes.BANNER_PATTERNS, BannerPatternsComponent.DEFAULT), at(ItemGroups.COLORED_BLOCKS, Items.BLUE_BANNER), at(ItemGroups.FUNCTIONAL, Items.BLUE_BANNER));
         INDIGO_BUNDLE = register("indigo_bundle", BundleItem::new, new Item.Settings().maxCount(1).component(DataComponentTypes.BUNDLE_CONTENTS, BundleContentsComponent.DEFAULT), ItemGroups.TOOLS, Items.BLUE_BUNDLE);
+        INDIGO_HARNESS = register("indigo_harness", Item::new, new Item.Settings().maxCount(1).component(DataComponentTypes.EQUIPPABLE, EquippableComponent.ofHarness(VADyeColors.INDIGO)), ItemGroups.TOOLS, Items.BLUE_HARNESS);
 
         //endregion
 
@@ -894,6 +899,7 @@ public class VAItems {
         PLUM_SHULKER_BOX = register("plum_shulker_box", settings ->  new BlockItem(VABlocks.PLUM_SHULKER_BOX, settings), new Item.Settings().translationKey(VABlocks.PLUM_SHULKER_BOX.getTranslationKey()).maxCount(1).component(DataComponentTypes.CONTAINER, ContainerComponent.DEFAULT), at(ItemGroups.COLORED_BLOCKS, Items.MAGENTA_SHULKER_BOX), at(ItemGroups.FUNCTIONAL, Items.MAGENTA_SHULKER_BOX));
         PLUM_BANNER = register("plum_banner", settings ->  new BannerItem(VABlocks.PLUM_BANNER, VABlocks.PLUM_WALL_BANNER, settings), new Item.Settings().translationKey(VABlocks.PLUM_BANNER.getTranslationKey()).maxCount(16).component(DataComponentTypes.BANNER_PATTERNS, BannerPatternsComponent.DEFAULT), at(ItemGroups.COLORED_BLOCKS, Items.MAGENTA_BANNER), at(ItemGroups.FUNCTIONAL, Items.MAGENTA_BANNER));
         PLUM_BUNDLE = register("plum_bundle", BundleItem::new, new Item.Settings().maxCount(1).component(DataComponentTypes.BUNDLE_CONTENTS, BundleContentsComponent.DEFAULT), ItemGroups.TOOLS, Items.MAGENTA_BUNDLE);
+        PLUM_HARNESS = register("plum_harness", Item::new, new Item.Settings().maxCount(1).component(DataComponentTypes.EQUIPPABLE, EquippableComponent.ofHarness(VADyeColors.PLUM)), ItemGroups.TOOLS, Items.MAGENTA_HARNESS);
 
         //endregion
 
@@ -914,6 +920,7 @@ public class VAItems {
         VIRIDIAN_SHULKER_BOX = register("viridian_shulker_box", settings ->  new BlockItem(VABlocks.VIRIDIAN_SHULKER_BOX, settings), new Item.Settings().translationKey(VABlocks.VIRIDIAN_SHULKER_BOX.getTranslationKey()).maxCount(1).component(DataComponentTypes.CONTAINER, ContainerComponent.DEFAULT), at(ItemGroups.COLORED_BLOCKS, Items.GREEN_SHULKER_BOX), at(ItemGroups.FUNCTIONAL, Items.GREEN_SHULKER_BOX));
         VIRIDIAN_BANNER = register("viridian_banner", settings ->  new BannerItem(VABlocks.VIRIDIAN_BANNER, VABlocks.VIRIDIAN_WALL_BANNER, settings), new Item.Settings().translationKey(VABlocks.VIRIDIAN_BANNER.getTranslationKey()).maxCount(16).component(DataComponentTypes.BANNER_PATTERNS, BannerPatternsComponent.DEFAULT), at(ItemGroups.COLORED_BLOCKS, Items.GREEN_BANNER), at(ItemGroups.FUNCTIONAL, Items.GREEN_BANNER));
         VIRIDIAN_BUNDLE = register("viridian_bundle", BundleItem::new, new Item.Settings().maxCount(1).component(DataComponentTypes.BUNDLE_CONTENTS, BundleContentsComponent.DEFAULT), ItemGroups.TOOLS, Items.GREEN_BUNDLE);
+        VIRIDIAN_HARNESS = register("viridian_harness", Item::new, new Item.Settings().maxCount(1).component(DataComponentTypes.EQUIPPABLE, EquippableComponent.ofHarness(VADyeColors.VIRIDIAN)), ItemGroups.TOOLS, Items.GREEN_HARNESS);
 
         //endregion
 
@@ -934,6 +941,7 @@ public class VAItems {
         TAN_SHULKER_BOX = register("tan_shulker_box", settings ->  new BlockItem(VABlocks.TAN_SHULKER_BOX, settings), new Item.Settings().translationKey(VABlocks.TAN_SHULKER_BOX.getTranslationKey()).maxCount(1).component(DataComponentTypes.CONTAINER, ContainerComponent.DEFAULT), at(ItemGroups.COLORED_BLOCKS, Items.BLACK_SHULKER_BOX), at(ItemGroups.FUNCTIONAL, Items.BLACK_SHULKER_BOX));
         TAN_BANNER = register("tan_banner", settings ->  new BannerItem(VABlocks.TAN_BANNER, VABlocks.TAN_WALL_BANNER, settings), new Item.Settings().translationKey(VABlocks.TAN_BANNER.getTranslationKey()).maxCount(16).component(DataComponentTypes.BANNER_PATTERNS, BannerPatternsComponent.DEFAULT), at(ItemGroups.COLORED_BLOCKS, Items.BLACK_BANNER), at(ItemGroups.FUNCTIONAL, Items.BLACK_BANNER));
         TAN_BUNDLE = register("tan_bundle", BundleItem::new, new Item.Settings().maxCount(1).component(DataComponentTypes.BUNDLE_CONTENTS, BundleContentsComponent.DEFAULT), ItemGroups.TOOLS, Items.BLACK_BUNDLE);
+        TAN_HARNESS = register("tan_harness", Item::new, new Item.Settings().maxCount(1).component(DataComponentTypes.EQUIPPABLE, EquippableComponent.ofHarness(VADyeColors.TAN)), ItemGroups.TOOLS, Items.BLACK_HARNESS);
 
         //endregion
 
@@ -954,6 +962,7 @@ public class VAItems {
         SINOPIA_SHULKER_BOX = register("sinopia_shulker_box", settings ->  new BlockItem(VABlocks.SINOPIA_SHULKER_BOX, settings), new Item.Settings().translationKey(VABlocks.SINOPIA_SHULKER_BOX.getTranslationKey()).maxCount(1).component(DataComponentTypes.CONTAINER, ContainerComponent.DEFAULT), at(ItemGroups.COLORED_BLOCKS, Items.RED_SHULKER_BOX), at(ItemGroups.FUNCTIONAL, Items.RED_SHULKER_BOX));
         SINOPIA_BANNER = register("sinopia_banner", settings ->  new BannerItem(VABlocks.SINOPIA_BANNER, VABlocks.SINOPIA_WALL_BANNER, settings), new Item.Settings().translationKey(VABlocks.SINOPIA_BANNER.getTranslationKey()).maxCount(16).component(DataComponentTypes.BANNER_PATTERNS, BannerPatternsComponent.DEFAULT), at(ItemGroups.COLORED_BLOCKS, Items.RED_BANNER), at(ItemGroups.FUNCTIONAL, Items.RED_BANNER));
         SINOPIA_BUNDLE = register("sinopia_bundle", BundleItem::new, new Item.Settings().maxCount(1).component(DataComponentTypes.BUNDLE_CONTENTS, BundleContentsComponent.DEFAULT), ItemGroups.TOOLS, Items.RED_BUNDLE);
+        SINOPIA_HARNESS = register("sinopia_harness", Item::new, new Item.Settings().maxCount(1).component(DataComponentTypes.EQUIPPABLE, EquippableComponent.ofHarness(VADyeColors.SINOPIA)), ItemGroups.TOOLS, Items.RED_HARNESS);
 
         //endregion
 
@@ -974,6 +983,7 @@ public class VAItems {
         LILAC_SHULKER_BOX = register("lilac_shulker_box", settings ->  new BlockItem(VABlocks.LILAC_SHULKER_BOX, settings), new Item.Settings().translationKey(VABlocks.LILAC_SHULKER_BOX.getTranslationKey()).maxCount(1).component(DataComponentTypes.CONTAINER, ContainerComponent.DEFAULT), at(ItemGroups.COLORED_BLOCKS, Items.PINK_SHULKER_BOX), at(ItemGroups.FUNCTIONAL, Items.PINK_SHULKER_BOX));
         LILAC_BANNER = register("lilac_banner", settings ->  new BannerItem(VABlocks.LILAC_BANNER, VABlocks.LILAC_WALL_BANNER, settings), new Item.Settings().translationKey(VABlocks.LILAC_BANNER.getTranslationKey()).maxCount(16).component(DataComponentTypes.BANNER_PATTERNS, BannerPatternsComponent.DEFAULT), at(ItemGroups.COLORED_BLOCKS, Items.PINK_BANNER), at(ItemGroups.FUNCTIONAL, Items.PINK_BANNER));
         LILAC_BUNDLE = register("lilac_bundle", BundleItem::new, new Item.Settings().maxCount(1).component(DataComponentTypes.BUNDLE_CONTENTS, BundleContentsComponent.DEFAULT), ItemGroups.TOOLS, Items.PINK_BUNDLE);
+        LILAC_HARNESS = register("lilac_harness", Item::new, new Item.Settings().maxCount(1).component(DataComponentTypes.EQUIPPABLE, EquippableComponent.ofHarness(VADyeColors.LILAC)), ItemGroups.TOOLS, Items.PINK_HARNESS);
 
         //endregion
 

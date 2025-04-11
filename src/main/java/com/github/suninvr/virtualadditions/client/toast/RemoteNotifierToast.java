@@ -3,6 +3,7 @@ package com.github.suninvr.virtualadditions.client.toast;
 import com.github.suninvr.virtualadditions.VirtualAdditions;
 import net.minecraft.advancement.AdvancementFrame;
 import net.minecraft.client.font.TextRenderer;
+import net.minecraft.client.gl.RenderPipelines;
 import net.minecraft.client.gui.DrawContext;
 import net.minecraft.client.render.RenderLayer;
 import net.minecraft.client.sound.PositionedSoundInstance;
@@ -42,7 +43,7 @@ public class RemoteNotifierToast implements Toast {
 
     @Override
     public void draw(DrawContext context, TextRenderer textRenderer, long startTime) {
-        context.drawGuiTexture(RenderLayer::getGuiTextured, TEXTURE, 0, 0, this.getWidth(), this.getHeight());
+        context.drawGuiTexture(RenderPipelines.GUI_TEXTURED, TEXTURE, 0, 0, this.getWidth(), this.getHeight());
         if (this.text != null) {
             List<OrderedText> lines = textRenderer.wrapLines(text, this.stack.isEmpty() ? 146 : 125);
             int textX = this.stack.isEmpty() ? 8 : 30;

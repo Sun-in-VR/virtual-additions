@@ -245,6 +245,14 @@ public class VAModelProvider {
             itemModelGenerator.registerBundle(VAItems.TAN_BUNDLE);
             itemModelGenerator.registerBundle(VAItems.SINOPIA_BUNDLE);
             itemModelGenerator.registerBundle(VAItems.LILAC_BUNDLE);
+            itemModelGenerator.register(VAItems.CHARTREUSE_HARNESS, Models.GENERATED);
+            itemModelGenerator.register(VAItems.MAROON_HARNESS, Models.GENERATED);
+            itemModelGenerator.register(VAItems.INDIGO_HARNESS, Models.GENERATED);
+            itemModelGenerator.register(VAItems.PLUM_HARNESS, Models.GENERATED);
+            itemModelGenerator.register(VAItems.VIRIDIAN_HARNESS, Models.GENERATED);
+            itemModelGenerator.register(VAItems.TAN_HARNESS, Models.GENERATED);
+            itemModelGenerator.register(VAItems.SINOPIA_HARNESS, Models.GENERATED);
+            itemModelGenerator.register(VAItems.LILAC_HARNESS, Models.GENERATED);
             itemModelGenerator.register(VAItems.EXOSKELETON_ARMOR_TRIM_SMITHING_TEMPLATE, Models.GENERATED);
 
             registerTintableWithDefaultTexture(itemModelGenerator, VAItems.ENGRAVING_CHISEL);

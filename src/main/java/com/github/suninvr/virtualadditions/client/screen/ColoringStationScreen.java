@@ -3,6 +3,7 @@ package com.github.suninvr.virtualadditions.client.screen;
 import com.github.suninvr.virtualadditions.block.entity.DyeContents;
 import com.github.suninvr.virtualadditions.screen.ColoringStationScreenHandler;
 import net.minecraft.client.MinecraftClient;
+import net.minecraft.client.gl.RenderPipelines;
 import net.minecraft.client.gui.DrawContext;
 import net.minecraft.client.gui.screen.Screen;
 import net.minecraft.client.gui.screen.ingame.HandledScreen;
@@ -100,7 +101,7 @@ public class ColoringStationScreen extends HandledScreen<ColoringStationScreenHa
     protected void drawBackground(DrawContext context, float delta, int mouseX, int mouseY) {
         int i = this.x;
         int j = this.y;
-        context.drawTexture(RenderLayer::getGuiTextured, TEXTURE, i, j, 0, 0, this.backgroundWidth, this.backgroundHeight, 256, 256);
+        context.drawTexture(RenderPipelines.GUI_TEXTURED, TEXTURE, i, j, 0, 0, this.backgroundWidth, this.backgroundHeight, 256, 256);
 
         this.drawDyeStatusBar(context, 0, this.caches[5].percent, i + 10, j + 35);
         this.drawDyeStatusBar(context, 1, this.caches[4].percent, i + 10, j + 41);
@@ -111,11 +112,11 @@ public class ColoringStationScreen extends HandledScreen<ColoringStationScreenHa
 
         Slot slot = this.handler.getSlot(0);
         if (!slot.hasStack()) {
-            context.drawGuiTexture(RenderLayer::getGuiTextured, DYE_SLOT_TEXTURE, i + slot.x, j + slot.y, 16, 16);
+            context.drawGuiTexture(RenderPipelines.GUI_TEXTURED, DYE_SLOT_TEXTURE, i + slot.x, j + slot.y, 16, 16);
         }
         int k = (int)(41.0f * this.scrollAmount);
         Identifier identifier = this.shouldScroll() ? SCROLLER_TEXTURE : SCROLLER_DISABLED_TEXTURE;
-        context.drawGuiTexture(RenderLayer::getGuiTextured, identifier, i + 119, j + 15 + k, 12, 15);
+        context.drawGuiTexture(RenderPipelines.GUI_TEXTURED, identifier, i + 119, j + 15 + k, 12, 15);
         int l = this.x + 52;
         int m = this.y + 14;
         int n = this.scrollOffset + 12;
@@ -127,7 +128,7 @@ public class ColoringStationScreen extends HandledScreen<ColoringStationScreenHa
     private void drawDyeStatusBar(DrawContext context, int index, float percent, int x, int y) {
         int v = index * 4;
         int max = (int)Math.ceil(34 * percent);
-        context.drawTexture(RenderLayer::getGuiTextured, TEXTURE, x, y, 176, v, max, 4, 256, 256);
+        context.drawTexture(RenderPipelines.GUI_TEXTURED, TEXTURE, x, y, 176, v, max, 4, 256, 256);
     }
 
     @Override
@@ -218,7 +219,7 @@ public class ColoringStationScreen extends HandledScreen<ColoringStationScreenHa
             ColoringStationScreenHandler.ColoringRecipeData data = this.handler.getRecipeData(i);
             ItemStack stack = this.handler.input.getStack(1);
             Identifier identifier = data.isDyeContentSufficient(this.dyeContents) && data.isInputValid(stack) ? (i == (this.handler).getSelectedRecipe() ? RECIPE_SELECTED_TEXTURE : mouseX >= k && mouseY >= m && mouseX < k + 16 && mouseY < m + 18 ? RECIPE_HIGHLIGHTED_TEXTURE : RECIPE_TEXTURE) : RECIPE_UNCRAFTABLE_TEXTURE;
-            context.drawGuiTexture(RenderLayer::getGuiTextured, identifier, k, m - 1, 16, 18);
+            context.drawGuiTexture(RenderPipelines.GUI_TEXTURED, identifier, k, m - 1, 16, 18);
         }
     }
 
