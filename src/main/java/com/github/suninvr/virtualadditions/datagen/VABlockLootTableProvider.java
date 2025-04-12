@@ -200,19 +200,19 @@ public final class VABlockLootTableProvider {
             this.addDrop(VABlocks.REDSTONE_BRIDGE);
 
             addFamilyDrops(
-                    VACollections.AEROBLOOM,
+                    VACollections.SOULBLOOM,
                     VACollections.FLOATROCK,
                     VACollections.POLISHED_FLOATROCK,
                     VACollections.FLOATROCK_BRICKS
             );
             addSimpleDrops(
-                    VABlocks.AEROBLOOM_LOG,
-                    VABlocks.AEROBLOOM_WOOD,
-                    VABlocks.STRIPPED_AEROBLOOM_LOG,
-                    VABlocks.STRIPPED_AEROBLOOM_WOOD,
-                    VABlocks.AEROBLOOM_HANGING_SIGN,
-                    VABlocks.AEROBLOOM_SAPLING,
-                    VABlocks.AEROBLOOM_HEDGE
+                    VABlocks.SOULBLOOM_LOG,
+                    VABlocks.SOULBLOOM_WOOD,
+                    VABlocks.STRIPPED_SOULBLOOM_LOG,
+                    VABlocks.STRIPPED_SOULBLOOM_WOOD,
+                    VABlocks.SOULBLOOM_HANGING_SIGN,
+                    VABlocks.SOULBLOOM_SAPLING,
+                    VABlocks.SOULBLOOM_HEDGE
             );
 
             this.addDrop(VABlocks.GRASSY_FLOATROCK, block -> this.drops(block, VABlocks.FLOATROCK));
@@ -226,7 +226,7 @@ public final class VABlockLootTableProvider {
             this.addDrop(VABlocks.FLOATROCK_LAPIS_ORE, this::lapisOreDrops);
             this.addDrop(VABlocks.FLOATROCK_DIAMOND_ORE, block -> this.oreDrops(block, Items.DIAMOND));
 
-            this.addDrop(VABlocks.AEROBLOOM_LEAVES, block ->  leavesDrops(VABlocks.AEROBLOOM_LEAVES, VABlocks.AEROBLOOM_SAPLING, SAPLING_DROP_CHANCE));
+            this.addDrop(VABlocks.SOULBLOOM_LEAVES, block ->  leavesDrops(VABlocks.SOULBLOOM_LEAVES, VABlocks.SOULBLOOM_SAPLING, SAPLING_DROP_CHANCE));
 
         }
     }

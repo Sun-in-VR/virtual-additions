@@ -1,6 +1,6 @@
 package com.github.suninvr.virtualadditions.registry;
 
-import com.github.suninvr.virtualadditions.worldgen.feature.AerobloomTrunkPlacer;
+import com.github.suninvr.virtualadditions.worldgen.feature.SoulbloomTrunkPlacer;
 import com.github.suninvr.virtualadditions.worldgen.feature.BalloonBulbFeature;
 import com.github.suninvr.virtualadditions.worldgen.feature.LumwaspNestFeature;
 import com.mojang.serialization.MapCodec;
@@ -36,7 +36,7 @@ public class VAFeatures {
         public static final RegistryKey<PlacedFeature> ORE_HORNFELS;
         public static final RegistryKey<PlacedFeature> ORE_BLUESCHIST;
         public static final RegistryKey<PlacedFeature> ORE_SYENITE;
-        public static final RegistryKey<PlacedFeature> AEROBLOOM_TREES_IN_HILLS;
+        public static final RegistryKey<PlacedFeature> SOULBLOOM_TREES;
 
         static {
             ORE_IOLITE = registerPlaced(idOf("ore_iolite"));
@@ -53,7 +53,7 @@ public class VAFeatures {
             ORE_HORNFELS = registerPlaced(idOf("ore_hornfels"));
             ORE_BLUESCHIST = registerPlaced(idOf("ore_blueschist"));
             ORE_SYENITE = registerPlaced(idOf("ore_syenite"));
-            AEROBLOOM_TREES_IN_HILLS = registerPlaced(idOf("aerobloom_trees_in_hills"));
+            SOULBLOOM_TREES = registerPlaced(idOf("soulbloom_trees"));
         }
 
         //public void bootstrap(Registerable<PlacedFeature> featureRegisterable) {
@@ -62,10 +62,10 @@ public class VAFeatures {
     }
 
     public static class Configured {
-        public static final RegistryKey<ConfiguredFeature<?, ?>> AEROBLOOM_TREE;
+        public static final RegistryKey<ConfiguredFeature<?, ?>> SOULBLOOM_TREE;
 
         static {
-            AEROBLOOM_TREE = registerConfigured(idOf("aerobloom_tree"));
+            SOULBLOOM_TREE = registerConfigured(idOf("soulbloom_tree"));
         }
     }
 
@@ -119,7 +119,7 @@ public class VAFeatures {
     }
 
     public static class TrunkPlacerTypes {
-        public static final TrunkPlacerType<AerobloomTrunkPlacer> AEROBLOOM_TRUNK_PLACER = Registry.register(Registries.TRUNK_PLACER_TYPE, idOf("aerobloom_trunk_placer"), new TrunkPlacerType<>((MapCodec<AerobloomTrunkPlacer>) AerobloomTrunkPlacer.CODEC));
+        public static final TrunkPlacerType<SoulbloomTrunkPlacer> SOULBLOOM_TRUNK_PLACER = Registry.register(Registries.TRUNK_PLACER_TYPE, idOf("soulbloom_trunk_placer"), new TrunkPlacerType<>((MapCodec<SoulbloomTrunkPlacer>) SoulbloomTrunkPlacer.CODEC));
         public static void init(){}
     }
 }

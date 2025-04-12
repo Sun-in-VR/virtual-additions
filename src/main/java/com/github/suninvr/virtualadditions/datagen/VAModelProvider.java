@@ -65,7 +65,7 @@ public class VAModelProvider {
         public void generateBlockStateModels(BlockStateModelGenerator blockStateModelGenerator) {
 
             blockStateModelGenerator.registerCubeAllModelTexturePool(VABlocks.FLOATROCK).family(VACollections.FLOATROCK);
-            blockStateModelGenerator.registerCubeAllModelTexturePool(VABlocks.AEROBLOOM_PLANKS).family(VACollections.AEROBLOOM);
+            blockStateModelGenerator.registerCubeAllModelTexturePool(VABlocks.SOULBLOOM_PLANKS).family(VACollections.SOULBLOOM);
             blockStateModelGenerator.registerCubeAllModelTexturePool(VABlocks.POLISHED_FLOATROCK).family(VACollections.POLISHED_FLOATROCK);
             blockStateModelGenerator.registerCubeAllModelTexturePool(VABlocks.FLOATROCK_BRICKS).family(VACollections.FLOATROCK_BRICKS);
             blockStateModelGenerator.registerCubeAllModelTexturePool(VABlocks.CUT_STEEL).family(VACollections.CUT_STEEL).parented(VABlocks.CUT_STEEL, VABlocks.WAXED_CUT_STEEL).parented(VABlocks.CHISELED_STEEL, VABlocks.WAXED_CHISELED_STEEL).family(VACollections.WAXED_CUT_STEEL);
@@ -122,8 +122,8 @@ public class VAModelProvider {
             blockStateModelGenerator.registerItemModel(VABlocks.TALL_GREENCAP_MUSHROOMS, "_top");
             blockStateModelGenerator.registerItemModel(VABlocks.GLOWING_SILK);
 
-            blockStateModelGenerator.registerItemModel(VAItems.AEROBLOOM_HANGING_SIGN);
-            blockStateModelGenerator.registerItemModel(VAItems.AEROBLOOM_SAPLING, BlockStateModelGenerator.CrossType.NOT_TINTED.registerItemModel(blockStateModelGenerator, VABlocks.AEROBLOOM_SAPLING));
+            blockStateModelGenerator.registerItemModel(VAItems.SOULBLOOM_HANGING_SIGN);
+            blockStateModelGenerator.registerItemModel(VAItems.SOULBLOOM_SAPLING, BlockStateModelGenerator.CrossType.NOT_TINTED.registerItemModel(blockStateModelGenerator, VABlocks.SOULBLOOM_SAPLING));
 
             blockStateModelGenerator.registerMirrorable(VABlocks.ROCK_SALT_BLOCK);
             blockStateModelGenerator.registerSimpleCubeAll(VABlocks.ROCK_SALT_ORE);
@@ -150,7 +150,7 @@ public class VAModelProvider {
             blockStateModelGenerator.registerParentedItemModel(VABlocks.PALE_OAK_HEDGE, Registries.BLOCK.getId(VABlocks.PALE_OAK_HEDGE).withPrefixedPath("block/").withSuffixedPath("_inventory"));
             registerParentedTintedItemModel(blockStateModelGenerator, VABlocks.MANGROVE_HEDGE, Registries.BLOCK.getId(VABlocks.MANGROVE_HEDGE).withPrefixedPath("block/").withSuffixedPath("_inventory"), new ConstantTintSource(FoliageColors.MANGROVE));
             blockStateModelGenerator.registerParentedItemModel(VABlocks.CHERRY_HEDGE, Registries.BLOCK.getId(VABlocks.CHERRY_HEDGE).withPrefixedPath("block/").withSuffixedPath("_inventory"));
-            blockStateModelGenerator.registerParentedItemModel(VABlocks.AEROBLOOM_HEDGE, Registries.BLOCK.getId(VABlocks.AEROBLOOM_HEDGE).withPrefixedPath("block/").withSuffixedPath("_inventory"));
+            blockStateModelGenerator.registerParentedItemModel(VABlocks.SOULBLOOM_HEDGE, Registries.BLOCK.getId(VABlocks.SOULBLOOM_HEDGE).withPrefixedPath("block/").withSuffixedPath("_inventory"));
             blockStateModelGenerator.registerParentedItemModel(VABlocks.AZALEA_HEDGE, Registries.BLOCK.getId(VABlocks.AZALEA_HEDGE).withPrefixedPath("block/").withSuffixedPath("_inventory"));
             blockStateModelGenerator.registerParentedItemModel(VABlocks.FLOWERING_AZALEA_HEDGE, Registries.BLOCK.getId(VABlocks.FLOWERING_AZALEA_HEDGE).withPrefixedPath("block/").withSuffixedPath("_inventory"));
 
@@ -158,7 +158,7 @@ public class VAModelProvider {
 
             registerSpotlight(blockStateModelGenerator);
 
-            blockStateModelGenerator.registerFlowerPotPlant(VABlocks.AEROBLOOM_SAPLING, VABlocks.POTTED_AEROBLOOM_SAPLING, BlockStateModelGenerator.CrossType.NOT_TINTED);
+            blockStateModelGenerator.registerFlowerPotPlant(VABlocks.SOULBLOOM_SAPLING, VABlocks.POTTED_SOULBLOOM_SAPLING, BlockStateModelGenerator.CrossType.NOT_TINTED);
             blockStateModelGenerator.registerFlowerPotPlant(VABlocks.GREENCAP_MUSHROOM, VABlocks.POTTED_GREENCAP_MUSHROOM, BlockStateModelGenerator.CrossType.NOT_TINTED);
 
             blockStateModelGenerator.registerSimpleCubeAll(VABlocks.STEEL_GRATE);
@@ -237,8 +237,8 @@ public class VAModelProvider {
             itemModelGenerator.registerArmor(VAItems.STEEL_BOOTS, VAArmorMaterial.STEEL.assetId(), BOOTS_TRIM_ID_PREFIX, false);
             itemModelGenerator.register(VAItems.STEEL_HORSE_ARMOR, Models.GENERATED);
 
-            itemModelGenerator.register(VAItems.AEROBLOOM_BOAT, Models.GENERATED);
-            itemModelGenerator.register(VAItems.AEROBLOOM_CHEST_BOAT, Models.GENERATED);
+            itemModelGenerator.register(VAItems.SOULBLOOM_BOAT, Models.GENERATED);
+            itemModelGenerator.register(VAItems.SOULBLOOM_CHEST_BOAT, Models.GENERATED);
 
             itemModelGenerator.registerBundle(VAItems.CHARTREUSE_BUNDLE);
             itemModelGenerator.registerBundle(VAItems.MAROON_BUNDLE);

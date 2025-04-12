@@ -501,9 +501,9 @@ public final class VARecipeProvider {
             offerBlasting(List.of(VAItems.FLOATROCK_LAPIS_ORE), RecipeCategory.MISC, Items.LAPIS_LAZULI, 0.2F, 100, "lapis_lazuli");
             offerBlasting(List.of(VAItems.FLOATROCK_DIAMOND_ORE), RecipeCategory.MISC, Items.DIAMOND, 1.0F, 100, "diamond");
 
-            offerHedgeRecipe(VABlocks.AEROBLOOM_HEDGE, VABlocks.AEROBLOOM_LEAVES);
-            offerBoatRecipe(VAItems.AEROBLOOM_BOAT, VABlocks.AEROBLOOM_PLANKS);
-            offerChestBoatRecipe(VAItems.AEROBLOOM_CHEST_BOAT, VAItems.AEROBLOOM_BOAT);
+            offerHedgeRecipe(VABlocks.SOULBLOOM_HEDGE, VABlocks.SOULBLOOM_LEAVES);
+            offerBoatRecipe(VAItems.SOULBLOOM_BOAT, VABlocks.SOULBLOOM_PLANKS);
+            offerChestBoatRecipe(VAItems.SOULBLOOM_CHEST_BOAT, VAItems.SOULBLOOM_BOAT);
 
             offerStonecuttingRecipes(VABlocks.FLOATROCK, VACollections.POLISHED_FLOATROCK, VACollections.FLOATROCK_BRICKS);
             generateCuttableFamilyChain(VACollections.FLOATROCK);
@@ -518,11 +518,11 @@ public final class VARecipeProvider {
             offerStonecuttingRecipe(RecipeCategory.BUILDING_BLOCKS, VAItems.CHISELED_ROCK_SALT_BRICKS, VAItems.ROCK_SALT_BRICKS);
             offerStonecuttingRecipe(RecipeCategory.BUILDING_BLOCKS, VAItems.CHISELED_ROCK_SALT_BRICKS, VAItems.ROCK_SALT_BLOCK);
 
-            generateFamily(VACollections.AEROBLOOM, FeatureFlags.VANILLA_FEATURES);
-            offerBarkBlockRecipe(VAItems.AEROBLOOM_WOOD, VAItems.AEROBLOOM_LOG);
-            offerBarkBlockRecipe(VAItems.STRIPPED_AEROBLOOM_WOOD, VAItems.STRIPPED_AEROBLOOM_LOG);
-            offerPlanksRecipe2(VAItems.AEROBLOOM_PLANKS, VAItemTags.AEROBLOOM_LOGS, 4);
-            offerHangingSignRecipe(VAItems.AEROBLOOM_HANGING_SIGN, VAItems.STRIPPED_AEROBLOOM_LOG);
+            generateFamily(VACollections.SOULBLOOM, FeatureFlags.VANILLA_FEATURES);
+            offerBarkBlockRecipe(VAItems.SOULBLOOM_WOOD, VAItems.SOULBLOOM_LOG);
+            offerBarkBlockRecipe(VAItems.STRIPPED_SOULBLOOM_WOOD, VAItems.STRIPPED_SOULBLOOM_LOG);
+            offerPlanksRecipe2(VAItems.SOULBLOOM_PLANKS, VAItemTags.SOULBLOOM_LOGS, 4);
+            offerHangingSignRecipe(VAItems.SOULBLOOM_HANGING_SIGN, VAItems.STRIPPED_SOULBLOOM_LOG);
 
             offerWaxingRecipes(exporter);
         }

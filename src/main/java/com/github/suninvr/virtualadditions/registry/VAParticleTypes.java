@@ -21,7 +21,7 @@ public class VAParticleTypes {
     public static final SimpleParticleType GREENCAP_SPORE;
     public static final SimpleParticleType SCRAPE_STEEL;
     public static final SimpleParticleType INTERFERENCE;
-    public static final SimpleParticleType AEROBLOOM_LEAVES;
+    public static final SimpleParticleType SOULBLOOM_LEAVES;
     public static final ParticleType<IoliteRingParticleEffect> IOLITE_TETHER_RING;
     public static final ParticleType<IoliteRingParticleEffect> IOLITE_ANCHOR_RING;
 
@@ -31,7 +31,7 @@ public class VAParticleTypes {
         GREENCAP_SPORE = register("greencap_spore");
         SCRAPE_STEEL = register("scrape_steel", true);
         INTERFERENCE = register("interference");
-        AEROBLOOM_LEAVES = register("aerobloom_leaves");
+        SOULBLOOM_LEAVES = register("soulbloom_leaves");
         IOLITE_TETHER_RING = register("warp_tether_ring", false, type -> IoliteRingParticleEffect.TETHER_CODEC, type -> IoliteRingParticleEffect.TETHER_PACKET_CODEC);
         IOLITE_ANCHOR_RING = register("warp_anchor_ring", false, type -> IoliteRingParticleEffect.ANCHOR_CODEC, type -> IoliteRingParticleEffect.ANCHOR_PACKET_CODEC);
     }

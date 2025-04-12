@@ -106,26 +106,26 @@ public class VAItems {
     public static final Item FLOATROCK_LAPIS_ORE;
     public static final Item FLOATROCK_DIAMOND_ORE;
     public static final Item SPRINGSOIL;
-    public static final Item AEROBLOOM_LOG;
-    public static final Item AEROBLOOM_WOOD;
-    public static final Item STRIPPED_AEROBLOOM_LOG;
-    public static final Item STRIPPED_AEROBLOOM_WOOD;
-    public static final Item AEROBLOOM_PLANKS;
-    public static final Item AEROBLOOM_STAIRS;
-    public static final Item AEROBLOOM_SLAB;
-    public static final Item AEROBLOOM_FENCE;
-    public static final Item AEROBLOOM_FENCE_GATE;
-    public static final Item AEROBLOOM_DOOR;
-    public static final Item AEROBLOOM_TRAPDOOR;
-    public static final Item AEROBLOOM_PRESSURE_PLATE;
-    public static final Item AEROBLOOM_BUTTON;
-    public static final Item AEROBLOOM_SIGN;
-    public static final Item AEROBLOOM_HANGING_SIGN;
-    public static final Item AEROBLOOM_LEAVES;
-    public static final Item AEROBLOOM_HEDGE;
-    public static final Item AEROBLOOM_SAPLING;
-    public static final Item AEROBLOOM_BOAT;
-    public static final Item AEROBLOOM_CHEST_BOAT;
+    public static final Item SOULBLOOM_LOG;
+    public static final Item SOULBLOOM_WOOD;
+    public static final Item STRIPPED_SOULBLOOM_LOG;
+    public static final Item STRIPPED_SOULBLOOM_WOOD;
+    public static final Item SOULBLOOM_PLANKS;
+    public static final Item SOULBLOOM_STAIRS;
+    public static final Item SOULBLOOM_SLAB;
+    public static final Item SOULBLOOM_FENCE;
+    public static final Item SOULBLOOM_FENCE_GATE;
+    public static final Item SOULBLOOM_DOOR;
+    public static final Item SOULBLOOM_TRAPDOOR;
+    public static final Item SOULBLOOM_PRESSURE_PLATE;
+    public static final Item SOULBLOOM_BUTTON;
+    public static final Item SOULBLOOM_SIGN;
+    public static final Item SOULBLOOM_HANGING_SIGN;
+    public static final Item SOULBLOOM_LEAVES;
+    public static final Item SOULBLOOM_HEDGE;
+    public static final Item SOULBLOOM_SAPLING;
+    public static final Item SOULBLOOM_BOAT;
+    public static final Item SOULBLOOM_CHEST_BOAT;
     public static final Item BALLOON_FRUIT;
     public static final Item OAK_HEDGE;
     public static final Item SPRUCE_HEDGE;
@@ -597,27 +597,27 @@ public class VAItems {
 
         //endregion
 
-        //region Aerobloom
+        //region Soulbloom
 
-        AEROBLOOM_LOG = registerBlockItem("aerobloom_log", VABlocks.AEROBLOOM_LOG, at(ItemGroups.BUILDING_BLOCKS, Items.CHERRY_BUTTON), at(ItemGroups.NATURAL, Items.CHERRY_LOG));
-        AEROBLOOM_WOOD = registerBlockItem("aerobloom_wood", VABlocks.AEROBLOOM_WOOD, ItemGroups.BUILDING_BLOCKS, prev);
-        STRIPPED_AEROBLOOM_LOG = registerBlockItem("stripped_aerobloom_log", VABlocks.STRIPPED_AEROBLOOM_LOG, ItemGroups.BUILDING_BLOCKS, prev);
-        STRIPPED_AEROBLOOM_WOOD = registerBlockItem("stripped_aerobloom_wood", VABlocks.STRIPPED_AEROBLOOM_WOOD, ItemGroups.BUILDING_BLOCKS, prev);
-        AEROBLOOM_PLANKS = registerBlockItem("aerobloom_planks", VABlocks.AEROBLOOM_PLANKS, ItemGroups.BUILDING_BLOCKS, prev);
-        AEROBLOOM_STAIRS = registerBlockItem("aerobloom_stairs", VABlocks.AEROBLOOM_STAIRS, ItemGroups.BUILDING_BLOCKS, prev);
-        AEROBLOOM_SLAB = registerBlockItem("aerobloom_slab", VABlocks.AEROBLOOM_SLAB, ItemGroups.BUILDING_BLOCKS, prev);
-        AEROBLOOM_FENCE = registerBlockItem("aerobloom_fence", VABlocks.AEROBLOOM_FENCE, ItemGroups.BUILDING_BLOCKS, prev);
-        AEROBLOOM_FENCE_GATE = registerBlockItem("aerobloom_fence_gate", VABlocks.AEROBLOOM_FENCE_GATE, ItemGroups.BUILDING_BLOCKS, prev);
-        AEROBLOOM_DOOR = registerBlockItem("aerobloom_door", VABlocks.AEROBLOOM_DOOR, ItemGroups.BUILDING_BLOCKS, prev);
-        AEROBLOOM_TRAPDOOR = registerBlockItem("aerobloom_trapdoor", VABlocks.AEROBLOOM_TRAPDOOR, ItemGroups.BUILDING_BLOCKS, prev);
-        AEROBLOOM_PRESSURE_PLATE = registerBlockItem("aerobloom_pressure_plate", VABlocks.AEROBLOOM_PRESSURE_PLATE, ItemGroups.BUILDING_BLOCKS, prev);
-        AEROBLOOM_BUTTON = registerBlockItem("aerobloom_button", VABlocks.AEROBLOOM_BUTTON, ItemGroups.BUILDING_BLOCKS, prev);
-        AEROBLOOM_SIGN = register("aerobloom_sign", settings ->  new SignItem(VABlocks.AEROBLOOM_SIGN, VABlocks.AEROBLOOM_WALL_SIGN, settings), new Item.Settings().translationKey(VABlocks.AEROBLOOM_SIGN.getTranslationKey()).maxCount(16), ItemGroups.FUNCTIONAL, Items.CHERRY_HANGING_SIGN);
-        AEROBLOOM_HANGING_SIGN = register("aerobloom_hanging_sign", settings ->  new HangingSignItem(VABlocks.AEROBLOOM_HANGING_SIGN, VABlocks.AEROBLOOM_WALL_HANGING_SIGN, settings), new Item.Settings().translationKey(VABlocks.AEROBLOOM_HANGING_SIGN.getTranslationKey()).maxCount(16), ItemGroups.FUNCTIONAL, prev);
-        AEROBLOOM_LEAVES = registerBlockItem("aerobloom_leaves", VABlocks.AEROBLOOM_LEAVES, ItemGroups.NATURAL, Items.CHERRY_LEAVES);
-        AEROBLOOM_SAPLING = registerBlockItem("aerobloom_sapling", VABlocks.AEROBLOOM_SAPLING, ItemGroups.NATURAL, Items.CHERRY_SAPLING);
-        AEROBLOOM_BOAT = register("aerobloom_boat", settings -> new BoatItem(VAEntityType.AEROBLOOM_BOAT, settings), new Item.Settings().maxCount(1), ItemGroups.TOOLS, Items.CHERRY_CHEST_BOAT);
-        AEROBLOOM_CHEST_BOAT = register("aerobloom_chest_boat", settings -> new BoatItem(VAEntityType.AEROBLOOM_CHEST_BOAT, settings), new Item.Settings().maxCount(1), ItemGroups.TOOLS, prev);
+        SOULBLOOM_LOG = registerBlockItem("soulbloom_log", VABlocks.SOULBLOOM_LOG, at(ItemGroups.BUILDING_BLOCKS, Items.CHERRY_BUTTON), at(ItemGroups.NATURAL, Items.CHERRY_LOG));
+        SOULBLOOM_WOOD = registerBlockItem("soulbloom_wood", VABlocks.SOULBLOOM_WOOD, ItemGroups.BUILDING_BLOCKS, prev);
+        STRIPPED_SOULBLOOM_LOG = registerBlockItem("stripped_soulbloom_log", VABlocks.STRIPPED_SOULBLOOM_LOG, ItemGroups.BUILDING_BLOCKS, prev);
+        STRIPPED_SOULBLOOM_WOOD = registerBlockItem("stripped_soulbloom_wood", VABlocks.STRIPPED_SOULBLOOM_WOOD, ItemGroups.BUILDING_BLOCKS, prev);
+        SOULBLOOM_PLANKS = registerBlockItem("soulbloom_planks", VABlocks.SOULBLOOM_PLANKS, ItemGroups.BUILDING_BLOCKS, prev);
+        SOULBLOOM_STAIRS = registerBlockItem("soulbloom_stairs", VABlocks.SOULBLOOM_STAIRS, ItemGroups.BUILDING_BLOCKS, prev);
+        SOULBLOOM_SLAB = registerBlockItem("soulbloom_slab", VABlocks.SOULBLOOM_SLAB, ItemGroups.BUILDING_BLOCKS, prev);
+        SOULBLOOM_FENCE = registerBlockItem("soulbloom_fence", VABlocks.SOULBLOOM_FENCE, ItemGroups.BUILDING_BLOCKS, prev);
+        SOULBLOOM_FENCE_GATE = registerBlockItem("soulbloom_fence_gate", VABlocks.SOULBLOOM_FENCE_GATE, ItemGroups.BUILDING_BLOCKS, prev);
+        SOULBLOOM_DOOR = registerBlockItem("soulbloom_door", VABlocks.SOULBLOOM_DOOR, ItemGroups.BUILDING_BLOCKS, prev);
+        SOULBLOOM_TRAPDOOR = registerBlockItem("soulbloom_trapdoor", VABlocks.SOULBLOOM_TRAPDOOR, ItemGroups.BUILDING_BLOCKS, prev);
+        SOULBLOOM_PRESSURE_PLATE = registerBlockItem("soulbloom_pressure_plate", VABlocks.SOULBLOOM_PRESSURE_PLATE, ItemGroups.BUILDING_BLOCKS, prev);
+        SOULBLOOM_BUTTON = registerBlockItem("soulbloom_button", VABlocks.SOULBLOOM_BUTTON, ItemGroups.BUILDING_BLOCKS, prev);
+        SOULBLOOM_SIGN = register("soulbloom_sign", settings ->  new SignItem(VABlocks.SOULBLOOM_SIGN, VABlocks.SOULBLOOM_WALL_SIGN, settings), new Item.Settings().translationKey(VABlocks.SOULBLOOM_SIGN.getTranslationKey()).maxCount(16), ItemGroups.FUNCTIONAL, Items.CHERRY_HANGING_SIGN);
+        SOULBLOOM_HANGING_SIGN = register("soulbloom_hanging_sign", settings ->  new HangingSignItem(VABlocks.SOULBLOOM_HANGING_SIGN, VABlocks.SOULBLOOM_WALL_HANGING_SIGN, settings), new Item.Settings().translationKey(VABlocks.SOULBLOOM_HANGING_SIGN.getTranslationKey()).maxCount(16), ItemGroups.FUNCTIONAL, prev);
+        SOULBLOOM_LEAVES = registerBlockItem("soulbloom_leaves", VABlocks.SOULBLOOM_LEAVES, ItemGroups.NATURAL, Items.CHERRY_LEAVES);
+        SOULBLOOM_SAPLING = registerBlockItem("soulbloom_sapling", VABlocks.SOULBLOOM_SAPLING, ItemGroups.NATURAL, Items.CHERRY_SAPLING);
+        SOULBLOOM_BOAT = register("soulbloom_boat", settings -> new BoatItem(VAEntityType.SOULBLOOM_BOAT, settings), new Item.Settings().maxCount(1), ItemGroups.TOOLS, Items.CHERRY_CHEST_BOAT);
+        SOULBLOOM_CHEST_BOAT = register("soulbloom_chest_boat", settings -> new BoatItem(VAEntityType.SOULBLOOM_CHEST_BOAT, settings), new Item.Settings().maxCount(1), ItemGroups.TOOLS, prev);
 
         //endregion
 
@@ -1078,7 +1078,7 @@ public class VAItems {
         AZALEA_HEDGE = registerBlockItem("azalea_hedge", VABlocks.AZALEA_HEDGE, ItemGroups.NATURAL, Items.AZALEA_LEAVES);
         FLOWERING_AZALEA_HEDGE = registerBlockItem("flowering_azalea_hedge", VABlocks.FLOWERING_AZALEA_HEDGE, ItemGroups.NATURAL, Items.FLOWERING_AZALEA_LEAVES);
         CHERRY_HEDGE = registerBlockItem("cherry_hedge", VABlocks.CHERRY_HEDGE, ItemGroups.NATURAL, Items.CHERRY_LEAVES);
-        AEROBLOOM_HEDGE = registerBlockItem("aerobloom_hedge", VABlocks.AEROBLOOM_HEDGE, ItemGroups.NATURAL, VAItems.AEROBLOOM_LEAVES);
+        SOULBLOOM_HEDGE = registerBlockItem("soulbloom_hedge", VABlocks.SOULBLOOM_HEDGE, ItemGroups.NATURAL, VAItems.SOULBLOOM_LEAVES);
 
         //endregion
 

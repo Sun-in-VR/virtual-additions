@@ -33,8 +33,8 @@ import static com.github.suninvr.virtualadditions.VirtualAdditions.idOf;
 
 public class VARenderers {
     public static EntityModelLayer LUMWASP_LAYER = new EntityModelLayer(Identifier.of("virtual_additions", "lumwasp"), "main");
-    public static EntityModelLayer AEROBLOOM_BOAT = new EntityModelLayer(Identifier.of("virtual_additions", "boat/aerobloom"), "main");
-    public static EntityModelLayer AEROBLOOM_CHEST_BOAT = new EntityModelLayer(Identifier.of("virtual_additions", "chest_boat/aerobloom"), "main");
+    public static EntityModelLayer SOULBLOOM_BOAT = new EntityModelLayer(Identifier.of("virtual_additions", "boat/soulbloom"), "main");
+    public static EntityModelLayer SOULBLOOM_CHEST_BOAT = new EntityModelLayer(Identifier.of("virtual_additions", "chest_boat/soulbloom"), "main");
     public static EntityModelLayer CUSTOM_BED_FOOT_LAYER = new EntityModelLayer(idOf("bed_foot"), "main");
     public static EntityModelLayer CUSTOM_BED_HEAD_LAYER = new EntityModelLayer(idOf("bed_head"), "main");
     public static final SpriteIdentifier CHARTREUSE_SHULKER_BOX = new SpriteIdentifier(TexturedRenderLayers.SHULKER_BOXES_ATLAS_TEXTURE, VirtualAdditions.idOf("entity/shulker/shulker_chartreuse"));
@@ -100,10 +100,10 @@ public class VARenderers {
                 VABlocks.WAXED_WEATHERED_CLIMBING_ROPE_ANCHOR,
                 VABlocks.WAXED_OXIDIZED_CLIMBING_ROPE_ANCHOR,
                 VABlocks.CLIMBING_ROPE,
-                VABlocks.AEROBLOOM_DOOR,
-                VABlocks.AEROBLOOM_TRAPDOOR,
-                VABlocks.AEROBLOOM_SAPLING,
-                VABlocks.POTTED_AEROBLOOM_SAPLING,
+                VABlocks.SOULBLOOM_DOOR,
+                VABlocks.SOULBLOOM_TRAPDOOR,
+                VABlocks.SOULBLOOM_SAPLING,
+                VABlocks.POTTED_SOULBLOOM_SAPLING,
                 VABlocks.BALLOON_BULB,
                 VABlocks.BALLOON_BULB_PLANT,
                 VABlocks.BALLOON_BULB_BUD,
@@ -121,8 +121,8 @@ public class VARenderers {
 
         BlockRenderLayerMap.INSTANCE.putBlocks(RenderLayer.getCutoutMipped(),
                 VABlocks.GRASSY_FLOATROCK,
-                VABlocks.AEROBLOOM_LEAVES,
-                VABlocks.AEROBLOOM_HEDGE,
+                VABlocks.SOULBLOOM_LEAVES,
+                VABlocks.SOULBLOOM_HEDGE,
                 VABlocks.OAK_HEDGE,
                 VABlocks.SPRUCE_HEDGE,
                 VABlocks.BIRCH_HEDGE,
@@ -165,8 +165,8 @@ public class VARenderers {
 
     private static void initEntityRenderers() {
         EntityModelLayerRegistry.registerModelLayer(LUMWASP_LAYER, LumwaspEntityModel::getTexturedModelData);
-        EntityModelLayerRegistry.registerModelLayer(AEROBLOOM_BOAT, BoatEntityModel::getTexturedModelData);
-        EntityModelLayerRegistry.registerModelLayer(AEROBLOOM_CHEST_BOAT, BoatEntityModel::getChestTexturedModelData);
+        EntityModelLayerRegistry.registerModelLayer(SOULBLOOM_BOAT, BoatEntityModel::getTexturedModelData);
+        EntityModelLayerRegistry.registerModelLayer(SOULBLOOM_CHEST_BOAT, BoatEntityModel::getChestTexturedModelData);
         EntityRendererRegistry.register(VAEntityType.CLIMBING_ROPE, ClimbingRopeEntityRenderer::new);
         EntityRendererRegistry.register(VAEntityType.STEEL_BOMB, FlyingItemEntityRenderer::new);
         EntityRendererRegistry.register(VAEntityType.TOMATO, FlyingItemEntityRenderer::new);
@@ -174,8 +174,8 @@ public class VARenderers {
         EntityRendererRegistry.register(VAEntityType.LUMWASP, LumwaspEntityRenderer::new);
         EntityRendererRegistry.register(VAEntityType.SALINE, SalineEntityRenderer::new);
         EntityRendererRegistry.register(VAEntityType.LIGHTNING_BOTTLE, FlyingItemEntityRenderer::new);
-        EntityRendererRegistry.register(VAEntityType.AEROBLOOM_BOAT, context -> new BoatEntityRenderer(context, AEROBLOOM_BOAT));
-        EntityRendererRegistry.register(VAEntityType.AEROBLOOM_CHEST_BOAT, context -> new BoatEntityRenderer(context, AEROBLOOM_CHEST_BOAT));
+        EntityRendererRegistry.register(VAEntityType.SOULBLOOM_BOAT, context -> new BoatEntityRenderer(context, SOULBLOOM_BOAT));
+        EntityRendererRegistry.register(VAEntityType.SOULBLOOM_CHEST_BOAT, context -> new BoatEntityRenderer(context, SOULBLOOM_CHEST_BOAT));
     }
 
     private static void initBlockEntityRenderers() {
@@ -189,8 +189,8 @@ public class VARenderers {
         BlockEntityRendererFactories.register( VABlockEntityType.CUSTOM_SHULKER_BOX, CustomShulkerBoxBlockEntityRenderer::new );
         BlockEntityRendererFactories.register( VABlockEntityType.CUSTOM_BANNER, BannerBlockEntityRenderer::new );
 
-        TexturedRenderLayers.SIGN_TYPE_TEXTURES.put(VABlocks.AEROBLOOM_WOODTYPE, new SpriteIdentifier(TexturedRenderLayers.SIGNS_ATLAS_TEXTURE, idOf("entity/signs/aerobloom")));
-        TexturedRenderLayers.HANGING_SIGN_TYPE_TEXTURES.put(VABlocks.AEROBLOOM_WOODTYPE, new SpriteIdentifier(TexturedRenderLayers.SIGNS_ATLAS_TEXTURE, idOf("entity/signs/hanging/aerobloom")));
+        TexturedRenderLayers.SIGN_TYPE_TEXTURES.put(VABlocks.SOULBLOOM_WOODTYPE, new SpriteIdentifier(TexturedRenderLayers.SIGNS_ATLAS_TEXTURE, idOf("entity/signs/soulbloom")));
+        TexturedRenderLayers.HANGING_SIGN_TYPE_TEXTURES.put(VABlocks.SOULBLOOM_WOODTYPE, new SpriteIdentifier(TexturedRenderLayers.SIGNS_ATLAS_TEXTURE, idOf("entity/signs/hanging/soulbloom")));
 
     }
 

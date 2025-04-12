@@ -66,8 +66,8 @@ public final class VAItemTagProvider {
             getOrCreateTagBuilder(ItemTags.PIG_FOOD).add(VAItems.TOMATO, VAItems.CORN, VAItems.CABBAGE);
             getOrCreateTagBuilder(ItemTags.VILLAGER_PICKS_UP).add(VAItems.TOMATO, VAItems.CORN, VAItems.CABBAGE, VAItems.CORN_SEEDS, VAItems.TOMATO_SEEDS, VAItems.CABBAGE_SEEDS);
             getOrCreateTagBuilder(ItemTags.CHICKEN_FOOD).add(VAItems.CORN_SEEDS, VAItems.TOMATO_SEEDS, VAItems.CABBAGE_SEEDS, VAItems.COTTON_SEEDS);
-            getOrCreateTagBuilder(ItemTags.BOATS).add(VAItems.AEROBLOOM_BOAT);
-            getOrCreateTagBuilder(ItemTags.CHEST_BOATS).add(VAItems.AEROBLOOM_CHEST_BOAT);
+            getOrCreateTagBuilder(ItemTags.BOATS).add(VAItems.SOULBLOOM_BOAT);
+            getOrCreateTagBuilder(ItemTags.CHEST_BOATS).add(VAItems.SOULBLOOM_CHEST_BOAT);
 
             getOrCreateTagBuilder(INGOTS).add(VAItems.STEEL_INGOT);
             getOrCreateTagBuilder(STEEL_INGOTS).add(VAItems.STEEL_INGOT);
@@ -296,28 +296,28 @@ public final class VAItemTagProvider {
 
             getOrCreateTagBuilder(ItemTags.STONE_CRAFTING_MATERIALS).add(VAItems.FLOATROCK);
             getOrCreateTagBuilder(ItemTags.STONE_TOOL_MATERIALS).add(VAItems.FLOATROCK);
-            getOrCreateTagBuilder(ItemTags.LOGS_THAT_BURN).add(VAItems.AEROBLOOM_LOG, VAItems.AEROBLOOM_WOOD, VAItems.STRIPPED_AEROBLOOM_LOG, VAItems.STRIPPED_AEROBLOOM_WOOD);
-            getOrCreateTagBuilder(ItemTags.PLANKS).add(VAItems.AEROBLOOM_PLANKS);
-            getOrCreateTagBuilder(ItemTags.SIGNS).add(VAItems.AEROBLOOM_SIGN);
-            getOrCreateTagBuilder(ItemTags.HANGING_SIGNS).add(VAItems.AEROBLOOM_HANGING_SIGN);
-            getOrCreateTagBuilder(ItemTags.FENCES).add(VAItems.AEROBLOOM_FENCE);
-            getOrCreateTagBuilder(ItemTags.DOORS).add(VAItems.AEROBLOOM_DOOR);
-            getOrCreateTagBuilder(ItemTags.TRAPDOORS).add(VAItems.AEROBLOOM_TRAPDOOR);
-            getOrCreateTagBuilder(ItemTags.LEAVES).add(VAItems.AEROBLOOM_LEAVES);
-            getOrCreateTagBuilder(ItemTags.SAPLINGS).add(VAItems.AEROBLOOM_SAPLING);
+            getOrCreateTagBuilder(ItemTags.LOGS_THAT_BURN).add(VAItems.SOULBLOOM_LOG, VAItems.SOULBLOOM_WOOD, VAItems.STRIPPED_SOULBLOOM_LOG, VAItems.STRIPPED_SOULBLOOM_WOOD);
+            getOrCreateTagBuilder(ItemTags.PLANKS).add(VAItems.SOULBLOOM_PLANKS);
+            getOrCreateTagBuilder(ItemTags.SIGNS).add(VAItems.SOULBLOOM_SIGN);
+            getOrCreateTagBuilder(ItemTags.HANGING_SIGNS).add(VAItems.SOULBLOOM_HANGING_SIGN);
+            getOrCreateTagBuilder(ItemTags.FENCES).add(VAItems.SOULBLOOM_FENCE);
+            getOrCreateTagBuilder(ItemTags.DOORS).add(VAItems.SOULBLOOM_DOOR);
+            getOrCreateTagBuilder(ItemTags.TRAPDOORS).add(VAItems.SOULBLOOM_TRAPDOOR);
+            getOrCreateTagBuilder(ItemTags.LEAVES).add(VAItems.SOULBLOOM_LEAVES);
+            getOrCreateTagBuilder(ItemTags.SAPLINGS).add(VAItems.SOULBLOOM_SAPLING);
 
             getOrCreateTagBuilder(VAItemTags.LUMWASP_LARVAE_FOOD).add(
                     VAItems.FLOATROCK,
                     VAItems.GRASSY_FLOATROCK
             );
-            getOrCreateTagBuilder(VAItemTags.AEROBLOOM_LOGS).add(
-                    VAItems.AEROBLOOM_LOG,
-                    VAItems.AEROBLOOM_WOOD,
-                    VAItems.STRIPPED_AEROBLOOM_LOG,
-                    VAItems.STRIPPED_AEROBLOOM_WOOD
+            getOrCreateTagBuilder(VAItemTags.SOULBLOOM_LOGS).add(
+                    VAItems.SOULBLOOM_LOG,
+                    VAItems.SOULBLOOM_WOOD,
+                    VAItems.STRIPPED_SOULBLOOM_LOG,
+                    VAItems.STRIPPED_SOULBLOOM_WOOD
             );
             configureWoodenBlockFamilies(
-                    VACollections.AEROBLOOM
+                    VACollections.SOULBLOOM
             );
             configureBlockFamilies(
                     VACollections.FLOATROCK,

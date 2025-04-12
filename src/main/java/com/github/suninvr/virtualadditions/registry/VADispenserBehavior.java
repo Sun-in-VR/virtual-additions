@@ -33,8 +33,8 @@ public class VADispenserBehavior {
         DispenserBlock.registerBehavior(ShulkerBoxBlock.get(VADyeColors.SINOPIA).asItem(), new BlockPlacementDispenserBehavior());
         DispenserBlock.registerBehavior(ShulkerBoxBlock.get(VADyeColors.LILAC).asItem(), new BlockPlacementDispenserBehavior());
 
-        DispenserBlock.registerBehavior(VAItems.AEROBLOOM_BOAT, new BoatDispenserBehavior(VAEntityType.AEROBLOOM_BOAT));
-        DispenserBlock.registerBehavior(VAItems.AEROBLOOM_CHEST_BOAT, new BoatDispenserBehavior(VAEntityType.AEROBLOOM_CHEST_BOAT));
+        DispenserBlock.registerBehavior(VAItems.SOULBLOOM_BOAT, new BoatDispenserBehavior(VAEntityType.SOULBLOOM_BOAT));
+        DispenserBlock.registerBehavior(VAItems.SOULBLOOM_CHEST_BOAT, new BoatDispenserBehavior(VAEntityType.SOULBLOOM_CHEST_BOAT));
 
         DispenserBlock.registerBehavior(VAItems.ACID_BUCKET, new ItemDispenserBehavior() {
             private final ItemDispenserBehavior fallbackBehavior = new ItemDispenserBehavior();

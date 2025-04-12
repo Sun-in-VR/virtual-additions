@@ -28,8 +28,8 @@ public class VAEntityType {
     public static final EntityType<AcidSpitEntity> ACID_SPIT;
     public static final EntityType<LumwaspEntity> LUMWASP;
     public static final EntityType<SalineEntity> SALINE;
-    public static final EntityType<BoatEntity> AEROBLOOM_BOAT;
-    public static final EntityType<ChestBoatEntity> AEROBLOOM_CHEST_BOAT;
+    public static final EntityType<BoatEntity> SOULBLOOM_BOAT;
+    public static final EntityType<ChestBoatEntity> SOULBLOOM_CHEST_BOAT;
     public static final EntityType<LightningBottleEntity> LIGHTNING_BOTTLE;
 
     public static final Map<EntityType<? extends LivingEntity>, DefaultAttributeContainer> ENTITY_ATTRIBUTES = new java.util.HashMap<>();
@@ -67,13 +67,13 @@ public class VAEntityType {
                 .dropsNothing().dimensions(0.25F, 0.25F).maxTrackingRange(4).trackingTickInterval(10)
                 .build(RegistryKey.of(RegistryKeys.ENTITY_TYPE, idOf("lightning_bottle"))));
 
-        AEROBLOOM_BOAT = Registry.register(Registries.ENTITY_TYPE, idOf("aerobloom_boat"), EntityType.Builder.create(getBoatFactory(() -> VAItems.AEROBLOOM_BOAT), SpawnGroup.MISC)
+        SOULBLOOM_BOAT = Registry.register(Registries.ENTITY_TYPE, idOf("soulbloom_boat"), EntityType.Builder.create(getBoatFactory(() -> VAItems.SOULBLOOM_BOAT), SpawnGroup.MISC)
                 .dropsNothing().dimensions(1.375F, 0.5625F).eyeHeight(0.5625F).maxTrackingRange(10)
-                .build(RegistryKey.of(RegistryKeys.ENTITY_TYPE, idOf("aerobloom_boat"))));
+                .build(RegistryKey.of(RegistryKeys.ENTITY_TYPE, idOf("soulbloom_boat"))));
 
-        AEROBLOOM_CHEST_BOAT = Registry.register(Registries.ENTITY_TYPE, idOf("aerobloom_chest_boat"), EntityType.Builder.create(getChestBoatFactory(() -> VAItems.AEROBLOOM_CHEST_BOAT), SpawnGroup.MISC)
+        SOULBLOOM_CHEST_BOAT = Registry.register(Registries.ENTITY_TYPE, idOf("soulbloom_chest_boat"), EntityType.Builder.create(getChestBoatFactory(() -> VAItems.SOULBLOOM_CHEST_BOAT), SpawnGroup.MISC)
                 .dropsNothing().dimensions(1.375F, 0.5625F).eyeHeight(0.5625F).maxTrackingRange(10)
-                .build(RegistryKey.of(RegistryKeys.ENTITY_TYPE, idOf("aerobloom_chest_boat"))));
+                .build(RegistryKey.of(RegistryKeys.ENTITY_TYPE, idOf("soulbloom_chest_boat"))));
 
         ENTITY_ATTRIBUTES.put(LUMWASP, LumwaspEntity.createLumwaspAttributes());
         ENTITY_ATTRIBUTES.put(SALINE, SalineEntity.createSalineAttributes());

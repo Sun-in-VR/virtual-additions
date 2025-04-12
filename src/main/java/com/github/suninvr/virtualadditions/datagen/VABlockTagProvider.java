@@ -54,7 +54,7 @@ public final class VABlockTagProvider {
             getOrCreateTagBuilder(BlockTags.REPLACEABLE).add(VABlocks.ACID, VABlocks.FRAYED_SILK);
             getOrCreateTagBuilder(BlockTags.SCULK_REPLACEABLE).add(VABlocks.SILK_BLOCK, VABlocks.WEBBED_SILK, VABlocks.ROCK_SALT_BLOCK);
             getOrCreateTagBuilder(BlockTags.REPLACEABLE).add(VABlocks.SPOTLIGHT_LIGHT);
-            getOrCreateTagBuilder(BlockTags.FLOWER_POTS).add(VABlocks.POTTED_AEROBLOOM_SAPLING, VABlocks.POTTED_GREENCAP_MUSHROOM);
+            getOrCreateTagBuilder(BlockTags.FLOWER_POTS).add(VABlocks.POTTED_SOULBLOOM_SAPLING, VABlocks.POTTED_GREENCAP_MUSHROOM);
 
             configureColorfulBlockSet(VACollections.CHARTREUSE);
             configureColorfulBlockSet(VACollections.MAROON);
@@ -338,7 +338,7 @@ public final class VABlockTagProvider {
                     .addOptionalTag(VABlockTags.HEDGES)
                     .addOptionalTag(BlockTags.REPLACEABLE);
 
-            getOrCreateTagBuilder(BlockTags.HOE_MINEABLE).add(VABlocks.AEROBLOOM_LEAVES);
+            getOrCreateTagBuilder(BlockTags.HOE_MINEABLE).add(VABlocks.SOULBLOOM_LEAVES);
 
             configureMinable(BlockTags.PICKAXE_MINEABLE, 0, VABlocks.GRASSY_FLOATROCK, VABlocks.FLOATROCK_COAL_ORE);
             configureMinable(BlockTags.PICKAXE_MINEABLE, 1, VABlocks.FLOATROCK_IRON_ORE, VABlocks.FLOATROCK_COPPER_ORE, VABlocks.FLOATROCK_LAPIS_ORE);
@@ -346,18 +346,18 @@ public final class VABlockTagProvider {
 
             configureOverworldStone(VABlocks.FLOATROCK);
             configureFamily(BlockTags.PICKAXE_MINEABLE, 0, VACollections.FLOATROCK, VACollections.POLISHED_FLOATROCK, VACollections.FLOATROCK_BRICKS);
-            configureWoodenFamily(BlockTags.AXE_MINEABLE, 0, VACollections.AEROBLOOM);
+            configureWoodenFamily(BlockTags.AXE_MINEABLE, 0, VACollections.SOULBLOOM);
 
             getOrCreateTagBuilder(VABlockTags.HEDGES).add(
-                    VABlocks.AEROBLOOM_HEDGE
+                    VABlocks.SOULBLOOM_HEDGE
             );
-            getOrCreateTagBuilder(BlockTags.WOODEN_FENCES).add(VABlocks.AEROBLOOM_FENCE);
-            getOrCreateTagBuilder(BlockTags.OVERWORLD_NATURAL_LOGS).add(VABlocks.AEROBLOOM_LOG);
-            getOrCreateTagBuilder(BlockTags.LOGS_THAT_BURN).add(VABlocks.AEROBLOOM_LOG).add(VABlocks.AEROBLOOM_WOOD).add(VABlocks.STRIPPED_AEROBLOOM_LOG).add(VABlocks.STRIPPED_AEROBLOOM_WOOD);
-            getOrCreateTagBuilder(BlockTags.CEILING_HANGING_SIGNS).add(VABlocks.AEROBLOOM_HANGING_SIGN);
-            getOrCreateTagBuilder(BlockTags.WALL_HANGING_SIGNS).add(VABlocks.AEROBLOOM_WALL_HANGING_SIGN);
-            getOrCreateTagBuilder(BlockTags.LEAVES).add(VABlocks.AEROBLOOM_LEAVES);
-            getOrCreateTagBuilder(BlockTags.SAPLINGS).add(VABlocks.AEROBLOOM_SAPLING);
+            getOrCreateTagBuilder(BlockTags.WOODEN_FENCES).add(VABlocks.SOULBLOOM_FENCE);
+            getOrCreateTagBuilder(BlockTags.OVERWORLD_NATURAL_LOGS).add(VABlocks.SOULBLOOM_LOG);
+            getOrCreateTagBuilder(BlockTags.LOGS_THAT_BURN).add(VABlocks.SOULBLOOM_LOG).add(VABlocks.SOULBLOOM_WOOD).add(VABlocks.STRIPPED_SOULBLOOM_LOG).add(VABlocks.STRIPPED_SOULBLOOM_WOOD);
+            getOrCreateTagBuilder(BlockTags.CEILING_HANGING_SIGNS).add(VABlocks.SOULBLOOM_HANGING_SIGN);
+            getOrCreateTagBuilder(BlockTags.WALL_HANGING_SIGNS).add(VABlocks.SOULBLOOM_WALL_HANGING_SIGN);
+            getOrCreateTagBuilder(BlockTags.LEAVES).add(VABlocks.SOULBLOOM_LEAVES);
+            getOrCreateTagBuilder(BlockTags.SAPLINGS).add(VABlocks.SOULBLOOM_SAPLING);
             getOrCreateTagBuilder(BlockTags.DIRT).add(VABlocks.GRASSY_FLOATROCK, VABlocks.SPRINGSOIL);
             getOrCreateTagBuilder(BlockTags.GUARDED_BY_PIGLINS).add(VABlocks.FLOATROCK_GOLD_ORE);
             getOrCreateTagBuilder(BlockTags.COAL_ORES).add(VABlocks.FLOATROCK_COAL_ORE);

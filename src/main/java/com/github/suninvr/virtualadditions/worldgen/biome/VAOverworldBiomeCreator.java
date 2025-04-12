@@ -54,7 +54,7 @@ public class VAOverworldBiomeCreator {
         DefaultBiomeFeatures.addDefaultVegetation(generation, false);
 
         if (!VirtualAdditions.isDataGenerationActive) {
-            generation.feature(GenerationStep.Feature.UNDERGROUND_ORES, VAFeatures.Placed.AEROBLOOM_TREES_IN_HILLS);
+            generation.feature(GenerationStep.Feature.UNDERGROUND_ORES, VAFeatures.Placed.SOULBLOOM_TREES);
         }
 
         return new Biome.Builder()

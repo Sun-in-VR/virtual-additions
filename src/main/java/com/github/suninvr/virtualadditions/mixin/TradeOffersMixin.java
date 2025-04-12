@@ -16,8 +16,8 @@ public abstract class TradeOffersMixin {
     @Shadow @Final @Mutable
     public static List<Pair<TradeOffers.Factory[], Integer>> WANDERING_TRADER_TRADES;
 
-    @Unique private static final TradeOffers.Factory AEROBLOOM_SAPLING_TRADE_OFFER = new TradeOffers.SellItemFactory(VAItems.AEROBLOOM_SAPLING, 5, 1, 8, 1);
-    @Unique private static final TradeOffers.Factory AEROBLOOM_LOG_TRADE_OFFER = new TradeOffers.SellItemFactory(VAItems.AEROBLOOM_LOG, 1, 8, 4, 1);
+    @Unique private static final TradeOffers.Factory SOULBLOOM_SAPLING_TRADE_OFFER = new TradeOffers.SellItemFactory(VAItems.SOULBLOOM_SAPLING, 5, 1, 8, 1);
+    @Unique private static final TradeOffers.Factory SOULBLOOM_LOG_TRADE_OFFER = new TradeOffers.SellItemFactory(VAItems.SOULBLOOM_LOG, 1, 8, 4, 1);
     @Unique private static final TradeOffers.Factory CHARTREUSE_DYE_TRADE_OFFER = new TradeOffers.SellItemFactory(VAItems.CHARTREUSE_DYE, 1, 3, 12, 1);
     @Unique private static final TradeOffers.Factory MAROON_DYE_TRADE_OFFER = new TradeOffers.SellItemFactory(VAItems.MAROON_DYE, 1, 3, 12, 1);
     @Unique private static final TradeOffers.Factory INDIGO_DYE_TRADE_OFFER = new TradeOffers.SellItemFactory(VAItems.INDIGO_DYE, 1, 3, 12, 1);
@@ -34,9 +34,9 @@ public abstract class TradeOffersMixin {
         ArrayList<TradeOffers.Factory> SELL_ITEM_TRADES = new ArrayList<>(List.of(WANDERING_TRADER_TRADES.get(1).getLeft()));
         ArrayList<TradeOffers.Factory> SELL_ITEM_TRADES_2 = new ArrayList<>(List.of(WANDERING_TRADER_TRADES.get(2).getLeft()));
 
-        SELL_ITEM_TRADES.add(AEROBLOOM_LOG_TRADE_OFFER);
+        SELL_ITEM_TRADES.add(SOULBLOOM_LOG_TRADE_OFFER);
 
-        SELL_ITEM_TRADES_2.add(AEROBLOOM_SAPLING_TRADE_OFFER);
+        SELL_ITEM_TRADES_2.add(SOULBLOOM_SAPLING_TRADE_OFFER);
         SELL_ITEM_TRADES_2.add(CHARTREUSE_DYE_TRADE_OFFER);
         SELL_ITEM_TRADES_2.add(MAROON_DYE_TRADE_OFFER);
         SELL_ITEM_TRADES_2.add(INDIGO_DYE_TRADE_OFFER);
