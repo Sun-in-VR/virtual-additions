@@ -3,6 +3,7 @@ package com.github.suninvr.virtualadditions.worldgen.biome;
 import com.github.suninvr.virtualadditions.VirtualAdditions;
 import com.github.suninvr.virtualadditions.registry.VAEntityType;
 import com.github.suninvr.virtualadditions.registry.VAFeatures;
+import net.minecraft.entity.EntityType;
 import net.minecraft.entity.SpawnGroup;
 import net.minecraft.registry.RegistryEntryLookup;
 import net.minecraft.sound.BiomeMoodSound;
@@ -25,6 +26,45 @@ public class VAOverworldBiomeCreator {
         float f = temperature / 3.0F;
         f = MathHelper.clamp(f, -1.0F, 1.0F);
         return MathHelper.hsvToRgb(0.62222224F - f * 0.05F, 0.5F + f * 0.1F, 1.0F);
+    }
+
+    public static Biome createSoulGrove(RegistryEntryLookup<PlacedFeature> featureLookup, RegistryEntryLookup<ConfiguredCarver<?>> carverLookup) {
+        BiomeEffects.Builder effects = new BiomeEffects.Builder()
+                .skyColor(8103167)
+                .fogColor(12638463)
+                .waterColor(4159204)
+                .waterFogColor(329011)
+                .grassColor(6801570)
+                .foliageColor(6801570)
+                .moodSound(BiomeMoodSound.CAVE)
+                .music(MusicType.createIngameMusic(SoundEvents.MUSIC_OVERWORLD_DRIPSTONE_CAVES));
+
+        SpawnSettings.Builder spawners = new SpawnSettings.Builder();
+        DefaultBiomeFeatures.addCaveMobs(spawners);
+        DefaultBiomeFeatures.addMonsters(spawners, 20, 5, 100, false);
+        spawners.spawn(SpawnGroup.CREATURE, 1, new SpawnSettings.SpawnEntry(EntityType.WOLF, 1, 1));
+
+        GenerationSettings.LookupBackedBuilder generation = new GenerationSettings.LookupBackedBuilder(featureLookup, carverLookup);
+        addBasicFeatures(generation);
+        DefaultBiomeFeatures.addPlainsTallGrass(generation);
+        DefaultBiomeFeatures.addDefaultOres(generation, true);
+        DefaultBiomeFeatures.addDefaultDisks(generation);
+        DefaultBiomeFeatures.addPlainsFeatures(generation);
+        DefaultBiomeFeatures.addDefaultMushrooms(generation);
+        DefaultBiomeFeatures.addDefaultVegetation(generation, false);
+
+        if (!VirtualAdditions.isDataGenerationActive) {
+            generation.feature(GenerationStep.Feature.UNDERGROUND_ORES, VAFeatures.Placed.AEROBLOOM_TREES_IN_HILLS);
+        }
+
+        return new Biome.Builder()
+                .precipitation(true)
+                .temperature(0.5F)
+                .downfall(0.5F)
+                .effects(effects.build())
+                .spawnSettings(spawners.build())
+                .generationSettings(generation.build())
+                .build();
     }
 
     public static Biome createSaltyCaves(RegistryEntryLookup<PlacedFeature> featureLookup, RegistryEntryLookup<ConfiguredCarver<?>> carverLookup) {

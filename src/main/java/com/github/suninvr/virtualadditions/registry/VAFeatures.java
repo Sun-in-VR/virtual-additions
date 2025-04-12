@@ -36,6 +36,7 @@ public class VAFeatures {
         public static final RegistryKey<PlacedFeature> ORE_HORNFELS;
         public static final RegistryKey<PlacedFeature> ORE_BLUESCHIST;
         public static final RegistryKey<PlacedFeature> ORE_SYENITE;
+        public static final RegistryKey<PlacedFeature> AEROBLOOM_TREES_IN_HILLS;
 
         static {
             ORE_IOLITE = registerPlaced(idOf("ore_iolite"));
@@ -52,6 +53,7 @@ public class VAFeatures {
             ORE_HORNFELS = registerPlaced(idOf("ore_hornfels"));
             ORE_BLUESCHIST = registerPlaced(idOf("ore_blueschist"));
             ORE_SYENITE = registerPlaced(idOf("ore_syenite"));
+            AEROBLOOM_TREES_IN_HILLS = registerPlaced(idOf("aerobloom_trees_in_hills"));
         }
 
         //public void bootstrap(Registerable<PlacedFeature> featureRegisterable) {

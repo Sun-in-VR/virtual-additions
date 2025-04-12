@@ -20,5 +20,6 @@ public class BuiltinBiomesMixin {
     private static void virtualAdditions$bootstrapBiomes(Registerable<Biome> biomeRegisterable, CallbackInfo ci, RegistryEntryLookup<PlacedFeature> registryEntryLookup, RegistryEntryLookup<ConfiguredCarver<?>> registryEntryLookup2) {
         biomeRegisterable.register(VABiomeKeys.WASP_DEN, VAOverworldBiomeCreator.createWaspDen(registryEntryLookup, registryEntryLookup2));
         biomeRegisterable.register(VABiomeKeys.SALTY_CAVES, VAOverworldBiomeCreator.createSaltyCaves(registryEntryLookup, registryEntryLookup2));
+        biomeRegisterable.register(VABiomeKeys.SOUL_GROVE, VAOverworldBiomeCreator.createSoulGrove(registryEntryLookup, registryEntryLookup2));
     }
 }
