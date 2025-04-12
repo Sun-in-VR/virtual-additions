@@ -237,6 +237,9 @@ public class VAModelProvider {
             itemModelGenerator.registerArmor(VAItems.STEEL_BOOTS, VAArmorMaterial.STEEL.assetId(), BOOTS_TRIM_ID_PREFIX, false);
             itemModelGenerator.register(VAItems.STEEL_HORSE_ARMOR, Models.GENERATED);
 
+            itemModelGenerator.register(VAItems.AEROBLOOM_BOAT, Models.GENERATED);
+            itemModelGenerator.register(VAItems.AEROBLOOM_CHEST_BOAT, Models.GENERATED);
+
             itemModelGenerator.registerBundle(VAItems.CHARTREUSE_BUNDLE);
             itemModelGenerator.registerBundle(VAItems.MAROON_BUNDLE);
             itemModelGenerator.registerBundle(VAItems.INDIGO_BUNDLE);

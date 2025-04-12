@@ -390,6 +390,8 @@
     "entity.virtual_additions.saline": "Saline",
     "entity.virtual_additions.lumwasp": "Lumwasp",
     "entity.virtual_additions.lyft": "Lyft",
+    "entity.virtual_additions.aerobloom_boat": "Aerobloom Boat",
+    "entity.virtual_additions.aerobloom_chest_boat": "Aerobloom Chest Boat",
 
     "generator.virtual_additions.virtual_world": "VA Preview",
 
@@ -470,6 +472,8 @@
     "item.virtual_additions.chicken_jerky": "Chicken Jerky",
     "item.virtual_additions.mutton_jerky": "Mutton Jerky",
     "item.virtual_additions.acid_bucket": "Acid Bucket",
+    "item.virtual_additions.aerobloom_boat": "Aerobloom Boat",
+    "item.virtual_additions.aerobloom_chest_boat": "Aerobloom Chest Boat",
     "item.virtual_additions.iolite": "Iolite",
     "item.virtual_additions.lightning_bottle": "Bottled Lightning",
     "item.virtual_additions.saline_spawn_egg": "Saline Spawn Egg",

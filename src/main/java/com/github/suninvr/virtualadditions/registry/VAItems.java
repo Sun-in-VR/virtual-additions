@@ -7,11 +7,6 @@ import com.github.suninvr.virtualadditions.item.*;
 import com.github.suninvr.virtualadditions.item.materials.SteelToolMaterial;
 import net.fabricmc.fabric.api.itemgroup.v1.ItemGroupEvents;
 import net.minecraft.block.*;
-import net.minecraft.block.cauldron.CauldronBehavior;
-import net.minecraft.block.dispenser.BlockPlacementDispenserBehavior;
-import net.minecraft.block.dispenser.DispenserBehavior;
-import net.minecraft.block.dispenser.ItemDispenserBehavior;
-import net.minecraft.block.dispenser.ProjectileDispenserBehavior;
 import net.minecraft.component.DataComponentTypes;
 import net.minecraft.component.type.*;
 import net.minecraft.entity.EntityType;
@@ -22,12 +17,8 @@ import net.minecraft.registry.RegistryKey;
 import net.minecraft.registry.RegistryKeys;
 import net.minecraft.text.Text;
 import net.minecraft.util.*;
-import net.minecraft.util.math.BlockPointer;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.world.World;
 
 import java.util.List;
-import java.util.Map;
 
 import static com.github.suninvr.virtualadditions.VirtualAdditions.idOf;
 import static com.github.suninvr.virtualadditions.registry.RegistryHelper.ItemRegistryHelper.*;
@@ -133,6 +124,8 @@ public class VAItems {
     public static final Item AEROBLOOM_LEAVES;
     public static final Item AEROBLOOM_HEDGE;
     public static final Item AEROBLOOM_SAPLING;
+    public static final Item AEROBLOOM_BOAT;
+    public static final Item AEROBLOOM_CHEST_BOAT;
     public static final Item BALLOON_FRUIT;
     public static final Item OAK_HEDGE;
     public static final Item SPRUCE_HEDGE;
@@ -623,6 +616,8 @@ public class VAItems {
         AEROBLOOM_HANGING_SIGN = register("aerobloom_hanging_sign", settings ->  new HangingSignItem(VABlocks.AEROBLOOM_HANGING_SIGN, VABlocks.AEROBLOOM_WALL_HANGING_SIGN, settings), new Item.Settings().translationKey(VABlocks.AEROBLOOM_HANGING_SIGN.getTranslationKey()).maxCount(16), ItemGroups.FUNCTIONAL, prev);
         AEROBLOOM_LEAVES = registerBlockItem("aerobloom_leaves", VABlocks.AEROBLOOM_LEAVES, ItemGroups.NATURAL, Items.CHERRY_LEAVES);
         AEROBLOOM_SAPLING = registerBlockItem("aerobloom_sapling", VABlocks.AEROBLOOM_SAPLING, ItemGroups.NATURAL, Items.CHERRY_SAPLING);
+        AEROBLOOM_BOAT = register("aerobloom_boat", settings -> new BoatItem(VAEntityType.AEROBLOOM_BOAT, settings), new Item.Settings().maxCount(1), ItemGroups.TOOLS, Items.CHERRY_CHEST_BOAT);
+        AEROBLOOM_CHEST_BOAT = register("aerobloom_chest_boat", settings -> new BoatItem(VAEntityType.AEROBLOOM_CHEST_BOAT, settings), new Item.Settings().maxCount(1), ItemGroups.TOOLS, prev);
 
         //endregion
 
@@ -1136,11 +1131,10 @@ public class VAItems {
     }
 
     public static void init(){
-        initDispenserBehaviors();
-        initCompostables();
-        initCauldronBehaviors();
+        VADispenserBehavior.init();
+        VACompostables.init();
+        VACauldronBehaviors.init();
         VALootTableModifiers.init();
-
 
         ItemGroupEvents.modifyEntriesEvent(ItemGroups.FOOD_AND_DRINK).register( (content) -> {
             if (ItemGroups.displayContext == null) return;
@@ -1149,90 +1143,6 @@ public class VAItems {
     }
 
     //region Initializers
-
-    protected static void initDispenserBehaviors() {
-        DispenserBlock.registerBehavior(STEEL_BOMB, new ProjectileDispenserBehavior(STEEL_BOMB));
-        DispenserBlock.registerBehavior(LIGHTNING_BOTTLE, new ProjectileDispenserBehavior(LIGHTNING_BOTTLE));
-        DispenserBlock.registerBehavior(TOMATO, new ProjectileDispenserBehavior(TOMATO));
-
-        Item[] climbingRopes = {VAItems.CLIMBING_ROPE, VAItems.WAXED_CLIMBING_ROPE, VAItems.EXPOSED_CLIMBING_ROPE, VAItems.WAXED_EXPOSED_CLIMBING_ROPE, VAItems.WEATHERED_CLIMBING_ROPE, VAItems.WAXED_WEATHERED_CLIMBING_ROPE, VAItems.OXIDIZED_CLIMBING_ROPE, VAItems.WAXED_OXIDIZED_CLIMBING_ROPE};
-
-        for (Item item : climbingRopes) {
-            DispenserBehavior climbingRopeBehavior = new ProjectileDispenserBehavior(item);
-            DispenserBlock.registerBehavior(item, climbingRopeBehavior);
-        }
-
-        DispenserBlock.registerBehavior(ShulkerBoxBlock.get(VADyeColors.CHARTREUSE).asItem(), new BlockPlacementDispenserBehavior());
-        DispenserBlock.registerBehavior(ShulkerBoxBlock.get(VADyeColors.MAROON).asItem(), new BlockPlacementDispenserBehavior());
-        DispenserBlock.registerBehavior(ShulkerBoxBlock.get(VADyeColors.INDIGO).asItem(), new BlockPlacementDispenserBehavior());
-        DispenserBlock.registerBehavior(ShulkerBoxBlock.get(VADyeColors.PLUM).asItem(), new BlockPlacementDispenserBehavior());
-        DispenserBlock.registerBehavior(ShulkerBoxBlock.get(VADyeColors.VIRIDIAN).asItem(), new BlockPlacementDispenserBehavior());
-        DispenserBlock.registerBehavior(ShulkerBoxBlock.get(VADyeColors.TAN).asItem(), new BlockPlacementDispenserBehavior());
-        DispenserBlock.registerBehavior(ShulkerBoxBlock.get(VADyeColors.SINOPIA).asItem(), new BlockPlacementDispenserBehavior());
-        DispenserBlock.registerBehavior(ShulkerBoxBlock.get(VADyeColors.LILAC).asItem(), new BlockPlacementDispenserBehavior());
-
-        DispenserBlock.registerBehavior(ACID_BUCKET, new ItemDispenserBehavior(){
-            private final ItemDispenserBehavior fallbackBehavior = new ItemDispenserBehavior();
-
-            public ItemStack dispenseSilently(BlockPointer pointer, ItemStack stack) {
-                FluidModificationItem fluidModificationItem = (FluidModificationItem)stack.getItem();
-                BlockPos blockPos = pointer.pos().offset(pointer.state().get(DispenserBlock.FACING));
-                World world = pointer.world();
-                if (fluidModificationItem.placeFluid(null, world, blockPos, null)) {
-                    fluidModificationItem.onEmptied(null, world, stack, blockPos);
-                    return new ItemStack(Items.BUCKET);
-                } else {
-                    return this.fallbackBehavior.dispense(pointer, stack);
-                }
-            }
-        });
-    }
-
-    protected static void initCompostables() {
-        ComposterBlock.registerCompostableItem(0.3F, COTTON_SEEDS);
-        ComposterBlock.registerCompostableItem(0.3F, COTTON);
-        ComposterBlock.registerCompostableItem(0.65F, CORN);
-        ComposterBlock.registerCompostableItem(0.3F, CORN_SEEDS);
-        ComposterBlock.registerCompostableItem(0.65F, TOMATO);
-        ComposterBlock.registerCompostableItem(0.3F, TOMATO_SEEDS);
-        ComposterBlock.registerCompostableItem(0.65F, CABBAGE);
-        ComposterBlock.registerCompostableItem(0.3F, CABBAGE_SEEDS);
-    }
-
-    protected static boolean lootTableKeyMatches(RegistryKey<LootTable> key, Block... blocks) {
-        for (Block block : blocks) {
-            if (block.getLootTableKey().isPresent() && block.getLootTableKey().get().equals(key)) return true;
-        }
-        return false;
-    }
-
-    protected static boolean lootTableKeyMatches(RegistryKey<LootTable> key, EntityType<?>... entities) {
-        for (EntityType<?> type : entities) {
-            if (type.getLootTableKey().isPresent() && type.getLootTableKey().get().equals(key)) return true;
-        }
-        return false;
-    }
-
-    protected static void initCauldronBehaviors() {
-        Map<Item, CauldronBehavior> waterBehaviors = CauldronBehavior.WATER_CAULDRON_BEHAVIOR.map();
-        waterBehaviors.put(VAItems.ENGRAVING_CHISEL, CauldronBehavior::cleanArmor);
-        waterBehaviors.put(VAItems.CHARTREUSE_SHULKER_BOX, CauldronBehavior::cleanShulkerBox);
-        waterBehaviors.put(VAItems.MAROON_SHULKER_BOX, CauldronBehavior::cleanShulkerBox);
-        waterBehaviors.put(VAItems.INDIGO_SHULKER_BOX, CauldronBehavior::cleanShulkerBox);
-        waterBehaviors.put(VAItems.PLUM_SHULKER_BOX, CauldronBehavior::cleanShulkerBox);
-        waterBehaviors.put(VAItems.VIRIDIAN_SHULKER_BOX, CauldronBehavior::cleanShulkerBox);
-        waterBehaviors.put(VAItems.TAN_SHULKER_BOX, CauldronBehavior::cleanShulkerBox);
-        waterBehaviors.put(VAItems.SINOPIA_SHULKER_BOX, CauldronBehavior::cleanShulkerBox);
-        waterBehaviors.put(VAItems.LILAC_SHULKER_BOX, CauldronBehavior::cleanShulkerBox);
-        waterBehaviors.put(VAItems.CHARTREUSE_BANNER, CauldronBehavior::cleanBanner);
-        waterBehaviors.put(VAItems.MAROON_BANNER, CauldronBehavior::cleanBanner);
-        waterBehaviors.put(VAItems.INDIGO_BANNER, CauldronBehavior::cleanBanner);
-        waterBehaviors.put(VAItems.PLUM_BANNER, CauldronBehavior::cleanBanner);
-        waterBehaviors.put(VAItems.VIRIDIAN_BANNER, CauldronBehavior::cleanBanner);
-        waterBehaviors.put(VAItems.TAN_BANNER, CauldronBehavior::cleanBanner);
-        waterBehaviors.put(VAItems.SINOPIA_BANNER, CauldronBehavior::cleanBanner);
-        waterBehaviors.put(VAItems.LILAC_BANNER, CauldronBehavior::cleanBanner);
-    }
 
     //endregion
 }

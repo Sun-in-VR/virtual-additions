@@ -12,6 +12,7 @@ import net.minecraft.entity.EntityType;
 import net.minecraft.item.Item;
 import net.minecraft.item.Items;
 import net.minecraft.loot.LootPool;
+import net.minecraft.loot.LootTable;
 import net.minecraft.loot.LootTables;
 import net.minecraft.loot.condition.*;
 import net.minecraft.loot.context.LootContext;
@@ -27,6 +28,7 @@ import net.minecraft.predicate.entity.EntityPredicate;
 import net.minecraft.predicate.entity.LocationPredicate;
 import net.minecraft.predicate.item.ItemPredicate;
 import net.minecraft.registry.RegistryEntryLookup;
+import net.minecraft.registry.RegistryKey;
 import net.minecraft.registry.RegistryKeys;
 import net.minecraft.registry.RegistryWrapper;
 import net.minecraft.registry.tag.BiomeTags;
@@ -262,5 +264,19 @@ public class VALootTableModifiers {
                         .conditionally(RandomChanceLootCondition.builder(0.125F))
                         .conditionally(InvertedLootCondition.builder(MatchToolLootCondition.builder(ItemPredicate.Builder.create().items(itemRegistryEntryLookup, Items.SHEARS))))
                 );
+    }
+
+    protected static boolean lootTableKeyMatches(RegistryKey<LootTable> key, Block... blocks) {
+        for (Block block : blocks) {
+            if (block.getLootTableKey().isPresent() && block.getLootTableKey().get().equals(key)) return true;
+        }
+        return false;
+    }
+
+    protected static boolean lootTableKeyMatches(RegistryKey<LootTable> key, EntityType<?>... entities) {
+        for (EntityType<?> type : entities) {
+            if (type.getLootTableKey().isPresent() && type.getLootTableKey().get().equals(key)) return true;
+        }
+        return false;
     }
 }

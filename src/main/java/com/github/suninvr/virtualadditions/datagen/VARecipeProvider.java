@@ -502,6 +502,8 @@ public final class VARecipeProvider {
             offerBlasting(List.of(VAItems.FLOATROCK_DIAMOND_ORE), RecipeCategory.MISC, Items.DIAMOND, 1.0F, 100, "diamond");
 
             offerHedgeRecipe(VABlocks.AEROBLOOM_HEDGE, VABlocks.AEROBLOOM_LEAVES);
+            offerBoatRecipe(VAItems.AEROBLOOM_BOAT, VABlocks.AEROBLOOM_PLANKS);
+            offerChestBoatRecipe(VAItems.AEROBLOOM_CHEST_BOAT, VAItems.AEROBLOOM_BOAT);
 
             offerStonecuttingRecipes(VABlocks.FLOATROCK, VACollections.POLISHED_FLOATROCK, VACollections.FLOATROCK_BRICKS);
             generateCuttableFamilyChain(VACollections.FLOATROCK);

@@ -20,8 +20,11 @@ import net.minecraft.client.render.block.entity.BannerBlockEntityRenderer;
 import net.minecraft.client.render.block.entity.BlockEntityRendererFactories;
 import net.minecraft.client.render.block.entity.HangingSignBlockEntityRenderer;
 import net.minecraft.client.render.block.entity.SignBlockEntityRenderer;
+import net.minecraft.client.render.entity.BoatEntityRenderer;
 import net.minecraft.client.render.entity.FlyingItemEntityRenderer;
+import net.minecraft.client.render.entity.model.BoatEntityModel;
 import net.minecraft.client.render.entity.model.EntityModelLayer;
+import net.minecraft.client.render.entity.model.EntityModelLayers;
 import net.minecraft.client.util.SpriteIdentifier;
 import net.minecraft.util.Identifier;
 import net.minecraft.world.biome.FoliageColors;
@@ -30,7 +33,8 @@ import static com.github.suninvr.virtualadditions.VirtualAdditions.idOf;
 
 public class VARenderers {
     public static EntityModelLayer LUMWASP_LAYER = new EntityModelLayer(Identifier.of("virtual_additions", "lumwasp"), "main");
-    public static EntityModelLayer LYFT_LAYER = new EntityModelLayer(Identifier.of("virtual_additions", "lyft"), "main");
+    public static EntityModelLayer AEROBLOOM_BOAT = new EntityModelLayer(Identifier.of("virtual_additions", "boat/aerobloom"), "main");
+    public static EntityModelLayer AEROBLOOM_CHEST_BOAT = new EntityModelLayer(Identifier.of("virtual_additions", "chest_boat/aerobloom"), "main");
     public static EntityModelLayer CUSTOM_BED_FOOT_LAYER = new EntityModelLayer(idOf("bed_foot"), "main");
     public static EntityModelLayer CUSTOM_BED_HEAD_LAYER = new EntityModelLayer(idOf("bed_head"), "main");
     public static final SpriteIdentifier CHARTREUSE_SHULKER_BOX = new SpriteIdentifier(TexturedRenderLayers.SHULKER_BOXES_ATLAS_TEXTURE, VirtualAdditions.idOf("entity/shulker/shulker_chartreuse"));
@@ -161,6 +165,8 @@ public class VARenderers {
 
     private static void initEntityRenderers() {
         EntityModelLayerRegistry.registerModelLayer(LUMWASP_LAYER, LumwaspEntityModel::getTexturedModelData);
+        EntityModelLayerRegistry.registerModelLayer(AEROBLOOM_BOAT, BoatEntityModel::getTexturedModelData);
+        EntityModelLayerRegistry.registerModelLayer(AEROBLOOM_CHEST_BOAT, BoatEntityModel::getChestTexturedModelData);
         EntityRendererRegistry.register(VAEntityType.CLIMBING_ROPE, ClimbingRopeEntityRenderer::new);
         EntityRendererRegistry.register(VAEntityType.STEEL_BOMB, FlyingItemEntityRenderer::new);
         EntityRendererRegistry.register(VAEntityType.TOMATO, FlyingItemEntityRenderer::new);
@@ -168,6 +174,8 @@ public class VARenderers {
         EntityRendererRegistry.register(VAEntityType.LUMWASP, LumwaspEntityRenderer::new);
         EntityRendererRegistry.register(VAEntityType.SALINE, SalineEntityRenderer::new);
         EntityRendererRegistry.register(VAEntityType.LIGHTNING_BOTTLE, FlyingItemEntityRenderer::new);
+        EntityRendererRegistry.register(VAEntityType.AEROBLOOM_BOAT, context -> new BoatEntityRenderer(context, AEROBLOOM_BOAT));
+        EntityRendererRegistry.register(VAEntityType.AEROBLOOM_CHEST_BOAT, context -> new BoatEntityRenderer(context, AEROBLOOM_CHEST_BOAT));
     }
 
     private static void initBlockEntityRenderers() {

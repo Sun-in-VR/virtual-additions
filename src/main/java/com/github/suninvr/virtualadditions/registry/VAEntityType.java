@@ -5,6 +5,10 @@ import com.github.suninvr.virtualadditions.entity.*;
 import net.minecraft.entity.*;
 import net.minecraft.entity.attribute.DefaultAttributeContainer;
 import net.minecraft.entity.mob.HostileEntity;
+import net.minecraft.entity.vehicle.BoatEntity;
+import net.minecraft.entity.vehicle.ChestBoatEntity;
+import net.minecraft.item.Item;
+import net.minecraft.item.Items;
 import net.minecraft.registry.Registries;
 import net.minecraft.registry.Registry;
 import net.minecraft.registry.RegistryKey;
@@ -12,6 +16,7 @@ import net.minecraft.registry.RegistryKeys;
 import net.minecraft.world.Heightmap;
 
 import java.util.Map;
+import java.util.function.Supplier;
 
 import static com.github.suninvr.virtualadditions.VirtualAdditions.idOf;
 
@@ -23,6 +28,8 @@ public class VAEntityType {
     public static final EntityType<AcidSpitEntity> ACID_SPIT;
     public static final EntityType<LumwaspEntity> LUMWASP;
     public static final EntityType<SalineEntity> SALINE;
+    public static final EntityType<BoatEntity> AEROBLOOM_BOAT;
+    public static final EntityType<ChestBoatEntity> AEROBLOOM_CHEST_BOAT;
     public static final EntityType<LightningBottleEntity> LIGHTNING_BOTTLE;
 
     public static final Map<EntityType<? extends LivingEntity>, DefaultAttributeContainer> ENTITY_ATTRIBUTES = new java.util.HashMap<>();
@@ -60,6 +67,13 @@ public class VAEntityType {
                 .dropsNothing().dimensions(0.25F, 0.25F).maxTrackingRange(4).trackingTickInterval(10)
                 .build(RegistryKey.of(RegistryKeys.ENTITY_TYPE, idOf("lightning_bottle"))));
 
+        AEROBLOOM_BOAT = Registry.register(Registries.ENTITY_TYPE, idOf("aerobloom_boat"), EntityType.Builder.create(getBoatFactory(() -> VAItems.AEROBLOOM_BOAT), SpawnGroup.MISC)
+                .dropsNothing().dimensions(1.375F, 0.5625F).eyeHeight(0.5625F).maxTrackingRange(10)
+                .build(RegistryKey.of(RegistryKeys.ENTITY_TYPE, idOf("aerobloom_boat"))));
+
+        AEROBLOOM_CHEST_BOAT = Registry.register(Registries.ENTITY_TYPE, idOf("aerobloom_chest_boat"), EntityType.Builder.create(getChestBoatFactory(() -> VAItems.AEROBLOOM_CHEST_BOAT), SpawnGroup.MISC)
+                .dropsNothing().dimensions(1.375F, 0.5625F).eyeHeight(0.5625F).maxTrackingRange(10)
+                .build(RegistryKey.of(RegistryKeys.ENTITY_TYPE, idOf("aerobloom_boat"))));
 
         ENTITY_ATTRIBUTES.put(LUMWASP, LumwaspEntity.createLumwaspAttributes());
         ENTITY_ATTRIBUTES.put(SALINE, SalineEntity.createSalineAttributes());
@@ -68,5 +82,14 @@ public class VAEntityType {
     public static void init(){
         SpawnRestriction.register(SALINE, SpawnRestriction.getLocation(SALINE), Heightmap.Type.MOTION_BLOCKING, HostileEntity::canSpawnInDark);
         SpawnRestriction.register(LUMWASP, SpawnRestriction.getLocation(LUMWASP), Heightmap.Type.MOTION_BLOCKING, LumwaspEntity::canSpawnInDark);
+    }
+
+
+    private static EntityType.EntityFactory<BoatEntity> getBoatFactory(Supplier<Item> itemSupplier) {
+        return (type, world) -> new BoatEntity(type, world, itemSupplier);
+    }
+
+    private static EntityType.EntityFactory<ChestBoatEntity> getChestBoatFactory(Supplier<Item> itemSupplier) {
+        return (type, world) -> new ChestBoatEntity(type, world, itemSupplier);
     }
 }
