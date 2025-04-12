@@ -34,13 +34,69 @@
     {
       "type": "minecraft:block_predicate_filter",
       "predicate": {
-        "type": "minecraft:would_survive",
-        "state": {
-          "Name": "virtual_additions:soulbloom_sapling",
-          "Properties": {
-            "stage": "0"
+        "type": "minecraft:all_of",
+        "predicates": [
+          {
+            "type": "minecraft:would_survive",
+            "offset": [
+              0,
+              0,
+              0
+            ],
+            "state": {
+              "Name": "virtual_additions:soulbloom_sapling",
+              "Properties": {}
+            }
+          },
+          {
+            "type": "minecraft:would_survive",
+            "offset": [
+              1,
+              0,
+              0
+            ],
+            "state": {
+              "Name": "virtual_additions:soulbloom_sapling",
+              "Properties": {}
+            }
+          },
+          {
+            "type": "minecraft:would_survive",
+            "offset": [
+              0,
+              0,
+              1
+            ],
+            "state": {
+              "Name": "virtual_additions:soulbloom_sapling",
+              "Properties": {}
+            }
+          },
+          {
+            "type": "minecraft:would_survive",
+            "offset": [
+              -1,
+              0,
+              0
+            ],
+            "state": {
+              "Name": "virtual_additions:soulbloom_sapling",
+              "Properties": {}
+            }
+          },
+          {
+            "type": "minecraft:would_survive",
+            "offset": [
+              0,
+              0,
+              -1
+            ],
+            "state": {
+              "Name": "virtual_additions:soulbloom_sapling",
+              "Properties": {}
+            }
           }
-        }
+        ]
       }
     }
   ]

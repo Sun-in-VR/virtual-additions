@@ -157,6 +157,12 @@ public final class VARecipeProvider {
             generateCuttableFamilyChain(VACollections.SYENITE_BRICKS);
             offer2x2ConversionChain(VABlocks.SYENITE, VABlocks.POLISHED_SYENITE, VABlocks.SYENITE_BRICKS);
 
+            offerStonecuttingRecipes(VABlocks.PORPHYRY, VACollections.POLISHED_PORPHYRY, VACollections.PORPHYRY_BRICKS);
+            generateCuttableFamilyChain(VACollections.PORPHYRY);
+            generateCuttableFamilyChain(VACollections.POLISHED_PORPHYRY);
+            generateCuttableFamilyChain(VACollections.PORPHYRY_BRICKS);
+            offer2x2ConversionChain(VABlocks.PORPHYRY, VABlocks.POLISHED_PORPHYRY, VABlocks.PORPHYRY_BRICKS);
+
             offer2x2FullRecipe(RecipeCategory.MISC, Items.STRING, VAItems.COTTON, 2);
             offerShapelessRecipe(RecipeCategory.MISC, VAItems.COTTON_SEEDS, 1, Pair.of(VAItems.COTTON, 1));
             offerShapelessRecipe(RecipeCategory.FOOD, VAItems.CORN_SEEDS, 1, Pair.of(VAItems.CORN, 1));
@@ -283,6 +289,26 @@ public final class VARecipeProvider {
                     VACollections.LILAC
             );
 
+            offerSmithingTrimRecipe(VAItems.EXOSKELETON_ARMOR_TRIM_SMITHING_TEMPLATE, VAArmorTrimPatterns.EXOSKELETON, RegistryKey.of(RegistryKeys.RECIPE, idOf("exoskeleton_armor_trim_smithing_template_smithing_trim")));
+            offerSmithingTemplateCopyingRecipe(VAItems.EXOSKELETON_ARMOR_TRIM_SMITHING_TEMPLATE, VAItems.SILK_BLOCK);
+
+            offerStonecuttingRecipes(VABlocks.ROCK_SALT_BLOCK, VACollections.ROCK_SALT_BRICKS);
+            generateCuttableFamilyChain(VACollections.ROCK_SALT_BRICKS);
+            offer2x2ConversionChain(VABlocks.ROCK_SALT_BLOCK, VABlocks.ROCK_SALT_BRICKS);
+            offerChiseledBlockRecipe(RecipeCategory.BUILDING_BLOCKS, VAItems.CHISELED_ROCK_SALT_BRICKS, VAItems.ROCK_SALT_BRICK_SLAB);
+            offerStonecuttingRecipe(RecipeCategory.BUILDING_BLOCKS, VAItems.CHISELED_ROCK_SALT_BRICKS, VAItems.ROCK_SALT_BRICKS);
+            offerStonecuttingRecipe(RecipeCategory.BUILDING_BLOCKS, VAItems.CHISELED_ROCK_SALT_BRICKS, VAItems.ROCK_SALT_BLOCK);
+
+            generateFamily(VACollections.SOULBLOOM, FeatureFlags.VANILLA_FEATURES);
+            offerBarkBlockRecipe(VAItems.SOULBLOOM_WOOD, VAItems.SOULBLOOM_LOG);
+            offerBarkBlockRecipe(VAItems.STRIPPED_SOULBLOOM_WOOD, VAItems.STRIPPED_SOULBLOOM_LOG);
+            offerPlanksRecipe2(VAItems.SOULBLOOM_PLANKS, VAItemTags.SOULBLOOM_LOGS, 4);
+            offerHangingSignRecipe(VAItems.SOULBLOOM_HANGING_SIGN, VAItems.STRIPPED_SOULBLOOM_LOG);
+
+            offerHedgeRecipe(VABlocks.SOULBLOOM_HEDGE, VABlocks.SOULBLOOM_LEAVES);
+            offerBoatRecipe(VAItems.SOULBLOOM_BOAT, VABlocks.SOULBLOOM_PLANKS);
+            offerChestBoatRecipe(VAItems.SOULBLOOM_CHEST_BOAT, VAItems.SOULBLOOM_BOAT);
+
             ShapelessRecipeJsonBuilder.create(this.registryLookup, RecipeCategory.MISC, VAItems.MAROON_DYE, 2)
                     .input(Ingredient.ofItems(Items.RED_DYE), 1)
                     .input(Ingredient.ofItems(Items.BLACK_DYE), 1)
@@ -300,7 +326,6 @@ public final class VARecipeProvider {
                     .input(Ingredient.ofItems(Items.YELLOW_DYE), 1)
                     .criterion("has_dye", conditionsFromItem(Items.YELLOW_DYE)).offerTo(this.exporter, idOf("chartreuse_dye_from_green_white_yellow_dye").toString());
 
-
             ShapelessRecipeJsonBuilder.create(this.registryLookup, RecipeCategory.MISC, VAItems.INDIGO_DYE, 2).group("indigo_dye")
                     .input(Ingredient.ofItems(Items.BLUE_DYE), 1)
                     .input(Ingredient.ofItems(Items.PURPLE_DYE), 1)
@@ -310,7 +335,6 @@ public final class VARecipeProvider {
                     .input(Ingredient.ofItems(Items.BLUE_DYE), 2)
                     .input(Ingredient.ofItems(Items.RED_DYE), 1)
                     .criterion("has_dye", conditionsFromItem(Items.BLUE_DYE)).offerTo(this.exporter, idOf("indigo_dye_from_blue_blue_red_dye").toString());
-
 
             ShapelessRecipeJsonBuilder.create(this.registryLookup, RecipeCategory.MISC, VAItems.PLUM_DYE, 2).group("plum_dye")
                     .input(Ingredient.ofItems(Items.PURPLE_DYE), 1)
@@ -329,7 +353,6 @@ public final class VARecipeProvider {
                     .input(Ingredient.ofItems(Items.BLACK_DYE), 1)
                     .criterion("has_dye", conditionsFromItem(Items.RED_DYE)).offerTo(this.exporter, idOf("plum_from_blue_red_red_black_dye").toString());
 
-
             ShapelessRecipeJsonBuilder.create(this.registryLookup, RecipeCategory.MISC, VAItems.VIRIDIAN_DYE, 2).group("viridian_dye")
                     .input(Ingredient.ofItems(Items.GREEN_DYE), 1)
                     .input(Ingredient.ofItems(Items.CYAN_DYE), 1)
@@ -339,7 +362,6 @@ public final class VARecipeProvider {
                     .input(Ingredient.ofItems(Items.GREEN_DYE), 2)
                     .input(Ingredient.ofItems(Items.BLUE_DYE), 1)
                     .criterion("has_dye", conditionsFromItem(Items.GREEN_DYE)).offerTo(this.exporter, idOf("viridian_from_green_green_blue_dye").toString());
-
 
             ShapelessRecipeJsonBuilder.create(this.registryLookup, RecipeCategory.MISC, VAItems.TAN_DYE, 2).group("tan_dye")
                     .input(Ingredient.ofItems(Items.ORANGE_DYE), 1)
@@ -359,7 +381,6 @@ public final class VARecipeProvider {
                     .input(Ingredient.ofItems(Items.BLACK_DYE), 1)
                     .criterion("has_dye", conditionsFromItem(Items.RED_DYE)).offerTo(this.exporter, idOf("tan_from_red_yellow_black_white_dye").toString());
 
-
             ShapelessRecipeJsonBuilder.create(this.registryLookup, RecipeCategory.MISC, VAItems.SINOPIA_DYE, 2).group("sinopia_dye")
                     .input(Ingredient.ofItems(Items.RED_DYE), 1)
                     .input(Ingredient.ofItems(Items.ORANGE_DYE), 1)
@@ -369,7 +390,6 @@ public final class VARecipeProvider {
                     .input(Ingredient.ofItems(Items.RED_DYE), 2)
                     .input(Ingredient.ofItems(Items.YELLOW_DYE), 1)
                     .criterion("has_dye", conditionsFromItem(Items.RED_DYE)).offerTo(this.exporter, idOf("sinopia_from_red_red_yellow_dye").toString());
-
 
             ShapelessRecipeJsonBuilder.create(this.registryLookup, RecipeCategory.MISC, VAItems.LILAC_DYE, 2).group("lilac_dye")
                     .input(Ingredient.ofItems(Items.WHITE_DYE), 1)
@@ -386,8 +406,6 @@ public final class VARecipeProvider {
                     .input(Items.SWEET_BERRIES, 3)
                     .input(Items.SUGAR)
                     .input(Items.EGG).criterion("has_sweet_berries", conditionsFromItem(Items.SWEET_BERRIES)).offerTo(this.exporter);
-
-
 
             ShapedRecipeJsonBuilder.create(this.registryLookup, RecipeCategory.TOOLS, VAItems.CLIMBING_ROPE, 4)
                     .pattern("#  ")
@@ -471,40 +489,10 @@ public final class VARecipeProvider {
                     .input('s', VAItems.STEEL_INGOT)
                     .criterion("steel_ingot", conditionsFromItem(VAItems.STEEL_INGOT)).offerTo(this.exporter);
 
-            ShapedRecipeJsonBuilder.create(this.registryLookup, RecipeCategory.BUILDING_BLOCKS, VAItems.PORPHYRY, 9)
-                    .pattern("ccc")
-                    .pattern("cfc")
-                    .pattern("ccc")
-                    .input('c', Items.COBBLESTONE)
-                    .input('f', VAItems.PORPHYRY)
-                    .criterion("porphyry", conditionsFromItem(VAItems.PORPHYRY)).offerTo(this.exporter);
-
-
-            offerSmithingTrimRecipe(VAItems.EXOSKELETON_ARMOR_TRIM_SMITHING_TEMPLATE, VAArmorTrimPatterns.EXOSKELETON, RegistryKey.of(RegistryKeys.RECIPE, idOf("exoskeleton_armor_trim_smithing_template_smithing_trim")));
-            offerSmithingTemplateCopyingRecipe(VAItems.EXOSKELETON_ARMOR_TRIM_SMITHING_TEMPLATE, VAItems.SILK_BLOCK);
-
-            offerHedgeRecipe(VABlocks.SOULBLOOM_HEDGE, VABlocks.SOULBLOOM_LEAVES);
-            offerBoatRecipe(VAItems.SOULBLOOM_BOAT, VABlocks.SOULBLOOM_PLANKS);
-            offerChestBoatRecipe(VAItems.SOULBLOOM_CHEST_BOAT, VAItems.SOULBLOOM_BOAT);
-
-            offerStonecuttingRecipes(VABlocks.PORPHYRY, VACollections.POLISHED_PORPHYRY, VACollections.PORPHYRY_BRICKS);
-            generateCuttableFamilyChain(VACollections.PORPHYRY);
-            generateCuttableFamilyChain(VACollections.POLISHED_PORPHYRY);
-            generateCuttableFamilyChain(VACollections.PORPHYRY_BRICKS);
-            offer2x2ConversionChain(VABlocks.PORPHYRY, VABlocks.POLISHED_PORPHYRY, VABlocks.PORPHYRY_BRICKS);
-
-            offerStonecuttingRecipes(VABlocks.ROCK_SALT_BLOCK, VACollections.ROCK_SALT_BRICKS);
-            generateCuttableFamilyChain(VACollections.ROCK_SALT_BRICKS);
-            offer2x2ConversionChain(VABlocks.ROCK_SALT_BLOCK, VABlocks.ROCK_SALT_BRICKS);
-            offerChiseledBlockRecipe(RecipeCategory.BUILDING_BLOCKS, VAItems.CHISELED_ROCK_SALT_BRICKS, VAItems.ROCK_SALT_BRICK_SLAB);
-            offerStonecuttingRecipe(RecipeCategory.BUILDING_BLOCKS, VAItems.CHISELED_ROCK_SALT_BRICKS, VAItems.ROCK_SALT_BRICKS);
-            offerStonecuttingRecipe(RecipeCategory.BUILDING_BLOCKS, VAItems.CHISELED_ROCK_SALT_BRICKS, VAItems.ROCK_SALT_BLOCK);
-
-            generateFamily(VACollections.SOULBLOOM, FeatureFlags.VANILLA_FEATURES);
-            offerBarkBlockRecipe(VAItems.SOULBLOOM_WOOD, VAItems.SOULBLOOM_LOG);
-            offerBarkBlockRecipe(VAItems.STRIPPED_SOULBLOOM_WOOD, VAItems.STRIPPED_SOULBLOOM_LOG);
-            offerPlanksRecipe2(VAItems.SOULBLOOM_PLANKS, VAItemTags.SOULBLOOM_LOGS, 4);
-            offerHangingSignRecipe(VAItems.SOULBLOOM_HANGING_SIGN, VAItems.STRIPPED_SOULBLOOM_LOG);
+            ShapelessRecipeJsonBuilder.create(this.registryLookup, RecipeCategory.DECORATIONS, Items.LIGHT_BLUE_DYE)
+                    .input(VAItems.BLUE_PETALS)
+                    .criterion("blue_petals", conditionsFromItem(VAItems.BLUE_PETALS))
+                            .offerTo(this.exporter, "virtual_additions:light_blue_dye_from_blue_petals");
 
             offerWaxingRecipes(exporter);
         }

@@ -186,13 +186,14 @@
     [],
     [
       "minecraft:spring_water",
-      "minecraft:spring_lava",
-      "virtual_additions:soulbloom_trees"
+      "minecraft:spring_lava"
     ],
     [
       "minecraft:glow_lichen",
-      "virtual_additions:blue_petals_soul_grove",
+      "virtual_additions:soulbloom_trees",
+      "virtual_additions:soulbloom_trees_small",
       "minecraft:patch_bush",
+      "virtual_additions:blue_petals_soul_grove",
       "minecraft:flower_default",
       "minecraft:patch_grass_forest",
       "minecraft:brown_mushroom_normal",
