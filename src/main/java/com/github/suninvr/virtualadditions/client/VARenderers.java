@@ -12,6 +12,7 @@ import net.fabricmc.fabric.api.client.render.fluid.v1.SimpleFluidRenderHandler;
 import net.fabricmc.fabric.api.client.rendering.v1.ColorProviderRegistry;
 import net.fabricmc.fabric.api.client.rendering.v1.EntityModelLayerRegistry;
 import net.fabricmc.fabric.api.client.rendering.v1.EntityRendererRegistry;
+import net.minecraft.block.Blocks;
 import net.minecraft.block.RedstoneWireBlock;
 import net.minecraft.client.color.world.BiomeColors;
 import net.minecraft.client.render.RenderLayer;
@@ -28,6 +29,7 @@ import net.minecraft.client.render.entity.model.EntityModelLayers;
 import net.minecraft.client.util.SpriteIdentifier;
 import net.minecraft.util.Identifier;
 import net.minecraft.world.biome.FoliageColors;
+import net.minecraft.world.biome.GrassColors;
 
 import static com.github.suninvr.virtualadditions.VirtualAdditions.idOf;
 
@@ -58,7 +60,6 @@ public class VARenderers {
         initBlockRenderLayers();
         initEntityRenderers();
         initBlockEntityRenderers();
-        initItemRenderers();
         initFluidRenderers();
         initColorProviders();
     }
@@ -104,6 +105,7 @@ public class VARenderers {
                 VABlocks.SOULBLOOM_TRAPDOOR,
                 VABlocks.SOULBLOOM_SAPLING,
                 VABlocks.POTTED_SOULBLOOM_SAPLING,
+                VABlocks.BLUE_PETALS,
                 VABlocks.BALLOON_BULB,
                 VABlocks.BALLOON_BULB_PLANT,
                 VABlocks.BALLOON_BULB_BUD,
@@ -193,50 +195,6 @@ public class VARenderers {
 
     }
 
-    private static void initItemRenderers() {
-        //BuiltinItemRendererRegistry.INSTANCE.register(VAItems.CHARTREUSE_BED, bedItemRenderer);
-        //BuiltinItemRendererRegistry.INSTANCE.register(VAItems.MAROON_BED, bedItemRenderer);
-        //BuiltinItemRendererRegistry.INSTANCE.register(VAItems.INDIGO_BED, bedItemRenderer);
-        //BuiltinItemRendererRegistry.INSTANCE.register(VAItems.PLUM_BED, bedItemRenderer);
-        //BuiltinItemRendererRegistry.INSTANCE.register(VAItems.VIRIDIAN_BED, bedItemRenderer);
-        //BuiltinItemRendererRegistry.INSTANCE.register(VAItems.TAN_BED, bedItemRenderer);
-        //BuiltinItemRendererRegistry.INSTANCE.register(VAItems.SINOPIA_BED, bedItemRenderer);
-        //BuiltinItemRendererRegistry.INSTANCE.register(VAItems.LILAC_BED, bedItemRenderer);
-
-        //BuiltinItemRendererRegistry.INSTANCE.register(VAItems.CHARTREUSE_SHULKER_BOX, shulkerBoxItemRenderer);
-        //BuiltinItemRendererRegistry.INSTANCE.register(VAItems.MAROON_SHULKER_BOX, shulkerBoxItemRenderer);
-        //BuiltinItemRendererRegistry.INSTANCE.register(VAItems.INDIGO_SHULKER_BOX, shulkerBoxItemRenderer);
-        //BuiltinItemRendererRegistry.INSTANCE.register(VAItems.PLUM_SHULKER_BOX, shulkerBoxItemRenderer);
-        //BuiltinItemRendererRegistry.INSTANCE.register(VAItems.VIRIDIAN_SHULKER_BOX, shulkerBoxItemRenderer);
-        //BuiltinItemRendererRegistry.INSTANCE.register(VAItems.TAN_SHULKER_BOX, shulkerBoxItemRenderer);
-        //BuiltinItemRendererRegistry.INSTANCE.register(VAItems.SINOPIA_SHULKER_BOX, shulkerBoxItemRenderer);
-        //BuiltinItemRendererRegistry.INSTANCE.register(VAItems.LILAC_SHULKER_BOX, shulkerBoxItemRenderer);
-
-        //ModelPredicateProviderRegistry.register(Items.CROSSBOW, idOf("climbing_rope"), (itemStack, clientWorld, livingEntity, a) -> {
-        //    if(!itemStack.isOf(Items.CROSSBOW)) return 0.0F;
-        //    ChargedProjectilesComponent component = itemStack.get(DataComponentTypes.CHARGED_PROJECTILES);
-        //    float f = 0.0F;
-        //    if (component != null) {
-        //        ItemStack stack = component.getProjectiles().isEmpty() ? ItemStack.EMPTY : component.getProjectiles().get(0);
-        //        if (stack.isOf(VAItems.CLIMBING_ROPE) || stack.isOf(VAItems.WAXED_CLIMBING_ROPE)) f = 0.25F;
-        //        else if (stack.isOf(VAItems.EXPOSED_CLIMBING_ROPE) || stack.isOf(VAItems.WAXED_EXPOSED_CLIMBING_ROPE)) f = 0.5F;
-        //        else if (stack.isOf(VAItems.WEATHERED_CLIMBING_ROPE) || stack.isOf(VAItems.WAXED_WEATHERED_CLIMBING_ROPE)) f = 0.75F;
-        //        else if (stack.isOf(VAItems.OXIDIZED_CLIMBING_ROPE) || stack.isOf(VAItems.WAXED_OXIDIZED_CLIMBING_ROPE)) f = 1.0F;
-        //    }
-        //    return f ;
-        //});
-
-        //ModelPredicateProviderRegistry.register(VAItems.ICE_CREAM, idOf("colorful"), (stack, world, entity, seed) -> {
-        //    if (!stack.isOf(VAItems.ICE_CREAM)) return 0.0F;
-        //    return stack.contains(DataComponentTypes.DYED_COLOR) ? 1.0F : 0.0F;
-        //});
-
-        //ModelPredicateProviderRegistry.register(VAItems.ENGRAVING_CHISEL, idOf("colorful"), (stack, world, entity, seed) -> {
-        //    if (!stack.isOf(VAItems.ENGRAVING_CHISEL)) return 0.0F;
-        //    return stack.contains(DataComponentTypes.DYED_COLOR) ? 1.0F : 0.0F;
-        //});
-    }
-
     private static void  initFluidRenderers() {
         FluidRenderHandlerRegistry.INSTANCE.register(VAFluids.ACID, VAFluids.FLOWING_ACID, new SimpleFluidRenderHandler(
                 Identifier.of("minecraft:block/water_still"),
@@ -258,5 +216,12 @@ public class VARenderers {
         ColorProviderRegistry.BLOCK.register( (state, world, pos, tintIndex) -> 0x00e076, VABlocks.ACID);
         ColorProviderRegistry.BLOCK.register( (state, world, pos, tintIndex) -> tintIndex <= 0 ? -1 : RedstoneWireBlock.getWireColor(state.get(RedstoneBridgeBlock.POWER)), VABlocks.REDSTONE_BRIDGE);
 
+        ColorProviderRegistry.BLOCK.register((state, world, pos, tintIndex) -> {
+            if (tintIndex != 0) {
+                return world != null && pos != null ? BiomeColors.getGrassColor(world, pos) : GrassColors.getDefaultColor();
+            } else {
+                return -1;
+            }
+        }, VABlocks.BLUE_PETALS);
     }
 }

@@ -203,6 +203,7 @@ public class VABlocks {
     public static final Block SOULBLOOM_LEAVES;
     public static final Block SOULBLOOM_SAPLING;
     public static final Block POTTED_SOULBLOOM_SAPLING;
+    public static final Block BLUE_PETALS;
     public static final Block BALLOON_BULB;
     public static final Block BALLOON_BULB_PLANT;
     public static final Block BALLOON_BULB_BUD;
@@ -582,6 +583,8 @@ public class VABlocks {
         SOULBLOOM_LEAVES = register("soulbloom_leaves", (settings) -> new UntintedParticleLeavesBlock(0.1F, VAParticleTypes.SOULBLOOM_LEAVES, settings), Settings.copy(Blocks.CHERRY_LEAVES));
         SOULBLOOM_SAPLING = register("soulbloom_sapling", (settings) -> new SaplingBlock(CustomSaplingGenerator.SOULBLOOM, settings), Settings.copy(Blocks.CHERRY_SAPLING));
         POTTED_SOULBLOOM_SAPLING = register("potted_soulbloom", (settings) -> new FlowerPotBlock(SOULBLOOM_SAPLING, settings), Settings.copy(Blocks.FLOWER_POT));
+
+        BLUE_PETALS = register("blue_petals", FlowerbedBlock::new, Settings.create().mapColor(MapColor.DARK_GREEN).noCollision().sounds(BlockSoundGroup.FLOWERBED).pistonBehavior(PistonBehavior.DESTROY));
 
         OAK_HEDGE = register("oak_hedge", HedgeBlock::new, Settings.copy(Blocks.OAK_LEAVES));
         SPRUCE_HEDGE = register("spruce_hedge", HedgeBlock::new, Settings.copy(Blocks.SPRUCE_LEAVES));

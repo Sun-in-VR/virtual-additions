@@ -68,6 +68,8 @@ public final class VAItemTagProvider {
             getOrCreateTagBuilder(ItemTags.CHICKEN_FOOD).add(VAItems.CORN_SEEDS, VAItems.TOMATO_SEEDS, VAItems.CABBAGE_SEEDS, VAItems.COTTON_SEEDS);
             getOrCreateTagBuilder(ItemTags.BOATS).add(VAItems.SOULBLOOM_BOAT);
             getOrCreateTagBuilder(ItemTags.CHEST_BOATS).add(VAItems.SOULBLOOM_CHEST_BOAT);
+            getOrCreateTagBuilder(ItemTags.FLOWERS).add(VAItems.BLUE_PETALS);
+            getOrCreateTagBuilder(ItemTags.BEE_FOOD).add(VAItems.BLUE_PETALS);
 
             getOrCreateTagBuilder(INGOTS).add(VAItems.STEEL_INGOT);
             getOrCreateTagBuilder(STEEL_INGOTS).add(VAItems.STEEL_INGOT);

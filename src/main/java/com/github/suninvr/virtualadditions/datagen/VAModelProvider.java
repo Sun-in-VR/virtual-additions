@@ -81,6 +81,8 @@ public class VAModelProvider {
             blockStateModelGenerator.registerCubeAllModelTexturePool(VABlocks.SYENITE_BRICKS).family(VACollections.SYENITE_BRICKS);
             blockStateModelGenerator.registerCubeAllModelTexturePool(VABlocks.POLISHED_SYENITE).family(VACollections.POLISHED_SYENITE);
 
+            blockStateModelGenerator.registerFlowerbed(VABlocks.BLUE_PETALS);
+
             blockStateModelGenerator.registerItemModel(VAItems.CABBAGE_SEEDS);
             blockStateModelGenerator.registerItemModel(VAItems.CORN_SEEDS);
             blockStateModelGenerator.registerItemModel(VAItems.COTTON_SEEDS);

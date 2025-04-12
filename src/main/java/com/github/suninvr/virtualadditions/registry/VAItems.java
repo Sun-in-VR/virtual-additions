@@ -117,6 +117,7 @@ public class VAItems {
     public static final Item SOULBLOOM_SAPLING;
     public static final Item SOULBLOOM_BOAT;
     public static final Item SOULBLOOM_CHEST_BOAT;
+    public static final Item BLUE_PETALS;
     public static final Item BALLOON_FRUIT;
     public static final Item OAK_HEDGE;
     public static final Item SPRUCE_HEDGE;
@@ -597,6 +598,8 @@ public class VAItems {
         SOULBLOOM_CHEST_BOAT = register("soulbloom_chest_boat", settings -> new BoatItem(VAEntityType.SOULBLOOM_CHEST_BOAT, settings), new Item.Settings().maxCount(1), ItemGroups.TOOLS, prev);
 
         //endregion
+
+        BLUE_PETALS = registerBlockItem("blue_petals", VABlocks.BLUE_PETALS, ItemGroups.NATURAL, Items.PINK_PETALS);
 
         SPRINGSOIL = registerBlockItem("springsoil", VABlocks.SPRINGSOIL, ItemGroups.NATURAL, Items.RED_SANDSTONE);
 
