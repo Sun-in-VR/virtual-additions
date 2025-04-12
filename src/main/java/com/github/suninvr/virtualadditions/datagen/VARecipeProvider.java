@@ -229,7 +229,7 @@ public final class VARecipeProvider {
             completeDyablesRecipes(wool, vanillaWool, virtualAdditionsWool, "wool", RecipeCategory.BUILDING_BLOCKS);
             completeDyablesRecipes(carpets, vanillaCarpets, virtualAdditionsCarpets, "carpet", RecipeCategory.BUILDING_BLOCKS);
             completeDyablesRecipes(harnesses, vanillaHarnesses, virtualAdditionsHarnesses, "harness", RecipeCategory.BUILDING_BLOCKS);
-            offerDyeablesRecipes(vanillaDyes, silkbulbs, VAItems.SILKBULB, "silkbulb", RecipeCategory.BUILDING_BLOCKS);
+            offerDyeablesRecipes(dyes, silkbulbs, VAItems.SILKBULB, "silkbulb", RecipeCategory.BUILDING_BLOCKS);
 
             TransmuteRecipeJsonBuilder.create(RecipeCategory.TOOLS, Ingredient.ofTag(this.registryLookup.getOrThrow(ItemTags.BUNDLES)), Ingredient.ofItems(VAItems.CHARTREUSE_DYE), VAItems.CHARTREUSE_BUNDLE).criterion(hasItem(VAItems.CHARTREUSE_DYE), this.conditionsFromItem(VAItems.CHARTREUSE_DYE)).group("bundle_dye").offerTo(exporter);
             TransmuteRecipeJsonBuilder.create(RecipeCategory.TOOLS, Ingredient.ofTag(this.registryLookup.getOrThrow(ItemTags.BUNDLES)), Ingredient.ofItems(VAItems.MAROON_DYE), VAItems.MAROON_BUNDLE).criterion(hasItem(VAItems.MAROON_DYE), this.conditionsFromItem(VAItems.MAROON_DYE)).group("bundle_dye").offerTo(exporter);
