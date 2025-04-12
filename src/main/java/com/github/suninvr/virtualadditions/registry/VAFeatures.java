@@ -23,7 +23,7 @@ public class VAFeatures {
 
     public static class Placed {
         public static final RegistryKey<PlacedFeature> ORE_IOLITE;
-        public static final RegistryKey<PlacedFeature> ORE_FLOATROCK;
+        public static final RegistryKey<PlacedFeature> ORE_PORPHYRY;
         public static final RegistryKey<PlacedFeature> WASP_DEN_CEILING;
         public static final RegistryKey<PlacedFeature> WASP_DEN_FLOOR;
         public static final RegistryKey<PlacedFeature> GREENCAP_MUSHROOM;
@@ -40,7 +40,7 @@ public class VAFeatures {
 
         static {
             ORE_IOLITE = registerPlaced(idOf("ore_iolite"));
-            ORE_FLOATROCK = registerPlaced(idOf("ore_floatrock"));
+            ORE_PORPHYRY = registerPlaced(idOf("ore_porphyry"));
             WASP_DEN_CEILING = registerPlaced(idOf("wasp_den_ceiling"));
             WASP_DEN_FLOOR = registerPlaced(idOf("wasp_den_floor"));
             GREENCAP_MUSHROOM = registerPlaced(idOf("greencap_mushroom"));
@@ -76,9 +76,9 @@ public class VAFeatures {
                 Placed.ORE_IOLITE
         );
         BiomeModifications.addFeature(
-                BiomeSelectors.tag(BiomeTags.IS_HILL),
+                BiomeSelectors.foundInOverworld(),
                 GenerationStep.Feature.UNDERGROUND_ORES,
-                Placed.ORE_FLOATROCK
+                Placed.ORE_PORPHYRY
         );
         BiomeModifications.addFeature(
                 BiomeSelectors.foundInOverworld(),

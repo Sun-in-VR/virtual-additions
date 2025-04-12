@@ -294,8 +294,8 @@ public final class VAItemTagProvider {
             configureGildedToolSet(VAItems.QUARTZ_TOOL_SETS);
             configureGildedToolSet(VAItems.SCULK_TOOL_SETS);
 
-            getOrCreateTagBuilder(ItemTags.STONE_CRAFTING_MATERIALS).add(VAItems.FLOATROCK);
-            getOrCreateTagBuilder(ItemTags.STONE_TOOL_MATERIALS).add(VAItems.FLOATROCK);
+            getOrCreateTagBuilder(ItemTags.STONE_CRAFTING_MATERIALS).add(VAItems.PORPHYRY);
+            getOrCreateTagBuilder(ItemTags.STONE_TOOL_MATERIALS).add(VAItems.PORPHYRY);
             getOrCreateTagBuilder(ItemTags.LOGS_THAT_BURN).add(VAItems.SOULBLOOM_LOG, VAItems.SOULBLOOM_WOOD, VAItems.STRIPPED_SOULBLOOM_LOG, VAItems.STRIPPED_SOULBLOOM_WOOD);
             getOrCreateTagBuilder(ItemTags.PLANKS).add(VAItems.SOULBLOOM_PLANKS);
             getOrCreateTagBuilder(ItemTags.SIGNS).add(VAItems.SOULBLOOM_SIGN);
@@ -307,8 +307,7 @@ public final class VAItemTagProvider {
             getOrCreateTagBuilder(ItemTags.SAPLINGS).add(VAItems.SOULBLOOM_SAPLING);
 
             getOrCreateTagBuilder(VAItemTags.LUMWASP_LARVAE_FOOD).add(
-                    VAItems.FLOATROCK,
-                    VAItems.GRASSY_FLOATROCK
+                    VAItems.PORPHYRY
             );
             getOrCreateTagBuilder(VAItemTags.SOULBLOOM_LOGS).add(
                     VAItems.SOULBLOOM_LOG,
@@ -320,9 +319,9 @@ public final class VAItemTagProvider {
                     VACollections.SOULBLOOM
             );
             configureBlockFamilies(
-                    VACollections.FLOATROCK,
-                    VACollections.POLISHED_FLOATROCK,
-                    VACollections.FLOATROCK_BRICKS
+                    VACollections.PORPHYRY,
+                    VACollections.POLISHED_PORPHYRY,
+                    VACollections.PORPHYRY_BRICKS
             );
         }
     }

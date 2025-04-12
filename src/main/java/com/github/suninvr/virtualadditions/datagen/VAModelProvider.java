@@ -64,10 +64,10 @@ public class VAModelProvider {
         @Override
         public void generateBlockStateModels(BlockStateModelGenerator blockStateModelGenerator) {
 
-            blockStateModelGenerator.registerCubeAllModelTexturePool(VABlocks.FLOATROCK).family(VACollections.FLOATROCK);
+            blockStateModelGenerator.registerCubeAllModelTexturePool(VABlocks.PORPHYRY).family(VACollections.PORPHYRY);
             blockStateModelGenerator.registerCubeAllModelTexturePool(VABlocks.SOULBLOOM_PLANKS).family(VACollections.SOULBLOOM);
-            blockStateModelGenerator.registerCubeAllModelTexturePool(VABlocks.POLISHED_FLOATROCK).family(VACollections.POLISHED_FLOATROCK);
-            blockStateModelGenerator.registerCubeAllModelTexturePool(VABlocks.FLOATROCK_BRICKS).family(VACollections.FLOATROCK_BRICKS);
+            blockStateModelGenerator.registerCubeAllModelTexturePool(VABlocks.POLISHED_PORPHYRY).family(VACollections.POLISHED_PORPHYRY);
+            blockStateModelGenerator.registerCubeAllModelTexturePool(VABlocks.PORPHYRY_BRICKS).family(VACollections.PORPHYRY_BRICKS);
             blockStateModelGenerator.registerCubeAllModelTexturePool(VABlocks.CUT_STEEL).family(VACollections.CUT_STEEL).parented(VABlocks.CUT_STEEL, VABlocks.WAXED_CUT_STEEL).parented(VABlocks.CHISELED_STEEL, VABlocks.WAXED_CHISELED_STEEL).family(VACollections.WAXED_CUT_STEEL);
             blockStateModelGenerator.registerCubeAllModelTexturePool(VABlocks.EXPOSED_CUT_STEEL).family(VACollections.EXPOSED_CUT_STEEL).parented(VABlocks.EXPOSED_CUT_STEEL, VABlocks.WAXED_EXPOSED_CUT_STEEL).parented(VABlocks.EXPOSED_CHISELED_STEEL, VABlocks.WAXED_EXPOSED_CHISELED_STEEL).family(VACollections.WAXED_EXPOSED_CUT_STEEL);
             blockStateModelGenerator.registerCubeAllModelTexturePool(VABlocks.WEATHERED_CUT_STEEL).family(VACollections.WEATHERED_CUT_STEEL).parented(VABlocks.WEATHERED_CUT_STEEL, VABlocks.WAXED_WEATHERED_CUT_STEEL).parented(VABlocks.WEATHERED_CHISELED_STEEL, VABlocks.WAXED_WEATHERED_CHISELED_STEEL).family(VACollections.WAXED_WEATHERED_CUT_STEEL);
@@ -80,7 +80,6 @@ public class VAModelProvider {
             blockStateModelGenerator.registerCubeAllModelTexturePool(VABlocks.COBBLED_SYENITE).family(VACollections.COBBLED_SYENITE);
             blockStateModelGenerator.registerCubeAllModelTexturePool(VABlocks.SYENITE_BRICKS).family(VACollections.SYENITE_BRICKS);
             blockStateModelGenerator.registerCubeAllModelTexturePool(VABlocks.POLISHED_SYENITE).family(VACollections.POLISHED_SYENITE);
-            blockStateModelGenerator.registerTintedItemModel(VABlocks.GRASSY_FLOATROCK, ModelIds.getBlockModelId(VABlocks.GRASSY_FLOATROCK), new GrassTintSource());
 
             blockStateModelGenerator.registerItemModel(VAItems.CABBAGE_SEEDS);
             blockStateModelGenerator.registerItemModel(VAItems.CORN_SEEDS);

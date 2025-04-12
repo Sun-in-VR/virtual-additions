@@ -35,9 +35,9 @@ public class VACollections {
     public static final BlockFamily SYENITE_BRICKS;
     public static final BlockFamily ROCK_SALT_BRICKS;
     public static final BlockFamily SOULBLOOM;
-    public static final BlockFamily FLOATROCK;
-    public static final BlockFamily FLOATROCK_BRICKS;
-    public static final BlockFamily POLISHED_FLOATROCK;
+    public static final BlockFamily PORPHYRY;
+    public static final BlockFamily PORPHYRY_BRICKS;
+    public static final BlockFamily POLISHED_PORPHYRY;
 
     public static final ColorfulBlockSet WHITE;
     public static final ColorfulBlockSet LIGHT_GRAY;
@@ -89,9 +89,9 @@ public class VACollections {
         SYENITE_BRICKS = register(VABlocks.SYENITE_BRICKS).stairs(VABlocks.SYENITE_BRICK_STAIRS).slab(VABlocks.SYENITE_BRICK_SLAB).wall(VABlocks.SYENITE_BRICK_WALL).cracked(VABlocks.CRACKED_SYENITE_BRICKS).chiseled(VABlocks.CHISELED_SYENITE).build();
         ROCK_SALT_BRICKS = register(VABlocks.ROCK_SALT_BRICKS).stairs(ROCK_SALT_BRICK_STAIRS).slab(ROCK_SALT_BRICK_SLAB).wall(ROCK_SALT_BRICK_WALL).build();
         SOULBLOOM = register(VABlocks.SOULBLOOM_PLANKS).button(VABlocks.SOULBLOOM_BUTTON).fence(VABlocks.SOULBLOOM_FENCE).fenceGate(VABlocks.SOULBLOOM_FENCE_GATE).sign(VABlocks.SOULBLOOM_SIGN, VABlocks.SOULBLOOM_WALL_SIGN).pressurePlate(VABlocks.SOULBLOOM_PRESSURE_PLATE).slab(VABlocks.SOULBLOOM_SLAB).stairs(VABlocks.SOULBLOOM_STAIRS).door(VABlocks.SOULBLOOM_DOOR).trapdoor(VABlocks.SOULBLOOM_TRAPDOOR).group("wooden").unlockCriterionName("has_planks").build();
-        FLOATROCK = register(VABlocks.FLOATROCK).stairs(VABlocks.FLOATROCK_STAIRS).slab(VABlocks.FLOATROCK_SLAB).wall(VABlocks.FLOATROCK_WALL).build();
-        FLOATROCK_BRICKS = register(VABlocks.FLOATROCK_BRICKS).stairs(VABlocks.FLOATROCK_BRICK_STAIRS).slab(VABlocks.FLOATROCK_BRICK_SLAB).wall(VABlocks.FLOATROCK_BRICK_WALL).build();
-        POLISHED_FLOATROCK = register(VABlocks.POLISHED_FLOATROCK).stairs(VABlocks.POLISHED_FLOATROCK_STAIRS).slab(VABlocks.POLISHED_FLOATROCK_SLAB).wall(VABlocks.POLISHED_FLOATROCK_WALL).build();
+        PORPHYRY = register(VABlocks.PORPHYRY).stairs(VABlocks.PORPHYRY_STAIRS).slab(VABlocks.PORPHYRY_SLAB).wall(VABlocks.PORPHYRY_WALL).build();
+        PORPHYRY_BRICKS = register(VABlocks.PORPHYRY_BRICKS).stairs(VABlocks.PORPHYRY_BRICK_STAIRS).slab(VABlocks.PORPHYRY_BRICK_SLAB).wall(VABlocks.PORPHYRY_BRICK_WALL).build();
+        POLISHED_PORPHYRY = register(VABlocks.POLISHED_PORPHYRY).stairs(VABlocks.POLISHED_PORPHYRY_STAIRS).slab(VABlocks.POLISHED_PORPHYRY_SLAB).wall(VABlocks.POLISHED_PORPHYRY_WALL).build();
         
         WHITE = ColorfulBlockSet.Builder.create(Items.WHITE_DYE).wool(WHITE_WOOL).carpet(WHITE_CARPET).terracotta(WHITE_TERRACOTTA).concrete(WHITE_CONCRETE).concretePowder(WHITE_CONCRETE_POWDER).stainedGlass(WHITE_STAINED_GLASS).stainedGlassPane(WHITE_STAINED_GLASS_PANE).candle(WHITE_CANDLE).candleCake(WHITE_CANDLE_CAKE).silkbulb(WHITE_SILKBULB).bed(WHITE_BED).shulkerBox(WHITE_SHULKER_BOX).banner(WHITE_BANNER).wallBanner(WHITE_WALL_BANNER).glazedTerracotta(WHITE_GLAZED_TERRACOTTA).build();
         LIGHT_GRAY = ColorfulBlockSet.Builder.create(Items.LIGHT_GRAY_DYE).wool(LIGHT_GRAY_WOOL).carpet(LIGHT_GRAY_CARPET).terracotta(LIGHT_GRAY_TERRACOTTA).concrete(LIGHT_GRAY_CONCRETE).concretePowder(LIGHT_GRAY_CONCRETE_POWDER).stainedGlass(LIGHT_GRAY_STAINED_GLASS).stainedGlassPane(LIGHT_GRAY_STAINED_GLASS_PANE).candle(LIGHT_GRAY_CANDLE).candleCake(LIGHT_GRAY_CANDLE_CAKE).silkbulb(LIGHT_GRAY_SILKBULB).bed(LIGHT_GRAY_BED).shulkerBox(LIGHT_GRAY_SHULKER_BOX).banner(LIGHT_GRAY_BANNER).wallBanner(LIGHT_GRAY_WALL_BANNER).glazedTerracotta(LIGHT_GRAY_GLAZED_TERRACOTTA).build();

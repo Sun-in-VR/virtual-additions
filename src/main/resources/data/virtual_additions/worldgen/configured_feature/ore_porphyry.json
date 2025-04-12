@@ -1,16 +1,16 @@
 {
   "type": "minecraft:ore",
   "config": {
-    "size": 12,
-    "discard_chance_on_air_exposure": 0.0,
+    "size": 64,
+    "discard_chance_on_air_exposure": 0,
     "targets": [
       {
         "target": {
           "predicate_type": "minecraft:tag_match",
-          "tag": "virtual_additions:floatrock_ore_replaceables"
+          "tag": "minecraft:base_stone_overworld"
         },
         "state": {
-          "Name": "virtual_additions:floatrock_iron_ore"
+          "Name": "virtual_additions:porphyry"
         }
       }
     ]

@@ -471,45 +471,27 @@ public final class VARecipeProvider {
                     .input('s', VAItems.STEEL_INGOT)
                     .criterion("steel_ingot", conditionsFromItem(VAItems.STEEL_INGOT)).offerTo(this.exporter);
 
-            ShapedRecipeJsonBuilder.create(this.registryLookup, RecipeCategory.BUILDING_BLOCKS, VAItems.FLOATROCK, 9)
+            ShapedRecipeJsonBuilder.create(this.registryLookup, RecipeCategory.BUILDING_BLOCKS, VAItems.PORPHYRY, 9)
                     .pattern("ccc")
                     .pattern("cfc")
                     .pattern("ccc")
                     .input('c', Items.COBBLESTONE)
-                    .input('f', VAItems.FLOATROCK)
-                    .criterion("floatrock", conditionsFromItem(VAItems.FLOATROCK)).offerTo(this.exporter);
+                    .input('f', VAItems.PORPHYRY)
+                    .criterion("porphyry", conditionsFromItem(VAItems.PORPHYRY)).offerTo(this.exporter);
 
 
             offerSmithingTrimRecipe(VAItems.EXOSKELETON_ARMOR_TRIM_SMITHING_TEMPLATE, VAArmorTrimPatterns.EXOSKELETON, RegistryKey.of(RegistryKeys.RECIPE, idOf("exoskeleton_armor_trim_smithing_template_smithing_trim")));
             offerSmithingTemplateCopyingRecipe(VAItems.EXOSKELETON_ARMOR_TRIM_SMITHING_TEMPLATE, VAItems.SILK_BLOCK);
 
-            offerSmelting(List.of(VAItems.FLOATROCK_COAL_ORE), RecipeCategory.MISC, Items.COAL, 0.1F, 200, "coal");
-            offerSmelting(List.of(VAItems.FLOATROCK_COPPER_ORE), RecipeCategory.MISC, Items.COPPER_INGOT, 0.7F, 200, "copper_ingot");
-            offerSmelting(List.of(VAItems.FLOATROCK_IRON_ORE), RecipeCategory.MISC, Items.IRON_INGOT, 0.7F, 200, "iron_ingot");
-            offerSmelting(List.of(VAItems.FLOATROCK_GOLD_ORE), RecipeCategory.MISC, Items.GOLD_INGOT, 1.0F, 200, "gold_ingot");
-            offerSmelting(List.of(VAItems.FLOATROCK_REDSTONE_ORE), RecipeCategory.MISC, Items.REDSTONE, 0.7F, 200, "redstone");
-            offerSmelting(List.of(VAItems.FLOATROCK_EMERALD_ORE), RecipeCategory.MISC, Items.EMERALD, 1.0F, 200, "emerald");
-            offerSmelting(List.of(VAItems.FLOATROCK_LAPIS_ORE), RecipeCategory.MISC, Items.LAPIS_LAZULI, 0.2F, 200, "lapis_lazuli");
-            offerSmelting(List.of(VAItems.FLOATROCK_DIAMOND_ORE), RecipeCategory.MISC, Items.DIAMOND, 1.0F, 200, "diamond");
-
-            offerBlasting(List.of(VAItems.FLOATROCK_COAL_ORE), RecipeCategory.MISC, Items.COAL, 0.1F, 100, "coal");
-            offerBlasting(List.of(VAItems.FLOATROCK_COPPER_ORE), RecipeCategory.MISC, Items.COPPER_INGOT, 0.7F, 100, "copper_ingot");
-            offerBlasting(List.of(VAItems.FLOATROCK_IRON_ORE), RecipeCategory.MISC, Items.IRON_INGOT, 0.7F, 100, "iron_ingot");
-            offerBlasting(List.of(VAItems.FLOATROCK_GOLD_ORE), RecipeCategory.MISC, Items.GOLD_INGOT, 1.0F, 100, "gold_ingot");
-            offerBlasting(List.of(VAItems.FLOATROCK_REDSTONE_ORE), RecipeCategory.MISC, Items.REDSTONE, 0.7F, 100, "redstone");
-            offerBlasting(List.of(VAItems.FLOATROCK_EMERALD_ORE), RecipeCategory.MISC, Items.EMERALD, 1.0F, 100, "emerald");
-            offerBlasting(List.of(VAItems.FLOATROCK_LAPIS_ORE), RecipeCategory.MISC, Items.LAPIS_LAZULI, 0.2F, 100, "lapis_lazuli");
-            offerBlasting(List.of(VAItems.FLOATROCK_DIAMOND_ORE), RecipeCategory.MISC, Items.DIAMOND, 1.0F, 100, "diamond");
-
             offerHedgeRecipe(VABlocks.SOULBLOOM_HEDGE, VABlocks.SOULBLOOM_LEAVES);
             offerBoatRecipe(VAItems.SOULBLOOM_BOAT, VABlocks.SOULBLOOM_PLANKS);
             offerChestBoatRecipe(VAItems.SOULBLOOM_CHEST_BOAT, VAItems.SOULBLOOM_BOAT);
 
-            offerStonecuttingRecipes(VABlocks.FLOATROCK, VACollections.POLISHED_FLOATROCK, VACollections.FLOATROCK_BRICKS);
-            generateCuttableFamilyChain(VACollections.FLOATROCK);
-            generateCuttableFamilyChain(VACollections.POLISHED_FLOATROCK);
-            generateCuttableFamilyChain(VACollections.FLOATROCK_BRICKS);
-            offer2x2ConversionChain(VABlocks.FLOATROCK, VABlocks.POLISHED_FLOATROCK, VABlocks.FLOATROCK_BRICKS);
+            offerStonecuttingRecipes(VABlocks.PORPHYRY, VACollections.POLISHED_PORPHYRY, VACollections.PORPHYRY_BRICKS);
+            generateCuttableFamilyChain(VACollections.PORPHYRY);
+            generateCuttableFamilyChain(VACollections.POLISHED_PORPHYRY);
+            generateCuttableFamilyChain(VACollections.PORPHYRY_BRICKS);
+            offer2x2ConversionChain(VABlocks.PORPHYRY, VABlocks.POLISHED_PORPHYRY, VABlocks.PORPHYRY_BRICKS);
 
             offerStonecuttingRecipes(VABlocks.ROCK_SALT_BLOCK, VACollections.ROCK_SALT_BRICKS);
             generateCuttableFamilyChain(VACollections.ROCK_SALT_BRICKS);

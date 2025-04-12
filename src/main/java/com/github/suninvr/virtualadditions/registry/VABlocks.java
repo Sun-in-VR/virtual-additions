@@ -26,7 +26,6 @@ import static com.github.suninvr.virtualadditions.registry.RegistryHelper.BlockR
 public class VABlocks {
 
     public static final BlockSoundGroup ROPE_SOUND_GROUP = new BlockSoundGroup(1.0F, 1.0F, VASoundEvents.BLOCK_ROPE_BREAK, VASoundEvents.BLOCK_ROPE_STEP, VASoundEvents.BLOCK_ROPE_PLACE, VASoundEvents.BLOCK_ROPE_HIT, VASoundEvents.BLOCK_ROPE_FALL);
-    public static final BlockSoundGroup GRASSY_FLOATROCK_SOUNDGROUP = new BlockSoundGroup(1.0F, 1.0F, SoundEvents.BLOCK_TUFF_BREAK, SoundEvents.BLOCK_GRASS_STEP, SoundEvents.BLOCK_TUFF_PLACE, SoundEvents.BLOCK_TUFF_HIT, SoundEvents.BLOCK_GRASS_FALL);
 
     public static final Block CLIMBING_ROPE;
     public static final Block CLIMBING_ROPE_ANCHOR;
@@ -171,27 +170,18 @@ public class VABlocks {
     public static final Block CORN_CROP;
     public static final Block TOMATO;
     public static final Block CABBAGE;
-    public static final Block FLOATROCK;
-    public static final Block GRASSY_FLOATROCK;
-    public static final Block FLOATROCK_STAIRS;
-    public static final Block FLOATROCK_SLAB;
-    public static final Block FLOATROCK_WALL;
-    public static final Block FLOATROCK_BRICKS;
-    public static final Block FLOATROCK_BRICK_STAIRS;
-    public static final Block FLOATROCK_BRICK_SLAB;
-    public static final Block FLOATROCK_BRICK_WALL;
-    public static final Block POLISHED_FLOATROCK;
-    public static final Block POLISHED_FLOATROCK_STAIRS;
-    public static final Block POLISHED_FLOATROCK_SLAB;
-    public static final Block POLISHED_FLOATROCK_WALL;
-    public static final Block FLOATROCK_COAL_ORE;
-    public static final Block FLOATROCK_IRON_ORE;
-    public static final Block FLOATROCK_COPPER_ORE;
-    public static final Block FLOATROCK_GOLD_ORE;
-    public static final Block FLOATROCK_REDSTONE_ORE;
-    public static final Block FLOATROCK_EMERALD_ORE;
-    public static final Block FLOATROCK_LAPIS_ORE;
-    public static final Block FLOATROCK_DIAMOND_ORE;
+    public static final Block PORPHYRY;
+    public static final Block PORPHYRY_STAIRS;
+    public static final Block PORPHYRY_SLAB;
+    public static final Block PORPHYRY_WALL;
+    public static final Block PORPHYRY_BRICKS;
+    public static final Block PORPHYRY_BRICK_STAIRS;
+    public static final Block PORPHYRY_BRICK_SLAB;
+    public static final Block PORPHYRY_BRICK_WALL;
+    public static final Block POLISHED_PORPHYRY;
+    public static final Block POLISHED_PORPHYRY_STAIRS;
+    public static final Block POLISHED_PORPHYRY_SLAB;
+    public static final Block POLISHED_PORPHYRY_WALL;
     public static final Block SPRINGSOIL;
     public static final Block SOULBLOOM_LOG;
     public static final Block SOULBLOOM_WOOD;
@@ -553,34 +543,22 @@ public class VABlocks {
         TOMATO = register("tomato", TomatoCropBlock::new, Settings.create().noCollision().ticksRandomly().breakInstantly().sounds(BlockSoundGroup.CROP));
         CABBAGE = register("cabbage", CabbageCropBlock::new, Settings.create().noCollision().ticksRandomly().breakInstantly().sounds(BlockSoundGroup.CROP));
 
-        FLOATROCK = register("floatrock", FloatrockBlock::new, Settings.copy(Blocks.TUFF));
-        GRASSY_FLOATROCK = register("grassy_floatrock", GrassyFloatrockBlock::new, Settings.copy(Blocks.TUFF).sounds(GRASSY_FLOATROCK_SOUNDGROUP));
-        FLOATROCK_STAIRS = register("floatrock_stairs", (settings) -> new StairsBlock(FLOATROCK.getDefaultState(), settings), Settings.copy(Blocks.TUFF));
-        FLOATROCK_SLAB = register("floatrock_slab", SlabBlock::new, Settings.copy(Blocks.TUFF));
-        FLOATROCK_WALL = register("floatrock_wall", WallBlock::new, Settings.copy(Blocks.TUFF));
-        FLOATROCK_BRICKS = register("floatrock_bricks", Block::new, Settings.copy(Blocks.TUFF_BRICKS));
-        FLOATROCK_BRICK_STAIRS = register("floatrock_brick_stairs", (settings) -> new StairsBlock(FLOATROCK_BRICKS.getDefaultState(), settings), Settings.copy(Blocks.TUFF_BRICKS));
-        FLOATROCK_BRICK_SLAB = register("floatrock_brick_slab", SlabBlock::new, Settings.copy(Blocks.TUFF_BRICKS));
-        FLOATROCK_BRICK_WALL = register("floatrock_brick_wall", WallBlock::new, Settings.copy(Blocks.TUFF_BRICKS));
-        POLISHED_FLOATROCK = register("polished_floatrock", Block::new, Settings.copy(Blocks.POLISHED_TUFF));
-        POLISHED_FLOATROCK_STAIRS = register("polished_floatrock_stairs", (settings) -> new StairsBlock(POLISHED_FLOATROCK.getDefaultState(), settings), Settings.copy(Blocks.POLISHED_TUFF));
-        POLISHED_FLOATROCK_SLAB = register("polished_floatrock_slab", SlabBlock::new, Settings.copy(Blocks.POLISHED_TUFF));
-        POLISHED_FLOATROCK_WALL = register("polished_floatrock_wall", WallBlock::new, Settings.copy(Blocks.POLISHED_TUFF));
+        PORPHYRY = register("porphyry", Block::new, Settings.copy(Blocks.TUFF));
+        PORPHYRY_STAIRS = register("porphyry_stairs", (settings) -> new StairsBlock(PORPHYRY.getDefaultState(), settings), Settings.copy(Blocks.TUFF));
+        PORPHYRY_SLAB = register("porphyry_slab", SlabBlock::new, Settings.copy(Blocks.TUFF));
+        PORPHYRY_WALL = register("porphyry_wall", WallBlock::new, Settings.copy(Blocks.TUFF));
+        PORPHYRY_BRICKS = register("porphyry_bricks", Block::new, Settings.copy(Blocks.TUFF_BRICKS));
+        PORPHYRY_BRICK_STAIRS = register("porphyry_brick_stairs", (settings) -> new StairsBlock(PORPHYRY_BRICKS.getDefaultState(), settings), Settings.copy(Blocks.TUFF_BRICKS));
+        PORPHYRY_BRICK_SLAB = register("porphyry_brick_slab", SlabBlock::new, Settings.copy(Blocks.TUFF_BRICKS));
+        PORPHYRY_BRICK_WALL = register("porphyry_brick_wall", WallBlock::new, Settings.copy(Blocks.TUFF_BRICKS));
+        POLISHED_PORPHYRY = register("polished_porphyry", Block::new, Settings.copy(Blocks.POLISHED_TUFF));
+        POLISHED_PORPHYRY_STAIRS = register("polished_porphyry_stairs", (settings) -> new StairsBlock(POLISHED_PORPHYRY.getDefaultState(), settings), Settings.copy(Blocks.POLISHED_TUFF));
+        POLISHED_PORPHYRY_SLAB = register("polished_porphyry_slab", SlabBlock::new, Settings.copy(Blocks.POLISHED_TUFF));
+        POLISHED_PORPHYRY_WALL = register("polished_porphyry_wall", WallBlock::new, Settings.copy(Blocks.POLISHED_TUFF));
 
         BALLOON_BULB = register("balloon_bulb", BalloonBulbBlock::new, Settings.copy(COTTON).mapColor(MapColor.LIGHT_BLUE).offset(AbstractBlock.OffsetType.XZ));
         BALLOON_BULB_PLANT = register("balloon_bulb_plant", BalloonBulbPlantBlock::new, Settings.copy(BALLOON_BULB).requires(VirtualAdditions.PREVIEW));
         BALLOON_BULB_BUD = register("balloon_bulb_bud", BalloonBulbBudBlock::new, Settings.copy(BALLOON_BULB).requires(VirtualAdditions.PREVIEW));
-
-        Settings floatrockOreSettings = Settings.create().mapColor(MapColor.TERRACOTTA_BROWN).instrument(NoteBlockInstrument.BASS).requiresTool().strength(2.0F, 1.5F).sounds(BlockSoundGroup.TUFF).requires(VirtualAdditions.PREVIEW);
-
-        FLOATROCK_COAL_ORE = register("floatrock_coal_ore", (settings) -> new ExperienceDroppingBlock(UniformIntProvider.create(0, 2), settings), floatrockOreSettings);
-        FLOATROCK_IRON_ORE = register("floatrock_iron_ore", (settings) -> new ExperienceDroppingBlock(ConstantIntProvider.create(0), settings), floatrockOreSettings);
-        FLOATROCK_COPPER_ORE = register("floatrock_copper_ore", (settings) -> new ExperienceDroppingBlock(ConstantIntProvider.create(0), settings), floatrockOreSettings);
-        FLOATROCK_GOLD_ORE = register("floatrock_gold_ore", (settings) -> new ExperienceDroppingBlock(ConstantIntProvider.create(0), settings), floatrockOreSettings);
-        FLOATROCK_REDSTONE_ORE = register("floatrock_redstone_ore", RedstoneOreBlock::new, floatrockOreSettings);
-        FLOATROCK_EMERALD_ORE = register("floatrock_emerald_ore", (settings) -> new ExperienceDroppingBlock(UniformIntProvider.create(3, 7), settings), floatrockOreSettings);
-        FLOATROCK_LAPIS_ORE = register("floatrock_lapis_ore", (settings) -> new ExperienceDroppingBlock(UniformIntProvider.create(2, 5), settings), floatrockOreSettings);
-        FLOATROCK_DIAMOND_ORE = register("floatrock_diamond_ore", (settings) -> new ExperienceDroppingBlock(UniformIntProvider.create(3, 7), settings), floatrockOreSettings);
 
         SPRINGSOIL = register("springsoil", SpringSoilBlock::new, Settings.copy(Blocks.ROOTED_DIRT).requires(VirtualAdditions.PREVIEW));
 

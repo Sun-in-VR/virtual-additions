@@ -84,27 +84,18 @@ public class VAItems {
     public static final Item SYENITE_BRICK_SLAB;
     public static final Item SYENITE_BRICK_WALL;
     public static final Item CHISELED_SYENITE;
-    public static final Item FLOATROCK;
-    public static final Item GRASSY_FLOATROCK;
-    public static final Item FLOATROCK_STAIRS;
-    public static final Item FLOATROCK_SLAB;
-    public static final Item FLOATROCK_WALL;
-    public static final Item FLOATROCK_BRICKS;
-    public static final Item FLOATROCK_BRICK_STAIRS;
-    public static final Item FLOATROCK_BRICK_SLAB;
-    public static final Item FLOATROCK_BRICK_WALL;
-    public static final Item POLISHED_FLOATROCK;
-    public static final Item POLISHED_FLOATROCK_STAIRS;
-    public static final Item POLISHED_FLOATROCK_SLAB;
-    public static final Item POLISHED_FLOATROCK_WALL;
-    public static final Item FLOATROCK_COAL_ORE;
-    public static final Item FLOATROCK_IRON_ORE;
-    public static final Item FLOATROCK_COPPER_ORE;
-    public static final Item FLOATROCK_GOLD_ORE;
-    public static final Item FLOATROCK_REDSTONE_ORE;
-    public static final Item FLOATROCK_EMERALD_ORE;
-    public static final Item FLOATROCK_LAPIS_ORE;
-    public static final Item FLOATROCK_DIAMOND_ORE;
+    public static final Item PORPHYRY;
+    public static final Item PORPHYRY_STAIRS;
+    public static final Item PORPHYRY_SLAB;
+    public static final Item PORPHYRY_WALL;
+    public static final Item PORPHYRY_BRICKS;
+    public static final Item PORPHYRY_BRICK_STAIRS;
+    public static final Item PORPHYRY_BRICK_SLAB;
+    public static final Item PORPHYRY_BRICK_WALL;
+    public static final Item POLISHED_PORPHYRY;
+    public static final Item POLISHED_PORPHYRY_STAIRS;
+    public static final Item POLISHED_PORPHYRY_SLAB;
+    public static final Item POLISHED_PORPHYRY_WALL;
     public static final Item SPRINGSOIL;
     public static final Item SOULBLOOM_LOG;
     public static final Item SOULBLOOM_WOOD;
@@ -566,34 +557,20 @@ public class VAItems {
 
         //region Skylands
 
-        //region Floatrock
+        //region Porphyry
 
-        FLOATROCK = registerBlockItem("floatrock", VABlocks.FLOATROCK, at(ItemGroups.BUILDING_BLOCKS, Items.DEEPSLATE_TILE_WALL), at(ItemGroups.NATURAL, Items.DEEPSLATE));
-        FLOATROCK_STAIRS = registerBlockItem("floatrock_stairs", VABlocks.FLOATROCK_STAIRS, ItemGroups.BUILDING_BLOCKS, prev);
-        FLOATROCK_SLAB = registerBlockItem("floatrock_slab", VABlocks.FLOATROCK_SLAB, ItemGroups.BUILDING_BLOCKS, prev);
-        FLOATROCK_WALL = registerBlockItem("floatrock_wall", VABlocks.FLOATROCK_WALL, ItemGroups.BUILDING_BLOCKS, prev);
-        FLOATROCK_BRICKS = registerBlockItem("floatrock_bricks", VABlocks.FLOATROCK_BRICKS, ItemGroups.BUILDING_BLOCKS, prev);
-        FLOATROCK_BRICK_STAIRS = registerBlockItem("floatrock_brick_stairs", VABlocks.FLOATROCK_BRICK_STAIRS, ItemGroups.BUILDING_BLOCKS, prev);
-        FLOATROCK_BRICK_SLAB = registerBlockItem("floatrock_brick_slab", VABlocks.FLOATROCK_BRICK_SLAB, ItemGroups.BUILDING_BLOCKS, prev);
-        FLOATROCK_BRICK_WALL = registerBlockItem("floatrock_brick_wall", VABlocks.FLOATROCK_BRICK_WALL, ItemGroups.BUILDING_BLOCKS, prev);
-        POLISHED_FLOATROCK = registerBlockItem("polished_floatrock", VABlocks.POLISHED_FLOATROCK, ItemGroups.BUILDING_BLOCKS, prev);
-        POLISHED_FLOATROCK_STAIRS = registerBlockItem("polished_floatrock_stairs", VABlocks.POLISHED_FLOATROCK_STAIRS, ItemGroups.BUILDING_BLOCKS, prev);
-        POLISHED_FLOATROCK_SLAB = registerBlockItem("polished_floatrock_slab", VABlocks.POLISHED_FLOATROCK_SLAB, ItemGroups.BUILDING_BLOCKS, prev);
-        POLISHED_FLOATROCK_WALL = registerBlockItem("polished_floatrock_wall", VABlocks.POLISHED_FLOATROCK_WALL, ItemGroups.BUILDING_BLOCKS, prev);
-        GRASSY_FLOATROCK = registerBlockItem("grassy_floatrock", VABlocks.GRASSY_FLOATROCK, ItemGroups.NATURAL, FLOATROCK);
-
-        //region Floatrock Ores
-
-        FLOATROCK_COAL_ORE = registerBlockItem("floatrock_coal_ore", VABlocks.FLOATROCK_COAL_ORE, ItemGroups.NATURAL, Items.DEEPSLATE_COAL_ORE);
-        FLOATROCK_COPPER_ORE = registerBlockItem("floatrock_copper_ore", VABlocks.FLOATROCK_COPPER_ORE, ItemGroups.NATURAL, Items.DEEPSLATE_COPPER_ORE);
-        FLOATROCK_IRON_ORE = registerBlockItem("floatrock_iron_ore", VABlocks.FLOATROCK_IRON_ORE, ItemGroups.NATURAL, Items.DEEPSLATE_IRON_ORE);
-        FLOATROCK_GOLD_ORE = registerBlockItem("floatrock_gold_ore", VABlocks.FLOATROCK_GOLD_ORE, ItemGroups.NATURAL, Items.DEEPSLATE_GOLD_ORE);
-        FLOATROCK_REDSTONE_ORE = registerBlockItem("floatrock_redstone_ore", VABlocks.FLOATROCK_REDSTONE_ORE,   ItemGroups.NATURAL, Items.DEEPSLATE_REDSTONE_ORE);
-        FLOATROCK_EMERALD_ORE = registerBlockItem("floatrock_emerald_ore", VABlocks.FLOATROCK_EMERALD_ORE, ItemGroups.NATURAL, Items.DEEPSLATE_EMERALD_ORE);
-        FLOATROCK_LAPIS_ORE = registerBlockItem("floatrock_lapis_ore", VABlocks.FLOATROCK_LAPIS_ORE, ItemGroups.NATURAL, Items.DEEPSLATE_LAPIS_ORE);
-        FLOATROCK_DIAMOND_ORE = registerBlockItem("floatrock_diamond_ore", VABlocks.FLOATROCK_DIAMOND_ORE, ItemGroups.NATURAL, Items.DEEPSLATE_DIAMOND_ORE);
-
-        //endregion
+        PORPHYRY = registerBlockItem("porphyry", VABlocks.PORPHYRY, at(ItemGroups.BUILDING_BLOCKS, Items.CHISELED_TUFF_BRICKS), at(ItemGroups.NATURAL, Items.TUFF));
+        PORPHYRY_STAIRS = registerBlockItem("porphyry_stairs", VABlocks.PORPHYRY_STAIRS, ItemGroups.BUILDING_BLOCKS, prev);
+        PORPHYRY_SLAB = registerBlockItem("porphyry_slab", VABlocks.PORPHYRY_SLAB, ItemGroups.BUILDING_BLOCKS, prev);
+        PORPHYRY_WALL = registerBlockItem("porphyry_wall", VABlocks.PORPHYRY_WALL, ItemGroups.BUILDING_BLOCKS, prev);
+        PORPHYRY_BRICKS = registerBlockItem("porphyry_bricks", VABlocks.PORPHYRY_BRICKS, ItemGroups.BUILDING_BLOCKS, prev);
+        PORPHYRY_BRICK_STAIRS = registerBlockItem("porphyry_brick_stairs", VABlocks.PORPHYRY_BRICK_STAIRS, ItemGroups.BUILDING_BLOCKS, prev);
+        PORPHYRY_BRICK_SLAB = registerBlockItem("porphyry_brick_slab", VABlocks.PORPHYRY_BRICK_SLAB, ItemGroups.BUILDING_BLOCKS, prev);
+        PORPHYRY_BRICK_WALL = registerBlockItem("porphyry_brick_wall", VABlocks.PORPHYRY_BRICK_WALL, ItemGroups.BUILDING_BLOCKS, prev);
+        POLISHED_PORPHYRY = registerBlockItem("polished_porphyry", VABlocks.POLISHED_PORPHYRY, ItemGroups.BUILDING_BLOCKS, prev);
+        POLISHED_PORPHYRY_STAIRS = registerBlockItem("polished_porphyry_stairs", VABlocks.POLISHED_PORPHYRY_STAIRS, ItemGroups.BUILDING_BLOCKS, prev);
+        POLISHED_PORPHYRY_SLAB = registerBlockItem("polished_porphyry_slab", VABlocks.POLISHED_PORPHYRY_SLAB, ItemGroups.BUILDING_BLOCKS, prev);
+        POLISHED_PORPHYRY_WALL = registerBlockItem("polished_porphyry_wall", VABlocks.POLISHED_PORPHYRY_WALL, ItemGroups.BUILDING_BLOCKS, prev);
 
         //endregion
 

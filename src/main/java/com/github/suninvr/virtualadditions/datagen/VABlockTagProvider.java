@@ -340,12 +340,8 @@ public final class VABlockTagProvider {
 
             getOrCreateTagBuilder(BlockTags.HOE_MINEABLE).add(VABlocks.SOULBLOOM_LEAVES);
 
-            configureMinable(BlockTags.PICKAXE_MINEABLE, 0, VABlocks.GRASSY_FLOATROCK, VABlocks.FLOATROCK_COAL_ORE);
-            configureMinable(BlockTags.PICKAXE_MINEABLE, 1, VABlocks.FLOATROCK_IRON_ORE, VABlocks.FLOATROCK_COPPER_ORE, VABlocks.FLOATROCK_LAPIS_ORE);
-            configureMinable(BlockTags.PICKAXE_MINEABLE, 2, VABlocks.FLOATROCK_DIAMOND_ORE, VABlocks.FLOATROCK_REDSTONE_ORE, VABlocks.FLOATROCK_EMERALD_ORE, VABlocks.FLOATROCK_GOLD_ORE);
-
-            configureOverworldStone(VABlocks.FLOATROCK);
-            configureFamily(BlockTags.PICKAXE_MINEABLE, 0, VACollections.FLOATROCK, VACollections.POLISHED_FLOATROCK, VACollections.FLOATROCK_BRICKS);
+            configureOverworldStone(VABlocks.PORPHYRY);
+            configureFamily(BlockTags.PICKAXE_MINEABLE, 0, VACollections.PORPHYRY, VACollections.POLISHED_PORPHYRY, VACollections.PORPHYRY_BRICKS);
             configureWoodenFamily(BlockTags.AXE_MINEABLE, 0, VACollections.SOULBLOOM);
 
             getOrCreateTagBuilder(VABlockTags.HEDGES).add(
@@ -358,16 +354,6 @@ public final class VABlockTagProvider {
             getOrCreateTagBuilder(BlockTags.WALL_HANGING_SIGNS).add(VABlocks.SOULBLOOM_WALL_HANGING_SIGN);
             getOrCreateTagBuilder(BlockTags.LEAVES).add(VABlocks.SOULBLOOM_LEAVES);
             getOrCreateTagBuilder(BlockTags.SAPLINGS).add(VABlocks.SOULBLOOM_SAPLING);
-            getOrCreateTagBuilder(BlockTags.DIRT).add(VABlocks.GRASSY_FLOATROCK, VABlocks.SPRINGSOIL);
-            getOrCreateTagBuilder(BlockTags.GUARDED_BY_PIGLINS).add(VABlocks.FLOATROCK_GOLD_ORE);
-            getOrCreateTagBuilder(BlockTags.COAL_ORES).add(VABlocks.FLOATROCK_COAL_ORE);
-            getOrCreateTagBuilder(BlockTags.COPPER_ORES).add(VABlocks.FLOATROCK_COPPER_ORE);
-            getOrCreateTagBuilder(BlockTags.IRON_ORES).add(VABlocks.FLOATROCK_IRON_ORE);
-            getOrCreateTagBuilder(BlockTags.GOLD_ORES).add(VABlocks.FLOATROCK_GOLD_ORE);
-            getOrCreateTagBuilder(BlockTags.REDSTONE_ORES).add(VABlocks.FLOATROCK_REDSTONE_ORE);
-            getOrCreateTagBuilder(BlockTags.EMERALD_ORES).add(VABlocks.FLOATROCK_EMERALD_ORE);
-            getOrCreateTagBuilder(BlockTags.LAPIS_ORES).add(VABlocks.FLOATROCK_LAPIS_ORE);
-            getOrCreateTagBuilder(BlockTags.DIAMOND_ORES).add(VABlocks.FLOATROCK_DIAMOND_ORE);
         }
     }
 
@@ -378,12 +364,6 @@ public final class VABlockTagProvider {
 
         @Override
         protected void configure(RegistryWrapper.WrapperLookup arg) {
-
-            getOrCreateTagBuilder(VABlockTags.FLOATROCK_ORE_REPLACEABLES).add(VABlocks.FLOATROCK);
-            getOrCreateTagBuilder(VABlockTags.SKYLANDS_CARVER_REPLACEABLES).add(VABlocks.FLOATROCK).add(VABlocks.GRASSY_FLOATROCK);
-
-            getOrCreateTagBuilder(VABlockTags.NO_FOLIAGE_WORLDGEN).add(VABlocks.SPRINGSOIL);
-
             getOrCreateTagBuilder(BlockTags.SHOVEL_MINEABLE).add(
                     VABlocks.SPRINGSOIL
             );

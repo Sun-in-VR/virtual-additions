@@ -201,9 +201,9 @@ public final class VABlockLootTableProvider {
 
             addFamilyDrops(
                     VACollections.SOULBLOOM,
-                    VACollections.FLOATROCK,
-                    VACollections.POLISHED_FLOATROCK,
-                    VACollections.FLOATROCK_BRICKS
+                    VACollections.PORPHYRY,
+                    VACollections.POLISHED_PORPHYRY,
+                    VACollections.PORPHYRY_BRICKS
             );
             addSimpleDrops(
                     VABlocks.SOULBLOOM_LOG,
@@ -214,17 +214,6 @@ public final class VABlockLootTableProvider {
                     VABlocks.SOULBLOOM_SAPLING,
                     VABlocks.SOULBLOOM_HEDGE
             );
-
-            this.addDrop(VABlocks.GRASSY_FLOATROCK, block -> this.drops(block, VABlocks.FLOATROCK));
-
-            this.addDrop(VABlocks.FLOATROCK_COAL_ORE, block -> this.oreDrops(block, Items.COAL));
-            this.addDrop(VABlocks.FLOATROCK_IRON_ORE, block -> this.oreDrops(block, Items.RAW_IRON));
-            this.addDrop(VABlocks.FLOATROCK_COPPER_ORE, this::copperOreDrops);
-            this.addDrop(VABlocks.FLOATROCK_GOLD_ORE, block -> this.oreDrops(block, Items.RAW_GOLD));
-            this.addDrop(VABlocks.FLOATROCK_REDSTONE_ORE, this::redstoneOreDrops);
-            this.addDrop(VABlocks.FLOATROCK_EMERALD_ORE, block -> this.oreDrops(block, Items.EMERALD));
-            this.addDrop(VABlocks.FLOATROCK_LAPIS_ORE, this::lapisOreDrops);
-            this.addDrop(VABlocks.FLOATROCK_DIAMOND_ORE, block -> this.oreDrops(block, Items.DIAMOND));
 
             this.addDrop(VABlocks.SOULBLOOM_LEAVES, block ->  leavesDrops(VABlocks.SOULBLOOM_LEAVES, VABlocks.SOULBLOOM_SAPLING, SAPLING_DROP_CHANCE));
 
