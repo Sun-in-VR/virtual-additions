@@ -73,7 +73,7 @@ public class VAEntityType {
 
         AEROBLOOM_CHEST_BOAT = Registry.register(Registries.ENTITY_TYPE, idOf("aerobloom_chest_boat"), EntityType.Builder.create(getChestBoatFactory(() -> VAItems.AEROBLOOM_CHEST_BOAT), SpawnGroup.MISC)
                 .dropsNothing().dimensions(1.375F, 0.5625F).eyeHeight(0.5625F).maxTrackingRange(10)
-                .build(RegistryKey.of(RegistryKeys.ENTITY_TYPE, idOf("aerobloom_boat"))));
+                .build(RegistryKey.of(RegistryKeys.ENTITY_TYPE, idOf("aerobloom_chest_boat"))));
 
         ENTITY_ATTRIBUTES.put(LUMWASP, LumwaspEntity.createLumwaspAttributes());
         ENTITY_ATTRIBUTES.put(SALINE, SalineEntity.createSalineAttributes());
