@@ -21,5 +21,6 @@ public class BuiltinBiomesMixin {
         biomeRegisterable.register(VABiomeKeys.WASP_DEN, VAOverworldBiomeCreator.createWaspDen(registryEntryLookup, registryEntryLookup2));
         biomeRegisterable.register(VABiomeKeys.SALTY_CAVES, VAOverworldBiomeCreator.createSaltyCaves(registryEntryLookup, registryEntryLookup2));
         biomeRegisterable.register(VABiomeKeys.SOUL_GROVE, VAOverworldBiomeCreator.createSoulGrove(registryEntryLookup, registryEntryLookup2));
+        biomeRegisterable.register(VABiomeKeys.WITHERED_WOODS, VAOverworldBiomeCreator.createSoulGrove(registryEntryLookup, registryEntryLookup2));
     }
 }

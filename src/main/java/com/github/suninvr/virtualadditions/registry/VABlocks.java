@@ -13,9 +13,12 @@ import net.minecraft.block.AbstractBlock.Settings;
 import net.minecraft.block.enums.NoteBlockInstrument;
 import net.minecraft.block.piston.PistonBehavior;
 import net.minecraft.entity.ai.pathing.PathNodeType;
+import net.minecraft.particle.EntityEffectParticleEffect;
+import net.minecraft.particle.ParticleTypes;
 import net.minecraft.sound.BlockSoundGroup;
 import net.minecraft.sound.SoundEvents;
 import net.minecraft.state.property.Properties;
+import net.minecraft.util.DyeColor;
 import net.minecraft.util.math.intprovider.ConstantIntProvider;
 import net.minecraft.util.math.intprovider.UniformIntProvider;
 
@@ -207,6 +210,29 @@ public class VABlocks {
     public static final Block BALLOON_BULB;
     public static final Block BALLOON_BULB_PLANT;
     public static final Block BALLOON_BULB_BUD;
+    public static final Block NECROTIC_NYLIUM;
+    public static final Block NECROTIC_ROOTS;
+    public static final Block POTTED_NECROTIC_ROOTS;
+    public static final Block WITHERED_LOG;
+    public static final Block WITHERED_WOOD;
+    public static final Block STRIPPED_WITHERED_LOG;
+    public static final Block STRIPPED_WITHERED_WOOD;
+    public static final Block WITHERED_PLANKS;
+    public static final Block WITHERED_STAIRS;
+    public static final Block WITHERED_SLAB;
+    public static final Block WITHERED_FENCE;
+    public static final Block WITHERED_FENCE_GATE;
+    public static final Block WITHERED_DOOR;
+    public static final Block WITHERED_TRAPDOOR;
+    public static final Block WITHERED_PRESSURE_PLATE;
+    public static final Block WITHERED_BUTTON;
+    public static final Block WITHERED_SIGN;
+    public static final Block WITHERED_WALL_SIGN;
+    public static final Block WITHERED_HANGING_SIGN;
+    public static final Block WITHERED_WALL_HANGING_SIGN;
+    public static final Block WITHERED_LEAVES;
+    public static final Block WITHERED_SAPLING;
+    public static final Block POTTED_WITHERED_SAPLING;
     public static final Block OAK_HEDGE;
     public static final Block SPRUCE_HEDGE;
     public static final Block BIRCH_HEDGE;
@@ -217,6 +243,7 @@ public class VABlocks {
     public static final Block MANGROVE_HEDGE;
     public static final Block CHERRY_HEDGE;
     public static final Block SOULBLOOM_HEDGE;
+    public static final Block WITHERED_HEDGE;
     public static final Block AZALEA_HEDGE;
     public static final Block FLOWERING_AZALEA_HEDGE;
     public static final Block GLOWING_SILK;
@@ -377,6 +404,8 @@ public class VABlocks {
 
     public static final BlockSetType SOULBLOOM = BlockSetTypeBuilder.copyOf(BlockSetType.CHERRY).build(idOf("soulbloom"));
     public static final WoodType SOULBLOOM_WOODTYPE = WoodType.register(WoodTypeBuilder.copyOf(WoodType.CHERRY).build(idOf("soulbloom"), SOULBLOOM));
+    public static final BlockSetType WITHERED = BlockSetTypeBuilder.copyOf(BlockSetType.WARPED).build(idOf("withered"));
+    public static final WoodType WITHERED_WOODTYPE = WoodType.register(WoodTypeBuilder.copyOf(WoodType.WARPED).build(idOf("withered"), WITHERED));
 
     public static final BlockSetType STEEL_BLOCK_SET_TYPE;
 
@@ -582,9 +611,34 @@ public class VABlocks {
         SOULBLOOM_WALL_HANGING_SIGN = register("soulbloom_wall_hanging_sign", (settings) -> new CustomSignBlocks.CustomWallHangingSignBlock(settings, SOULBLOOM_WOODTYPE), Settings.copy(Blocks.CHERRY_WALL_HANGING_SIGN).lootTable(SOULBLOOM_HANGING_SIGN.getLootTableKey()));
         SOULBLOOM_LEAVES = register("soulbloom_leaves", (settings) -> new UntintedParticleLeavesBlock(0.1F, VAParticleTypes.SOULBLOOM_LEAVES, settings), Settings.copy(Blocks.CHERRY_LEAVES));
         SOULBLOOM_SAPLING = register("soulbloom_sapling", (settings) -> new SaplingBlock(CustomSaplingGenerator.SOULBLOOM, settings), Settings.copy(Blocks.CHERRY_SAPLING));
-        POTTED_SOULBLOOM_SAPLING = register("potted_soulbloom", (settings) -> new FlowerPotBlock(SOULBLOOM_SAPLING, settings), Settings.copy(Blocks.FLOWER_POT));
+        POTTED_SOULBLOOM_SAPLING = register("potted_soulbloom_sapling", (settings) -> new FlowerPotBlock(SOULBLOOM_SAPLING, settings), Settings.copy(Blocks.FLOWER_POT));
 
         BLUE_PETALS = register("blue_petals", FlowerbedBlock::new, Settings.create().mapColor(MapColor.DARK_GREEN).noCollision().sounds(BlockSoundGroup.FLOWERBED).pistonBehavior(PistonBehavior.DESTROY));
+
+        NECROTIC_NYLIUM = register("necrotic_nylium", (NecroticNyliumBlock::new), Settings.copy(Blocks.WARPED_NYLIUM).mapColor(MapColor.BLACK));
+        NECROTIC_ROOTS = register("necrotic_roots", (RootsBlock::new), Settings.copy(Blocks.WARPED_ROOTS).mapColor(MapColor.BLACK));
+        POTTED_NECROTIC_ROOTS = register("potted_necrotic_roots", (settings) -> new FlowerPotBlock(NECROTIC_ROOTS, settings), Settings.copy(Blocks.FLOWER_POT));
+
+        WITHERED_LOG = register("withered_log", PillarBlock::new, Blocks.createNetherStemSettings(MapColor.BLACK).strength(5.0F, 6.0F));
+        WITHERED_WOOD = register("withered_wood", PillarBlock::new, Blocks.createNetherStemSettings(MapColor.BLACK).strength(5.0F, 6.0F));
+        STRIPPED_WITHERED_LOG = register("stripped_withered_log", PillarBlock::new, Blocks.createNetherStemSettings(MapColor.BLACK).strength(5.0F, 6.0F));
+        STRIPPED_WITHERED_WOOD = register("stripped_withered_wood", PillarBlock::new, Blocks.createNetherStemSettings(MapColor.BLACK).strength(5.0F, 6.0F));
+        WITHERED_PLANKS = register("withered_planks", Block::new, Settings.copy(Blocks.WARPED_PLANKS).mapColor(MapColor.BLACK).strength(5.0F, 6.0F));
+        WITHERED_STAIRS = register("withered_stairs", (settings) -> new StairsBlock(WITHERED_PLANKS.getDefaultState(), settings), Settings.copy(Blocks.WARPED_STAIRS).mapColor(MapColor.BLACK).strength(5.0F, 6.0F));
+        WITHERED_SLAB = register("withered_slab", SlabBlock::new, Settings.copy(Blocks.WARPED_SLAB).mapColor(MapColor.BLACK).strength(5.0F, 6.0F));
+        WITHERED_FENCE = register("withered_fence", FenceBlock::new, Settings.copy(Blocks.WARPED_FENCE).mapColor(MapColor.BLACK).strength(5.0F, 6.0F));
+        WITHERED_FENCE_GATE = register("withered_fence_gate", (settings) -> new FenceGateBlock(WITHERED_WOODTYPE, settings), Settings.copy(Blocks.WARPED_FENCE_GATE).mapColor(MapColor.BLACK).strength(5.0F, 6.0F));
+        WITHERED_DOOR = register("withered_door", (settings) -> new DoorBlock( WITHERED, settings), Settings.copy(Blocks.WARPED_DOOR).mapColor(MapColor.BLACK).strength(5.0F, 6.0F));
+        WITHERED_TRAPDOOR = register("withered_trapdoor", (settings) -> new TrapdoorBlock( WITHERED, settings), Settings.copy(Blocks.WARPED_DOOR).mapColor(MapColor.BLACK).strength(5.0F, 6.0F));
+        WITHERED_PRESSURE_PLATE = register("withered_pressure_plate", (settings) -> new PressurePlateBlock(WITHERED, settings), Settings.copy(Blocks.WARPED_PRESSURE_PLATE).strength(2.5F).mapColor(MapColor.BLACK));
+        WITHERED_BUTTON = register("withered_button", (settings) -> new ButtonBlock(WITHERED, 30, settings), Settings.copy(Blocks.WARPED_BUTTON).strength(2.5F).mapColor(MapColor.BLACK));
+        WITHERED_SIGN = register("withered_sign", (settings) -> new CustomSignBlocks.CustomSignBlock(settings, WITHERED_WOODTYPE, DyeColor.WHITE), Settings.copy(Blocks.CHERRY_SIGN).strength(2.5F).mapColor(MapColor.BLACK));
+        WITHERED_WALL_SIGN = register("withered_wall_sign", (settings) -> new CustomSignBlocks.CustomWallSignBlock(settings, WITHERED_WOODTYPE, DyeColor.WHITE), Settings.copy(WITHERED_SIGN).lootTable(WITHERED_SIGN.getLootTableKey()).strength(2.5F).mapColor(MapColor.BLACK));
+        WITHERED_HANGING_SIGN = register("withered_hanging_sign", (settings) -> new CustomSignBlocks.CustomHangingSignBlock(settings, WITHERED_WOODTYPE, DyeColor.WHITE), Settings.copy(Blocks.CHERRY_HANGING_SIGN).strength(2.5F).mapColor(MapColor.BLACK));
+        WITHERED_WALL_HANGING_SIGN = register("withered_wall_hanging_sign", (settings) -> new CustomSignBlocks.CustomWallHangingSignBlock(settings, WITHERED_WOODTYPE, DyeColor.WHITE), Settings.copy(Blocks.CHERRY_WALL_HANGING_SIGN).lootTable(WITHERED_HANGING_SIGN.getLootTableKey()).strength(2.5F).mapColor(MapColor.BLACK));
+        WITHERED_LEAVES = register("withered_leaves", (settings) -> new UntintedParticleLeavesBlock(0.1F, EntityEffectParticleEffect.create(ParticleTypes.TINTED_LEAVES, 5918012), settings), Settings.copy(Blocks.CHERRY_LEAVES).mapColor(MapColor.BLACK));
+        WITHERED_SAPLING = register("withered_sapling", (settings) -> new WitheredSaplingBlock(CustomSaplingGenerator.WITHERED, settings), Settings.copy(Blocks.CHERRY_SAPLING).mapColor(MapColor.BLACK));
+        POTTED_WITHERED_SAPLING = register("potted_withered_sapling", (settings) -> new FlowerPotBlock(WITHERED_SAPLING, settings), Settings.copy(Blocks.FLOWER_POT));
 
         OAK_HEDGE = register("oak_hedge", HedgeBlock::new, Settings.copy(Blocks.OAK_LEAVES));
         SPRUCE_HEDGE = register("spruce_hedge", HedgeBlock::new, Settings.copy(Blocks.SPRUCE_LEAVES));
@@ -596,6 +650,7 @@ public class VABlocks {
         MANGROVE_HEDGE = register("mangrove_hedge", HedgeBlock::new, Settings.copy(Blocks.MANGROVE_LEAVES));
         CHERRY_HEDGE = register("cherry_hedge", HedgeBlock::new, Settings.copy(Blocks.CHERRY_LEAVES));
         SOULBLOOM_HEDGE = register("soulbloom_hedge", HedgeBlock::new, Settings.copy(VABlocks.SOULBLOOM_LEAVES));
+        WITHERED_HEDGE = register("withered_hedge", HedgeBlock::new, Settings.copy(VABlocks.WITHERED_LEAVES));
         AZALEA_HEDGE = register("azalea_hedge", HedgeBlock::new, Settings.copy(Blocks.AZALEA_LEAVES));
         FLOWERING_AZALEA_HEDGE = register("flowering_azalea_hedge", HedgeBlock::new, Settings.copy(Blocks.FLOWERING_AZALEA_LEAVES));
 
@@ -845,6 +900,8 @@ public class VABlocks {
         fire.registerFlammableBlock(LILAC_SILKBULB, 5, 20);
         StrippableBlockRegistry.register(SOULBLOOM_LOG, STRIPPED_SOULBLOOM_LOG);
         StrippableBlockRegistry.register(SOULBLOOM_WOOD, STRIPPED_SOULBLOOM_WOOD);
+        StrippableBlockRegistry.register(WITHERED_LOG, STRIPPED_WITHERED_LOG);
+        StrippableBlockRegistry.register(WITHERED_WOOD, STRIPPED_WITHERED_WOOD);
         //FlattenableBlockRegistry.register(Blocks.DIRT_PATH, Blocks.DIRT.getDefaultState());
         FlattenableBlockRegistry.register(Blocks.FARMLAND, Blocks.DIRT_PATH.getDefaultState());
         //TillableBlockRegistry.register(Blocks.FARMLAND, context -> true, Blocks.DIRT.getDefaultState());

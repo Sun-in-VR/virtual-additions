@@ -8,7 +8,6 @@ import net.minecraft.data.family.BlockFamilies;
 import net.minecraft.data.family.BlockFamily;
 import net.minecraft.item.Items;
 
-import java.util.ArrayList;
 import java.util.function.Supplier;
 
 import static com.github.suninvr.virtualadditions.registry.VABlocks.*;
@@ -35,6 +34,7 @@ public class VACollections {
     public static final BlockFamily SYENITE_BRICKS;
     public static final BlockFamily ROCK_SALT_BRICKS;
     public static final BlockFamily SOULBLOOM;
+    public static final BlockFamily WITHERED;
     public static final BlockFamily PORPHYRY;
     public static final BlockFamily PORPHYRY_BRICKS;
     public static final BlockFamily POLISHED_PORPHYRY;
@@ -89,6 +89,7 @@ public class VACollections {
         SYENITE_BRICKS = register(VABlocks.SYENITE_BRICKS).stairs(VABlocks.SYENITE_BRICK_STAIRS).slab(VABlocks.SYENITE_BRICK_SLAB).wall(VABlocks.SYENITE_BRICK_WALL).cracked(VABlocks.CRACKED_SYENITE_BRICKS).chiseled(VABlocks.CHISELED_SYENITE).build();
         ROCK_SALT_BRICKS = register(VABlocks.ROCK_SALT_BRICKS).stairs(ROCK_SALT_BRICK_STAIRS).slab(ROCK_SALT_BRICK_SLAB).wall(ROCK_SALT_BRICK_WALL).build();
         SOULBLOOM = register(VABlocks.SOULBLOOM_PLANKS).button(VABlocks.SOULBLOOM_BUTTON).fence(VABlocks.SOULBLOOM_FENCE).fenceGate(VABlocks.SOULBLOOM_FENCE_GATE).sign(VABlocks.SOULBLOOM_SIGN, VABlocks.SOULBLOOM_WALL_SIGN).pressurePlate(VABlocks.SOULBLOOM_PRESSURE_PLATE).slab(VABlocks.SOULBLOOM_SLAB).stairs(VABlocks.SOULBLOOM_STAIRS).door(VABlocks.SOULBLOOM_DOOR).trapdoor(VABlocks.SOULBLOOM_TRAPDOOR).group("wooden").unlockCriterionName("has_planks").build();
+        WITHERED = register(VABlocks.WITHERED_PLANKS).button(VABlocks.WITHERED_BUTTON).fence(VABlocks.WITHERED_FENCE).fenceGate(VABlocks.WITHERED_FENCE_GATE).sign(VABlocks.WITHERED_SIGN, VABlocks.WITHERED_WALL_SIGN).pressurePlate(VABlocks.WITHERED_PRESSURE_PLATE).slab(VABlocks.WITHERED_SLAB).stairs(VABlocks.WITHERED_STAIRS).door(VABlocks.WITHERED_DOOR).trapdoor(VABlocks.WITHERED_TRAPDOOR).group("wooden").unlockCriterionName("has_planks").build();
         PORPHYRY = register(VABlocks.PORPHYRY).stairs(VABlocks.PORPHYRY_STAIRS).slab(VABlocks.PORPHYRY_SLAB).wall(VABlocks.PORPHYRY_WALL).build();
         PORPHYRY_BRICKS = register(VABlocks.PORPHYRY_BRICKS).stairs(VABlocks.PORPHYRY_BRICK_STAIRS).slab(VABlocks.PORPHYRY_BRICK_SLAB).wall(VABlocks.PORPHYRY_BRICK_WALL).build();
         POLISHED_PORPHYRY = register(VABlocks.POLISHED_PORPHYRY).stairs(VABlocks.POLISHED_PORPHYRY_STAIRS).slab(VABlocks.POLISHED_PORPHYRY_SLAB).wall(VABlocks.POLISHED_PORPHYRY_WALL).build();

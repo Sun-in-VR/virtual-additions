@@ -119,6 +119,26 @@ public class VAItems {
     public static final Item SOULBLOOM_CHEST_BOAT;
     public static final Item BLUE_PETALS;
     public static final Item BALLOON_FRUIT;
+    public static final Item NECROTIC_NYLIUM;
+    public static final Item NECROTIC_ROOTS;
+    public static final Item WITHERED_LOG;
+    public static final Item WITHERED_WOOD;
+    public static final Item STRIPPED_WITHERED_LOG;
+    public static final Item STRIPPED_WITHERED_WOOD;
+    public static final Item WITHERED_PLANKS;
+    public static final Item WITHERED_STAIRS;
+    public static final Item WITHERED_SLAB;
+    public static final Item WITHERED_FENCE;
+    public static final Item WITHERED_FENCE_GATE;
+    public static final Item WITHERED_DOOR;
+    public static final Item WITHERED_TRAPDOOR;
+    public static final Item WITHERED_PRESSURE_PLATE;
+    public static final Item WITHERED_BUTTON;
+    public static final Item WITHERED_SIGN;
+    public static final Item WITHERED_HANGING_SIGN;
+    public static final Item WITHERED_LEAVES;
+    public static final Item WITHERED_HEDGE;
+    public static final Item WITHERED_SAPLING;
     public static final Item OAK_HEDGE;
     public static final Item SPRUCE_HEDGE;
     public static final Item BIRCH_HEDGE;
@@ -556,8 +576,6 @@ public class VAItems {
 
         //endregion
 
-        //region Skylands
-
         //region Porphyry
 
         PORPHYRY = registerBlockItem("porphyry", VABlocks.PORPHYRY, at(ItemGroups.BUILDING_BLOCKS, Items.CHISELED_TUFF_BRICKS), at(ItemGroups.NATURAL, Items.TUFF));
@@ -597,13 +615,36 @@ public class VAItems {
         SOULBLOOM_BOAT = register("soulbloom_boat", settings -> new BoatItem(VAEntityType.SOULBLOOM_BOAT, settings), new Item.Settings().maxCount(1), ItemGroups.TOOLS, Items.CHERRY_CHEST_BOAT);
         SOULBLOOM_CHEST_BOAT = register("soulbloom_chest_boat", settings -> new BoatItem(VAEntityType.SOULBLOOM_CHEST_BOAT, settings), new Item.Settings().maxCount(1), ItemGroups.TOOLS, prev);
 
-        //endregion
-
         BLUE_PETALS = registerBlockItem("blue_petals", VABlocks.BLUE_PETALS, ItemGroups.NATURAL, Items.PINK_PETALS);
 
         SPRINGSOIL = registerBlockItem("springsoil", VABlocks.SPRINGSOIL, ItemGroups.NATURAL, Items.RED_SANDSTONE);
 
         BALLOON_FRUIT = register("balloon_fruit", settings -> new BalloonFruitItem(VABlocks.BALLOON_BULB_BUD, settings), new Item.Settings().food(VAFoodComponents.BALLOON_FRUIT, VAFoodComponents.BALLOON_FRUIT_CONSUMABLE), ItemGroups.FOOD_AND_DRINK, Items.CHORUS_FRUIT);
+
+        //endregion
+
+        //region Wither Woods
+
+        NECROTIC_NYLIUM = registerBlockItem("necrotic_nylium", VABlocks.NECROTIC_NYLIUM, ItemGroups.NATURAL, Items.WARPED_NYLIUM);
+        NECROTIC_ROOTS = registerBlockItem("necrotic_roots", VABlocks.NECROTIC_ROOTS, ItemGroups.NATURAL, Items.WARPED_ROOTS);
+
+        WITHERED_LOG = registerBlockItem("withered_log", VABlocks.WITHERED_LOG, at(ItemGroups.BUILDING_BLOCKS, Items.WARPED_BUTTON), at(ItemGroups.NATURAL, Items.WARPED_STEM));
+        WITHERED_WOOD = registerBlockItem("withered_wood", VABlocks.WITHERED_WOOD, ItemGroups.BUILDING_BLOCKS, prev);
+        STRIPPED_WITHERED_LOG = registerBlockItem("stripped_withered_log", VABlocks.STRIPPED_WITHERED_LOG, ItemGroups.BUILDING_BLOCKS, prev);
+        STRIPPED_WITHERED_WOOD = registerBlockItem("stripped_withered_wood", VABlocks.STRIPPED_WITHERED_WOOD, ItemGroups.BUILDING_BLOCKS, prev);
+        WITHERED_PLANKS = registerBlockItem("withered_planks", VABlocks.WITHERED_PLANKS, ItemGroups.BUILDING_BLOCKS, prev);
+        WITHERED_STAIRS = registerBlockItem("withered_stairs", VABlocks.WITHERED_STAIRS, ItemGroups.BUILDING_BLOCKS, prev);
+        WITHERED_SLAB = registerBlockItem("withered_slab", VABlocks.WITHERED_SLAB, ItemGroups.BUILDING_BLOCKS, prev);
+        WITHERED_FENCE = registerBlockItem("withered_fence", VABlocks.WITHERED_FENCE, ItemGroups.BUILDING_BLOCKS, prev);
+        WITHERED_FENCE_GATE = registerBlockItem("withered_fence_gate", VABlocks.WITHERED_FENCE_GATE, ItemGroups.BUILDING_BLOCKS, prev);
+        WITHERED_DOOR = registerBlockItem("withered_door", VABlocks.WITHERED_DOOR, ItemGroups.BUILDING_BLOCKS, prev);
+        WITHERED_TRAPDOOR = registerBlockItem("withered_trapdoor", VABlocks.WITHERED_TRAPDOOR, ItemGroups.BUILDING_BLOCKS, prev);
+        WITHERED_PRESSURE_PLATE = registerBlockItem("withered_pressure_plate", VABlocks.WITHERED_PRESSURE_PLATE, ItemGroups.BUILDING_BLOCKS, prev);
+        WITHERED_BUTTON = registerBlockItem("withered_button", VABlocks.WITHERED_BUTTON, ItemGroups.BUILDING_BLOCKS, prev);
+        WITHERED_SIGN = register("withered_sign", settings ->  new SignItem(VABlocks.WITHERED_SIGN, VABlocks.WITHERED_WALL_SIGN, settings), new Item.Settings().translationKey(VABlocks.WITHERED_SIGN.getTranslationKey()).maxCount(16), ItemGroups.FUNCTIONAL, Items.WARPED_HANGING_SIGN);
+        WITHERED_HANGING_SIGN = register("withered_hanging_sign", settings ->  new HangingSignItem(VABlocks.WITHERED_HANGING_SIGN, VABlocks.WITHERED_WALL_HANGING_SIGN, settings), new Item.Settings().translationKey(VABlocks.WITHERED_HANGING_SIGN.getTranslationKey()).maxCount(16), ItemGroups.FUNCTIONAL, prev);
+        WITHERED_LEAVES = registerBlockItem("withered_leaves", VABlocks.WITHERED_LEAVES, ItemGroups.NATURAL, Items.FLOWERING_AZALEA_LEAVES);
+        WITHERED_SAPLING = registerBlockItem("withered_sapling", VABlocks.WITHERED_SAPLING, ItemGroups.NATURAL, Items.FLOWERING_AZALEA);
 
         //endregion
 
@@ -1059,6 +1100,7 @@ public class VAItems {
         FLOWERING_AZALEA_HEDGE = registerBlockItem("flowering_azalea_hedge", VABlocks.FLOWERING_AZALEA_HEDGE, ItemGroups.NATURAL, Items.FLOWERING_AZALEA_LEAVES);
         CHERRY_HEDGE = registerBlockItem("cherry_hedge", VABlocks.CHERRY_HEDGE, ItemGroups.NATURAL, Items.CHERRY_LEAVES);
         SOULBLOOM_HEDGE = registerBlockItem("soulbloom_hedge", VABlocks.SOULBLOOM_HEDGE, ItemGroups.NATURAL, VAItems.SOULBLOOM_LEAVES);
+        WITHERED_HEDGE = registerBlockItem("withered_hedge", VABlocks.WITHERED_HEDGE, ItemGroups.NATURAL, VAItems.WITHERED_LEAVES);
 
         //endregion
 

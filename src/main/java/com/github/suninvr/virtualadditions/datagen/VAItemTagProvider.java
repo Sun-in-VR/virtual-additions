@@ -307,6 +307,16 @@ public final class VAItemTagProvider {
             getOrCreateTagBuilder(ItemTags.TRAPDOORS).add(VAItems.SOULBLOOM_TRAPDOOR);
             getOrCreateTagBuilder(ItemTags.LEAVES).add(VAItems.SOULBLOOM_LEAVES);
             getOrCreateTagBuilder(ItemTags.SAPLINGS).add(VAItems.SOULBLOOM_SAPLING);
+            
+            getOrCreateTagBuilder(ItemTags.LOGS).add(VAItems.WITHERED_LOG, VAItems.WITHERED_WOOD);//, VAItems.STRIPPED_WITHERED_LOG, VAItems.STRIPPED_WITHERED_WOOD);
+            getOrCreateTagBuilder(ItemTags.PLANKS).add(VAItems.WITHERED_PLANKS);
+            //getOrCreateTagBuilder(ItemTags.SIGNS).add(VAItems.WITHERED_SIGN);
+            //getOrCreateTagBuilder(ItemTags.HANGING_SIGNS).add(VAItems.WITHERED_HANGING_SIGN);
+            getOrCreateTagBuilder(ItemTags.FENCES).add(VAItems.WITHERED_FENCE);
+            //getOrCreateTagBuilder(ItemTags.DOORS).add(VAItems.WITHERED_DOOR);
+            //getOrCreateTagBuilder(ItemTags.TRAPDOORS).add(VAItems.WITHERED_TRAPDOOR);
+            getOrCreateTagBuilder(ItemTags.LEAVES).add(VAItems.WITHERED_LEAVES);
+            //getOrCreateTagBuilder(ItemTags.SAPLINGS).add(VAItems.WITHERED_SAPLING);
 
             getOrCreateTagBuilder(VAItemTags.LUMWASP_LARVAE_FOOD).add(
                     VAItems.PORPHYRY
@@ -317,8 +327,15 @@ public final class VAItemTagProvider {
                     VAItems.STRIPPED_SOULBLOOM_LOG,
                     VAItems.STRIPPED_SOULBLOOM_WOOD
             );
+            getOrCreateTagBuilder(VAItemTags.WITHERED_LOGS).add(
+                    VAItems.WITHERED_LOG,
+                    VAItems.WITHERED_WOOD,
+                    VAItems.STRIPPED_WITHERED_LOG,
+                    VAItems.STRIPPED_WITHERED_WOOD
+            );
             configureWoodenBlockFamilies(
-                    VACollections.SOULBLOOM
+                    VACollections.SOULBLOOM,
+                    VACollections.WITHERED
             );
             configureBlockFamilies(
                     VACollections.PORPHYRY,

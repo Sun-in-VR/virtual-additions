@@ -304,10 +304,16 @@ public final class VARecipeProvider {
             offerBarkBlockRecipe(VAItems.STRIPPED_SOULBLOOM_WOOD, VAItems.STRIPPED_SOULBLOOM_LOG);
             offerPlanksRecipe2(VAItems.SOULBLOOM_PLANKS, VAItemTags.SOULBLOOM_LOGS, 4);
             offerHangingSignRecipe(VAItems.SOULBLOOM_HANGING_SIGN, VAItems.STRIPPED_SOULBLOOM_LOG);
-
             offerHedgeRecipe(VABlocks.SOULBLOOM_HEDGE, VABlocks.SOULBLOOM_LEAVES);
             offerBoatRecipe(VAItems.SOULBLOOM_BOAT, VABlocks.SOULBLOOM_PLANKS);
             offerChestBoatRecipe(VAItems.SOULBLOOM_CHEST_BOAT, VAItems.SOULBLOOM_BOAT);
+            
+            generateFamily(VACollections.WITHERED, FeatureFlags.VANILLA_FEATURES);
+            offerBarkBlockRecipe(VAItems.WITHERED_WOOD, VAItems.WITHERED_LOG);
+            offerBarkBlockRecipe(VAItems.STRIPPED_WITHERED_WOOD, VAItems.STRIPPED_WITHERED_LOG);
+            offerPlanksRecipe2(VAItems.WITHERED_PLANKS, VAItemTags.WITHERED_LOGS, 4);
+            //offerHangingSignRecipe(VAItems.WITHERED_HANGING_SIGN, VAItems.STRIPPED_WITHERED_LOG);
+            offerHedgeRecipe(VABlocks.WITHERED_HEDGE, VABlocks.WITHERED_LEAVES);
 
             ShapelessRecipeJsonBuilder.create(this.registryLookup, RecipeCategory.MISC, VAItems.MAROON_DYE, 2)
                     .input(Ingredient.ofItems(Items.RED_DYE), 1)

@@ -66,6 +66,7 @@ public class VAModelProvider {
 
             blockStateModelGenerator.registerCubeAllModelTexturePool(VABlocks.PORPHYRY).family(VACollections.PORPHYRY);
             blockStateModelGenerator.registerCubeAllModelTexturePool(VABlocks.SOULBLOOM_PLANKS).family(VACollections.SOULBLOOM);
+            blockStateModelGenerator.registerCubeAllModelTexturePool(VABlocks.WITHERED_PLANKS).family(VACollections.WITHERED);
             blockStateModelGenerator.registerCubeAllModelTexturePool(VABlocks.POLISHED_PORPHYRY).family(VACollections.POLISHED_PORPHYRY);
             blockStateModelGenerator.registerCubeAllModelTexturePool(VABlocks.PORPHYRY_BRICKS).family(VACollections.PORPHYRY_BRICKS);
             blockStateModelGenerator.registerCubeAllModelTexturePool(VABlocks.CUT_STEEL).family(VACollections.CUT_STEEL).parented(VABlocks.CUT_STEEL, VABlocks.WAXED_CUT_STEEL).parented(VABlocks.CHISELED_STEEL, VABlocks.WAXED_CHISELED_STEEL).family(VACollections.WAXED_CUT_STEEL);
@@ -80,6 +81,12 @@ public class VAModelProvider {
             blockStateModelGenerator.registerCubeAllModelTexturePool(VABlocks.COBBLED_SYENITE).family(VACollections.COBBLED_SYENITE);
             blockStateModelGenerator.registerCubeAllModelTexturePool(VABlocks.SYENITE_BRICKS).family(VACollections.SYENITE_BRICKS);
             blockStateModelGenerator.registerCubeAllModelTexturePool(VABlocks.POLISHED_SYENITE).family(VACollections.POLISHED_SYENITE);
+
+            blockStateModelGenerator.registerNetherrackBottomCustomTop(VABlocks.NECROTIC_NYLIUM);
+            blockStateModelGenerator.createLogTexturePool(VABlocks.WITHERED_LOG).log(VABlocks.WITHERED_LOG).wood(VABlocks.WITHERED_WOOD);
+            blockStateModelGenerator.createLogTexturePool(VABlocks.STRIPPED_WITHERED_LOG).log(VABlocks.STRIPPED_WITHERED_LOG).wood(VABlocks.STRIPPED_WITHERED_WOOD);
+            blockStateModelGenerator.registerHangingSign(VABlocks.STRIPPED_WITHERED_LOG, VABlocks.WITHERED_HANGING_SIGN, VABlocks.WITHERED_WALL_HANGING_SIGN);
+            blockStateModelGenerator.registerSimpleCubeAll(VABlocks.WITHERED_LEAVES);
 
             blockStateModelGenerator.registerFlowerbed(VABlocks.BLUE_PETALS);
 
@@ -125,6 +132,9 @@ public class VAModelProvider {
 
             blockStateModelGenerator.registerItemModel(VAItems.SOULBLOOM_HANGING_SIGN);
             blockStateModelGenerator.registerItemModel(VAItems.SOULBLOOM_SAPLING, BlockStateModelGenerator.CrossType.NOT_TINTED.registerItemModel(blockStateModelGenerator, VABlocks.SOULBLOOM_SAPLING));
+            blockStateModelGenerator.registerItemModel(VAItems.WITHERED_SAPLING, BlockStateModelGenerator.CrossType.NOT_TINTED.registerItemModel(blockStateModelGenerator, VABlocks.WITHERED_SAPLING));
+
+            blockStateModelGenerator.registerItemModel(VAItems.NECROTIC_ROOTS, BlockStateModelGenerator.CrossType.NOT_TINTED.registerItemModel(blockStateModelGenerator, VABlocks.NECROTIC_ROOTS));
 
             blockStateModelGenerator.registerMirrorable(VABlocks.ROCK_SALT_BLOCK);
             blockStateModelGenerator.registerSimpleCubeAll(VABlocks.ROCK_SALT_ORE);
@@ -152,6 +162,7 @@ public class VAModelProvider {
             registerParentedTintedItemModel(blockStateModelGenerator, VABlocks.MANGROVE_HEDGE, Registries.BLOCK.getId(VABlocks.MANGROVE_HEDGE).withPrefixedPath("block/").withSuffixedPath("_inventory"), new ConstantTintSource(FoliageColors.MANGROVE));
             blockStateModelGenerator.registerParentedItemModel(VABlocks.CHERRY_HEDGE, Registries.BLOCK.getId(VABlocks.CHERRY_HEDGE).withPrefixedPath("block/").withSuffixedPath("_inventory"));
             blockStateModelGenerator.registerParentedItemModel(VABlocks.SOULBLOOM_HEDGE, Registries.BLOCK.getId(VABlocks.SOULBLOOM_HEDGE).withPrefixedPath("block/").withSuffixedPath("_inventory"));
+            blockStateModelGenerator.registerParentedItemModel(VABlocks.WITHERED_HEDGE, Registries.BLOCK.getId(VABlocks.WITHERED_HEDGE).withPrefixedPath("block/").withSuffixedPath("_inventory"));
             blockStateModelGenerator.registerParentedItemModel(VABlocks.AZALEA_HEDGE, Registries.BLOCK.getId(VABlocks.AZALEA_HEDGE).withPrefixedPath("block/").withSuffixedPath("_inventory"));
             blockStateModelGenerator.registerParentedItemModel(VABlocks.FLOWERING_AZALEA_HEDGE, Registries.BLOCK.getId(VABlocks.FLOWERING_AZALEA_HEDGE).withPrefixedPath("block/").withSuffixedPath("_inventory"));
 
@@ -160,7 +171,9 @@ public class VAModelProvider {
             registerSpotlight(blockStateModelGenerator);
 
             blockStateModelGenerator.registerFlowerPotPlant(VABlocks.SOULBLOOM_SAPLING, VABlocks.POTTED_SOULBLOOM_SAPLING, BlockStateModelGenerator.CrossType.NOT_TINTED);
+            blockStateModelGenerator.registerFlowerPotPlant(VABlocks.WITHERED_SAPLING, VABlocks.POTTED_WITHERED_SAPLING, BlockStateModelGenerator.CrossType.NOT_TINTED);
             blockStateModelGenerator.registerFlowerPotPlant(VABlocks.GREENCAP_MUSHROOM, VABlocks.POTTED_GREENCAP_MUSHROOM, BlockStateModelGenerator.CrossType.NOT_TINTED);
+            blockStateModelGenerator.registerFlowerPotPlant(VABlocks.NECROTIC_ROOTS, VABlocks.POTTED_NECROTIC_ROOTS, BlockStateModelGenerator.CrossType.NOT_TINTED);
 
             blockStateModelGenerator.registerSimpleCubeAll(VABlocks.STEEL_GRATE);
             blockStateModelGenerator.registerSimpleCubeAll(VABlocks.EXPOSED_STEEL_GRATE);

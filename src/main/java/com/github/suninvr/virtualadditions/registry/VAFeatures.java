@@ -1,8 +1,6 @@
 package com.github.suninvr.virtualadditions.registry;
 
-import com.github.suninvr.virtualadditions.worldgen.feature.SoulbloomTrunkPlacer;
-import com.github.suninvr.virtualadditions.worldgen.feature.BalloonBulbFeature;
-import com.github.suninvr.virtualadditions.worldgen.feature.LumwaspNestFeature;
+import com.github.suninvr.virtualadditions.worldgen.feature.*;
 import com.mojang.serialization.MapCodec;
 import net.fabricmc.fabric.api.biome.v1.BiomeModifications;
 import net.fabricmc.fabric.api.biome.v1.BiomeSelectors;
@@ -12,6 +10,7 @@ import net.minecraft.util.Identifier;
 import net.minecraft.world.biome.BiomeKeys;
 import net.minecraft.world.gen.GenerationStep;
 import net.minecraft.world.gen.feature.*;
+import net.minecraft.world.gen.foliage.FoliagePlacerType;
 import net.minecraft.world.gen.trunk.TrunkPlacerType;
 
 import static com.github.suninvr.virtualadditions.VirtualAdditions.idOf;
@@ -63,9 +62,13 @@ public class VAFeatures {
 
     public static class Configured {
         public static final RegistryKey<ConfiguredFeature<?, ?>> SOULBLOOM_TREE;
+        public static final RegistryKey<ConfiguredFeature<?, ?>> WITHERED_TREE;
+        public static final RegistryKey<ConfiguredFeature<?, ?>> NECROTIC_ROOTS_BONEMEAL;
 
         static {
             SOULBLOOM_TREE = registerConfigured(idOf("soulbloom_tree"));
+            WITHERED_TREE = registerConfigured(idOf("withered_tree"));
+            NECROTIC_ROOTS_BONEMEAL = registerConfigured(idOf("necrotic_roots_bonemeal"));
         }
     }
 
@@ -119,7 +122,13 @@ public class VAFeatures {
     }
 
     public static class TrunkPlacerTypes {
-        public static final TrunkPlacerType<SoulbloomTrunkPlacer> SOULBLOOM_TRUNK_PLACER = Registry.register(Registries.TRUNK_PLACER_TYPE, idOf("soulbloom_trunk_placer"), new TrunkPlacerType<>((MapCodec<SoulbloomTrunkPlacer>) SoulbloomTrunkPlacer.CODEC));
+        public static final TrunkPlacerType<SoulbloomTrunkPlacer> SOULBLOOM_TRUNK_PLACER = Registry.register(Registries.TRUNK_PLACER_TYPE, idOf("soulbloom_trunk_placer"), new TrunkPlacerType<>(SoulbloomTrunkPlacer.CODEC));
+        public static final TrunkPlacerType<WitheredTrunkPlacer> WITHERED_TRUNK_PLACER = Registry.register(Registries.TRUNK_PLACER_TYPE, idOf("withered_trunk_placer"), new TrunkPlacerType<>(WitheredTrunkPlacer.CODEC));
+        public static void init(){}
+    }
+
+    public static class FoliagePlacerTypes {
+        //public static final FoliagePlacerType<WitheredFoliagePlacer> WITHERED_TRUNK_PLACER = Registry.register(Registries.FOLIAGE_PLACER_TYPE, idOf("withered_foliage_placer"), new FoliagePlacerType<>(WitheredFoliagePlacer.CODEC));
         public static void init(){}
     }
 }

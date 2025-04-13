@@ -26,6 +26,7 @@
     "ItemMixin",
     "ItemStackMixin",
     "LivingEntityMixin",
+    "NetherrackBlockMixin",
     "OxidizableMixin",
     "PlayerEntityMixin",
     "RangedWeaponItemMixin",
@@ -41,6 +42,8 @@
     "VillagerEntityMixin",
     "WallBlockMixin",
     "WaterFluidMixin",
+    "WitherRoseBlockMixin",
+    "WitherSkeletonEntityMixin",
     "WolfEntityMixin"
   ],
   "client": [

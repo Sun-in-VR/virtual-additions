@@ -1,0 +1,24 @@
+{
+  "type": "minecraft:simple_random_selector",
+  "config": {
+    "features": [
+      {
+        "feature": "virtual_additions:withered_tree",
+        "placement": [
+          {
+            "type": "minecraft:rarity_filter",
+            "chance": 2
+          }
+        ]
+      },
+      {
+        "feature": "virtual_additions:withered_tree_small",
+        "placement": []
+      },
+      {
+        "feature": "virtual_additions:necrotic_roots_patch",
+        "placement": []
+      }
+    ]
+  }
+}

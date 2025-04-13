@@ -105,6 +105,12 @@ public class VARenderers {
                 VABlocks.SOULBLOOM_TRAPDOOR,
                 VABlocks.SOULBLOOM_SAPLING,
                 VABlocks.POTTED_SOULBLOOM_SAPLING,
+                VABlocks.NECROTIC_ROOTS,
+                VABlocks.POTTED_NECROTIC_ROOTS,
+                VABlocks.WITHERED_DOOR,
+                VABlocks.WITHERED_TRAPDOOR,
+                VABlocks.WITHERED_SAPLING,
+                VABlocks.POTTED_WITHERED_SAPLING,
                 VABlocks.BLUE_PETALS,
                 VABlocks.BALLOON_BULB,
                 VABlocks.BALLOON_BULB_PLANT,
@@ -124,6 +130,8 @@ public class VARenderers {
         BlockRenderLayerMap.INSTANCE.putBlocks(RenderLayer.getCutoutMipped(),
                 VABlocks.SOULBLOOM_LEAVES,
                 VABlocks.SOULBLOOM_HEDGE,
+                VABlocks.WITHERED_LEAVES,
+                VABlocks.WITHERED_HEDGE,
                 VABlocks.OAK_HEDGE,
                 VABlocks.SPRUCE_HEDGE,
                 VABlocks.BIRCH_HEDGE,
@@ -192,6 +200,8 @@ public class VARenderers {
 
         TexturedRenderLayers.SIGN_TYPE_TEXTURES.put(VABlocks.SOULBLOOM_WOODTYPE, new SpriteIdentifier(TexturedRenderLayers.SIGNS_ATLAS_TEXTURE, idOf("entity/signs/soulbloom")));
         TexturedRenderLayers.HANGING_SIGN_TYPE_TEXTURES.put(VABlocks.SOULBLOOM_WOODTYPE, new SpriteIdentifier(TexturedRenderLayers.SIGNS_ATLAS_TEXTURE, idOf("entity/signs/hanging/soulbloom")));
+        TexturedRenderLayers.SIGN_TYPE_TEXTURES.put(VABlocks.WITHERED_WOODTYPE, new SpriteIdentifier(TexturedRenderLayers.SIGNS_ATLAS_TEXTURE, idOf("entity/signs/withered")));
+        TexturedRenderLayers.HANGING_SIGN_TYPE_TEXTURES.put(VABlocks.WITHERED_WOODTYPE, new SpriteIdentifier(TexturedRenderLayers.SIGNS_ATLAS_TEXTURE, idOf("entity/signs/hanging/withered")));
 
     }
 

@@ -9,10 +9,7 @@ import com.github.suninvr.virtualadditions.registry.collection.ColorfulBlockSet;
 import net.fabricmc.fabric.api.datagen.v1.FabricDataGenerator;
 import net.fabricmc.fabric.api.datagen.v1.FabricDataOutput;
 import net.fabricmc.fabric.api.datagen.v1.provider.FabricBlockLootTableProvider;
-import net.minecraft.block.BedBlock;
-import net.minecraft.block.Block;
-import net.minecraft.block.CropBlock;
-import net.minecraft.block.TallPlantBlock;
+import net.minecraft.block.*;
 import net.minecraft.block.enums.BedPart;
 import net.minecraft.block.enums.DoubleBlockHalf;
 import net.minecraft.data.family.BlockFamily;
@@ -78,7 +75,12 @@ public final class VABlockLootTableProvider {
                     VACollections.HORNFELS_TILES,
                     VACollections.BLUESCHIST_BRICKS,
                     VACollections.SYENITE_BRICKS,
-                    VACollections.ROCK_SALT_BRICKS
+                    VACollections.ROCK_SALT_BRICKS,
+                    VACollections.SOULBLOOM,
+                    VACollections.WITHERED,
+                    VACollections.PORPHYRY,
+                    VACollections.POLISHED_PORPHYRY,
+                    VACollections.PORPHYRY_BRICKS
             );
 
             addSimpleDrops(
@@ -145,12 +147,31 @@ public final class VABlockLootTableProvider {
                     VABlocks.ACID_BLOCK,
                     VABlocks.ROCK_SALT_BLOCK,
                     VABlocks.CHISELED_ROCK_SALT_BRICKS,
+                    VABlocks.SOULBLOOM_LOG,
+                    VABlocks.SOULBLOOM_WOOD,
+                    VABlocks.STRIPPED_SOULBLOOM_LOG,
+                    VABlocks.STRIPPED_SOULBLOOM_WOOD,
+                    VABlocks.SOULBLOOM_HANGING_SIGN,
+                    VABlocks.SOULBLOOM_SAPLING,
+                    VABlocks.SOULBLOOM_HEDGE,
+                    VABlocks.WITHERED_LOG,
+                    VABlocks.WITHERED_WOOD,
+                    VABlocks.STRIPPED_WITHERED_LOG,
+                    VABlocks.STRIPPED_WITHERED_WOOD,
+                    VABlocks.WITHERED_HANGING_SIGN,
+                    VABlocks.WITHERED_SAPLING,
+                    VABlocks.WITHERED_HEDGE,
+                    VABlocks.NECROTIC_ROOTS,
                     VABlocks.COLORING_STATION,
                     VABlocks.IOLITE_BLOCK,
                     VABlocks.WARP_ANCHOR,
                     VABlocks.ENTANGLEMENT_DRIVE,
                     VABlocks.SPOTLIGHT
             );
+
+            this.addDrop(VABlocks.BLUE_PETALS, this.segmentedDrops(VABlocks.BLUE_PETALS));
+
+            this.addDrop(VABlocks.NECROTIC_NYLIUM, block -> this.drops(block, Blocks.NETHERRACK));
 
             LootCondition.Builder tomatoBuilder = BlockStatePropertyLootCondition.builder(VABlocks.TOMATO)
                     .properties(StatePredicate.Builder.create().exactMatch(CropBlock.AGE, 7));
@@ -199,23 +220,8 @@ public final class VABlockLootTableProvider {
 
             this.addDrop(VABlocks.REDSTONE_BRIDGE);
 
-            addFamilyDrops(
-                    VACollections.SOULBLOOM,
-                    VACollections.PORPHYRY,
-                    VACollections.POLISHED_PORPHYRY,
-                    VACollections.PORPHYRY_BRICKS
-            );
-            addSimpleDrops(
-                    VABlocks.SOULBLOOM_LOG,
-                    VABlocks.SOULBLOOM_WOOD,
-                    VABlocks.STRIPPED_SOULBLOOM_LOG,
-                    VABlocks.STRIPPED_SOULBLOOM_WOOD,
-                    VABlocks.SOULBLOOM_HANGING_SIGN,
-                    VABlocks.SOULBLOOM_SAPLING,
-                    VABlocks.SOULBLOOM_HEDGE
-            );
-
             this.addDrop(VABlocks.SOULBLOOM_LEAVES, block ->  leavesDrops(VABlocks.SOULBLOOM_LEAVES, VABlocks.SOULBLOOM_SAPLING, SAPLING_DROP_CHANCE));
+            this.addDrop(VABlocks.WITHERED_LEAVES, block ->  leavesDrops(VABlocks.WITHERED_LEAVES, VABlocks.WITHERED_SAPLING, SAPLING_DROP_CHANCE));
 
         }
     }
