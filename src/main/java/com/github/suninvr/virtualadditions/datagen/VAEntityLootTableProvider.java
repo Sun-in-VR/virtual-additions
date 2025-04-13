@@ -5,15 +5,22 @@ import com.github.suninvr.virtualadditions.registry.VAItems;
 import net.fabricmc.fabric.api.datagen.v1.FabricDataGenerator;
 import net.fabricmc.fabric.api.datagen.v1.FabricDataOutput;
 import net.fabricmc.fabric.api.datagen.v1.provider.FabricEntityLootTableProvider;
+import net.minecraft.entity.EntityType;
+import net.minecraft.item.Item;
 import net.minecraft.item.Items;
 import net.minecraft.loot.LootPool;
 import net.minecraft.loot.LootTable;
-import net.minecraft.loot.condition.KilledByPlayerLootCondition;
-import net.minecraft.loot.condition.RandomChanceWithEnchantedBonusLootCondition;
+import net.minecraft.loot.condition.*;
+import net.minecraft.loot.context.LootContext;
 import net.minecraft.loot.entry.ItemEntry;
 import net.minecraft.loot.function.EnchantedCountIncreaseLootFunction;
 import net.minecraft.loot.function.SetCountLootFunction;
 import net.minecraft.loot.provider.number.UniformLootNumberProvider;
+import net.minecraft.predicate.entity.EntityEquipmentPredicate;
+import net.minecraft.predicate.entity.EntityPredicate;
+import net.minecraft.predicate.item.ItemPredicate;
+import net.minecraft.registry.RegistryEntryLookup;
+import net.minecraft.registry.RegistryKeys;
 import net.minecraft.registry.RegistryWrapper;
 import org.jetbrains.annotations.NotNull;
 
@@ -26,6 +33,9 @@ public class VAEntityLootTableProvider {
     }
     public static FabricDataGenerator.Pack.RegistryDependentFactory<?> preview() {
         return PreviewProvider::new;
+    }
+    public static FabricDataGenerator.Pack.RegistryDependentFactory<?> enhancements() {
+        return EnhancementsProvider::new;
     }
 
     protected static class BaseProvider extends Provider {
@@ -81,9 +91,48 @@ public class VAEntityLootTableProvider {
         }
     }
 
+    protected static class EnhancementsProvider extends Provider {
+
+        protected EnhancementsProvider(FabricDataOutput output, @NotNull CompletableFuture<RegistryWrapper.WrapperLookup> registryLookup) {
+            super(output, registryLookup);
+        }
+
+        @Override
+        public void generate() {
+            RegistryEntryLookup<Item> registryEntryLookup = registries.getOrThrow(RegistryKeys.ITEM);
+
+            LootTable.Builder witherSkeletonBuilder = LootTable.builder()
+                    .pool(LootPool.builder().with(commonDrop(Items.COAL, -1, 1)))
+                    .pool(LootPool.builder().with(commonDrop(Items.BONE, 0, 1)))
+                    .pool(LootPool.builder().with(ItemEntry.builder(Items.WITHER_SKELETON_SKULL)
+                            .conditionally(KilledByPlayerLootCondition.builder())
+                            .conditionally(AnyOfLootCondition.builder(
+                                    RandomChanceWithEnchantedBonusLootCondition.builder(registries, 0.025F, 0.01F),
+                                    AllOfLootCondition.builder(
+                                            RandomChanceWithEnchantedBonusLootCondition.builder(registries, 0.35F, 0.1F),
+                                            EntityPropertiesLootCondition.builder(LootContext.EntityTarget.THIS, EntityPredicate.Builder.create().equipment(EntityEquipmentPredicate.Builder.create().head(ItemPredicate.Builder.create().items(registryEntryLookup, Items.NETHERITE_HELMET))))
+                                    )
+                            ))
+
+                    ));
+
+            this.register(EntityType.WITHER_SKELETON, witherSkeletonBuilder);
+        }
+    }
+
     protected static abstract class Provider extends FabricEntityLootTableProvider {
         protected Provider(FabricDataOutput output, @NotNull CompletableFuture<RegistryWrapper.WrapperLookup> registryLookup) {
             super(output, registryLookup);
+        }
+
+        protected ItemEntry.Builder commonDrop(Item item, int baseMin, int baseMax, int enchantedMin, int enchantedMax) {
+            return ItemEntry.builder(item)
+                    .apply(SetCountLootFunction.builder(UniformLootNumberProvider.create(baseMin, baseMax)))
+                    .apply(EnchantedCountIncreaseLootFunction.builder(registries, UniformLootNumberProvider.create(enchantedMin, enchantedMax)));
+        }
+
+        protected ItemEntry.Builder commonDrop(Item item, int baseMin, int baseMax) {
+            return commonDrop(item, baseMin, baseMax, 0, 1);
         }
     }
 

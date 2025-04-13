@@ -32,6 +32,7 @@ public class VirtualAdditionsDataGeneration implements DataGeneratorEntrypoint {
 
         FabricDataGenerator.Pack enhancementsData = fabricDataGenerator.createBuiltinResourcePack(idOf("enhancements_data"));
         enhancementsData.addProvider(VASimpleLootTableProvider.enhancementsEntities());
+        enhancementsData.addProvider(VAEntityLootTableProvider.enhancements());
         enhancementsData.addProvider(VASimpleLootTableProvider.enhancementsShearing());
     }
 

@@ -36,7 +36,7 @@ public class WitherSkeletonEntityMixin extends MobEntity {
                 this.equipStack(EquipmentSlot.FEET, new ItemStack(Items.NETHERITE_BOOTS));
                 ci.cancel();
             }
-            if (random.nextFloat() > 0.35F) {
+            if (random.nextFloat() > 0.15F) {
                 this.equipStack(EquipmentSlot.MAINHAND, new ItemStack(Items.BOW));
                 ci.cancel();
             }
