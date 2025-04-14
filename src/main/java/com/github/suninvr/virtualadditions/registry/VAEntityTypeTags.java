@@ -9,6 +9,7 @@ import static com.github.suninvr.virtualadditions.VirtualAdditions.idOf;
 @SuppressWarnings("SameParameterValue")
 public class VAEntityTypeTags {
     public static final TagKey<EntityType<?>> PASSES_THROUGH_WEBBED_SILK = register("passes_through_webbed_silk");
+    public static final TagKey<EntityType<?>> SPECTRE_BUFF_TARGETS = register("spectre_buff_targets");
 
     public static void init(){}
 

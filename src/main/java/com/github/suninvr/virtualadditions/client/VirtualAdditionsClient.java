@@ -12,6 +12,7 @@ import net.fabricmc.api.ClientModInitializer;
 import net.fabricmc.fabric.api.client.networking.v1.ClientPlayNetworking;
 import net.fabricmc.fabric.api.client.particle.v1.ParticleFactoryRegistry;
 import net.minecraft.client.gui.screen.ingame.HandledScreens;
+import net.minecraft.client.particle.FlameParticle;
 import net.minecraft.client.particle.LeavesParticle;
 import net.minecraft.client.particle.TrialSpawnerDetectionParticle;
 import net.minecraft.client.particle.WaterSplashParticle;
@@ -31,6 +32,7 @@ public class VirtualAdditionsClient implements ClientModInitializer {
         ParticleFactoryRegistry.getInstance().register(VAParticleTypes.INTERFERENCE, InterferenceFactory::new);
         ParticleFactoryRegistry.getInstance().register(VAParticleTypes.IOLITE_ANCHOR_RING, IoliteRingParticle.Factory::new);
         ParticleFactoryRegistry.getInstance().register(VAParticleTypes.IOLITE_TETHER_RING, IoliteRingParticle.Factory::new);
+        ParticleFactoryRegistry.getInstance().register(VAParticleTypes.SPECTRAL_FLAME, FlameParticle.Factory::new);
 
         HandledScreens.register(VAScreenHandler.ENTANGLEMENT_DRIVE, EntanglementDriveScreen::new);
         HandledScreens.register(VAScreenHandler.COLORING_STATION, ColoringStationScreen::new);

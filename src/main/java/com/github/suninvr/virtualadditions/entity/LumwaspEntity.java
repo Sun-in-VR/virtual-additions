@@ -28,6 +28,7 @@ import net.minecraft.server.world.ServerWorld;
 import net.minecraft.sound.SoundEvent;
 import net.minecraft.sound.SoundEvents;
 import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.math.Vec3d;
 import net.minecraft.util.math.random.Random;
 import net.minecraft.world.*;
 import net.minecraft.world.dimension.DimensionType;
@@ -47,8 +48,8 @@ public class LumwaspEntity extends HostileEntity implements RangedAttackMob, Flu
     public static DefaultAttributeContainer createLumwaspAttributes() {
         return MobEntity.createMobAttributes()
                 .add(EntityAttributes.MAX_HEALTH, 16.0)
-                .add(EntityAttributes.FLYING_SPEED, 1.55)
-                .add(EntityAttributes.MOVEMENT_SPEED, 0.25)
+                .add(EntityAttributes.FLYING_SPEED, 0.135)
+                .add(EntityAttributes.MOVEMENT_SPEED, 0.1)
                 .add(EntityAttributes.ATTACK_DAMAGE, 4.0)
                 .add(EntityAttributes.FOLLOW_RANGE, 16.0)
                 .build();
@@ -74,8 +75,8 @@ public class LumwaspEntity extends HostileEntity implements RangedAttackMob, Flu
     @Override
     protected void initGoals() {
         this.goalSelector.add(1, new AlwaysEscapeSunlightGoal(this, 1.2D));
-        this.goalSelector.add(2, new MeleeCloseRangeGoal(this, 1.0D, 4, true));
-        this.goalSelector.add(3, new ProjectileAttackGoal(this, 1.0D, 45, 8));
+        this.goalSelector.add(2, new MeleeCloseRangeGoal(this, 1.2D, 4, true));
+        this.goalSelector.add(3, new ProjectileAttackGoal(this, 1.1D, 45, 8));
         this.goalSelector.add(5, new FlyGoal(this, 1.0D));
         this.goalSelector.add(6, new LookAtEntityGoal(this, PlayerEntity.class, 8.0F));
         this.goalSelector.add(6, new LookAroundGoal(this));
@@ -195,6 +196,16 @@ public class LumwaspEntity extends HostileEntity implements RangedAttackMob, Flu
 
         }
         return bl;
+    }
+
+
+    @Override
+    public void travel(Vec3d movementInput) {
+        if (this.isOnGround()) {
+            super.travel(movementInput);
+            return;
+        }
+        this.travelFlying(movementInput, this.getMovementSpeed());
     }
 
     private static class MeleeCloseRangeGoal extends MeleeAttackGoal {

@@ -559,6 +559,20 @@
           }
         ]
       }
+    },
+    "virtual_additions:spectre": {
+      "trigger": "minecraft:player_killed_entity",
+      "conditions": {
+        "entity": [
+          {
+            "condition": "minecraft:entity_properties",
+            "entity": "this",
+            "predicate": {
+              "type": "virtual_additions:spectre"
+            }
+          }
+        ]
+      }
     }
   },
   "requirements": [
@@ -678,6 +692,9 @@
     ],
     [
       "virtual_additions:saline"
+    ],
+    [
+      "virtual_additions:spectre"
     ]
   ],
   "rewards": {

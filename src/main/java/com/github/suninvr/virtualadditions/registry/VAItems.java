@@ -436,6 +436,7 @@ public class VAItems {
     public static final Item REMOTE_NOTIFIER;
     public static final Item SALINE_SPAWN_EGG;
     public static final Item LUMWASP_SPAWN_EGG;
+    public static final Item SPECTRE_SPAWN_EGG;
 
     public static final ToolSet AMETHYST_DIAMOND_TOOL_SET;
     public static final ToolSet COPPER_DIAMOND_TOOL_SET;
@@ -1149,6 +1150,7 @@ public class VAItems {
 
         SALINE_SPAWN_EGG = register("saline_spawn_egg", settings -> new SpawnEggItem(VAEntityType.SALINE, settings), new Item.Settings(), ItemGroups.SPAWN_EGGS, Items.RAVAGER_SPAWN_EGG);
         LUMWASP_SPAWN_EGG = register("lumwasp_spawn_egg", settings -> new SpawnEggItem(VAEntityType.LUMWASP, settings), new Item.Settings(), ItemGroups.SPAWN_EGGS, Items.LLAMA_SPAWN_EGG);
+        SPECTRE_SPAWN_EGG = register("spectre_spawn_egg", settings -> new SpawnEggItem(VAEntityType.SPECTRE, settings), new Item.Settings(), ItemGroups.SPAWN_EGGS, Items.SNOW_GOLEM_SPAWN_EGG);
         //endregion
     }
 

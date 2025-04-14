@@ -118,6 +118,12 @@
         "weight": 5,
         "minCount": 1,
         "maxCount": 1
+      },
+      {
+        "type": "virtual_additions:spectre",
+        "weight": 300,
+        "minCount": 1,
+        "maxCount": 1
       }
     ],
     "underground_water_creature": [

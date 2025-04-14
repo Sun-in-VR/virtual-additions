@@ -35,6 +35,8 @@ import static com.github.suninvr.virtualadditions.VirtualAdditions.idOf;
 
 public class VARenderers {
     public static EntityModelLayer LUMWASP_LAYER = new EntityModelLayer(Identifier.of("virtual_additions", "lumwasp"), "main");
+    public static EntityModelLayer SPECTRE_LAYER = new EntityModelLayer(Identifier.of("virtual_additions", "spectre"), "main");
+    public static EntityModelLayer SPECTRE_OUTER_LAYER = new EntityModelLayer(Identifier.of("virtual_additions", "spectre_outer"), "main");
     public static EntityModelLayer SOULBLOOM_BOAT = new EntityModelLayer(Identifier.of("virtual_additions", "boat/soulbloom"), "main");
     public static EntityModelLayer SOULBLOOM_CHEST_BOAT = new EntityModelLayer(Identifier.of("virtual_additions", "chest_boat/soulbloom"), "main");
     public static EntityModelLayer CUSTOM_BED_FOOT_LAYER = new EntityModelLayer(idOf("bed_foot"), "main");
@@ -174,6 +176,7 @@ public class VARenderers {
 
     private static void initEntityRenderers() {
         EntityModelLayerRegistry.registerModelLayer(LUMWASP_LAYER, LumwaspEntityModel::getTexturedModelData);
+        EntityModelLayerRegistry.registerModelLayer(SPECTRE_LAYER, SpectreEntityModel::getTexturedModelData);
         EntityModelLayerRegistry.registerModelLayer(SOULBLOOM_BOAT, BoatEntityModel::getTexturedModelData);
         EntityModelLayerRegistry.registerModelLayer(SOULBLOOM_CHEST_BOAT, BoatEntityModel::getChestTexturedModelData);
         EntityRendererRegistry.register(VAEntityType.CLIMBING_ROPE, ClimbingRopeEntityRenderer::new);
@@ -181,6 +184,7 @@ public class VARenderers {
         EntityRendererRegistry.register(VAEntityType.TOMATO, FlyingItemEntityRenderer::new);
         EntityRendererRegistry.register(VAEntityType.ACID_SPIT, AcidSpitEntityRenderer::new);
         EntityRendererRegistry.register(VAEntityType.LUMWASP, LumwaspEntityRenderer::new);
+        EntityRendererRegistry.register(VAEntityType.SPECTRE, SpectreEntityRenderer::new);
         EntityRendererRegistry.register(VAEntityType.SALINE, SalineEntityRenderer::new);
         EntityRendererRegistry.register(VAEntityType.LIGHTNING_BOTTLE, FlyingItemEntityRenderer::new);
         EntityRendererRegistry.register(VAEntityType.SOULBLOOM_BOAT, context -> new BoatEntityRenderer(context, SOULBLOOM_BOAT));

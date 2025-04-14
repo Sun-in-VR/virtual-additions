@@ -20,6 +20,22 @@ public class VAEntityTypeTagProvider extends FabricTagProvider.EntityTypeTagProv
         getOrCreateTagBuilder(EntityTypeTags.IMPACT_PROJECTILES).add(VAEntityType.STEEL_BOMB, VAEntityType.CLIMBING_ROPE, VAEntityType.ACID_SPIT);
         getOrCreateTagBuilder(EntityTypeTags.ARTHROPOD).add(VAEntityType.LUMWASP);
         getOrCreateTagBuilder(EntityTypeTags.UNDEAD).add(VAEntityType.SALINE);
+        getOrCreateTagBuilder(VAEntityTypeTags.SPECTRE_BUFF_TARGETS)
+                .add(
+                        EntityType.SPIDER,
+                        VAEntityType.LUMWASP,
+                        EntityType.ZOMBIE,
+                        EntityType.DROWNED,
+                        EntityType.HUSK,
+                        VAEntityType.SALINE,
+                        EntityType.SKELETON,
+                        EntityType.WITHER_SKELETON,
+                        EntityType.STRAY,
+                        EntityType.BOGGED,
+                        EntityType.BLAZE,
+                        EntityType.BREEZE,
+                        EntityType.GHAST
+                ).addOptionalTag(EntityTypeTags.ILLAGER);
         getOrCreateTagBuilder(VAEntityTypeTags.PASSES_THROUGH_WEBBED_SILK)
                 .add(EntityType.ITEM, EntityType.EXPERIENCE_ORB)
                 .addOptionalTag(EntityTypeTags.IMPACT_PROJECTILES);

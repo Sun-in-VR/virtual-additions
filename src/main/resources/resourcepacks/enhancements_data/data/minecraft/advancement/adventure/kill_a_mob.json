@@ -558,6 +558,20 @@
           }
         ]
       }
+    },
+    "virtual_additions:spectre": {
+      "trigger": "minecraft:player_killed_entity",
+      "conditions": {
+        "entity": [
+          {
+            "condition": "minecraft:entity_properties",
+            "entity": "this",
+            "predicate": {
+              "type": "virtual_additions:spectre"
+            }
+          }
+        ]
+      }
     }
   },
   "requirements": [
@@ -600,7 +614,8 @@
       "minecraft:zombie",
       "minecraft:zombified_piglin",
       "virtual_additions:lumwasp",
-      "virtual_additions:saline"
+      "virtual_additions:saline",
+      "virtual_additions:spectre"
     ]
   ],
   "sends_telemetry_event": true

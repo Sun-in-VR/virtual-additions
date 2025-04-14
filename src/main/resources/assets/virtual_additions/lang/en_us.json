@@ -22,6 +22,8 @@
 
     "biome.virtual_additions.wasp_den": "Wasp Den",
     "biome.virtual_additions.salty_caves": "Salty Caves",
+    "biome.virtual_additions.soul_grove": "Soul Grove",
+    "biome.virtual_additions.withered_woods": "Withered Woods",
 
     "block.virtual_additions.climbing_rope_anchor": "Climbing Rope Anchor",
     "block.virtual_additions.climbing_rope": "Climbing Rope",
@@ -399,6 +401,7 @@
 
     "entity.virtual_additions.lumwasp": "Lumwasp",
     "entity.virtual_additions.saline": "Saline",
+    "entity.virtual_additions.spectre": "Spectre",
     "entity.virtual_additions.acid_spit": "Acid Spit",
     "entity.virtual_additions.climbing_rope": "Climbing Rope",
     "entity.virtual_additions.steel_bomb": "Thrown Steel Bomb",
@@ -490,7 +493,7 @@
     "item.virtual_additions.lightning_bottle": "Bottled Lightning",
     "item.virtual_additions.saline_spawn_egg": "Saline Spawn Egg",
     "item.virtual_additions.lumwasp_spawn_egg": "Lumwasp Spawn Egg",
-    "item.virtual_additions.lyft_spawn_egg": "Lyft Spawn Egg",
+    "item.virtual_additions.spectre_spawn_egg": "Spectre Spawn Egg",
 
     "item.minecraft.potion.effect.virtual_additions.frailty": "Potion of Frailty",
     "item.minecraft.splash_potion.effect.virtual_additions.frailty": "Splash Potion of Frailty",

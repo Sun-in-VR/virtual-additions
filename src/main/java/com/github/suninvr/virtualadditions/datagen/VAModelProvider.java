@@ -238,6 +238,7 @@ public class VAModelProvider {
 
             itemModelGenerator.register(VAItems.SALINE_SPAWN_EGG, Models.GENERATED);
             itemModelGenerator.register(VAItems.LUMWASP_SPAWN_EGG, Models.GENERATED);
+            itemModelGenerator.register(VAItems.SPECTRE_SPAWN_EGG, Models.GENERATED);
 
             itemModelGenerator.register(VAItems.STEEL_SWORD, Models.HANDHELD);
             itemModelGenerator.register(VAItems.STEEL_SHOVEL, Models.HANDHELD);
