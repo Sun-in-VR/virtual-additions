@@ -6,10 +6,10 @@ import net.minecraft.client.particle.TrialSpawnerDetectionParticle;
 import net.minecraft.client.world.ClientWorld;
 import net.minecraft.particle.SimpleParticleType;
 
-public class InterferenceFactory extends TrialSpawnerDetectionParticle.Factory {
+public class PowerParticleFactory extends TrialSpawnerDetectionParticle.Factory {
     SpriteProvider spriteProvider;
 
-    public InterferenceFactory(SpriteProvider spriteProvider) {
+    public PowerParticleFactory(SpriteProvider spriteProvider) {
         super(spriteProvider);
         this.spriteProvider = spriteProvider;
     }

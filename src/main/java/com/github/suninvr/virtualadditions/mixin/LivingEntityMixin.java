@@ -1,8 +1,10 @@
 package com.github.suninvr.virtualadditions.mixin;
 
+import com.github.suninvr.virtualadditions.entity.SpectreEntity;
 import com.github.suninvr.virtualadditions.item.GildTypes;
 import com.github.suninvr.virtualadditions.item.interfaces.GildedToolItem;
 import com.github.suninvr.virtualadditions.registry.VABlockTags;
+import com.github.suninvr.virtualadditions.registry.VAEntityType;
 import com.github.suninvr.virtualadditions.registry.VAStatusEffects;
 import net.minecraft.block.BlockState;
 import net.minecraft.entity.Entity;
@@ -52,6 +54,13 @@ public abstract class LivingEntityMixin extends Entity {
                     this.experienceMultiplier = 1.6F;
                 }
             }
+        }
+    }
+
+    @Inject(method = "onRemove", at = @At("HEAD"))
+    void virtualAdditions$onRemoveSpectre(RemovalReason reason, CallbackInfo ci) {
+        if ((Object)(this) instanceof SpectreEntity spectre) {
+            spectre.setBuffTarget(null);
         }
     }
 

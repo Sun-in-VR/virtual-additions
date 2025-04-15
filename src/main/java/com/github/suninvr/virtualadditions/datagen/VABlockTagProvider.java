@@ -348,6 +348,12 @@ public final class VABlockTagProvider {
                     .addOptionalTag(VABlockTags.HEDGES)
                     .addOptionalTag(BlockTags.REPLACEABLE);
 
+            getOrCreateTagBuilder(VABlockTags.SPECTRE_SPAWNABLE_ON).add(
+                    Blocks.GRASS_BLOCK,
+                    Blocks.PODZOL,
+                    Blocks.MYCELIUM
+            ).addOptionalTag(BlockTags.NYLIUM);
+
             getOrCreateTagBuilder(BlockTags.HOE_MINEABLE).add(VABlocks.SOULBLOOM_LEAVES, VABlocks.WITHERED_LEAVES);
 
             configureOverworldStone(VABlocks.PORPHYRY);

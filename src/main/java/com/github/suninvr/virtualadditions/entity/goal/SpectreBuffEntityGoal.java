@@ -2,25 +2,19 @@ package com.github.suninvr.virtualadditions.entity.goal;
 
 import com.github.suninvr.virtualadditions.entity.SpectreEntity;
 import com.github.suninvr.virtualadditions.registry.VAEntityTypeTags;
-import net.minecraft.client.render.entity.model.AbstractZombieModel;
 import net.minecraft.entity.ai.control.LookControl;
 import net.minecraft.entity.ai.goal.Goal;
 import net.minecraft.entity.ai.pathing.BirdNavigation;
 import net.minecraft.entity.ai.pathing.EntityNavigation;
 import net.minecraft.entity.ai.pathing.MobNavigation;
 import net.minecraft.entity.mob.*;
-import net.minecraft.registry.tag.EntityTypeTags;
 import org.jetbrains.annotations.Nullable;
 
-import java.util.EnumSet;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 import java.util.function.Predicate;
 
 public class SpectreBuffEntityGoal extends Goal {
     private final SpectreEntity mob;
-    private final Predicate<MobEntity> targetPredicate;
     @Nullable
     private MobEntity target;
     private final double speed;
@@ -29,11 +23,12 @@ public class SpectreBuffEntityGoal extends Goal {
     private final float minDistance;
     private final float maxDistance;
     private final float buffMaxDistance;
-    private static final Map<Class<?>, Integer> mobPriority = new HashMap<>();
+    private List<MobEntity> nearbyMobs = new ArrayList<>();
+    private static final Predicate<MobEntity> targetPredicate;
+    private static final Map<Class<?>, Integer> targetPriority = new HashMap<>();
 
     public SpectreBuffEntityGoal(SpectreEntity mob, double speed, float buffMaxDistance, float minDistance, float maxDistance) {
         this.mob = mob;
-        this.targetPredicate = target -> target != null && mob.getClass() != target.getClass();
         this.speed = speed;
         this.navigation = mob.getNavigation();
         this.minDistance = minDistance;
@@ -47,28 +42,41 @@ public class SpectreBuffEntityGoal extends Goal {
 
     @Override
     public boolean canStart() {
-        List<MobEntity> list = this.mob.getWorld().getEntitiesByClass(MobEntity.class, this.mob.getBoundingBox().expand(this.maxDistance), this.targetPredicate);
+        this.updateList();
         MobEntity entity = null;
         int priority = -1;
-        if (!list.isEmpty()) {
-            for (MobEntity mobEntity : list) {
-                int i;
-                if (!mobEntity.isInvisible() && mobEntity.getType().isIn(VAEntityTypeTags.SPECTRE_BUFF_TARGETS) && (this.mob.canSee(mobEntity) || this.target == mobEntity) && (i = getPriority(mobEntity)) > priority) {
-                    entity = mobEntity;
-                    priority = i;
-                }
+        for (MobEntity mobEntity : this.nearbyMobs) {
+            int i;
+            if (canStartTargetMob(mobEntity) && (i = getPriority(mobEntity)) > priority) {
+                entity = mobEntity;
+                priority = i;
             }
         }
         if (entity != null) {
-            this.target = entity;
+            this.setTarget(entity);
             return true;
         }
         return false;
     }
 
+    private boolean canStartTargetMob(MobEntity entity) {
+        if (entity == null) return false;
+        UUID spectreId = SpectreEntity.getBuffingSpectreId(entity);
+        boolean isAvailable = spectreId == null || spectreId.equals(this.mob.getUuid());
+        return canTargetMob(entity) && isAvailable;
+    }
+
+    private boolean canTargetMob(MobEntity entity) {
+        return entity != null && !entity.isDead() && !entity.isRemoved() && !entity.isInvisible() && !(this.mob.distanceTo(entity) > 24);
+    }
+
+    private void updateList() {
+        this.nearbyMobs = this.mob.getWorld().getEntitiesByClass(MobEntity.class, this.mob.getBoundingBox().expand(this.maxDistance), this.targetPredicate);
+    }
+
     @Override
     public boolean shouldContinue() {
-        return this.target != null && !this.target.isDead() && !this.target.isRemoved(); //&& !this.navigation.isIdle();
+        return this.canStartTargetMob(this.target);
     }
 
     @Override
@@ -78,8 +86,13 @@ public class SpectreBuffEntityGoal extends Goal {
 
     @Override
     public void stop() {
-        this.target = null;
+        this.setTarget(null);
         this.navigation.stop();
+    }
+
+    private void setTarget(MobEntity entity) {
+        this.target = entity;
+        this.mob.setBuffTarget(entity);
     }
 
     @Override
@@ -90,11 +103,11 @@ public class SpectreBuffEntityGoal extends Goal {
                 boolean bl = this.mob.canSee(this.target);
                 this.updateCountdownTicks = this.getTickCount(10);
                 double d = this.mob.getX() - this.target.getX();
-                double e = this.mob.getY() - this.target.getY();
+                double e = this.mob.getY() - (this.target.getY() + this.target.getHeight());
                 double f = this.mob.getZ() - this.target.getZ();
                 double g = d * d + e * e + f * f;
                 if (!(g <= this.minDistance * this.minDistance) || !bl) {
-                    this.navigation.startMovingTo(this.target.getX(), this.target.getY() + 3, this.target.getZ(), this.speed);
+                    this.navigation.startMovingTo(this.target.getX(), this.target.getY() + this.target.getHeight(), this.target.getZ(), this.speed);
                 } else {
                     this.navigation.stop();
                     LookControl lookControl = this.target.getLookControl();
@@ -105,23 +118,22 @@ public class SpectreBuffEntityGoal extends Goal {
                         this.navigation.startMovingTo(this.mob.getX() - h, this.mob.getY(), this.mob.getZ() - i, this.speed);
                     }
                 }
-                if (g <= this.buffMaxDistance * this.buffMaxDistance && bl) {
-                    this.mob.setBuffTarget(this.target);
-                } else this.mob.setBuffTarget(null);
+                this.mob.setIsBuffing(g <= this.buffMaxDistance * this.buffMaxDistance && bl);
             }
         }
     }
 
     private int getPriority(MobEntity entity) {
-        int i = mobPriority.getOrDefault(entity, 0) + entity.getArmor();
+        int i = targetPriority.getOrDefault(entity.getClass(), 0) + entity.getArmor();
         i += (int) (entity.getMaxHealth() - entity.getHealth());
         return i;
     }
 
     static {
-        mobPriority.put(WitherSkeletonEntity.class, 5);
-        mobPriority.put(AbstractSkeletonEntity.class, 3);
-        mobPriority.put(ZombieEntity.class, 2);
-        mobPriority.put(HostileEntity.class, 1);
+        targetPriority.put(WitherSkeletonEntity.class, 5);
+        targetPriority.put(AbstractSkeletonEntity.class, 3);
+        targetPriority.put(ZombieEntity.class, 2);
+        targetPriority.put(HostileEntity.class, 1);
+        targetPredicate = target -> target != null && !target.isDead() && !target.isRemoved() && SpectreEntity.class != target.getClass() && target.getType().isIn(VAEntityTypeTags.SPECTRE_BUFF_TARGETS);
     }
 }

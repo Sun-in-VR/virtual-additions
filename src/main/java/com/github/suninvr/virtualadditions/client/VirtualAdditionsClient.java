@@ -14,7 +14,6 @@ import net.fabricmc.fabric.api.client.particle.v1.ParticleFactoryRegistry;
 import net.minecraft.client.gui.screen.ingame.HandledScreens;
 import net.minecraft.client.particle.FlameParticle;
 import net.minecraft.client.particle.LeavesParticle;
-import net.minecraft.client.particle.TrialSpawnerDetectionParticle;
 import net.minecraft.client.particle.WaterSplashParticle;
 import net.minecraft.text.Text;
 
@@ -29,7 +28,8 @@ public class VirtualAdditionsClient implements ClientModInitializer {
         ParticleFactoryRegistry.getInstance().register(VAParticleTypes.GREENCAP_SPORE, GreencapSporeParticle.Factory::new);
         ParticleFactoryRegistry.getInstance().register(VAParticleTypes.SCRAPE_STEEL, SteelScrapeFactory::new);
         ParticleFactoryRegistry.getInstance().register(VAParticleTypes.SOULBLOOM_LEAVES, LeavesParticle.CherryLeavesFactory::new);
-        ParticleFactoryRegistry.getInstance().register(VAParticleTypes.INTERFERENCE, InterferenceFactory::new);
+        ParticleFactoryRegistry.getInstance().register(VAParticleTypes.INTERFERENCE, PowerParticleFactory::new);
+        ParticleFactoryRegistry.getInstance().register(VAParticleTypes.SPECTRAL_POWER, PowerParticleFactory::new);
         ParticleFactoryRegistry.getInstance().register(VAParticleTypes.IOLITE_ANCHOR_RING, IoliteRingParticle.Factory::new);
         ParticleFactoryRegistry.getInstance().register(VAParticleTypes.IOLITE_TETHER_RING, IoliteRingParticle.Factory::new);
         ParticleFactoryRegistry.getInstance().register(VAParticleTypes.SPECTRAL_FLAME, FlameParticle.Factory::new);

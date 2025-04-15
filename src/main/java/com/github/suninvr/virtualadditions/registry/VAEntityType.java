@@ -65,7 +65,7 @@ public class VAEntityType {
                 .build(RegistryKey.of(RegistryKeys.ENTITY_TYPE, VirtualAdditions.idOf("saline"))));
 
         SPECTRE = Registry.register(Registries.ENTITY_TYPE, idOf("spectre"), EntityType.Builder.create(SpectreEntity::new, SpawnGroup.MONSTER)
-                .dimensions(0.75F, 0.75F)
+                .dimensions(0.5F, 0.5F).eyeHeight(0.25F)
                 .build(RegistryKey.of(RegistryKeys.ENTITY_TYPE, VirtualAdditions.idOf("spectre"))));
 
         LIGHTNING_BOTTLE = Registry.register(Registries.ENTITY_TYPE, idOf("lightning_bottle"), EntityType.Builder.<LightningBottleEntity>create(LightningBottleEntity::new, SpawnGroup.MISC)

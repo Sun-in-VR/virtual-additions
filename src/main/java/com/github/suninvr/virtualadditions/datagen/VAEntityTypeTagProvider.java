@@ -33,8 +33,7 @@ public class VAEntityTypeTagProvider extends FabricTagProvider.EntityTypeTagProv
                         EntityType.STRAY,
                         EntityType.BOGGED,
                         EntityType.BLAZE,
-                        EntityType.BREEZE,
-                        EntityType.GHAST
+                        EntityType.BREEZE
                 ).addOptionalTag(EntityTypeTags.ILLAGER);
         getOrCreateTagBuilder(VAEntityTypeTags.PASSES_THROUGH_WEBBED_SILK)
                 .add(EntityType.ITEM, EntityType.EXPERIENCE_ORB)

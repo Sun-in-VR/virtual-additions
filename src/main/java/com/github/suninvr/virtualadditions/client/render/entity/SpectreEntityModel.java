@@ -19,7 +19,7 @@ public class SpectreEntityModel<T extends SpectreEntity> extends EntityModel<Liv
         ModelPartData head = modelPartData.addChild("head", ModelPartBuilder.create()
                         .uv(0, 0)
                         .cuboid("head", -3, -3, -3, 6, 6, 6, new Dilation(0.0F))
-                , ModelTransform.origin(0, 18, 0));
+                , ModelTransform.origin(0, 20, 0));
         return TexturedModelData.of(modelData, 32, 16);
     }
 
