@@ -563,6 +563,11 @@
     "subtitles.entity.saline.ambient": "Saline groans",
     "subtitles.entity.saline.hurt": "Saline hurts",
     "subtitles.entity.saline.death": "Saline dies",
+    "subtitles.entity.spectre.empower_start": "Spectre empowers mob",
+    "subtitles.entity.spectre.empower_ambient": "Spectre hums",
+    "subtitles.entity.spectre.ambient": "Spectre crackles",
+    "subtitles.entity.spectre.hurt": "Spectre hurts",
+    "subtitles.entity.spectre.death": "Spectre dies",
     "subtitles.block.frayed_silk.idle": "Silk crackling",
     "subtitles.block.lumwasp_nest.idle": "Larvae chirping",
 

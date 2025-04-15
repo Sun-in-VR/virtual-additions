@@ -117,6 +117,43 @@
       "virtual_additions:entity/lumwasp/death"
     ]
   },
+  "entity.spectre.empower_ambient": {
+    "subtitle": "subtitles.entity.spectre.empower_ambient",
+    "sounds": [
+      "virtual_additions:entity/spectre/empower_ambient"
+    ]
+  },
+  "entity.spectre.empower_start": {
+    "subtitle": "subtitles.entity.spectre.empower_start",
+    "sounds": [
+      "virtual_additions:entity/spectre/empower_start"
+    ]
+  },
+  "entity.spectre.ambient": {
+    "subtitle": "subtitles.entity.spectre.ambient",
+    "sounds": [
+      "virtual_additions:entity/spectre/ambient1",
+      "virtual_additions:entity/spectre/ambient2",
+      "virtual_additions:entity/spectre/ambient3",
+      "virtual_additions:entity/spectre/ambient4"
+    ]
+  },
+  "entity.spectre.hurt": {
+    "subtitle": "subtitles.entity.spectre.hurt",
+    "sounds": [
+      "virtual_additions:entity/spectre/hurt1",
+      "virtual_additions:entity/spectre/hurt2",
+      "virtual_additions:entity/spectre/hurt3",
+      "virtual_additions:entity/spectre/hurt4"
+    ]
+  },
+  "entity.spectre.death": {
+    "subtitle": "subtitles.entity.spectre.death",
+    "sounds": [
+      "virtual_additions:entity/spectre/death1",
+      "virtual_additions:entity/spectre/death2"
+    ]
+  },
   "item.bucket.empty_acid": {
     "subtitle": "subtitles.item.bucket.empty",
     "sounds": [

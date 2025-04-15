@@ -4,7 +4,10 @@ import com.github.suninvr.virtualadditions.VirtualAdditions;
 import com.github.suninvr.virtualadditions.entity.goal.SpectreBuffEntityGoal;
 import com.github.suninvr.virtualadditions.registry.VABlockTags;
 import com.github.suninvr.virtualadditions.registry.VAParticleTypes;
+import com.github.suninvr.virtualadditions.registry.VASoundEvents;
 import com.github.suninvr.virtualadditions.registry.VATrackedDataHandlerRegistry;
+import net.fabricmc.api.EnvType;
+import net.fabricmc.api.Environment;
 import net.minecraft.block.BlockState;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.LivingEntity;
@@ -16,6 +19,7 @@ import net.minecraft.entity.ai.pathing.BirdNavigation;
 import net.minecraft.entity.ai.pathing.EntityNavigation;
 import net.minecraft.entity.attribute.DefaultAttributeContainer;
 import net.minecraft.entity.attribute.EntityAttributes;
+import net.minecraft.entity.damage.DamageSource;
 import net.minecraft.entity.data.DataTracker;
 import net.minecraft.entity.data.TrackedData;
 import net.minecraft.entity.data.TrackedDataHandlerRegistry;
@@ -28,6 +32,7 @@ import net.minecraft.nbt.NbtCompound;
 import net.minecraft.particle.ParticleEffect;
 import net.minecraft.particle.TrailParticleEffect;
 import net.minecraft.sound.SoundCategory;
+import net.minecraft.sound.SoundEvent;
 import net.minecraft.sound.SoundEvents;
 import net.minecraft.util.Uuids;
 import net.minecraft.util.math.BlockPos;
@@ -36,6 +41,7 @@ import net.minecraft.util.math.random.Random;
 import net.minecraft.world.ServerWorldAccess;
 import net.minecraft.world.World;
 import org.apache.logging.log4j.Level;
+import org.jetbrains.annotations.Nullable;
 
 import java.util.HashMap;
 import java.util.List;
@@ -119,6 +125,7 @@ public class SpectreEntity extends HostileEntity implements RangedAttackMob {
     public void tickMovement() {
         super.tickMovement();
         if (this.getWorld().isClient()) {
+            if (this.age % 40 == 0) this.refreshTarget();
             this.spawnAmbientEffects();
             if (this.isBuffingTarget()) {
                 if (this.buffTarget instanceof LivingEntity livingEntity) {
@@ -133,9 +140,12 @@ public class SpectreEntity extends HostileEntity implements RangedAttackMob {
     @Override
     public void onDataTrackerUpdate(List<DataTracker.SerializedEntry<?>> entries) {
         super.onDataTrackerUpdate(entries);
-        if (this.getWorld().isClient) {
-            this.buffTarget = (LivingEntity) this.getWorld().getEntity(this.dataTracker.get(BUFF_TARGET));
-        }
+        if (this.getWorld().isClient) this.refreshTarget();
+    }
+
+    @Environment(EnvType.CLIENT)
+    private void refreshTarget() {
+        this.buffTarget = (LivingEntity) this.getWorld().getEntity(this.dataTracker.get(BUFF_TARGET));
     }
 
     private void spawnAmbientEffects() {
@@ -152,7 +162,7 @@ public class SpectreEntity extends HostileEntity implements RangedAttackMob {
             this.getWorld().addParticleClient(effect, true, true, this.getParticleX(0.35), this.getBodyY(0.5), this.getParticleZ(0.35), 0.0, 0.0, 0.0);
         }
         if (this.buffTicks % 2 == 0) this.getWorld().addParticleClient(VAParticleTypes.SPECTRAL_POWER, buffTarget.getParticleX(1), buffTarget.getBodyY(0.25), buffTarget.getParticleZ(1), 0.0, 0.0, 0.0);
-        if (this.buffTicks % 60 == 0) this.getWorld().playSoundClient(this.getX(), this.getY(), this.getZ(), SoundEvents.BLOCK_BEACON_AMBIENT, SoundCategory.HOSTILE, 1.0F, 1.3333F, true);
+        if (this.buffTicks % 50 == 0 && !this.isSilent()) this.getWorld().playSoundClient(this.getX(), this.getY(), this.getZ(), VASoundEvents.ENTITY_SPECTRE_EMPOWER_AMBIENT, SoundCategory.HOSTILE, 0.2F, 1.0F, true);
     }
 
     private void applyEffects(LivingEntity buffTarget, int difficulty) {
@@ -166,7 +176,7 @@ public class SpectreEntity extends HostileEntity implements RangedAttackMob {
     public void setIsBuffing(boolean bl) {
         if (bl && this.isBuffingTarget()) return;
         this.dataTracker.set(IS_BUFFING_TARGET, bl);
-        if (bl && checkBuffTarget()) this.getWorld().playSound(this, this.getX(), this.getY(), this.getZ(), SoundEvents.BLOCK_AMETHYST_BLOCK_CHIME, SoundCategory.HOSTILE, 1.0F, 1.3333F);
+        if (bl && checkBuffTarget()) this.getWorld().playSound(this, this.getX(), this.getY(), this.getZ(), VASoundEvents.ENTITY_SPECTRE_EMPOWER_START, SoundCategory.HOSTILE, 0.6F, 1.0F);
     }
 
     public boolean isBuffingTarget() {
@@ -218,6 +228,22 @@ public class SpectreEntity extends HostileEntity implements RangedAttackMob {
     public NbtCompound writeNbt(NbtCompound nbt) {
         nbt.put("buff_target", Uuids.CODEC, this.buffTargetId);
         return super.writeNbt(nbt);
+    }
+
+    @Nullable
+    @Override
+    protected SoundEvent getAmbientSound() {
+        return VASoundEvents.ENTITY_SPECTRE_AMBIENT;
+    }
+
+    @Override
+    protected SoundEvent getHurtSound(DamageSource source) {
+        return VASoundEvents.ENTITY_SPECTRE_HURT;
+    }
+
+    @Override
+    protected SoundEvent getDeathSound() {
+        return VASoundEvents.ENTITY_SPECTRE_DEATH;
     }
 
     public static boolean canSpawnInDark(EntityType<? extends HostileEntity> type, ServerWorldAccess world, SpawnReason spawnReason, BlockPos pos, Random random) {

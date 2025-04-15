@@ -22,6 +22,11 @@ public class VASoundEvents {
     public static final SoundEvent ENTITY_SALINE_DEATH;
     public static final SoundEvent ENTITY_LUMWASP_HURT;
     public static final SoundEvent ENTITY_LUMWASP_DEATH;
+    public static final SoundEvent ENTITY_SPECTRE_EMPOWER_START;
+    public static final SoundEvent ENTITY_SPECTRE_EMPOWER_AMBIENT;
+    public static final SoundEvent ENTITY_SPECTRE_AMBIENT;
+    public static final SoundEvent ENTITY_SPECTRE_HURT;
+    public static final SoundEvent ENTITY_SPECTRE_DEATH;
     public static final SoundEvent BUCKET_FILL_ACID;
     public static final SoundEvent BUCKET_EMPTY_ACID;
     public static final SoundEvent ACID_SIZZLE;
@@ -52,6 +57,11 @@ public class VASoundEvents {
         ENTITY_SALINE_DEATH = register("entity.saline.death");
         ENTITY_LUMWASP_HURT = register("entity.lumwasp.hurt");
         ENTITY_LUMWASP_DEATH = register("entity.lumwasp.death");
+        ENTITY_SPECTRE_EMPOWER_START = register("entity.spectre.empower_start");
+        ENTITY_SPECTRE_EMPOWER_AMBIENT = register("entity.spectre.empower_ambient");
+        ENTITY_SPECTRE_AMBIENT = register("entity.spectre.ambient");
+        ENTITY_SPECTRE_HURT = register("entity.spectre.hurt");
+        ENTITY_SPECTRE_DEATH = register("entity.spectre.death");
         BUCKET_FILL_ACID = register("item.bucket.fill_acid");
         BUCKET_EMPTY_ACID = register("item.bucket.empty_acid");
         ACID_SIZZLE = register("block.acid.sizzle");
