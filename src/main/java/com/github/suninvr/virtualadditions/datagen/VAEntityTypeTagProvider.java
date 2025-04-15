@@ -22,18 +22,24 @@ public class VAEntityTypeTagProvider extends FabricTagProvider.EntityTypeTagProv
         getOrCreateTagBuilder(EntityTypeTags.UNDEAD).add(VAEntityType.SALINE);
         getOrCreateTagBuilder(VAEntityTypeTags.SPECTRE_BUFF_TARGETS)
                 .add(
-                        EntityType.SPIDER,
-                        VAEntityType.LUMWASP,
-                        EntityType.ZOMBIE,
+                        EntityType.BLAZE,
+                        EntityType.BOGGED,
+                        EntityType.BREEZE,
+                        EntityType.CAVE_SPIDER,
+                        EntityType.CREAKING,
                         EntityType.DROWNED,
                         EntityType.HUSK,
+                        VAEntityType.LUMWASP,
+                        EntityType.MAGMA_CUBE,
+                        EntityType.RAVAGER,
                         VAEntityType.SALINE,
                         EntityType.SKELETON,
-                        EntityType.WITHER_SKELETON,
+                        EntityType.SLIME,
+                        EntityType.SPIDER,
                         EntityType.STRAY,
-                        EntityType.BOGGED,
-                        EntityType.BLAZE,
-                        EntityType.BREEZE
+                        EntityType.WITCH,
+                        EntityType.WITHER_SKELETON,
+                        EntityType.ZOMBIE
                 ).addOptionalTag(EntityTypeTags.ILLAGER);
         getOrCreateTagBuilder(VAEntityTypeTags.PASSES_THROUGH_WEBBED_SILK)
                 .add(EntityType.ITEM, EntityType.EXPERIENCE_ORB)

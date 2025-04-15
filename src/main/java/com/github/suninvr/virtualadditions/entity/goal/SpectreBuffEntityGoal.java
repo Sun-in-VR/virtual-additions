@@ -42,6 +42,11 @@ public class SpectreBuffEntityGoal extends Goal {
 
     @Override
     public boolean canStart() {
+        if (canTargetMob( (MobEntity) this.mob.getBuffTarget())) {
+            this.target = (MobEntity) this.mob.getBuffTarget();
+            return true;
+        }
+
         this.updateList();
         MobEntity entity = null;
         int priority = -1;
@@ -102,12 +107,13 @@ public class SpectreBuffEntityGoal extends Goal {
             if (--this.updateCountdownTicks <= 0) {
                 boolean bl = this.mob.canSee(this.target);
                 this.updateCountdownTicks = this.getTickCount(10);
+                double targetY = this.target.getBodyY(1) + 1;
                 double d = this.mob.getX() - this.target.getX();
-                double e = this.mob.getY() - (this.target.getY() + this.target.getHeight());
+                double e = this.mob.getY() - targetY;
                 double f = this.mob.getZ() - this.target.getZ();
                 double g = d * d + e * e + f * f;
                 if (!(g <= this.minDistance * this.minDistance) || !bl) {
-                    this.navigation.startMovingTo(this.target.getX(), this.target.getY() + this.target.getHeight(), this.target.getZ(), this.speed);
+                    this.navigation.startMovingTo(this.target.getX(), targetY, this.target.getZ(), this.speed);
                 } else {
                     this.navigation.stop();
                     LookControl lookControl = this.target.getLookControl();

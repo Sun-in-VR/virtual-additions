@@ -4,8 +4,8 @@ import com.github.suninvr.virtualadditions.VirtualAdditions;
 import com.github.suninvr.virtualadditions.entity.goal.SpectreBuffEntityGoal;
 import com.github.suninvr.virtualadditions.registry.VABlockTags;
 import com.github.suninvr.virtualadditions.registry.VAParticleTypes;
+import com.github.suninvr.virtualadditions.registry.VATrackedDataHandlerRegistry;
 import net.minecraft.block.BlockState;
-import net.minecraft.block.Blocks;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.SpawnReason;
@@ -16,6 +16,9 @@ import net.minecraft.entity.ai.pathing.BirdNavigation;
 import net.minecraft.entity.ai.pathing.EntityNavigation;
 import net.minecraft.entity.attribute.DefaultAttributeContainer;
 import net.minecraft.entity.attribute.EntityAttributes;
+import net.minecraft.entity.data.DataTracker;
+import net.minecraft.entity.data.TrackedData;
+import net.minecraft.entity.data.TrackedDataHandlerRegistry;
 import net.minecraft.entity.effect.StatusEffectInstance;
 import net.minecraft.entity.effect.StatusEffects;
 import net.minecraft.entity.mob.HostileEntity;
@@ -24,28 +27,30 @@ import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.nbt.NbtCompound;
 import net.minecraft.particle.ParticleEffect;
 import net.minecraft.particle.TrailParticleEffect;
-import net.minecraft.registry.tag.BlockTags;
-import net.minecraft.server.network.ServerPlayerEntity;
-import net.minecraft.server.world.ServerWorld;
 import net.minecraft.sound.SoundCategory;
 import net.minecraft.sound.SoundEvents;
+import net.minecraft.util.Uuids;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Vec3d;
 import net.minecraft.util.math.random.Random;
-import net.minecraft.world.Difficulty;
 import net.minecraft.world.ServerWorldAccess;
 import net.minecraft.world.World;
 import org.apache.logging.log4j.Level;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.UUID;
 
 public class SpectreEntity extends HostileEntity implements RangedAttackMob {
-    private LivingEntity buffTarget = null;
-    private boolean isBuffingTarget = false;
+    private static final TrackedData<Boolean> IS_BUFFING_TARGET = DataTracker.registerData(SpectreEntity.class, TrackedDataHandlerRegistry.BOOLEAN);
+    private static final TrackedData<UUID> BUFF_TARGET = DataTracker.registerData(SpectreEntity.class, VATrackedDataHandlerRegistry.UUID);
+    private static final UUID EMPTY_ID = UUID.fromString("0-0-0-0-0");
     private static final Map<UUID, UUID> spectreToTarget = new HashMap<>();
     private static final Map<UUID, UUID> targetToSpectre = new HashMap<>();
+    private LivingEntity buffTarget = null;
+    private UUID buffTargetId = EMPTY_ID;
+    private int buffTicks = 0;
 
     public SpectreEntity(EntityType<? extends HostileEntity> entityType, World world) {
         super(entityType, world);
@@ -63,12 +68,21 @@ public class SpectreEntity extends HostileEntity implements RangedAttackMob {
     }
 
     @Override
+    protected void initDataTracker(DataTracker.Builder builder) {
+        super.initDataTracker(builder);
+        builder.add(IS_BUFFING_TARGET, false);
+        builder.add(BUFF_TARGET, EMPTY_ID);
+    }
+
+    @Override
     protected void initGoals() {
         super.initGoals();
         this.goalSelector.add(1, new FleeEntityGoal<>(this, PlayerEntity.class, 8.0F, 1.0, 1.2));
         this.goalSelector.add(2, new SpectreBuffEntityGoal(this, 1.5, 8.0F, 5.0F, 16.0F));
         //this.goalSelector.add(3, new ProjectileAttackGoal(this, 1.2F, 10, 20, 4.0F));
         this.goalSelector.add(4, new FlyGoal(this, 1));
+        this.goalSelector.add(4, new LookAtEntityGoal(this, MobEntity.class, 8.0F));
+        this.goalSelector.add(5, new LookAroundGoal(this));
         this.targetSelector.add(1, new ActiveTargetGoal<>(this, PlayerEntity.class, true));
     }
 
@@ -93,45 +107,70 @@ public class SpectreEntity extends HostileEntity implements RangedAttackMob {
         this.noClip = false;
         this.setNoGravity(true);
         if (this.isDead()) return;
-        if (this.getWorld() instanceof ServerWorld serverWorld) {
-            this.spawnAmbientEffects(serverWorld);
-            if (this.checkBuffTarget() && this.isBuffingTarget) {
-                this.spawnBuffEffects(this.buffTarget, serverWorld);
+        if (!this.getWorld().isClient) {
+            if (this.checkBuffTarget() && this.isBuffingTarget()) {
                 int difficulty = this.getWorld().getDifficulty().getId();
                 if (this.age % 20 == 0) this.applyEffects(this.buffTarget, difficulty);
             }
         }
     }
 
-    private void spawnAmbientEffects(ServerWorld serverWorld) {
-        if (this.age % 4 == 0) serverWorld.spawnParticles(VAParticleTypes.SPECTRAL_FLAME, this.getX(), this.getY() + 0.575, this.getZ(), 1, 0.125, 0.125, 0.125, 0.0);
+    @Override
+    public void tickMovement() {
+        super.tickMovement();
+        if (this.getWorld().isClient()) {
+            this.spawnAmbientEffects();
+            if (this.isBuffingTarget()) {
+                if (this.buffTarget instanceof LivingEntity livingEntity) {
+                    this.spawnBuffEffects(livingEntity);
+                }
+            }
+        }
+        if (this.isBuffingTarget()) this.buffTicks += 1;
+        else this.buffTicks = 0;
     }
 
-    private void spawnBuffEffects(LivingEntity buffTarget, ServerWorld serverWorld) {
+    @Override
+    public void onDataTrackerUpdate(List<DataTracker.SerializedEntry<?>> entries) {
+        super.onDataTrackerUpdate(entries);
+        if (this.getWorld().isClient) {
+            this.buffTarget = (LivingEntity) this.getWorld().getEntity(this.dataTracker.get(BUFF_TARGET));
+        }
+    }
+
+    private void spawnAmbientEffects() {
+        if (this.age % 3 == 0) {
+            this.getWorld().addParticleClient(VAParticleTypes.SPECTRAL_FLAME, this.getParticleX(0.35), this.getBodyY(1), this.getParticleZ(0.35), 0.0, 0.0, 0.0);
+        }
+    }
+
+    private void spawnBuffEffects(LivingEntity buffTarget) {
         if (buffTarget == null) return;
-
-        Vec3d pos = buffTarget.getPos();
-        double y = (Math.random() * buffTarget.getHeight());
-        ParticleEffect effect = new TrailParticleEffect(pos.add(0, y, 0), 0xCFEEFF, 15);
-
-        serverWorld.spawnParticles(effect, this.getX(), this.getY() + 0.375, this.getZ(), 1, 0.125, 0.125, 0.125, 0.0);
-        if (this.age % 8 == 0) serverWorld.spawnParticles(VAParticleTypes.SPECTRAL_POWER, buffTarget.getX(), buffTarget.getY() + buffTarget.getHeight() / 2, buffTarget.getZ(), 5, buffTarget.getWidth() * 0.45, buffTarget.getHeight() * 0.35, buffTarget.getWidth() * 0.45, 0.0);
-        if (this.age % 60 == 0) serverWorld.playSound(this, this.getX(), this.getY(), this.getZ(), SoundEvents.BLOCK_BEACON_AMBIENT, SoundCategory.HOSTILE, 1.0F, 1.3333F);
-
+        for (int i = 0; i < 1; ++i) {
+            Vec3d pos = new Vec3d(buffTarget.getParticleX(0.6), buffTarget.getRandomBodyY(), buffTarget.getParticleZ(0.6));
+            ParticleEffect effect = new TrailParticleEffect(pos, 0xCFEEFF, this.getWorld().random.nextInt(20) + 10);
+            this.getWorld().addParticleClient(effect, true, true, this.getParticleX(0.35), this.getBodyY(0.5), this.getParticleZ(0.35), 0.0, 0.0, 0.0);
+        }
+        if (this.buffTicks % 2 == 0) this.getWorld().addParticleClient(VAParticleTypes.SPECTRAL_POWER, buffTarget.getParticleX(1), buffTarget.getBodyY(0.25), buffTarget.getParticleZ(1), 0.0, 0.0, 0.0);
+        if (this.buffTicks % 60 == 0) this.getWorld().playSoundClient(this.getX(), this.getY(), this.getZ(), SoundEvents.BLOCK_BEACON_AMBIENT, SoundCategory.HOSTILE, 1.0F, 1.3333F, true);
     }
 
     private void applyEffects(LivingEntity buffTarget, int difficulty) {
         if (buffTarget == null) return;
         buffTarget.addStatusEffect(new StatusEffectInstance(StatusEffects.STRENGTH, 30, 0, true, true));
         buffTarget.addStatusEffect(new StatusEffectInstance(StatusEffects.SPEED, 30, 0, true, true));
-        buffTarget.addStatusEffect(new StatusEffectInstance(StatusEffects.RESISTANCE, 30, 2, true, true));
+        buffTarget.addStatusEffect(new StatusEffectInstance(StatusEffects.RESISTANCE, 30, difficulty - 1, true, true));
         this.addStatusEffect(new StatusEffectInstance(StatusEffects.RESISTANCE, 30, difficulty - 1, true, false));
     }
 
     public void setIsBuffing(boolean bl) {
-        if (bl && this.isBuffingTarget) return;
-        this.isBuffingTarget = bl;
+        if (bl && this.isBuffingTarget()) return;
+        this.dataTracker.set(IS_BUFFING_TARGET, bl);
         if (bl && checkBuffTarget()) this.getWorld().playSound(this, this.getX(), this.getY(), this.getZ(), SoundEvents.BLOCK_AMETHYST_BLOCK_CHIME, SoundCategory.HOSTILE, 1.0F, 1.3333F);
+    }
+
+    public boolean isBuffingTarget() {
+        return this.dataTracker.get(IS_BUFFING_TARGET);
     }
 
     public void setBuffTarget(MobEntity target) {
@@ -139,23 +178,46 @@ public class SpectreEntity extends HostileEntity implements RangedAttackMob {
         spectreToTarget.remove(this.uuid);
         if (target == null) {
             this.buffTarget = null;
+            this.buffTargetId = EMPTY_ID;
         } else {
             this.buffTarget = target;
-            targetToSpectre.put(this.buffTarget.getUuid(), this.getUuid());
-            spectreToTarget.put(this.getUuid(), this.buffTarget.getUuid());
+            UUID targetId = this.buffTarget.getUuid();
+            UUID thisId = this.getUuid();
+            targetToSpectre.put(targetId, thisId);
+            spectreToTarget.put(thisId, targetId);
+            this.buffTargetId = targetId;
         }
+        this.dataTracker.set(BUFF_TARGET, this.buffTargetId);
         if (VirtualAdditions.DEBUG) VirtualAdditions.LOGGER.log(Level.INFO, "Spectre Target Maps: T->S = " + targetToSpectre.size() + ", S->T = " + spectreToTarget.size());
     }
 
-    public static UUID getBuffingSpectreId(MobEntity entity) {
+    public LivingEntity getBuffTarget() {
+        this.checkBuffTarget();
+        return this.buffTarget;
+    }
+
+    public static UUID getBuffingSpectreId(LivingEntity entity) {
         return targetToSpectre.get(entity.getUuid());
     }
 
     private boolean checkBuffTarget() {
+        if (this.buffTarget == null && buffTargetId != EMPTY_ID) this.setBuffTarget((MobEntity) this.getWorld().getEntity(buffTargetId));
         if (this.buffTarget == null) return false;
         if (this.buffTarget.isDead() || this.buffTarget.isRemoved()) this.buffTarget = null;
-        if (buffTarget == null) this.isBuffingTarget = false;
+        if (buffTarget == null) this.setIsBuffing(false);
         return this.buffTarget != null;
+    }
+
+    @Override
+    public void readNbt(NbtCompound nbt) {
+        super.readNbt(nbt);
+        this.buffTargetId = nbt.get("buff_target", Uuids.CODEC).orElse(EMPTY_ID);
+    }
+
+    @Override
+    public NbtCompound writeNbt(NbtCompound nbt) {
+        nbt.put("buff_target", Uuids.CODEC, this.buffTargetId);
+        return super.writeNbt(nbt);
     }
 
     public static boolean canSpawnInDark(EntityType<? extends HostileEntity> type, ServerWorldAccess world, SpawnReason spawnReason, BlockPos pos, Random random) {

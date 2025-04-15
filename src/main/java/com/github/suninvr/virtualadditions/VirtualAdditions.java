@@ -79,6 +79,7 @@ public class VirtualAdditions implements ModInitializer {
 		VAScreenHandler.init();
 		VASoundEvents.init();
 		VAStatusEffects.init();
+		VATrackedDataHandlerRegistry.init();
 	}
 
 	/**
