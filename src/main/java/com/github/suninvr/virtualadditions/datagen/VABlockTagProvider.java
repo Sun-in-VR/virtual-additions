@@ -64,6 +64,7 @@ public final class VABlockTagProvider {
             getOrCreateTagBuilder(BlockTags.ENDERMAN_HOLDABLE).add(VABlocks.NECROTIC_NYLIUM, VABlocks.NECROTIC_ROOTS);
             getOrCreateTagBuilder(BlockTags.FIRE).add(VABlocks.SPECTRAL_FIRE);
             getOrCreateTagBuilder(BlockTags.WALL_POST_OVERRIDE).add(VABlocks.SPECTRAL_TORCH);
+            getOrCreateTagBuilder(BlockTags.CAMEL_SAND_STEP_SOUND_BLOCKS).add(VABlocks.SPECTRAL_SAND);
 
             configureColorfulBlockSet(VACollections.CHARTREUSE);
             configureColorfulBlockSet(VACollections.MAROON);
@@ -151,6 +152,10 @@ public final class VABlockTagProvider {
 
             configureMinable(BlockTags.AXE_MINEABLE, 0,
                     VABlocks.COLORING_STATION
+                    );
+
+            configureMinable(BlockTags.SHOVEL_MINEABLE, 0,
+                    VABlocks.SPECTRAL_SAND
                     );
 
             configureOverworldStone(VABlocks.HORNFELS, VABlocks.BLUESCHIST, VABlocks.SYENITE);

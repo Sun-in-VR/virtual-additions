@@ -164,6 +164,7 @@ public final class VABlockLootTableProvider {
                     VABlocks.NECROTIC_ROOTS,
                     VABlocks.SPECTRAL_TORCH,
                     VABlocks.SPECTRAL_LANTERN,
+                    VABlocks.SPECTRAL_SAND,
                     VABlocks.COLORING_STATION,
                     VABlocks.IOLITE_BLOCK,
                     VABlocks.WARP_ANCHOR,
