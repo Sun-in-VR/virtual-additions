@@ -312,8 +312,24 @@ public final class VARecipeProvider {
             offerBarkBlockRecipe(VAItems.WITHERED_WOOD, VAItems.WITHERED_LOG);
             offerBarkBlockRecipe(VAItems.STRIPPED_WITHERED_WOOD, VAItems.STRIPPED_WITHERED_LOG);
             offerPlanksRecipe2(VAItems.WITHERED_PLANKS, VAItemTags.WITHERED_LOGS, 4);
-            //offerHangingSignRecipe(VAItems.WITHERED_HANGING_SIGN, VAItems.STRIPPED_WITHERED_LOG);
+            offerHangingSignRecipe(VAItems.WITHERED_HANGING_SIGN, VAItems.STRIPPED_WITHERED_LOG);
             offerHedgeRecipe(VABlocks.WITHERED_HEDGE, VABlocks.WITHERED_LEAVES);
+
+            offerCompactingRecipe(RecipeCategory.BUILDING_BLOCKS, VABlocks.SPECTRAL_SAND, VAItems.SPECTRAL_POWDER);
+
+            ShapedRecipeJsonBuilder.create(this.registryLookup, RecipeCategory.BUILDING_BLOCKS, VAItems.SPECTRAL_TORCH, 4)
+                            .pattern("c")
+                            .pattern("/")
+                            .pattern("p")
+                            .input('c', Items.COAL).input('/', Items.STICK).input('p', VAItems.SPECTRAL_POWDER)
+                    .criterion("has_spectral_powder", conditionsFromItem(VAItems.SPECTRAL_POWDER)).offerTo(exporter);
+
+            ShapedRecipeJsonBuilder.create(this.registryLookup, RecipeCategory.BUILDING_BLOCKS, VAItems.SPECTRAL_LANTERN)
+                            .pattern("iii")
+                            .pattern("iti")
+                            .pattern("iii")
+                            .input('i', Items.IRON_NUGGET).input('t', VAItems.SPECTRAL_TORCH)
+                    .criterion("has_spectral_torch", conditionsFromItem(VAItems.SPECTRAL_TORCH)).offerTo(exporter);
 
             ShapelessRecipeJsonBuilder.create(this.registryLookup, RecipeCategory.MISC, VAItems.MAROON_DYE, 2)
                     .input(Ingredient.ofItems(Items.RED_DYE), 1)

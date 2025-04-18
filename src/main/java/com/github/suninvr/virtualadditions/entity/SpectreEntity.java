@@ -83,10 +83,9 @@ public class SpectreEntity extends HostileEntity implements RangedAttackMob {
     @Override
     protected void initGoals() {
         super.initGoals();
-        this.goalSelector.add(1, new FleeEntityGoal<>(this, PlayerEntity.class, 8.0F, 1.0, 1.2));
-        this.goalSelector.add(2, new SpectreBuffEntityGoal(this, 1.5, 8.0F, 5.0F, 16.0F));
+        this.goalSelector.add(1, new SpectreBuffEntityGoal(this, 1.5, 8.0F, 5.0F, 16.0F));
         //this.goalSelector.add(3, new ProjectileAttackGoal(this, 1.2F, 10, 20, 4.0F));
-        this.goalSelector.add(4, new FlyGoal(this, 1));
+        this.goalSelector.add(4, new FlyGoal(this, 1.0F));
         this.goalSelector.add(4, new LookAtEntityGoal(this, MobEntity.class, 8.0F));
         this.goalSelector.add(5, new LookAroundGoal(this));
         this.targetSelector.add(1, new ActiveTargetGoal<>(this, PlayerEntity.class, true));
@@ -108,9 +107,7 @@ public class SpectreEntity extends HostileEntity implements RangedAttackMob {
 
     @Override
     public void tick() {
-        this.noClip = true;
         super.tick();
-        this.noClip = false;
         this.setNoGravity(true);
         if (this.isDead()) return;
         if (!this.getWorld().isClient) {
@@ -155,10 +152,10 @@ public class SpectreEntity extends HostileEntity implements RangedAttackMob {
     }
 
     private void spawnBuffEffects(LivingEntity buffTarget) {
-        if (buffTarget == null) return;
+        if (buffTarget == null || this.isDead() || this.isRemoved()) return;
         for (int i = 0; i < 1; ++i) {
             Vec3d pos = new Vec3d(buffTarget.getParticleX(0.6), buffTarget.getRandomBodyY(), buffTarget.getParticleZ(0.6));
-            ParticleEffect effect = new TrailParticleEffect(pos, 0xCFEEFF, this.getWorld().random.nextInt(20) + 10);
+            ParticleEffect effect = new TrailParticleEffect(pos, 0xE0EFFF, this.getWorld().random.nextInt(20) + 10);
             this.getWorld().addParticleClient(effect, true, true, this.getParticleX(0.35), this.getBodyY(0.5), this.getParticleZ(0.35), 0.0, 0.0, 0.0);
         }
         if (this.buffTicks % 2 == 0) this.getWorld().addParticleClient(VAParticleTypes.SPECTRAL_POWER, buffTarget.getParticleX(1), buffTarget.getBodyY(0.25), buffTarget.getParticleZ(1), 0.0, 0.0, 0.0);
@@ -176,7 +173,7 @@ public class SpectreEntity extends HostileEntity implements RangedAttackMob {
     public void setIsBuffing(boolean bl) {
         if (bl && this.isBuffingTarget()) return;
         this.dataTracker.set(IS_BUFFING_TARGET, bl);
-        if (bl && checkBuffTarget()) this.getWorld().playSound(this, this.getX(), this.getY(), this.getZ(), VASoundEvents.ENTITY_SPECTRE_EMPOWER_START, SoundCategory.HOSTILE, 0.6F, 1.0F);
+        if (bl && !this.isSilent() && checkBuffTarget()) this.getWorld().playSound(this, this.getX(), this.getY(), this.getZ(), VASoundEvents.ENTITY_SPECTRE_EMPOWER_START, SoundCategory.HOSTILE, 0.6F, 1.0F);
     }
 
     public boolean isBuffingTarget() {
@@ -189,6 +186,7 @@ public class SpectreEntity extends HostileEntity implements RangedAttackMob {
         if (target == null) {
             this.buffTarget = null;
             this.buffTargetId = EMPTY_ID;
+            this.setIsBuffing(false);
         } else {
             this.buffTarget = target;
             UUID targetId = this.buffTarget.getUuid();
@@ -253,7 +251,12 @@ public class SpectreEntity extends HostileEntity implements RangedAttackMob {
 
     @Override
     protected EntityNavigation createNavigation(World world) {
-        BirdNavigation birdNavigation = new BirdNavigation(this, world);
+        BirdNavigation birdNavigation = new BirdNavigation(this, world) {
+            @Override
+            protected boolean canPathDirectlyThrough(Vec3d origin, Vec3d target) {
+                return super.canPathDirectlyThrough(origin, target);
+            }
+        };
         birdNavigation.setCanOpenDoors(false);
         birdNavigation.setCanSwim(true);
         birdNavigation.setMaxFollowRange(48.0F);

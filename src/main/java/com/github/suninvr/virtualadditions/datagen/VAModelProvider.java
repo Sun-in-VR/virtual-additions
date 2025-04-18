@@ -10,6 +10,7 @@ import net.fabricmc.fabric.api.client.datagen.v1.provider.FabricModelProvider;
 import net.fabricmc.fabric.api.datagen.v1.FabricDataGenerator;
 import net.fabricmc.fabric.api.datagen.v1.FabricDataOutput;
 import net.minecraft.block.Block;
+import net.minecraft.block.Blocks;
 import net.minecraft.block.CropBlock;
 import net.minecraft.client.data.*;
 import net.minecraft.client.render.item.model.ItemModel;
@@ -87,6 +88,11 @@ public class VAModelProvider {
             blockStateModelGenerator.createLogTexturePool(VABlocks.STRIPPED_WITHERED_LOG).log(VABlocks.STRIPPED_WITHERED_LOG).wood(VABlocks.STRIPPED_WITHERED_WOOD);
             blockStateModelGenerator.registerHangingSign(VABlocks.STRIPPED_WITHERED_LOG, VABlocks.WITHERED_HANGING_SIGN, VABlocks.WITHERED_WALL_HANGING_SIGN);
             blockStateModelGenerator.registerSimpleCubeAll(VABlocks.WITHERED_LEAVES);
+
+            registerSpectralFire(blockStateModelGenerator);
+            blockStateModelGenerator.registerTorch(VABlocks.SPECTRAL_TORCH, VABlocks.SPECTRAL_WALL_TORCH);
+            blockStateModelGenerator.registerLantern(VABlocks.SPECTRAL_LANTERN);
+            blockStateModelGenerator.registerSimpleCubeAll(VABlocks.SPECTRAL_SAND);
 
             blockStateModelGenerator.registerFlowerbed(VABlocks.BLUE_PETALS);
 
@@ -254,6 +260,8 @@ public class VAModelProvider {
 
             itemModelGenerator.register(VAItems.SOULBLOOM_BOAT, Models.GENERATED);
             itemModelGenerator.register(VAItems.SOULBLOOM_CHEST_BOAT, Models.GENERATED);
+
+            itemModelGenerator.register(VAItems.SPECTRAL_POWDER, Models.GENERATED);
 
             itemModelGenerator.registerBundle(VAItems.CHARTREUSE_BUNDLE);
             itemModelGenerator.registerBundle(VAItems.MAROON_BUNDLE);
@@ -514,6 +522,20 @@ public class VAModelProvider {
                                     ItemModels.rangeDispatchEntry(unbaked10, 1.0F)
                                     )),
                             ItemModels.switchCase(CrossbowItem.ChargeType.ROCKET, unbaked6))));
+        }
+
+        protected void registerSpectralFire(BlockStateModelGenerator generator) {
+            WeightedVariant weightedVariant = generator.getFireFloorModels(VABlocks.SPECTRAL_FIRE);
+            WeightedVariant weightedVariant2 = generator.getFireSideModels(VABlocks.SPECTRAL_FIRE);
+            generator.blockStateCollector
+                    .accept(
+                            MultipartBlockModelDefinitionCreator.create(VABlocks.SPECTRAL_FIRE)
+                                    .with(weightedVariant)
+                                    .with(weightedVariant2)
+                                    .with(weightedVariant2.apply(BlockStateModelGenerator.ROTATE_Y_90))
+                                    .with(weightedVariant2.apply(BlockStateModelGenerator.ROTATE_Y_180))
+                                    .with(weightedVariant2.apply(BlockStateModelGenerator.ROTATE_Y_270))
+                    );
         }
     }
 

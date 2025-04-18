@@ -62,6 +62,8 @@ public final class VABlockTagProvider {
             getOrCreateTagBuilder(BlockTags.NYLIUM).add(VABlocks.NECROTIC_NYLIUM);
             getOrCreateTagBuilder(BlockTags.MUSHROOM_GROW_BLOCK).add(VABlocks.NECROTIC_NYLIUM);
             getOrCreateTagBuilder(BlockTags.ENDERMAN_HOLDABLE).add(VABlocks.NECROTIC_NYLIUM, VABlocks.NECROTIC_ROOTS);
+            getOrCreateTagBuilder(BlockTags.FIRE).add(VABlocks.SPECTRAL_FIRE);
+            getOrCreateTagBuilder(BlockTags.WALL_POST_OVERRIDE).add(VABlocks.SPECTRAL_TORCH);
 
             configureColorfulBlockSet(VACollections.CHARTREUSE);
             configureColorfulBlockSet(VACollections.MAROON);
@@ -96,7 +98,8 @@ public final class VABlockTagProvider {
                     .add(VABlocks.ROCK_SALT_BLOCK)
                     .add(VABlocks.ROCK_SALT_CRYSTAL)
                     .add(VABlocks.CHISELED_ROCK_SALT_BRICKS)
-                    .add(VABlocks.NECROTIC_NYLIUM);
+                    .add(VABlocks.NECROTIC_NYLIUM)
+                    .add(VABlocks.SPECTRAL_LANTERN);
 
             configureMinable(BlockTags.PICKAXE_MINEABLE, 1,
                     VABlocks.STEEL_BLOCK,

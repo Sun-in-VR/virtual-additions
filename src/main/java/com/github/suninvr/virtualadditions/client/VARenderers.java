@@ -113,6 +113,8 @@ public class VARenderers {
                 VABlocks.WITHERED_TRAPDOOR,
                 VABlocks.WITHERED_SAPLING,
                 VABlocks.POTTED_WITHERED_SAPLING,
+                VABlocks.SPECTRAL_FIRE,
+                VABlocks.SPECTRAL_LANTERN,
                 VABlocks.BLUE_PETALS,
                 VABlocks.BALLOON_BULB,
                 VABlocks.BALLOON_BULB_PLANT,

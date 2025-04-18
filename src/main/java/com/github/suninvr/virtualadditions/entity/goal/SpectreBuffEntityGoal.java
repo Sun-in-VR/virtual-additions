@@ -20,6 +20,7 @@ public class SpectreBuffEntityGoal extends Goal {
     private final double speed;
     private final EntityNavigation navigation;
     private int updateCountdownTicks;
+    private long targetLastSeen;
     private final float minDistance;
     private final float maxDistance;
     private final float buffMaxDistance;
@@ -50,11 +51,15 @@ public class SpectreBuffEntityGoal extends Goal {
         this.updateList();
         MobEntity entity = null;
         int priority = -1;
+        double distance = Double.MAX_VALUE;
         for (MobEntity mobEntity : this.nearbyMobs) {
-            int i;
-            if (canStartTargetMob(mobEntity) && (i = getPriority(mobEntity)) > priority) {
+            if (!canStartTargetMob(mobEntity)) continue;
+            int i = getPriority(mobEntity);
+            double d = this.mob.distanceTo(mobEntity);
+            if (i > priority || (i == priority && d < distance)) {
                 entity = mobEntity;
                 priority = i;
+                distance = d;
             }
         }
         if (entity != null) {
@@ -68,7 +73,7 @@ public class SpectreBuffEntityGoal extends Goal {
         if (entity == null) return false;
         UUID spectreId = SpectreEntity.getBuffingSpectreId(entity);
         boolean isAvailable = spectreId == null || spectreId.equals(this.mob.getUuid());
-        return canTargetMob(entity) && isAvailable;
+        return canTargetMob(entity) && isAvailable && (this.mob.getBuffTarget() == entity || this.mob.getVisibilityCache().canSee(entity));
     }
 
     private boolean canTargetMob(MobEntity entity) {
@@ -81,7 +86,7 @@ public class SpectreBuffEntityGoal extends Goal {
 
     @Override
     public boolean shouldContinue() {
-        return this.canStartTargetMob(this.target);
+        return this.canStartTargetMob(this.target) && this.mob.getWorld().getTime() - this.targetLastSeen < 100;
     }
 
     @Override
@@ -105,14 +110,15 @@ public class SpectreBuffEntityGoal extends Goal {
         if (this.target != null && !this.mob.isLeashed()) {
             this.mob.getLookControl().lookAt(this.target, 10.0F, this.mob.getMaxLookPitchChange());
             if (--this.updateCountdownTicks <= 0) {
-                boolean bl = this.mob.canSee(this.target);
+                boolean bl = this.mob.getVisibilityCache().canSee(this.target);
+                if (bl) this.targetLastSeen = this.mob.getWorld().getTime();
                 this.updateCountdownTicks = this.getTickCount(10);
-                double targetY = this.target.getBodyY(1) + 1;
+                double targetY = this.target.getEyeY();
                 double d = this.mob.getX() - this.target.getX();
                 double e = this.mob.getY() - targetY;
                 double f = this.mob.getZ() - this.target.getZ();
                 double g = d * d + e * e + f * f;
-                if (!(g <= this.minDistance * this.minDistance) || !bl) {
+                if (!bl || !(g <= this.minDistance * this.minDistance)) {
                     this.navigation.startMovingTo(this.target.getX(), targetY, this.target.getZ(), this.speed);
                 } else {
                     this.navigation.stop();
@@ -129,7 +135,7 @@ public class SpectreBuffEntityGoal extends Goal {
         }
     }
 
-    private int getPriority(MobEntity entity) {
+    private static int getPriority(MobEntity entity) {
         int i = targetPriority.getOrDefault(entity.getClass(), 0) + entity.getArmor();
         i += (int) (entity.getMaxHealth() - entity.getHealth());
         return i;

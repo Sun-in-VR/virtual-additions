@@ -76,6 +76,14 @@ public class VAEntityLootTableProvider {
                             )
                     );
             this.register(VAEntityType.SALINE, salineBuilder);
+
+            LootTable.Builder spectreBuilder = LootTable.builder()
+                    .pool(LootPool.builder()
+                            .with(ItemEntry.builder(VAItems.SPECTRAL_POWDER)
+                                .apply(SetCountLootFunction.builder(UniformLootNumberProvider.create(-1.0F, 1.0F)))
+                                .apply(EnchantedCountIncreaseLootFunction.builder(this.registries, UniformLootNumberProvider.create(0.0F, 1.0F))))
+                    );
+            this.register(VAEntityType.SPECTRE, spectreBuilder);
         }
     }
 

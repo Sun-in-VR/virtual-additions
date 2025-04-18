@@ -17,6 +17,7 @@ import net.minecraft.registry.RegistryKey;
 import net.minecraft.registry.RegistryKeys;
 import net.minecraft.text.Text;
 import net.minecraft.util.*;
+import net.minecraft.util.math.Direction;
 
 import java.util.List;
 
@@ -139,6 +140,10 @@ public class VAItems {
     public static final Item WITHERED_LEAVES;
     public static final Item WITHERED_HEDGE;
     public static final Item WITHERED_SAPLING;
+    public static final Item SPECTRAL_TORCH;
+    public static final Item SPECTRAL_LANTERN;
+    public static final Item SPECTRAL_POWDER;
+    public static final Item SPECTRAL_SAND;
     public static final Item OAK_HEDGE;
     public static final Item SPRUCE_HEDGE;
     public static final Item BIRCH_HEDGE;
@@ -646,6 +651,15 @@ public class VAItems {
         WITHERED_HANGING_SIGN = register("withered_hanging_sign", settings ->  new HangingSignItem(VABlocks.WITHERED_HANGING_SIGN, VABlocks.WITHERED_WALL_HANGING_SIGN, settings), new Item.Settings().translationKey(VABlocks.WITHERED_HANGING_SIGN.getTranslationKey()).maxCount(16), ItemGroups.FUNCTIONAL, prev);
         WITHERED_LEAVES = registerBlockItem("withered_leaves", VABlocks.WITHERED_LEAVES, ItemGroups.NATURAL, Items.FLOWERING_AZALEA_LEAVES);
         WITHERED_SAPLING = registerBlockItem("withered_sapling", VABlocks.WITHERED_SAPLING, ItemGroups.NATURAL, Items.FLOWERING_AZALEA);
+
+        //endregion
+
+        //region Spectral Items
+
+        SPECTRAL_TORCH = register("spectral_torch", settings -> new VerticallyAttachableBlockItem(VABlocks.SPECTRAL_TORCH, VABlocks.SPECTRAL_WALL_TORCH, Direction.DOWN, settings), new Item.Settings(), ItemGroups.FUNCTIONAL, Items.SOUL_TORCH);
+        SPECTRAL_LANTERN = registerBlockItem("spectral_lantern", VABlocks.SPECTRAL_LANTERN, ItemGroups.FUNCTIONAL, Items.SOUL_LANTERN);
+        SPECTRAL_POWDER = register("spectral_powder", ItemGroups.INGREDIENTS, Items.BLAZE_POWDER);
+        SPECTRAL_SAND = registerBlockItem("spectral_sand", VABlocks.SPECTRAL_SAND, ItemGroups.NATURAL, Items.RED_SANDSTONE);
 
         //endregion
 

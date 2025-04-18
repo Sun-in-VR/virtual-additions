@@ -18,6 +18,7 @@ import net.minecraft.particle.ParticleTypes;
 import net.minecraft.sound.BlockSoundGroup;
 import net.minecraft.sound.SoundEvents;
 import net.minecraft.state.property.Properties;
+import net.minecraft.util.ColorCode;
 import net.minecraft.util.DyeColor;
 import net.minecraft.util.math.intprovider.ConstantIntProvider;
 import net.minecraft.util.math.intprovider.UniformIntProvider;
@@ -233,6 +234,11 @@ public class VABlocks {
     public static final Block WITHERED_LEAVES;
     public static final Block WITHERED_SAPLING;
     public static final Block POTTED_WITHERED_SAPLING;
+    public static final Block SPECTRAL_FIRE;
+    public static final Block SPECTRAL_TORCH;
+    public static final Block SPECTRAL_WALL_TORCH;
+    public static final Block SPECTRAL_LANTERN;
+    public static final Block SPECTRAL_SAND;
     public static final Block OAK_HEDGE;
     public static final Block SPRUCE_HEDGE;
     public static final Block BIRCH_HEDGE;
@@ -639,6 +645,12 @@ public class VABlocks {
         WITHERED_LEAVES = register("withered_leaves", (settings) -> new UntintedParticleLeavesBlock(0.1F, EntityEffectParticleEffect.create(ParticleTypes.TINTED_LEAVES, 5918012), settings), Settings.copy(Blocks.CHERRY_LEAVES).sounds(BlockSoundGroup.MANGROVE_ROOTS).mapColor(MapColor.BLACK));
         WITHERED_SAPLING = register("withered_sapling", (settings) -> new WitheredSaplingBlock(CustomSaplingGenerator.WITHERED, settings), Settings.copy(Blocks.CHERRY_SAPLING).mapColor(MapColor.BLACK));
         POTTED_WITHERED_SAPLING = register("potted_withered_sapling", (settings) -> new FlowerPotBlock(WITHERED_SAPLING, settings), Settings.copy(Blocks.FLOWER_POT));
+
+        SPECTRAL_FIRE = register("spectral_fire", SpectralFireBlock::new, Settings.copy(Blocks.SOUL_FIRE).luminance((state) -> 11).mapColor(MapColor.WHITE));
+        SPECTRAL_TORCH = register("spectral_torch", (settings -> new TorchBlock(VAParticleTypes.SPECTRAL_FLAME, settings)), Settings.copy(Blocks.SOUL_TORCH).luminance((state) -> 11).mapColor(MapColor.WHITE));
+        SPECTRAL_WALL_TORCH = register("spectral_wall_torch", (settings -> new WallTorchBlock(VAParticleTypes.SPECTRAL_FLAME, settings)), Settings.copy(SPECTRAL_TORCH).lootTable(SPECTRAL_TORCH.getLootTableKey()).overrideTranslationKey(SPECTRAL_FIRE.getTranslationKey()));
+        SPECTRAL_LANTERN = register("spectral_lantern", LanternBlock::new, Settings.copy(Blocks.SOUL_LANTERN).luminance((state) -> 11));
+        SPECTRAL_SAND = register("spectral_sand", settings -> new ColoredFallingBlock(new ColorCode(0xB3C1D0), settings), Settings.copy(Blocks.SAND).mapColor(MapColor.WHITE));
 
         OAK_HEDGE = register("oak_hedge", HedgeBlock::new, Settings.copy(Blocks.OAK_LEAVES));
         SPRUCE_HEDGE = register("spruce_hedge", HedgeBlock::new, Settings.copy(Blocks.SPRUCE_LEAVES));

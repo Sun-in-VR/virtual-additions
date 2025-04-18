@@ -162,6 +162,8 @@ public final class VABlockLootTableProvider {
                     VABlocks.WITHERED_SAPLING,
                     VABlocks.WITHERED_HEDGE,
                     VABlocks.NECROTIC_ROOTS,
+                    VABlocks.SPECTRAL_TORCH,
+                    VABlocks.SPECTRAL_LANTERN,
                     VABlocks.COLORING_STATION,
                     VABlocks.IOLITE_BLOCK,
                     VABlocks.WARP_ANCHOR,
