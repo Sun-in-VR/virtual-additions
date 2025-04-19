@@ -21,12 +21,12 @@ import net.minecraft.client.render.item.property.select.ChargeTypeProperty;
 import net.minecraft.client.render.item.property.select.TrimMaterialProperty;
 import net.minecraft.client.render.item.tint.ConstantTintSource;
 import net.minecraft.client.render.item.tint.DyeTintSource;
-import net.minecraft.client.render.item.tint.GrassTintSource;
 import net.minecraft.client.render.item.tint.TintSource;
 import net.minecraft.client.render.model.json.WeightedVariant;
 import net.minecraft.component.DataComponentTypes;
 import net.minecraft.item.CrossbowItem;
 import net.minecraft.item.Item;
+import net.minecraft.item.ItemConvertible;
 import net.minecraft.item.Items;
 import net.minecraft.item.equipment.EquipmentAsset;
 import net.minecraft.item.equipment.EquipmentAssetKeys;
@@ -63,229 +63,278 @@ public class VAModelProvider {
         }
 
         @Override
-        public void generateBlockStateModels(BlockStateModelGenerator blockStateModelGenerator) {
+        public void generateBlockStateModels(BlockStateModelGenerator generator) {
 
-            blockStateModelGenerator.registerCubeAllModelTexturePool(VABlocks.PORPHYRY).family(VACollections.PORPHYRY);
-            blockStateModelGenerator.registerCubeAllModelTexturePool(VABlocks.SOULBLOOM_PLANKS).family(VACollections.SOULBLOOM);
-            blockStateModelGenerator.registerCubeAllModelTexturePool(VABlocks.WITHERED_PLANKS).family(VACollections.WITHERED);
-            blockStateModelGenerator.registerCubeAllModelTexturePool(VABlocks.POLISHED_PORPHYRY).family(VACollections.POLISHED_PORPHYRY);
-            blockStateModelGenerator.registerCubeAllModelTexturePool(VABlocks.PORPHYRY_BRICKS).family(VACollections.PORPHYRY_BRICKS);
-            blockStateModelGenerator.registerCubeAllModelTexturePool(VABlocks.CUT_STEEL).family(VACollections.CUT_STEEL).parented(VABlocks.CUT_STEEL, VABlocks.WAXED_CUT_STEEL).parented(VABlocks.CHISELED_STEEL, VABlocks.WAXED_CHISELED_STEEL).family(VACollections.WAXED_CUT_STEEL);
-            blockStateModelGenerator.registerCubeAllModelTexturePool(VABlocks.EXPOSED_CUT_STEEL).family(VACollections.EXPOSED_CUT_STEEL).parented(VABlocks.EXPOSED_CUT_STEEL, VABlocks.WAXED_EXPOSED_CUT_STEEL).parented(VABlocks.EXPOSED_CHISELED_STEEL, VABlocks.WAXED_EXPOSED_CHISELED_STEEL).family(VACollections.WAXED_EXPOSED_CUT_STEEL);
-            blockStateModelGenerator.registerCubeAllModelTexturePool(VABlocks.WEATHERED_CUT_STEEL).family(VACollections.WEATHERED_CUT_STEEL).parented(VABlocks.WEATHERED_CUT_STEEL, VABlocks.WAXED_WEATHERED_CUT_STEEL).parented(VABlocks.WEATHERED_CHISELED_STEEL, VABlocks.WAXED_WEATHERED_CHISELED_STEEL).family(VACollections.WAXED_WEATHERED_CUT_STEEL);
-            blockStateModelGenerator.registerCubeAllModelTexturePool(VABlocks.OXIDIZED_CUT_STEEL).family(VACollections.OXIDIZED_CUT_STEEL).parented(VABlocks.OXIDIZED_CUT_STEEL, VABlocks.WAXED_OXIDIZED_CUT_STEEL).parented(VABlocks.OXIDIZED_CHISELED_STEEL, VABlocks.WAXED_OXIDIZED_CHISELED_STEEL).family(VACollections.WAXED_OXIDIZED_CUT_STEEL);
-            blockStateModelGenerator.registerCubeAllModelTexturePool(VABlocks.ROCK_SALT_BRICKS).family(VACollections.ROCK_SALT_BRICKS);
-            blockStateModelGenerator.registerCubeAllModelTexturePool(VABlocks.COBBLED_HORNFELS).family(VACollections.COBBLED_HORNFELS);
-            blockStateModelGenerator.registerCubeAllModelTexturePool(VABlocks.COBBLED_BLUESCHIST).family(VACollections.COBBLED_BLUESCHIST);
-            blockStateModelGenerator.registerCubeAllModelTexturePool(VABlocks.BLUESCHIST_BRICKS).family(VACollections.BLUESCHIST_BRICKS);
-            blockStateModelGenerator.registerCubeAllModelTexturePool(VABlocks.POLISHED_BLUESCHIST).family(VACollections.POLISHED_BLUESCHIST);
-            blockStateModelGenerator.registerCubeAllModelTexturePool(VABlocks.COBBLED_SYENITE).family(VACollections.COBBLED_SYENITE);
-            blockStateModelGenerator.registerCubeAllModelTexturePool(VABlocks.SYENITE_BRICKS).family(VACollections.SYENITE_BRICKS);
-            blockStateModelGenerator.registerCubeAllModelTexturePool(VABlocks.POLISHED_SYENITE).family(VACollections.POLISHED_SYENITE);
+            generator.registerCubeAllModelTexturePool(VABlocks.PORPHYRY).family(VACollections.PORPHYRY);
+            generator.registerCubeAllModelTexturePool(VABlocks.SOULBLOOM_PLANKS).family(VACollections.SOULBLOOM);
+            generator.registerCubeAllModelTexturePool(VABlocks.WITHERED_PLANKS).family(VACollections.WITHERED);
+            generator.registerCubeAllModelTexturePool(VABlocks.POLISHED_PORPHYRY).family(VACollections.POLISHED_PORPHYRY);
+            generator.registerCubeAllModelTexturePool(VABlocks.PORPHYRY_BRICKS).family(VACollections.PORPHYRY_BRICKS);
+            generator.registerCubeAllModelTexturePool(VABlocks.CUT_STEEL).family(VACollections.CUT_STEEL).parented(VABlocks.CUT_STEEL, VABlocks.WAXED_CUT_STEEL).parented(VABlocks.CHISELED_STEEL, VABlocks.WAXED_CHISELED_STEEL).family(VACollections.WAXED_CUT_STEEL);
+            generator.registerCubeAllModelTexturePool(VABlocks.EXPOSED_CUT_STEEL).family(VACollections.EXPOSED_CUT_STEEL).parented(VABlocks.EXPOSED_CUT_STEEL, VABlocks.WAXED_EXPOSED_CUT_STEEL).parented(VABlocks.EXPOSED_CHISELED_STEEL, VABlocks.WAXED_EXPOSED_CHISELED_STEEL).family(VACollections.WAXED_EXPOSED_CUT_STEEL);
+            generator.registerCubeAllModelTexturePool(VABlocks.WEATHERED_CUT_STEEL).family(VACollections.WEATHERED_CUT_STEEL).parented(VABlocks.WEATHERED_CUT_STEEL, VABlocks.WAXED_WEATHERED_CUT_STEEL).parented(VABlocks.WEATHERED_CHISELED_STEEL, VABlocks.WAXED_WEATHERED_CHISELED_STEEL).family(VACollections.WAXED_WEATHERED_CUT_STEEL);
+            generator.registerCubeAllModelTexturePool(VABlocks.OXIDIZED_CUT_STEEL).family(VACollections.OXIDIZED_CUT_STEEL).parented(VABlocks.OXIDIZED_CUT_STEEL, VABlocks.WAXED_OXIDIZED_CUT_STEEL).parented(VABlocks.OXIDIZED_CHISELED_STEEL, VABlocks.WAXED_OXIDIZED_CHISELED_STEEL).family(VACollections.WAXED_OXIDIZED_CUT_STEEL);
+            generator.registerCubeAllModelTexturePool(VABlocks.ROCK_SALT_BRICKS).family(VACollections.ROCK_SALT_BRICKS);
+            generator.registerCubeAllModelTexturePool(VABlocks.COBBLED_HORNFELS).family(VACollections.COBBLED_HORNFELS);
+            generator.registerCubeAllModelTexturePool(VABlocks.COBBLED_BLUESCHIST).family(VACollections.COBBLED_BLUESCHIST);
+            generator.registerCubeAllModelTexturePool(VABlocks.BLUESCHIST_BRICKS).family(VACollections.BLUESCHIST_BRICKS);
+            generator.registerCubeAllModelTexturePool(VABlocks.POLISHED_BLUESCHIST).family(VACollections.POLISHED_BLUESCHIST);
+            generator.registerCubeAllModelTexturePool(VABlocks.COBBLED_SYENITE).family(VACollections.COBBLED_SYENITE);
+            generator.registerCubeAllModelTexturePool(VABlocks.SYENITE_BRICKS).family(VACollections.SYENITE_BRICKS);
+            generator.registerCubeAllModelTexturePool(VABlocks.POLISHED_SYENITE).family(VACollections.POLISHED_SYENITE);
 
-            blockStateModelGenerator.registerNetherrackBottomCustomTop(VABlocks.NECROTIC_NYLIUM);
-            blockStateModelGenerator.createLogTexturePool(VABlocks.WITHERED_LOG).log(VABlocks.WITHERED_LOG).wood(VABlocks.WITHERED_WOOD);
-            blockStateModelGenerator.createLogTexturePool(VABlocks.STRIPPED_WITHERED_LOG).log(VABlocks.STRIPPED_WITHERED_LOG).wood(VABlocks.STRIPPED_WITHERED_WOOD);
-            blockStateModelGenerator.registerHangingSign(VABlocks.STRIPPED_WITHERED_LOG, VABlocks.WITHERED_HANGING_SIGN, VABlocks.WITHERED_WALL_HANGING_SIGN);
-            blockStateModelGenerator.registerSimpleCubeAll(VABlocks.WITHERED_LEAVES);
+            registerSimpleBlockItems(generator,
+                    VABlocks.HORNFELS,
+                    VABlocks.POLISHED_HORNFELS,
+                    VABlocks.POLISHED_HORNFELS_STAIRS,
+                    VABlocks.POLISHED_HORNFELS_SLAB,
+                    VABlocks.HORNFELS_TILES,
+                    VABlocks.CRACKED_HORNFELS_TILES,
+                    VABlocks.HORNFELS_TILE_STAIRS,
+                    VABlocks.HORNFELS_TILE_SLAB,
+                    VABlocks.CHISELED_HORNFELS_TILES,
+                    VABlocks.SYENITE,
+                    VABlocks.CAGELIGHT,
+                    VABlocks.LUMWASP_NEST,
+                    VABlocks.ACID_BLOCK,
+                    VABlocks.WARP_ANCHOR,
+                    VABlocks.WARP_TETHER,
+                    VABlocks.ENTANGLEMENT_DRIVE
+                    );
+            
+            registerSimpleCubeAll(generator,
+                    VABlocks.CHISELED_HORNFELS,
+                    VABlocks.BLUESCHIST,
+                    VABlocks.SPRINGSOIL,
+                    VABlocks.RAW_STEEL_BLOCK,
+                    VABlocks.SILK_BLOCK,
+                    VABlocks.WEBBED_SILK,
+                    VABlocks.IOLITE_ORE,
+                    VABlocks.IOLITE_BLOCK,
+                    VABlocks.SILKBULB,
+                    VABlocks.WHITE_SILKBULB,
+                    VABlocks.LIGHT_GRAY_SILKBULB,
+                    VABlocks.GRAY_SILKBULB,
+                    VABlocks.BLACK_SILKBULB,
+                    VABlocks.BROWN_SILKBULB,
+                    VABlocks.RED_SILKBULB,
+                    VABlocks.ORANGE_SILKBULB,
+                    VABlocks.YELLOW_SILKBULB,
+                    VABlocks.LIME_SILKBULB,
+                    VABlocks.GREEN_SILKBULB,
+                    VABlocks.CYAN_SILKBULB,
+                    VABlocks.LIGHT_BLUE_SILKBULB,
+                    VABlocks.BLUE_SILKBULB,
+                    VABlocks.PURPLE_SILKBULB,
+                    VABlocks.MAGENTA_SILKBULB,
+                    VABlocks.PINK_SILKBULB,
+                    VABlocks.ROCK_SALT_ORE,
+                    VABlocks.DEEPSLATE_ROCK_SALT_ORE,
+                    VABlocks.SOULBLOOM_LEAVES,
+                    VABlocks.WITHERED_LEAVES,
+                    VABlocks.SPECTRAL_SAND,
+                    VABlocks.STEEL_BLOCK,
+                    VABlocks.EXPOSED_STEEL_BLOCK,
+                    VABlocks.WEATHERED_STEEL_BLOCK,
+                    VABlocks.OXIDIZED_STEEL_BLOCK,
+                    VABlocks.STEEL_GRATE,
+                    VABlocks.EXPOSED_STEEL_GRATE,
+                    VABlocks.WEATHERED_STEEL_GRATE,
+                    VABlocks.OXIDIZED_STEEL_GRATE
+                    );
 
-            registerSpectralFire(blockStateModelGenerator);
-            blockStateModelGenerator.registerTorch(VABlocks.SPECTRAL_TORCH, VABlocks.SPECTRAL_WALL_TORCH);
-            blockStateModelGenerator.registerLantern(VABlocks.SPECTRAL_LANTERN);
-            blockStateModelGenerator.registerSimpleCubeAll(VABlocks.SPECTRAL_SAND);
+            generator.createLogTexturePool(VABlocks.SOULBLOOM_LOG).log(VABlocks.SOULBLOOM_LOG).wood(VABlocks.SOULBLOOM_WOOD);
+            generator.createLogTexturePool(VABlocks.STRIPPED_SOULBLOOM_LOG).log(VABlocks.STRIPPED_SOULBLOOM_LOG).wood(VABlocks.STRIPPED_SOULBLOOM_WOOD);
+            generator.registerHangingSign(VABlocks.STRIPPED_SOULBLOOM_LOG, VABlocks.SOULBLOOM_HANGING_SIGN, VABlocks.SOULBLOOM_WALL_HANGING_SIGN);
 
-            blockStateModelGenerator.registerFlowerbed(VABlocks.BLUE_PETALS);
+            generator.registerNetherrackBottomCustomTop(VABlocks.NECROTIC_NYLIUM);
+            generator.createLogTexturePool(VABlocks.WITHERED_LOG).log(VABlocks.WITHERED_LOG).wood(VABlocks.WITHERED_WOOD);
+            generator.createLogTexturePool(VABlocks.STRIPPED_WITHERED_LOG).log(VABlocks.STRIPPED_WITHERED_LOG).wood(VABlocks.STRIPPED_WITHERED_WOOD);
+            generator.registerHangingSign(VABlocks.STRIPPED_WITHERED_LOG, VABlocks.WITHERED_HANGING_SIGN, VABlocks.WITHERED_WALL_HANGING_SIGN);
 
-            blockStateModelGenerator.registerItemModel(VAItems.CABBAGE_SEEDS);
-            blockStateModelGenerator.registerItemModel(VAItems.CORN_SEEDS);
-            blockStateModelGenerator.registerItemModel(VAItems.COTTON_SEEDS);
-            blockStateModelGenerator.registerItemModel(VAItems.BALLOON_FRUIT);
+            registerSpectralFire(generator);
+            generator.registerTorch(VABlocks.SPECTRAL_TORCH, VABlocks.SPECTRAL_WALL_TORCH);
+            generator.registerLantern(VABlocks.SPECTRAL_LANTERN);
 
-            blockStateModelGenerator.registerItemModel(VAItems.CLIMBING_ROPE);
-            blockStateModelGenerator.registerItemModel(VAItems.EXPOSED_CLIMBING_ROPE);
-            blockStateModelGenerator.registerItemModel(VAItems.WEATHERED_CLIMBING_ROPE);
-            blockStateModelGenerator.registerItemModel(VAItems.OXIDIZED_CLIMBING_ROPE);
-            blockStateModelGenerator.registerParentedItemModel(VABlocks.WAXED_CLIMBING_ROPE_ANCHOR, Registries.ITEM.getId(VAItems.CLIMBING_ROPE).withPrefixedPath("item/"));
-            blockStateModelGenerator.registerParentedItemModel(VABlocks.WAXED_EXPOSED_CLIMBING_ROPE_ANCHOR, Registries.ITEM.getId(VAItems.EXPOSED_CLIMBING_ROPE).withPrefixedPath("item/"));
-            blockStateModelGenerator.registerParentedItemModel(VABlocks.WAXED_WEATHERED_CLIMBING_ROPE_ANCHOR, Registries.ITEM.getId(VAItems.WEATHERED_CLIMBING_ROPE).withPrefixedPath("item/"));
-            blockStateModelGenerator.registerParentedItemModel(VABlocks.WAXED_OXIDIZED_CLIMBING_ROPE_ANCHOR, Registries.ITEM.getId(VAItems.OXIDIZED_CLIMBING_ROPE).withPrefixedPath("item/"));
-            blockStateModelGenerator.registerItemModel(VAItems.STEEL_DOOR);
-            blockStateModelGenerator.registerItemModel(VAItems.EXPOSED_STEEL_DOOR);
-            blockStateModelGenerator.registerItemModel(VAItems.WEATHERED_STEEL_DOOR);
-            blockStateModelGenerator.registerItemModel(VAItems.OXIDIZED_STEEL_DOOR);
-            blockStateModelGenerator.registerParentedItemModel(VABlocks.WAXED_STEEL_DOOR, Registries.ITEM.getId(VAItems.STEEL_DOOR).withPrefixedPath("item/"));
-            blockStateModelGenerator.registerParentedItemModel(VABlocks.WAXED_EXPOSED_STEEL_DOOR, Registries.ITEM.getId(VAItems.EXPOSED_STEEL_DOOR).withPrefixedPath("item/"));
-            blockStateModelGenerator.registerParentedItemModel(VABlocks.WAXED_WEATHERED_STEEL_DOOR, Registries.ITEM.getId(VAItems.WEATHERED_STEEL_DOOR).withPrefixedPath("item/"));
-            blockStateModelGenerator.registerParentedItemModel(VABlocks.WAXED_OXIDIZED_STEEL_DOOR, Registries.ITEM.getId(VAItems.OXIDIZED_STEEL_DOOR).withPrefixedPath("item/"));
+            generator.registerFlowerbed(VABlocks.BLUE_PETALS);
 
-            blockStateModelGenerator.registerParentedItemModel(VABlocks.STEEL_TRAPDOOR, Registries.BLOCK.getId(VABlocks.STEEL_TRAPDOOR).withPrefixedPath("block/").withSuffixedPath("_bottom"));
-            blockStateModelGenerator.registerParentedItemModel(VABlocks.EXPOSED_STEEL_TRAPDOOR, Registries.BLOCK.getId(VABlocks.EXPOSED_STEEL_TRAPDOOR).withPrefixedPath("block/").withSuffixedPath("_bottom"));
-            blockStateModelGenerator.registerParentedItemModel(VABlocks.WEATHERED_STEEL_TRAPDOOR, Registries.BLOCK.getId(VABlocks.WEATHERED_STEEL_TRAPDOOR).withPrefixedPath("block/").withSuffixedPath("_bottom"));
-            blockStateModelGenerator.registerParentedItemModel(VABlocks.OXIDIZED_STEEL_TRAPDOOR, Registries.BLOCK.getId(VABlocks.OXIDIZED_STEEL_TRAPDOOR).withPrefixedPath("block/").withSuffixedPath("_bottom"));
-            blockStateModelGenerator.registerParentedItemModel(VABlocks.WAXED_STEEL_TRAPDOOR, Registries.BLOCK.getId(VABlocks.STEEL_TRAPDOOR).withPrefixedPath("block/").withSuffixedPath("_bottom"));
-            blockStateModelGenerator.registerParentedItemModel(VABlocks.WAXED_EXPOSED_STEEL_TRAPDOOR, Registries.BLOCK.getId(VABlocks.EXPOSED_STEEL_TRAPDOOR).withPrefixedPath("block/").withSuffixedPath("_bottom"));
-            blockStateModelGenerator.registerParentedItemModel(VABlocks.WAXED_WEATHERED_STEEL_TRAPDOOR, Registries.BLOCK.getId(VABlocks.WEATHERED_STEEL_TRAPDOOR).withPrefixedPath("block/").withSuffixedPath("_bottom"));
-            blockStateModelGenerator.registerParentedItemModel(VABlocks.WAXED_OXIDIZED_STEEL_TRAPDOOR, Registries.BLOCK.getId(VABlocks.OXIDIZED_STEEL_TRAPDOOR).withPrefixedPath("block/").withSuffixedPath("_bottom"));
+            generator.registerItemModel(VAItems.CABBAGE_SEEDS);
+            generator.registerItemModel(VAItems.CORN_SEEDS);
+            generator.registerItemModel(VAItems.COTTON_SEEDS);
+            generator.registerItemModel(VAItems.BALLOON_FRUIT);
 
-            blockStateModelGenerator.registerParentedItemModel(VABlocks.REDSTONE_BRIDGE, Registries.BLOCK.getId(VABlocks.REDSTONE_BRIDGE).withPrefixedPath("block/").withSuffixedPath("_inventory"));
+            generator.registerItemModel(VAItems.CLIMBING_ROPE);
+            generator.registerItemModel(VAItems.EXPOSED_CLIMBING_ROPE);
+            generator.registerItemModel(VAItems.WEATHERED_CLIMBING_ROPE);
+            generator.registerItemModel(VAItems.OXIDIZED_CLIMBING_ROPE);
+            generator.registerParentedItemModel(VABlocks.WAXED_CLIMBING_ROPE_ANCHOR, Registries.ITEM.getId(VAItems.CLIMBING_ROPE).withPrefixedPath("item/"));
+            generator.registerParentedItemModel(VABlocks.WAXED_EXPOSED_CLIMBING_ROPE_ANCHOR, Registries.ITEM.getId(VAItems.EXPOSED_CLIMBING_ROPE).withPrefixedPath("item/"));
+            generator.registerParentedItemModel(VABlocks.WAXED_WEATHERED_CLIMBING_ROPE_ANCHOR, Registries.ITEM.getId(VAItems.WEATHERED_CLIMBING_ROPE).withPrefixedPath("item/"));
+            generator.registerParentedItemModel(VABlocks.WAXED_OXIDIZED_CLIMBING_ROPE_ANCHOR, Registries.ITEM.getId(VAItems.OXIDIZED_CLIMBING_ROPE).withPrefixedPath("item/"));
+            generator.registerItemModel(VAItems.STEEL_DOOR);
+            generator.registerItemModel(VAItems.EXPOSED_STEEL_DOOR);
+            generator.registerItemModel(VAItems.WEATHERED_STEEL_DOOR);
+            generator.registerItemModel(VAItems.OXIDIZED_STEEL_DOOR);
+            generator.registerParentedItemModel(VABlocks.WAXED_STEEL_DOOR, Registries.ITEM.getId(VAItems.STEEL_DOOR).withPrefixedPath("item/"));
+            generator.registerParentedItemModel(VABlocks.WAXED_EXPOSED_STEEL_DOOR, Registries.ITEM.getId(VAItems.EXPOSED_STEEL_DOOR).withPrefixedPath("item/"));
+            generator.registerParentedItemModel(VABlocks.WAXED_WEATHERED_STEEL_DOOR, Registries.ITEM.getId(VAItems.WEATHERED_STEEL_DOOR).withPrefixedPath("item/"));
+            generator.registerParentedItemModel(VABlocks.WAXED_OXIDIZED_STEEL_DOOR, Registries.ITEM.getId(VAItems.OXIDIZED_STEEL_DOOR).withPrefixedPath("item/"));
 
-            blockStateModelGenerator.registerItemModel(VABlocks.ROCK_SALT_CRYSTAL, "_tip");
+            generator.registerParentedItemModel(VABlocks.STEEL_TRAPDOOR, Registries.BLOCK.getId(VABlocks.STEEL_TRAPDOOR).withPrefixedPath("block/").withSuffixedPath("_bottom"));
+            generator.registerParentedItemModel(VABlocks.EXPOSED_STEEL_TRAPDOOR, Registries.BLOCK.getId(VABlocks.EXPOSED_STEEL_TRAPDOOR).withPrefixedPath("block/").withSuffixedPath("_bottom"));
+            generator.registerParentedItemModel(VABlocks.WEATHERED_STEEL_TRAPDOOR, Registries.BLOCK.getId(VABlocks.WEATHERED_STEEL_TRAPDOOR).withPrefixedPath("block/").withSuffixedPath("_bottom"));
+            generator.registerParentedItemModel(VABlocks.OXIDIZED_STEEL_TRAPDOOR, Registries.BLOCK.getId(VABlocks.OXIDIZED_STEEL_TRAPDOOR).withPrefixedPath("block/").withSuffixedPath("_bottom"));
+            generator.registerParentedItemModel(VABlocks.WAXED_STEEL_TRAPDOOR, Registries.BLOCK.getId(VABlocks.STEEL_TRAPDOOR).withPrefixedPath("block/").withSuffixedPath("_bottom"));
+            generator.registerParentedItemModel(VABlocks.WAXED_EXPOSED_STEEL_TRAPDOOR, Registries.BLOCK.getId(VABlocks.EXPOSED_STEEL_TRAPDOOR).withPrefixedPath("block/").withSuffixedPath("_bottom"));
+            generator.registerParentedItemModel(VABlocks.WAXED_WEATHERED_STEEL_TRAPDOOR, Registries.BLOCK.getId(VABlocks.WEATHERED_STEEL_TRAPDOOR).withPrefixedPath("block/").withSuffixedPath("_bottom"));
+            generator.registerParentedItemModel(VABlocks.WAXED_OXIDIZED_STEEL_TRAPDOOR, Registries.BLOCK.getId(VABlocks.OXIDIZED_STEEL_TRAPDOOR).withPrefixedPath("block/").withSuffixedPath("_bottom"));
 
-            blockStateModelGenerator.registerItemModel(VABlocks.FRAYED_SILK);
-            blockStateModelGenerator.registerItemModel(VABlocks.GREENCAP_MUSHROOM);
-            blockStateModelGenerator.registerItemModel(VABlocks.TALL_GREENCAP_MUSHROOMS, "_top");
-            blockStateModelGenerator.registerItemModel(VABlocks.GLOWING_SILK);
+            generator.registerParentedItemModel(VABlocks.REDSTONE_BRIDGE, Registries.BLOCK.getId(VABlocks.REDSTONE_BRIDGE).withPrefixedPath("block/").withSuffixedPath("_inventory"));
 
-            blockStateModelGenerator.registerItemModel(VAItems.SOULBLOOM_HANGING_SIGN);
-            blockStateModelGenerator.registerItemModel(VAItems.SOULBLOOM_SAPLING, BlockStateModelGenerator.CrossType.NOT_TINTED.registerItemModel(blockStateModelGenerator, VABlocks.SOULBLOOM_SAPLING));
-            blockStateModelGenerator.registerItemModel(VAItems.WITHERED_SAPLING, BlockStateModelGenerator.CrossType.NOT_TINTED.registerItemModel(blockStateModelGenerator, VABlocks.WITHERED_SAPLING));
+            generator.registerItemModel(VABlocks.ROCK_SALT_CRYSTAL, "_tip");
 
-            blockStateModelGenerator.registerItemModel(VAItems.NECROTIC_ROOTS, BlockStateModelGenerator.CrossType.NOT_TINTED.registerItemModel(blockStateModelGenerator, VABlocks.NECROTIC_ROOTS));
+            generator.registerItemModel(VABlocks.FRAYED_SILK);
+            generator.registerItemModel(VABlocks.GREENCAP_MUSHROOM);
+            generator.registerItemModel(VABlocks.TALL_GREENCAP_MUSHROOMS, "_top");
+            generator.registerItemModel(VABlocks.GLOWING_SILK);
 
-            blockStateModelGenerator.registerMirrorable(VABlocks.ROCK_SALT_BLOCK);
-            blockStateModelGenerator.registerSimpleCubeAll(VABlocks.ROCK_SALT_ORE);
-            blockStateModelGenerator.registerSimpleCubeAll(VABlocks.DEEPSLATE_ROCK_SALT_ORE);
-            blockStateModelGenerator.registerSingleton(VABlocks.CHISELED_ROCK_SALT_BRICKS, TexturedModel.CUBE_COLUMN);
+            generator.registerItemModel(VAItems.SOULBLOOM_SAPLING, BlockStateModelGenerator.CrossType.NOT_TINTED.registerItemModel(generator, VABlocks.SOULBLOOM_SAPLING));
+            generator.registerItemModel(VAItems.WITHERED_SAPLING, BlockStateModelGenerator.CrossType.NOT_TINTED.registerItemModel(generator, VABlocks.WITHERED_SAPLING));
 
-            blockStateModelGenerator.registerCrop(VABlocks.TOMATO, CropBlock.AGE, 0, 1, 2, 3, 4, 5, 6, 7);
+            generator.registerItemModel(VAItems.NECROTIC_ROOTS, BlockStateModelGenerator.CrossType.NOT_TINTED.registerItemModel(generator, VABlocks.NECROTIC_ROOTS));
 
-            registerColorfulBlockSetModels( blockStateModelGenerator,VACollections.CHARTREUSE);
-            registerColorfulBlockSetModels( blockStateModelGenerator,VACollections.MAROON);
-            registerColorfulBlockSetModels( blockStateModelGenerator,VACollections.INDIGO);
-            registerColorfulBlockSetModels( blockStateModelGenerator,VACollections.PLUM);
-            registerColorfulBlockSetModels( blockStateModelGenerator,VACollections.VIRIDIAN);
-            registerColorfulBlockSetModels( blockStateModelGenerator,VACollections.TAN);
-            registerColorfulBlockSetModels( blockStateModelGenerator,VACollections.SINOPIA);
-            registerColorfulBlockSetModels( blockStateModelGenerator,VACollections.LILAC);
+            generator.registerMirrorable(VABlocks.ROCK_SALT_BLOCK);
+            generator.registerSingleton(VABlocks.CHISELED_ROCK_SALT_BRICKS, TexturedModel.CUBE_COLUMN);
 
-            registerParentedTintedItemModel(blockStateModelGenerator, VABlocks.OAK_HEDGE, Registries.BLOCK.getId(VABlocks.OAK_HEDGE).withPrefixedPath("block/").withSuffixedPath("_inventory"), new ConstantTintSource(FoliageColors.DEFAULT));
-            registerParentedTintedItemModel(blockStateModelGenerator, VABlocks.SPRUCE_HEDGE, Registries.BLOCK.getId(VABlocks.SPRUCE_HEDGE).withPrefixedPath("block/").withSuffixedPath("_inventory"), new ConstantTintSource(FoliageColors.SPRUCE));
-            registerParentedTintedItemModel(blockStateModelGenerator, VABlocks.BIRCH_HEDGE, Registries.BLOCK.getId(VABlocks.BIRCH_HEDGE).withPrefixedPath("block/").withSuffixedPath("_inventory"), new ConstantTintSource(FoliageColors.BIRCH));
-            registerParentedTintedItemModel(blockStateModelGenerator, VABlocks.JUNGLE_HEDGE, Registries.BLOCK.getId(VABlocks.JUNGLE_HEDGE).withPrefixedPath("block/").withSuffixedPath("_inventory"), new ConstantTintSource(FoliageColors.DEFAULT));
-            registerParentedTintedItemModel(blockStateModelGenerator, VABlocks.ACACIA_HEDGE, Registries.BLOCK.getId(VABlocks.ACACIA_HEDGE).withPrefixedPath("block/").withSuffixedPath("_inventory"), new ConstantTintSource(FoliageColors.DEFAULT));
-            registerParentedTintedItemModel(blockStateModelGenerator, VABlocks.DARK_OAK_HEDGE, Registries.BLOCK.getId(VABlocks.DARK_OAK_HEDGE).withPrefixedPath("block/").withSuffixedPath("_inventory"), new ConstantTintSource(FoliageColors.DEFAULT));
-            blockStateModelGenerator.registerParentedItemModel(VABlocks.PALE_OAK_HEDGE, Registries.BLOCK.getId(VABlocks.PALE_OAK_HEDGE).withPrefixedPath("block/").withSuffixedPath("_inventory"));
-            registerParentedTintedItemModel(blockStateModelGenerator, VABlocks.MANGROVE_HEDGE, Registries.BLOCK.getId(VABlocks.MANGROVE_HEDGE).withPrefixedPath("block/").withSuffixedPath("_inventory"), new ConstantTintSource(FoliageColors.MANGROVE));
-            blockStateModelGenerator.registerParentedItemModel(VABlocks.CHERRY_HEDGE, Registries.BLOCK.getId(VABlocks.CHERRY_HEDGE).withPrefixedPath("block/").withSuffixedPath("_inventory"));
-            blockStateModelGenerator.registerParentedItemModel(VABlocks.SOULBLOOM_HEDGE, Registries.BLOCK.getId(VABlocks.SOULBLOOM_HEDGE).withPrefixedPath("block/").withSuffixedPath("_inventory"));
-            blockStateModelGenerator.registerParentedItemModel(VABlocks.WITHERED_HEDGE, Registries.BLOCK.getId(VABlocks.WITHERED_HEDGE).withPrefixedPath("block/").withSuffixedPath("_inventory"));
-            blockStateModelGenerator.registerParentedItemModel(VABlocks.AZALEA_HEDGE, Registries.BLOCK.getId(VABlocks.AZALEA_HEDGE).withPrefixedPath("block/").withSuffixedPath("_inventory"));
-            blockStateModelGenerator.registerParentedItemModel(VABlocks.FLOWERING_AZALEA_HEDGE, Registries.BLOCK.getId(VABlocks.FLOWERING_AZALEA_HEDGE).withPrefixedPath("block/").withSuffixedPath("_inventory"));
+            generator.registerCrop(VABlocks.TOMATO, CropBlock.AGE, 0, 1, 2, 3, 4, 5, 6, 7);
 
-            registerColoringStation(blockStateModelGenerator);
+            registerColorfulBlockSetModels( generator,VACollections.CHARTREUSE);
+            registerColorfulBlockSetModels( generator,VACollections.MAROON);
+            registerColorfulBlockSetModels( generator,VACollections.INDIGO);
+            registerColorfulBlockSetModels( generator,VACollections.PLUM);
+            registerColorfulBlockSetModels( generator,VACollections.VIRIDIAN);
+            registerColorfulBlockSetModels( generator,VACollections.TAN);
+            registerColorfulBlockSetModels( generator,VACollections.SINOPIA);
+            registerColorfulBlockSetModels( generator,VACollections.LILAC);
 
-            registerSpotlight(blockStateModelGenerator);
+            registerInventoryBlockItem(generator, VABlocks.OAK_HEDGE, new ConstantTintSource(FoliageColors.DEFAULT));
+            registerInventoryBlockItem(generator, VABlocks.SPRUCE_HEDGE, new ConstantTintSource(FoliageColors.SPRUCE));
+            registerInventoryBlockItem(generator, VABlocks.BIRCH_HEDGE, new ConstantTintSource(FoliageColors.BIRCH));
+            registerInventoryBlockItem(generator, VABlocks.JUNGLE_HEDGE, new ConstantTintSource(FoliageColors.DEFAULT));
+            registerInventoryBlockItem(generator, VABlocks.ACACIA_HEDGE, new ConstantTintSource(FoliageColors.DEFAULT));
+            registerInventoryBlockItem(generator, VABlocks.DARK_OAK_HEDGE, new ConstantTintSource(FoliageColors.DEFAULT));
+            registerInventoryBlockItem(generator, VABlocks.PALE_OAK_HEDGE);
+            registerInventoryBlockItem(generator, VABlocks.MANGROVE_HEDGE, new ConstantTintSource(FoliageColors.MANGROVE));
+            registerInventoryBlockItem(generator, VABlocks.CHERRY_HEDGE);
+            registerInventoryBlockItem(generator, VABlocks.SOULBLOOM_HEDGE);
+            registerInventoryBlockItem(generator, VABlocks.WITHERED_HEDGE);
+            registerInventoryBlockItem(generator, VABlocks.AZALEA_HEDGE);
+            registerInventoryBlockItem(generator, VABlocks.FLOWERING_AZALEA_HEDGE);
 
-            blockStateModelGenerator.registerFlowerPotPlant(VABlocks.SOULBLOOM_SAPLING, VABlocks.POTTED_SOULBLOOM_SAPLING, BlockStateModelGenerator.CrossType.NOT_TINTED);
-            blockStateModelGenerator.registerFlowerPotPlant(VABlocks.WITHERED_SAPLING, VABlocks.POTTED_WITHERED_SAPLING, BlockStateModelGenerator.CrossType.NOT_TINTED);
-            blockStateModelGenerator.registerFlowerPotPlant(VABlocks.GREENCAP_MUSHROOM, VABlocks.POTTED_GREENCAP_MUSHROOM, BlockStateModelGenerator.CrossType.NOT_TINTED);
-            blockStateModelGenerator.registerFlowerPotPlant(VABlocks.NECROTIC_ROOTS, VABlocks.POTTED_NECROTIC_ROOTS, BlockStateModelGenerator.CrossType.NOT_TINTED);
+            registerColoringStation(generator);
+            registerSpotlight(generator);
 
-            blockStateModelGenerator.registerSimpleCubeAll(VABlocks.STEEL_GRATE);
-            blockStateModelGenerator.registerSimpleCubeAll(VABlocks.EXPOSED_STEEL_GRATE);
-            blockStateModelGenerator.registerSimpleCubeAll(VABlocks.WEATHERED_STEEL_GRATE);
-            blockStateModelGenerator.registerSimpleCubeAll(VABlocks.OXIDIZED_STEEL_GRATE);
-            blockStateModelGenerator.registerParented(VABlocks.STEEL_GRATE, VABlocks.WAXED_STEEL_GRATE);
-            blockStateModelGenerator.registerParented(VABlocks.EXPOSED_STEEL_GRATE, VABlocks.WAXED_EXPOSED_STEEL_GRATE);
-            blockStateModelGenerator.registerParented(VABlocks.WEATHERED_STEEL_GRATE, VABlocks.WAXED_WEATHERED_STEEL_GRATE);
-            blockStateModelGenerator.registerParented(VABlocks.OXIDIZED_STEEL_GRATE, VABlocks.WAXED_OXIDIZED_STEEL_GRATE);
-            blockStateModelGenerator.registerSimpleCubeAll(VABlocks.EXPOSED_STEEL_BLOCK);
-            blockStateModelGenerator.registerSimpleCubeAll(VABlocks.WEATHERED_STEEL_BLOCK);
-            blockStateModelGenerator.registerSimpleCubeAll(VABlocks.OXIDIZED_STEEL_BLOCK);
-            blockStateModelGenerator.registerParented(VABlocks.STEEL_BLOCK, VABlocks.WAXED_STEEL_BLOCK);
-            blockStateModelGenerator.registerParented(VABlocks.EXPOSED_STEEL_BLOCK, VABlocks.WAXED_EXPOSED_STEEL_BLOCK);
-            blockStateModelGenerator.registerParented(VABlocks.WEATHERED_STEEL_BLOCK, VABlocks.WAXED_WEATHERED_STEEL_BLOCK);
-            blockStateModelGenerator.registerParented(VABlocks.OXIDIZED_STEEL_BLOCK, VABlocks.WAXED_OXIDIZED_STEEL_BLOCK);
+            generator.registerFlowerPotPlant(VABlocks.SOULBLOOM_SAPLING, VABlocks.POTTED_SOULBLOOM_SAPLING, BlockStateModelGenerator.CrossType.NOT_TINTED);
+            generator.registerFlowerPotPlant(VABlocks.WITHERED_SAPLING, VABlocks.POTTED_WITHERED_SAPLING, BlockStateModelGenerator.CrossType.NOT_TINTED);
+            generator.registerFlowerPotPlant(VABlocks.GREENCAP_MUSHROOM, VABlocks.POTTED_GREENCAP_MUSHROOM, BlockStateModelGenerator.CrossType.NOT_TINTED);
+            generator.registerFlowerPotPlant(VABlocks.NECROTIC_ROOTS, VABlocks.POTTED_NECROTIC_ROOTS, BlockStateModelGenerator.CrossType.NOT_TINTED);
 
-            blockStateModelGenerator.registerParented(VABlocks.STEEL_BLOCK, VABlocks.REMOTE_NOTIFIER);
+            generator.registerParented(VABlocks.STEEL_GRATE, VABlocks.WAXED_STEEL_GRATE);
+            generator.registerParented(VABlocks.EXPOSED_STEEL_GRATE, VABlocks.WAXED_EXPOSED_STEEL_GRATE);
+            generator.registerParented(VABlocks.WEATHERED_STEEL_GRATE, VABlocks.WAXED_WEATHERED_STEEL_GRATE);
+            generator.registerParented(VABlocks.OXIDIZED_STEEL_GRATE, VABlocks.WAXED_OXIDIZED_STEEL_GRATE);
+            generator.registerParented(VABlocks.STEEL_BLOCK, VABlocks.WAXED_STEEL_BLOCK);
+            generator.registerParented(VABlocks.EXPOSED_STEEL_BLOCK, VABlocks.WAXED_EXPOSED_STEEL_BLOCK);
+            generator.registerParented(VABlocks.WEATHERED_STEEL_BLOCK, VABlocks.WAXED_WEATHERED_STEEL_BLOCK);
+            generator.registerParented(VABlocks.OXIDIZED_STEEL_BLOCK, VABlocks.WAXED_OXIDIZED_STEEL_BLOCK);
+
+            generator.registerParented(VABlocks.STEEL_BLOCK, VABlocks.REMOTE_NOTIFIER);
         }
 
         @Override
-        public void generateItemModels(ItemModelGenerator itemModelGenerator) {
-            generateGildedToolItemModels(itemModelGenerator, VAItems.AMETHYST_TOOL_SETS);
-            generateGildedToolItemModels(itemModelGenerator, VAItems.COPPER_TOOL_SETS);
-            generateGildedToolItemModels(itemModelGenerator, VAItems.EMERALD_TOOL_SETS);
-            generateGildedToolItemModels(itemModelGenerator, VAItems.IOLITE_TOOL_SETS);
-            generateGildedToolItemModels(itemModelGenerator, VAItems.QUARTZ_TOOL_SETS);
-            generateGildedToolItemModels(itemModelGenerator, VAItems.SCULK_TOOL_SETS);
+        public void generateItemModels(ItemModelGenerator generator) {
+            generateGildedToolItemModels(generator, VAItems.AMETHYST_TOOL_SETS);
+            generateGildedToolItemModels(generator, VAItems.COPPER_TOOL_SETS);
+            generateGildedToolItemModels(generator, VAItems.EMERALD_TOOL_SETS);
+            generateGildedToolItemModels(generator, VAItems.IOLITE_TOOL_SETS);
+            generateGildedToolItemModels(generator, VAItems.QUARTZ_TOOL_SETS);
+            generateGildedToolItemModels(generator, VAItems.SCULK_TOOL_SETS);
 
-            itemModelGenerator.register(VAItems.CHARTREUSE_DYE, Models.GENERATED);
-            itemModelGenerator.register(VAItems.MAROON_DYE, Models.GENERATED);
-            itemModelGenerator.register(VAItems.INDIGO_DYE, Models.GENERATED);
-            itemModelGenerator.register(VAItems.PLUM_DYE, Models.GENERATED);
-            itemModelGenerator.register(VAItems.VIRIDIAN_DYE, Models.GENERATED);
-            itemModelGenerator.register(VAItems.TAN_DYE, Models.GENERATED);
-            itemModelGenerator.register(VAItems.SINOPIA_DYE, Models.GENERATED);
-            itemModelGenerator.register(VAItems.LILAC_DYE, Models.GENERATED);
-            itemModelGenerator.register(VAItems.ROCK_SALT, Models.GENERATED);
-            itemModelGenerator.register(VAItems.RAW_STEEL, Models.GENERATED);
-            itemModelGenerator.register(VAItems.STEEL_INGOT, Models.GENERATED);
-            itemModelGenerator.register(VAItems.TOOL_GILD_SMITHING_TEMPLATE, Models.GENERATED);
-            itemModelGenerator.register(VAItems.STEEL_BOMB, Models.GENERATED);
-            itemModelGenerator.register(VAItems.IOLITE, Models.GENERATED);
-            itemModelGenerator.register(VAItems.TOMATO, Models.GENERATED);
-            itemModelGenerator.register(VAItems.CABBAGE, Models.GENERATED);
-            itemModelGenerator.register(VAItems.CORN, Models.GENERATED);
-            itemModelGenerator.register(VAItems.ROASTED_CORN, Models.GENERATED);
-            itemModelGenerator.register(VAItems.COTTON, Models.GENERATED);
+            registerSimpleItems(generator,
+                    VAItems.CHARTREUSE_DYE,
+                    VAItems.MAROON_DYE,
+                    VAItems.INDIGO_DYE,
+                    VAItems.PLUM_DYE,
+                    VAItems.VIRIDIAN_DYE,
+                    VAItems.TAN_DYE,
+                    VAItems.SINOPIA_DYE,
+                    VAItems.LILAC_DYE,
+                    VAItems.ROCK_SALT,
+                    VAItems.RAW_STEEL,
+                    VAItems.STEEL_INGOT,
+                    VAItems.TOOL_GILD_SMITHING_TEMPLATE,
+                    VAItems.STEEL_BOMB,
+                    VAItems.IOLITE,
+                    VAItems.TOMATO,
+                    VAItems.CABBAGE,
+                    VAItems.CORN,
+                    VAItems.ROASTED_CORN,
+                    VAItems.COTTON,
+                    VAItems.FRIED_EGG,
+                    VAItems.CHEESE_WEDGE,
+                    VAItems.BEEF_JERKY,
+                    VAItems.PORK_JERKY,
+                    VAItems.CHICKEN_JERKY,
+                    VAItems.MUTTON_JERKY,
+                    VAItems.SWEET_BERRY_PIE,
+                    VAItems.ACID_BUCKET,
+                    VAItems.SILK_THREAD,
+                    VAItems.LUMWASP_MANDIBLE,
+                    VAItems.LIGHTNING_BOTTLE,
+                    VAItems.SALINE_SPAWN_EGG,
+                    VAItems.LUMWASP_SPAWN_EGG,
+                    VAItems.SPECTRE_SPAWN_EGG,
+                    VAItems.STEEL_HORSE_ARMOR,
+                    VAItems.SOULBLOOM_BOAT,
+                    VAItems.SOULBLOOM_CHEST_BOAT,
+                    VAItems.SPECTRAL_POWDER,
+                    VAItems.CHARTREUSE_HARNESS,
+                    VAItems.MAROON_HARNESS,
+                    VAItems.INDIGO_HARNESS,
+                    VAItems.PLUM_HARNESS,
+                    VAItems.VIRIDIAN_HARNESS,
+                    VAItems.TAN_HARNESS,
+                    VAItems.SINOPIA_HARNESS,
+                    VAItems.LILAC_HARNESS,
+                    VAItems.EXOSKELETON_ARMOR_TRIM_SMITHING_TEMPLATE
+            );
 
-            itemModelGenerator.register(VAItems.FRIED_EGG, Models.GENERATED);
-            itemModelGenerator.register(VAItems.CHEESE_WEDGE, Models.GENERATED);
-            itemModelGenerator.register(VAItems.BEEF_JERKY, Models.GENERATED);
-            itemModelGenerator.register(VAItems.PORK_JERKY, Models.GENERATED);
-            itemModelGenerator.register(VAItems.CHICKEN_JERKY, Models.GENERATED);
-            itemModelGenerator.register(VAItems.MUTTON_JERKY, Models.GENERATED);
-            itemModelGenerator.register(VAItems.SWEET_BERRY_PIE, Models.GENERATED);
-            itemModelGenerator.register(VAItems.ACID_BUCKET, Models.GENERATED);
-            itemModelGenerator.register(VAItems.SILK_THREAD, Models.GENERATED);
-            itemModelGenerator.register(VAItems.LUMWASP_MANDIBLE, Models.GENERATED);
+            registerItems(generator, Models.HANDHELD,
+                    VAItems.STEEL_SWORD,
+                    VAItems.STEEL_SHOVEL,
+                    VAItems.STEEL_PICKAXE,
+                    VAItems.STEEL_AXE,
+                    VAItems.STEEL_HOE
+            );
 
-            itemModelGenerator.register(VAItems.LIGHTNING_BOTTLE, Models.GENERATED);
+            generator.registerArmor(VAItems.STEEL_HELMET, VAArmorMaterial.STEEL.assetId(), HELMET_TRIM_ID_PREFIX, false);
+            generator.registerArmor(VAItems.STEEL_CHESTPLATE, VAArmorMaterial.STEEL.assetId(), CHESTPLATE_TRIM_ID_PREFIX, false);
+            generator.registerArmor(VAItems.STEEL_LEGGINGS, VAArmorMaterial.STEEL.assetId(), LEGGINGS_TRIM_ID_PREFIX, false);
+            generator.registerArmor(VAItems.STEEL_BOOTS, VAArmorMaterial.STEEL.assetId(), BOOTS_TRIM_ID_PREFIX, false);
 
-            itemModelGenerator.register(VAItems.SALINE_SPAWN_EGG, Models.GENERATED);
-            itemModelGenerator.register(VAItems.LUMWASP_SPAWN_EGG, Models.GENERATED);
-            itemModelGenerator.register(VAItems.SPECTRE_SPAWN_EGG, Models.GENERATED);
+            generator.registerBundle(VAItems.CHARTREUSE_BUNDLE);
+            generator.registerBundle(VAItems.MAROON_BUNDLE);
+            generator.registerBundle(VAItems.INDIGO_BUNDLE);
+            generator.registerBundle(VAItems.PLUM_BUNDLE);
+            generator.registerBundle(VAItems.VIRIDIAN_BUNDLE);
+            generator.registerBundle(VAItems.TAN_BUNDLE);
+            generator.registerBundle(VAItems.SINOPIA_BUNDLE);
+            generator.registerBundle(VAItems.LILAC_BUNDLE);
 
-            itemModelGenerator.register(VAItems.STEEL_SWORD, Models.HANDHELD);
-            itemModelGenerator.register(VAItems.STEEL_SHOVEL, Models.HANDHELD);
-            itemModelGenerator.register(VAItems.STEEL_PICKAXE, Models.HANDHELD);
-            itemModelGenerator.register(VAItems.STEEL_AXE, Models.HANDHELD);
-            itemModelGenerator.register(VAItems.STEEL_HOE, Models.HANDHELD);
+            registerTintableWithDefaultTexture(generator, VAItems.ENGRAVING_CHISEL);
+            registerTintableWithDefaultTexture(generator, VAItems.ICE_CREAM);
 
-            itemModelGenerator.registerArmor(VAItems.STEEL_HELMET, VAArmorMaterial.STEEL.assetId(), HELMET_TRIM_ID_PREFIX, false);
-            itemModelGenerator.registerArmor(VAItems.STEEL_CHESTPLATE, VAArmorMaterial.STEEL.assetId(), CHESTPLATE_TRIM_ID_PREFIX, false);
-            itemModelGenerator.registerArmor(VAItems.STEEL_LEGGINGS, VAArmorMaterial.STEEL.assetId(), LEGGINGS_TRIM_ID_PREFIX, false);
-            itemModelGenerator.registerArmor(VAItems.STEEL_BOOTS, VAArmorMaterial.STEEL.assetId(), BOOTS_TRIM_ID_PREFIX, false);
-            itemModelGenerator.register(VAItems.STEEL_HORSE_ARMOR, Models.GENERATED);
-
-            itemModelGenerator.register(VAItems.SOULBLOOM_BOAT, Models.GENERATED);
-            itemModelGenerator.register(VAItems.SOULBLOOM_CHEST_BOAT, Models.GENERATED);
-
-            itemModelGenerator.register(VAItems.SPECTRAL_POWDER, Models.GENERATED);
-
-            itemModelGenerator.registerBundle(VAItems.CHARTREUSE_BUNDLE);
-            itemModelGenerator.registerBundle(VAItems.MAROON_BUNDLE);
-            itemModelGenerator.registerBundle(VAItems.INDIGO_BUNDLE);
-            itemModelGenerator.registerBundle(VAItems.PLUM_BUNDLE);
-            itemModelGenerator.registerBundle(VAItems.VIRIDIAN_BUNDLE);
-            itemModelGenerator.registerBundle(VAItems.TAN_BUNDLE);
-            itemModelGenerator.registerBundle(VAItems.SINOPIA_BUNDLE);
-            itemModelGenerator.registerBundle(VAItems.LILAC_BUNDLE);
-            itemModelGenerator.register(VAItems.CHARTREUSE_HARNESS, Models.GENERATED);
-            itemModelGenerator.register(VAItems.MAROON_HARNESS, Models.GENERATED);
-            itemModelGenerator.register(VAItems.INDIGO_HARNESS, Models.GENERATED);
-            itemModelGenerator.register(VAItems.PLUM_HARNESS, Models.GENERATED);
-            itemModelGenerator.register(VAItems.VIRIDIAN_HARNESS, Models.GENERATED);
-            itemModelGenerator.register(VAItems.TAN_HARNESS, Models.GENERATED);
-            itemModelGenerator.register(VAItems.SINOPIA_HARNESS, Models.GENERATED);
-            itemModelGenerator.register(VAItems.LILAC_HARNESS, Models.GENERATED);
-            itemModelGenerator.register(VAItems.EXOSKELETON_ARMOR_TRIM_SMITHING_TEMPLATE, Models.GENERATED);
-
-            registerTintableWithDefaultTexture(itemModelGenerator, VAItems.ENGRAVING_CHISEL);
-            registerTintableWithDefaultTexture(itemModelGenerator, VAItems.ICE_CREAM);
-
-            registerApplicablePotion(itemModelGenerator, VAItems.APPLICABLE_POTION);
-
+            registerApplicablePotion(generator, VAItems.APPLICABLE_POTION);
         }
     }
 
@@ -397,7 +446,9 @@ public class VAModelProvider {
                 if (s.stainedGlassPane() != null) g.registerGlassAndPane(s.stainedGlass(), s.stainedGlassPane());
                 else g.registerSimpleCubeAll(s.stainedGlass());
             }
-            if (s.silkbulb() != null) g.registerSimpleCubeAll(s.silkbulb());
+            if (s.silkbulb() != null) {
+                g.registerSimpleCubeAll(s.silkbulb());
+            };
             if (s.candle() != null && s.candleCake() != null) g.registerCandle(s.candle(), s.candleCake());
             s.ifShulkerBox(shulkerbox -> g.registerShulkerBox(shulkerbox, s.dye().getColor()));
             s.ifGlazedTerracotta(block -> g.registerSouthDefaultHorizontalFacing(TexturedModel.TEMPLATE_GLAZED_TERRACOTTA, block));
@@ -456,7 +507,7 @@ public class VAModelProvider {
             generator.output.accept(item, ItemModels.condition(new HasComponentProperty(DataComponentTypes.DYED_COLOR, true), ItemModels.tinted(dyedItemIdentifier, new DyeTintSource(0xFFFFFF)), ItemModels.basic(undyedItemIdentifier)));
         }
 
-        public void registerParentedTintedItemModel(BlockStateModelGenerator generator, Block block, Identifier parentModelId, TintSource... sources) {
+        public static void registerParentedTintedItemModel(BlockStateModelGenerator generator, Block block, Identifier parentModelId, TintSource... sources) {
             generator.itemModelOutput.accept(block.asItem(), ItemModels.tinted(parentModelId, sources));
         }
 
@@ -537,7 +588,44 @@ public class VAModelProvider {
                                     .with(weightedVariant2.apply(BlockStateModelGenerator.ROTATE_Y_270))
                     );
         }
+
+        protected static void registerSimpleBlockItem(BlockStateModelGenerator generator, Block block) {
+            generator.registerParentedItemModel(block, Registries.BLOCK.getId(block).withPrefixedPath("block/"));
+        }
+
+        protected static void registerInventoryBlockItem(BlockStateModelGenerator generator, Block block) {
+            generator.registerParentedItemModel(block, Registries.BLOCK.getId(block).withPrefixedPath("block/").withSuffixedPath("_inventory"));
+        }
+
+        protected static void registerInventoryBlockItem(BlockStateModelGenerator generator, Block block, TintSource... sources) {
+            registerParentedTintedItemModel(generator, block, Registries.BLOCK.getId(block).withPrefixedPath("block/").withSuffixedPath("_inventory"), sources);
+        }
+        
+        protected static void registerSimpleBlockItems(BlockStateModelGenerator generator, Block... blocks) {
+            for (Block block : blocks) {
+                registerSimpleBlockItem(generator, block);
+            }
+        }
+        
+        protected static void registerSimpleCubeAll(BlockStateModelGenerator generator, Block... blocks) {
+            for (Block block : blocks) {
+                generator.registerSimpleCubeAll(block);
+            }
+        }
+
+        protected static void registerSimpleItems(ItemModelGenerator generator, Item... items) {
+            for (Item item : items) {
+                generator.register(item, Models.GENERATED);
+            }
+        }
+
+        protected static void registerItems(ItemModelGenerator generator, Model model, Item... items) {
+            for (Item item : items) {
+                generator.register(item, model);
+            }
+        }
     }
+
 
     private static boolean haltModelGeneration = false;
 

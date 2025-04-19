@@ -1,7 +1,0 @@
-{
-  "parent": "minecraft:block/cube_column_uv_locked_z",
-  "textures": {
-    "end": "virtual_additions:block/soulbloom_log_top",
-    "side": "virtual_additions:block/soulbloom_log"
-  }
-}
