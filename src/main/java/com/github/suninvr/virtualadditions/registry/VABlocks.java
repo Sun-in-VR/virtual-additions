@@ -650,7 +650,7 @@ public class VABlocks {
         SPECTRAL_TORCH = register("spectral_torch", (settings -> new TorchBlock(VAParticleTypes.SPECTRAL_FLAME, settings)), Settings.copy(Blocks.SOUL_TORCH).luminance((state) -> 11).mapColor(MapColor.WHITE));
         SPECTRAL_WALL_TORCH = register("spectral_wall_torch", (settings -> new WallTorchBlock(VAParticleTypes.SPECTRAL_FLAME, settings)), Settings.copy(SPECTRAL_TORCH).lootTable(SPECTRAL_TORCH.getLootTableKey()).overrideTranslationKey(SPECTRAL_FIRE.getTranslationKey()));
         SPECTRAL_LANTERN = register("spectral_lantern", LanternBlock::new, Settings.copy(Blocks.SOUL_LANTERN).luminance((state) -> 11));
-        SPECTRAL_SAND = register("spectral_sand", settings -> new ColoredFallingBlock(new ColorCode(0xB3C1D0), settings), Settings.copy(Blocks.SAND).mapColor(MapColor.WHITE));
+        SPECTRAL_SAND = register("spectral_sand", settings -> new ColoredFallingBlock(new ColorCode(0xB3C1D0), settings), Settings.copy(Blocks.SAND).allowsSpawning((state, world, pos, type) -> type.equals(VAEntityType.SPECTRE)).mapColor(MapColor.WHITE));
 
         OAK_HEDGE = register("oak_hedge", HedgeBlock::new, Settings.copy(Blocks.OAK_LEAVES));
         SPRUCE_HEDGE = register("spruce_hedge", HedgeBlock::new, Settings.copy(Blocks.SPRUCE_LEAVES));

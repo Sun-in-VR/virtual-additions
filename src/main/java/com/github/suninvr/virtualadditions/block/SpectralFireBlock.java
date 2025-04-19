@@ -6,6 +6,7 @@ import net.minecraft.block.AbstractBlock;
 import net.minecraft.block.AbstractFireBlock;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.Blocks;
+import net.minecraft.entity.CollisionEvent;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityCollisionHandler;
 import net.minecraft.util.math.BlockPos;
@@ -34,6 +35,7 @@ public class SpectralFireBlock extends AbstractFireBlock {
 
     @Override
     protected void onEntityCollision(BlockState state, World world, BlockPos pos, Entity entity, EntityCollisionHandler handler) {
+        handler.addEvent(CollisionEvent.FREEZE);
     }
 
     @Override

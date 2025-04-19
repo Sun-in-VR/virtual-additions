@@ -259,7 +259,7 @@ public final class VARecipeProvider {
             createColoringRecipeSet(ItemTags.HARNESSES, harnesses);
 
             for(int i = 0; i < virtualAdditionsHarnesses.size(); ++i) {
-                this.method_70963(virtualAdditionsHarnesses.get(i), virtualAdditionsWool.get(i));
+                this.offerHarness(virtualAdditionsHarnesses.get(i), virtualAdditionsWool.get(i));
             }
 
             offerColoringStationRecipes(

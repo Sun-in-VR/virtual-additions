@@ -359,7 +359,8 @@ public final class VABlockTagProvider {
             getOrCreateTagBuilder(VABlockTags.SPECTRE_SPAWNABLE_ON).add(
                     Blocks.GRASS_BLOCK,
                     Blocks.PODZOL,
-                    Blocks.MYCELIUM
+                    Blocks.MYCELIUM,
+                    VABlocks.SPECTRAL_SAND
             ).addOptionalTag(BlockTags.NYLIUM);
 
             getOrCreateTagBuilder(BlockTags.HOE_MINEABLE).add(VABlocks.SOULBLOOM_LEAVES, VABlocks.WITHERED_LEAVES);

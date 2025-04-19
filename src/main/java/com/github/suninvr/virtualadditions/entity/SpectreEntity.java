@@ -244,6 +244,11 @@ public class SpectreEntity extends HostileEntity implements RangedAttackMob {
         return VASoundEvents.ENTITY_SPECTRE_DEATH;
     }
 
+    @Override
+    public boolean hurtByWater() {
+        return true;
+    }
+
     public static boolean canSpawnInDark(EntityType<? extends HostileEntity> type, ServerWorldAccess world, SpawnReason spawnReason, BlockPos pos, Random random) {
         BlockState state = world.getBlockState(pos.down());
         return state.isIn(VABlockTags.SPECTRE_SPAWNABLE_ON) && HostileEntity.canSpawnInDark(type, world, spawnReason, pos, random);
