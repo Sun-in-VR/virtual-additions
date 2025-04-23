@@ -6,10 +6,12 @@ import net.minecraft.world.GameRules;
 
 public class VAGameRules {
     public static final GameRules.Key<GameRules.BooleanRule> IOLITE_INTERFERENCE;
+    public static final GameRules.Key<GameRules.IntRule> WARP_TETHER_MAX_RANGE;
     public static final GameRules.Key<GameRules.IntRule> SCULK_GILD_BLOCK_SELECTION_MAXIMUM;
 
     static {
         IOLITE_INTERFERENCE = GameRuleRegistry.register("ioliteInterference", GameRules.Category.PLAYER, GameRuleFactory.createBooleanRule(true));
+        WARP_TETHER_MAX_RANGE = GameRuleRegistry.register("warpTetherMaxRange", GameRules.Category.MISC, GameRuleFactory.createIntRule(128, 0, Integer.MAX_VALUE));
         SCULK_GILD_BLOCK_SELECTION_MAXIMUM = GameRuleRegistry.register("sculkGildBlockSelectionMaximum", GameRules.Category.PLAYER, GameRuleFactory.createIntRule(255, 0, 10000));
     }
 

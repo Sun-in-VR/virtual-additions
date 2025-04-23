@@ -84,7 +84,7 @@ public class SpectreEntity extends HostileEntity implements RangedAttackMob {
     protected void initGoals() {
         super.initGoals();
         this.goalSelector.add(1, new SpectreBuffEntityGoal(this, 1.5, 8.0F, 5.0F, 16.0F));
-        //this.goalSelector.add(3, new ProjectileAttackGoal(this, 1.2F, 10, 20, 4.0F));
+        this.goalSelector.add(3, new ProjectileAttackGoal(this, 1.2F, 40, 40, 4.0F));
         this.goalSelector.add(4, new FlyGoal(this, 1.0F));
         this.goalSelector.add(4, new LookAtEntityGoal(this, MobEntity.class, 8.0F));
         this.goalSelector.add(5, new LookAroundGoal(this));
@@ -102,7 +102,15 @@ public class SpectreEntity extends HostileEntity implements RangedAttackMob {
 
     @Override
     public void shootAt(LivingEntity target, float pullProgress) {
-
+        this.playSound(VASoundEvents.ENTITY_SPECTRE_EMPOWER_START, 1.0F, 1.0F);
+        double d = target.getEyeY() - 1.100000023841858;
+        double e = target.getX() - this.getX();
+        double g = target.getZ() - this.getZ();
+        double h = Math.sqrt(e * e + g * g) * 0.20000000298023224;
+        SpectralBoltEntity projectile = new SpectralBoltEntity(this.getWorld(), this);
+        double f = d - projectile.getY();
+        projectile.setVelocity(e, f + h, g, 0.25F, 0.0F);
+        this.getWorld().spawnEntity(projectile);
     }
 
     @Override
@@ -147,7 +155,7 @@ public class SpectreEntity extends HostileEntity implements RangedAttackMob {
 
     private void spawnAmbientEffects() {
         if (this.age % 3 == 0) {
-            this.getWorld().addParticleClient(VAParticleTypes.SPECTRAL_FLAME, this.getParticleX(0.35), this.getBodyY(1), this.getParticleZ(0.35), 0.0, 0.0, 0.0);
+            this.getWorld().addParticleClient(VAParticleTypes.SPECTRAL_FLAME, this.getParticleX(0.25), this.getBodyY(1), this.getParticleZ(0.25), 0.0, 0.0, 0.0);
         }
     }
 

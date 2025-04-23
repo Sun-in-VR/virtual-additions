@@ -87,8 +87,10 @@ public class WarpTetherBlock extends BlockWithEntity implements Waterloggable {
             double destX = (destPos.getX() + (entity.getX() - pos.getX()));
             double destY = (destPos.getY() + (entity.getY() - pos.getY()));
             double destZ = (destPos.getZ() + (entity.getZ() - pos.getZ()));
+            int range = ((ServerWorld) world).getGameRules().getInt(VAGameRules.WARP_TETHER_MAX_RANGE);
+            boolean inRange = squaredDistance <= (range * range);
             boolean bl = entity instanceof LivingEntity livingEntity && livingEntity.getStatusEffect(VAStatusEffects.IOLITE_INTERFERENCE) != null;
-            if (!bl && destState.getBlock() == VABlocks.WARP_ANCHOR && !destState.get(WarpAnchorBlock.POWERED)) {
+            if (!bl && inRange && destState.getBlock() == VABlocks.WARP_ANCHOR && !destState.get(WarpAnchorBlock.POWERED)) {
                 destY += destState.get(WarpAnchorBlock.FACING).equals(Direction.DOWN) ? (entity.getBoundingBox().getLengthY()) * -1 : 0;
                 entity.requestTeleport(destX, destY, destZ);
                 int i = (int) Math.clamp((entity.getWidth() * entity.getWidth() * entity.getHeight() * 20.0F), 5, 50);

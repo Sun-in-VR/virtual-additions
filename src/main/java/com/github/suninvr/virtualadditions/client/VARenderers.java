@@ -185,6 +185,7 @@ public class VARenderers {
         EntityRendererRegistry.register(VAEntityType.STEEL_BOMB, FlyingItemEntityRenderer::new);
         EntityRendererRegistry.register(VAEntityType.TOMATO, FlyingItemEntityRenderer::new);
         EntityRendererRegistry.register(VAEntityType.ACID_SPIT, AcidSpitEntityRenderer::new);
+        EntityRendererRegistry.register(VAEntityType.SPECTRAL_BOLT, SpectralBoltEntityRenderer::new);
         EntityRendererRegistry.register(VAEntityType.LUMWASP, LumwaspEntityRenderer::new);
         EntityRendererRegistry.register(VAEntityType.SPECTRE, SpectreEntityRenderer::new);
         EntityRendererRegistry.register(VAEntityType.SALINE, SalineEntityRenderer::new);
