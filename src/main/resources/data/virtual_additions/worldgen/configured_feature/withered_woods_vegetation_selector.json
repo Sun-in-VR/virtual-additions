@@ -16,6 +16,15 @@
         "placement": []
       },
       {
+        "feature": "virtual_additions:bone_litter",
+        "placement": [
+          {
+            "type": "minecraft:rarity_filter",
+            "chance": 2
+          }
+        ]
+      },
+      {
         "feature": "virtual_additions:necrotic_roots_patch",
         "placement": []
       }

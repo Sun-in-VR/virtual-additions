@@ -10,7 +10,6 @@ import net.fabricmc.fabric.api.client.datagen.v1.provider.FabricModelProvider;
 import net.fabricmc.fabric.api.datagen.v1.FabricDataGenerator;
 import net.fabricmc.fabric.api.datagen.v1.FabricDataOutput;
 import net.minecraft.block.Block;
-import net.minecraft.block.Blocks;
 import net.minecraft.block.CropBlock;
 import net.minecraft.client.data.*;
 import net.minecraft.client.render.item.model.ItemModel;
@@ -26,7 +25,6 @@ import net.minecraft.client.render.model.json.WeightedVariant;
 import net.minecraft.component.DataComponentTypes;
 import net.minecraft.item.CrossbowItem;
 import net.minecraft.item.Item;
-import net.minecraft.item.ItemConvertible;
 import net.minecraft.item.Items;
 import net.minecraft.item.equipment.EquipmentAsset;
 import net.minecraft.item.equipment.EquipmentAssetKeys;
@@ -207,6 +205,9 @@ public class VAModelProvider {
             generator.registerSingleton(VABlocks.CHISELED_ROCK_SALT_BRICKS, TexturedModel.CUBE_COLUMN);
 
             generator.registerCrop(VABlocks.TOMATO, CropBlock.AGE, 0, 1, 2, 3, 4, 5, 6, 7);
+
+            generator.registerLeafLitter(VABlocks.BONE_LITTER);
+            generator.registerTintableCross(VABlocks.BONE_PILE, BlockStateModelGenerator.CrossType.NOT_TINTED);
 
             registerColorfulBlockSetModels( generator,VACollections.CHARTREUSE);
             registerColorfulBlockSetModels( generator,VACollections.MAROON);

@@ -9,11 +9,8 @@ import net.fabricmc.fabric.api.itemgroup.v1.ItemGroupEvents;
 import net.minecraft.block.*;
 import net.minecraft.component.DataComponentTypes;
 import net.minecraft.component.type.*;
-import net.minecraft.entity.EntityType;
 import net.minecraft.item.*;
 import net.minecraft.item.equipment.EquipmentType;
-import net.minecraft.loot.LootTable;
-import net.minecraft.registry.RegistryKey;
 import net.minecraft.registry.RegistryKeys;
 import net.minecraft.text.Text;
 import net.minecraft.util.*;
@@ -122,6 +119,8 @@ public class VAItems {
     public static final Item BALLOON_FRUIT;
     public static final Item NECROTIC_NYLIUM;
     public static final Item NECROTIC_ROOTS;
+    public static final Item BONE_LITTER;
+    public static final Item BONE_PILE;
     public static final Item WITHERED_LOG;
     public static final Item WITHERED_WOOD;
     public static final Item STRIPPED_WITHERED_LOG;
@@ -633,6 +632,9 @@ public class VAItems {
 
         NECROTIC_NYLIUM = registerBlockItem("necrotic_nylium", VABlocks.NECROTIC_NYLIUM, ItemGroups.NATURAL, Items.WARPED_NYLIUM);
         NECROTIC_ROOTS = registerBlockItem("necrotic_roots", VABlocks.NECROTIC_ROOTS, ItemGroups.NATURAL, Items.WARPED_ROOTS);
+        
+        BONE_LITTER = registerBlockItem("bone_litter", VABlocks.BONE_LITTER, ItemGroups.NATURAL, prev);
+        BONE_PILE = registerBlockItem("bone_pile", VABlocks.BONE_PILE, ItemGroups.NATURAL, prev);
 
         WITHERED_LOG = registerBlockItem("withered_log", VABlocks.WITHERED_LOG, at(ItemGroups.BUILDING_BLOCKS, Items.WARPED_BUTTON), at(ItemGroups.NATURAL, Items.WARPED_STEM));
         WITHERED_WOOD = registerBlockItem("withered_wood", VABlocks.WITHERED_WOOD, ItemGroups.BUILDING_BLOCKS, prev);

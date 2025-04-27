@@ -36,6 +36,7 @@ public class VAFeatures {
         public static final RegistryKey<PlacedFeature> ORE_BLUESCHIST;
         public static final RegistryKey<PlacedFeature> ORE_SYENITE;
         public static final RegistryKey<PlacedFeature> SOULBLOOM_TREES;
+        public static final RegistryKey<PlacedFeature> BONE_LITTER_SOUL_SAND_VALLEY;
 
         static {
             ORE_IOLITE = registerPlaced(idOf("ore_iolite"));
@@ -53,11 +54,8 @@ public class VAFeatures {
             ORE_BLUESCHIST = registerPlaced(idOf("ore_blueschist"));
             ORE_SYENITE = registerPlaced(idOf("ore_syenite"));
             SOULBLOOM_TREES = registerPlaced(idOf("soulbloom_trees"));
+            BONE_LITTER_SOUL_SAND_VALLEY = registerPlaced(idOf("bone_litter_soul_sand_valley"));
         }
-
-        //public void bootstrap(Registerable<PlacedFeature> featureRegisterable) {
-        //    PlacedFeatures.register(featureRegisterable, );
-        //}
     }
 
     public static class Configured {
@@ -107,6 +105,11 @@ public class VAFeatures {
                 BiomeSelectors.tag(BiomeTags.IS_OCEAN),
                 GenerationStep.Feature.UNDERGROUND_ORES,
                 Placed.ORE_ROCK_SALT_OCEANS
+        );
+        BiomeModifications.addFeature(
+                BiomeSelectors.includeByKey(BiomeKeys.SOUL_SAND_VALLEY),
+                GenerationStep.Feature.VEGETAL_DECORATION,
+                Placed.BONE_LITTER_SOUL_SAND_VALLEY
         );
         TrunkPlacerTypes.init();
         BALLOON_BULB_FEATURE = Registry.register(Registries.FEATURE, idOf("balloon_bulb"), new BalloonBulbFeature(DefaultFeatureConfig.CODEC));

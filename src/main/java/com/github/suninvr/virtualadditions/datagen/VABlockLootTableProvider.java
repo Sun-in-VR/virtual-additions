@@ -22,6 +22,7 @@ import net.minecraft.item.Items;
 import net.minecraft.loot.LootPool;
 import net.minecraft.loot.LootTable;
 import net.minecraft.loot.condition.*;
+import net.minecraft.loot.entry.AlternativeEntry;
 import net.minecraft.loot.entry.ItemEntry;
 import net.minecraft.loot.function.ApplyBonusLootFunction;
 import net.minecraft.loot.function.ExplosionDecayLootFunction;
@@ -38,6 +39,7 @@ import net.minecraft.util.math.BlockPos;
 
 import java.util.ArrayList;
 import java.util.concurrent.CompletableFuture;
+import java.util.stream.IntStream;
 
 @SuppressWarnings("SameParameterValue")
 public final class VABlockLootTableProvider {
@@ -176,6 +178,9 @@ public final class VABlockLootTableProvider {
 
             this.addDrop(VABlocks.NECROTIC_NYLIUM, block -> this.drops(block, Blocks.NETHERRACK));
 
+            this.addDrop(VABlocks.BONE_LITTER, this.boneLitterDrops(VABlocks.BONE_LITTER));
+            this.addDrop(VABlocks.BONE_PILE, this.bonePileDrops(VABlocks.BONE_PILE));
+
             LootCondition.Builder tomatoBuilder = BlockStatePropertyLootCondition.builder(VABlocks.TOMATO)
                     .properties(StatePredicate.Builder.create().exactMatch(CropBlock.AGE, 7));
             this.addDrop(VABlocks.TOMATO, this.cropDrops(VABlocks.TOMATO, VAItems.TOMATO, VAItems.TOMATO_SEEDS, 1, 3, tomatoBuilder));
@@ -239,7 +244,7 @@ public final class VABlockLootTableProvider {
             this.addDrop(VABlocks.BALLOON_BULB, block -> this.drops(VAItems.BALLOON_FRUIT));
 
             this.addSimpleDrops(
-                    VABlocks.SPRINGSOIL
+                    VABlocks.SPRING_LEAF
                     );
 
             this.addDrop(VABlocks.BALLOON_BULB_PLANT, block -> new LootTable.Builder().pool(LootPool.builder().with(ItemEntry.builder(VAItems.BALLOON_FRUIT).conditionally(BlockStatePropertyLootCondition.builder(VABlocks.BALLOON_BULB_PLANT).properties(StatePredicate.Builder.create().exactMatch(BalloonBulbPlantBlock.AGE, 3))).apply(SetCountLootFunction.builder(UniformLootNumberProvider.create(2, 3))))));
@@ -351,6 +356,16 @@ public final class VABlockLootTableProvider {
             );
         }
 
+
+        public LootTable.Builder bonePileDrops(Block drop) {
+            return this.dropsWithSilkTouch(drop,
+                    this.applyExplosionDecay(drop,
+                            ItemEntry.builder(Items.BONE_MEAL)
+                                    .apply(SetCountLootFunction.builder(UniformLootNumberProvider.create(-1.0F, 1.0F)))
+                    )
+            );
+        }
+
         protected LootTable.Builder cornDrops() {
             RegistryWrapper.Impl<Enchantment> impl = this.registries.getOrThrow(RegistryKeys.ENCHANTMENT);
             return LootTable.builder()
@@ -443,6 +458,32 @@ public final class VABlockLootTableProvider {
                 i++;
             }
             return AnyOfLootCondition.builder(buildersList.toArray(builders));
+        }
+
+
+        protected LootTable.Builder boneLitterDrops(Block segmented) {
+            return segmented instanceof Segmented segmented2 ? LootTable.builder().pool(
+                            LootPool.builder().rolls(ConstantLootNumberProvider.create(1.0F)).with(
+                                    AlternativeEntry.builder(
+                                            ItemEntry.builder(segmented)
+                                                    .apply(
+                                                            IntStream.rangeClosed(1, 4).boxed().toList(),
+                                                            count -> SetCountLootFunction.builder(ConstantLootNumberProvider.create(count))
+                                                                    .conditionally(
+                                                                            BlockStatePropertyLootCondition.builder(segmented).properties(StatePredicate.Builder.create().exactMatch(segmented2.getAmountProperty(), count))
+                                                                    )
+                                                    )
+                                                    .conditionally(createSilkTouchCondition()),
+                                            ItemEntry.builder(Items.BONE_MEAL)
+                                                    .apply(
+                                                            IntStream.rangeClosed(1, 4).boxed().toList(),
+                                                            count -> SetCountLootFunction.builder(UniformLootNumberProvider.create(-1, count))
+                                                                    .conditionally(BlockStatePropertyLootCondition.builder(segmented).properties(StatePredicate.Builder.create().exactMatch(segmented2.getAmountProperty(), count)))
+                                                    )
+                                    )
+                                    ).apply(ExplosionDecayLootFunction.builder())
+                    )
+                    : dropsNothing();
         }
     }
 }

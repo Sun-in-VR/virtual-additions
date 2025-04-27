@@ -315,6 +315,16 @@ public final class VARecipeProvider {
             offerHangingSignRecipe(VAItems.WITHERED_HANGING_SIGN, VAItems.STRIPPED_WITHERED_LOG);
             offerHedgeRecipe(VABlocks.WITHERED_HEDGE, VABlocks.WITHERED_LEAVES);
 
+
+            ShapedRecipeJsonBuilder.create(this.registryLookup, RecipeCategory.DECORATIONS, VAItems.BONE_PILE, 4)
+                    .pattern("bBb")
+                    .input('B', Items.BONE_BLOCK).input('b', Items.BONE)
+                    .criterion("has_bone_block", conditionsFromItem(Items.BONE_BLOCK)).offerTo(exporter);
+            ShapelessRecipeJsonBuilder.create(this.registryLookup, RecipeCategory.DECORATIONS, VAItems.BONE_LITTER, 2)
+                            .input(VAItems.BONE_PILE).criterion("has_bone_pile", conditionsFromItem(VAItems.BONE_PILE)).offerTo(exporter);
+            ShapelessRecipeJsonBuilder.create(this.registryLookup, RecipeCategory.MISC, Items.BONE_MEAL)
+                            .input(VAItems.BONE_LITTER).criterion("has_bone_litter", conditionsFromItem(VAItems.BONE_PILE)).offerTo(exporter);
+
             offerCompactingRecipe(RecipeCategory.BUILDING_BLOCKS, VABlocks.SPECTRAL_SAND, VAItems.SPECTRAL_POWDER);
 
             ShapedRecipeJsonBuilder.create(this.registryLookup, RecipeCategory.BUILDING_BLOCKS, VAItems.SPECTRAL_TORCH, 4)
@@ -330,6 +340,7 @@ public final class VARecipeProvider {
                             .pattern("iii")
                             .input('i', Items.IRON_NUGGET).input('t', VAItems.SPECTRAL_TORCH)
                     .criterion("has_spectral_torch", conditionsFromItem(VAItems.SPECTRAL_TORCH)).offerTo(exporter);
+
 
             ShapelessRecipeJsonBuilder.create(this.registryLookup, RecipeCategory.MISC, VAItems.MAROON_DYE, 2)
                     .input(Ingredient.ofItems(Items.RED_DYE), 1)

@@ -109,6 +109,8 @@ public class VARenderers {
                 VABlocks.POTTED_SOULBLOOM_SAPLING,
                 VABlocks.NECROTIC_ROOTS,
                 VABlocks.POTTED_NECROTIC_ROOTS,
+                VABlocks.BONE_LITTER,
+                VABlocks.BONE_PILE,
                 VABlocks.WITHERED_DOOR,
                 VABlocks.WITHERED_TRAPDOOR,
                 VABlocks.WITHERED_SAPLING,

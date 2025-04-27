@@ -10,17 +10,14 @@ import net.fabricmc.fabric.api.registry.OxidizableBlocksRegistry;
 import net.fabricmc.fabric.api.registry.StrippableBlockRegistry;
 import net.minecraft.block.*;
 import net.minecraft.block.AbstractBlock.Settings;
-import net.minecraft.block.enums.NoteBlockInstrument;
 import net.minecraft.block.piston.PistonBehavior;
 import net.minecraft.entity.ai.pathing.PathNodeType;
 import net.minecraft.particle.EntityEffectParticleEffect;
 import net.minecraft.particle.ParticleTypes;
 import net.minecraft.sound.BlockSoundGroup;
 import net.minecraft.sound.SoundEvents;
-import net.minecraft.state.property.Properties;
 import net.minecraft.util.ColorCode;
 import net.minecraft.util.DyeColor;
-import net.minecraft.util.math.intprovider.ConstantIntProvider;
 import net.minecraft.util.math.intprovider.UniformIntProvider;
 
 import static com.github.suninvr.virtualadditions.VirtualAdditions.idOf;
@@ -214,6 +211,8 @@ public class VABlocks {
     public static final Block NECROTIC_NYLIUM;
     public static final Block NECROTIC_ROOTS;
     public static final Block POTTED_NECROTIC_ROOTS;
+    public static final Block BONE_LITTER;
+    public static final Block BONE_PILE;
     public static final Block WITHERED_LOG;
     public static final Block WITHERED_WOOD;
     public static final Block STRIPPED_WITHERED_LOG;
@@ -625,6 +624,9 @@ public class VABlocks {
         NECROTIC_ROOTS = register("necrotic_roots", (RootsBlock::new), Settings.copy(Blocks.WARPED_ROOTS).mapColor(MapColor.BLACK));
         POTTED_NECROTIC_ROOTS = register("potted_necrotic_roots", (settings) -> new FlowerPotBlock(NECROTIC_ROOTS, settings), Settings.copy(Blocks.FLOWER_POT));
 
+        BONE_LITTER = register("bone_litter", LeafLitterBlock::new, Settings.create().mapColor(MapColor.PALE_YELLOW).noCollision().strength(0.2F).pistonBehavior(PistonBehavior.DESTROY).sounds(BlockSoundGroup.BONE));
+        BONE_PILE = register("bone_pile", BonePileBlock::new, Settings.copy(BONE_LITTER));
+
         WITHERED_LOG = register("withered_log", PillarBlock::new, Blocks.createNetherStemSettings(MapColor.BLACK).strength(5.0F, 6.0F));
         WITHERED_WOOD = register("withered_wood", PillarBlock::new, Blocks.createNetherStemSettings(MapColor.BLACK).strength(5.0F, 6.0F));
         STRIPPED_WITHERED_LOG = register("stripped_withered_log", PillarBlock::new, Blocks.createNetherStemSettings(MapColor.BLACK).strength(5.0F, 6.0F));
@@ -642,7 +644,7 @@ public class VABlocks {
         WITHERED_WALL_SIGN = register("withered_wall_sign", (settings) -> new CustomSignBlocks.CustomWallSignBlock(settings, WITHERED_WOODTYPE, DyeColor.WHITE), Settings.copy(WITHERED_SIGN).lootTable(WITHERED_SIGN.getLootTableKey()).strength(2.5F).mapColor(MapColor.BLACK));
         WITHERED_HANGING_SIGN = register("withered_hanging_sign", (settings) -> new CustomSignBlocks.CustomHangingSignBlock(settings, WITHERED_WOODTYPE, DyeColor.WHITE), Settings.copy(Blocks.CHERRY_HANGING_SIGN).strength(2.5F).mapColor(MapColor.BLACK));
         WITHERED_WALL_HANGING_SIGN = register("withered_wall_hanging_sign", (settings) -> new CustomSignBlocks.CustomWallHangingSignBlock(settings, WITHERED_WOODTYPE, DyeColor.WHITE), Settings.copy(Blocks.CHERRY_WALL_HANGING_SIGN).lootTable(WITHERED_HANGING_SIGN.getLootTableKey()).strength(2.5F).mapColor(MapColor.BLACK));
-        WITHERED_LEAVES = register("withered_leaves", (settings) -> new UntintedParticleLeavesBlock(0.1F, EntityEffectParticleEffect.create(ParticleTypes.TINTED_LEAVES, 5918012), settings), Settings.copy(Blocks.CHERRY_LEAVES).sounds(BlockSoundGroup.MANGROVE_ROOTS).mapColor(MapColor.BLACK));
+        WITHERED_LEAVES = register("withered_leaves", (settings) -> new UntintedParticleLeavesBlock(0.025F, EntityEffectParticleEffect.create(ParticleTypes.TINTED_LEAVES, 0x464928), settings), Settings.copy(Blocks.CHERRY_LEAVES).sounds(BlockSoundGroup.MANGROVE_ROOTS).mapColor(MapColor.BLACK));
         WITHERED_SAPLING = register("withered_sapling", (settings) -> new WitheredSaplingBlock(CustomSaplingGenerator.WITHERED, settings), Settings.copy(Blocks.CHERRY_SAPLING).mapColor(MapColor.BLACK));
         POTTED_WITHERED_SAPLING = register("potted_withered_sapling", (settings) -> new FlowerPotBlock(WITHERED_SAPLING, settings), Settings.copy(Blocks.FLOWER_POT));
 

@@ -100,7 +100,10 @@ public final class VABlockTagProvider {
                     .add(VABlocks.ROCK_SALT_CRYSTAL)
                     .add(VABlocks.CHISELED_ROCK_SALT_BRICKS)
                     .add(VABlocks.NECROTIC_NYLIUM)
-                    .add(VABlocks.SPECTRAL_LANTERN);
+                    .add(VABlocks.BONE_LITTER)
+                    .add(VABlocks.BONE_PILE)
+                    .add(VABlocks.SPECTRAL_LANTERN)
+            ;
 
             configureMinable(BlockTags.PICKAXE_MINEABLE, 1,
                     VABlocks.STEEL_BLOCK,
