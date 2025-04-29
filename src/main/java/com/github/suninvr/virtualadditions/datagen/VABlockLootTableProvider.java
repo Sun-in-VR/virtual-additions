@@ -172,8 +172,15 @@ public final class VABlockLootTableProvider {
                     VABlocks.WARP_ANCHOR,
                     VABlocks.ENTANGLEMENT_DRIVE,
                     VABlocks.SPOTLIGHT,
+                    VABlocks.SMALL_SPRING_LOTUS,
                     VABlocks.SPRING_LOTUS
             );
+
+            this.addDrop(VABlocks.POTTED_GREENCAP_MUSHROOM, this.pottedPlantDrops(VABlocks.GREENCAP_MUSHROOM));
+            this.addDrop(VABlocks.POTTED_SOULBLOOM_SAPLING, this.pottedPlantDrops(VABlocks.SOULBLOOM_SAPLING));
+            this.addDrop(VABlocks.POTTED_WITHERED_SAPLING, this.pottedPlantDrops(VABlocks.WITHERED_SAPLING));
+            this.addDrop(VABlocks.POTTED_NECROTIC_ROOTS, this.pottedPlantDrops(VABlocks.NECROTIC_ROOTS));
+            this.addDrop(VABlocks.POTTED_SMALL_SPRING_LOTUS, this.pottedPlantDrops(VABlocks.SMALL_SPRING_LOTUS));
 
             this.addDrop(VABlocks.BLUE_PETALS, this.segmentedDrops(VABlocks.BLUE_PETALS));
 

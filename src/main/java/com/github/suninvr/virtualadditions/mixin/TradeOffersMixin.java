@@ -27,7 +27,7 @@ public abstract class TradeOffersMixin {
     @Unique private static final TradeOffers.Factory SINOPIA_DYE_TRADE_OFFER = new TradeOffers.SellItemFactory(VAItems.SINOPIA_DYE, 1, 3, 12, 1);
     @Unique private static final TradeOffers.Factory LILAC_DYE_TRADE_OFFER = new TradeOffers.SellItemFactory(VAItems.LILAC_DYE, 1, 3, 12, 1);
     @Unique private static final TradeOffers.Factory LIGHTNING_BOTTLE_TRADE_OFFER = new TradeOffers.SellItemFactory(VAItems.LIGHTNING_BOTTLE, 15, 1, 12, 1);
-    @Unique private static final TradeOffers.Factory SPRING_LOTUS_TRADE_OFFER = new TradeOffers.SellItemFactory(VAItems.SPRING_LOTUS, 1, 2, 5, 1);
+    @Unique private static final TradeOffers.Factory SPRING_LOTUS_TRADE_OFFER = new TradeOffers.SellItemFactory(VAItems.SMALL_SPRING_LOTUS, 1, 1, 12, 1);
 
     static {
         ArrayList<Pair<TradeOffers.Factory[], Integer>> TRADES = new ArrayList<>();
@@ -47,6 +47,7 @@ public abstract class TradeOffersMixin {
         SELL_ITEM_TRADES_2.add(SINOPIA_DYE_TRADE_OFFER);
         SELL_ITEM_TRADES_2.add(LILAC_DYE_TRADE_OFFER);
         SELL_ITEM_TRADES_2.add(LIGHTNING_BOTTLE_TRADE_OFFER);
+        SELL_ITEM_TRADES_2.add(SPRING_LOTUS_TRADE_OFFER);
 
         TRADES.add(Pair.of(BUY_ITEM_TRADES.toArray(new TradeOffers.Factory[]{}), WANDERING_TRADER_TRADES.getFirst().getRight()));
         TRADES.add(Pair.of(SELL_ITEM_TRADES.toArray(new TradeOffers.Factory[]{}), WANDERING_TRADER_TRADES.get(1).getRight()));

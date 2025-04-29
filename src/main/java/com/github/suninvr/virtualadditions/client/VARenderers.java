@@ -129,6 +129,8 @@ public class VARenderers {
                 VABlocks.TALL_GREENCAP_MUSHROOMS,
                 VABlocks.GREENCAP_MUSHROOM,
                 VABlocks.POTTED_GREENCAP_MUSHROOM,
+                VABlocks.SMALL_SPRING_LOTUS,
+                VABlocks.POTTED_SMALL_SPRING_LOTUS,
                 VABlocks.SPRING_LOTUS
         );
 

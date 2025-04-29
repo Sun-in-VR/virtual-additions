@@ -202,6 +202,8 @@ public class VAModelProvider {
 
             generator.registerItemModel(VAItems.NECROTIC_ROOTS, BlockStateModelGenerator.CrossType.NOT_TINTED.registerItemModel(generator, VABlocks.NECROTIC_ROOTS));
 
+            generator.registerItemModel(VAItems.SMALL_SPRING_LOTUS, BlockStateModelGenerator.CrossType.NOT_TINTED.registerItemModel(generator, VABlocks.SMALL_SPRING_LOTUS));
+
             generator.registerMirrorable(VABlocks.ROCK_SALT_BLOCK);
             generator.registerSingleton(VABlocks.CHISELED_ROCK_SALT_BRICKS, TexturedModel.CUBE_COLUMN);
 
@@ -240,6 +242,7 @@ public class VAModelProvider {
             generator.registerFlowerPotPlant(VABlocks.WITHERED_SAPLING, VABlocks.POTTED_WITHERED_SAPLING, BlockStateModelGenerator.CrossType.NOT_TINTED);
             generator.registerFlowerPotPlant(VABlocks.GREENCAP_MUSHROOM, VABlocks.POTTED_GREENCAP_MUSHROOM, BlockStateModelGenerator.CrossType.NOT_TINTED);
             generator.registerFlowerPotPlant(VABlocks.NECROTIC_ROOTS, VABlocks.POTTED_NECROTIC_ROOTS, BlockStateModelGenerator.CrossType.NOT_TINTED);
+            generator.registerFlowerPotPlant(VABlocks.SMALL_SPRING_LOTUS, VABlocks.POTTED_SMALL_SPRING_LOTUS, BlockStateModelGenerator.CrossType.NOT_TINTED);
 
             generator.registerParented(VABlocks.STEEL_GRATE, VABlocks.WAXED_STEEL_GRATE);
             generator.registerParented(VABlocks.EXPOSED_STEEL_GRATE, VABlocks.WAXED_EXPOSED_STEEL_GRATE);

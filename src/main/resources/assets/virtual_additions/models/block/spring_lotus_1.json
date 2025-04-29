@@ -2,7 +2,7 @@
 	"credit": "Made with Blockbench",
 	"parent": "minecraft:block/block",
 	"textures": {
-		"0": "virtual_additions:block/spring_lotus_stem_0",
+		"0": "virtual_additions:block/spring_lotus_stem_1",
 		"1": "virtual_additions:block/spring_lotus",
 		"2": "virtual_additions:block/spring_lotus_side",
 		"particle": "virtual_additions:block/spring_lotus"
@@ -10,15 +10,24 @@
 	"elements": [
 		{
 			"name": "stem",
-			"from": [3, 0, 3],
-			"to": [13, 14, 13],
+			"from": [3, 0, 8],
+			"to": [13, 16, 8],
 			"shade": false,
-			"rotation": {"angle": 0, "axis": "y", "origin": [2, 0, 2]},
+			"rotation": {"angle": 45, "axis": "y", "origin": [8, 8, 8], "rescale": true},
 			"faces": {
-				"north": {"uv": [3, 2, 13, 16], "texture": "#0"},
-				"east": {"uv": [3, 2, 13, 16], "texture": "#0"},
-				"south": {"uv": [3, 2, 13, 16], "texture": "#0"},
-				"west": {"uv": [3, 2, 13, 16], "texture": "#0"}
+				"north": {"uv": [3, 0, 13, 16], "texture": "#0"},
+				"south": {"uv": [3, 0, 13, 16], "texture": "#0"}
+			}
+		},
+		{
+			"name": "stem",
+			"from": [3, 0, 8],
+			"to": [13, 14, 8],
+			"shade": false,
+			"rotation": {"angle": -45, "axis": "y", "origin": [8, 8, 8], "rescale": true},
+			"faces": {
+				"north": {"uv": [3, 0, 13, 16], "texture": "#0"},
+				"south": {"uv": [3, 0, 13, 16], "texture": "#0"}
 			}
 		},
 		{

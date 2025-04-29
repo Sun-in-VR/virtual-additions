@@ -183,6 +183,8 @@ public class VABlocks {
     public static final Block POLISHED_PORPHYRY_STAIRS;
     public static final Block POLISHED_PORPHYRY_SLAB;
     public static final Block POLISHED_PORPHYRY_WALL;
+    public static final Block SMALL_SPRING_LOTUS;
+    public static final Block POTTED_SMALL_SPRING_LOTUS;
     public static final Block SPRING_LOTUS;
     public static final Block SOULBLOOM_LOG;
     public static final Block SOULBLOOM_WOOD;
@@ -595,6 +597,8 @@ public class VABlocks {
         BALLOON_BULB_PLANT = register("balloon_bulb_plant", BalloonBulbPlantBlock::new, Settings.copy(BALLOON_BULB).requires(VirtualAdditions.PREVIEW));
         BALLOON_BULB_BUD = register("balloon_bulb_bud", BalloonBulbBudBlock::new, Settings.copy(BALLOON_BULB).requires(VirtualAdditions.PREVIEW));
 
+        SMALL_SPRING_LOTUS = register("small_spring_lotus", SmallSpringLotusBlock::new, Settings.copy(Blocks.SMALL_DRIPLEAF));
+        POTTED_SMALL_SPRING_LOTUS = register("potted_small_spring_lotus", (settings) -> new FlowerPotBlock(SMALL_SPRING_LOTUS, settings), Settings.copy(Blocks.FLOWER_POT));
         SPRING_LOTUS = register("spring_lotus", SpringLotusBlock::new, Settings.copy(Blocks.BIG_DRIPLEAF));
 
         SOULBLOOM_LOG = register("soulbloom_log", PillarBlock::new, Settings.copy(Blocks.CHERRY_LOG));

@@ -13,6 +13,12 @@
                   "Name": "virtual_additions:spring_lotus"
                 },
                 "weight": 1
+              },
+              {
+                "data": {
+                  "Name": "virtual_additions:small_spring_lotus"
+                },
+                "weight": 7
               }
             ]
           }
@@ -28,8 +34,8 @@
         }
       ]
     },
-    "tries": 7,
-    "xz_spread": 3,
+    "tries": 34,
+    "xz_spread": 4,
     "y_spread": 2
   }
 }

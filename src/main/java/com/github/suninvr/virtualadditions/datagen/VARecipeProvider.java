@@ -445,74 +445,74 @@ public final class VARecipeProvider {
                     .pattern(" #s")
                     .pattern(" ss")
                     .input('#', Items.COPPER_INGOT).input('s', Items.STRING)
-                    .criterion("copper_ingot", conditionsFromItem(Items.COPPER_INGOT)).offerTo(this.exporter);
+                    .criterion("has_copper_ingot", conditionsFromItem(Items.COPPER_INGOT)).offerTo(this.exporter);
 
             ShapedRecipeJsonBuilder.create(this.registryLookup, RecipeCategory.BUILDING_BLOCKS, VABlocks.SILKBULB, 1)
                     .pattern("###")
                     .pattern("#b#")
                     .pattern("###")
                     .input('#', VAItems.SILK_THREAD).input('b', VAItems.ACID_BLOCK)
-                    .criterion("acid_block", conditionsFromItem(VAItems.ACID_BLOCK)).offerTo(this.exporter);
+                    .criterion("has_acid_block", conditionsFromItem(VAItems.ACID_BLOCK)).offerTo(this.exporter);
 
             ShapedRecipeJsonBuilder.create(this.registryLookup, RecipeCategory.REDSTONE, VABlocks.ENTANGLEMENT_DRIVE, 1)
                     .pattern("s#s")
                     .pattern("sNs")
                     .pattern("s#s")
                     .input('#', VAItems.IOLITE).input('s', VAItems.STEEL_INGOT).input('N', Items.NETHER_STAR)
-                    .criterion("iolite", conditionsFromItem(VAItems.IOLITE)).offerTo(this.exporter);
+                    .criterion("has_iolite", conditionsFromItem(VAItems.IOLITE)).offerTo(this.exporter);
 
             ShapedRecipeJsonBuilder.create(this.registryLookup, RecipeCategory.TRANSPORTATION, VABlocks.WARP_TETHER, 1)
                     .pattern("s#s")
                     .pattern("epe")
                     .input('#', VAItems.IOLITE).input('s', VAItems.STEEL_INGOT).input('e', Blocks.END_STONE).input('p', Items.ENDER_PEARL)
-                    .criterion("iolite", conditionsFromItem(VAItems.IOLITE)).offerTo(this.exporter);
+                    .criterion("has_iolite", conditionsFromItem(VAItems.IOLITE)).offerTo(this.exporter);
 
             ShapedRecipeJsonBuilder.create(this.registryLookup, RecipeCategory.TRANSPORTATION, VABlocks.WARP_ANCHOR, 1)
                     .pattern("s#s")
                     .pattern("eye")
                     .input('#', VAItems.IOLITE).input('s', VAItems.STEEL_INGOT).input('e', Blocks.END_STONE).input('y', Items.ENDER_EYE)
-                    .criterion("iolite", conditionsFromItem(VAItems.IOLITE)).offerTo(this.exporter);
+                    .criterion("has_iolite", conditionsFromItem(VAItems.IOLITE)).offerTo(this.exporter);
 
             ShapedRecipeJsonBuilder.create(this.registryLookup, RecipeCategory.COMBAT, VAItems.STEEL_BOMB, 4)
                     .pattern(" s ")
                     .pattern("#g#")
                     .input('#', VAItems.STEEL_INGOT).input('s', Items.STRING).input('g', Items.GUNPOWDER)
-                    .criterion("steel_ingot", conditionsFromItem(VAItems.STEEL_INGOT)).offerTo(this.exporter);
+                    .criterion("has_steel_ingot", conditionsFromItem(VAItems.STEEL_INGOT)).offerTo(this.exporter);
 
             ShapedRecipeJsonBuilder.create(this.registryLookup, RecipeCategory.REDSTONE, VAItems.REDSTONE_BRIDGE, 3)
                     .pattern("#")
                     .pattern("r")
                     .pattern("#")
                     .input('#', VAItems.STEEL_INGOT).input('r', Items.REDSTONE)
-                    .criterion("steel_ingot", conditionsFromItem(VAItems.STEEL_INGOT)).offerTo(this.exporter);
+                    .criterion("has_steel_ingot", conditionsFromItem(VAItems.STEEL_INGOT)).offerTo(this.exporter);
 
             ShapedRecipeJsonBuilder.create(this.registryLookup, RecipeCategory.DECORATIONS, VAItems.CAGELIGHT, 3)
                     .pattern("#")
                     .pattern("g")
                     .pattern("#")
                     .input('#', VAItems.STEEL_INGOT).input('g', Items.GLOWSTONE_DUST)
-                    .criterion("steel_ingot", conditionsFromItem(VAItems.STEEL_INGOT)).offerTo(this.exporter);
+                    .criterion("has_steel_ingot", conditionsFromItem(VAItems.STEEL_INGOT)).offerTo(this.exporter);
 
             ShapedRecipeJsonBuilder.create(this.registryLookup, RecipeCategory.MISC, VAItems.COLORING_STATION, 1)
                     .pattern("BB")
                     .pattern("##")
                     .pattern("##")
                     .input('#', Ingredient.ofTag(this.registryLookup.getOrThrow(ItemTags.PLANKS))).input('B', Ingredient.ofTag(this.registryLookup.getOrThrow(ItemTags.WOOL)))
-                    .criterion("wool", conditionsFromTag(ItemTags.WOOL)).offerTo(this.exporter);
+                    .criterion("has_wool", conditionsFromTag(ItemTags.WOOL)).offerTo(this.exporter);
 
             ShapedRecipeJsonBuilder.create(this.registryLookup, RecipeCategory.REDSTONE, VAItems.SPOTLIGHT, 1)
                     .pattern("ssa")
                     .pattern("rga")
                     .pattern("ssa")
                     .input('a', Items.AMETHYST_SHARD).input('g', Items.GLOWSTONE).input('s', VAItems.STEEL_INGOT).input('r', Items.REDSTONE)
-                    .criterion("glowstone", conditionsFromItem(Items.GLOWSTONE)).offerTo(this.exporter);
+                    .criterion("has_glowstone", conditionsFromItem(Items.GLOWSTONE)).offerTo(this.exporter);
 
             ShapedRecipeJsonBuilder.create(this.registryLookup, RecipeCategory.FOOD, VAItems.ICE_CREAM, 1)
                     .pattern(" s ")
                     .pattern("bmb")
                     .pattern(" w ")
                     .input('s', VAItems.ROCK_SALT).input('b', Items.SNOWBALL).input('m', Items.MILK_BUCKET).input('w', Items.BOWL)
-                    .criterion("milk", conditionsFromItem(Items.MILK_BUCKET)).offerTo(this.exporter);
+                    .criterion("has_milk", conditionsFromItem(Items.MILK_BUCKET)).offerTo(this.exporter);
 
             ShapedRecipeJsonBuilder.create(this.registryLookup, RecipeCategory.DECORATIONS, VAItems.ENGRAVING_CHISEL, 1)
                     .pattern("c")
@@ -520,12 +520,17 @@ public final class VARecipeProvider {
                     .pattern("c")
                     .input('c', ItemTags.STONE_CRAFTING_MATERIALS)
                     .input('s', VAItems.STEEL_INGOT)
-                    .criterion("steel_ingot", conditionsFromItem(VAItems.STEEL_INGOT)).offerTo(this.exporter);
+                    .criterion("has_steel_ingot", conditionsFromItem(VAItems.STEEL_INGOT)).offerTo(this.exporter);
 
             ShapelessRecipeJsonBuilder.create(this.registryLookup, RecipeCategory.DECORATIONS, Items.LIGHT_BLUE_DYE)
                     .input(VAItems.BLUE_PETALS)
-                    .criterion("blue_petals", conditionsFromItem(VAItems.BLUE_PETALS))
+                    .criterion("has_blue_petals", conditionsFromItem(VAItems.BLUE_PETALS))
                             .offerTo(this.exporter, "virtual_additions:light_blue_dye_from_blue_petals");
+
+            ShapelessRecipeJsonBuilder.create(this.registryLookup, RecipeCategory.DECORATIONS, Items.ORANGE_DYE)
+                    .input(VAItems.SMALL_SPRING_LOTUS)
+                    .criterion("has_small_spring_lotus", conditionsFromItem(VAItems.SMALL_SPRING_LOTUS))
+                            .offerTo(this.exporter, "virtual_additions:orange_dye_from_small_spring_lotus");
 
             offerWaxingRecipes(exporter);
         }

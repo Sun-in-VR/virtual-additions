@@ -1,6 +1,8 @@
 package com.github.suninvr.virtualadditions.block;
 
+import com.github.suninvr.virtualadditions.registry.VABlocks;
 import com.github.suninvr.virtualadditions.registry.VAEntityTypeTags;
+import com.github.suninvr.virtualadditions.registry.VAParticleTypes;
 import com.mojang.serialization.MapCodec;
 import net.minecraft.block.*;
 import net.minecraft.entity.Entity;
@@ -13,6 +15,7 @@ import net.minecraft.state.property.BooleanProperty;
 import net.minecraft.state.property.IntProperty;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Box;
+import net.minecraft.util.math.Vec3d;
 import net.minecraft.util.math.random.Random;
 import net.minecraft.util.shape.VoxelShape;
 import net.minecraft.util.shape.VoxelShapes;
@@ -60,20 +63,18 @@ public class SpringLotusBlock extends PlantBlock implements Fertilizable {
             if (compression < 2) world.scheduleBlockTick(pos, this, 8);
             world.playSound(null, pos, SoundEvents.BLOCK_BIG_DRIPLEAF_TILT_UP, SoundCategory.BLOCKS, 1, 1.2F);
         } else {
-            final boolean[] sprung = {false};
-            world.getOtherEntities(null, Box.of(pos.toCenterPos(), 1.0, 1.0, 1.0)).forEach(
+            Vec3d centerPos = pos.toCenterPos();
+            world.getOtherEntities(null, Box.of(centerPos, 1.0, 1.0, 1.0)).forEach(
                     entity -> {
-                        sprung[0] = true;
                         double d = entity instanceof MinecartEntity ? 2.8 : 1.6;
                         entity.addVelocity(0.0, d, 0.0);
                         entity.velocityModified = true;
                     }
             );
-            if (sprung[0]) {
-                world.setBlockState(pos, state.with(COMPRESSION, 0).with(IS_PUSHING, true));
-                world.scheduleBlockTick(pos, this, 10);
-                world.playSound(null, pos, SoundEvents.BLOCK_BIG_DRIPLEAF_TILT_DOWN, SoundCategory.BLOCKS, 1, 1);
-            }
+            world.setBlockState(pos, state.with(COMPRESSION, 0).with(IS_PUSHING, true));
+            world.scheduleBlockTick(pos, this, 10);
+            world.playSound(null, pos, SoundEvents.BLOCK_BIG_DRIPLEAF_TILT_DOWN, SoundCategory.BLOCKS, 1, 1);
+            world.spawnParticles(VAParticleTypes.SPRING_LOTUS_POLLEN, false, false, centerPos.getX(), centerPos.getY() + 1.0, centerPos.getZ(), 25, 0.25, 0.25, 0.25, 0.25);
         }
     }
 
@@ -96,7 +97,7 @@ public class SpringLotusBlock extends PlantBlock implements Fertilizable {
 
     @Override
     public void grow(ServerWorld world, Random random, BlockPos pos, BlockState state) {
-        Fertilizable.findPosToSpreadTo(world, pos, state).ifPresent(posx -> world.setBlockState(posx, this.getDefaultState()));
+        Fertilizable.findPosToSpreadTo(world, pos, state).ifPresent(posx -> world.setBlockState(posx, VABlocks.SMALL_SPRING_LOTUS.getDefaultState()));
     }
 
     @Override
@@ -121,9 +122,9 @@ public class SpringLotusBlock extends PlantBlock implements Fertilizable {
     }
 
     static {
-        SHAPE_3 = VoxelShapes.union(Block.createColumnShape(16.0, 4.0, 8.0), Block.createColumnShape(12.0, 0.0, 8.0));
-        SHAPE_2 = VoxelShapes.union(Block.createColumnShape(16.0, 8.0, 12.0), Block.createColumnShape(10.0, 0.0, 12.0));
+        SHAPE_3 = VoxelShapes.union(Block.createColumnShape(16.0, 4.0, 8.0), Block.createColumnShape(14.0, 0.0, 8.0));
+        SHAPE_2 = VoxelShapes.union(Block.createColumnShape(16.0, 8.0, 12.0), Block.createColumnShape(12.0, 0.0, 12.0));
         SHAPE_1 = VoxelShapes.union(Block.createColumnShape(16.0, 10.0, 14.0), Block.createColumnShape(10.0, 0.0, 14.0));
-        SHAPE_0 = VoxelShapes.union(Block.createColumnShape(16.0, 12.0, 16.0), Block.createColumnShape(10.0, 0.0, 16.0));
+        SHAPE_0 = VoxelShapes.union(Block.createColumnShape(16.0, 12.0, 16.0), Block.createColumnShape(8.0, 0.0, 16.0));
     }
 }

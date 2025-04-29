@@ -94,6 +94,7 @@ public class VAItems {
     public static final Item POLISHED_PORPHYRY_STAIRS;
     public static final Item POLISHED_PORPHYRY_SLAB;
     public static final Item POLISHED_PORPHYRY_WALL;
+    public static final Item SMALL_SPRING_LOTUS;
     public static final Item SPRING_LOTUS;
     public static final Item SOULBLOOM_LOG;
     public static final Item SOULBLOOM_WOOD;
@@ -622,7 +623,8 @@ public class VAItems {
 
         BLUE_PETALS = registerBlockItem("blue_petals", VABlocks.BLUE_PETALS, ItemGroups.NATURAL, Items.PINK_PETALS);
 
-        SPRING_LOTUS = registerBlockItem("spring_lotus", VABlocks.SPRING_LOTUS, ItemGroups.NATURAL, Items.SMALL_DRIPLEAF);
+        SMALL_SPRING_LOTUS = registerBlockItem("small_spring_lotus", VABlocks.SMALL_SPRING_LOTUS, ItemGroups.NATURAL, Items.SMALL_DRIPLEAF);
+        SPRING_LOTUS = registerBlockItem("spring_lotus", VABlocks.SPRING_LOTUS, ItemGroups.NATURAL, prev);
 
         BALLOON_FRUIT = register("balloon_fruit", settings -> new BalloonFruitItem(VABlocks.BALLOON_BULB_BUD, settings), new Item.Settings().food(VAFoodComponents.BALLOON_FRUIT, VAFoodComponents.BALLOON_FRUIT_CONSUMABLE), ItemGroups.FOOD_AND_DRINK, Items.CHORUS_FRUIT);
 

@@ -10,15 +10,24 @@
 	"elements": [
 		{
 			"name": "stem",
-			"from": [2, 0, 2],
-			"to": [14, 8, 14],
+			"from": [1, 0, 8],
+			"to": [15, 8, 8],
 			"shade": false,
-			"rotation": {"angle": 0, "axis": "y", "origin": [2, 0, 2]},
+			"rotation": {"angle": 45, "axis": "y", "origin": [8, 4, 8], "rescale": true},
 			"faces": {
-				"north": {"uv": [2, 8, 14, 16], "texture": "#0"},
-				"east": {"uv": [2, 8, 14, 16], "texture": "#0"},
-				"south": {"uv": [2, 8, 14, 16], "texture": "#0"},
-				"west": {"uv": [2, 8, 14, 16], "texture": "#0"}
+				"north": {"uv": [1, 8, 15, 16], "texture": "#0"},
+				"south": {"uv": [1, 8, 15, 16], "texture": "#0"}
+			}
+		},
+		{
+			"name": "stem",
+			"from": [1, 0, 8],
+			"to": [15, 8, 8],
+			"shade": false,
+			"rotation": {"angle": -45, "axis": "y", "origin": [8, 4, 8], "rescale": true},
+			"faces": {
+				"north": {"uv": [1, 8, 15, 16], "texture": "#0"},
+				"south": {"uv": [1, 8, 15, 16], "texture": "#0"}
 			}
 		},
 		{
