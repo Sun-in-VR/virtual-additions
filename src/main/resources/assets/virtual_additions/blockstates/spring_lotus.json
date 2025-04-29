@@ -11,6 +11,9 @@
     },
     "compression=3": {
       "model": "virtual_additions:block/spring_lotus_3"
+    },
+    "compression=4": {
+      "model": "virtual_additions:block/spring_lotus_4"
     }
   }
 }
