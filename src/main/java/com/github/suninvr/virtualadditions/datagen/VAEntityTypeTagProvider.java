@@ -21,6 +21,11 @@ public class VAEntityTypeTagProvider extends FabricTagProvider.EntityTypeTagProv
         getOrCreateTagBuilder(EntityTypeTags.ARTHROPOD).add(VAEntityType.LUMWASP);
         getOrCreateTagBuilder(EntityTypeTags.UNDEAD).add(VAEntityType.SALINE);
         getOrCreateTagBuilder(EntityTypeTags.FREEZE_IMMUNE_ENTITY_TYPES).add(VAEntityType.SPECTRE);
+        getOrCreateTagBuilder(VAEntityTypeTags.IGNORES_SPRING_LOTUS)
+                .add(
+                        EntityType.BEE,
+                        EntityType.FROG
+        );
         getOrCreateTagBuilder(VAEntityTypeTags.SPECTRE_BUFF_TARGETS)
                 .add(
                         EntityType.BLAZE,

@@ -20,6 +20,8 @@ public class VAPotions {
     public static final RegistryEntry<Potion> LONG_LOVE;
     public static final RegistryEntry<Potion> SILENCE;
     public static final RegistryEntry<Potion> LOQUACITY;
+    public static final RegistryEntry<Potion> AURA;
+    public static final RegistryEntry<Potion> LONG_AURA;
 
     public static void init(){
         initBrewingRecipes();
@@ -33,6 +35,8 @@ public class VAPotions {
         LONG_LOVE = register("long_love", new Potion( "virtual_additions.love", new StatusEffectInstance(VAStatusEffects.LOVE, 4800)));
         SILENCE = register("silence", new Potion( "virtual_additions.silence", new StatusEffectInstance(VAStatusEffects.SILENCE, 1)));
         LOQUACITY = register("loquacity", new Potion( "virtual_additions.loquacity", new StatusEffectInstance(VAStatusEffects.LOQUACITY, 1)));
+        AURA = register("aura", new Potion("virtual_additions.aura", new StatusEffectInstance(VAStatusEffects.AURA, 800)));
+        LONG_AURA = register("long_aura", new Potion("virtual_additions.aura", new StatusEffectInstance(VAStatusEffects.AURA, 1800)));
     }
 
     private static RegistryEntry<Potion> register(String id, Potion potion) {
@@ -51,6 +55,8 @@ public class VAPotions {
             builder.registerPotionRecipe(Potions.AWKWARD, Items.ECHO_SHARD, SILENCE);
             builder.registerPotionRecipe(SILENCE, Items.FERMENTED_SPIDER_EYE, LOQUACITY);
             builder.registerPotionRecipe(LOQUACITY, Items.FERMENTED_SPIDER_EYE, SILENCE);
+            builder.registerPotionRecipe(Potions.AWKWARD, VAItems.SPECTRAL_POWDER, AURA);
+            builder.registerPotionRecipe(AURA, Items.REDSTONE, LONG_AURA);
         });
     }
 }

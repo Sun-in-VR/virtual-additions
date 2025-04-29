@@ -103,7 +103,6 @@ public class VAModelProvider {
             registerSimpleCubeAll(generator,
                     VABlocks.CHISELED_HORNFELS,
                     VABlocks.BLUESCHIST,
-                    VABlocks.SPRINGSOIL,
                     VABlocks.RAW_STEEL_BLOCK,
                     VABlocks.SILK_BLOCK,
                     VABlocks.WEBBED_SILK,
@@ -190,6 +189,8 @@ public class VAModelProvider {
             generator.registerParentedItemModel(VABlocks.REDSTONE_BRIDGE, Registries.BLOCK.getId(VABlocks.REDSTONE_BRIDGE).withPrefixedPath("block/").withSuffixedPath("_inventory"));
 
             generator.registerItemModel(VABlocks.ROCK_SALT_CRYSTAL, "_tip");
+
+            generator.registerParentedItemModel(VABlocks.SPRING_LOTUS, Registries.BLOCK.getId(VABlocks.SPRING_LOTUS).withPrefixedPath("block/").withSuffixedPath("_3"));
 
             generator.registerItemModel(VABlocks.FRAYED_SILK);
             generator.registerItemModel(VABlocks.GREENCAP_MUSHROOM);

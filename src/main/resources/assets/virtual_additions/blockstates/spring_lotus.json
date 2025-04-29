@@ -1,0 +1,16 @@
+{
+  "variants": {
+    "compression=0": {
+      "model": "virtual_additions:block/spring_lotus_0"
+    },
+    "compression=1": {
+      "model": "virtual_additions:block/spring_lotus_1"
+    },
+    "compression=2": {
+      "model": "virtual_additions:block/spring_lotus_2"
+    },
+    "compression=3": {
+      "model": "virtual_additions:block/spring_lotus_3"
+    }
+  }
+}

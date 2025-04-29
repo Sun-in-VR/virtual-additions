@@ -12,7 +12,6 @@ import net.fabricmc.fabric.api.client.render.fluid.v1.SimpleFluidRenderHandler;
 import net.fabricmc.fabric.api.client.rendering.v1.ColorProviderRegistry;
 import net.fabricmc.fabric.api.client.rendering.v1.EntityModelLayerRegistry;
 import net.fabricmc.fabric.api.client.rendering.v1.EntityRendererRegistry;
-import net.minecraft.block.Blocks;
 import net.minecraft.block.RedstoneWireBlock;
 import net.minecraft.client.color.world.BiomeColors;
 import net.minecraft.client.render.RenderLayer;
@@ -25,7 +24,6 @@ import net.minecraft.client.render.entity.BoatEntityRenderer;
 import net.minecraft.client.render.entity.FlyingItemEntityRenderer;
 import net.minecraft.client.render.entity.model.BoatEntityModel;
 import net.minecraft.client.render.entity.model.EntityModelLayer;
-import net.minecraft.client.render.entity.model.EntityModelLayers;
 import net.minecraft.client.util.SpriteIdentifier;
 import net.minecraft.util.Identifier;
 import net.minecraft.world.biome.FoliageColors;
@@ -130,7 +128,8 @@ public class VARenderers {
                 VABlocks.FRAYED_SILK,
                 VABlocks.TALL_GREENCAP_MUSHROOMS,
                 VABlocks.GREENCAP_MUSHROOM,
-                VABlocks.POTTED_GREENCAP_MUSHROOM
+                VABlocks.POTTED_GREENCAP_MUSHROOM,
+                VABlocks.SPRING_LOTUS
         );
 
         BlockRenderLayerMap.INSTANCE.putBlocks(RenderLayer.getCutoutMipped(),

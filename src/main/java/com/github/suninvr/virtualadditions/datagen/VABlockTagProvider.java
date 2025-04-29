@@ -41,8 +41,9 @@ public final class VABlockTagProvider {
         protected void configure(RegistryWrapper.WrapperLookup arg) {
 
             getOrCreateTagBuilder(BlockTags.SWORD_EFFICIENT).addOptionalTag(HEDGES);
-            getOrCreateTagBuilder(BlockTags.FLOWERS).add(VABlocks.CHERRY_HEDGE, VABlocks.FLOWERING_AZALEA_HEDGE, VABlocks.BLUE_PETALS);
-            getOrCreateTagBuilder(BlockTags.BEE_ATTRACTIVE).add(VABlocks.CHERRY_HEDGE, VABlocks.FLOWERING_AZALEA_HEDGE, VABlocks.BLUE_PETALS);
+            getOrCreateTagBuilder(BlockTags.FLOWERS).add(VABlocks.CHERRY_HEDGE, VABlocks.FLOWERING_AZALEA_HEDGE, VABlocks.BLUE_PETALS, VABlocks.SPRING_LOTUS);
+            getOrCreateTagBuilder(BlockTags.BEE_ATTRACTIVE).add(VABlocks.CHERRY_HEDGE, VABlocks.FLOWERING_AZALEA_HEDGE, VABlocks.BLUE_PETALS, VABlocks.SPRING_LOTUS);
+            getOrCreateTagBuilder(BlockTags.FROG_PREFER_JUMP_TO).add(VABlocks.SPRING_LOTUS);
             getOrCreateTagBuilder(BlockTags.INSIDE_STEP_SOUND_BLOCKS).add(VABlocks.BLUE_PETALS);
             getOrCreateTagBuilder(BlockTags.BEACON_BASE_BLOCKS).add(VABlocks.STEEL_BLOCK, VABlocks.EXPOSED_STEEL_BLOCK, VABlocks.WEATHERED_STEEL_BLOCK, VABlocks.OXIDIZED_STEEL_BLOCK, VABlocks.WAXED_STEEL_BLOCK, VABlocks.WAXED_EXPOSED_STEEL_BLOCK, VABlocks.WAXED_WEATHERED_STEEL_BLOCK, VABlocks.WAXED_OXIDIZED_STEEL_BLOCK, VABlocks.IOLITE_BLOCK);
             getOrCreateTagBuilder(BlockTags.CLIMBABLE).add(VABlocks.CLIMBING_ROPE, VABlocks.CLIMBING_ROPE_ANCHOR, VABlocks.EXPOSED_CLIMBING_ROPE_ANCHOR, VABlocks.WEATHERED_CLIMBING_ROPE_ANCHOR, VABlocks.OXIDIZED_CLIMBING_ROPE_ANCHOR, VABlocks.WAXED_CLIMBING_ROPE_ANCHOR, VABlocks.WAXED_EXPOSED_CLIMBING_ROPE_ANCHOR, VABlocks.WAXED_WEATHERED_CLIMBING_ROPE_ANCHOR);
@@ -82,7 +83,9 @@ public final class VABlockTagProvider {
             getOrCreateTagBuilder(BlockTags.HOE_MINEABLE).add(
                             VABlocks.SILK_BLOCK,
                             VABlocks.WEBBED_SILK,
-                            VABlocks.LUMWASP_NEST)
+                            VABlocks.LUMWASP_NEST,
+                            VABlocks.SPRING_LOTUS
+                    )
                     .addOptionalTag(SILKBULBS)
                     .addOptionalTag(HEDGES);
 
@@ -397,9 +400,6 @@ public final class VABlockTagProvider {
 
         @Override
         protected void configure(RegistryWrapper.WrapperLookup arg) {
-            getOrCreateTagBuilder(BlockTags.SHOVEL_MINEABLE).add(
-                    VABlocks.SPRINGSOIL
-            );
         }
     }
 

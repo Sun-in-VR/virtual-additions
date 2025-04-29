@@ -171,7 +171,8 @@ public final class VABlockLootTableProvider {
                     VABlocks.IOLITE_BLOCK,
                     VABlocks.WARP_ANCHOR,
                     VABlocks.ENTANGLEMENT_DRIVE,
-                    VABlocks.SPOTLIGHT
+                    VABlocks.SPOTLIGHT,
+                    VABlocks.SPRING_LOTUS
             );
 
             this.addDrop(VABlocks.BLUE_PETALS, this.segmentedDrops(VABlocks.BLUE_PETALS));
@@ -242,10 +243,6 @@ public final class VABlockLootTableProvider {
         @Override
         public void generate() {
             this.addDrop(VABlocks.BALLOON_BULB, block -> this.drops(VAItems.BALLOON_FRUIT));
-
-            this.addSimpleDrops(
-                    VABlocks.SPRING_LEAF
-                    );
 
             this.addDrop(VABlocks.BALLOON_BULB_PLANT, block -> new LootTable.Builder().pool(LootPool.builder().with(ItemEntry.builder(VAItems.BALLOON_FRUIT).conditionally(BlockStatePropertyLootCondition.builder(VABlocks.BALLOON_BULB_PLANT).properties(StatePredicate.Builder.create().exactMatch(BalloonBulbPlantBlock.AGE, 3))).apply(SetCountLootFunction.builder(UniformLootNumberProvider.create(2, 3))))));
         }

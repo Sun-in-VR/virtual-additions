@@ -183,7 +183,7 @@ public class VABlocks {
     public static final Block POLISHED_PORPHYRY_STAIRS;
     public static final Block POLISHED_PORPHYRY_SLAB;
     public static final Block POLISHED_PORPHYRY_WALL;
-    public static final Block SPRINGSOIL;
+    public static final Block SPRING_LOTUS;
     public static final Block SOULBLOOM_LOG;
     public static final Block SOULBLOOM_WOOD;
     public static final Block STRIPPED_SOULBLOOM_LOG;
@@ -595,7 +595,7 @@ public class VABlocks {
         BALLOON_BULB_PLANT = register("balloon_bulb_plant", BalloonBulbPlantBlock::new, Settings.copy(BALLOON_BULB).requires(VirtualAdditions.PREVIEW));
         BALLOON_BULB_BUD = register("balloon_bulb_bud", BalloonBulbBudBlock::new, Settings.copy(BALLOON_BULB).requires(VirtualAdditions.PREVIEW));
 
-        SPRINGSOIL = register("springsoil", SpringSoilBlock::new, Settings.copy(Blocks.ROOTED_DIRT).requires(VirtualAdditions.PREVIEW));
+        SPRING_LOTUS = register("spring_lotus", SpringLotusBlock::new, Settings.copy(Blocks.BIG_DRIPLEAF));
 
         SOULBLOOM_LOG = register("soulbloom_log", PillarBlock::new, Settings.copy(Blocks.CHERRY_LOG));
         SOULBLOOM_WOOD = register("soulbloom_wood", PillarBlock::new, Settings.copy(Blocks.CHERRY_WOOD));
@@ -840,7 +840,8 @@ public class VABlocks {
     }
 
     public static void init(){
-        LandPathNodeTypesRegistry.register(ACID, PathNodeType.LAVA, PathNodeType.DANGER_FIRE);
+        LandPathNodeTypesRegistry.register(ACID, PathNodeType.DAMAGE_OTHER, PathNodeType.DAMAGE_OTHER);
+        LandPathNodeTypesRegistry.register(SPRING_LOTUS, PathNodeType.DAMAGE_OTHER, PathNodeType.DAMAGE_OTHER);
 
         FireBlock fire = (FireBlock) Blocks.FIRE;
         fire.registerFlammableBlock(CLIMBING_ROPE_ANCHOR, 5, 20);

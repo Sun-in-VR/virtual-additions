@@ -27,6 +27,7 @@ public abstract class TradeOffersMixin {
     @Unique private static final TradeOffers.Factory SINOPIA_DYE_TRADE_OFFER = new TradeOffers.SellItemFactory(VAItems.SINOPIA_DYE, 1, 3, 12, 1);
     @Unique private static final TradeOffers.Factory LILAC_DYE_TRADE_OFFER = new TradeOffers.SellItemFactory(VAItems.LILAC_DYE, 1, 3, 12, 1);
     @Unique private static final TradeOffers.Factory LIGHTNING_BOTTLE_TRADE_OFFER = new TradeOffers.SellItemFactory(VAItems.LIGHTNING_BOTTLE, 15, 1, 12, 1);
+    @Unique private static final TradeOffers.Factory SPRING_LOTUS_TRADE_OFFER = new TradeOffers.SellItemFactory(VAItems.SPRING_LOTUS, 1, 2, 5, 1);
 
     static {
         ArrayList<Pair<TradeOffers.Factory[], Integer>> TRADES = new ArrayList<>();

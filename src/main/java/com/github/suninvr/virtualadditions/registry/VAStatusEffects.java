@@ -1,5 +1,6 @@
 package com.github.suninvr.virtualadditions.registry;
 
+import com.github.suninvr.virtualadditions.entity.effect.AuraStatusEffect;
 import com.github.suninvr.virtualadditions.entity.effect.SilenceAndLoquacityStatusEffect;
 import net.minecraft.entity.effect.StatusEffect;
 import net.minecraft.entity.effect.StatusEffectCategory;
@@ -17,13 +18,15 @@ public class VAStatusEffects {
     public static final RegistryEntry<StatusEffect> LOVE;
     public static final RegistryEntry<StatusEffect> SILENCE;
     public static final RegistryEntry<StatusEffect> LOQUACITY;
+    public static final RegistryEntry<StatusEffect> AURA;
 
     static {
         IOLITE_INTERFERENCE = Registry.registerReference(Registries.STATUS_EFFECT, idOf("iolite_interference"), new CustomStatusEffect(StatusEffectCategory.HARMFUL, 0x9a5bff, VAParticleTypes.INTERFERENCE));
         FRAILTY = Registry.registerReference(Registries.STATUS_EFFECT, idOf("frailty"), new CustomStatusEffect(StatusEffectCategory.HARMFUL, 0xe9E4021));
         LOVE = Registry.registerReference(Registries.STATUS_EFFECT, idOf("love"), new CustomStatusEffect(StatusEffectCategory.NEUTRAL, 0xdfa7e5));
-        SILENCE = Registry.registerReference(Registries.STATUS_EFFECT, idOf("silence"), new SilenceAndLoquacityStatusEffect(StatusEffectCategory.HARMFUL, 0x1987a1));
+        SILENCE = Registry.registerReference(Registries.STATUS_EFFECT, idOf("silence"), new SilenceAndLoquacityStatusEffect(StatusEffectCategory.NEUTRAL, 0x1987a1));
         LOQUACITY = Registry.registerReference(Registries.STATUS_EFFECT, idOf("loquacity"), new SilenceAndLoquacityStatusEffect(StatusEffectCategory.NEUTRAL, 0xe6785e, true));
+        AURA = Registry.registerReference(Registries.STATUS_EFFECT, idOf("aura"), new AuraStatusEffect(StatusEffectCategory.NEUTRAL, 0x9dbad0));
     }
 
     public static void init(){}
