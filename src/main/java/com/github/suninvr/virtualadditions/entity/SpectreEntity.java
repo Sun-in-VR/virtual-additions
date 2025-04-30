@@ -259,7 +259,7 @@ public class SpectreEntity extends HostileEntity implements RangedAttackMob {
 
     public static boolean canSpawnInDark(EntityType<? extends HostileEntity> type, ServerWorldAccess world, SpawnReason spawnReason, BlockPos pos, Random random) {
         BlockState state = world.getBlockState(pos.down());
-        return state.isIn(VABlockTags.SPECTRE_SPAWNABLE_ON) && HostileEntity.canSpawnInDark(type, world, spawnReason, pos, random);
+        return (state.isIn(VABlockTags.SPECTRE_SPAWNABLE_ON) || !spawnReason.equals(SpawnReason.NATURAL)) && HostileEntity.canSpawnInDark(type, world, spawnReason, pos, random);
     }
 
     @Override

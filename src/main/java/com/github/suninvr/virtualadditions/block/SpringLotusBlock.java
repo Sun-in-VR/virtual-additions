@@ -89,7 +89,10 @@ public class SpringLotusBlock extends PlantBlock implements Fertilizable {
             world.getOtherEntities(null, Box.of(centerPos, 1.0, 1.0, 1.0)).forEach(
                     entity -> {
                         double d = entity instanceof AbstractMinecartEntity ? 2.8 : 1.6;
-                        entity.addVelocity(0.0, d, 0.0);
+                        Vec3d velocity = entity.getVelocity();
+                        d = Math.min(velocity.y + d, d * 1.1);
+                        if (d < velocity.y) return;
+                        entity.setVelocity(velocity.x, d, velocity.z);
                         entity.velocityModified = true;
                     }
             );
