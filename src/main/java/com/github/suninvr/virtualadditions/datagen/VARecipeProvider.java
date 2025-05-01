@@ -527,7 +527,7 @@ public final class VARecipeProvider {
                     .criterion("has_blue_petals", conditionsFromItem(VAItems.BLUE_PETALS))
                             .offerTo(this.exporter, "virtual_additions:light_blue_dye_from_blue_petals");
 
-            ShapelessRecipeJsonBuilder.create(this.registryLookup, RecipeCategory.DECORATIONS, Items.ORANGE_DYE)
+            ShapelessRecipeJsonBuilder.create(this.registryLookup, RecipeCategory.DECORATIONS, VAItems.PLUM_DYE)
                     .input(VAItems.SMALL_SPRING_LOTUS)
                     .criterion("has_small_spring_lotus", conditionsFromItem(VAItems.SMALL_SPRING_LOTUS))
                             .offerTo(this.exporter, "virtual_additions:orange_dye_from_small_spring_lotus");

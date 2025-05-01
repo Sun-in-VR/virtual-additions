@@ -38,7 +38,7 @@ public class SpringLotusPollenParticle extends SpriteBillboardParticle {
             particle.maxAge = MathHelper.nextBetween(world.random, 20, 100);
             particle.alpha = 50;
             if (world.random.nextBoolean()) particle.setColor(0.93F, 0.87F, 0.27F);
-            else particle.setColor(0.96F, 0.58F, 0.39F);
+            else particle.setColor(0.78F, 0.44F, 0.53F);
             particle.setVelocity(velocityX * 0.25, velocityY + (world.random.nextDouble() * 2.0), velocityZ * 0.25);
             return particle;
         }
