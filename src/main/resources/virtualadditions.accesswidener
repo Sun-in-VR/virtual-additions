@@ -32,3 +32,4 @@ accessible method net/minecraft/client/data/Models item (Ljava/lang/String;[Lnet
 accessible field net/minecraft/block/ExperienceDroppingBlock experienceDropped Lnet/minecraft/util/math/intprovider/IntProvider;
 accessible field net/minecraft/block/entity/SignBlockEntity frontText Lnet/minecraft/block/entity/SignText;
 accessible field net/minecraft/block/entity/SignBlockEntity backText Lnet/minecraft/block/entity/SignText;
+accessible method net/minecraft/loot/LootTables registerLootTable (Lnet/minecraft/registry/RegistryKey;)Lnet/minecraft/registry/RegistryKey;

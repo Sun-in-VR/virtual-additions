@@ -2,10 +2,7 @@ package com.github.suninvr.virtualadditions.entity;
 
 import com.github.suninvr.virtualadditions.VirtualAdditions;
 import com.github.suninvr.virtualadditions.entity.goal.SpectreBuffEntityGoal;
-import com.github.suninvr.virtualadditions.registry.VABlockTags;
-import com.github.suninvr.virtualadditions.registry.VAParticleTypes;
-import com.github.suninvr.virtualadditions.registry.VASoundEvents;
-import com.github.suninvr.virtualadditions.registry.VATrackedDataHandlerRegistry;
+import com.github.suninvr.virtualadditions.registry.*;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
 import net.minecraft.block.BlockState;
@@ -195,7 +192,7 @@ public class SpectreEntity extends HostileEntity implements RangedAttackMob {
             this.buffTarget = null;
             this.buffTargetId = EMPTY_ID;
             this.setIsBuffing(false);
-        } else {
+        } else if (!(targetToSpectre.containsKey(target.getUuid()))) {
             this.buffTarget = target;
             UUID targetId = this.buffTarget.getUuid();
             UUID thisId = this.getUuid();
@@ -259,7 +256,7 @@ public class SpectreEntity extends HostileEntity implements RangedAttackMob {
 
     public static boolean canSpawnInDark(EntityType<? extends HostileEntity> type, ServerWorldAccess world, SpawnReason spawnReason, BlockPos pos, Random random) {
         BlockState state = world.getBlockState(pos.down());
-        return (state.isIn(VABlockTags.SPECTRE_SPAWNABLE_ON) || !spawnReason.equals(SpawnReason.NATURAL)) && HostileEntity.canSpawnInDark(type, world, spawnReason, pos, random);
+        return (state.isIn(VABlockTags.SPECTRE_SPAWNABLE_ON) || !spawnReason.equals(SpawnReason.NATURAL)) && ((spawnReason.equals(SpawnReason.SPAWNER) && world.getBlockState(pos).isOf(VABlocks.SPECTRAL_FIRE)) || HostileEntity.canSpawnInDark(type, world, spawnReason, pos, random));
     }
 
     @Override

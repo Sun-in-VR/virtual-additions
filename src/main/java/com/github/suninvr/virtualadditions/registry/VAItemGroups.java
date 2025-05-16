@@ -14,6 +14,8 @@ import net.minecraft.registry.Registry;
 import net.minecraft.registry.RegistryKey;
 import net.minecraft.text.Text;
 
+import java.util.Comparator;
+
 import static com.github.suninvr.virtualadditions.VirtualAdditions.idOf;
 
 public class VAItemGroups {
@@ -40,7 +42,7 @@ public class VAItemGroups {
 
     private static void populateLootTablesGroup() {
         ItemGroupEvents.modifyEntriesEvent(LOOT_TABLES_KEY).register(group -> {
-            LootTables.getAll().forEach(lootTableKey -> {
+            LootTables.getAll().stream().sorted(Comparator.comparing(registryKey -> registryKey.getValue().toString())).forEach(lootTableKey -> {
                 ItemStack stack = Items.CHEST.getDefaultStack();
                 stack.set(DataComponentTypes.CONTAINER_LOOT, new ContainerLootComponent(lootTableKey, 0L));
                 stack.set(DataComponentTypes.ITEM_NAME, Text.of(lootTableKey.getValue().toString()));

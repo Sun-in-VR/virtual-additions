@@ -8,14 +8,14 @@ import com.mojang.serialization.MapCodec;
 import net.minecraft.block.*;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.LivingEntity;
-import net.minecraft.entity.MovementType;
+import net.minecraft.entity.effect.StatusEffectInstance;
+import net.minecraft.entity.effect.StatusEffects;
 import net.minecraft.entity.vehicle.AbstractMinecartEntity;
-import net.minecraft.entity.vehicle.MinecartEntity;
+import net.minecraft.server.network.ServerPlayerEntity;
 import net.minecraft.server.world.ServerWorld;
 import net.minecraft.sound.SoundCategory;
 import net.minecraft.sound.SoundEvents;
 import net.minecraft.state.StateManager;
-import net.minecraft.state.property.BooleanProperty;
 import net.minecraft.state.property.EnumProperty;
 import net.minecraft.state.property.IntProperty;
 import net.minecraft.util.math.BlockPos;
@@ -55,11 +55,14 @@ public class SpringLotusBlock extends PlantBlock implements Fertilizable {
             super.onLandedUpon(world, state, pos, entity, fallDistance);
             return;
         }
-        double d = (fallDistance - 8.0) * 0.5;
+        double d = fallDistance - 15.0;
         super.onLandedUpon(world, state, pos, entity, d);
+        if (world.isClient()) return;
         if (d > entity.getSafeFallDistance() && entity instanceof LivingEntity) {
             world.setBlockState(pos, state.with(COMPRESSION, 4).with(STATE, SpringLotusState.OVER_COMPRESSED));
             world.playSound(null, pos, SoundEvents.BLOCK_BIG_DRIPLEAF_TILT_DOWN, SoundCategory.BLOCKS, 1, 0.8F);
+            world.scheduleBlockTick(pos, this, 1);
+        } else if (state.get(COMPRESSION) == 3 && fallDistance >= 0.5 && !entity.getType().isIn(VAEntityTypeTags.IGNORES_SPRING_LOTUS)) {
             world.scheduleBlockTick(pos, this, 1);
         }
     }
@@ -85,29 +88,43 @@ public class SpringLotusBlock extends PlantBlock implements Fertilizable {
             world.setBlockState(pos, state.with(COMPRESSION, compression - 1));
             world.playSound(null, pos, SoundEvents.BLOCK_BIG_DRIPLEAF_TILT_UP, SoundCategory.BLOCKS, 1, 1.2F);
         } else {
-            Vec3d centerPos = pos.toCenterPos();
-            world.getOtherEntities(null, Box.of(centerPos, 1.0, 1.0, 1.0)).forEach(
-                    entity -> {
-                        double d = entity instanceof AbstractMinecartEntity ? 2.8 : 1.6;
-                        Vec3d velocity = entity.getVelocity();
-                        d = Math.min(velocity.y + d, d * 1.1);
-                        if (d < velocity.y) return;
-                        entity.setVelocity(velocity.x, d, velocity.z);
-                        entity.velocityModified = true;
-                    }
-            );
-            world.setBlockState(pos, state.with(COMPRESSION, 0).with(STATE, SpringLotusState.PUSHING));
-            world.scheduleBlockTick(pos, this, 5);
-            world.playSound(null, pos, SoundEvents.BLOCK_BIG_DRIPLEAF_TILT_DOWN, SoundCategory.BLOCKS, 1, 1);
-            world.spawnParticles(VAParticleTypes.SPRING_LOTUS_POLLEN, false, false, centerPos.getX(), centerPos.getY() + 1.0, centerPos.getZ(), 25, 0.25, 0.25, 0.25, 0.25);
+            spring(world, pos, state);
         }
     }
 
-    @Override
-    public void onSteppedOn(World world, BlockPos pos, BlockState state, Entity entity) {
-        if (!world.isClient() && state.get(COMPRESSION) == 3 && !entity.getType().isIn(VAEntityTypeTags.IGNORES_SPRING_LOTUS) && !entity.isSneaking()) {
-            world.scheduleBlockTick(pos, this, 1);
+    private static void spring(ServerWorld world, BlockPos pos, BlockState state) {
+        Vec3d centerPos = pos.toCenterPos();
+        world.getOtherEntities(null, Box.of(centerPos, 1.0, 1.0, 1.0))
+                .forEach(entity -> {
+                    double d = getSpringPower(entity);
+                    int r;
+                    if ((r =world.getReceivedRedstonePower(pos)) > 0) {
+                        d *= (7.0 - Math.sqrt(r)) / 6.0;
+                    }
+                    Vec3d velocity = entity.getVelocity();
+                    if (d < velocity.y) return;
+                    entity.setVelocity(velocity.x, d, velocity.z);
+                    entity.velocityModified = true;
+                }
+        );
+        world.setBlockState(pos, state.with(COMPRESSION, 0).with(STATE, SpringLotusState.PUSHING));
+        world.scheduleBlockTick(pos, state.getBlock(), 5);
+        world.playSound(null, pos, SoundEvents.BLOCK_BIG_DRIPLEAF_TILT_DOWN, SoundCategory.BLOCKS, 1, 1);
+        world.spawnParticles(VAParticleTypes.SPRING_LOTUS_POLLEN, false, false, centerPos.getX(), centerPos.getY() + 1.0, centerPos.getZ(), 25, 0.25, 0.25, 0.25, 0.25);
+    }
+
+    private static double getSpringPower(Entity entity) {
+        double d = entity instanceof AbstractMinecartEntity ? 2.8 : 1.5;
+        if (entity instanceof ServerPlayerEntity serverPlayerEntity) {
+            if (serverPlayerEntity.getPlayerInput().sneak()) d = 1.05F;
+            else if (serverPlayerEntity.getPlayerInput().jump()) {
+                StatusEffectInstance instance = serverPlayerEntity.getStatusEffect(StatusEffects.JUMP_BOOST);
+                double f = instance != null ? (instance.getAmplifier() + 1) * 0.15 : 0;
+                d = 1.78F + f;
+            }
         }
+        if (entity.getType().isIn(VAEntityTypeTags.IGNORES_SPRING_LOTUS)) d *= 0.65;
+        return d;
     }
 
     @Override
