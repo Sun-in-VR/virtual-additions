@@ -75,7 +75,7 @@ public class DestructiveSculkBlock extends BlockWithEntity {
         if (!state.get(SPREADING)) {
             if (world.getBlockEntity(pos) instanceof DestructiveSculkBlockEntity destructiveSculkBlockEntity) {
                 PlayerEntity player = world.getPlayerByUuid(destructiveSculkBlockEntity.getPlayerId());
-                if (player != null) player.incrementStat(Stats.MINED.getOrCreateStat(destructiveSculkBlockEntity.getReplacedBlock()));
+                if (player != null) player.incrementStat(Stats.MINED.getOrCreateStat(destructiveSculkBlockEntity.getReplacedState().getBlock()));
                 destructiveSculkBlockEntity.destroyAll(false);
             }
         }
@@ -97,7 +97,7 @@ public class DestructiveSculkBlock extends BlockWithEntity {
                     int ia = Math.abs(i);
                     int ja = Math.abs(j);
                     int ka = Math.abs(k);
-                    if (!(ia == ja && ja == ka) && stateToReplace.isOf(blockEntity.getReplacedBlock())) {
+                    if (!(ia == ja && ja == ka) && stateToReplace.isOf(blockEntity.getReplacedState().getBlock())) {
                         if ( (ia + ja + ka) >= 2) {
                             validPosLater.add(blockPos);
                         } else {
@@ -139,8 +139,8 @@ public class DestructiveSculkBlock extends BlockWithEntity {
     @Override
     protected List<ItemStack> getDroppedStacks(BlockState state, LootWorldContext.Builder builder) {
         DestructiveSculkBlockEntity blockEntity = builder.get(LootContextParameters.BLOCK_ENTITY) instanceof DestructiveSculkBlockEntity destructiveSculkBlockEntity ? destructiveSculkBlockEntity : null;
-        if (blockEntity != null) {
-            return blockEntity.getDroppedStacks();
+        if (blockEntity != null && blockEntity.getWorld() instanceof ServerWorld serverWorld) {
+            return blockEntity.getDroppedStacks(serverWorld);
         }
         return Collections.emptyList();
     }
@@ -150,7 +150,7 @@ public class DestructiveSculkBlock extends BlockWithEntity {
         super.onStacksDropped(state, world, pos, tool, dropExperience);
         DestructiveSculkBlockEntity blockEntity = getBlockEntity(world, pos);
         if (blockEntity != null) {
-            Block block = blockEntity.getReplacedBlock();
+            Block block = blockEntity.getReplacedState().getBlock();
             if (block instanceof ExperienceDroppingBlock experienceDroppingBlock) {
                 dropExperienceWhenMined(world, pos, blockEntity.getTool(), experienceDroppingBlock.experienceDropped);
             }

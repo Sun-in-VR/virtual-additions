@@ -11,13 +11,16 @@ import com.github.suninvr.virtualadditions.registry.collection.ColorfulBlockSet;
 import net.fabricmc.fabric.api.datagen.v1.FabricDataGenerator;
 import net.fabricmc.fabric.api.datagen.v1.FabricDataOutput;
 import net.fabricmc.fabric.api.datagen.v1.provider.FabricTagProvider;
+import net.minecraft.block.Block;
 import net.minecraft.data.family.BlockFamily;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemConvertible;
 import net.minecraft.item.Items;
+import net.minecraft.registry.Registries;
 import net.minecraft.registry.RegistryKeys;
 import net.minecraft.registry.RegistryWrapper;
 import net.minecraft.registry.tag.ItemTags;
+import net.minecraft.registry.tag.TagBuilder;
 import net.minecraft.registry.tag.TagKey;
 import net.minecraft.util.Identifier;
 
@@ -45,43 +48,43 @@ public final class VAItemTagProvider {
 
         @Override
         protected void configure(RegistryWrapper.WrapperLookup arg) {
-            getOrCreateTagBuilder(ItemTags.BEACON_PAYMENT_ITEMS).add(VAItems.STEEL_INGOT, VAItems.IOLITE);
-            getOrCreateTagBuilder(ItemTags.STONE_CRAFTING_MATERIALS).add(VAItems.COBBLED_HORNFELS, VAItems.COBBLED_BLUESCHIST, VAItems.COBBLED_SYENITE);
-            getOrCreateTagBuilder(ItemTags.STONE_TOOL_MATERIALS).add(VAItems.COBBLED_HORNFELS, VAItems.COBBLED_BLUESCHIST, VAItems.COBBLED_SYENITE);
-            getOrCreateTagBuilder(ItemTags.TRIM_MATERIALS).add(VAItems.STEEL_INGOT, VAItems.IOLITE, VAItems.ROCK_SALT);
-            getOrCreateTagBuilder(ItemTags.TRIMMABLE_ARMOR).add(VAItems.STEEL_HELMET, VAItems.STEEL_CHESTPLATE, VAItems.STEEL_LEGGINGS, VAItems.STEEL_BOOTS);
-            getOrCreateTagBuilder(ItemTags.HEAD_ARMOR_ENCHANTABLE).add(VAItems.STEEL_HELMET);
-            getOrCreateTagBuilder(ItemTags.CHEST_ARMOR_ENCHANTABLE).add(VAItems.STEEL_CHESTPLATE);
-            getOrCreateTagBuilder(ItemTags.LEG_ARMOR_ENCHANTABLE).add(VAItems.STEEL_LEGGINGS);
-            getOrCreateTagBuilder(ItemTags.FOOT_ARMOR_ENCHANTABLE).add(VAItems.STEEL_BOOTS);
-            getOrCreateTagBuilder(ItemTags.HEAD_ARMOR).add(VAItems.STEEL_HELMET);
-            getOrCreateTagBuilder(ItemTags.CHEST_ARMOR).add(VAItems.STEEL_CHESTPLATE);
-            getOrCreateTagBuilder(ItemTags.LEG_ARMOR).add(VAItems.STEEL_LEGGINGS);
-            getOrCreateTagBuilder(ItemTags.FOOT_ARMOR).add(VAItems.STEEL_BOOTS);
-            getOrCreateTagBuilder(ItemTags.VILLAGER_PLANTABLE_SEEDS).add(VAItems.CORN_SEEDS, VAItems.TOMATO_SEEDS, VAItems.CABBAGE_SEEDS);
-            getOrCreateTagBuilder(ItemTags.DOORS).add(VAItems.STEEL_DOOR);
-            getOrCreateTagBuilder(ItemTags.TRAPDOORS).add(VAItems.STEEL_TRAPDOOR);
-            getOrCreateTagBuilder(ItemTags.DYEABLE).add(VAItems.ICE_CREAM, VAItems.ENGRAVING_CHISEL);
-            getOrCreateTagBuilder(ItemTags.DURABILITY_ENCHANTABLE).add(VAItems.ENGRAVING_CHISEL);
-            getOrCreateTagBuilder(ItemTags.PIG_FOOD).add(VAItems.TOMATO, VAItems.CORN, VAItems.CABBAGE);
-            getOrCreateTagBuilder(ItemTags.VILLAGER_PICKS_UP).add(VAItems.TOMATO, VAItems.CORN, VAItems.CABBAGE, VAItems.CORN_SEEDS, VAItems.TOMATO_SEEDS, VAItems.CABBAGE_SEEDS);
-            getOrCreateTagBuilder(ItemTags.CHICKEN_FOOD).add(VAItems.CORN_SEEDS, VAItems.TOMATO_SEEDS, VAItems.CABBAGE_SEEDS, VAItems.COTTON_SEEDS);
-            getOrCreateTagBuilder(ItemTags.BOATS).add(VAItems.SOULBLOOM_BOAT);
-            getOrCreateTagBuilder(ItemTags.CHEST_BOATS).add(VAItems.SOULBLOOM_CHEST_BOAT);
-            getOrCreateTagBuilder(ItemTags.FLOWERS).add(VAItems.BLUE_PETALS, VAItems.SPRING_LOTUS, VAItems.SMALL_SPRING_LOTUS);
-            getOrCreateTagBuilder(ItemTags.SMALL_FLOWERS).add(VAItems.SMALL_SPRING_LOTUS);
-            getOrCreateTagBuilder(ItemTags.BEE_FOOD).add(VAItems.BLUE_PETALS, VAItems.SPRING_LOTUS, VAItems.SMALL_SPRING_LOTUS);
+            addTo(ItemTags.BEACON_PAYMENT_ITEMS, VAItems.STEEL_INGOT, VAItems.IOLITE);
+            addTo(ItemTags.STONE_CRAFTING_MATERIALS, VAItems.COBBLED_HORNFELS, VAItems.COBBLED_BLUESCHIST, VAItems.COBBLED_SYENITE);
+            addTo(ItemTags.STONE_TOOL_MATERIALS, VAItems.COBBLED_HORNFELS, VAItems.COBBLED_BLUESCHIST, VAItems.COBBLED_SYENITE);
+            addTo(ItemTags.TRIM_MATERIALS, VAItems.STEEL_INGOT, VAItems.IOLITE, VAItems.ROCK_SALT);
+            addTo(ItemTags.TRIMMABLE_ARMOR, VAItems.STEEL_HELMET, VAItems.STEEL_CHESTPLATE, VAItems.STEEL_LEGGINGS, VAItems.STEEL_BOOTS);
+            addTo(ItemTags.HEAD_ARMOR_ENCHANTABLE, VAItems.STEEL_HELMET);
+            addTo(ItemTags.CHEST_ARMOR_ENCHANTABLE, VAItems.STEEL_CHESTPLATE);
+            addTo(ItemTags.LEG_ARMOR_ENCHANTABLE, VAItems.STEEL_LEGGINGS);
+            addTo(ItemTags.FOOT_ARMOR_ENCHANTABLE, VAItems.STEEL_BOOTS);
+            addTo(ItemTags.HEAD_ARMOR, VAItems.STEEL_HELMET);
+            addTo(ItemTags.CHEST_ARMOR, VAItems.STEEL_CHESTPLATE);
+            addTo(ItemTags.LEG_ARMOR, VAItems.STEEL_LEGGINGS);
+            addTo(ItemTags.FOOT_ARMOR, VAItems.STEEL_BOOTS);
+            addTo(ItemTags.VILLAGER_PLANTABLE_SEEDS, VAItems.CORN_SEEDS, VAItems.TOMATO_SEEDS, VAItems.CABBAGE_SEEDS);
+            addTo(ItemTags.DOORS, VAItems.STEEL_DOOR);
+            addTo(ItemTags.TRAPDOORS, VAItems.STEEL_TRAPDOOR);
+            addTo(ItemTags.DYEABLE, VAItems.ICE_CREAM, VAItems.ENGRAVING_CHISEL);
+            addTo(ItemTags.DURABILITY_ENCHANTABLE, VAItems.ENGRAVING_CHISEL);
+            addTo(ItemTags.PIG_FOOD, VAItems.TOMATO, VAItems.CORN, VAItems.CABBAGE);
+            addTo(ItemTags.VILLAGER_PICKS_UP, VAItems.TOMATO, VAItems.CORN, VAItems.CABBAGE, VAItems.CORN_SEEDS, VAItems.TOMATO_SEEDS, VAItems.CABBAGE_SEEDS);
+            addTo(ItemTags.CHICKEN_FOOD, VAItems.CORN_SEEDS, VAItems.TOMATO_SEEDS, VAItems.CABBAGE_SEEDS, VAItems.COTTON_SEEDS);
+            addTo(ItemTags.BOATS, VAItems.SOULBLOOM_BOAT);
+            addTo(ItemTags.CHEST_BOATS, VAItems.SOULBLOOM_CHEST_BOAT);
+            addTo(ItemTags.FLOWERS, VAItems.BLUE_PETALS, VAItems.SPRING_LOTUS, VAItems.SMALL_SPRING_LOTUS);
+            addTo(ItemTags.SMALL_FLOWERS, VAItems.SMALL_SPRING_LOTUS);
+            addTo(ItemTags.BEE_FOOD, VAItems.BLUE_PETALS, VAItems.SPRING_LOTUS, VAItems.SMALL_SPRING_LOTUS);
 
-            getOrCreateTagBuilder(INGOTS).add(VAItems.STEEL_INGOT);
-            getOrCreateTagBuilder(STEEL_INGOTS).add(VAItems.STEEL_INGOT);
-            getOrCreateTagBuilder(RAW_ORES).add(VAItems.RAW_STEEL);
-            getOrCreateTagBuilder(IOLITE).add(VAItems.IOLITE);
-            getOrCreateTagBuilder(IOLITE_ORES).add(VAItems.IOLITE_ORE);
-            getOrCreateTagBuilder(VAItemTags.ROCK_SALT_ORES).add(VAItems.ROCK_SALT_ORE, VAItems.DEEPSLATE_ROCK_SALT_ORE);
-            getOrCreateTagBuilder(GEMS).addOptionalTag(IOLITE);
-            getOrCreateTagBuilder(ORES).addOptionalTag(IOLITE_ORES).addOptionalTag(VAItemTags.ROCK_SALT_ORES);
-            getOrCreateTagBuilder(FOODS).add(VAItems.FRIED_EGG, VAItems.CORN, VAItems.ROASTED_CORN, VAItems.ICE_CREAM, VAItems.SWEET_BERRY_PIE);
-            getOrCreateTagBuilder(POTIONS).add(VAItems.APPLICABLE_POTION);
+            addTo(INGOTS, VAItems.STEEL_INGOT);
+            addTo(STEEL_INGOTS, VAItems.STEEL_INGOT);
+            addTo(RAW_ORES, VAItems.RAW_STEEL);
+            addTo(IOLITE, VAItems.IOLITE);
+            addTo(IOLITE_ORES, VAItems.IOLITE_ORE);
+            addTo(VAItemTags.ROCK_SALT_ORES, VAItems.ROCK_SALT_ORE, VAItems.DEEPSLATE_ROCK_SALT_ORE);
+            addTo(GEMS).addOptionalTag(IOLITE.id());
+            addTo(ORES).addOptionalTag(IOLITE_ORES.id()).addOptionalTag(VAItemTags.ROCK_SALT_ORES.id());
+            addTo(FOODS, VAItems.FRIED_EGG, VAItems.CORN, VAItems.ROASTED_CORN, VAItems.ICE_CREAM, VAItems.SWEET_BERRY_PIE);
+            addTo(POTIONS, VAItems.APPLICABLE_POTION);
 
             configureColorfulBlockSet(
                     VACollections.CHARTREUSE,
@@ -94,7 +97,7 @@ public final class VAItemTagProvider {
                     VACollections.LILAC
             );
 
-            getOrCreateTagBuilder(ItemTags.BUNDLES).add(
+            addTo(ItemTags.BUNDLES, 
                     VAItems.CHARTREUSE_BUNDLE,
                     VAItems.MAROON_BUNDLE,
                     VAItems.INDIGO_BUNDLE,
@@ -105,7 +108,7 @@ public final class VAItemTagProvider {
                     VAItems.LILAC_BUNDLE
             );
 
-            getOrCreateTagBuilder(ItemTags.HARNESSES).add(
+            addTo(ItemTags.HARNESSES, 
                     VAItems.CHARTREUSE_HARNESS,
                     VAItems.MAROON_HARNESS,
                     VAItems.INDIGO_HARNESS,
@@ -116,7 +119,7 @@ public final class VAItemTagProvider {
                     VAItems.LILAC_HARNESS
             );
 
-            getOrCreateTagBuilder(VAItemTags.SILKBULBS).add(
+            addTo(VAItemTags.SILKBULBS, 
                     VAItems.SILKBULB,
                     VAItems.WHITE_SILKBULB,
                     VAItems.LIGHT_GRAY_SILKBULB,
@@ -136,7 +139,7 @@ public final class VAItemTagProvider {
                     VAItems.PINK_SILKBULB
             );
 
-            getOrCreateTagBuilder(VAItemTags.LUMWASP_LARVAE_FOOD).add(
+            addTo(VAItemTags.LUMWASP_LARVAE_FOOD, 
                     Items.STONE,
                     Items.COBBLESTONE,
                     Items.GRANITE,
@@ -153,7 +156,7 @@ public final class VAItemTagProvider {
                     VAItems.COBBLED_SYENITE
             );
 
-            getOrCreateTagBuilder(VAItemTags.ACID_RESISTANT).add(
+            addTo(VAItemTags.ACID_RESISTANT, 
                     VAItems.ACID_BLOCK,
                     Items.ANCIENT_DEBRIS,
                     Items.NETHERITE_SCRAP,
@@ -180,15 +183,14 @@ public final class VAItemTagProvider {
                     VAItems.IOLITE_NETHERITE_TOOL_SET
                     );
 
-            getOrCreateTagBuilder(VAItemTags.ACCEPTS_APPLIED_EFFECTS)
-                    .addOptionalTag(ItemTags.SWORDS)
-                    .addOptionalTag(ItemTags.SHOVELS)
-                    .addOptionalTag(ItemTags.PICKAXES)
-                    .addOptionalTag(ItemTags.AXES)
-                    .addOptionalTag(ItemTags.HOES)
-                    .add(Items.TRIDENT, Items.MACE);
+            addTo(VAItemTags.ACCEPTS_APPLIED_EFFECTS, Items.TRIDENT, Items.MACE)
+                    .addOptionalTag(ItemTags.SWORDS.id())
+                    .addOptionalTag(ItemTags.SHOVELS.id())
+                    .addOptionalTag(ItemTags.PICKAXES.id())
+                    .addOptionalTag(ItemTags.AXES.id())
+                    .addOptionalTag(ItemTags.HOES.id());
 
-            getOrCreateTagBuilder(VAItemTags.BASE_DYE).add(
+            addTo(VAItemTags.BASE_DYE, 
                     Items.RED_DYE,
                     Items.GREEN_DYE,
                     Items.BLUE_DYE,
@@ -197,7 +199,7 @@ public final class VAItemTagProvider {
                     Items.WHITE_DYE
             );
 
-            getOrCreateTagBuilder(VAItemTags.COLORABLE_GLASS).add(
+            addTo(VAItemTags.COLORABLE_GLASS, 
                     Items.GLASS,
                     Items.WHITE_STAINED_GLASS,
                     Items.LIGHT_GRAY_STAINED_GLASS,
@@ -225,7 +227,7 @@ public final class VAItemTagProvider {
                     Items.PINK_STAINED_GLASS
             );
 
-            getOrCreateTagBuilder(VAItemTags.COLORABLE_GLASS_PANE).add(
+            addTo(VAItemTags.COLORABLE_GLASS_PANE, 
                     Items.GLASS_PANE,
                     Items.WHITE_STAINED_GLASS_PANE,
                     Items.LIGHT_GRAY_STAINED_GLASS_PANE,
@@ -253,7 +255,7 @@ public final class VAItemTagProvider {
                     Items.PINK_STAINED_GLASS_PANE
             );
 
-            getOrCreateTagBuilder(ItemTags.SHULKER_BOXES).add(
+            addTo(ItemTags.SHULKER_BOXES, 
                     VAItems.LILAC_SHULKER_BOX,
                     VAItems.MAROON_SHULKER_BOX,
                     VAItems.SINOPIA_SHULKER_BOX,
@@ -264,7 +266,7 @@ public final class VAItemTagProvider {
                     VAItems.PLUM_SHULKER_BOX
             );
 
-            getOrCreateTagBuilder(VAItemTags.CLIMBING_ROPES).add(
+            addTo(VAItemTags.CLIMBING_ROPES, 
                     VAItems.CLIMBING_ROPE,
                     VAItems.EXPOSED_CLIMBING_ROPE,
                     VAItems.WEATHERED_CLIMBING_ROPE,
@@ -297,38 +299,38 @@ public final class VAItemTagProvider {
             configureGildedToolSet(VAItems.QUARTZ_TOOL_SETS);
             configureGildedToolSet(VAItems.SCULK_TOOL_SETS);
 
-            getOrCreateTagBuilder(ItemTags.STONE_CRAFTING_MATERIALS).add(VAItems.PORPHYRY);
-            getOrCreateTagBuilder(ItemTags.STONE_TOOL_MATERIALS).add(VAItems.PORPHYRY);
-            getOrCreateTagBuilder(ItemTags.LOGS_THAT_BURN).add(VAItems.SOULBLOOM_LOG, VAItems.SOULBLOOM_WOOD, VAItems.STRIPPED_SOULBLOOM_LOG, VAItems.STRIPPED_SOULBLOOM_WOOD);
-            getOrCreateTagBuilder(ItemTags.PLANKS).add(VAItems.SOULBLOOM_PLANKS);
-            getOrCreateTagBuilder(ItemTags.SIGNS).add(VAItems.SOULBLOOM_SIGN);
-            getOrCreateTagBuilder(ItemTags.HANGING_SIGNS).add(VAItems.SOULBLOOM_HANGING_SIGN);
-            getOrCreateTagBuilder(ItemTags.FENCES).add(VAItems.SOULBLOOM_FENCE);
-            getOrCreateTagBuilder(ItemTags.DOORS).add(VAItems.SOULBLOOM_DOOR);
-            getOrCreateTagBuilder(ItemTags.TRAPDOORS).add(VAItems.SOULBLOOM_TRAPDOOR);
-            getOrCreateTagBuilder(ItemTags.LEAVES).add(VAItems.SOULBLOOM_LEAVES);
-            getOrCreateTagBuilder(ItemTags.SAPLINGS).add(VAItems.SOULBLOOM_SAPLING);
+            addTo(ItemTags.STONE_CRAFTING_MATERIALS, VAItems.PORPHYRY);
+            addTo(ItemTags.STONE_TOOL_MATERIALS, VAItems.PORPHYRY);
+            addTo(ItemTags.LOGS_THAT_BURN, VAItems.SOULBLOOM_LOG, VAItems.SOULBLOOM_WOOD, VAItems.STRIPPED_SOULBLOOM_LOG, VAItems.STRIPPED_SOULBLOOM_WOOD);
+            addTo(ItemTags.PLANKS, VAItems.SOULBLOOM_PLANKS);
+            addTo(ItemTags.SIGNS, VAItems.SOULBLOOM_SIGN);
+            addTo(ItemTags.HANGING_SIGNS, VAItems.SOULBLOOM_HANGING_SIGN);
+            addTo(ItemTags.FENCES, VAItems.SOULBLOOM_FENCE);
+            addTo(ItemTags.DOORS, VAItems.SOULBLOOM_DOOR);
+            addTo(ItemTags.TRAPDOORS, VAItems.SOULBLOOM_TRAPDOOR);
+            addTo(ItemTags.LEAVES, VAItems.SOULBLOOM_LEAVES);
+            addTo(ItemTags.SAPLINGS, VAItems.SOULBLOOM_SAPLING);
             
-            getOrCreateTagBuilder(ItemTags.LOGS).add(VAItems.WITHERED_LOG, VAItems.WITHERED_WOOD);//, VAItems.STRIPPED_WITHERED_LOG, VAItems.STRIPPED_WITHERED_WOOD);
-            getOrCreateTagBuilder(ItemTags.PLANKS).add(VAItems.WITHERED_PLANKS);
-            //getOrCreateTagBuilder(ItemTags.SIGNS).add(VAItems.WITHERED_SIGN);
-            //getOrCreateTagBuilder(ItemTags.HANGING_SIGNS).add(VAItems.WITHERED_HANGING_SIGN);
-            getOrCreateTagBuilder(ItemTags.FENCES).add(VAItems.WITHERED_FENCE);
-            //getOrCreateTagBuilder(ItemTags.DOORS).add(VAItems.WITHERED_DOOR);
-            //getOrCreateTagBuilder(ItemTags.TRAPDOORS).add(VAItems.WITHERED_TRAPDOOR);
-            getOrCreateTagBuilder(ItemTags.LEAVES).add(VAItems.WITHERED_LEAVES);
-            //getOrCreateTagBuilder(ItemTags.SAPLINGS).add(VAItems.WITHERED_SAPLING);
+            addTo(ItemTags.LOGS, VAItems.WITHERED_LOG, VAItems.WITHERED_WOOD);//, VAItems.STRIPPED_WITHERED_LOG, VAItems.STRIPPED_WITHERED_WOOD);
+            addTo(ItemTags.PLANKS, VAItems.WITHERED_PLANKS);
+            addTo(ItemTags.SIGNS, VAItems.WITHERED_SIGN);
+            addTo(ItemTags.HANGING_SIGNS, VAItems.WITHERED_HANGING_SIGN);
+            addTo(ItemTags.FENCES, VAItems.WITHERED_FENCE);
+            addTo(ItemTags.DOORS, VAItems.WITHERED_DOOR);
+            addTo(ItemTags.TRAPDOORS, VAItems.WITHERED_TRAPDOOR);
+            addTo(ItemTags.LEAVES, VAItems.WITHERED_LEAVES);
+            addTo(ItemTags.SAPLINGS, VAItems.WITHERED_SAPLING);
 
-            getOrCreateTagBuilder(VAItemTags.LUMWASP_LARVAE_FOOD).add(
+            addTo(VAItemTags.LUMWASP_LARVAE_FOOD, 
                     VAItems.PORPHYRY
             );
-            getOrCreateTagBuilder(VAItemTags.SOULBLOOM_LOGS).add(
+            addTo(VAItemTags.SOULBLOOM_LOGS, 
                     VAItems.SOULBLOOM_LOG,
                     VAItems.SOULBLOOM_WOOD,
                     VAItems.STRIPPED_SOULBLOOM_LOG,
                     VAItems.STRIPPED_SOULBLOOM_WOOD
             );
-            getOrCreateTagBuilder(VAItemTags.WITHERED_LOGS).add(
+            addTo(VAItemTags.WITHERED_LOGS, 
                     VAItems.WITHERED_LOG,
                     VAItems.WITHERED_WOOD,
                     VAItems.STRIPPED_WITHERED_LOG,
@@ -353,8 +355,7 @@ public final class VAItemTagProvider {
 
         @Override
         protected void configure(RegistryWrapper.WrapperLookup arg) {
-
-            getOrCreateTagBuilder(FOODS).add(VAItems.BALLOON_FRUIT);
+            addTo(FOODS,VAItems.BALLOON_FRUIT);
         }
     }
 
@@ -372,19 +373,27 @@ public final class VAItemTagProvider {
         public Provider(FabricDataOutput output, CompletableFuture<RegistryWrapper.WrapperLookup> completableFuture) {
             super(output, completableFuture);
         }
+        
+        protected TagBuilder addTo(TagKey<Item> tag, ItemConvertible... items) {
+            TagBuilder builder = getTagBuilder(tag);
+            for (ItemConvertible item : items) {
+                builder.add(Registries.ITEM.getId(item.asItem()));
+            }
+            return builder;
+        }
 
         protected void configureBlockFamilies(BlockFamily... families) {
             for (BlockFamily family : families) {
                 family.getVariants().forEach((variant, block) -> {
                     switch (variant) {
-                        case STAIRS -> getOrCreateTagBuilder(ItemTags.STAIRS).add(block.asItem());
-                        case SLAB -> getOrCreateTagBuilder(ItemTags.SLABS).add(block.asItem());
-                        case WALL -> getOrCreateTagBuilder(ItemTags.WALLS).add(block.asItem());
-                        case FENCE -> getOrCreateTagBuilder(ItemTags.FENCES).add(block.asItem());
-                        case FENCE_GATE -> getOrCreateTagBuilder(ItemTags.FENCE_GATES).add(block.asItem());
-                        case DOOR -> getOrCreateTagBuilder(ItemTags.DOORS).add(block.asItem());
-                        case TRAPDOOR -> getOrCreateTagBuilder(ItemTags.TRAPDOORS).add(block.asItem());
-                        case BUTTON -> getOrCreateTagBuilder(ItemTags.BUTTONS).add(block.asItem());
+                        case STAIRS -> addTo(ItemTags.STAIRS, block.asItem());
+                        case SLAB -> addTo(ItemTags.SLABS, block.asItem());
+                        case WALL -> addTo(ItemTags.WALLS, block.asItem());
+                        case FENCE -> addTo(ItemTags.FENCES, block.asItem());
+                        case FENCE_GATE -> addTo(ItemTags.FENCE_GATES, block.asItem());
+                        case DOOR -> addTo(ItemTags.DOORS, block.asItem());
+                        case TRAPDOOR -> addTo(ItemTags.TRAPDOORS, block.asItem());
+                        case BUTTON -> addTo(ItemTags.BUTTONS, block.asItem());
                     }
                 });
             }
@@ -406,20 +415,16 @@ public final class VAItemTagProvider {
             for (BlockFamily family : families) {
                 family.getVariants().forEach((variant, block) -> {
                     switch (variant) {
-                        case STAIRS -> getOrCreateTagBuilder(ItemTags.WOODEN_STAIRS).add(block.asItem());
-                        case SLAB -> getOrCreateTagBuilder(ItemTags.WOODEN_SLABS).add(block.asItem());
-                        case FENCE -> getOrCreateTagBuilder(ItemTags.WOODEN_FENCES).add(block.asItem());
-                        case DOOR -> getOrCreateTagBuilder(ItemTags.WOODEN_DOORS).add(block.asItem());
-                        case TRAPDOOR -> getOrCreateTagBuilder(ItemTags.WOODEN_TRAPDOORS).add(block.asItem());
-                        case BUTTON -> getOrCreateTagBuilder(ItemTags.WOODEN_BUTTONS).add(block.asItem());
-                        case PRESSURE_PLATE -> getOrCreateTagBuilder(ItemTags.WOODEN_PRESSURE_PLATES).add(block.asItem());
+                        case STAIRS -> addTo(ItemTags.WOODEN_STAIRS, block.asItem());
+                        case SLAB -> addTo(ItemTags.WOODEN_SLABS, block.asItem());
+                        case FENCE -> addTo(ItemTags.WOODEN_FENCES, block.asItem());
+                        case DOOR -> addTo(ItemTags.WOODEN_DOORS, block.asItem());
+                        case TRAPDOOR -> addTo(ItemTags.WOODEN_TRAPDOORS, block.asItem());
+                        case BUTTON -> addTo(ItemTags.WOODEN_BUTTONS, block.asItem());
+                        case PRESSURE_PLATE -> addTo(ItemTags.WOODEN_PRESSURE_PLATES, block.asItem());
                     }
                 });
             }
-        }
-
-        protected void addTo(TagKey<Item> tag, ItemConvertible item) {
-            getOrCreateTagBuilder(tag).add(item.asItem());
         }
 
         protected void configureGildedToolSet(RegistryHelper.ItemRegistryHelper.ToolSet... sets) {
@@ -428,33 +433,33 @@ public final class VAItemTagProvider {
                 Item[] items = set.getItems();
                 GildType type = GildedToolUtil.getGildType(set.AXE());
                 if (type != GildTypes.NONE) {
-                    getOrCreateTagBuilder(VAItemTags.GILDED_TOOLS).add(items);
-                    getOrCreateTagBuilder(type.getTag()).add(items);
-                    getOrCreateTagBuilder(type.getAxesTag()).add(set.AXE());
-                    getOrCreateTagBuilder(type.getHoesTag()).add(set.HOE());
-                    getOrCreateTagBuilder(type.getPickaxesTag()).add(set.PICKAXE());
-                    getOrCreateTagBuilder(type.getShovelsTag()).add(set.SHOVEL());
-                    getOrCreateTagBuilder(type.getSwordsTag()).add(set.SWORD());
+                    addTo(VAItemTags.GILDED_TOOLS, items);
+                    addTo(type.getTag(), items);
+                    addTo(type.getAxesTag(), set.AXE());
+                    addTo(type.getHoesTag(), set.HOE());
+                    addTo(type.getPickaxesTag(), set.PICKAXE());
+                    addTo(type.getShovelsTag(), set.SHOVEL());
+                    addTo(type.getSwordsTag(), set.SWORD());
                 }
                 if (set.NAME().contains("golden")) {
-                    getOrCreateTagBuilder(ItemTags.PIGLIN_LOVED).add(items);
+                    addTo(ItemTags.PIGLIN_LOVED, items);
                 }
             }
         }
 
         protected void configureToolSet(RegistryHelper.ItemRegistryHelper.ToolSet set) {
-            getOrCreateTagBuilder(ItemTags.AXES).add(set.AXE());
-            getOrCreateTagBuilder(ItemTags.HOES).add(set.HOE());
-            getOrCreateTagBuilder(ItemTags.PICKAXES).add(set.PICKAXE());
-            getOrCreateTagBuilder(ItemTags.SHOVELS).add(set.SHOVEL());
-            getOrCreateTagBuilder(ItemTags.SWORDS).add(set.SWORD());
+            addTo(ItemTags.AXES, set.AXE());
+            addTo(ItemTags.HOES, set.HOE());
+            addTo(ItemTags.PICKAXES, set.PICKAXE());
+            addTo(ItemTags.SHOVELS, set.SHOVEL());
+            addTo(ItemTags.SWORDS, set.SWORD());
 
-            getOrCreateTagBuilder(ItemTags.CLUSTER_MAX_HARVESTABLES).add(set.PICKAXE());
+            addTo(ItemTags.CLUSTER_MAX_HARVESTABLES, set.PICKAXE());
         }
 
         protected void configureToolSets(TagKey<Item> tag, RegistryHelper.ItemRegistryHelper.ToolSet... sets) {
-            FabricTagBuilder builder = getOrCreateTagBuilder(tag);
-            Arrays.stream(sets).iterator().forEachRemaining(set -> set.forEach(builder::add));
+            TagBuilder builder = getTagBuilder(tag);
+            Arrays.stream(sets).iterator().forEachRemaining(set -> set.forEach(item -> builder.add(Registries.ITEM.getId(item))));
         }
     }
 }

@@ -103,8 +103,8 @@ public class ColoringStationScreen extends HandledScreen<ColoringStationScreenHa
         int j = this.y;
         context.drawTexture(RenderPipelines.GUI_TEXTURED, TEXTURE, i, j, 0, 0, this.backgroundWidth, this.backgroundHeight, 256, 256);
 
-        this.drawDyeStatusBar(context, 0, this.caches[5].percent, i + 10, j + 35);
-        this.drawDyeStatusBar(context, 1, this.caches[4].percent, i + 10, j + 41);
+        this.drawDyeStatusBar(context, 0, this.caches[4].percent, i + 10, j + 35);
+        this.drawDyeStatusBar(context, 1, this.caches[5].percent, i + 10, j + 41);
         this.drawDyeStatusBar(context, 2, this.caches[0].percent, i + 10, j + 47);
         this.drawDyeStatusBar(context, 3, this.caches[1].percent, i + 10, j + 53);
         this.drawDyeStatusBar(context, 4, this.caches[2].percent, i + 10, j + 59);

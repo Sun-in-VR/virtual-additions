@@ -12,6 +12,8 @@ import net.minecraft.nbt.NbtHelper;
 import net.minecraft.registry.RegistryWrapper;
 import net.minecraft.registry.entry.RegistryEntry;
 import net.minecraft.server.world.ServerWorld;
+import net.minecraft.storage.ReadView;
+import net.minecraft.storage.WriteView;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.event.BlockPositionSource;
@@ -32,15 +34,15 @@ public class SpotlightBlockEntity extends BlockEntity implements GameEventListen
     }
 
     @Override
-    protected void writeNbt(NbtCompound nbt, RegistryWrapper.WrapperLookup lookup) {
-        super.writeNbt(nbt, lookup);
-        nbt.putNullable("light_pos", BlockPos.CODEC, this.lightPos);
+    protected void writeData(WriteView view) {
+        super.writeData(view);
+        view.put("light_pos", BlockPos.CODEC, this.lightPos);
     }
 
     @Override
-    public void readNbt(NbtCompound nbt, RegistryWrapper.WrapperLookup lookup) {
-        super.readNbt(nbt, lookup);
-        nbt.get("light_pos", BlockPos.CODEC).ifPresent(pos -> this.lightPos = pos);
+    protected void readData(ReadView view) {
+        super.readData(view);
+        view.read("light_pos", BlockPos.CODEC).ifPresent(pos -> this.lightPos = pos);
     }
 
     @Override

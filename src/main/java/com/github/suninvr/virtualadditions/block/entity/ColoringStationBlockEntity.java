@@ -13,6 +13,8 @@ import net.minecraft.screen.NamedScreenHandlerFactory;
 import net.minecraft.screen.PropertyDelegate;
 import net.minecraft.screen.ScreenHandler;
 import net.minecraft.screen.ScreenHandlerContext;
+import net.minecraft.storage.ReadView;
+import net.minecraft.storage.WriteView;
 import net.minecraft.text.Text;
 import net.minecraft.util.math.BlockPos;
 import org.jetbrains.annotations.Nullable;
@@ -61,15 +63,16 @@ public class ColoringStationBlockEntity extends BlockEntity implements NamedScre
     }
 
     @Override
-    public void readNbt(NbtCompound nbt, RegistryWrapper.WrapperLookup lookup) {
-        super.readNbt(nbt, lookup);
-        this.dyeContents = DyeContents.from(nbt);
+    protected void readData(ReadView view) {
+        super.readData(view);
+        this.dyeContents = DyeContents.from(view);
     }
 
     @Override
-    protected void writeNbt(NbtCompound nbt, RegistryWrapper.WrapperLookup lookup) {
-        super.writeNbt(nbt, lookup);
-        this.dyeContents.to(nbt);
+    protected void writeData(WriteView view) {
+        super.writeData(view);
+        this.dyeContents.to(view);
+
     }
 
     public List<ItemStack> getDroppedStacks() {

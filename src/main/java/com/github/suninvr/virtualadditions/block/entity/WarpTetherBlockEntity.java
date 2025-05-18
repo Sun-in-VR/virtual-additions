@@ -10,6 +10,8 @@ import net.minecraft.nbt.NbtCompound;
 import net.minecraft.nbt.NbtHelper;
 import net.minecraft.particle.ParticleEffect;
 import net.minecraft.registry.RegistryWrapper;
+import net.minecraft.storage.ReadView;
+import net.minecraft.storage.WriteView;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 
@@ -23,15 +25,15 @@ public class WarpTetherBlockEntity extends BlockEntity {
     }
 
     @Override
-    public void writeNbt(NbtCompound tag, RegistryWrapper.WrapperLookup lookup) {
-        super.writeNbt(tag, lookup);
-        if (this.destination != null) tag.put("destination", BlockPos.CODEC, this.destination);
+    protected void writeData(WriteView view) {
+        super.writeData(view);
+        if (this.destination != null) view.put("destination", BlockPos.CODEC, this.destination);
     }
 
     @Override
-    public void readNbt(NbtCompound tag, RegistryWrapper.WrapperLookup lookup) {
-        super.readNbt(tag, lookup);
-        tag.get("destination", BlockPos.CODEC).ifPresent(blockPos -> this.destination = blockPos);
+    protected void readData(ReadView view) {
+        super.readData(view);
+        view.read("destination", BlockPos.CODEC).ifPresent(blockPos -> this.destination = blockPos);
     }
 
     public static void tick(World world, BlockPos pos, BlockState state, WarpTetherBlockEntity blockEntity) {

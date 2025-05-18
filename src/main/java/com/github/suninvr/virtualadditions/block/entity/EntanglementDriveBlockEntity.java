@@ -21,6 +21,8 @@ import net.minecraft.screen.NamedScreenHandlerFactory;
 import net.minecraft.screen.PropertyDelegate;
 import net.minecraft.screen.ScreenHandler;
 import net.minecraft.screen.ScreenHandlerContext;
+import net.minecraft.storage.ReadView;
+import net.minecraft.storage.WriteView;
 import net.minecraft.text.Text;
 import net.minecraft.util.Uuids;
 import net.minecraft.util.math.BlockPos;
@@ -81,18 +83,18 @@ public class EntanglementDriveBlockEntity extends BlockEntity implements NamedSc
     }
 
     @Override
-    public void readNbt(NbtCompound nbt, RegistryWrapper.WrapperLookup lookup) {
-        super.readNbt(nbt, lookup);
-        this.slotIndex = nbt.getInt("SlotIndex").orElse(-1);
-        UUID playerId = nbt.get("UUID", Uuids.CODEC).orElse(nullId);
+    protected void readData(ReadView view) {
+        super.readData(view);
+        this.slotIndex = view.getInt("slot_index",-1);
+        UUID playerId = view.read("user_id", Uuids.CODEC).orElse(nullId);
         this.setPlayerId(playerId);
     }
 
     @Override
-    protected void writeNbt(NbtCompound nbt, RegistryWrapper.WrapperLookup lookup) {
-        super.writeNbt(nbt, lookup);
-        nbt.putInt("SlotIndex", this.slotIndex);
-        nbt.put("UUID", Uuids.CODEC, this.playerId);
+    protected void writeData(WriteView view) {
+        super.writeData(view);
+        view.putInt("slot_index", this.slotIndex);
+        view.put("user_id", Uuids.CODEC, this.playerId);
     }
 
     @NotNull

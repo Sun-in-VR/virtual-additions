@@ -31,6 +31,8 @@ import net.minecraft.particle.TrailParticleEffect;
 import net.minecraft.sound.SoundCategory;
 import net.minecraft.sound.SoundEvent;
 import net.minecraft.sound.SoundEvents;
+import net.minecraft.storage.ReadView;
+import net.minecraft.storage.WriteView;
 import net.minecraft.util.Uuids;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Vec3d;
@@ -45,7 +47,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.UUID;
 
-public class SpectreEntity extends HostileEntity implements RangedAttackMob {
+public class SpectreEntity extends HostileEntity {
     private static final TrackedData<Boolean> IS_BUFFING_TARGET = DataTracker.registerData(SpectreEntity.class, TrackedDataHandlerRegistry.BOOLEAN);
     private static final TrackedData<UUID> BUFF_TARGET = DataTracker.registerData(SpectreEntity.class, VATrackedDataHandlerRegistry.UUID);
     private static final UUID EMPTY_ID = UUID.fromString("0-0-0-0-0");
@@ -81,7 +83,6 @@ public class SpectreEntity extends HostileEntity implements RangedAttackMob {
     protected void initGoals() {
         super.initGoals();
         this.goalSelector.add(1, new SpectreBuffEntityGoal(this, 1.5, 8.0F, 5.0F, 16.0F));
-        this.goalSelector.add(3, new ProjectileAttackGoal(this, 1.2F, 40, 40, 4.0F));
         this.goalSelector.add(4, new FlyGoal(this, 1.0F));
         this.goalSelector.add(4, new LookAtEntityGoal(this, MobEntity.class, 8.0F));
         this.goalSelector.add(5, new LookAroundGoal(this));
@@ -95,19 +96,6 @@ public class SpectreEntity extends HostileEntity implements RangedAttackMob {
     @Override
     public void travel(Vec3d movementInput) {
         this.travelFlying(movementInput, this.getMovementSpeed());
-    }
-
-    @Override
-    public void shootAt(LivingEntity target, float pullProgress) {
-        this.playSound(VASoundEvents.ENTITY_SPECTRE_EMPOWER_START, 1.0F, 1.0F);
-        double d = target.getEyeY() - 1.100000023841858;
-        double e = target.getX() - this.getX();
-        double g = target.getZ() - this.getZ();
-        double h = Math.sqrt(e * e + g * g) * 0.20000000298023224;
-        SpectralBoltEntity projectile = new SpectralBoltEntity(this.getWorld(), this);
-        double f = d - projectile.getY();
-        projectile.setVelocity(e, f + h, g, 0.25F, 0.0F);
-        this.getWorld().spawnEntity(projectile);
     }
 
     @Override
@@ -222,15 +210,15 @@ public class SpectreEntity extends HostileEntity implements RangedAttackMob {
     }
 
     @Override
-    public void readNbt(NbtCompound nbt) {
-        super.readNbt(nbt);
-        this.buffTargetId = nbt.get("buff_target", Uuids.CODEC).orElse(EMPTY_ID);
+    public void readData(ReadView view) {
+        super.readData(view);
+        this.buffTargetId = view.read("buff_target", Uuids.CODEC).orElse(EMPTY_ID);
     }
 
     @Override
-    public NbtCompound writeNbt(NbtCompound nbt) {
-        nbt.put("buff_target", Uuids.CODEC, this.buffTargetId);
-        return super.writeNbt(nbt);
+    public void writeData(WriteView view) {
+        super.writeData(view);
+        view.put("buff_target", Uuids.CODEC, this.buffTargetId);
     }
 
     @Nullable

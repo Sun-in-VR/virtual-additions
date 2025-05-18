@@ -2,6 +2,7 @@ package com.github.suninvr.virtualadditions.block.entity;
 
 import com.github.suninvr.virtualadditions.registry.VADyeColors;
 import net.minecraft.item.DyeItem;
+import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.Items;
 import net.minecraft.nbt.NbtCompound;
@@ -9,6 +10,8 @@ import net.minecraft.network.PacketByteBuf;
 import net.minecraft.network.RegistryByteBuf;
 import net.minecraft.network.codec.PacketCodec;
 import net.minecraft.screen.PropertyDelegate;
+import net.minecraft.storage.ReadView;
+import net.minecraft.storage.WriteView;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -56,20 +59,16 @@ public class DyeContents {
         this(propertyDelegate.get(0), propertyDelegate.get(1), propertyDelegate.get(2), propertyDelegate.get(3), propertyDelegate.get(4), propertyDelegate.get(5));
     }
 
-    public static DyeContents from(NbtCompound nbt) {
-        Optional<NbtCompound> optionalDyeContents = nbt.getCompound("dye_contents");
-        if (optionalDyeContents.isPresent()) {
-            NbtCompound dyeContents = optionalDyeContents.get();
-            return new DyeContents(
-                    dyeContents.getInt("red").orElse(0),
-                    dyeContents.getInt("green").orElse(0),
-                    dyeContents.getInt("blue").orElse(0),
-                    dyeContents.getInt("yellow").orElse(0),
-                    dyeContents.getInt("black").orElse(0),
-                    dyeContents.getInt("white").orElse(0)
-            );
-        }
-        return new DyeContents();
+    public static DyeContents from(ReadView view) {
+        Optional<int[]> contents = view.getOptionalIntArray("dye_contents");
+        return contents.map(ints -> new DyeContents(
+                ints.length > 0 ? ints[0] : 0,
+                ints.length > 1 ? ints[1] : 0,
+                ints.length > 2 ? ints[2] : 0,
+                ints.length > 3 ? ints[3] : 0,
+                ints.length > 4 ? ints[4] : 0,
+                ints.length > 5 ? ints[5] : 0
+        )).orElseGet(DyeContents::new);
     }
 
     public static DyeContents from(PacketByteBuf buf) {
@@ -80,15 +79,8 @@ public class DyeContents {
         return new DyeContents(0, 0, 0, 0, 0, 0);
     }
 
-    public void to(NbtCompound nbt) {
-        NbtCompound dyeContents = new NbtCompound();
-        dyeContents.putInt("red", this.getR());
-        dyeContents.putInt("green", this.getG());
-        dyeContents.putInt("blue", this.getB());
-        dyeContents.putInt("yellow", this.getY());
-        dyeContents.putInt("black", this.getK());
-        dyeContents.putInt("white", this.getW());
-        nbt.put("dye_contents", dyeContents);
+    public void to(WriteView view) {
+        view.putIntArray("dye_contents", this.asIntArray());
     }
 
     public void to(PacketByteBuf buf) {
@@ -120,7 +112,7 @@ public class DyeContents {
     }
 
     public int[] asIntArray() {
-        return new int[]{this.getR(), this.getG(), this.getB(), this.getY(), this.getW(), this.getK()};
+        return new int[]{this.getR(), this.getG(), this.getB(), this.getY(), this.getK(), this.getW()};
     }
 
     @Override
@@ -137,23 +129,14 @@ public class DyeContents {
     }
 
     public boolean canAdd(DyeContents contents) {
-        int R, G, B, Y, K, W;
-        if ((R = this.getR() + contents.getR()) > 8192 || R < 0) return false;
-        if ((G = this.getG() + contents.getG()) > 8192 || G < 0) return false;
-        if ((B = this.getB() + contents.getB()) > 8192 || B < 0) return false;
-        if ((Y = this.getY() + contents.getY()) > 8192 || Y < 0) return false;
-        if ((K = this.getK() + contents.getK()) > 8192 || K < 0) return false;
-        if ((W = this.getW() + contents.getW()) > 8192 || W < 0) return false;
+        int[] thisContents = this.asIntArray();
+        int[] thatContents = contents.asIntArray();
+        int i;
+        for (i = 0; i <= 5; i++) {
+            int c = thisContents[i] + thatContents[i];
+            if (0 > c || c > 8192) return false;
+        }
         return true;
-    }
-
-    public void add(int r, int g, int b, int y, int k, int w) {
-        this.setR(this.getR() + r);
-        this.setG(this.getG() + g);
-        this.setB(this.getB() + b);
-        this.setY(this.getY() + y);
-        this.setK(this.getK() + k);
-        this.setW(this.getW() + w);
     }
 
     public void multiply(int x) {
@@ -215,37 +198,29 @@ public class DyeContents {
 
     public List<ItemStack> getDyeStacks() {
         ArrayList<ItemStack> stacks = new ArrayList<>();
-        int r = Math.floorDiv(this.getR(), 32);
-        while (r > 0) {
-            stacks.add(new ItemStack(Items.RED_DYE, Math.min(r, 64)));
-            r -= 64;
-        }
-        int g = Math.floorDiv(this.getG(), 32);
-        while (g > 0) {
-            stacks.add(new ItemStack(Items.GREEN_DYE, Math.min(g, 64)));
-            g -= 64;
-        }
-        int b = Math.floorDiv(this.getB(), 32);
-        while (b > 0) {
-            stacks.add(new ItemStack(Items.BLUE_DYE, Math.min(b, 64)));
-            b -= 64;
-        }
-        int y = Math.floorDiv(this.getY(), 32);
-        while (y > 0) {
-            stacks.add(new ItemStack(Items.YELLOW_DYE, Math.min(y, 64)));
-            y -= 64;
-        }
-        int w = Math.floorDiv(this.getW(), 32);
-        while (w > 0) {
-            stacks.add(new ItemStack(Items.WHITE_DYE, Math.min(w, 64)));
-            w -= 64;
-        }
-        int k = Math.floorDiv(this.getK(), 32);
-        while (k > 0) {
-            stacks.add(new ItemStack(Items.BLACK_DYE, Math.min(k, 64)));
-            k -= 64;
+        int[] ints = this.asIntArray();
+        int i = 0;
+        for (int j : ints) {
+            int c = Math.floorDiv(j, 32);
+            while (c > 0) {
+                stacks.add(new ItemStack(getDyeFromIndex(i), Math.min(c, 64)));
+                c -= 64;
+            }
+            i++;
         }
         return stacks;
+    }
+
+    private static Item getDyeFromIndex(int index) {
+        return switch (index) {
+            case 0 -> Items.RED_DYE;
+            case 1 -> Items.GREEN_DYE;
+            case 2 -> Items.BLUE_DYE;
+            case 3 -> Items.YELLOW_DYE;
+            case 4 -> Items.BLACK_DYE;
+            case 5 -> Items.WHITE_DYE;
+            default -> throw new IllegalStateException("Unexpected value: " + index);
+        };
     }
 
     public DyeContents copy() {
@@ -253,7 +228,7 @@ public class DyeContents {
     }
 
     public DyeContents copyAndMultiply(int x) {
-        DyeContents contents = new DyeContents(this.getR(), this.getG(), this.getB(), this.getY(), this.getK(), this.getW());
+        DyeContents contents = this.copy();
         contents.multiply(x);
         return contents;
     }

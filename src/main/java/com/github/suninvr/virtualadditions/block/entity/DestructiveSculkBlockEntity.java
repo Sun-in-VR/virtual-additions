@@ -3,7 +3,6 @@ package com.github.suninvr.virtualadditions.block.entity;
 import com.github.suninvr.virtualadditions.block.DestructiveSculkBlock;
 import com.github.suninvr.virtualadditions.registry.VABlockEntityType;
 import com.github.suninvr.virtualadditions.registry.VABlocks;
-import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.Blocks;
 import net.minecraft.block.entity.BlockEntity;
@@ -16,7 +15,8 @@ import net.minecraft.nbt.NbtList;
 import net.minecraft.registry.Registries;
 import net.minecraft.registry.RegistryWrapper;
 import net.minecraft.server.world.ServerWorld;
-import net.minecraft.util.Identifier;
+import net.minecraft.storage.ReadView;
+import net.minecraft.storage.WriteView;
 import net.minecraft.util.Uuids;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Vec3d;
@@ -25,13 +25,13 @@ import org.jetbrains.annotations.Nullable;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 import java.util.UUID;
 
 public class DestructiveSculkBlockEntity extends BlockEntity {
-    private Block replacedBlock;
+    private BlockState replacedState;
     private UUID playerId;
     private static final UUID nullId = UUID.fromString("0-0-0-0-0");
-    private List<ItemStack> stacksToDrop;
     private ItemStack tool;
     private int potency;
     private final ArrayList<BlockPos> affectedPos;
@@ -40,18 +40,17 @@ public class DestructiveSculkBlockEntity extends BlockEntity {
 
     public DestructiveSculkBlockEntity(BlockPos pos, BlockState state) {
         super(VABlockEntityType.DESTRUCTIVE_SCULK, pos, state);
-        this.replacedBlock = Blocks.AIR;
+        this.replacedState = Blocks.AIR.getDefaultState();
         this.playerId = nullId;
         this.tool = ItemStack.EMPTY;
         this.potency = 0;
         this.affectedPos = new ArrayList<>();
         this.activePosIndex = -1;
-        this.stacksToDrop = new ArrayList<>();
         this.firstTick = true;
     }
 
-    public Block getReplacedBlock() {
-        return replacedBlock;
+    public BlockState getReplacedState() {
+        return replacedState;
     }
 
     public UUID getPlayerId() {
@@ -91,10 +90,7 @@ public class DestructiveSculkBlockEntity extends BlockEntity {
 
     public void setReplacedState(BlockState state) {
         if (this.world instanceof ServerWorld serverWorld) {
-            this.replacedBlock = state.getBlock();
-            this.stacksToDrop = state.getDroppedStacks(
-                    this.modifyLootContext(new LootWorldContext.Builder(serverWorld))
-            );
+            this.replacedState = state;
             this.markDirty();
         }
     }
@@ -171,46 +167,35 @@ public class DestructiveSculkBlockEntity extends BlockEntity {
     }
 
     @Override
-    public void readNbt(NbtCompound nbt, RegistryWrapper.WrapperLookup lookup) {
-        super.readNbt(nbt, lookup);
-        this.replacedBlock = Registries.BLOCK.get(Identifier.of(nbt.getString("block").get()));
-        NbtList stacksToDrop = nbt.getList("stacksToDrop").get();
-        this.stacksToDrop.clear();
-        stacksToDrop.forEach(nbtElement -> ItemStack.fromNbt(lookup, nbtElement).ifPresent(this.stacksToDrop::add));
-        this.playerId = nbt.get("playerId", Uuids.CODEC).orElse(nullId);
-        if (nbt.contains("tool")) this.tool = ItemStack.fromNbt(lookup, nbt.getCompound("tool").get()).orElse(ItemStack.EMPTY);
-        this.potency = nbt.getInt("potency").orElse(0);
-        this.activePosIndex = nbt.getInt("activePosIndex").orElse(0);
-        NbtList affectedPos = nbt.getList("affectedPos").get();
+    protected void readData(ReadView view) {
+        super.readData(view);
+        this.potency = view.getInt("potency", 0);
+        view.read("player_id", Uuids.CODEC).ifPresentOrElse(this::setPlayerId, () -> this.setPlayerId(nullId));
+        view.read("state", BlockState.CODEC).ifPresent(state -> this.replacedState = state);
+        view.read("tool", ItemStack.CODEC).ifPresent(itemStack -> this.tool = itemStack);
+        this.activePosIndex = view.getInt("active_pos_index", -1);
         this.affectedPos.clear();
-        affectedPos.forEach(
-                (nbtElement -> nbtElement.asCompound().flatMap(nbtCompound -> nbtCompound.get("pos", BlockPos.CODEC)).ifPresent(this.affectedPos::add))
-        );
+        Optional<ReadView.TypedListReadView<BlockPos>> affectedPos = view.getOptionalTypedListView("affected_pos", BlockPos.CODEC);
+        affectedPos.ifPresent(blockPos -> blockPos.forEach(this.affectedPos::add));
     }
 
     @Override
-    protected void writeNbt(NbtCompound nbt, RegistryWrapper.WrapperLookup lookup) {
-        super.writeNbt(nbt, lookup);
-        nbt.putString("block", Registries.BLOCK.getId(this.replacedBlock).toString());
-        NbtList stacksToDrop = new NbtList();
-        for (ItemStack stack : this.stacksToDrop) {
-            stacksToDrop.add(stack.toNbt(lookup));
+    protected void writeData(WriteView view) {
+        super.writeData(view);
+        view.putInt("potency", this.potency);
+        view.put("player_id", Uuids.CODEC, this.playerId);
+        view.put("state", BlockState.CODEC, this.replacedState);
+        view.put("tool", ItemStack.CODEC, this.tool);
+        if (!this.affectedPos.isEmpty()) {
+            view.putInt("active_pos_index", this.activePosIndex);
+            WriteView.ListAppender<BlockPos> affectedPos = view.getListAppender("affected_pos", BlockPos.CODEC);
+            this.affectedPos.forEach(affectedPos::add);
         }
-        nbt.put("stacksToDrop", stacksToDrop);
-        nbt.put("playerId", Uuids.CODEC, playerId);
-        if (!this.tool.isEmpty()) nbt.put("tool", this.tool.toNbt(lookup));
-        nbt.putInt("potency", this.potency);
-        nbt.putInt("activePosIndex", this.activePosIndex);
-        NbtList affectedPos = new NbtList();
-        for (BlockPos pos : this.affectedPos) {
-            NbtCompound posNbt = new NbtCompound();
-            posNbt.putNullable("pos", BlockPos.CODEC, pos);
-            affectedPos.add(posNbt);
-        }
-        nbt.put("affectedPos", affectedPos);
     }
 
-    public List<ItemStack> getDroppedStacks() {
-        return this.stacksToDrop;
+    public List<ItemStack> getDroppedStacks(ServerWorld serverWorld) {
+        return this.replacedState.getDroppedStacks(
+                this.modifyLootContext(new LootWorldContext.Builder(serverWorld))
+        );
     }
 }
