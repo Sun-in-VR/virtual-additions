@@ -1,10 +1,7 @@
 package com.github.suninvr.virtualadditions.entity;
 
 import com.github.suninvr.virtualadditions.block.ClimbingRopeAnchorBlock;
-import com.github.suninvr.virtualadditions.registry.VAAdvancementCriteria;
-import com.github.suninvr.virtualadditions.registry.VAEntityType;
-import com.github.suninvr.virtualadditions.registry.VAItemTags;
-import com.github.suninvr.virtualadditions.registry.VAItems;
+import com.github.suninvr.virtualadditions.registry.*;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.Oxidizable;
 import net.minecraft.block.enums.BlockHalf;
@@ -19,6 +16,8 @@ import net.minecraft.entity.projectile.PersistentProjectileEntity;
 import net.minecraft.item.BlockItem;
 import net.minecraft.item.ItemStack;
 import net.minecraft.server.network.ServerPlayerEntity;
+import net.minecraft.sound.SoundCategory;
+import net.minecraft.sound.SoundEvent;
 import net.minecraft.util.hit.BlockHitResult;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Direction;
@@ -53,6 +52,7 @@ public class ClimbingRopeEntity extends PersistentProjectileEntity {
             }
             this.getWorld().setBlockState(placePos, state);
             this.getWorld().scheduleBlockTick(placePos, state.getBlock(), 1);
+            this.getWorld().playSound(this, placePos, state.getSoundGroup().getPlaceSound(), SoundCategory.BLOCKS,1.0F, 0.8F);
             this.discard();
         }
     }
@@ -117,6 +117,11 @@ public class ClimbingRopeEntity extends PersistentProjectileEntity {
             case WEATHERED -> 0.6F;
             case OXIDIZED -> 0.4F;
         };
+    }
+
+    @Override
+    protected SoundEvent getHitSound() {
+        return VASoundEvents.BLOCK_ROPE_HIT_GROUND;
     }
 
     @Override

@@ -562,6 +562,7 @@
     "item.virtual_additions.applicable_potion.effect.infested": "Applicable Potion of Infestation",
 
     "subtitles.block.climbing_rope.extends": "Rope extends",
+    "subtitles.block.climbing_rope.hit_ground": "Climbing Rope vibrates",
     "subtitles.block.acid.sizzle": "Acid sizzles",
     "subtitles.block.warp_anchor.warp": "Something warps nearby",
     "subtitles.block.warp_tether.warp": "Something warps away",

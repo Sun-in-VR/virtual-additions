@@ -2,49 +2,70 @@
   "block.rope.break": {
     "subtitle": "subtitles.block.generic.break",
     "sounds": [
-      "entity/leashknot/break1",
-      "entity/leashknot/break2",
-      "entity/leashknot/break3"
+      "entity/leashknot/unleash1",
+      "entity/leashknot/unleash2",
+      "entity/leashknot/unleash3"
     ]
   },
   "block.rope.step": {
     "subtitle": "subtitles.block.generic.footsteps",
     "sounds": [
-      "entity/leashknot/break1",
-      "entity/leashknot/break2",
-      "entity/leashknot/break3"
+      "entity/leashknot/unleash1",
+      "entity/leashknot/unleash2",
+      "entity/leashknot/unleash3"
     ]
   },
   "block.rope.fall": {
     "subtitle": "subtitles.block.generic.fall",
     "sounds": [
-      "entity/leashknot/break1",
-      "entity/leashknot/break2",
-      "entity/leashknot/break3"
+      "entity/leashknot/unleash1",
+      "entity/leashknot/unleash2",
+      "entity/leashknot/unleash3"
     ]
   },
   "block.rope.hit": {
     "subtitle": "subtitles.block.generic.hit",
     "sounds": [
-      "entity/leashknot/break1",
-      "entity/leashknot/break2",
-      "entity/leashknot/break3"
+      "entity/leashknot/unleash1",
+      "entity/leashknot/unleash2",
+      "entity/leashknot/unleash3"
     ]
   },
   "block.rope.place": {
     "subtitle": "subtitles.block.generic.place",
     "sounds": [
-      "entity/leashknot/place1",
-      "entity/leashknot/place2",
-      "entity/leashknot/place3"
+      "entity/leashknot/leash1",
+      "entity/leashknot/leash2",
+      "entity/leashknot/leash3"
     ]
   },
   "block.rope.extend": {
     "subtitle": "subtitles.block.climbing_rope.extends",
     "sounds": [
-      "entity/leashknot/break1",
-      "entity/leashknot/break2",
-      "entity/leashknot/break3"
+      "entity/leashknot/unleash1",
+      "entity/leashknot/unleash2",
+      "entity/leashknot/unleash3"
+    ]
+  },
+  "block.rope.hit_ground": {
+    "subtitle": "subtitles.block.climbing_rope.hit_ground",
+    "sounds": [
+      {
+        "name": "item/trident/ground_impact1",
+        "pitch": 1.4
+      },
+      {
+        "name": "item/trident/ground_impact2",
+        "pitch": 1.4
+      },
+      {
+        "name": "item/trident/ground_impact3",
+        "pitch": 1.4
+      },
+      {
+        "name": "item/trident/ground_impact4",
+        "pitch": 1.4
+      }
     ]
   },
   "block.acid.sizzle": {

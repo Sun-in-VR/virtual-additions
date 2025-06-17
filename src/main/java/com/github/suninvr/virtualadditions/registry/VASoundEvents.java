@@ -14,6 +14,7 @@ public class VASoundEvents {
     public static final SoundEvent BLOCK_ROPE_HIT;
     public static final SoundEvent BLOCK_ROPE_PLACE;
     public static final SoundEvent BLOCK_ROPE_STEP;
+    public static final SoundEvent BLOCK_ROPE_HIT_GROUND;
     public static final SoundEvent ENTITY_STEEL_BOMB_THROW;
     public static final SoundEvent ENTITY_TOMATO_THROW;
     public static final SoundEvent ENTITY_TOMATO_HIT;
@@ -49,6 +50,7 @@ public class VASoundEvents {
         BLOCK_ROPE_HIT = register("block.rope.hit");
         BLOCK_ROPE_PLACE = register("block.rope.place");
         BLOCK_ROPE_STEP = register("block.rope.step");
+        BLOCK_ROPE_HIT_GROUND = register("block.rope.hit_ground");
         ENTITY_STEEL_BOMB_THROW = register("entity.steel_bomb.throw");
         ENTITY_TOMATO_THROW = register("entity.tomato.throw");
         ENTITY_TOMATO_HIT = register("entity.tomato.hit");

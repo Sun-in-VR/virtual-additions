@@ -6,14 +6,15 @@ import com.github.suninvr.virtualadditions.client.render.block.CustomBedBlockEnt
 import com.github.suninvr.virtualadditions.client.render.block.CustomShulkerBoxBlockEntityRenderer;
 import com.github.suninvr.virtualadditions.client.render.entity.*;
 import com.github.suninvr.virtualadditions.registry.*;
-import net.fabricmc.fabric.api.blockrenderlayer.v1.BlockRenderLayerMap;
 import net.fabricmc.fabric.api.client.render.fluid.v1.FluidRenderHandlerRegistry;
 import net.fabricmc.fabric.api.client.render.fluid.v1.SimpleFluidRenderHandler;
+import net.fabricmc.fabric.api.client.rendering.v1.BlockRenderLayerMap;
 import net.fabricmc.fabric.api.client.rendering.v1.ColorProviderRegistry;
 import net.fabricmc.fabric.api.client.rendering.v1.EntityModelLayerRegistry;
 import net.fabricmc.fabric.api.client.rendering.v1.EntityRendererRegistry;
 import net.minecraft.block.RedstoneWireBlock;
 import net.minecraft.client.color.world.BiomeColors;
+import net.minecraft.client.render.BlockRenderLayer;
 import net.minecraft.client.render.RenderLayer;
 import net.minecraft.client.render.TexturedRenderLayers;
 import net.minecraft.client.render.block.entity.BannerBlockEntityRenderer;
@@ -65,12 +66,12 @@ public class VARenderers {
     }
 
     private static void initBlockRenderLayers() {
-        BlockRenderLayerMap.INSTANCE.putFluids(RenderLayer.getTranslucent(),
+        BlockRenderLayerMap.putFluids(BlockRenderLayer.TRANSLUCENT,
                 VAFluids.ACID,
                 VAFluids.FLOWING_ACID
         );
 
-        BlockRenderLayerMap.INSTANCE.putBlocks(RenderLayer.getTranslucent(),
+        BlockRenderLayerMap.putBlocks(BlockRenderLayer.TRANSLUCENT,
                 VABlocks.WEBBED_SILK,
                 VABlocks.ACID_BLOCK,
                 VABlocks.CHARTREUSE_STAINED_GLASS,
@@ -91,7 +92,7 @@ public class VARenderers {
                 VABlocks.LILAC_STAINED_GLASS_PANE
         );
 
-        BlockRenderLayerMap.INSTANCE.putBlocks(RenderLayer.getCutout(),
+        BlockRenderLayerMap.putBlocks(BlockRenderLayer.CUTOUT,
                 VABlocks.CLIMBING_ROPE_ANCHOR,
                 VABlocks.EXPOSED_CLIMBING_ROPE_ANCHOR,
                 VABlocks.WEATHERED_CLIMBING_ROPE_ANCHOR,
@@ -134,7 +135,7 @@ public class VARenderers {
                 VABlocks.SPRING_LOTUS
         );
 
-        BlockRenderLayerMap.INSTANCE.putBlocks(RenderLayer.getCutoutMipped(),
+        BlockRenderLayerMap.putBlocks(BlockRenderLayer.CUTOUT_MIPPED,
                 VABlocks.SOULBLOOM_LEAVES,
                 VABlocks.SOULBLOOM_HEDGE,
                 VABlocks.WITHERED_LEAVES,
