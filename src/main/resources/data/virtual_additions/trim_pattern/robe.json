@@ -1,0 +1,7 @@
+{
+  "asset_id": "virtual_additions:robe",
+  "description": {
+    "translate": "trim_pattern.virtual_additions.robe"
+  },
+  "template_item": "virtual_additions:robe_armor_trim_smithing_template"
+}

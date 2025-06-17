@@ -1,0 +1,33 @@
+{
+  "name": "virtual_additions:cemetery/sub_hall/wall_decor",
+  "elements": [
+    {
+      "element": {
+        "element_type": "minecraft:single_pool_element",
+        "location": "virtual_additions:cemetery/sub_hall/basic/wall_decor/study",
+        "processors": "virtual_additions:cemetery/main_hall",
+        "projection": "rigid"
+      },
+      "weight": 1
+    },
+    {
+      "element": {
+        "element_type": "minecraft:single_pool_element",
+        "location": "virtual_additions:cemetery/sub_hall/basic/wall_decor/shrine",
+        "processors": "virtual_additions:cemetery/main_hall",
+        "projection": "rigid"
+      },
+      "weight": 1
+    },
+    {
+      "element": {
+        "element_type": "minecraft:single_pool_element",
+        "location": "virtual_additions:cemetery/sub_hall/basic/wall_decor/candles",
+        "processors": "virtual_additions:cemetery/main_hall",
+        "projection": "rigid"
+      },
+      "weight": 1
+    }
+  ],
+  "fallback": "minecraft:empty"
+}

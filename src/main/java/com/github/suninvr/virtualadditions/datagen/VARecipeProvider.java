@@ -292,6 +292,9 @@ public final class VARecipeProvider {
             offerSmithingTrimRecipe(VAItems.EXOSKELETON_ARMOR_TRIM_SMITHING_TEMPLATE, VAArmorTrimPatterns.EXOSKELETON, RegistryKey.of(RegistryKeys.RECIPE, idOf("exoskeleton_armor_trim_smithing_template_smithing_trim")));
             offerSmithingTemplateCopyingRecipe(VAItems.EXOSKELETON_ARMOR_TRIM_SMITHING_TEMPLATE, VAItems.SILK_BLOCK);
 
+            offerSmithingTrimRecipe(VAItems.ROBE_ARMOR_TRIM_SMITHING_TEMPLATE, VAArmorTrimPatterns.ROBE, RegistryKey.of(RegistryKeys.RECIPE, idOf("robe_armor_trim_smithing_template_smithing_trim")));
+            offerSmithingTemplateCopyingRecipe(VAItems.ROBE_ARMOR_TRIM_SMITHING_TEMPLATE, VAItems.SPECTRAL_SAND);
+
             offerStonecuttingRecipes(VABlocks.ROCK_SALT_BLOCK, VACollections.ROCK_SALT_BRICKS);
             generateCuttableFamilyChain(VACollections.ROCK_SALT_BRICKS);
             offer2x2ConversionChain(VABlocks.ROCK_SALT_BLOCK, VABlocks.ROCK_SALT_BRICKS);

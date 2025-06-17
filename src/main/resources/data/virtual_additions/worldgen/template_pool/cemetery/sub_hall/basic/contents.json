@@ -1,0 +1,33 @@
+{
+  "name": "virtual_additions:cemetery/sub_hall/contents",
+  "elements": [
+    {
+      "element": {
+        "element_type": "minecraft:single_pool_element",
+        "location": "virtual_additions:cemetery/sub_hall/basic/contents/spider_spawner",
+        "processors": "virtual_additions:cemetery/main_hall",
+        "projection": "rigid"
+      },
+      "weight": 1
+    },
+    {
+      "element": {
+        "element_type": "minecraft:single_pool_element",
+        "location": "virtual_additions:cemetery/sub_hall/basic/contents/skeleton_spawner",
+        "processors": "virtual_additions:cemetery/main_hall",
+        "projection": "rigid"
+      },
+      "weight": 1
+    },
+    {
+      "element": {
+        "element_type": "minecraft:single_pool_element",
+        "location": "virtual_additions:cemetery/sub_hall/basic/contents/chest",
+        "processors": "virtual_additions:cemetery/main_hall",
+        "projection": "rigid"
+      },
+      "weight": 1
+    }
+  ],
+  "fallback": "minecraft:empty"
+}

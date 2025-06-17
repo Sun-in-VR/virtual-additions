@@ -1,0 +1,14 @@
+{
+  "name": "virtual_additions:cemetery/bone_litter",
+  "elements": [
+    {
+      "element": {
+        "element_type": "minecraft:feature_pool_element",
+        "projection": "rigid",
+        "feature": "virtual_additions:bone_litter"
+      },
+      "weight": 1
+    }
+  ],
+  "fallback": "minecraft:empty"
+}

@@ -79,7 +79,7 @@ public class VASimpleLootTableProvider {
             lootTableBiConsumer.accept(VALootTables.CEMETERY, LootTable.builder(
                     ).pool(LootPool.builder().conditionally(chance(0.25F))
                             .with(item(Items.DIAMOND, 1, 3))
-                            .with(item(VAItems.TOOL_GILD_SMITHING_TEMPLATE))
+                            .with(item(VAItems.ROBE_ARMOR_TRIM_SMITHING_TEMPLATE))
                     ).pool(LootPool.builder().rolls(uniform(2.0F, 4.0F))
                             .with(item(VAItems.SPECTRAL_POWDER, 2, 8).weight(10))
                             .with(item(VAItems.SPECTRAL_TORCH, 2, 8).weight(8))

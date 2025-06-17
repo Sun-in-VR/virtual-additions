@@ -1,0 +1,42 @@
+{
+  "name": "virtual_additions:cemetery/junction/upper",
+  "elements": [
+    {
+      "element": {
+        "element_type": "minecraft:single_pool_element",
+        "location": "virtual_additions:cemetery/junction/maze/upper",
+        "processors": "virtual_additions:cemetery/main_hall",
+        "projection": "rigid"
+      },
+      "weight": 1
+    },
+    {
+      "element": {
+        "element_type": "minecraft:single_pool_element",
+        "location": "virtual_additions:cemetery/junction/maze/upper_no_secret",
+        "processors": "virtual_additions:cemetery/main_hall",
+        "projection": "rigid"
+      },
+      "weight": 2
+    },
+    {
+      "element": {
+        "element_type": "minecraft:single_pool_element",
+        "location": "virtual_additions:cemetery/junction/bonfire/upper",
+        "processors": "virtual_additions:cemetery/main_hall",
+        "projection": "rigid"
+      },
+      "weight": 1
+    },
+    {
+      "element": {
+        "element_type": "minecraft:single_pool_element",
+        "location": "virtual_additions:cemetery/junction/bonfire/upper_no_secret",
+        "processors": "virtual_additions:cemetery/main_hall",
+        "projection": "rigid"
+      },
+      "weight": 2
+    }
+  ],
+  "fallback": "minecraft:empty"
+}

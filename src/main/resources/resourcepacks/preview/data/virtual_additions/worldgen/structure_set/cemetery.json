@@ -1,0 +1,14 @@
+{
+  "placement": {
+    "type": "minecraft:random_spread",
+    "salt": 10387312,
+    "separation": 6,
+    "spacing": 15
+  },
+  "structures": [
+    {
+      "structure": "virtual_additions:cemetery",
+      "weight": 1
+    }
+  ]
+}

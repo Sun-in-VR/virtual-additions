@@ -1,0 +1,15 @@
+{
+  "name": "virtual_additions:cemetery/sub_hall_lower",
+  "elements": [
+    {
+      "element": {
+        "element_type": "minecraft:single_pool_element",
+        "location": "virtual_additions:cemetery/sub_hall/basic/lower",
+        "processors": "virtual_additions:cemetery/main_hall",
+        "projection": "rigid"
+      },
+      "weight": 5
+    }
+  ],
+  "fallback": "minecraft:empty"
+}

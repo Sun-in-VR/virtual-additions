@@ -1,0 +1,78 @@
+{
+  "name": "virtual_additions:cemetery/grave",
+  "elements": [
+    {
+      "element": {
+        "element_type": "minecraft:single_pool_element",
+        "location": "virtual_additions:cemetery/graves/grave0",
+        "processors": "virtual_additions:cemetery/graves",
+        "projection": "rigid"
+      },
+      "weight": 1
+    },
+    {
+      "element": {
+        "element_type": "minecraft:single_pool_element",
+        "location": "virtual_additions:cemetery/graves/grave1",
+        "processors": "virtual_additions:cemetery/graves",
+        "projection": "rigid"
+      },
+      "weight": 1
+    },
+    {
+      "element": {
+        "element_type": "minecraft:single_pool_element",
+        "location": "virtual_additions:cemetery/graves/grave2",
+        "processors": "virtual_additions:cemetery/graves",
+        "projection": "rigid"
+      },
+      "weight": 1
+    },
+    {
+      "element": {
+        "element_type": "minecraft:single_pool_element",
+        "location": "virtual_additions:cemetery/graves/grave3",
+        "processors": "virtual_additions:cemetery/graves",
+        "projection": "rigid"
+      },
+      "weight": 1
+    },
+    {
+      "element": {
+        "element_type": "minecraft:single_pool_element",
+        "location": "virtual_additions:cemetery/graves/grave4",
+        "processors": "virtual_additions:cemetery/graves",
+        "projection": "rigid"
+      },
+      "weight": 1
+    },
+    {
+      "element": {
+        "element_type": "minecraft:single_pool_element",
+        "location": "virtual_additions:cemetery/graves/grave5",
+        "processors": "virtual_additions:cemetery/graves",
+        "projection": "rigid"
+      },
+      "weight": 1
+    },
+    {
+      "element": {
+        "element_type": "minecraft:single_pool_element",
+        "location": "virtual_additions:cemetery/graves/grave6",
+        "processors": "virtual_additions:cemetery/graves",
+        "projection": "rigid"
+      },
+      "weight": 1
+    },
+    {
+      "element": {
+        "element_type": "minecraft:single_pool_element",
+        "location": "virtual_additions:cemetery/graves/grave7",
+        "processors": "virtual_additions:cemetery/graves",
+        "projection": "rigid"
+      },
+      "weight": 1
+    }
+  ],
+  "fallback": "minecraft:empty"
+}

@@ -11,6 +11,7 @@ public class VAArmorTrimPatterns {
     //IMPORTANT NOTE: Armor trim patterns are registered in ArmorTrimPatternsMixin at the moment
     //
     public static final RegistryKey<ArmorTrimPattern> EXOSKELETON = of("exoskeleton");
+    public static final RegistryKey<ArmorTrimPattern> ROBE = of("robe");
 
     private static RegistryKey<ArmorTrimPattern> of(String id) {
         return RegistryKey.of(RegistryKeys.TRIM_PATTERN, idOf(id));

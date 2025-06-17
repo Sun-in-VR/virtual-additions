@@ -432,6 +432,7 @@ public class VAItems {
     public static final Item COLORING_STATION;
     public static final Item TOOL_GILD_SMITHING_TEMPLATE;
     public static final Item EXOSKELETON_ARMOR_TRIM_SMITHING_TEMPLATE;
+    public static final Item ROBE_ARMOR_TRIM_SMITHING_TEMPLATE;
     public static final Item IOLITE;
     public static final Item IOLITE_ORE;
     public static final Item IOLITE_BLOCK;
@@ -1132,6 +1133,7 @@ public class VAItems {
         ),new Item.Settings(), ItemGroups.INGREDIENTS, Items.NETHERITE_UPGRADE_SMITHING_TEMPLATE);
 
         EXOSKELETON_ARMOR_TRIM_SMITHING_TEMPLATE = register("exoskeleton_armor_trim_smithing_template", SmithingTemplateItem::of, new Item.Settings().rarity(Rarity.UNCOMMON), ItemGroups.INGREDIENTS, Items.BOLT_ARMOR_TRIM_SMITHING_TEMPLATE);
+        ROBE_ARMOR_TRIM_SMITHING_TEMPLATE = register("robe_armor_trim_smithing_template", SmithingTemplateItem::of, new Item.Settings().rarity(Rarity.RARE), ItemGroups.INGREDIENTS, prev);
 
         //endregion
 

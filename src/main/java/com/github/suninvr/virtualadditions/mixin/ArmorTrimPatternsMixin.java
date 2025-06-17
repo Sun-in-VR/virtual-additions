@@ -19,5 +19,6 @@ public abstract class ArmorTrimPatternsMixin {
     @Inject(method = "bootstrap", at = @At("TAIL"))
     private static void virtualAdditions$bootstrap(Registerable<ArmorTrimPattern> registry, CallbackInfo ci) {
         register(registry, VAArmorTrimPatterns.EXOSKELETON);
+        register(registry, VAArmorTrimPatterns.ROBE);
     }
 }

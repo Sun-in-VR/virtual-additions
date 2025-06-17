@@ -311,7 +311,8 @@ public class VAModelProvider {
                     VAItems.TAN_HARNESS,
                     VAItems.SINOPIA_HARNESS,
                     VAItems.LILAC_HARNESS,
-                    VAItems.EXOSKELETON_ARMOR_TRIM_SMITHING_TEMPLATE
+                    VAItems.EXOSKELETON_ARMOR_TRIM_SMITHING_TEMPLATE,
+                    VAItems.ROBE_ARMOR_TRIM_SMITHING_TEMPLATE
             );
 
             registerItems(generator, Models.HANDHELD,
