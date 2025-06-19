@@ -24,7 +24,9 @@ public class VAParticleTypes {
     public static final SimpleParticleType SPECTRAL_POWER;
     public static final SimpleParticleType SOULBLOOM_LEAVES;
     public static final SimpleParticleType SPECTRAL_FLAME;
+    public static final SimpleParticleType SMALL_SPECTRAL_FLAME;
     public static final SimpleParticleType SPRING_LOTUS_POLLEN;
+    public static final SimpleParticleType SOUL_FIREFLY;
     public static final ParticleType<IoliteRingParticleEffect> IOLITE_TETHER_RING;
     public static final ParticleType<IoliteRingParticleEffect> IOLITE_ANCHOR_RING;
 
@@ -36,8 +38,10 @@ public class VAParticleTypes {
         INTERFERENCE = register("interference");
         SOULBLOOM_LEAVES = register("soulbloom_leaves");
         SPECTRAL_FLAME = register("spectral_flame");
+        SMALL_SPECTRAL_FLAME = register("small_spectral_flame");
         SPECTRAL_POWER = register("spectral_power");
         SPRING_LOTUS_POLLEN = register("spring_lotus_pollen");
+        SOUL_FIREFLY = register("soul_firefly");
         IOLITE_TETHER_RING = register("warp_tether_ring", false, type -> IoliteRingParticleEffect.TETHER_CODEC, type -> IoliteRingParticleEffect.TETHER_PACKET_CODEC);
         IOLITE_ANCHOR_RING = register("warp_anchor_ring", false, type -> IoliteRingParticleEffect.ANCHOR_CODEC, type -> IoliteRingParticleEffect.ANCHOR_PACKET_CODEC);
     }

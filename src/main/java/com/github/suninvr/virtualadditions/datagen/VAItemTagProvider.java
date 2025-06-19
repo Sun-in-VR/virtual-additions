@@ -71,9 +71,9 @@ public final class VAItemTagProvider {
             addTo(ItemTags.CHICKEN_FOOD, VAItems.CORN_SEEDS, VAItems.TOMATO_SEEDS, VAItems.CABBAGE_SEEDS, VAItems.COTTON_SEEDS);
             addTo(ItemTags.BOATS, VAItems.SOULBLOOM_BOAT);
             addTo(ItemTags.CHEST_BOATS, VAItems.SOULBLOOM_CHEST_BOAT);
-            addTo(ItemTags.FLOWERS, VAItems.BLUE_PETALS, VAItems.SPRING_LOTUS, VAItems.SMALL_SPRING_LOTUS);
-            addTo(ItemTags.SMALL_FLOWERS, VAItems.SMALL_SPRING_LOTUS);
-            addTo(ItemTags.BEE_FOOD, VAItems.BLUE_PETALS, VAItems.SPRING_LOTUS, VAItems.SMALL_SPRING_LOTUS);
+            addTo(ItemTags.FLOWERS, VAItems.BLUE_PETALS, VAItems.SPRING_LOTUS, VAItems.SMALL_SPRING_LOTUS, VAItems.SOUL_SPROUT);
+            addTo(ItemTags.SMALL_FLOWERS, VAItems.SMALL_SPRING_LOTUS, VAItems.SOUL_SPROUT);
+            addTo(ItemTags.BEE_FOOD, VAItems.BLUE_PETALS, VAItems.SPRING_LOTUS, VAItems.SMALL_SPRING_LOTUS, VAItems.SOUL_SPROUT);
 
             addTo(INGOTS, VAItems.STEEL_INGOT);
             addTo(STEEL_INGOTS, VAItems.STEEL_INGOT);

@@ -117,6 +117,7 @@ public class VAItems {
     public static final Item SOULBLOOM_BOAT;
     public static final Item SOULBLOOM_CHEST_BOAT;
     public static final Item BLUE_PETALS;
+    public static final Item SOUL_SPROUT;
     public static final Item BALLOON_FRUIT;
     public static final Item NECROTIC_NYLIUM;
     public static final Item NECROTIC_ROOTS;
@@ -623,6 +624,7 @@ public class VAItems {
         SOULBLOOM_CHEST_BOAT = register("soulbloom_chest_boat", settings -> new BoatItem(VAEntityType.SOULBLOOM_CHEST_BOAT, settings), new Item.Settings().maxCount(1), ItemGroups.TOOLS, prev);
 
         BLUE_PETALS = registerBlockItem("blue_petals", VABlocks.BLUE_PETALS, ItemGroups.NATURAL, Items.PINK_PETALS);
+        SOUL_SPROUT = registerBlockItem("soul_sprout", VABlocks.SOUL_SPROUT, ItemGroups.NATURAL, Items.TORCHFLOWER);
 
         SMALL_SPRING_LOTUS = registerBlockItem("small_spring_lotus", VABlocks.SMALL_SPRING_LOTUS, ItemGroups.NATURAL, Items.SMALL_DRIPLEAF);
         SPRING_LOTUS = registerBlockItem("spring_lotus", VABlocks.SPRING_LOTUS, ItemGroups.NATURAL, prev);

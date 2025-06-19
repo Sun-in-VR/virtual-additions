@@ -535,6 +535,11 @@ public final class VARecipeProvider {
                     .criterion("has_small_spring_lotus", conditionsFromItem(VAItems.SMALL_SPRING_LOTUS))
                             .offerTo(this.exporter, "virtual_additions:orange_dye_from_small_spring_lotus");
 
+            ShapelessRecipeJsonBuilder.create(this.registryLookup, RecipeCategory.DECORATIONS, Items.LIGHT_BLUE_DYE)
+                    .input(VAItems.SOUL_SPROUT)
+                    .criterion("has_soul_sprout", conditionsFromItem(VAItems.SOUL_SPROUT))
+                    .offerTo(this.exporter, "virtual_additions:orange_dye_from_soul_sprout");
+
             offerWaxingRecipes(exporter);
         }
     }

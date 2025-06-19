@@ -132,7 +132,9 @@ public class VARenderers {
                 VABlocks.POTTED_GREENCAP_MUSHROOM,
                 VABlocks.SMALL_SPRING_LOTUS,
                 VABlocks.POTTED_SMALL_SPRING_LOTUS,
-                VABlocks.SPRING_LOTUS
+                VABlocks.SPRING_LOTUS,
+                VABlocks.SOUL_SPROUT,
+                VABlocks.POTTED_SOUL_SPROUT
         );
 
         BlockRenderLayerMap.putBlocks(BlockRenderLayer.CUTOUT_MIPPED,

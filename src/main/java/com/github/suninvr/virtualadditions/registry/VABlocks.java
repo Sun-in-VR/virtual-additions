@@ -207,6 +207,8 @@ public class VABlocks {
     public static final Block SOULBLOOM_SAPLING;
     public static final Block POTTED_SOULBLOOM_SAPLING;
     public static final Block BLUE_PETALS;
+    public static final Block SOUL_SPROUT;
+    public static final Block POTTED_SOUL_SPROUT;
     public static final Block BALLOON_BULB;
     public static final Block BALLOON_BULB_PLANT;
     public static final Block BALLOON_BULB_BUD;
@@ -623,7 +625,9 @@ public class VABlocks {
         POTTED_SOULBLOOM_SAPLING = register("potted_soulbloom_sapling", (settings) -> new FlowerPotBlock(SOULBLOOM_SAPLING, settings), Settings.copy(Blocks.FLOWER_POT));
 
         BLUE_PETALS = register("blue_petals", FlowerbedBlock::new, Settings.create().mapColor(MapColor.DARK_GREEN).noCollision().sounds(BlockSoundGroup.FLOWERBED).pistonBehavior(PistonBehavior.DESTROY));
-
+        SOUL_SPROUT = register("soul_sprout", SoulSproutBlock::new, Settings.copy(Blocks.FIREFLY_BUSH).mapColor(DyeColor.LIGHT_BLUE));
+        POTTED_SOUL_SPROUT = register("potted_soul_sprout", (settings) -> new FlowerPotBlock(SOUL_SPROUT, settings), Settings.copy(Blocks.FLOWER_POT));
+        
         NECROTIC_NYLIUM = register("necrotic_nylium", (NecroticNyliumBlock::new), Settings.copy(Blocks.WARPED_NYLIUM).mapColor(MapColor.BLACK));
         NECROTIC_ROOTS = register("necrotic_roots", (RootsBlock::new), Settings.copy(Blocks.WARPED_ROOTS).mapColor(MapColor.BLACK));
         POTTED_NECROTIC_ROOTS = register("potted_necrotic_roots", (settings) -> new FlowerPotBlock(NECROTIC_ROOTS, settings), Settings.copy(Blocks.FLOWER_POT));
