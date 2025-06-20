@@ -11,8 +11,6 @@ import net.minecraft.registry.Registry;
 public class VABlockEntityType {
     public static final BlockEntityType<SpotlightBlockEntity> SPOTLIGHT;
     public static final BlockEntityType<SpotlightLightBlockEntity> SPOTLIGHT_LIGHT;
-    public static final BlockEntityType<WarpTetherBlockEntity> WARP_TETHER;
-    public static final BlockEntityType<WarpAnchorBlockEntity> WARP_ANCHOR;
     public static final BlockEntityType<EntanglementDriveBlockEntity> ENTANGLEMENT_DRIVE;
     public static final BlockEntityType<DestructiveSculkBlockEntity> DESTRUCTIVE_SCULK;
     public static final BlockEntityType<ColoringStationBlockEntity> COLORING_STATION;
@@ -21,36 +19,20 @@ public class VABlockEntityType {
     public static final BlockEntityType<CustomBedBlockEntity> CUSTOM_BED;
     public static final BlockEntityType<ShulkerBoxBlockEntity> CUSTOM_SHULKER_BOX;
     public static final BlockEntityType<BannerBlockEntity> CUSTOM_BANNER;
+    public static final BlockEntityType<MiniPortalBlockEntity> MINI_PORTAL;
 
     static {
         SPOTLIGHT = register("spotlight", SpotlightBlockEntity::new, VABlocks.SPOTLIGHT);
         SPOTLIGHT_LIGHT = register("spotlight_light", SpotlightLightBlockEntity::new, VABlocks.SPOTLIGHT_LIGHT);
-        WARP_TETHER = register("iolite_tether", WarpTetherBlockEntity::new, VABlocks.WARP_TETHER);
-        WARP_ANCHOR = register("iolite_anchor", WarpAnchorBlockEntity::new, VABlocks.WARP_ANCHOR);
         ENTANGLEMENT_DRIVE = register("entanglement_drive", EntanglementDriveBlockEntity::new, VABlocks.ENTANGLEMENT_DRIVE);
         DESTRUCTIVE_SCULK = register("destructive_sculk", DestructiveSculkBlockEntity::new, VABlocks.DESTRUCTIVE_SCULK);
         COLORING_STATION = register("coloring_station", ColoringStationBlockEntity::new, VABlocks.COLORING_STATION);
+        MINI_PORTAL = register("mini_portal", MiniPortalBlockEntity::new, VABlocks.MINI_PORTAL);
         CUSTOM_SIGN = register("custom_sign", CustomSignBlockEntity::new, VABlocks.SOULBLOOM_SIGN, VABlocks.SOULBLOOM_WALL_SIGN, VABlocks.WITHERED_SIGN, VABlocks.WITHERED_WALL_SIGN);
         CUSTOM_HANGING_SIGN = register("custom_hanging_sign", CustomHangingSignBlockEntity::new, VABlocks.SOULBLOOM_HANGING_SIGN, VABlocks.SOULBLOOM_WALL_HANGING_SIGN, VABlocks.WITHERED_HANGING_SIGN, VABlocks.WITHERED_WALL_HANGING_SIGN);
         CUSTOM_BED = register("custom_bed", CustomBedBlockEntity::new, VABlocks.CHARTREUSE_BED, VABlocks.MAROON_BED, VABlocks.INDIGO_BED, VABlocks.PLUM_BED, VABlocks.VIRIDIAN_BED, VABlocks.TAN_BED, VABlocks.SINOPIA_BED, VABlocks.LILAC_BED);
         CUSTOM_SHULKER_BOX = register("shulker_box", CustomShulkerBoxBlockEntity::new, VABlocks.CHARTREUSE_SHULKER_BOX, VABlocks.MAROON_SHULKER_BOX, VABlocks.INDIGO_SHULKER_BOX, VABlocks.PLUM_SHULKER_BOX, VABlocks.VIRIDIAN_SHULKER_BOX, VABlocks.TAN_SHULKER_BOX, VABlocks.SINOPIA_SHULKER_BOX, VABlocks.LILAC_SHULKER_BOX);
-        CUSTOM_BANNER = register("banner", CustomBannerBlockEntity::new,
-                VABlocks.CHARTREUSE_BANNER,
-                VABlocks.CHARTREUSE_WALL_BANNER,
-                VABlocks.MAROON_BANNER,
-                VABlocks.MAROON_WALL_BANNER,
-                VABlocks.INDIGO_BANNER,
-                VABlocks.INDIGO_WALL_BANNER,
-                VABlocks.PLUM_BANNER,
-                VABlocks.PLUM_WALL_BANNER,
-                VABlocks.VIRIDIAN_BANNER,
-                VABlocks.VIRIDIAN_WALL_BANNER,
-                VABlocks.TAN_BANNER,
-                VABlocks.TAN_WALL_BANNER,
-                VABlocks.SINOPIA_BANNER,
-                VABlocks.SINOPIA_WALL_BANNER,
-                VABlocks.LILAC_BANNER,
-                VABlocks.LILAC_WALL_BANNER);
+        CUSTOM_BANNER = register("banner", CustomBannerBlockEntity::new, VABlocks.CHARTREUSE_BANNER, VABlocks.CHARTREUSE_WALL_BANNER, VABlocks.MAROON_BANNER, VABlocks.MAROON_WALL_BANNER, VABlocks.INDIGO_BANNER, VABlocks.INDIGO_WALL_BANNER, VABlocks.PLUM_BANNER, VABlocks.PLUM_WALL_BANNER, VABlocks.VIRIDIAN_BANNER, VABlocks.VIRIDIAN_WALL_BANNER, VABlocks.TAN_BANNER, VABlocks.TAN_WALL_BANNER, VABlocks.SINOPIA_BANNER, VABlocks.SINOPIA_WALL_BANNER, VABlocks.LILAC_BANNER, VABlocks.LILAC_WALL_BANNER);
         BlockEntityType.BED.addSupportedBlock(VABlocks.CHARTREUSE_BED);
         BlockEntityType.BED.addSupportedBlock(VABlocks.MAROON_BED);
         BlockEntityType.BED.addSupportedBlock(VABlocks.INDIGO_BED);

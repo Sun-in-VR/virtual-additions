@@ -95,8 +95,6 @@ public class VAModelProvider {
                     VABlocks.CAGELIGHT,
                     VABlocks.LUMWASP_NEST,
                     VABlocks.ACID_BLOCK,
-                    VABlocks.WARP_ANCHOR,
-                    VABlocks.WARP_TETHER,
                     VABlocks.ENTANGLEMENT_DRIVE
                     );
             
@@ -256,6 +254,8 @@ public class VAModelProvider {
             generator.registerParented(VABlocks.OXIDIZED_STEEL_BLOCK, VABlocks.WAXED_OXIDIZED_STEEL_BLOCK);
 
             generator.registerParented(VABlocks.STEEL_BLOCK, VABlocks.REMOTE_NOTIFIER);
+
+            generator.registerBuiltinWithParticle(VABlocks.MINI_PORTAL, VABlocks.IOLITE_BLOCK);
         }
 
         @Override
@@ -282,6 +282,7 @@ public class VAModelProvider {
                     VAItems.TOOL_GILD_SMITHING_TEMPLATE,
                     VAItems.STEEL_BOMB,
                     VAItems.IOLITE,
+                    VAItems.PORTAL_CORE,
                     VAItems.TOMATO,
                     VAItems.CABBAGE,
                     VAItems.CORN,

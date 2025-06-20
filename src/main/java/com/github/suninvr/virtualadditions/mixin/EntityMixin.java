@@ -43,22 +43,16 @@ public abstract class EntityMixin implements Nameable, EntityLike, CommandOutput
     @Shadow public abstract boolean updateMovementInFluid(TagKey<Fluid> tag, double speed);
 
     @Shadow public abstract DamageSources getDamageSources();
-
     @Shadow public abstract BlockPos getBlockPos();
-    
     @Unique private Vec3d windVelocity;
-    
     @Unique private boolean isInWindCurrent;
-
     @SuppressWarnings("OptionalUsedAsFieldOrParameterType")
     @Shadow public Optional<BlockPos> supportingBlockPos;
-
-    @Shadow public abstract void addVelocity(Vec3d velocity);
-
     @Shadow public abstract boolean damage(ServerWorld world, DamageSource source, float amount);
-
     @Shadow private World world;
+
     private int ticksInAcid;
+    private boolean usedMiniPortalThisTick;
 
     @Inject(method = "getPosWithYOffset", at = @At("RETURN"), locals = LocalCapture.CAPTURE_FAILHARD, cancellable = true)
     void virtualAdditions$getPosWithYOffsetForHedge(float offset, CallbackInfoReturnable<BlockPos> cir) {
@@ -80,8 +74,8 @@ public abstract class EntityMixin implements Nameable, EntityLike, CommandOutput
             this.ticksInAcid = Math.max(this.ticksInAcid - 1, 0);
         }
         
-        if (this.isInWindCurrent) {
-            this.isInWindCurrent = false;
+        if (this.usedMiniPortalThisTick) {
+            this.usedMiniPortalThisTick = false;
         }
     }
 
@@ -95,13 +89,11 @@ public abstract class EntityMixin implements Nameable, EntityLike, CommandOutput
         return !this.firstUpdate && this.fluidHeight.getDouble(VAFluids.ACID_TAG) > 0.0;
     }
 
-    @Override
-    public void virtualAdditions$setInWind(boolean bl) {
-        this.isInWindCurrent = bl;
+    public boolean virtualAdditions$hasUsedMiniPortalThisTick() {
+        return this.usedMiniPortalThisTick;
     }
 
-    @Override
-    public void virtualAdditions$setWindVelocity(Vec3d vel) {
-        this.windVelocity = vel;
+    public void virtualAdditions$setUsedMiniPortalThisTick(boolean usedMiniPortalThisTick) {
+        this.usedMiniPortalThisTick = usedMiniPortalThisTick;
     }
 }

@@ -464,16 +464,11 @@ public final class VARecipeProvider {
                     .input('#', VAItems.IOLITE).input('s', VAItems.STEEL_INGOT).input('N', Items.NETHER_STAR)
                     .criterion("has_iolite", conditionsFromItem(VAItems.IOLITE)).offerTo(this.exporter);
 
-            ShapedRecipeJsonBuilder.create(this.registryLookup, RecipeCategory.TRANSPORTATION, VABlocks.WARP_TETHER, 1)
-                    .pattern("s#s")
-                    .pattern("epe")
-                    .input('#', VAItems.IOLITE).input('s', VAItems.STEEL_INGOT).input('e', Blocks.END_STONE).input('p', Items.ENDER_PEARL)
-                    .criterion("has_iolite", conditionsFromItem(VAItems.IOLITE)).offerTo(this.exporter);
-
-            ShapedRecipeJsonBuilder.create(this.registryLookup, RecipeCategory.TRANSPORTATION, VABlocks.WARP_ANCHOR, 1)
-                    .pattern("s#s")
+            ShapedRecipeJsonBuilder.create(this.registryLookup, RecipeCategory.TRANSPORTATION, VAItems.PORTAL_CORE, 1)
+                    .pattern("eee")
                     .pattern("eye")
-                    .input('#', VAItems.IOLITE).input('s', VAItems.STEEL_INGOT).input('e', Blocks.END_STONE).input('y', Items.ENDER_EYE)
+                    .pattern("eee")
+                    .input('e', VAItems.IOLITE).input('y', Items.ENDER_PEARL)
                     .criterion("has_iolite", conditionsFromItem(VAItems.IOLITE)).offerTo(this.exporter);
 
             ShapedRecipeJsonBuilder.create(this.registryLookup, RecipeCategory.COMBAT, VAItems.STEEL_BOMB, 4)

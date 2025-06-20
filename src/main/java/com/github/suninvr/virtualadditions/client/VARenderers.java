@@ -2,8 +2,10 @@ package com.github.suninvr.virtualadditions.client;
 
 import com.github.suninvr.virtualadditions.VirtualAdditions;
 import com.github.suninvr.virtualadditions.block.RedstoneBridgeBlock;
+import com.github.suninvr.virtualadditions.block.entity.MiniPortalBlockEntity;
 import com.github.suninvr.virtualadditions.client.render.block.CustomBedBlockEntityRenderer;
 import com.github.suninvr.virtualadditions.client.render.block.CustomShulkerBoxBlockEntityRenderer;
+import com.github.suninvr.virtualadditions.client.render.block.MiniPortalBlockEntityRenderer;
 import com.github.suninvr.virtualadditions.client.render.entity.*;
 import com.github.suninvr.virtualadditions.registry.*;
 import net.fabricmc.fabric.api.client.render.fluid.v1.FluidRenderHandlerRegistry;
@@ -204,6 +206,8 @@ public class VARenderers {
 
         EntityModelLayerRegistry.registerModelLayer(CUSTOM_BED_FOOT_LAYER, CustomBedBlockEntityRenderer.FOOT_MODEL_PROVIDER);
         EntityModelLayerRegistry.registerModelLayer(CUSTOM_BED_HEAD_LAYER, CustomBedBlockEntityRenderer.HEAD_MODEL_PROVIDER);
+
+        BlockEntityRendererFactories.register( VABlockEntityType.MINI_PORTAL, MiniPortalBlockEntityRenderer::new );
 
         BlockEntityRendererFactories.register( VABlockEntityType.CUSTOM_SIGN, SignBlockEntityRenderer::new );
         BlockEntityRendererFactories.register( VABlockEntityType.CUSTOM_HANGING_SIGN, HangingSignBlockEntityRenderer::new );

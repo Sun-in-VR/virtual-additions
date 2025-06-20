@@ -191,39 +191,47 @@
       "virtual_additions:item/bucket/fill_acid_3"
     ]
   },
-  "block.warp_tether.warp": {
-    "subtitle": "subtitles.block.warp_tether.warp",
+  "block.mini_portal.depart": {
+    "subtitle": "subtitles.block.mini_portal.depart",
     "sounds": [
       "virtual_additions:block/warp_pad/warp1",
       "virtual_additions:block/warp_pad/warp2",
       "virtual_additions:block/warp_pad/warp3"
     ]
   },
-  "block.warp_tether.fail": {
-    "subtitle": "subtitles.block.warp_tether.fail",
+  "block.mini_portal.arrive": {
+    "subtitle": "subtitles.block.mini_portal.arrive",
+    "sounds": [
+      "virtual_additions:block/warp_pad/warp1",
+      "virtual_additions:block/warp_pad/warp2",
+      "virtual_additions:block/warp_pad/warp3"
+    ]
+  },
+  "block.mini_portal.fail": {
+    "subtitle": "subtitles.block.mini_portal.fail",
     "sounds": [
       "block/respawn_anchor/deplete1",
       "block/respawn_anchor/deplete2"
     ]
   },
-  "block.warp_tether.recharge": {
-    "subtitle": "subtitles.block.warp_tether.recharge",
+  "block.mini_portal.recharge": {
+    "subtitle": "subtitles.block.mini_portal.recharge",
     "sounds": [
       "block/respawn_anchor/ambient1",
       "block/respawn_anchor/ambient2",
       "block/respawn_anchor/ambient3"
     ]
   },
-  "block.warp_anchor.warp": {
-    "subtitle": "subtitles.block.warp_anchor.warp",
+  "block.mini_portal.open": {
+    "subtitle": "subtitles.block.mini_portal.open",
     "sounds": [
-      "virtual_additions:block/warp_pad/warp1",
-      "virtual_additions:block/warp_pad/warp2",
-      "virtual_additions:block/warp_pad/warp3"
+      "block/respawn_anchor/set_spawn1",
+      "block/respawn_anchor/set_spawn2",
+      "block/respawn_anchor/set_spawn3"
     ]
   },
-  "block.warp_anchor.use": {
-    "subtitle": "subtitles.block.warp_anchor.use",
+  "item.portal_core.use": {
+    "subtitle": "subtitles.item.portal_core.use",
     "sounds": [
       "block/end_portal/eyeplace1",
       "block/end_portal/eyeplace2",

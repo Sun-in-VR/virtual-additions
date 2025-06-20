@@ -405,8 +405,7 @@ public class VABlocks {
     public static final Block ACID_BLOCK;
     public static final Block IOLITE_ORE;
     public static final Block IOLITE_BLOCK;
-    public static final Block WARP_ANCHOR;
-    public static final Block WARP_TETHER;
+    public static final Block MINI_PORTAL;
     public static final Block ENTANGLEMENT_DRIVE;
     public static final Block REMOTE_NOTIFIER;
     public static final Block DESTRUCTIVE_SCULK;
@@ -837,8 +836,7 @@ public class VABlocks {
 
         IOLITE_ORE = register("iolite_ore", (settings) -> new ExperienceDroppingBlock(UniformIntProvider.create(5, 9), settings), Settings.copy(Blocks.END_STONE).strength(4.5F, 4.5F).requiresTool());
         IOLITE_BLOCK = register("iolite_block", Block::new, Settings.create().mapColor(MapColor.MAGENTA).sounds(BlockSoundGroup.METAL).requiresTool().hardness(5.0F).resistance(300.0F));
-        WARP_ANCHOR = register("warp_anchor", WarpAnchorBlock::new, Settings.create().nonOpaque().sounds(BlockSoundGroup.NETHERITE).luminance(state -> 3).emissiveLighting( (state, world, pos) -> !state.get(WarpAnchorBlock.POWERED) ).hardness(22.5F).requiresTool().resistance(600.0F));
-        WARP_TETHER = register("warp_tether", WarpTetherBlock::new, Settings.create().nonOpaque().sounds(BlockSoundGroup.NETHERITE).luminance(state -> 3).emissiveLighting( (state, world, pos) -> !state.get(WarpTetherBlock.COOLDOWN) ).hardness(22.5F).requiresTool().resistance(600.0F));
+        MINI_PORTAL = register("mini_portal", MiniPortalBlock::new, Settings.copy(Blocks.GLASS).luminance(state -> 11));
         ENTANGLEMENT_DRIVE = register("entanglement_drive", EntanglementDriveBlock::new, Settings.create().nonOpaque().sounds(BlockSoundGroup.NETHERITE).luminance(state -> 3).hardness(22.5F).requiresTool().resistance(600.0F));
         REMOTE_NOTIFIER = register("remote_notifier", RemoteNotifierBlock::new, Settings.create().nonOpaque().sounds(BlockSoundGroup.NETHERITE).hardness(22.5F).requiresTool().resistance(600.0F).requires(VirtualAdditions.PREVIEW));
 

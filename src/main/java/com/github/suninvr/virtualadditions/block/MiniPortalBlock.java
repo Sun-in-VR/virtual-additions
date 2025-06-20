@@ -1,0 +1,196 @@
+package com.github.suninvr.virtualadditions.block;
+
+import com.github.suninvr.virtualadditions.block.entity.MiniPortalBlockEntity;
+import com.github.suninvr.virtualadditions.block.enums.MiniPortalState;
+import com.github.suninvr.virtualadditions.interfaces.EntityInterface;
+import com.github.suninvr.virtualadditions.registry.*;
+import com.mojang.serialization.MapCodec;
+import net.minecraft.block.*;
+import net.minecraft.block.entity.BlockEntity;
+import net.minecraft.entity.Entity;
+import net.minecraft.entity.EntityCollisionHandler;
+import net.minecraft.entity.LivingEntity;
+import net.minecraft.entity.effect.StatusEffectInstance;
+import net.minecraft.fluid.FluidState;
+import net.minecraft.fluid.Fluids;
+import net.minecraft.item.ItemPlacementContext;
+import net.minecraft.item.ItemStack;
+import net.minecraft.predicate.entity.EntityPredicates;
+import net.minecraft.server.network.ServerPlayerEntity;
+import net.minecraft.server.world.ServerWorld;
+import net.minecraft.sound.SoundCategory;
+import net.minecraft.state.StateManager;
+import net.minecraft.state.property.BooleanProperty;
+import net.minecraft.state.property.EnumProperty;
+import net.minecraft.state.property.Properties;
+import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.math.Box;
+import net.minecraft.util.math.Direction;
+import net.minecraft.util.math.Vec3d;
+import net.minecraft.util.math.random.Random;
+import net.minecraft.util.shape.VoxelShape;
+import net.minecraft.util.shape.VoxelShapes;
+import net.minecraft.world.BlockView;
+import net.minecraft.world.World;
+import net.minecraft.world.WorldView;
+import net.minecraft.world.event.GameEvent;
+import net.minecraft.world.tick.ScheduledTickView;
+import org.jetbrains.annotations.Nullable;
+
+import java.util.Optional;
+import java.util.function.Consumer;
+
+public class MiniPortalBlock extends BlockWithEntity implements Waterloggable {
+    public static final MapCodec<MiniPortalBlock> CODEC = createCodec(MiniPortalBlock::new);
+    private final VoxelShape SHAPE = createColumnShape(10, 3, 13);
+    private final Box BOX = VoxelShapes.fullCube().getBoundingBox();
+    public static final EnumProperty<MiniPortalState> STATE = EnumProperty.of("state", MiniPortalState.class);
+    public static final BooleanProperty WATERLOGGED = Properties.WATERLOGGED;
+
+    public MiniPortalBlock(Settings settings) {
+        super(settings);
+        this.setDefaultState(getStateManager().getDefaultState()
+                .with(STATE, MiniPortalState.OPEN)
+                .with(WATERLOGGED, false)
+        );
+    }
+
+    @Override
+    protected void appendProperties(StateManager.Builder<Block, BlockState> builder) {
+        builder.add(STATE, WATERLOGGED);
+    }
+
+    @Override
+    protected MapCodec<? extends BlockWithEntity> getCodec() {
+        return CODEC;
+    }
+
+    @Nullable
+    @Override
+    public BlockEntity createBlockEntity(BlockPos pos, BlockState state) {
+        return new MiniPortalBlockEntity(pos, state);
+    }
+
+    @Override
+    protected VoxelShape getCollisionShape(BlockState state, BlockView world, BlockPos pos, ShapeContext context) {
+        return VoxelShapes.empty();
+    }
+
+    @Override
+    protected VoxelShape getOutlineShape(BlockState state, BlockView world, BlockPos pos, ShapeContext context) {
+        return SHAPE;
+    }
+
+    @Override
+    public void randomDisplayTick(BlockState state, World world, BlockPos pos, Random random) {
+        Vec3d particlePos = pos.toCenterPos().addRandom(random, 1);
+        world.addParticleClient(VAParticleTypes.INTERFERENCE, particlePos.x, particlePos.y, particlePos.z, 0, 0,0);
+    }
+
+    @Override
+    protected void onEntityCollision(BlockState state, World world, BlockPos pos, Entity entity, EntityCollisionHandler handler) {
+        super.onEntityCollision(state, world, pos, entity, handler);
+        Optional<BlockPos> destination = getDestination(world, pos);
+        if (destination.isPresent() && state.get(STATE).allowsTeleporting) {
+            BlockState destState = world.getBlockState(destination.get());
+            if (!destState.isOf(this)) return;
+            if (canTeleportEntity(entity)) {
+                world.setBlockState(pos, state.with(STATE, MiniPortalState.COOLDOWN));
+                world.setBlockState(destination.get(), destState.with(STATE, MiniPortalState.BLOCKED));
+                world.scheduleBlockTick(pos, this, 20);
+                world.scheduleBlockTick(destination.get(), this, 20);
+                teleportEntity(world, pos, destination.get(), entity);
+            } else {
+                world.playSound(null, pos, VASoundEvents.BLOCK_MINI_PORTAL_FAIL, SoundCategory.BLOCKS, 1.0F, 1.6F);
+                world.setBlockState(pos, state.with(STATE, MiniPortalState.BLOCKED));
+                world.scheduleBlockTick(pos, this, 20);
+            }
+        }
+    }
+
+    protected boolean canTeleportEntity(Entity entity) {
+        if (entity.isSneaking()) return false;
+        if (((EntityInterface)entity).virtualAdditions$hasUsedMiniPortalThisTick()) return false;
+        if (entity instanceof LivingEntity livingEntity && livingEntity.getStatusEffect(VAStatusEffects.IOLITE_INTERFERENCE) != null) return false;
+        return true;
+    }
+
+    @Override
+    protected void scheduledTick(BlockState state, ServerWorld world, BlockPos pos, Random random) {
+        super.scheduledTick(state, world, pos, random);
+        if (state.get(STATE).equals(MiniPortalState.BLOCKED) && getEntityCount(world, BOX.offset(pos)) > 0) {
+            world.scheduleBlockTick(pos, this, 20);
+        } else {
+            world.playSound(null, pos, VASoundEvents.BLOCK_MINI_PORTAL_RECHARGE, SoundCategory.BLOCKS, 1.0F, 1.6F);
+            world.setBlockState(pos, state.with(STATE, MiniPortalState.OPEN));
+        }
+    }
+
+    public void teleportEntity(World world, BlockPos origin, BlockPos destination, Entity entity) {
+        if (!world.isClient() && world instanceof ServerWorld serverWorld){
+            if (destination == null) return;
+            double squaredDistance = origin.getSquaredDistance(destination);
+            double destX = (destination.getX() + (entity.getX() - origin.getX()));
+            double destY = (destination.getY() + (entity.getY() - origin.getY()));
+            double destZ = (destination.getZ() + (entity.getZ() - origin.getZ()));
+            entity.requestTeleport(destX, destY, destZ);
+            ((EntityInterface)entity).virtualAdditions$setUsedMiniPortalThisTick(true);
+            int i = (int) Math.clamp((entity.getWidth() * entity.getWidth() * entity.getHeight() * 20.0F), 5, 50);
+            ((ServerWorld) world).spawnParticles(VAParticleTypes.INTERFERENCE, destX, destY, destZ, i, entity.getWidth() * 0.45, entity.getHeight() * 0.25, entity.getWidth() * 0.45, 0);
+            world.emitGameEvent(entity, GameEvent.TELEPORT, origin);
+            world.emitGameEvent(entity, GameEvent.TELEPORT, destination);
+            world.playSound(null, origin, VASoundEvents.BLOCK_MINI_PORTAL_DEPART, SoundCategory.BLOCKS, 1.0F, 1.0F);
+            world.playSound(null, destination, VASoundEvents.BLOCK_MINI_PORTAL_ARRIVE, SoundCategory.BLOCKS, 1.0F, 1.0F);
+            if (serverWorld.getGameRules().getBoolean(VAGameRules.IOLITE_INTERFERENCE) && entity instanceof LivingEntity livingEntity && !livingEntity.isInCreativeMode()) {
+                int duration = 0;
+                StatusEffectInstance effect = livingEntity.getStatusEffect(VAStatusEffects.IOLITE_INTERFERENCE);
+                if (effect != null) duration = effect.getDuration();
+                duration = Math.min((int)Math.max(600 * Math.sqrt(squaredDistance) / 256, duration), 72000);
+                livingEntity.addStatusEffect(new StatusEffectInstance(VAStatusEffects.IOLITE_INTERFERENCE, duration, 0, false, true));
+            }
+            if (entity instanceof ServerPlayerEntity player) {
+                VAAdvancementCriteria.USE_TELEPORTER.trigger(player);
+            }
+        }
+    }
+
+    @Override
+    protected ItemStack getPickStack(WorldView world, BlockPos pos, BlockState state, boolean includeData) {
+        return VAItems.PORTAL_CORE.getDefaultStack();
+    }
+
+    protected static int getEntityCount(World world, Box box) {
+        return world.getEntitiesByClass(Entity.class, box, EntityPredicates.EXCEPT_SPECTATOR).size();
+    }
+
+    protected static Optional<BlockPos> getDestination(World world, BlockPos pos) {
+        BlockPos[] dest = {null};
+        ifBlockEntity(world, pos, entity -> dest[0] = entity.getDestination());
+        return Optional.ofNullable(dest[0]);
+    }
+
+    protected static void ifBlockEntity(World world, BlockPos pos, Consumer<MiniPortalBlockEntity> consumer) {
+        world.getBlockEntity(pos, VABlockEntityType.MINI_PORTAL).ifPresent(consumer);
+    }
+
+    @Nullable
+    @Override
+    public BlockState getPlacementState(ItemPlacementContext ctx) {
+        FluidState fluidState = ctx.getWorld().getFluidState(ctx.getBlockPos());
+        return super.getPlacementState(ctx).with(WATERLOGGED, fluidState.isOf(Fluids.WATER));
+    }
+
+    @Override
+    protected BlockState getStateForNeighborUpdate(BlockState state, WorldView world, ScheduledTickView tickView, BlockPos pos, Direction direction, BlockPos neighborPos, BlockState neighborState, Random random) {
+        if (state.get(WATERLOGGED)) {
+            tickView.scheduleFluidTick(pos, Fluids.WATER, Fluids.WATER.getTickRate(world));
+        }
+
+        return super.getStateForNeighborUpdate(state, world, tickView, pos, direction, neighborPos, neighborState, random);
+    }
+
+    @Override
+    protected FluidState getFluidState(BlockState state) {
+        return state.get(WATERLOGGED) ? Fluids.WATER.getStill(false) : Fluids.EMPTY.getDefaultState();
+    }
+}

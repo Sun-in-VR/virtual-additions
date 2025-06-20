@@ -169,7 +169,6 @@ public final class VABlockLootTableProvider {
                     VABlocks.SPECTRAL_SAND,
                     VABlocks.COLORING_STATION,
                     VABlocks.IOLITE_BLOCK,
-                    VABlocks.WARP_ANCHOR,
                     VABlocks.ENTANGLEMENT_DRIVE,
                     VABlocks.SPOTLIGHT,
                     VABlocks.SMALL_SPRING_LOTUS,
@@ -190,6 +189,8 @@ public final class VABlockLootTableProvider {
 
             this.addDrop(VABlocks.BONE_LITTER, this.boneLitterDrops(VABlocks.BONE_LITTER));
             this.addDrop(VABlocks.BONE_PILE, this.bonePileDrops(VABlocks.BONE_PILE));
+
+            this.addDrop(VABlocks.MINI_PORTAL, VAItems.PORTAL_CORE);
 
             LootCondition.Builder tomatoBuilder = BlockStatePropertyLootCondition.builder(VABlocks.TOMATO)
                     .properties(StatePredicate.Builder.create().exactMatch(CropBlock.AGE, 7));

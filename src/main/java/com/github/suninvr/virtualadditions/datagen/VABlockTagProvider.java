@@ -137,8 +137,6 @@ public final class VABlockTagProvider {
                     VABlocks.WAXED_EXPOSED_STEEL_TRAPDOOR,
                     VABlocks.WAXED_WEATHERED_STEEL_TRAPDOOR,
                     VABlocks.WAXED_OXIDIZED_STEEL_TRAPDOOR,
-                    VABlocks.WARP_ANCHOR,
-                    VABlocks.WARP_TETHER,
                     VABlocks.ENTANGLEMENT_DRIVE,
                     VABlocks.REDSTONE_BRIDGE,
                     VABlocks.CAGELIGHT,

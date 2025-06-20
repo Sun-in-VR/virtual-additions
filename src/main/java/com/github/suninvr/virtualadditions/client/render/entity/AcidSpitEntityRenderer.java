@@ -29,7 +29,6 @@ public class AcidSpitEntityRenderer extends EntityRenderer<AcidSpitEntity, Entit
         matrices.multiply(this.dispatcher.getRotation());
         matrices.multiply(RotationAxis.POSITIVE_Y.rotationDegrees(180.0F));
         MatrixStack.Entry entry = matrices.peek();
-        Matrix4f matrix4f = entry.getPositionMatrix();
         VertexConsumer vertexConsumer = vertexConsumers.getBuffer(LAYER);
         produceVertex(vertexConsumer, entry, light, 0.0F, 0, 0, 1);
         produceVertex(vertexConsumer, entry, light, 1.0F, 0, 1, 1);
