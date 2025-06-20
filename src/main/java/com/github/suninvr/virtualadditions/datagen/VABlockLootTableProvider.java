@@ -190,7 +190,7 @@ public final class VABlockLootTableProvider {
             this.addDrop(VABlocks.BONE_LITTER, this.boneLitterDrops(VABlocks.BONE_LITTER));
             this.addDrop(VABlocks.BONE_PILE, this.bonePileDrops(VABlocks.BONE_PILE));
 
-            this.addDrop(VABlocks.MINI_PORTAL, VAItems.PORTAL_CORE);
+            this.addDrop(VABlocks.MINI_PORTAL, VAItems.IOLITE);
 
             LootCondition.Builder tomatoBuilder = BlockStatePropertyLootCondition.builder(VABlocks.TOMATO)
                     .properties(StatePredicate.Builder.create().exactMatch(CropBlock.AGE, 7));

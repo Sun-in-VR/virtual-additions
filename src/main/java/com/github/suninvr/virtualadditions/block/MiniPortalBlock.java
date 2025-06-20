@@ -33,6 +33,7 @@ import net.minecraft.util.shape.VoxelShapes;
 import net.minecraft.world.BlockView;
 import net.minecraft.world.World;
 import net.minecraft.world.WorldView;
+import net.minecraft.world.block.WireOrientation;
 import net.minecraft.world.event.GameEvent;
 import net.minecraft.world.tick.ScheduledTickView;
 import org.jetbrains.annotations.Nullable;
@@ -89,14 +90,14 @@ public class MiniPortalBlock extends BlockWithEntity implements Waterloggable {
 
     @Override
     protected void onEntityCollision(BlockState state, World world, BlockPos pos, Entity entity, EntityCollisionHandler handler) {
-        super.onEntityCollision(state, world, pos, entity, handler);
+        if (state.get(STATE).equals(MiniPortalState.POWERED)) return;
         Optional<BlockPos> destination = getDestination(world, pos);
-        if (destination.isPresent() && state.get(STATE).allowsTeleporting) {
+        if (destination.isPresent() && state.get(STATE).canDepart) {
             BlockState destState = world.getBlockState(destination.get());
             if (!destState.isOf(this)) return;
-            if (canTeleportEntity(entity)) {
+            if (destState.get(STATE).canArrive && canTeleportEntity(entity)) {
                 world.setBlockState(pos, state.with(STATE, MiniPortalState.COOLDOWN));
-                world.setBlockState(destination.get(), destState.with(STATE, MiniPortalState.BLOCKED));
+                world.setBlockState(destination.get(), destState.with(STATE, MiniPortalState.COOLDOWN));
                 world.scheduleBlockTick(pos, this, 20);
                 world.scheduleBlockTick(destination.get(), this, 20);
                 teleportEntity(world, pos, destination.get(), entity);
@@ -108,8 +109,17 @@ public class MiniPortalBlock extends BlockWithEntity implements Waterloggable {
         }
     }
 
+    @Override
+    protected boolean hasComparatorOutput(BlockState state) {
+        return true;
+    }
+
+    @Override
+    protected int getComparatorOutput(BlockState state, World world, BlockPos pos) {
+        return state.get(STATE).equals(MiniPortalState.COOLDOWN) ? 15 : 0;
+    }
+
     protected boolean canTeleportEntity(Entity entity) {
-        if (entity.isSneaking()) return false;
         if (((EntityInterface)entity).virtualAdditions$hasUsedMiniPortalThisTick()) return false;
         if (entity instanceof LivingEntity livingEntity && livingEntity.getStatusEffect(VAStatusEffects.IOLITE_INTERFERENCE) != null) return false;
         return true;
@@ -118,7 +128,10 @@ public class MiniPortalBlock extends BlockWithEntity implements Waterloggable {
     @Override
     protected void scheduledTick(BlockState state, ServerWorld world, BlockPos pos, Random random) {
         super.scheduledTick(state, world, pos, random);
-        if (state.get(STATE).equals(MiniPortalState.BLOCKED) && getEntityCount(world, BOX.offset(pos)) > 0) {
+        if (state.get(STATE).equals(MiniPortalState.POWERED)) return;
+        int entityCount = getEntityCount(world, BOX.offset(pos));
+        if (entityCount > 0) {
+            if (!state.get(STATE).equals(MiniPortalState.BLOCKED)) world.setBlockState(pos, state.with(STATE, MiniPortalState.BLOCKED));
             world.scheduleBlockTick(pos, this, 20);
         } else {
             world.playSound(null, pos, VASoundEvents.BLOCK_MINI_PORTAL_RECHARGE, SoundCategory.BLOCKS, 1.0F, 1.6F);
@@ -145,7 +158,7 @@ public class MiniPortalBlock extends BlockWithEntity implements Waterloggable {
                 int duration = 0;
                 StatusEffectInstance effect = livingEntity.getStatusEffect(VAStatusEffects.IOLITE_INTERFERENCE);
                 if (effect != null) duration = effect.getDuration();
-                duration = Math.min((int)Math.max(600 * Math.sqrt(squaredDistance) / 256, duration), 72000);
+                duration = Math.min((int)Math.max(600 * Math.sqrt(squaredDistance) / 256, duration), Integer.MAX_VALUE);
                 livingEntity.addStatusEffect(new StatusEffectInstance(VAStatusEffects.IOLITE_INTERFERENCE, duration, 0, false, true));
             }
             if (entity instanceof ServerPlayerEntity player) {
@@ -181,12 +194,13 @@ public class MiniPortalBlock extends BlockWithEntity implements Waterloggable {
     }
 
     @Override
-    protected BlockState getStateForNeighborUpdate(BlockState state, WorldView world, ScheduledTickView tickView, BlockPos pos, Direction direction, BlockPos neighborPos, BlockState neighborState, Random random) {
-        if (state.get(WATERLOGGED)) {
-            tickView.scheduleFluidTick(pos, Fluids.WATER, Fluids.WATER.getTickRate(world));
+    protected void neighborUpdate(BlockState state, World world, BlockPos pos, Block sourceBlock, @Nullable WireOrientation wireOrientation, boolean notify) {
+        if (state.get(WATERLOGGED)) world.scheduleFluidTick(pos, Fluids.WATER, Fluids.WATER.getTickRate(world));
+        if (world.isReceivingRedstonePower(pos) && !state.get(STATE).equals(MiniPortalState.POWERED)) {
+            world.setBlockState(pos, state.with(STATE, MiniPortalState.POWERED));
+        } else if (!world.isReceivingRedstonePower(pos) && state.get(STATE).equals(MiniPortalState.POWERED)) {
+            world.setBlockState(pos, state.with(STATE, MiniPortalState.OPEN));
         }
-
-        return super.getStateForNeighborUpdate(state, world, tickView, pos, direction, neighborPos, neighborState, random);
     }
 
     @Override

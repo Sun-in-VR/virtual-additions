@@ -6,13 +6,10 @@ import com.github.suninvr.virtualadditions.registry.VABlocks;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.entity.BlockEntity;
 import net.minecraft.block.entity.BlockEntityType;
-import net.minecraft.item.ItemStack;
 import net.minecraft.storage.ReadView;
 import net.minecraft.storage.WriteView;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
-
-import java.util.UUID;
 
 public class MiniPortalBlockEntity extends BlockEntity {
     private BlockPos destination;
@@ -59,7 +56,7 @@ public class MiniPortalBlockEntity extends BlockEntity {
     }
 
     public boolean isBlocked() {
-        return this.getCachedState().isOf(VABlocks.MINI_PORTAL) && !this.getCachedState().get(MiniPortalBlock.STATE).allowsTeleporting;
+        return this.getCachedState().isOf(VABlocks.MINI_PORTAL) && !this.getCachedState().get(MiniPortalBlock.STATE).canDepart;
     }
 
 

@@ -5,18 +5,17 @@ import net.minecraft.util.StringIdentifiable;
 import java.util.Locale;
 
 public enum MiniPortalState implements StringIdentifiable {
-    OPEN(true),
-    BLOCKED,
-    COOLDOWN;
+    OPEN(true, true),
+    BLOCKED(false, true),
+    COOLDOWN(false, true),
+    POWERED(false, false);
     
-    public final boolean allowsTeleporting;
+    public final boolean canDepart;
+    public final boolean canArrive;
 
-    MiniPortalState(boolean allowsTeleporting) {
-        this.allowsTeleporting = allowsTeleporting;
-    }
-    
-    MiniPortalState() {
-        this.allowsTeleporting = false;
+    MiniPortalState(boolean canDepart, boolean canArrive) {
+        this.canDepart = canDepart;
+        this.canArrive = canArrive;
     }
 
     @Override
