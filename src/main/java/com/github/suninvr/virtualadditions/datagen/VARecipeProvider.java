@@ -443,11 +443,15 @@ public final class VARecipeProvider {
                     .input(Items.SUGAR)
                     .input(Items.EGG).criterion("has_sweet_berries", conditionsFromItem(Items.SWEET_BERRIES)).offerTo(this.exporter);
 
+            ShapelessRecipeJsonBuilder.create(this.registryLookup, RecipeCategory.FOOD, Items.EXPERIENCE_BOTTLE, 3)
+                    .input(Items.GLASS_BOTTLE, 3)
+                    .input(VAItems.SOUL_SPROUT).criterion("has_soul_sprout", conditionsFromItem(VAItems.SOUL_SPROUT)).offerTo(this.exporter);
+
             ShapedRecipeJsonBuilder.create(this.registryLookup, RecipeCategory.TOOLS, VAItems.CLIMBING_ROPE, 4)
-                    .pattern("#  ")
-                    .pattern(" #s")
-                    .pattern(" ss")
-                    .input('#', Items.COPPER_INGOT).input('s', Items.STRING)
+                    .pattern(" # ")
+                    .pattern(" # ")
+                    .pattern(" l ")
+                    .input('#', Items.COPPER_INGOT).input('l', Items.LEAD)
                     .criterion("has_copper_ingot", conditionsFromItem(Items.COPPER_INGOT)).offerTo(this.exporter);
 
             ShapedRecipeJsonBuilder.create(this.registryLookup, RecipeCategory.BUILDING_BLOCKS, VABlocks.SILKBULB, 1)
@@ -469,7 +473,12 @@ public final class VARecipeProvider {
                     .pattern("eye")
                     .pattern("eee")
                     .input('e', VAItems.IOLITE).input('y', Items.ENDER_PEARL)
-                    .criterion("has_iolite", conditionsFromItem(VAItems.IOLITE)).offerTo(this.exporter);
+                    .criterion("has_iolite", conditionsFromItem(VAItems.IOLITE)).group("portal_core").offerTo(this.exporter);
+
+            ShapelessRecipeJsonBuilder.create(this.registryLookup, RecipeCategory.TRANSPORTATION, VAItems.PORTAL_CORE, 1)
+                     .input(VAItems.DRAINED_PORTAL_CORE)
+                     .input(VAItems.IOLITE, 2)
+                     .criterion("has_drained_portal_core", conditionsFromItem(VAItems.DRAINED_PORTAL_CORE)).group("portal_core").offerTo(this.exporter, "portal_core_restoration");
 
             ShapedRecipeJsonBuilder.create(this.registryLookup, RecipeCategory.COMBAT, VAItems.STEEL_BOMB, 4)
                     .pattern(" s ")

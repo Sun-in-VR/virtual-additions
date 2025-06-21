@@ -172,7 +172,6 @@ public final class VABlockLootTableProvider {
                     VABlocks.ENTANGLEMENT_DRIVE,
                     VABlocks.SPOTLIGHT,
                     VABlocks.SMALL_SPRING_LOTUS,
-                    VABlocks.SOUL_SPROUT,
                     VABlocks.SPRING_LOTUS
             );
 
@@ -190,7 +189,7 @@ public final class VABlockLootTableProvider {
             this.addDrop(VABlocks.BONE_LITTER, this.boneLitterDrops(VABlocks.BONE_LITTER));
             this.addDrop(VABlocks.BONE_PILE, this.bonePileDrops(VABlocks.BONE_PILE));
 
-            this.addDrop(VABlocks.MINI_PORTAL, VAItems.IOLITE);
+            this.addDrop(VABlocks.MINI_PORTAL, VAItems.DRAINED_PORTAL_CORE);
 
             LootCondition.Builder tomatoBuilder = BlockStatePropertyLootCondition.builder(VABlocks.TOMATO)
                     .properties(StatePredicate.Builder.create().exactMatch(CropBlock.AGE, 7));
@@ -204,8 +203,13 @@ public final class VABlockLootTableProvider {
                     .properties(StatePredicate.Builder.create().exactMatch(CropBlock.AGE, 7));
             this.addDrop(VABlocks.COTTON, this.cropDrops(VABlocks.COTTON, VAItems.COTTON, VAItems.COTTON_SEEDS, 1, 2, cottonBuilder));
 
+            LootCondition.Builder soulSproutCropBuilder = BlockStatePropertyLootCondition.builder(VABlocks.SOUL_SPROUT_CROP)
+                    .properties(StatePredicate.Builder.create().exactMatch(CropBlock.AGE, 7));
+            this.addDrop(VABlocks.SOUL_SPROUT_CROP, this.plantCropDrops(VABlocks.SOUL_SPROUT_CROP, VABlocks.SOUL_SPROUT.asItem(), VAItems.SOUL_SPROUT_SEEDS, soulSproutCropBuilder));
+
             this.addDrop(VABlocks.CORN_CROP, this.cornDrops());
 
+            this.addDrop(VABlocks.SOUL_SPROUT, dropsWithSilkTouchOrShears(VABlocks.SOUL_SPROUT, this.applyExplosionDecay(VABlocks.SOUL_SPROUT, ItemEntry.builder(VAItems.SOUL_SPROUT_SEEDS))));
 
             addColorfulBlockSetDrops(VACollections.CHARTREUSE);
             addColorfulBlockSetDrops(VACollections.MAROON);
@@ -329,6 +333,25 @@ public final class VABlockLootTableProvider {
                             .pool(LootPool.builder()
                                     .with(ItemEntry.builder(product)
                                             .apply(SetCountLootFunction.builder(UniformLootNumberProvider.create(minYield, maxYield)))
+                                            .conditionally(condition)
+                                            .alternatively(ItemEntry.builder(seeds))
+                                    )
+                            )
+                            .pool(
+                                    LootPool.builder()
+                                            .conditionally(condition)
+                                            .with(ItemEntry.builder(seeds).apply(ApplyBonusLootFunction.binomialWithBonusCount(impl.getOrThrow(Enchantments.FORTUNE), 0.5714286F, 3)))
+                            )
+            );
+        }
+
+        public LootTable.Builder plantCropDrops(Block crop, Item product, Item seeds, LootCondition.Builder condition) {
+            RegistryWrapper.Impl<Enchantment> impl = this.registries.getOrThrow(RegistryKeys.ENCHANTMENT);
+            return this.applyExplosionDecay(
+                    crop,
+                    LootTable.builder()
+                            .pool(LootPool.builder()
+                                    .with(ItemEntry.builder(product)
                                             .conditionally(condition)
                                             .alternatively(ItemEntry.builder(seeds))
                                     )

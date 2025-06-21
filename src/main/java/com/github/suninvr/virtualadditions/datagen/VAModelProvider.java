@@ -156,6 +156,7 @@ public class VAModelProvider {
             generator.registerItemModel(VAItems.CABBAGE_SEEDS);
             generator.registerItemModel(VAItems.CORN_SEEDS);
             generator.registerItemModel(VAItems.COTTON_SEEDS);
+            generator.registerItemModel(VAItems.SOUL_SPROUT_SEEDS);
             generator.registerItemModel(VAItems.BALLOON_FRUIT);
 
             generator.registerItemModel(VAItems.CLIMBING_ROPE);
@@ -283,6 +284,7 @@ public class VAModelProvider {
                     VAItems.STEEL_BOMB,
                     VAItems.IOLITE,
                     VAItems.PORTAL_CORE,
+                    VAItems.DRAINED_PORTAL_CORE,
                     VAItems.TOMATO,
                     VAItems.CABBAGE,
                     VAItems.CORN,

@@ -263,6 +263,7 @@ public class VAItems {
     public static final Item CABBAGE;
     public static final Item COTTON_SEEDS;
     public static final Item COTTON;
+    public static final Item SOUL_SPROUT_SEEDS;
     public static final Item FRIED_EGG;
     public static final Item ICE_CREAM;
     public static final Item CHEESE_WEDGE;
@@ -437,6 +438,7 @@ public class VAItems {
     public static final Item IOLITE_ORE;
     public static final Item IOLITE_BLOCK;
     public static final Item PORTAL_CORE;
+    public static final Item DRAINED_PORTAL_CORE;
     public static final Item ENTANGLEMENT_DRIVE;
     public static final Item REMOTE_NOTIFIER;
     public static final Item SALINE_SPAWN_EGG;
@@ -1033,6 +1035,7 @@ public class VAItems {
         IOLITE_ORE = registerBlockItem("iolite_ore", VABlocks.IOLITE_ORE, ItemGroups.NATURAL, Items.ANCIENT_DEBRIS);
         IOLITE_BLOCK = registerBlockItem("iolite_block", VABlocks.IOLITE_BLOCK, ItemGroups.BUILDING_BLOCKS, Items.NETHERITE_BLOCK);
         PORTAL_CORE = register("portal_core", PortalCoreItem::new, new Item.Settings().maxCount(1), ItemGroups.TOOLS, Items.TNT_MINECART);
+        DRAINED_PORTAL_CORE = register("drained_portal_core", new Item.Settings().maxCount(1), ItemGroups.TOOLS, prev);
         ENTANGLEMENT_DRIVE = register("entanglement_drive", settings ->  new BlockItem(VABlocks.ENTANGLEMENT_DRIVE, settings), new Item.Settings().rarity(Rarity.RARE).translationKey(VABlocks.ENTANGLEMENT_DRIVE.getTranslationKey()), ItemGroups.REDSTONE, prev);
         REMOTE_NOTIFIER = register("remote_notifier", settings ->  new BlockItem(VABlocks.REMOTE_NOTIFIER, settings), new Item.Settings().translationKey(VABlocks.REMOTE_NOTIFIER.getTranslationKey()).requires(VirtualAdditions.PREVIEW), ItemGroups.REDSTONE, prev);
 
@@ -1147,6 +1150,7 @@ public class VAItems {
         CABBAGE = register("cabbage", new Item.Settings().food(VAFoodComponents.CABBAGE),ItemGroups.FOOD_AND_DRINK, Items.BEETROOT);
         COTTON_SEEDS = register("cotton_seeds", settings -> new BlockItem(VABlocks.COTTON, settings),new Item.Settings().useItemPrefixedTranslationKey(), ItemGroups.NATURAL, Items.BEETROOT_SEEDS);
         COTTON = register("cotton", ItemGroups.INGREDIENTS, Items.WHEAT);
+        SOUL_SPROUT_SEEDS = register("soul_sprout_seeds", settings -> new BlockItem(VABlocks.SOUL_SPROUT_CROP, settings),new Item.Settings().useItemPrefixedTranslationKey(), ItemGroups.NATURAL, Items.PITCHER_POD);
 
         FRIED_EGG = register("fried_egg", new Item.Settings().food(VAFoodComponents.FRIED_EGG), ItemGroups.FOOD_AND_DRINK, Items.COOKED_CHICKEN);
         ICE_CREAM = register("ice_cream", new Item.Settings().food(VAFoodComponents.ICE_CREAM).maxCount(1), ItemGroups.FOOD_AND_DRINK, Items.COOKIE);

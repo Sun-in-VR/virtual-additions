@@ -1,0 +1,7 @@
+{
+  "parent": "minecraft:block/cross_emissive",
+  "textures": {
+    "cross": "virtual_additions:block/soul_sprout_crop1",
+    "cross_emissive": "virtual_additions:block/soul_sprout_crop1_emissive"
+  }
+}
