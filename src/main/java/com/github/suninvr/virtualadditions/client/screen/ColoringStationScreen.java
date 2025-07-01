@@ -175,11 +175,11 @@ public class ColoringStationScreen extends HandledScreen<ColoringStationScreenHa
         int i = this.x;
         int j = this.y;
         if (x < i + 45 && x >= i + 9 && y < j + 40 && y >= j + 34) {
-            K = !advanced ? this.caches[5].dye : this.dyeContents.getK();
+            K = !advanced ? this.caches[4].dye : this.dyeContents.getK();
             context.drawTooltip(textRenderer, Text.translatable(advanced ? INDICATOR_ADVANCED_BLACK : INDICATOR_BLACK, K), x, y);
         }
         if (x < i + 45 && x >= i + 9 && y < j + 46 && y >= j + 40) {
-            W = !advanced ? this.caches[4].dye : this.dyeContents.getW();
+            W = !advanced ? this.caches[5].dye : this.dyeContents.getW();
             context.drawTooltip(textRenderer, Text.translatable(advanced ? INDICATOR_ADVANCED_WHITE : INDICATOR_WHITE, W), x, y);
         }
         if (x < i + 45 && x >= i + 9 && y < j + 52 && y >= j + 46) {

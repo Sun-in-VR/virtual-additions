@@ -120,7 +120,7 @@ public class ClimbingRopeBlock extends Block implements Waterloggable {
             world.setBlockState(pos, state.with(END, true));
             if (world.getBlockState(pos.down()).isOf(VABlocks.CLIMBING_ROPE)) world.breakBlock(pos.down(), true, player);
             stack.damage(1, player, LivingEntity.getSlotForHand(hand));
-            world.playSound(player, pos, SoundEvents.BLOCK_GROWING_PLANT_CROP, SoundCategory.BLOCKS, 1.0F, 1.0F);
+            world.playSound(player, pos, SoundEvents.ITEM_SHEARS_SNIP, SoundCategory.BLOCKS, 1.0F, 1.0F);
             world.emitGameEvent(GameEvent.BLOCK_CHANGE, pos, GameEvent.Emitter.of(player, state));
             if (player instanceof ServerPlayerEntity) {
                 Criteria.ITEM_USED_ON_BLOCK.trigger((ServerPlayerEntity)player, pos, stack);
