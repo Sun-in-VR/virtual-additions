@@ -8,25 +8,35 @@ import com.google.common.collect.Maps;
 import net.fabricmc.fabric.api.datagen.v1.FabricDataGenerator;
 import net.fabricmc.fabric.api.datagen.v1.FabricDataOutput;
 import net.fabricmc.fabric.api.datagen.v1.provider.SimpleFabricLootTableProvider;
+import net.minecraft.component.DataComponentTypes;
 import net.minecraft.data.DataProvider;
 import net.minecraft.data.loottable.EntityLootTableGenerator;
+import net.minecraft.entity.passive.ChickenVariants;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemConvertible;
 import net.minecraft.item.Items;
 import net.minecraft.loot.LootPool;
 import net.minecraft.loot.LootTable;
 import net.minecraft.loot.LootTables;
+import net.minecraft.loot.condition.EntityPropertiesLootCondition;
 import net.minecraft.loot.condition.LootCondition;
 import net.minecraft.loot.condition.RandomChanceLootCondition;
+import net.minecraft.loot.context.LootContext;
 import net.minecraft.loot.context.LootContextTypes;
+import net.minecraft.loot.entry.AlternativeEntry;
 import net.minecraft.loot.entry.ItemEntry;
 import net.minecraft.loot.entry.LeafEntry;
 import net.minecraft.loot.function.*;
 import net.minecraft.loot.provider.number.ConstantLootNumberProvider;
 import net.minecraft.loot.provider.number.LootNumberProvider;
 import net.minecraft.loot.provider.number.UniformLootNumberProvider;
+import net.minecraft.predicate.component.ComponentMapPredicate;
+import net.minecraft.predicate.component.ComponentsPredicate;
+import net.minecraft.predicate.entity.EntityPredicate;
 import net.minecraft.registry.RegistryKey;
+import net.minecraft.registry.RegistryKeys;
 import net.minecraft.registry.RegistryWrapper;
+import net.minecraft.registry.entry.LazyRegistryEntryReference;
 import net.minecraft.util.DyeColor;
 import net.minecraft.util.context.ContextType;
 
@@ -34,10 +44,13 @@ import java.util.Map;
 import java.util.concurrent.CompletableFuture;
 import java.util.function.BiConsumer;
 
+import static com.github.suninvr.virtualadditions.VirtualAdditions.idOf;
+
 public class VASimpleLootTableProvider {
 
     public static FabricDataGenerator.Pack.RegistryDependentFactory<DataProvider> enhancementsShearing() {return EnhancementsShearingProvider::new;}
     public static FabricDataGenerator.Pack.RegistryDependentFactory<DataProvider> enhancementsEntities() {return EnhancementsEntitiesProvider::new;}
+    public static FabricDataGenerator.Pack.RegistryDependentFactory<DataProvider> enhancementsGift() {return EnhancementsGiftProvider::new;}
     public static FabricDataGenerator.Pack.RegistryDependentFactory<DataProvider> base() {return BaseProvider::new;}
 
     public static class BaseProvider extends Provider {
@@ -134,6 +147,33 @@ public class VASimpleLootTableProvider {
                                     LootTable.builder().pool(LootPool.builder().with(ItemEntry.builder(wool)))
                             )
                     );
+
+
+        }
+    }
+
+    public static class EnhancementsGiftProvider extends Provider {
+        CompletableFuture<RegistryWrapper.WrapperLookup> registryLookup;
+
+        public EnhancementsGiftProvider(FabricDataOutput fabricDataOutput, CompletableFuture<RegistryWrapper.WrapperLookup> registryLookup) {
+            super(fabricDataOutput, registryLookup, LootContextTypes.GIFT);
+            this.registryLookup = registryLookup;
+        }
+
+        @Override
+        public void accept(BiConsumer<RegistryKey<LootTable>, LootTable.Builder> lootTableBiConsumer) {
+            lootTableBiConsumer.accept(LootTables.CHICKEN_LAY_GAMEPLAY,
+                    LootTable.builder().pool(LootPool.builder().with(
+                            AlternativeEntry.builder(
+                                    ItemEntry.builder(Items.EGG).conditionally(EntityPropertiesLootCondition.builder(LootContext.EntityTarget.THIS, EntityPredicate.Builder.create().components(ComponentsPredicate.Builder.create().exact(ComponentMapPredicate.of(DataComponentTypes.CHICKEN_VARIANT, new LazyRegistryEntryReference<>(ChickenVariants.TEMPERATE))).build()))),
+                                    ItemEntry.builder(Items.BROWN_EGG).conditionally(EntityPropertiesLootCondition.builder(LootContext.EntityTarget.THIS, EntityPredicate.Builder.create().components(ComponentsPredicate.Builder.create().exact(ComponentMapPredicate.of(DataComponentTypes.CHICKEN_VARIANT, new LazyRegistryEntryReference<>(ChickenVariants.WARM))).build()))),
+                                    ItemEntry.builder(Items.BLUE_EGG).conditionally(EntityPropertiesLootCondition.builder(LootContext.EntityTarget.THIS, EntityPredicate.Builder.create().components(ComponentsPredicate.Builder.create().exact(ComponentMapPredicate.of(DataComponentTypes.CHICKEN_VARIANT, new LazyRegistryEntryReference<>(ChickenVariants.COLD))).build()))),
+                                    ItemEntry.builder(VAItems.PURPLE_EGG).conditionally(EntityPropertiesLootCondition.builder(LootContext.EntityTarget.THIS, EntityPredicate.Builder.create().components(ComponentsPredicate.Builder.create().exact(ComponentMapPredicate.of(DataComponentTypes.CHICKEN_VARIANT, new LazyRegistryEntryReference<>(RegistryKey.of(RegistryKeys.CHICKEN_VARIANT, idOf("enchanted"))))).build())))
+                            )
+                    ))
+                    );
+
+
         }
     }
 

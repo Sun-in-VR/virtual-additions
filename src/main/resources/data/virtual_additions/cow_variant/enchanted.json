@@ -1,0 +1,13 @@
+{
+  "asset_id": "virtual_additions:entity/cow/enchanted_cow",
+  "model": "cold",
+  "spawn_conditions": [
+    {
+      "condition": {
+        "type": "minecraft:biome",
+        "biomes": "#virtual_additions:spawns_enchanted_variant_farm_animals"
+      },
+      "priority": 1
+    }
+  ]
+}

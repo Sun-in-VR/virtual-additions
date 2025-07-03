@@ -1,0 +1,12 @@
+{
+  "asset_id": "virtual_additions:entity/pig/enchanted_pig",
+  "spawn_conditions": [
+    {
+      "condition": {
+        "type": "minecraft:biome",
+        "biomes": "#virtual_additions:spawns_enchanted_variant_farm_animals"
+      },
+      "priority": 1
+    }
+  ]
+}

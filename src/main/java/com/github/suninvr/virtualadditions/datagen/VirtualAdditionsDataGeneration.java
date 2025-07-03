@@ -35,6 +35,7 @@ public class VirtualAdditionsDataGeneration implements DataGeneratorEntrypoint {
         enhancementsData.addProvider(VASimpleLootTableProvider.enhancementsEntities());
         enhancementsData.addProvider(VAEntityLootTableProvider.enhancements());
         enhancementsData.addProvider(VASimpleLootTableProvider.enhancementsShearing());
+        enhancementsData.addProvider(VASimpleLootTableProvider.enhancementsGift());
     }
 
 }

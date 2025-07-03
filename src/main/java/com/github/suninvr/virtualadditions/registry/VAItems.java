@@ -10,7 +10,9 @@ import net.minecraft.component.DataComponentTypes;
 import net.minecraft.component.type.*;
 import net.minecraft.item.*;
 import net.minecraft.item.equipment.EquipmentType;
+import net.minecraft.registry.RegistryKey;
 import net.minecraft.registry.RegistryKeys;
+import net.minecraft.registry.entry.LazyRegistryEntryReference;
 import net.minecraft.text.Text;
 import net.minecraft.util.*;
 import net.minecraft.util.math.Direction;
@@ -169,6 +171,7 @@ public class VAItems {
     public static final Item RAW_STEEL;
     public static final Item RAW_STEEL_BLOCK;
     public static final Item STEEL_INGOT;
+    public static final Item STEEL_NUGGET;
     public static final Item STEEL_BLOCK;
     public static final Item CUT_STEEL;
     public static final Item CUT_STEEL_STAIRS;
@@ -302,6 +305,7 @@ public class VAItems {
     public static final Item ACID_BLOCK;
     public static final Item APPLICABLE_POTION;
     public static final Item LIGHTNING_BOTTLE;
+    public static final Item PURPLE_EGG;
     public static final Item CHARTREUSE_DYE;
     public static final Item CHARTREUSE_WOOL;
     public static final Item CHARTREUSE_CARPET;
@@ -702,6 +706,7 @@ public class VAItems {
         SPOTLIGHT = registerBlockItem("spotlight", VABlocks.SPOTLIGHT, ItemGroups.REDSTONE, Items.REDSTONE_LAMP);
         RAW_STEEL = register("raw_steel", ItemGroups.INGREDIENTS, Items.RAW_GOLD);
         STEEL_INGOT = register("steel_ingot", new Item.Settings().trimMaterial(VAArmorTrimMaterials.STEEL), ItemGroups.INGREDIENTS, Items.GOLD_INGOT);
+        STEEL_NUGGET = register("steel_nugget", ItemGroups.INGREDIENTS, Items.GOLD_NUGGET);
         STEEL_BOMB = register("steel_bomb", SteelBombItem::new, new Item.Settings().maxCount(16).component(VADataComponentTypes.EXPLOSIVE_CONTENTS, ExplosiveContentComponent.DEFAULT), at(ItemGroups.COMBAT, Items.SNOWBALL), at(ItemGroups.TOOLS, Items.LEAD));
         STEEL_SWORD = register("steel_sword", settings -> new Item(settings.sword(SteelToolMaterial.INSTANCE, 3, -2.4F)), new Item.Settings(), ItemGroups.COMBAT, Items.GOLDEN_SWORD);
         STEEL_SHOVEL = register("steel_shovel", settings -> new ShovelItem(SteelToolMaterial.INSTANCE, 1.5F, -3.0F, settings), new Item.Settings(), ItemGroups.TOOLS, Items.GOLDEN_HOE);
@@ -1167,6 +1172,8 @@ public class VAItems {
         ENGRAVING_CHISEL = register("engraving_chisel", new Item.Settings().maxCount(1).maxDamage(64), ItemGroups.TOOLS, Items.NAME_TAG);
         LIGHTNING_BOTTLE = register("lightning_bottle", LightningBottleItem::new, new Item.Settings().component(DataComponentTypes.ENCHANTMENT_GLINT_OVERRIDE, true).rarity(Rarity.RARE).maxCount(16), ItemGroups.INGREDIENTS, Items.EXPERIENCE_BOTTLE);
 
+        PURPLE_EGG = register("purple_egg", EggItem::new, new Item.Settings().maxCount(16).component(DataComponentTypes.CHICKEN_VARIANT, new LazyRegistryEntryReference<>(RegistryKey.of(RegistryKeys.CHICKEN_VARIANT, idOf("enchanted")))), at(ItemGroups.COMBAT, Items.BLUE_EGG), at(ItemGroups.INGREDIENTS, Items.BLUE_EGG));
+
         //endregion
 
         //region Spawn Eggs
@@ -1174,6 +1181,7 @@ public class VAItems {
         SALINE_SPAWN_EGG = register("saline_spawn_egg", settings -> new SpawnEggItem(VAEntityType.SALINE, settings), new Item.Settings(), ItemGroups.SPAWN_EGGS, Items.RAVAGER_SPAWN_EGG);
         LUMWASP_SPAWN_EGG = register("lumwasp_spawn_egg", settings -> new SpawnEggItem(VAEntityType.LUMWASP, settings), new Item.Settings(), ItemGroups.SPAWN_EGGS, Items.LLAMA_SPAWN_EGG);
         SPECTRE_SPAWN_EGG = register("spectre_spawn_egg", settings -> new SpawnEggItem(VAEntityType.SPECTRE, settings), new Item.Settings(), ItemGroups.SPAWN_EGGS, Items.SNOW_GOLEM_SPAWN_EGG);
+
         //endregion
     }
 

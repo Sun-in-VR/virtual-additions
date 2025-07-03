@@ -33,6 +33,7 @@
     "RangedWeaponItemMixin",
     "RedstoneWireBlockMixin",
     "ServerRecipeManagerMixin",
+    "SheepColorsMixin",
     "SheepEntityMixin",
     "ShovelItemMixin",
     "ShulkerBoxBlockMixin",

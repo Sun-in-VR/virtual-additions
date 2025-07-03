@@ -33,9 +33,9 @@ public class SheepEntityMixin extends AnimalEntity {
 
     @Inject(method = "setColor", at = @At("HEAD"), cancellable = true)
     void virtualAdditions$setAnySheepColor(DyeColor color, CallbackInfo ci) {
-        if (24 > color.getIndex() && color.getIndex() > 15) {
+        if ((24 > color.getIndex() && color.getIndex() > 15) || (this.dataTracker.get(COLOR) > 15)) {
             byte b = this.dataTracker.get(COLOR);
-            this.dataTracker.set(COLOR, (byte) (b & 240 | color.getIndex() & 31));
+            this.dataTracker.set(COLOR, (byte) (b & 224 | color.getIndex() & 31));
             ci.cancel();
         };
     }

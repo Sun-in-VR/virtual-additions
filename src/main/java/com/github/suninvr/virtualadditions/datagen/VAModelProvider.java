@@ -280,6 +280,7 @@ public class VAModelProvider {
                     VAItems.ROCK_SALT,
                     VAItems.RAW_STEEL,
                     VAItems.STEEL_INGOT,
+                    VAItems.STEEL_NUGGET,
                     VAItems.TOOL_GILD_SMITHING_TEMPLATE,
                     VAItems.STEEL_BOMB,
                     VAItems.IOLITE,
@@ -316,6 +317,7 @@ public class VAModelProvider {
                     VAItems.TAN_HARNESS,
                     VAItems.SINOPIA_HARNESS,
                     VAItems.LILAC_HARNESS,
+                    VAItems.PURPLE_EGG,
                     VAItems.EXOSKELETON_ARMOR_TRIM_SMITHING_TEMPLATE,
                     VAItems.ROBE_ARMOR_TRIM_SMITHING_TEMPLATE
             );

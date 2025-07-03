@@ -107,9 +107,15 @@ public final class VARecipeProvider {
 
             offerCompactingRecipe(RecipeCategory.MISC, VABlocks.STEEL_BLOCK, VAItems.STEEL_INGOT, "steel_ingot");
             offerShapelessRecipe(VAItems.STEEL_INGOT, VABlocks.STEEL_BLOCK, "steel", 9);
-            offerShapelessRecipe(VAItems.STEEL_INGOT, VABlocks.WAXED_STEEL_BLOCK, "steel", 9);
-            offerCompactingRecipe(RecipeCategory.MISC, VABlocks.RAW_STEEL_BLOCK, VAItems.RAW_STEEL, "steel_ingot");
+            offerShapelessRecipe(VAItems.STEEL_INGOT, VABlocks.WAXED_STEEL_BLOCK, "steel_ingot", 9);
+            offerCompactingRecipe(RecipeCategory.MISC, VABlocks.RAW_STEEL_BLOCK, VAItems.RAW_STEEL, "raw_steel");
             offerShapelessRecipe(VAItems.RAW_STEEL, VABlocks.RAW_STEEL_BLOCK, "raw_steel", 9);
+            offerCompactingRecipe(RecipeCategory.MISC, VAItems.STEEL_INGOT, VAItems.STEEL_NUGGET, "steel_nugget");
+            offerShapelessRecipe(VAItems.STEEL_NUGGET, VAItems.STEEL_INGOT, "steel_nugget", 9);
+
+            CookingRecipeJsonBuilder.createSmelting(Ingredient.ofItems(VAItems.STEEL_PICKAXE, VAItems.STEEL_SHOVEL, VAItems.STEEL_AXE, VAItems.STEEL_HOE, VAItems.STEEL_SWORD, VAItems.STEEL_HELMET, VAItems.STEEL_CHESTPLATE, VAItems.STEEL_LEGGINGS, VAItems.STEEL_BOOTS, VAItems.STEEL_HORSE_ARMOR), RecipeCategory.MISC, VAItems.STEEL_NUGGET, 0.1F, 200).criterion("has_steel_pickaxe", this.conditionsFromItem(VAItems.STEEL_PICKAXE)).criterion("has_steel_shovel", this.conditionsFromItem(VAItems.STEEL_SHOVEL)).criterion("has_steel_axe", this.conditionsFromItem(VAItems.STEEL_AXE)).criterion("has_steel_hoe", this.conditionsFromItem(VAItems.STEEL_HOE)).criterion("has_steel_sword", this.conditionsFromItem(VAItems.STEEL_SWORD)).criterion("has_steel_helmet", this.conditionsFromItem(VAItems.STEEL_HELMET)).criterion("has_steel_chestplate", this.conditionsFromItem(VAItems.STEEL_CHESTPLATE)).criterion("has_steel_leggings", this.conditionsFromItem(VAItems.STEEL_LEGGINGS)).criterion("has_steel_boots", this.conditionsFromItem(VAItems.STEEL_BOOTS)).criterion("has_steel_horse_armor", this.conditionsFromItem(VAItems.STEEL_HORSE_ARMOR)).offerTo(this.exporter, getSmeltingItemPath(VAItems.STEEL_NUGGET));
+            CookingRecipeJsonBuilder.createBlasting(Ingredient.ofItems(VAItems.STEEL_PICKAXE, VAItems.STEEL_SHOVEL, VAItems.STEEL_AXE, VAItems.STEEL_HOE, VAItems.STEEL_SWORD, VAItems.STEEL_HELMET, VAItems.STEEL_CHESTPLATE, VAItems.STEEL_LEGGINGS, VAItems.STEEL_BOOTS, VAItems.STEEL_HORSE_ARMOR), RecipeCategory.MISC, VAItems.STEEL_NUGGET, 0.1F, 200).criterion("has_steel_pickaxe", this.conditionsFromItem(VAItems.STEEL_PICKAXE)).criterion("has_steel_shovel", this.conditionsFromItem(VAItems.STEEL_SHOVEL)).criterion("has_steel_axe", this.conditionsFromItem(VAItems.STEEL_AXE)).criterion("has_steel_hoe", this.conditionsFromItem(VAItems.STEEL_HOE)).criterion("has_steel_sword", this.conditionsFromItem(VAItems.STEEL_SWORD)).criterion("has_steel_helmet", this.conditionsFromItem(VAItems.STEEL_HELMET)).criterion("has_steel_chestplate", this.conditionsFromItem(VAItems.STEEL_CHESTPLATE)).criterion("has_steel_leggings", this.conditionsFromItem(VAItems.STEEL_LEGGINGS)).criterion("has_steel_boots", this.conditionsFromItem(VAItems.STEEL_BOOTS)).criterion("has_steel_horse_armor", this.conditionsFromItem(VAItems.STEEL_HORSE_ARMOR)).offerTo(this.exporter, getBlastingItemPath(VAItems.STEEL_NUGGET));
+
             offerCompactingRecipe(RecipeCategory.MISC, VABlocks.IOLITE_BLOCK, VAItems.IOLITE, "iolite");
             offerShapelessRecipe(VAItems.IOLITE, VABlocks.IOLITE_BLOCK, "iolite", 9);
 
@@ -169,7 +175,7 @@ public final class VARecipeProvider {
             offerShapelessRecipe(RecipeCategory.FOOD, VAItems.TOMATO_SEEDS, 1, Pair.of(VAItems.TOMATO, 1));
             offerShapelessRecipe(RecipeCategory.FOOD, VAItems.CABBAGE_SEEDS, 1, Pair.of(VAItems.CABBAGE, 1));
 
-            offerCookingRecipes(VAItems.FRIED_EGG, List.of(Items.EGG, Items.BROWN_EGG, Items.BLUE_EGG), 0.35F, "fried_egg");
+            offerCookingRecipes(VAItems.FRIED_EGG, List.of(Items.EGG, Items.BROWN_EGG, Items.BLUE_EGG, VAItems.PURPLE_EGG), 0.35F, "fried_egg");
             offerCookingRecipes(VAItems.ROASTED_CORN, VAItems.CORN, 0.35F, "corn");
 
             offerJerkyFoodRecipe(Items.COOKED_BEEF, VAItems.BEEF_JERKY);

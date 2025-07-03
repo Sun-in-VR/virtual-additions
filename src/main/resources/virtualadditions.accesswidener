@@ -33,3 +33,6 @@ accessible field net/minecraft/block/ExperienceDroppingBlock experienceDropped L
 accessible field net/minecraft/block/entity/SignBlockEntity frontText Lnet/minecraft/block/entity/SignText;
 accessible field net/minecraft/block/entity/SignBlockEntity backText Lnet/minecraft/block/entity/SignText;
 accessible method net/minecraft/loot/LootTables registerLootTable (Lnet/minecraft/registry/RegistryKey;)Lnet/minecraft/registry/RegistryKey;
+accessible class net/minecraft/entity/passive/SheepColors$SpawnConfig
+accessible method net/minecraft/entity/passive/SheepColors$SpawnConfig <init> (Lnet/minecraft/entity/passive/SheepColors$ColorSelector;)V
+accessible class net/minecraft/entity/passive/SheepColors$ColorSelector
