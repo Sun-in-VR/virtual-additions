@@ -10,17 +10,17 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.shape.VoxelShape;
 import net.minecraft.world.BlockView;
 
-public class SoulSproutCropBlock extends CropBlock {
+public class WisberryCropBlock extends CropBlock {
     private static final VoxelShape[] SHAPES_BY_AGE = Block.createShapeArray(7, (age) -> {
         return Block.createColumnShape(16.0, 0.0, (double)(2 + age));
     });
 
-    public SoulSproutCropBlock(Settings settings) {
+    public WisberryCropBlock(Settings settings) {
         super(settings);
     }
 
     protected ItemConvertible getSeedsItem() {
-        return VAItems.SOUL_SPROUT_SEEDS;
+        return VAItems.WISBERRY_SEEDS;
     }
 
     protected VoxelShape getOutlineShape(BlockState state, BlockView world, BlockPos pos, ShapeContext context) {

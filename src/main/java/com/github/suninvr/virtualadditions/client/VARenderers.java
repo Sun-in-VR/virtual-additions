@@ -2,7 +2,6 @@ package com.github.suninvr.virtualadditions.client;
 
 import com.github.suninvr.virtualadditions.VirtualAdditions;
 import com.github.suninvr.virtualadditions.block.RedstoneBridgeBlock;
-import com.github.suninvr.virtualadditions.block.entity.MiniPortalBlockEntity;
 import com.github.suninvr.virtualadditions.client.render.block.CustomBedBlockEntityRenderer;
 import com.github.suninvr.virtualadditions.client.render.block.CustomShulkerBoxBlockEntityRenderer;
 import com.github.suninvr.virtualadditions.client.render.block.MiniPortalBlockEntityRenderer;
@@ -17,7 +16,6 @@ import net.fabricmc.fabric.api.client.rendering.v1.EntityRendererRegistry;
 import net.minecraft.block.RedstoneWireBlock;
 import net.minecraft.client.color.world.BiomeColors;
 import net.minecraft.client.render.BlockRenderLayer;
-import net.minecraft.client.render.RenderLayer;
 import net.minecraft.client.render.TexturedRenderLayers;
 import net.minecraft.client.render.block.entity.BannerBlockEntityRenderer;
 import net.minecraft.client.render.block.entity.BlockEntityRendererFactories;
@@ -137,7 +135,7 @@ public class VARenderers {
                 VABlocks.SPRING_LOTUS,
                 VABlocks.SOUL_SPROUT,
                 VABlocks.POTTED_SOUL_SPROUT,
-                VABlocks.SOUL_SPROUT_CROP
+                VABlocks.WISBERRY
         );
 
         BlockRenderLayerMap.putBlocks(BlockRenderLayer.CUTOUT_MIPPED,

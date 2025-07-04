@@ -239,6 +239,10 @@ public class VALootTableModifiers {
     private static LootPool.Builder createFruitCropSeedsLoot(RegistryWrapper.Impl<Biome> impl, RegistryEntryLookup<Enchantment> enchantmentLookup, RegistryEntryLookup<Item> itemRegistryEntryLookup) {
         return LootPool.builder()
                 .with(AlternativeEntry.builder(
+                                        ItemEntry.builder(WISBERRY_SEEDS)
+                                                .conditionally(LocationCheckLootCondition.builder(LocationPredicate.Builder.create().biome(
+                                                        impl.getOrThrow(VABiomeTags.SPAWNS_ENCHANTED_VARIANT_FARM_ANIMALS)
+                                                ))),
                                         ItemEntry.builder(CORN_SEEDS)
                                                 .conditionally(LocationCheckLootCondition.builder(LocationPredicate.Builder.create().biome(
                                                         impl.getOrThrow(BiomeTags.SPAWNS_WARM_VARIANT_FARM_ANIMALS)

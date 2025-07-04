@@ -62,7 +62,7 @@ public class SpringLotusBlock extends PlantBlock implements Fertilizable {
             world.setBlockState(pos, state.with(COMPRESSION, 4).with(STATE, SpringLotusState.OVER_COMPRESSED));
             world.playSound(null, pos, SoundEvents.BLOCK_BIG_DRIPLEAF_TILT_DOWN, SoundCategory.BLOCKS, 1, 0.8F);
             world.scheduleBlockTick(pos, this, 1);
-        } else if (state.get(COMPRESSION) == 3 && fallDistance >= 0.5 && !entity.getType().isIn(VAEntityTypeTags.IGNORES_SPRING_LOTUS)) {
+        } else if (state.get(COMPRESSION) == 3 && fallDistance >= 0.5 && !entity.getType().isIn(VAEntityTypeTags.IGNORES_SPRING_LOTUS) && !entity.isSneaking()) {
             world.scheduleBlockTick(pos, this, 1);
         }
     }
@@ -114,15 +114,7 @@ public class SpringLotusBlock extends PlantBlock implements Fertilizable {
     }
 
     private static double getSpringPower(Entity entity) {
-        double d = entity instanceof AbstractMinecartEntity ? 2.8 : 1.5;
-        if (entity instanceof ServerPlayerEntity serverPlayerEntity) {
-            if (serverPlayerEntity.getPlayerInput().sneak()) d = 1.05F;
-            else if (serverPlayerEntity.getPlayerInput().jump()) {
-                StatusEffectInstance instance = serverPlayerEntity.getStatusEffect(StatusEffects.JUMP_BOOST);
-                double f = instance != null ? (instance.getAmplifier() + 1) * 0.15 : 0;
-                d = 1.78F + f;
-            }
-        }
+        double d = entity instanceof AbstractMinecartEntity ? 2.8 : 1.6;
         if (entity.getType().isIn(VAEntityTypeTags.IGNORES_SPRING_LOTUS)) d *= 0.65;
         return d;
     }

@@ -451,7 +451,7 @@ public final class VARecipeProvider {
 
             ShapelessRecipeJsonBuilder.create(this.registryLookup, RecipeCategory.FOOD, Items.EXPERIENCE_BOTTLE, 3)
                     .input(Items.GLASS_BOTTLE, 3)
-                    .input(VAItems.SOUL_SPROUT).criterion("has_soul_sprout", conditionsFromItem(VAItems.SOUL_SPROUT)).offerTo(this.exporter);
+                    .input(VAItems.WISBERRY).criterion("has_wisberry", conditionsFromItem(VAItems.WISBERRY)).offerTo(this.exporter);
 
             ShapedRecipeJsonBuilder.create(this.registryLookup, RecipeCategory.TOOLS, VAItems.CLIMBING_ROPE, 4)
                     .pattern(" # ")

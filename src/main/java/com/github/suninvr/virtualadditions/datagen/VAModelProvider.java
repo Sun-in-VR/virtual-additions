@@ -156,7 +156,6 @@ public class VAModelProvider {
             generator.registerItemModel(VAItems.CABBAGE_SEEDS);
             generator.registerItemModel(VAItems.CORN_SEEDS);
             generator.registerItemModel(VAItems.COTTON_SEEDS);
-            generator.registerItemModel(VAItems.SOUL_SPROUT_SEEDS);
             generator.registerItemModel(VAItems.BALLOON_FRUIT);
 
             generator.registerItemModel(VAItems.CLIMBING_ROPE);
@@ -208,6 +207,7 @@ public class VAModelProvider {
             generator.registerSingleton(VABlocks.CHISELED_ROCK_SALT_BRICKS, TexturedModel.CUBE_COLUMN);
 
             generator.registerCrop(VABlocks.TOMATO, CropBlock.AGE, 0, 1, 2, 3, 4, 5, 6, 7);
+            generator.registerCrop(VABlocks.WISBERRY, CropBlock.AGE, 0, 1, 1, 1, 2, 2, 2, 3);
 
             generator.registerLeafLitter(VABlocks.BONE_LITTER);
             generator.registerTintableCross(VABlocks.BONE_PILE, BlockStateModelGenerator.CrossType.NOT_TINTED);
@@ -290,6 +290,7 @@ public class VAModelProvider {
                     VAItems.CABBAGE,
                     VAItems.CORN,
                     VAItems.ROASTED_CORN,
+                    VAItems.WISBERRY,
                     VAItems.COTTON,
                     VAItems.FRIED_EGG,
                     VAItems.CHEESE_WEDGE,

@@ -172,7 +172,8 @@ public final class VABlockLootTableProvider {
                     VABlocks.ENTANGLEMENT_DRIVE,
                     VABlocks.SPOTLIGHT,
                     VABlocks.SMALL_SPRING_LOTUS,
-                    VABlocks.SPRING_LOTUS
+                    VABlocks.SPRING_LOTUS,
+                    VABlocks.SOUL_SPROUT
             );
 
             this.addDrop(VABlocks.POTTED_GREENCAP_MUSHROOM, this.pottedPlantDrops(VABlocks.GREENCAP_MUSHROOM));
@@ -203,13 +204,11 @@ public final class VABlockLootTableProvider {
                     .properties(StatePredicate.Builder.create().exactMatch(CropBlock.AGE, 7));
             this.addDrop(VABlocks.COTTON, this.cropDrops(VABlocks.COTTON, VAItems.COTTON, VAItems.COTTON_SEEDS, 1, 2, cottonBuilder));
 
-            LootCondition.Builder soulSproutCropBuilder = BlockStatePropertyLootCondition.builder(VABlocks.SOUL_SPROUT_CROP)
+            LootCondition.Builder wisberryCropBuilder = BlockStatePropertyLootCondition.builder(VABlocks.WISBERRY)
                     .properties(StatePredicate.Builder.create().exactMatch(CropBlock.AGE, 7));
-            this.addDrop(VABlocks.SOUL_SPROUT_CROP, this.plantCropDrops(VABlocks.SOUL_SPROUT_CROP, VABlocks.SOUL_SPROUT.asItem(), VAItems.SOUL_SPROUT_SEEDS, soulSproutCropBuilder));
+            this.addDrop(VABlocks.WISBERRY, this.plantCropDrops(VABlocks.WISBERRY, VAItems.WISBERRY, VAItems.WISBERRY_SEEDS, wisberryCropBuilder));
 
             this.addDrop(VABlocks.CORN_CROP, this.cornDrops());
-
-            this.addDrop(VABlocks.SOUL_SPROUT, dropsWithSilkTouchOrShears(VABlocks.SOUL_SPROUT, this.applyExplosionDecay(VABlocks.SOUL_SPROUT, ItemEntry.builder(VAItems.SOUL_SPROUT_SEEDS))));
 
             addColorfulBlockSetDrops(VACollections.CHARTREUSE);
             addColorfulBlockSetDrops(VACollections.MAROON);
