@@ -437,6 +437,14 @@
           "items": "virtual_additions:mutton_jerky"
         }
       }
+    },
+    "wisberry": {
+      "trigger": "minecraft:consume_item",
+      "conditions": {
+        "item": {
+          "items": "virtual_additions:wisberry"
+        }
+      }
     }
   },
   "requirements": [
@@ -598,6 +606,9 @@
     ],
     [
       "mutton_jerky"
+    ],
+    [
+      "wisberry"
     ]
   ],
   "rewards": {

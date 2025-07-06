@@ -20,7 +20,8 @@ public class VillagerEntityMixin {
     private static final Map<Item, Integer> virtualAddition$ITEM_FOOD_VALUES = ImmutableMap.of(
             VAItems.CORN, 1,
             VAItems.TOMATO, 1,
-            VAItems.CABBAGE, 1
+            VAItems.CABBAGE, 2,
+            VAItems.WISBERRY, 1
     );
 
     static {

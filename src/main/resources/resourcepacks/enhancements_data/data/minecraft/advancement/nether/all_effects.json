@@ -54,7 +54,8 @@
           "minecraft:wither": {},
           "virtual_additions:iolite_interference": {},
           "virtual_additions:frailty": {},
-          "virtual_additions:love": {}
+          "virtual_additions:love": {},
+          "virtual_additions:aura": {}
         }
       }
     }

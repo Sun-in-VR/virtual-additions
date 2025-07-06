@@ -61,14 +61,14 @@ public final class VAItemTagProvider {
             addTo(ItemTags.CHEST_ARMOR, VAItems.STEEL_CHESTPLATE);
             addTo(ItemTags.LEG_ARMOR, VAItems.STEEL_LEGGINGS);
             addTo(ItemTags.FOOT_ARMOR, VAItems.STEEL_BOOTS);
-            addTo(ItemTags.VILLAGER_PLANTABLE_SEEDS, VAItems.CORN_SEEDS, VAItems.TOMATO_SEEDS, VAItems.CABBAGE_SEEDS);
+            addTo(ItemTags.VILLAGER_PLANTABLE_SEEDS, VAItems.CORN_SEEDS, VAItems.TOMATO_SEEDS, VAItems.CABBAGE_SEEDS, VAItems.WISBERRY_SEEDS);
             addTo(ItemTags.DOORS, VAItems.STEEL_DOOR);
             addTo(ItemTags.TRAPDOORS, VAItems.STEEL_TRAPDOOR);
             addTo(ItemTags.DYEABLE, VAItems.ICE_CREAM, VAItems.ENGRAVING_CHISEL);
             addTo(ItemTags.DURABILITY_ENCHANTABLE, VAItems.ENGRAVING_CHISEL);
             addTo(ItemTags.PIG_FOOD, VAItems.TOMATO, VAItems.CORN, VAItems.CABBAGE);
-            addTo(ItemTags.VILLAGER_PICKS_UP, VAItems.TOMATO, VAItems.CORN, VAItems.CABBAGE, VAItems.CORN_SEEDS, VAItems.TOMATO_SEEDS, VAItems.CABBAGE_SEEDS);
-            addTo(ItemTags.CHICKEN_FOOD, VAItems.CORN_SEEDS, VAItems.TOMATO_SEEDS, VAItems.CABBAGE_SEEDS, VAItems.COTTON_SEEDS);
+            addTo(ItemTags.VILLAGER_PICKS_UP, VAItems.TOMATO, VAItems.CORN, VAItems.CABBAGE, VAItems.WISBERRY, VAItems.CORN_SEEDS, VAItems.TOMATO_SEEDS, VAItems.CABBAGE_SEEDS, VAItems.WISBERRY_SEEDS);
+            addTo(ItemTags.CHICKEN_FOOD, VAItems.CORN_SEEDS, VAItems.TOMATO_SEEDS, VAItems.CABBAGE_SEEDS, VAItems.COTTON_SEEDS, VAItems.WISBERRY_SEEDS);
             addTo(ItemTags.BOATS, VAItems.SOULBLOOM_BOAT);
             addTo(ItemTags.CHEST_BOATS, VAItems.SOULBLOOM_CHEST_BOAT);
             addTo(ItemTags.FLOWERS, VAItems.BLUE_PETALS, VAItems.SPRING_LOTUS, VAItems.SMALL_SPRING_LOTUS, VAItems.SOUL_SPROUT);

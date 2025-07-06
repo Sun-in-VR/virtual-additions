@@ -1,6 +1,7 @@
 package com.github.suninvr.virtualadditions.mixin;
 
 import com.github.suninvr.virtualadditions.entity.PlayerProjectionEntity;
+import com.github.suninvr.virtualadditions.item.ProjectionSpyglassItem;
 import com.github.suninvr.virtualadditions.network.PlayerProjectionMovementC2SPayload;
 import com.github.suninvr.virtualadditions.registry.VAItems;
 import com.mojang.authlib.GameProfile;
@@ -73,21 +74,21 @@ public abstract class ClientPlayerEntityMixin extends AbstractClientPlayerEntity
 
     @Inject(method = "shouldStopSprinting", at = @At("HEAD"), cancellable = true)
     void virtualAdditions$shouldStopSprinting(CallbackInfoReturnable<Boolean> cir) {
-        if (MinecraftClient.getInstance().getCameraEntity() instanceof PlayerProjectionEntity) cir.setReturnValue(true);
+        if (ProjectionSpyglassItem.isInUseBy(this)) cir.setReturnValue(true);
     }
 
     @Inject(method = "shouldStopSwimSprinting", at = @At("HEAD"), cancellable = true)
     void virtualAdditions$shouldStopSwimSprinting(CallbackInfoReturnable<Boolean> cir) {
-        if (MinecraftClient.getInstance().getCameraEntity() instanceof PlayerProjectionEntity) cir.setReturnValue(true);
+        if (ProjectionSpyglassItem.isInUseBy(this)) cir.setReturnValue(true);
     }
 
     @Inject(method = "isSneaking", at = @At("HEAD"), cancellable = true)
     void virtualAdditions$isSneaking(CallbackInfoReturnable<Boolean> cir) {
-        if (this.isUsingItem() && this.getActiveItem().isOf(VAItems.SPECTRAL_SPYGLASS)) cir.setReturnValue(false);
+        if (ProjectionSpyglassItem.isInUseBy(this)) cir.setReturnValue(false);
     }
 
     @Inject(method = "isCamera", at = @At("HEAD"), cancellable = true)
     void virtualAdditions$isCamera(CallbackInfoReturnable<Boolean> cir) {
-        if (this.isUsingItem() && this.getActiveItem().isOf(VAItems.SPECTRAL_SPYGLASS)) cir.setReturnValue(true);
+        if (ProjectionSpyglassItem.isInUseBy(this)) cir.setReturnValue(true);
     }
 }

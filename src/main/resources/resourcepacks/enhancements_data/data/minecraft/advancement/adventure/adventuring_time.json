@@ -909,6 +909,22 @@
           }
         ]
       }
+    },
+    "virtual_additions:soul_grove": {
+      "trigger": "minecraft:location",
+      "conditions": {
+        "player": [
+          {
+            "condition": "minecraft:entity_properties",
+            "entity": "this",
+            "predicate": {
+              "location": {
+                "biomes": "virtual_additions:soul_grove"
+              }
+            }
+          }
+        ]
+      }
     }
   },
   "requirements": [
@@ -1079,6 +1095,9 @@
     ],
     [
       "virtual_additions:salty_caves"
+    ],
+    [
+      "virtual_additions:soul_grove"
     ]
   ],
   "rewards": {

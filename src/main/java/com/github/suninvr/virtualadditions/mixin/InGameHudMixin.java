@@ -1,6 +1,7 @@
 package com.github.suninvr.virtualadditions.mixin;
 
 import com.github.suninvr.virtualadditions.entity.PlayerProjectionEntity;
+import com.github.suninvr.virtualadditions.item.ProjectionSpyglassItem;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.gl.RenderPipelines;
 import net.minecraft.client.gui.DrawContext;
@@ -47,7 +48,7 @@ public class InGameHudMixin {
 
     @Inject(method = "renderMiscOverlays", at = @At("HEAD"), cancellable = true)
     void virtualAdditions$renderSpectralSpyglassMiscOverlay(DrawContext context, RenderTickCounter tickCounter, CallbackInfo ci) {
-        if (this.client.options.getPerspective().isFirstPerson() && this.client.cameraEntity instanceof PlayerProjectionEntity) {
+        if (this.client.options.getPerspective().isFirstPerson() && ProjectionSpyglassItem.isInUseBy(this.client.player)) {
             float f = tickCounter.getDynamicDeltaTicks();
             this.spyglassScale = MathHelper.lerp(0.5F * f, this.spyglassScale, 1.125F);
             this.virtualAdditions$renderSpectralSpyglassOverlay(context, this.spyglassScale);
@@ -57,6 +58,6 @@ public class InGameHudMixin {
 
     @Inject(method = "getCameraPlayer", at = @At("HEAD"), cancellable = true)
     void virtualAdditions$getCameraPlayerFromProjection(CallbackInfoReturnable<PlayerEntity> cir) {
-        if (this.client.getCameraEntity() instanceof PlayerProjectionEntity playerProjectionEntity) cir.setReturnValue(playerProjectionEntity.getPlayer());
+        if (this.client.getCameraEntity() instanceof PlayerProjectionEntity playerProjectionEntity && ProjectionSpyglassItem.isInUseBy(this.client.player)) cir.setReturnValue(playerProjectionEntity.getPlayer());
     }
 }

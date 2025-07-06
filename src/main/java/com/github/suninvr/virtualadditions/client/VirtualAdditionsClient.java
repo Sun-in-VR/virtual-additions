@@ -9,7 +9,10 @@ import com.github.suninvr.virtualadditions.registry.VAPackets;
 import com.github.suninvr.virtualadditions.registry.VAParticleTypes;
 import com.github.suninvr.virtualadditions.registry.VAScreenHandler;
 import com.github.suninvr.virtualadditions.screen.ColoringStationScreenHandler;
+import com.mojang.brigadier.builder.LiteralArgumentBuilder;
 import net.fabricmc.api.ClientModInitializer;
+import net.fabricmc.fabric.api.client.command.v2.ClientCommandManager;
+import net.fabricmc.fabric.api.client.command.v2.ClientCommandRegistrationCallback;
 import net.fabricmc.fabric.api.client.networking.v1.ClientPlayNetworking;
 import net.fabricmc.fabric.api.client.particle.v1.ParticleFactoryRegistry;
 import net.minecraft.client.MinecraftClient;
@@ -21,6 +24,8 @@ import net.minecraft.client.particle.WaterSplashParticle;
 import net.minecraft.entity.Entity;
 import net.minecraft.text.Text;
 import net.minecraft.world.World;
+
+import java.io.File;
 
 public class VirtualAdditionsClient implements ClientModInitializer {
 

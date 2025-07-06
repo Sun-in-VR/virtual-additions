@@ -36,6 +36,7 @@ public class VADispenserBehavior {
         DispenserBlock.registerProjectileBehavior(VAItems.STEEL_BOMB);
         DispenserBlock.registerProjectileBehavior(VAItems.LIGHTNING_BOTTLE);
         DispenserBlock.registerProjectileBehavior(VAItems.TOMATO);
+        DispenserBlock.registerProjectileBehavior(VAItems.PURPLE_EGG);
 
         DispenserBlock.registerBehavior(VAItems.SALINE_SPAWN_EGG, spawnEggBehavior);
         DispenserBlock.registerBehavior(VAItems.LUMWASP_SPAWN_EGG, spawnEggBehavior);

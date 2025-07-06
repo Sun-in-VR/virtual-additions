@@ -20,7 +20,6 @@ public class SoulSproutBlock extends FlowerBlock {
     public SoulSproutBlock(Settings settings) {
         super(VAStatusEffects.AURA, 4, settings);
     }
-    public static final IntProvider experienceDropped = UniformIntProvider.create(-1, 1);
 
     @Override
     public void randomDisplayTick(BlockState state, World world, BlockPos pos, Random random) {
@@ -33,14 +32,6 @@ public class SoulSproutBlock extends FlowerBlock {
             double e = pos.getY() + random.nextDouble() * 5.0;
             double f = pos.getZ() + random.nextDouble() * 10.0 - 5.0;
             world.addParticleClient(VAParticleTypes.SOUL_FIREFLY, d, e, f, 0.0, 0.0, 0.0);
-        }
-    }
-
-    @Override
-    protected void onStacksDropped(BlockState state, ServerWorld world, BlockPos pos, ItemStack tool, boolean dropExperience) {
-        if (tool.isOf(Items.SHEARS)) return;
-        if (dropExperience) {
-            this.dropExperienceWhenMined(world, pos, tool, experienceDropped);
         }
     }
 }

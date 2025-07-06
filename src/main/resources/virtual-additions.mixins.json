@@ -23,6 +23,7 @@
     "ExperienceDroppingBlockMixin",
     "FeatureFlagsMixin",
     "FenceBlockMixin",
+    "HeldItemRendererMixin",
     "HoeItemMixin",
     "HoneycombItemMixin",
     "ItemMixin",

@@ -121,6 +121,17 @@
         ]
       },
       "trigger": "minecraft:placed_block"
+    },
+    "wisberry": {
+      "conditions": {
+        "location": [
+          {
+            "block": "virtual_additions:wisberry",
+            "condition": "minecraft:block_state_property"
+          }
+        ]
+      },
+      "trigger": "minecraft:placed_block"
     }
   },
   "display": {
@@ -147,7 +158,8 @@
       "cotton",
       "corn_crop",
       "tomato",
-      "cabbage"
+      "cabbage",
+      "wisberry"
     ]
   ],
   "sends_telemetry_event": true

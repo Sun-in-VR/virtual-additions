@@ -126,6 +126,12 @@
       "conditions": {
         "recipe_id": "virtual_additions:exoskeleton_armor_trim_smithing_template_smithing_trim"
       }
+    },
+    "armor_trimmed_virtual_additions:robe_armor_trim_smithing_template_smithing_trim": {
+      "trigger": "minecraft:recipe_crafted",
+      "conditions": {
+        "recipe_id": "virtual_additions:robe_armor_trim_smithing_template_smithing_trim"
+      }
     }
   },
   "requirements": [
@@ -148,7 +154,8 @@
       "armor_trimmed_minecraft:ward_armor_trim_smithing_template_smithing_trim",
       "armor_trimmed_minecraft:wayfinder_armor_trim_smithing_template_smithing_trim",
       "armor_trimmed_minecraft:wild_armor_trim_smithing_template_smithing_trim",
-      "armor_trimmed_virtual_additions:exoskeleton_armor_trim_smithing_template_smithing_trim"
+      "armor_trimmed_virtual_additions:exoskeleton_armor_trim_smithing_template_smithing_trim",
+      "armor_trimmed_virtual_additions:robe_armor_trim_smithing_template_smithing_trim"
     ]
   ],
   "sends_telemetry_event": true
