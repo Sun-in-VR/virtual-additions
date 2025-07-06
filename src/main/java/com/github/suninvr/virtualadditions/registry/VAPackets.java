@@ -34,13 +34,17 @@ public class VAPackets {
 
         PayloadTypeRegistry.playC2S().register(PLAYER_PROJECTION_MOVEMENT_C2S_ID, PlayerProjectionMovementC2SPayload.CODEC);
         ServerPlayNetworking.registerGlobalReceiver(PLAYER_PROJECTION_MOVEMENT_C2S_ID, (payload, context) -> {
-            if (context.player().getWorld() != null && context.player().getWorld().getEntity(payload.getEntityId()) instanceof PlayerProjectionEntity entity) {
-                double dx = payload.getPos().x - entity.lastX;
-                double dy = payload.getPos().y - entity.lastY;
-                double dz = payload.getPos().z - entity.lastZ;
-                entity.move(MovementType.PLAYER, new Vec3d(dx, dy, dz));
-                entity.setAngles(payload.getYaw(), payload.getPitch());
-                entity.lastYaw = entity.bodyYaw = entity.headYaw = entity.getYaw();
+            if (context.player().getWorld() != null && context.player().getWorld().getEntity(payload.entityId()) instanceof PlayerProjectionEntity entity) {
+                payload.pos().ifPresent(pos -> {
+                    double dx = pos.x - entity.lastX;
+                    double dy = pos.y - entity.lastY;
+                    double dz = pos.z - entity.lastZ;
+                    entity.move(MovementType.PLAYER, new Vec3d(dx, dy, dz));
+                });
+                if (payload.pitch().isPresent() && payload.yaw().isPresent()) {
+                    entity.setAngles(payload.yaw().get(), payload.pitch().get());
+                    entity.lastYaw = entity.bodyYaw = entity.headYaw = entity.getYaw();
+                }
             }
         });
 

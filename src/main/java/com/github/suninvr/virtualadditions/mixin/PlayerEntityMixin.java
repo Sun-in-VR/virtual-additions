@@ -1,5 +1,7 @@
 package com.github.suninvr.virtualadditions.mixin;
 
+import com.github.suninvr.virtualadditions.entity.PlayerProjectionEntity;
+import com.github.suninvr.virtualadditions.interfaces.PlayerEntityInterface;
 import com.github.suninvr.virtualadditions.item.GildTypes;
 import com.github.suninvr.virtualadditions.item.GildedToolUtil;
 import com.github.suninvr.virtualadditions.registry.VADamageTypes;
@@ -19,19 +21,37 @@ import net.minecraft.server.world.ServerWorld;
 import net.minecraft.world.World;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
+import org.spongepowered.asm.mixin.Unique;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
 @Mixin(PlayerEntity.class)
-public abstract class PlayerEntityMixin extends LivingEntity {
+public abstract class PlayerEntityMixin extends LivingEntity implements PlayerEntityInterface {
     @Shadow public abstract boolean isSwimming();
 
     @Shadow public abstract ItemCooldownManager getItemCooldownManager();
 
+    @Unique private PlayerProjectionEntity projection = null;
+
     protected PlayerEntityMixin(EntityType<? extends LivingEntity> entityType, World world) {
         super(entityType, world);
+    }
+
+    @Override
+    public PlayerProjectionEntity virtualAdditions$getProjectionEntity() {
+        return this.projection;
+    }
+
+    @Override
+    public void virtualAdditions$setProjectionEntity(PlayerProjectionEntity projection) {
+        this.projection = projection;
+    }
+
+    @Override
+    public boolean virtualAdditions$hasProjectionEntity() {
+        return this.projection != null;
     }
 
     @Inject(method = "getBlockBreakingSpeed", at = @At(value = "INVOKE", target = "Lnet/minecraft/entity/effect/StatusEffectUtil;hasHaste(Lnet/minecraft/entity/LivingEntity;)Z", shift = At.Shift.BEFORE))

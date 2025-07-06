@@ -31,7 +31,7 @@ public class PlayerProjectionPhasingFogModifier extends FogModifier {
 
     @Override
     public int getFogColor(ClientWorld world, Camera camera, int viewDistance, float skyDarkness) {
-        return 0x646473;
+        return 0x2e404c;
     }
 
     @Override

@@ -4,53 +4,33 @@ import com.github.suninvr.virtualadditions.entity.PlayerProjectionEntity;
 import com.github.suninvr.virtualadditions.registry.VAPackets;
 import net.minecraft.network.PacketByteBuf;
 import net.minecraft.network.codec.PacketCodec;
+import net.minecraft.network.codec.PacketCodecs;
 import net.minecraft.network.packet.CustomPayload;
+import net.minecraft.util.Uuids;
 import net.minecraft.util.math.Vec3d;
 
+import java.util.Optional;
 import java.util.UUID;
 
-public class PlayerProjectionMovementC2SPayload implements CustomPayload {
-    public static final PacketCodec<PacketByteBuf, PlayerProjectionMovementC2SPayload> CODEC = PacketCodec.of(PlayerProjectionMovementC2SPayload::write, PlayerProjectionMovementC2SPayload::new);
-    private final UUID entityId;
-    private final Vec3d pos;
-    private final float pitch;
-    private final float yaw;
+public record PlayerProjectionMovementC2SPayload(UUID entityId, Optional<Vec3d> pos, Optional<Float> pitch, Optional<Float> yaw) implements CustomPayload {
+    public static final PacketCodec<PacketByteBuf, PlayerProjectionMovementC2SPayload> CODEC = PacketCodec.tuple(
+            Uuids.PACKET_CODEC, PlayerProjectionMovementC2SPayload::entityId,
+            PacketCodecs.optional(Vec3d.PACKET_CODEC), PlayerProjectionMovementC2SPayload::pos,
+            PacketCodecs.FLOAT.collect(PacketCodecs::optional), PlayerProjectionMovementC2SPayload::pitch,
+            PacketCodecs.FLOAT.collect(PacketCodecs::optional), PlayerProjectionMovementC2SPayload::yaw,
+            PlayerProjectionMovementC2SPayload::new
+    );
 
-    public PlayerProjectionMovementC2SPayload(PacketByteBuf packetByteBuf) {
-        this.entityId = packetByteBuf.readUuid();
-        this.pos = packetByteBuf.readVec3d();
-        this.pitch = packetByteBuf.readFloat();
-        this.yaw = packetByteBuf.readFloat();
+    public static PlayerProjectionMovementC2SPayload createFull(PlayerProjectionEntity entity) {
+        return new PlayerProjectionMovementC2SPayload(entity.getUuid(), Optional.of(entity.getPos()), Optional.of(entity.getPitch()), Optional.of(entity.getYaw()));
     }
 
-    public PlayerProjectionMovementC2SPayload(PlayerProjectionEntity entity) {
-        this.entityId = entity.getUuid();
-        this.pos = entity.getPos();
-        this.pitch = entity.getPitch();
-        this.yaw = entity.getYaw();
+    public static PlayerProjectionMovementC2SPayload createPosOnly(PlayerProjectionEntity entity) {
+        return new PlayerProjectionMovementC2SPayload(entity.getUuid(), Optional.of(entity.getPos()), Optional.empty(), Optional.empty());
     }
 
-    private void write(PacketByteBuf buf) {
-        buf.writeUuid(this.entityId);
-        buf.writeVec3d(this.pos);
-        buf.writeFloat(this.pitch);
-        buf.writeFloat(this.yaw);
-    }
-
-    public UUID getEntityId() {
-        return this.entityId;
-    }
-
-    public Vec3d getPos() {
-        return pos;
-    }
-
-    public float getPitch() {
-        return pitch;
-    }
-
-    public float getYaw() {
-        return yaw;
+    public static PlayerProjectionMovementC2SPayload createAnglesOnly(PlayerProjectionEntity entity) {
+        return new PlayerProjectionMovementC2SPayload(entity.getUuid(), Optional.empty(), Optional.of(entity.getPitch()), Optional.of(entity.getYaw()));
     }
 
     @Override

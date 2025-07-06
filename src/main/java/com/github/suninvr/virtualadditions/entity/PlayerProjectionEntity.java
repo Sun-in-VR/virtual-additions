@@ -1,12 +1,15 @@
 package com.github.suninvr.virtualadditions.entity;
 
 import com.github.suninvr.virtualadditions.interfaces.DamageSourcesInterface;
+import com.github.suninvr.virtualadditions.interfaces.PlayerEntityInterface;
+import com.github.suninvr.virtualadditions.network.PlayerProjectionMovementC2SPayload;
 import com.github.suninvr.virtualadditions.network.PlayerProjectionS2CPayload;
 import com.github.suninvr.virtualadditions.registry.VAEntityType;
 import com.github.suninvr.virtualadditions.registry.VAItems;
 import com.github.suninvr.virtualadditions.registry.VATrackedDataHandlerRegistry;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
+import net.fabricmc.fabric.api.client.networking.v1.ClientPlayNetworking;
 import net.fabricmc.fabric.api.networking.v1.ServerPlayNetworking;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.network.ClientPlayerEntity;
@@ -35,6 +38,7 @@ public class PlayerProjectionEntity extends LivingEntity {
     private static final UUID EMPTY_ID = UUID.fromString("0-0-0-0-0");
     private PlayerEntity player;
     private boolean isPhasingThroughWall;
+    public boolean lookDirectionChanged = false;
     private long isPhasingThroughWallLastCheck = -1;
 
     public PlayerProjectionEntity(EntityType<? extends LivingEntity> entityType, World world) {
@@ -51,6 +55,7 @@ public class PlayerProjectionEntity extends LivingEntity {
 
     public static PlayerProjectionEntity createForPlayer(PlayerEntity player) {
         PlayerProjectionEntity entity = VAEntityType.PLAYER_PROJECTION.create(player.getWorld(), SpawnReason.MOB_SUMMONED);
+        if (entity == null) return null;
         Vec3d vec3d = player.getEyePos().add(player.getRotationVector().multiply(1.6));
         entity.setPos(vec3d.x, vec3d.y, vec3d.z);
         entity.setRotation(player.getYaw(), player.getPitch());
@@ -60,6 +65,7 @@ public class PlayerProjectionEntity extends LivingEntity {
         player.getWorld().spawnEntity(entity);
         if (player instanceof ServerPlayerEntity serverPlayerEntity) ServerPlayNetworking.send(serverPlayerEntity, new PlayerProjectionS2CPayload(entity.uuid));
         entity.setCustomName(player.getName());
+        ((PlayerEntityInterface)(player)).virtualAdditions$setProjectionEntity(entity);
         return entity;
     }
 
@@ -79,7 +85,7 @@ public class PlayerProjectionEntity extends LivingEntity {
         if (this.player == null && this.dataTracker.get(PLAYER_ID) instanceof UUID playerId && !playerId.equals(EMPTY_ID)) {
             this.player = this.getWorld().getPlayerByUuid(playerId);
         }
-        if (this.player != null) {
+        if (this.getWorld().isClient() && this.player != null && this.age % 2 == 0) {
             this.spawnTrailParticles();
         }
     }
@@ -94,11 +100,11 @@ public class PlayerProjectionEntity extends LivingEntity {
         return this.isPhasingThroughWall;
     }
 
+    @Environment(EnvType.CLIENT)
     @Override
     public void onRemoved() {
         if (this.getPlayer() != null) {
             if (this.getPlayer().isMainPlayer()) MinecraftClient.getInstance().setCameraEntity(MinecraftClient.getInstance().player);
-
         }
     }
 
@@ -106,7 +112,9 @@ public class PlayerProjectionEntity extends LivingEntity {
     public void remove(RemovalReason reason) {
         super.remove(reason);
         if (this.getPlayer() instanceof ServerPlayerEntity serverPlayer) {
-            serverPlayer.getItemCooldownManager().set(VAItems.SPECTRAL_SPYGLASS.getDefaultStack(), 20);
+            if (!serverPlayer.getItemCooldownManager().isCoolingDown(VAItems.SPECTRAL_SPYGLASS.getDefaultStack())) serverPlayer.getItemCooldownManager().set(VAItems.SPECTRAL_SPYGLASS.getDefaultStack(), 20);
+            serverPlayer.clearActiveItem();
+            ((PlayerEntityInterface)(player)).virtualAdditions$setProjectionEntity(null);
         }
     }
 
@@ -123,9 +131,10 @@ public class PlayerProjectionEntity extends LivingEntity {
             this.setVelocity(this.getVelocity().multiply(this.isPhasingThroughWall() ? 0.2F : 0.91F));
         }
     }
+
+    @Environment(EnvType.CLIENT)
     private void spawnTrailParticles() {
         if (this.getPlayer() == null) return;
-        if (this.getPlayer().isMainPlayer() && this.age % 4 != 0) return;
         Vec3d playerRelative = this.player.getEyePos().subtract(this.getEyePos());
         Vec3d pos = new Vec3d(this.getParticleX(0.35), this.getRandomBodyY(), this.getParticleZ(0.35)).add(playerRelative.multiply(0.5 / Math.max(playerRelative.length(), 0.001)));
         Vec3d playerPos = new Vec3d(this.player.getParticleX(0.6), this.player.getRandomBodyY(), this.player.getParticleZ(0.6));
@@ -133,9 +142,20 @@ public class PlayerProjectionEntity extends LivingEntity {
         this.getWorld().addParticleClient(effect, true, true, pos.x, pos.y, pos.z, 0.0, 0.0, 0.0);
     }
 
-    @Override
-    protected Vec3d getControlledMovementInput(PlayerEntity controllingPlayer, Vec3d movementInput) {
-        return movementInput;
+    @Environment(EnvType.CLIENT)
+    public void sendMovementPackets() {
+        boolean anglesChanged = this.lookDirectionChanged;
+        boolean posChanged = this.getPos().x != this.lastX || this.getPos().y != this.lastY || this.getPos().z != this.lastZ;
+        PlayerProjectionMovementC2SPayload payload = null;
+        if (anglesChanged && posChanged) {
+            payload = PlayerProjectionMovementC2SPayload.createFull(this);
+        } else if (posChanged) {
+            payload = PlayerProjectionMovementC2SPayload.createPosOnly(this);
+        } else if (anglesChanged) {
+            payload = PlayerProjectionMovementC2SPayload.createAnglesOnly(this);
+        }
+        this.lookDirectionChanged = false;
+        if (payload != null) ClientPlayNetworking.send(payload);
     }
 
     @Override

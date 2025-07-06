@@ -2,23 +2,25 @@ package com.github.suninvr.virtualadditions.mixin;
 
 import com.github.suninvr.virtualadditions.entity.PlayerProjectionEntity;
 import com.github.suninvr.virtualadditions.item.ProjectionSpyglassItem;
-import com.github.suninvr.virtualadditions.network.PlayerProjectionMovementC2SPayload;
-import com.github.suninvr.virtualadditions.registry.VAItems;
 import com.mojang.authlib.GameProfile;
-import net.fabricmc.fabric.api.client.networking.v1.ClientPlayNetworking;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.input.Input;
 import net.minecraft.client.network.AbstractClientPlayerEntity;
 import net.minecraft.client.network.ClientPlayerEntity;
+import net.minecraft.client.util.ClientPlayerTickable;
 import net.minecraft.client.world.ClientWorld;
+import net.minecraft.util.Cooldown;
 import net.minecraft.util.Hand;
 import net.minecraft.util.PlayerInput;
+import org.spongepowered.asm.mixin.Final;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
+
+import java.util.List;
 
 @Mixin(ClientPlayerEntity.class)
 public abstract class ClientPlayerEntityMixin extends AbstractClientPlayerEntity {
@@ -42,6 +44,14 @@ public abstract class ClientPlayerEntityMixin extends AbstractClientPlayerEntity
 
     @Shadow public abstract float getYaw(float tickProgress);
 
+    @Shadow @Final private Cooldown itemDropCooldown;
+
+    @Shadow protected abstract void sendMovementPackets();
+
+    @Shadow @Final private List<ClientPlayerTickable> tickables;
+
+    @Shadow public abstract boolean isInSneakingPose();
+
     @Inject(method = "tickMovementInput", at = @At("HEAD"), cancellable = true)
     void virtualAdditions$tickMovementInput(CallbackInfo ci) {
         if (MinecraftClient.getInstance().getCameraEntity() instanceof PlayerProjectionEntity) {
@@ -56,10 +66,18 @@ public abstract class ClientPlayerEntityMixin extends AbstractClientPlayerEntity
         }
     }
 
-    @Inject(method = "tick", at = @At("TAIL"))
-    void virtualAdditions$sendVehicleMovementPacketsForPlayerProjection(CallbackInfo ci) {
-        if (this.isLoaded() && MinecraftClient.getInstance().getCameraEntity() instanceof PlayerProjectionEntity playerProjectionEntity) {
-            ClientPlayNetworking.send(new PlayerProjectionMovementC2SPayload(playerProjectionEntity));
+    @Inject(method = "tick", at = @At(value = "INVOKE", target = "Lnet/minecraft/client/network/ClientPlayerEntity;tickLoaded()V", shift = At.Shift.AFTER), cancellable = true)
+    void virtualAdditions$overrideMovementPackets(CallbackInfo ci) {
+        if (this.isLoaded() && ProjectionSpyglassItem.isInUseBy(this) && MinecraftClient.getInstance().getCameraEntity() instanceof PlayerProjectionEntity playerProjectionEntity) {
+            this.tickLoaded();
+            this.itemDropCooldown.tick();
+            super.tick();
+            this.sendMovementPackets();
+            playerProjectionEntity.sendMovementPackets();
+            for (ClientPlayerTickable clientPlayerTickable : this.tickables) {
+                clientPlayerTickable.tick();
+            }
+            ci.cancel();
         }
     }
 
