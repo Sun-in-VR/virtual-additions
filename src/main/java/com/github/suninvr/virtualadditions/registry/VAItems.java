@@ -146,6 +146,7 @@ public class VAItems {
     public static final Item SPECTRAL_LANTERN;
     public static final Item SPECTRAL_POWDER;
     public static final Item SPECTRAL_SAND;
+    public static final Item SPECTRAL_SPYGLASS;
     public static final Item OAK_HEDGE;
     public static final Item SPRUCE_HEDGE;
     public static final Item BIRCH_HEDGE;
@@ -672,6 +673,8 @@ public class VAItems {
         SPECTRAL_LANTERN = registerBlockItem("spectral_lantern", VABlocks.SPECTRAL_LANTERN, ItemGroups.FUNCTIONAL, Items.SOUL_LANTERN);
         SPECTRAL_POWDER = register("spectral_powder", ItemGroups.INGREDIENTS, Items.BLAZE_POWDER);
         SPECTRAL_SAND = registerBlockItem("spectral_sand", VABlocks.SPECTRAL_SAND, ItemGroups.NATURAL, Items.RED_SANDSTONE);
+
+        SPECTRAL_SPYGLASS = register("spectral_spyglass", ProjectionSpyglassItem::new, new Item.Settings().maxCount(1), ItemGroups.TOOLS, Items.SPYGLASS);
 
         //endregion
 

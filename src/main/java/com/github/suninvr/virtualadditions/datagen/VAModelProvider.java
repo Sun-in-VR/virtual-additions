@@ -349,6 +349,8 @@ public class VAModelProvider {
             registerTintableWithDefaultTexture(generator, VAItems.ICE_CREAM);
 
             registerApplicablePotion(generator, VAItems.APPLICABLE_POTION);
+
+            generator.registerWithInHandModel(VAItems.SPECTRAL_SPYGLASS);
         }
     }
 

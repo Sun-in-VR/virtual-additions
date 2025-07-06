@@ -1,6 +1,7 @@
 package com.github.suninvr.virtualadditions.mixin;
 
 import com.github.suninvr.virtualadditions.entity.AcidSpitEntity;
+import com.github.suninvr.virtualadditions.entity.PlayerProjectionEntity;
 import com.github.suninvr.virtualadditions.interfaces.DamageSourcesInterface;
 import com.github.suninvr.virtualadditions.registry.VADamageTypes;
 import net.minecraft.entity.Entity;
@@ -38,5 +39,9 @@ public abstract class DamageSourcesMixin implements DamageSourcesInterface {
 
     public DamageSource virtualAdditions$acidSpit(AcidSpitEntity source, @Nullable Entity attacker) {
         return this.create(VADamageTypes.ACID_SPIT, source, attacker);
+    }
+
+    public DamageSource virtualAdditions$soulDestroyed(@Nullable PlayerProjectionEntity source, @Nullable Entity attacker) {
+        return this.create(VADamageTypes.SOUL_DESTROYED, source, attacker);
     }
 }

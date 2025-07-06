@@ -455,6 +455,7 @@
     "item.virtual_additions.balloon_fruit": "Balloon Fruit",
     "item.virtual_additions.spectral_torch": "Spectral Torch",
     "item.virtual_additions.spectral_powder": "Spectral Powder",
+    "item.virtual_additions.spectral_spyglass": "Spectral Spyglass",
     "item.virtual_additions.fried_egg": "Fried Egg",
     "item.virtual_additions.ice_cream": "Ice Cream",
     "item.virtual_additions.cheese_wedge": "Cheese Wedge",
@@ -599,6 +600,7 @@
     "death.attack.acid": "%s dissolved in acid",
     "death.attack.acid.player": "%s dissolved in acid while trying to escape %s",
     "death.attack.acid_spit": "%s dissolved in the acidic spit of %s",
+    "death.attack.soul_destroyed": "%s's soul was obliterated by %s",
 
     "gamerule.ioliteInterference": "Iolite interference effects",
     "gamerule.sculkGildBlockSelectionMaximum": "Sculk Gild Maximum Selection Size",

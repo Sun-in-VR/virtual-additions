@@ -6,6 +6,7 @@ import com.github.suninvr.virtualadditions.client.render.block.CustomBedBlockEnt
 import com.github.suninvr.virtualadditions.client.render.block.CustomShulkerBoxBlockEntityRenderer;
 import com.github.suninvr.virtualadditions.client.render.block.MiniPortalBlockEntityRenderer;
 import com.github.suninvr.virtualadditions.client.render.entity.*;
+import com.github.suninvr.virtualadditions.client.render.fog.PlayerProjectionPhasingFogModifier;
 import com.github.suninvr.virtualadditions.registry.*;
 import net.fabricmc.fabric.api.client.render.fluid.v1.FluidRenderHandlerRegistry;
 import net.fabricmc.fabric.api.client.render.fluid.v1.SimpleFluidRenderHandler;
@@ -25,10 +26,15 @@ import net.minecraft.client.render.entity.BoatEntityRenderer;
 import net.minecraft.client.render.entity.FlyingItemEntityRenderer;
 import net.minecraft.client.render.entity.model.BoatEntityModel;
 import net.minecraft.client.render.entity.model.EntityModelLayer;
+import net.minecraft.client.render.fog.FogModifier;
+import net.minecraft.client.render.fog.FogRenderer;
 import net.minecraft.client.util.SpriteIdentifier;
 import net.minecraft.util.Identifier;
 import net.minecraft.world.biome.FoliageColors;
 import net.minecraft.world.biome.GrassColors;
+
+import java.util.ArrayList;
+import java.util.List;
 
 import static com.github.suninvr.virtualadditions.VirtualAdditions.idOf;
 
@@ -63,6 +69,7 @@ public class VARenderers {
         initBlockEntityRenderers();
         initFluidRenderers();
         initColorProviders();
+        initFogModifiers();
     }
 
     private static void initBlockRenderLayers() {
@@ -196,6 +203,7 @@ public class VARenderers {
         EntityRendererRegistry.register(VAEntityType.LUMWASP, LumwaspEntityRenderer::new);
         EntityRendererRegistry.register(VAEntityType.SPECTRE, SpectreEntityRenderer::new);
         EntityRendererRegistry.register(VAEntityType.SALINE, SalineEntityRenderer::new);
+        EntityRendererRegistry.register(VAEntityType.PLAYER_PROJECTION, PlayerProjectionEntityRenderer::new);
         EntityRendererRegistry.register(VAEntityType.LIGHTNING_BOTTLE, FlyingItemEntityRenderer::new);
         EntityRendererRegistry.register(VAEntityType.SOULBLOOM_BOAT, context -> new BoatEntityRenderer(context, SOULBLOOM_BOAT));
         EntityRendererRegistry.register(VAEntityType.SOULBLOOM_CHEST_BOAT, context -> new BoatEntityRenderer(context, SOULBLOOM_CHEST_BOAT));
@@ -249,5 +257,9 @@ public class VARenderers {
                 return -1;
             }
         }, VABlocks.BLUE_PETALS);
+    }
+
+    private static void initFogModifiers() {
+        FogRenderer.FOG_MODIFIERS.addFirst(new PlayerProjectionPhasingFogModifier());
     }
 }

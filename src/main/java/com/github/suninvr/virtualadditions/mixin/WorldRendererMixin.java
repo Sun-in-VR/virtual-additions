@@ -1,30 +1,30 @@
 package com.github.suninvr.virtualadditions.mixin;
 
-import com.github.suninvr.virtualadditions.registry.VABlockTags;
-import com.github.suninvr.virtualadditions.registry.VAParticleTypes;
+import com.github.suninvr.virtualadditions.entity.PlayerProjectionEntity;
+import net.minecraft.client.MinecraftClient;
+import net.minecraft.client.render.Camera;
+import net.minecraft.client.render.Frustum;
 import net.minecraft.client.render.WorldRenderer;
 import net.minecraft.client.world.ClientWorld;
-import net.minecraft.particle.ParticleUtil;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.math.intprovider.UniformIntProvider;
+import net.minecraft.entity.Entity;
 import org.jetbrains.annotations.Nullable;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
-import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
+import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
+
+import java.util.List;
 
 @Mixin(WorldRenderer.class)
 public class WorldRendererMixin {
 
     @Shadow private @Nullable ClientWorld world;
 
-    //@Inject(method = "processWorldEvent", at = @At(value = "INVOKE", target = "Lnet/minecraft/particle/ParticleUtil;spawnParticle(Lnet/minecraft/world/World;Lnet/minecraft/util/math/BlockPos;Lnet/minecraft/particle/ParticleEffect;Lnet/minecraft/util/math/intprovider/IntProvider;)V", ordinal = 4, shift = At.Shift.BEFORE), cancellable = true)
-    //void virtualAdditions$spawnSteelScrapeParticles(int eventId, BlockPos pos, int data, CallbackInfo ci) {
-    //    if (this.world != null && this.world.getBlockState(pos).isIn(VABlockTags.USES_STEEL_SCRAPE_PARTICLES)) {
-    //        ParticleUtil.spawnParticle(this.world, pos, VAParticleTypes.SCRAPE_STEEL, UniformIntProvider.create(3, 5));
-    //        ci.cancel();
-    //    }
-    //}
+    @Inject(method = "getEntitiesToRender", at = @At("RETURN"))
+    void virtualAdditions$getEntitiesToRenderWhileUsingSpectralSpyglass(Camera camera, Frustum frustum, List<Entity> output, CallbackInfoReturnable<Boolean> cir) {
+        if (camera.getFocusedEntity() instanceof PlayerProjectionEntity && MinecraftClient.getInstance().player != null) output.add(MinecraftClient.getInstance().player);
+
+    }
 
 }

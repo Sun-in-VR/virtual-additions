@@ -12,6 +12,7 @@
     "BlockMixin",
     "BuiltinBiomesMixin",
     "BundleContentsComponentMixin",
+    "ClientPlayerEntityMixin",
     "CrossbowItemMixin",
     "DamageSourcesMixin",
     "DeathProtectionComponentMixin",
@@ -51,8 +52,10 @@
   "client": [
     "ClientPlayerInteractionManagerMixin",
     "ClientPlayNetworkHandlerMixin",
+    "InGameHudMixin",
     "ModelProviderItemAssetsMixin",
     "NumericPropertiesMixin",
+    "PlayerEntityRendererMixin",
     "TexturedRenderLayersMixin",
     "WorldEventHandlerMixin",
     "WorldRendererMixin"

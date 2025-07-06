@@ -1,7 +1,6 @@
 {
   "replace": false,
   "values": [
-    "virtual_additions:acid",
     "virtual_additions:soul_destroyed"
   ]
 }

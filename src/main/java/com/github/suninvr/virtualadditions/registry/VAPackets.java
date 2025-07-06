@@ -1,13 +1,14 @@
 package com.github.suninvr.virtualadditions.registry;
 
-import com.github.suninvr.virtualadditions.network.ColoringStationS2CPayload;
-import com.github.suninvr.virtualadditions.network.EntanglementDriveC2SPayload;
-import com.github.suninvr.virtualadditions.network.RemoteNotifierS2CPayload;
+import com.github.suninvr.virtualadditions.entity.PlayerProjectionEntity;
+import com.github.suninvr.virtualadditions.network.*;
 import com.github.suninvr.virtualadditions.screen.EntanglementDriveScreenHandler;
 import net.fabricmc.fabric.api.networking.v1.PayloadTypeRegistry;
 import net.fabricmc.fabric.api.networking.v1.ServerPlayNetworking;
+import net.minecraft.entity.MovementType;
 import net.minecraft.network.packet.CustomPayload;
 import net.minecraft.sound.SoundCategory;
+import net.minecraft.util.math.Vec3d;
 
 import static com.github.suninvr.virtualadditions.VirtualAdditions.idOf;
 
@@ -16,6 +17,8 @@ public class VAPackets {
     public static CustomPayload.Id<EntanglementDriveC2SPayload> ENTANGLEMENT_DRIVE_C2S_ID = new CustomPayload.Id<>(idOf("entanglement_drive_c2s"));
     public static CustomPayload.Id<RemoteNotifierS2CPayload> REMOTE_NOTIFIER_S2C_ID = new CustomPayload.Id<>(idOf("remote_notifier_s2c"));
     public static CustomPayload.Id<ColoringStationS2CPayload> COLORING_STATION_S2C_ID = new CustomPayload.Id<>(idOf("coloring_station_s2c"));
+    public static CustomPayload.Id<PlayerProjectionS2CPayload> PLAYER_PROJECTION_S2C_ID = new CustomPayload.Id<>(idOf("player_projection_s2c"));
+    public static CustomPayload.Id<PlayerProjectionMovementC2SPayload> PLAYER_PROJECTION_MOVEMENT_C2S_ID = new CustomPayload.Id<>(idOf("player_projection_movement_c2s"));
 
     static {
         PayloadTypeRegistry.playC2S().register(ENTANGLEMENT_DRIVE_C2S_ID, EntanglementDriveC2SPayload.CODEC);
@@ -29,8 +32,21 @@ public class VAPackets {
             }
         });
 
+        PayloadTypeRegistry.playC2S().register(PLAYER_PROJECTION_MOVEMENT_C2S_ID, PlayerProjectionMovementC2SPayload.CODEC);
+        ServerPlayNetworking.registerGlobalReceiver(PLAYER_PROJECTION_MOVEMENT_C2S_ID, (payload, context) -> {
+            if (context.player().getWorld() != null && context.player().getWorld().getEntity(payload.getEntityId()) instanceof PlayerProjectionEntity entity) {
+                double dx = payload.getPos().x - entity.lastX;
+                double dy = payload.getPos().y - entity.lastY;
+                double dz = payload.getPos().z - entity.lastZ;
+                entity.move(MovementType.PLAYER, new Vec3d(dx, dy, dz));
+                entity.setAngles(payload.getYaw(), payload.getPitch());
+                entity.lastYaw = entity.bodyYaw = entity.headYaw = entity.getYaw();
+            }
+        });
+
         PayloadTypeRegistry.playS2C().register(REMOTE_NOTIFIER_S2C_ID, RemoteNotifierS2CPayload.CODEC);
         PayloadTypeRegistry.playS2C().register(COLORING_STATION_S2C_ID, ColoringStationS2CPayload.CODEC);
+        PayloadTypeRegistry.playS2C().register(PLAYER_PROJECTION_S2C_ID, PlayerProjectionS2CPayload.CODEC);
 
     }
 

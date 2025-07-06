@@ -4,8 +4,9 @@ import com.github.suninvr.virtualadditions.entity.SpectreEntity;
 import net.minecraft.client.model.*;
 import net.minecraft.client.render.entity.model.EntityModel;
 import net.minecraft.client.render.entity.state.LivingEntityRenderState;
+import net.minecraft.entity.LivingEntity;
 
-public class SpectreEntityModel<T extends SpectreEntity> extends EntityModel<LivingEntityRenderState> {
+public class SpectreEntityModel<T extends LivingEntity> extends EntityModel<LivingEntityRenderState> {
     private final ModelPart head;
 
     protected SpectreEntityModel(ModelPart root) {

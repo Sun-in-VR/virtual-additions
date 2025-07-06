@@ -4,6 +4,7 @@ import com.github.suninvr.virtualadditions.client.particle.*;
 import com.github.suninvr.virtualadditions.client.screen.ColoringStationScreen;
 import com.github.suninvr.virtualadditions.client.screen.EntanglementDriveScreen;
 import com.github.suninvr.virtualadditions.client.toast.RemoteNotifierToast;
+import com.github.suninvr.virtualadditions.entity.PlayerProjectionEntity;
 import com.github.suninvr.virtualadditions.registry.VAPackets;
 import com.github.suninvr.virtualadditions.registry.VAParticleTypes;
 import com.github.suninvr.virtualadditions.registry.VAScreenHandler;
@@ -11,12 +12,15 @@ import com.github.suninvr.virtualadditions.screen.ColoringStationScreenHandler;
 import net.fabricmc.api.ClientModInitializer;
 import net.fabricmc.fabric.api.client.networking.v1.ClientPlayNetworking;
 import net.fabricmc.fabric.api.client.particle.v1.ParticleFactoryRegistry;
+import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.gui.screen.ingame.HandledScreens;
 import net.minecraft.client.particle.FireflyParticle;
 import net.minecraft.client.particle.FlameParticle;
 import net.minecraft.client.particle.LeavesParticle;
 import net.minecraft.client.particle.WaterSplashParticle;
+import net.minecraft.entity.Entity;
 import net.minecraft.text.Text;
+import net.minecraft.world.World;
 
 public class VirtualAdditionsClient implements ClientModInitializer {
 
@@ -51,6 +55,24 @@ public class VirtualAdditionsClient implements ClientModInitializer {
                     coloringStationScreen.getScreenHandler().setRecipeData(payload.list());
                 } else {
                     ColoringStationScreenHandler.recipeDataOnLoad = payload.list();
+                }
+            }
+        });
+
+        ClientPlayNetworking.registerGlobalReceiver(VAPackets.PLAYER_PROJECTION_S2C_ID, (payload, context) -> {
+            World world = context.player().getWorld();
+            if (world != null) {
+                Entity entity = world.getEntity(payload.getEntityId());
+                if (entity instanceof PlayerProjectionEntity playerProjectionEntity) {
+                    if (payload.isRemoved()) {
+                        playerProjectionEntity.remove(Entity.RemovalReason.DISCARDED);
+                        context.client().setCameraEntity(context.client().player);
+                    } else {
+                        playerProjectionEntity.setClientPlayer(context.client().player);
+                        context.client().setCameraEntity(playerProjectionEntity);
+                    }
+                } else {
+                    context.client().setCameraEntity(context.client().player);
                 }
             }
         });

@@ -4,7 +4,6 @@ import com.github.suninvr.virtualadditions.entity.SpectreEntity;
 import com.github.suninvr.virtualadditions.item.GildTypes;
 import com.github.suninvr.virtualadditions.item.interfaces.GildedToolItem;
 import com.github.suninvr.virtualadditions.registry.VABlockTags;
-import com.github.suninvr.virtualadditions.registry.VAEntityType;
 import com.github.suninvr.virtualadditions.registry.VAStatusEffects;
 import net.minecraft.block.BlockState;
 import net.minecraft.entity.Entity;
@@ -18,6 +17,7 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.registry.entry.RegistryEntry;
 import net.minecraft.server.world.ServerWorld;
 import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.math.Vec3d;
 import net.minecraft.util.shape.VoxelShapes;
 import net.minecraft.world.World;
 import org.jetbrains.annotations.Nullable;
@@ -83,5 +83,9 @@ public abstract class LivingEntityMixin extends Entity {
     @Inject(method = "getExperienceToDrop(Lnet/minecraft/server/world/ServerWorld;Lnet/minecraft/entity/Entity;)I", at = @At("RETURN"), cancellable = true)
     void virtualAdditions$getModifiedXpToDrop(ServerWorld world, Entity attacker, CallbackInfoReturnable<Integer> cir) {
         cir.setReturnValue((int) (cir.getReturnValueI() * this.experienceMultiplier));
+    }
+
+    @Inject(method = "travelControlled", at = @At("HEAD"))
+    void virtualAdditions$travelConteolled(PlayerEntity controllingPlayer, Vec3d movementInput, CallbackInfo ci) {
     }
 }

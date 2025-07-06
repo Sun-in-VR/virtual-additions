@@ -30,6 +30,7 @@ public class VAEntityType {
     public static final EntityType<LumwaspEntity> LUMWASP;
     public static final EntityType<SalineEntity> SALINE;
     public static final EntityType<SpectreEntity> SPECTRE;
+    public static final EntityType<PlayerProjectionEntity> PLAYER_PROJECTION;
     public static final EntityType<BoatEntity> SOULBLOOM_BOAT;
     public static final EntityType<ChestBoatEntity> SOULBLOOM_CHEST_BOAT;
     public static final EntityType<LightningBottleEntity> LIGHTNING_BOTTLE;
@@ -75,6 +76,10 @@ public class VAEntityType {
                 .dimensions(0.5F, 0.5F).eyeHeight(0.25F).makeFireImmune()
                 .build(RegistryKey.of(RegistryKeys.ENTITY_TYPE, VirtualAdditions.idOf("spectre"))));
 
+        PLAYER_PROJECTION = Registry.register(Registries.ENTITY_TYPE, idOf("player_projection"), EntityType.Builder.create(PlayerProjectionEntity::new, SpawnGroup.MISC)
+                .dimensions(0.5F, 0.5F).eyeHeight(0.25F).dropsNothing()
+                .build(RegistryKey.of(RegistryKeys.ENTITY_TYPE, VirtualAdditions.idOf("spectre"))));
+
         LIGHTNING_BOTTLE = Registry.register(Registries.ENTITY_TYPE, idOf("lightning_bottle"), EntityType.Builder.<LightningBottleEntity>create(LightningBottleEntity::new, SpawnGroup.MISC)
                 .dropsNothing().dimensions(0.25F, 0.25F).maxTrackingRange(4).trackingTickInterval(10)
                 .build(RegistryKey.of(RegistryKeys.ENTITY_TYPE, idOf("lightning_bottle"))));
@@ -90,6 +95,7 @@ public class VAEntityType {
         ENTITY_ATTRIBUTES.put(LUMWASP, LumwaspEntity.createLumwaspAttributes());
         ENTITY_ATTRIBUTES.put(SALINE, SalineEntity.createSalineAttributes());
         ENTITY_ATTRIBUTES.put(SPECTRE, SpectreEntity.createSpectreAttributes());
+        ENTITY_ATTRIBUTES.put(PLAYER_PROJECTION, SpectreEntity.createSpectreAttributes());
     }
 
     public static void init(){

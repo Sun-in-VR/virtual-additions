@@ -1,16 +1,23 @@
 package com.github.suninvr.virtualadditions.mixin;
 
+import com.github.suninvr.virtualadditions.entity.PlayerProjectionEntity;
 import com.github.suninvr.virtualadditions.interfaces.DamageSourcesInterface;
 import com.github.suninvr.virtualadditions.interfaces.EntityInterface;
 import com.github.suninvr.virtualadditions.registry.VABlockTags;
 import com.github.suninvr.virtualadditions.registry.VAFluids;
 import com.github.suninvr.virtualadditions.registry.VAItemTags;
+import com.github.suninvr.virtualadditions.registry.VAItems;
 import it.unimi.dsi.fastutil.objects.Object2DoubleMap;
+import net.fabricmc.api.EnvType;
+import net.fabricmc.api.Environment;
 import net.minecraft.block.BlockState;
+import net.minecraft.client.MinecraftClient;
+import net.minecraft.client.network.ClientPlayerEntity;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.ItemEntity;
 import net.minecraft.entity.damage.DamageSource;
 import net.minecraft.entity.damage.DamageSources;
+import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.fluid.Fluid;
 import net.minecraft.registry.tag.TagKey;
 import net.minecraft.server.command.CommandOutput;
@@ -76,6 +83,17 @@ public abstract class EntityMixin implements Nameable, EntityLike, CommandOutput
         
         if (this.usedMiniPortalThisTick) {
             this.usedMiniPortalThisTick = false;
+        }
+    }
+
+    @Environment(EnvType.CLIENT)
+    @Inject(method = "changeLookDirection", at = @At("HEAD"), cancellable = true)
+    void virtualAdditions$lockLookDirection(double cursorDeltaX, double cursorDeltaY, CallbackInfo ci) {
+        if (((Object)this) instanceof ClientPlayerEntity && MinecraftClient.getInstance().getCameraEntity() instanceof PlayerProjectionEntity entity) {
+            entity.changeLookDirection(cursorDeltaX, cursorDeltaY);
+            entity.lastYaw = entity.bodyYaw = entity.headYaw = entity.getYaw();
+            entity.updateLastAngles();
+            ci.cancel();
         }
     }
 
