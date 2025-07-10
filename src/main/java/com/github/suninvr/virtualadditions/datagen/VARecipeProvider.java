@@ -350,6 +350,13 @@ public final class VARecipeProvider {
                             .input('i', Items.IRON_NUGGET).input('t', VAItems.SPECTRAL_TORCH)
                     .criterion("has_spectral_torch", conditionsFromItem(VAItems.SPECTRAL_TORCH)).offerTo(exporter);
 
+            ShapedRecipeJsonBuilder.create(this.registryLookup, RecipeCategory.TOOLS, VAItems.SPECTRAL_SPYGLASS)
+                            .pattern("sss")
+                            .pattern("sps")
+                            .pattern("sss")
+                            .input('s', VAItems.SPECTRAL_POWDER).input('p', Items.SPYGLASS)
+                    .criterion("has_spectral_powder", conditionsFromItem(VAItems.SPECTRAL_POWDER)).offerTo(exporter);
+
 
             ShapelessRecipeJsonBuilder.create(this.registryLookup, RecipeCategory.MISC, VAItems.MAROON_DYE, 2)
                     .input(Ingredient.ofItems(Items.RED_DYE), 1)
@@ -451,7 +458,7 @@ public final class VARecipeProvider {
 
             ShapelessRecipeJsonBuilder.create(this.registryLookup, RecipeCategory.FOOD, Items.EXPERIENCE_BOTTLE, 3)
                     .input(Items.GLASS_BOTTLE, 3)
-                    .input(VAItems.WISBERRY).criterion("has_wisberry", conditionsFromItem(VAItems.WISBERRY)).offerTo(this.exporter);
+                    .input(VAItems.WISDOM_BERRY).criterion("has_wisdom_berry", conditionsFromItem(VAItems.WISDOM_BERRY)).offerTo(this.exporter);
 
             ShapedRecipeJsonBuilder.create(this.registryLookup, RecipeCategory.TOOLS, VAItems.CLIMBING_ROPE, 4)
                     .pattern(" # ")

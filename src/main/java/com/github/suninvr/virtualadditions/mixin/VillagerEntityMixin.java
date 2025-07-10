@@ -21,7 +21,7 @@ public class VillagerEntityMixin {
             VAItems.CORN, 1,
             VAItems.TOMATO, 1,
             VAItems.CABBAGE, 2,
-            VAItems.WISBERRY, 1
+            VAItems.WISDOM_BERRY, 1
     );
 
     static {

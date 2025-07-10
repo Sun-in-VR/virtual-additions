@@ -438,11 +438,11 @@
         }
       }
     },
-    "wisberry": {
+    "wisdom_berry": {
       "trigger": "minecraft:consume_item",
       "conditions": {
         "item": {
-          "items": "virtual_additions:wisberry"
+          "items": "virtual_additions:wisdom_berry"
         }
       }
     }
@@ -608,7 +608,7 @@
       "mutton_jerky"
     ],
     [
-      "wisberry"
+      "wisdom_berry"
     ]
   ],
   "rewards": {

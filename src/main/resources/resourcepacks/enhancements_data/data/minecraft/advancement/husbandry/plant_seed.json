@@ -122,11 +122,11 @@
       },
       "trigger": "minecraft:placed_block"
     },
-    "wisberry": {
+    "wisdom_berry": {
       "conditions": {
         "location": [
           {
-            "block": "virtual_additions:wisberry",
+            "block": "virtual_additions:wisdom_berry",
             "condition": "minecraft:block_state_property"
           }
         ]
@@ -159,7 +159,7 @@
       "corn_crop",
       "tomato",
       "cabbage",
-      "wisberry"
+      "wisdom_berry"
     ]
   ],
   "sends_telemetry_event": true

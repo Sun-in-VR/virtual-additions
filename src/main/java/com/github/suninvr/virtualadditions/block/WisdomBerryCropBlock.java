@@ -15,16 +15,16 @@ import net.minecraft.util.math.intprovider.UniformIntProvider;
 import net.minecraft.util.shape.VoxelShape;
 import net.minecraft.world.BlockView;
 
-public class WisberryCropBlock extends CropBlock {
+public class WisdomBerryCropBlock extends CropBlock {
     public static final IntProvider experienceDropped = UniformIntProvider.create(0, 1);
     private static final VoxelShape[] SHAPES_BY_AGE = Block.createShapeArray(7, (age) -> Block.createColumnShape(16.0, 0.0, (double)(2 + age)));
 
-    public WisberryCropBlock(Settings settings) {
+    public WisdomBerryCropBlock(Settings settings) {
         super(settings);
     }
 
     protected ItemConvertible getSeedsItem() {
-        return VAItems.WISBERRY_SEEDS;
+        return VAItems.WISDOM_BERRY_SEEDS;
     }
 
     protected VoxelShape getOutlineShape(BlockState state, BlockView world, BlockPos pos, ShapeContext context) {

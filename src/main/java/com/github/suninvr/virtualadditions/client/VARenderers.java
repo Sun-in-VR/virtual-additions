@@ -142,7 +142,7 @@ public class VARenderers {
                 VABlocks.SPRING_LOTUS,
                 VABlocks.SOUL_SPROUT,
                 VABlocks.POTTED_SOUL_SPROUT,
-                VABlocks.WISBERRY
+                VABlocks.WISDOM_BERRY
         );
 
         BlockRenderLayerMap.putBlocks(BlockRenderLayer.CUTOUT_MIPPED,

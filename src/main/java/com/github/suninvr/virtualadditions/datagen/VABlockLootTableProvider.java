@@ -204,9 +204,9 @@ public final class VABlockLootTableProvider {
                     .properties(StatePredicate.Builder.create().exactMatch(CropBlock.AGE, 7));
             this.addDrop(VABlocks.COTTON, this.cropDrops(VABlocks.COTTON, VAItems.COTTON, VAItems.COTTON_SEEDS, 1, 2, cottonBuilder));
 
-            LootCondition.Builder wisberryCropBuilder = BlockStatePropertyLootCondition.builder(VABlocks.WISBERRY)
+            LootCondition.Builder wisdom_berryCropBuilder = BlockStatePropertyLootCondition.builder(VABlocks.WISDOM_BERRY)
                     .properties(StatePredicate.Builder.create().exactMatch(CropBlock.AGE, 7));
-            this.addDrop(VABlocks.WISBERRY, this.plantCropDrops(VABlocks.WISBERRY, VAItems.WISBERRY, VAItems.WISBERRY_SEEDS, wisberryCropBuilder));
+            this.addDrop(VABlocks.WISDOM_BERRY, this.plantCropDrops(VABlocks.WISDOM_BERRY, VAItems.WISDOM_BERRY, VAItems.WISDOM_BERRY_SEEDS, wisdom_berryCropBuilder));
 
             this.addDrop(VABlocks.CORN_CROP, this.cornDrops());
 

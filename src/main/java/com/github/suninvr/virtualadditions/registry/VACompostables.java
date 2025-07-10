@@ -13,8 +13,8 @@ public class VACompostables {
         ComposterBlock.registerCompostableItem(0.3F, VAItems.TOMATO_SEEDS);
         ComposterBlock.registerCompostableItem(0.65F, VAItems.CABBAGE);
         ComposterBlock.registerCompostableItem(0.3F, VAItems.CABBAGE_SEEDS);
-        ComposterBlock.registerCompostableItem(0.65F, VAItems.WISBERRY);
-        ComposterBlock.registerCompostableItem(0.3F, VAItems.WISBERRY_SEEDS);
+        ComposterBlock.registerCompostableItem(0.65F, VAItems.WISDOM_BERRY);
+        ComposterBlock.registerCompostableItem(0.3F, VAItems.WISDOM_BERRY_SEEDS);
         ComposterBlock.registerCompostableItem(0.65F, VAItems.GREENCAP_MUSHROOM);
         ComposterBlock.registerCompostableItem(0.85F, VAItems.TALL_GREENCAP_MUSHROOMS);
         ComposterBlock.registerCompostableItem(0.65F, VAItems.SILKBULB);

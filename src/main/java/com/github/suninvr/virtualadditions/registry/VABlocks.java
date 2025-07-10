@@ -171,7 +171,7 @@ public class VABlocks {
     public static final Block CORN_CROP;
     public static final Block TOMATO;
     public static final Block CABBAGE;
-    public static final Block WISBERRY;
+    public static final Block WISDOM_BERRY;
     public static final Block PORPHYRY;
     public static final Block PORPHYRY_STAIRS;
     public static final Block PORPHYRY_SLAB;
@@ -581,7 +581,7 @@ public class VABlocks {
         CORN_CROP = register("corn_crop", CornCropBlock::new, Settings.create().noCollision().ticksRandomly().breakInstantly().sounds(BlockSoundGroup.CROP).offset(AbstractBlock.OffsetType.XZ));
         TOMATO = register("tomato", TomatoCropBlock::new, Settings.create().noCollision().ticksRandomly().breakInstantly().sounds(BlockSoundGroup.CROP));
         CABBAGE = register("cabbage", CabbageCropBlock::new, Settings.create().noCollision().ticksRandomly().breakInstantly().sounds(BlockSoundGroup.CROP));
-        WISBERRY = register("wisberry", WisberryCropBlock::new, Settings.create().noCollision().ticksRandomly().breakInstantly().sounds(BlockSoundGroup.CROP));
+        WISDOM_BERRY = register("wisdom_berry", WisdomBerryCropBlock::new, Settings.create().noCollision().ticksRandomly().breakInstantly().sounds(BlockSoundGroup.CROP));
 
         PORPHYRY = register("porphyry", Block::new, Settings.copy(Blocks.TUFF));
         PORPHYRY_STAIRS = register("porphyry_stairs", (settings) -> new StairsBlock(PORPHYRY.getDefaultState(), settings), Settings.copy(Blocks.TUFF));
