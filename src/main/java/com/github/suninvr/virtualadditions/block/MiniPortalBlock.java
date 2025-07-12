@@ -3,6 +3,7 @@ package com.github.suninvr.virtualadditions.block;
 import com.github.suninvr.virtualadditions.block.entity.MiniPortalBlockEntity;
 import com.github.suninvr.virtualadditions.block.enums.MiniPortalState;
 import com.github.suninvr.virtualadditions.interfaces.EntityInterface;
+import com.github.suninvr.virtualadditions.particle.ColorfulPowerParticleEffect;
 import com.github.suninvr.virtualadditions.registry.*;
 import com.mojang.serialization.MapCodec;
 import net.minecraft.block.*;
@@ -11,22 +12,27 @@ import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityCollisionHandler;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.effect.StatusEffectInstance;
+import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.fluid.FluidState;
 import net.minecraft.fluid.Fluids;
+import net.minecraft.item.DyeItem;
 import net.minecraft.item.ItemPlacementContext;
 import net.minecraft.item.ItemStack;
+import net.minecraft.particle.ParticleEffect;
 import net.minecraft.predicate.entity.EntityPredicates;
 import net.minecraft.server.network.ServerPlayerEntity;
 import net.minecraft.server.world.ServerWorld;
 import net.minecraft.sound.SoundCategory;
+import net.minecraft.sound.SoundEvents;
 import net.minecraft.state.StateManager;
 import net.minecraft.state.property.BooleanProperty;
 import net.minecraft.state.property.EnumProperty;
 import net.minecraft.state.property.Properties;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.math.Box;
-import net.minecraft.util.math.Direction;
-import net.minecraft.util.math.Vec3d;
+import net.minecraft.util.ActionResult;
+import net.minecraft.util.Colors;
+import net.minecraft.util.Hand;
+import net.minecraft.util.hit.BlockHitResult;
+import net.minecraft.util.math.*;
 import net.minecraft.util.math.random.Random;
 import net.minecraft.util.shape.VoxelShape;
 import net.minecraft.util.shape.VoxelShapes;
@@ -66,6 +72,16 @@ public class MiniPortalBlock extends BlockWithEntity implements Waterloggable {
         return CODEC;
     }
 
+    @Override
+    protected ActionResult onUseWithItem(ItemStack stack, BlockState state, World world, BlockPos pos, PlayerEntity player, Hand hand, BlockHitResult hit) {
+        if (stack.getItem() instanceof DyeItem dyeItem && world.getBlockEntity(pos) instanceof MiniPortalBlockEntity entity && entity.setDyeColor(dyeItem.getColor())) {
+            stack.decrementUnlessCreative(1, player);
+            world.playSound(player, pos, SoundEvents.ITEM_DYE_USE, SoundCategory.BLOCKS);
+            return ActionResult.SUCCESS;
+        }
+        return super.onUseWithItem(stack, state, world, pos, player, hand, hit);
+    }
+
     @Nullable
     @Override
     public BlockEntity createBlockEntity(BlockPos pos, BlockState state) {
@@ -85,7 +101,7 @@ public class MiniPortalBlock extends BlockWithEntity implements Waterloggable {
     @Override
     public void randomDisplayTick(BlockState state, World world, BlockPos pos, Random random) {
         Vec3d particlePos = pos.toCenterPos().addRandom(random, 1);
-        world.addParticleClient(VAParticleTypes.INTERFERENCE, particlePos.x, particlePos.y, particlePos.z, 0, 0,0);
+        if (world.getBlockEntity(pos) instanceof MiniPortalBlockEntity miniPortalBlockEntity) world.addParticleClient(miniPortalBlockEntity.getParticleParameter(), particlePos.x, particlePos.y, particlePos.z, 0, 0,0);
     }
 
     @Override
@@ -93,6 +109,7 @@ public class MiniPortalBlock extends BlockWithEntity implements Waterloggable {
         if (state.get(STATE).equals(MiniPortalState.POWERED)) return;
         Optional<BlockPos> destination = getDestination(world, pos);
         if (destination.isPresent() && state.get(STATE).canDepart) {
+            MiniPortalBlockEntity blockEntity = (MiniPortalBlockEntity) world.getBlockEntity(pos);
             BlockState destState = world.getBlockState(destination.get());
             if (!destState.isOf(this)) return;
             if (destState.get(STATE).canArrive && canTeleportEntity(entity)) {
@@ -100,7 +117,7 @@ public class MiniPortalBlock extends BlockWithEntity implements Waterloggable {
                 world.setBlockState(destination.get(), destState.with(STATE, MiniPortalState.COOLDOWN));
                 world.scheduleBlockTick(pos, this, 20);
                 world.scheduleBlockTick(destination.get(), this, 20);
-                teleportEntity(world, pos, destination.get(), entity);
+                teleportEntity(world, pos, destination.get(), entity, blockEntity.getParticleParameter());
             } else {
                 world.playSound(null, pos, VASoundEvents.BLOCK_MINI_PORTAL_FAIL, SoundCategory.BLOCKS, 1.0F, 1.6F);
                 world.setBlockState(pos, state.with(STATE, MiniPortalState.BLOCKED));
@@ -139,7 +156,7 @@ public class MiniPortalBlock extends BlockWithEntity implements Waterloggable {
         }
     }
 
-    public void teleportEntity(World world, BlockPos origin, BlockPos destination, Entity entity) {
+    public void teleportEntity(World world, BlockPos origin, BlockPos destination, Entity entity, ParticleEffect particleEffect) {
         if (!world.isClient() && world instanceof ServerWorld serverWorld){
             if (destination == null) return;
             double squaredDistance = origin.getSquaredDistance(destination);
@@ -149,7 +166,7 @@ public class MiniPortalBlock extends BlockWithEntity implements Waterloggable {
             entity.requestTeleport(destX, destY, destZ);
             ((EntityInterface)entity).virtualAdditions$setUsedMiniPortalThisTick(true);
             int i = (int) Math.clamp((entity.getWidth() * entity.getWidth() * entity.getHeight() * 20.0F), 5, 50);
-            ((ServerWorld) world).spawnParticles(VAParticleTypes.INTERFERENCE, destX, destY, destZ, i, entity.getWidth() * 0.45, entity.getHeight() * 0.25, entity.getWidth() * 0.45, 0);
+            ((ServerWorld) world).spawnParticles(particleEffect, destX, destY, destZ, i, entity.getWidth() * 0.45, entity.getHeight() * 0.25, entity.getWidth() * 0.45, 0);
             world.emitGameEvent(entity, GameEvent.TELEPORT, origin);
             world.emitGameEvent(entity, GameEvent.TELEPORT, destination);
             world.playSound(null, origin, VASoundEvents.BLOCK_MINI_PORTAL_DEPART, SoundCategory.BLOCKS, 1.0F, 1.0F);

@@ -174,9 +174,16 @@ public final class VARecipeProvider {
             offerShapelessRecipe(RecipeCategory.FOOD, VAItems.CORN_SEEDS, 1, Pair.of(VAItems.CORN, 1));
             offerShapelessRecipe(RecipeCategory.FOOD, VAItems.TOMATO_SEEDS, 1, Pair.of(VAItems.TOMATO, 1));
             offerShapelessRecipe(RecipeCategory.FOOD, VAItems.CABBAGE_SEEDS, 1, Pair.of(VAItems.CABBAGE, 1));
+            offerShapelessRecipe(RecipeCategory.FOOD, VAItems.WISDOM_BERRY_SEEDS, 1, Pair.of(VAItems.WISDOM_BERRY, 1));
 
             offerCookingRecipes(VAItems.FRIED_EGG, List.of(Items.EGG, Items.BROWN_EGG, Items.BLUE_EGG, VAItems.PURPLE_EGG), 0.35F, "fried_egg");
             offerCookingRecipes(VAItems.ROASTED_CORN, VAItems.CORN, 0.35F, "corn");
+
+            ShapelessRecipeJsonBuilder.create(this.registryLookup, RecipeCategory.FOOD, VAItems.TOMATO_SOUP)
+                            .input(VAItems.TOMATO, 3).input(Items.BOWL).criterion("has_tomato", conditionsFromItem(VAItems.TOMATO)).offerTo(this.exporter);
+
+            ShapelessRecipeJsonBuilder.create(this.registryLookup, RecipeCategory.FOOD, VAItems.SALAD)
+                            .input(VAItems.CABBAGE, 1).input(VAItems.TOMATO, 1).input(VAItems.ROASTED_CORN, 1).input(Items.BOWL).criterion("has_food", conditionsFromItem(VAItems.TOMATO)).offerTo(this.exporter);
 
             offerJerkyFoodRecipe(Items.COOKED_BEEF, VAItems.BEEF_JERKY);
             offerJerkyFoodRecipe(Items.COOKED_PORKCHOP, VAItems.PORK_JERKY);

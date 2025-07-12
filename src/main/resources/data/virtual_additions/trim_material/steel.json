@@ -4,7 +4,7 @@
     "color": "#686b93",
     "translate": "trim_material.virtual_additions.steel"
   },
-  "override_armor_materials": {
+  "override_armor_assets": {
     "virtual_additions:steel": "steel_darker"
   }
 }

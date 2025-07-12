@@ -263,8 +263,10 @@ public class VAItems {
     public static final Item ROASTED_CORN;
     public static final Item TOMATO_SEEDS;
     public static final Item TOMATO;
+    public static final Item TOMATO_SOUP;
     public static final Item CABBAGE_SEEDS;
     public static final Item CABBAGE;
+    public static final Item SALAD;
     public static final Item COTTON_SEEDS;
     public static final Item COTTON;
     public static final Item WISDOM_BERRY_SEEDS;
@@ -1154,16 +1156,18 @@ public class VAItems {
         CORN = register("corn", new Item.Settings().food(VAFoodComponents.CORN), ItemGroups.FOOD_AND_DRINK, Items.BEETROOT);
         ROASTED_CORN = register("roasted_corn", new Item.Settings().food(VAFoodComponents.ROASTED_CORN), ItemGroups.FOOD_AND_DRINK, prev);
         TOMATO_SEEDS = register("tomato_seeds", settings -> new BlockItem(VABlocks.TOMATO, settings),new Item.Settings().useItemPrefixedTranslationKey(), ItemGroups.NATURAL, CORN_SEEDS);
-        TOMATO = register("tomato", TomatoItem::new, new Item.Settings().food(VAFoodComponents.TOMATO),ItemGroups.FOOD_AND_DRINK, Items.BEETROOT);
+        TOMATO = register("tomato", TomatoItem::new, new Item.Settings().food(VAFoodComponents.TOMATO), ItemGroups.FOOD_AND_DRINK, Items.BEETROOT);
+        TOMATO_SOUP = register("tomato_soup", new Item.Settings().food(VAFoodComponents.TOMATO_SOUP).maxCount(1).useRemainder(Items.BOWL), ItemGroups.FOOD_AND_DRINK, Items.BEETROOT_SOUP);
         CABBAGE_SEEDS = register("cabbage_seeds", settings -> new BlockItem(VABlocks.CABBAGE, settings),new Item.Settings().useItemPrefixedTranslationKey(), ItemGroups.NATURAL, CORN_SEEDS);
         CABBAGE = register("cabbage", new Item.Settings().food(VAFoodComponents.CABBAGE),ItemGroups.FOOD_AND_DRINK, Items.BEETROOT);
+        SALAD = register("salad", new Item.Settings().food(VAFoodComponents.SALAD).maxCount(1).useRemainder(Items.BOWL), ItemGroups.FOOD_AND_DRINK, Items.BEETROOT_SOUP);
         COTTON_SEEDS = register("cotton_seeds", settings -> new BlockItem(VABlocks.COTTON, settings),new Item.Settings().useItemPrefixedTranslationKey(), ItemGroups.NATURAL, Items.BEETROOT_SEEDS);
         COTTON = register("cotton", ItemGroups.INGREDIENTS, Items.WHEAT);
         WISDOM_BERRY_SEEDS = register("wisdom_berry_seeds", settings -> new BlockItem(VABlocks.WISDOM_BERRY, settings),new Item.Settings().useItemPrefixedTranslationKey(), ItemGroups.NATURAL, Items.PITCHER_POD);
         WISDOM_BERRY = register("wisdom_berry", new Item.Settings().food(VAFoodComponents.WISDOM_BERRY), ItemGroups.FOOD_AND_DRINK, CABBAGE);
 
         FRIED_EGG = register("fried_egg", new Item.Settings().food(VAFoodComponents.FRIED_EGG), ItemGroups.FOOD_AND_DRINK, Items.COOKED_CHICKEN);
-        ICE_CREAM = register("ice_cream", new Item.Settings().food(VAFoodComponents.ICE_CREAM).maxCount(1), ItemGroups.FOOD_AND_DRINK, Items.COOKIE);
+        ICE_CREAM = register("ice_cream", new Item.Settings().food(VAFoodComponents.ICE_CREAM).maxCount(1).useRemainder(Items.BOWL), ItemGroups.FOOD_AND_DRINK, Items.COOKIE);
         CHEESE_WEDGE = register("cheese_wedge", new Item.Settings().food(VAFoodComponents.CHEESE_WEDGE), ItemGroups.FOOD_AND_DRINK, Items.MILK_BUCKET);
         SWEET_BERRY_PIE = register("sweet_berry_pie", new Item.Settings().food(VAFoodComponents.SWEET_BERRY_PIE), ItemGroups.FOOD_AND_DRINK, Items.PUMPKIN_PIE);
 

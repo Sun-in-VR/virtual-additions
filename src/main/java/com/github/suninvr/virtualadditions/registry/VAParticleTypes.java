@@ -1,6 +1,7 @@
 package com.github.suninvr.virtualadditions.registry;
 
 import com.github.suninvr.virtualadditions.VirtualAdditions;
+import com.github.suninvr.virtualadditions.particle.ColorfulPowerParticleEffect;
 import com.github.suninvr.virtualadditions.particle.IoliteRingParticleEffect;
 import com.mojang.serialization.Codec;
 import com.mojang.serialization.MapCodec;
@@ -27,6 +28,7 @@ public class VAParticleTypes {
     public static final SimpleParticleType SMALL_SPECTRAL_FLAME;
     public static final SimpleParticleType SPRING_LOTUS_POLLEN;
     public static final SimpleParticleType SOUL_FIREFLY;
+    public static final ParticleType<ColorfulPowerParticleEffect> COLORFUL_POWER;
     public static final ParticleType<IoliteRingParticleEffect> IOLITE_TETHER_RING;
     public static final ParticleType<IoliteRingParticleEffect> IOLITE_ANCHOR_RING;
 
@@ -42,6 +44,7 @@ public class VAParticleTypes {
         SPECTRAL_POWER = register("spectral_power");
         SPRING_LOTUS_POLLEN = register("spring_lotus_pollen");
         SOUL_FIREFLY = register("soul_firefly");
+        COLORFUL_POWER = register("colorful_power", false, type -> ColorfulPowerParticleEffect.CODEC, type -> ColorfulPowerParticleEffect.PACKET_CODEC);
         IOLITE_TETHER_RING = register("warp_tether_ring", false, type -> IoliteRingParticleEffect.TETHER_CODEC, type -> IoliteRingParticleEffect.TETHER_PACKET_CODEC);
         IOLITE_ANCHOR_RING = register("warp_anchor_ring", false, type -> IoliteRingParticleEffect.ANCHOR_CODEC, type -> IoliteRingParticleEffect.ANCHOR_PACKET_CODEC);
     }

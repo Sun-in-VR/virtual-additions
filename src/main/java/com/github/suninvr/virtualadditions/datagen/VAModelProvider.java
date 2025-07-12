@@ -287,9 +287,11 @@ public class VAModelProvider {
                     VAItems.PORTAL_CORE,
                     VAItems.DRAINED_PORTAL_CORE,
                     VAItems.TOMATO,
+                    VAItems.TOMATO_SOUP,
                     VAItems.CABBAGE,
                     VAItems.CORN,
                     VAItems.ROASTED_CORN,
+                    VAItems.SALAD,
                     VAItems.WISDOM_BERRY,
                     VAItems.COTTON,
                     VAItems.FRIED_EGG,
@@ -428,9 +430,9 @@ public class VAModelProvider {
                         new ItemModelGenerator.TrimMaterial(ArmorTrimAssets.LAPIS, ArmorTrimMaterials.LAPIS),
                         new ItemModelGenerator.TrimMaterial(ArmorTrimAssets.AMETHYST, ArmorTrimMaterials.AMETHYST),
                         new ItemModelGenerator.TrimMaterial(ArmorTrimAssets.RESIN, ArmorTrimMaterials.RESIN),
-                        new ItemModelGenerator.TrimMaterial(ArmorTrimAssets.of("virtual_additions_steel", Map.of(VAArmorMaterial.STEEL_ASSET_KEY, "virtual_additions_steel_darker")), VAArmorTrimMaterials.STEEL),
-                        new ItemModelGenerator.TrimMaterial(ArmorTrimAssets.of("virtual_additions_rock_salt"), VAArmorTrimMaterials.ROCK_SALT),
-                        new ItemModelGenerator.TrimMaterial(ArmorTrimAssets.of("virtual_additions_iolite"), VAArmorTrimMaterials.IOLITE)
+                        new ItemModelGenerator.TrimMaterial(VAArmorTrimAssets.STEEL, VAArmorTrimMaterials.STEEL),
+                        new ItemModelGenerator.TrimMaterial(VAArmorTrimAssets.ROCK_SALT, VAArmorTrimMaterials.ROCK_SALT),
+                        new ItemModelGenerator.TrimMaterial(VAArmorTrimAssets.IOLITE, VAArmorTrimMaterials.IOLITE)
                 );
 
         public Provider(FabricDataOutput output) {
