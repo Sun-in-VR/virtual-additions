@@ -74,7 +74,7 @@ public class MiniPortalBlockEntity extends BlockEntity {
     }
 
     public boolean setDyeColor(DyeColor color) {
-        if (color.equals(this.dyeColor)) return false;
+        if (color == this.dyeColor) return false;
         this.dyeColor = color;
         this.markDirty();
         if (this.world instanceof ServerWorld serverWorld) serverWorld.getChunkManager().markForUpdate(this.pos);

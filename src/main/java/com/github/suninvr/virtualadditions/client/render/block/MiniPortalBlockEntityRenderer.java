@@ -1,6 +1,7 @@
 package com.github.suninvr.virtualadditions.client.render.block;
 
 import com.github.suninvr.virtualadditions.block.entity.MiniPortalBlockEntity;
+import com.github.suninvr.virtualadditions.client.VARenderLayers;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.render.OverlayTexture;
 import net.minecraft.client.render.RenderLayer;
@@ -21,14 +22,14 @@ public class MiniPortalBlockEntityRenderer implements BlockEntityRenderer<MiniPo
     private static final Identifier TEXTURE_DYED_BLOCKED = Identifier.of("virtual_additions", "textures/entity/mini_portal/dyed_blocked.png");
     private static final Identifier TEXTURE_DYED_GLOW = Identifier.of("virtual_additions", "textures/entity/mini_portal/dyed_open_glow.png");
     private static final Identifier TEXTURE_DYED_BLOCKED_GLOW = Identifier.of("virtual_additions", "textures/entity/mini_portal/dyed_blocked_glow.png");
-    private static final RenderLayer LAYER = RenderLayer.getEntityCutout(TEXTURE);
-    private static final RenderLayer LAYER_BLOCKED = RenderLayer.getEntityCutout(TEXTURE_BLOCKED);
-    private static final RenderLayer LAYER_GLOW = RenderLayer.getEntityTranslucent(TEXTURE_GLOW);
-    private static final RenderLayer LAYER_BLOCKED_GLOW = RenderLayer.getEntityTranslucent(TEXTURE_BLOCKED_GLOW);
-    private static final RenderLayer LAYER_DYED = RenderLayer.getEntityCutout(TEXTURE_DYED);
-    private static final RenderLayer LAYER_DYED_BLOCKED = RenderLayer.getEntityCutout(TEXTURE_DYED_BLOCKED);
-    private static final RenderLayer LAYER_DYED_GLOW = RenderLayer.getEntityTranslucent(TEXTURE_DYED_GLOW);
-    private static final RenderLayer LAYER_DYED_BLOCKED_GLOW = RenderLayer.getEntityTranslucent(TEXTURE_DYED_BLOCKED_GLOW);
+    private static final RenderLayer LAYER = VARenderLayers.getMiniPortal(TEXTURE, false);
+    private static final RenderLayer LAYER_BLOCKED = VARenderLayers.getMiniPortal(TEXTURE_BLOCKED, false);
+    private static final RenderLayer LAYER_GLOW = VARenderLayers.getMiniPortal(TEXTURE_GLOW, true);
+    private static final RenderLayer LAYER_BLOCKED_GLOW = VARenderLayers.getMiniPortal(TEXTURE_BLOCKED_GLOW, true);
+    private static final RenderLayer LAYER_DYED = VARenderLayers.getMiniPortal(TEXTURE_DYED, false);
+    private static final RenderLayer LAYER_DYED_BLOCKED = VARenderLayers.getMiniPortal(TEXTURE_DYED_BLOCKED, false);
+    private static final RenderLayer LAYER_DYED_GLOW = VARenderLayers.getMiniPortal(TEXTURE_DYED_GLOW, true);
+    private static final RenderLayer LAYER_DYED_BLOCKED_GLOW = VARenderLayers.getMiniPortal(TEXTURE_DYED_BLOCKED_GLOW, true);
 
     public MiniPortalBlockEntityRenderer(BlockEntityRendererFactory.Context context) {
 

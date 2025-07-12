@@ -8,6 +8,7 @@ import com.github.suninvr.virtualadditions.registry.*;
 import com.mojang.serialization.MapCodec;
 import net.minecraft.block.*;
 import net.minecraft.block.entity.BlockEntity;
+import net.minecraft.component.DataComponentTypes;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityCollisionHandler;
 import net.minecraft.entity.LivingEntity;
@@ -15,15 +16,15 @@ import net.minecraft.entity.effect.StatusEffectInstance;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.fluid.FluidState;
 import net.minecraft.fluid.Fluids;
-import net.minecraft.item.DyeItem;
-import net.minecraft.item.ItemPlacementContext;
-import net.minecraft.item.ItemStack;
+import net.minecraft.item.*;
 import net.minecraft.particle.ParticleEffect;
+import net.minecraft.potion.Potions;
 import net.minecraft.predicate.entity.EntityPredicates;
 import net.minecraft.server.network.ServerPlayerEntity;
 import net.minecraft.server.world.ServerWorld;
 import net.minecraft.sound.SoundCategory;
 import net.minecraft.sound.SoundEvents;
+import net.minecraft.stat.Stats;
 import net.minecraft.state.StateManager;
 import net.minecraft.state.property.BooleanProperty;
 import net.minecraft.state.property.EnumProperty;
@@ -76,7 +77,14 @@ public class MiniPortalBlock extends BlockWithEntity implements Waterloggable {
     protected ActionResult onUseWithItem(ItemStack stack, BlockState state, World world, BlockPos pos, PlayerEntity player, Hand hand, BlockHitResult hit) {
         if (stack.getItem() instanceof DyeItem dyeItem && world.getBlockEntity(pos) instanceof MiniPortalBlockEntity entity && entity.setDyeColor(dyeItem.getColor())) {
             stack.decrementUnlessCreative(1, player);
-            world.playSound(player, pos, SoundEvents.ITEM_DYE_USE, SoundCategory.BLOCKS);
+            world.playSound(null, pos, SoundEvents.ITEM_DYE_USE, SoundCategory.BLOCKS);
+            return ActionResult.SUCCESS;
+        }
+        if (stack.isOf(Items.POTION) && stack.contains(DataComponentTypes.POTION_CONTENTS) && stack.get(DataComponentTypes.POTION_CONTENTS).matches(Potions.WATER)&& world.getBlockEntity(pos) instanceof MiniPortalBlockEntity entity && entity.setDyeColor(null)) {
+            player.setStackInHand(hand, ItemUsage.exchangeStack(stack, player, new ItemStack(Items.GLASS_BOTTLE)));
+            player.incrementStat(Stats.USED.getOrCreateStat(stack.getItem()));
+            world.playSound(null, pos, SoundEvents.ITEM_BOTTLE_EMPTY, SoundCategory.BLOCKS, 1.0F, 1.0F);
+            world.emitGameEvent(null, GameEvent.FLUID_PLACE, pos);
             return ActionResult.SUCCESS;
         }
         return super.onUseWithItem(stack, state, world, pos, player, hand, hit);

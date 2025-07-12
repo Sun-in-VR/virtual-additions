@@ -31,6 +31,7 @@ public class VirtualAdditionsClient implements ClientModInitializer {
 
     @Override
     public void onInitializeClient() {
+        VARenderLayers.init();
         VARenderers.init();
 
         ParticleFactoryRegistry.getInstance().register(VAParticleTypes.ACID_SPLASH_EMITTER, AcidSplashEmitterParticle.Factory::new);
