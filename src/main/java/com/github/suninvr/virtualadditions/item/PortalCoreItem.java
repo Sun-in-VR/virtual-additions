@@ -47,10 +47,12 @@ public class PortalCoreItem extends Item {
         ItemStack stack = context.getStack();
         if (stack.contains(VADataComponentTypes.PORTAL_CORE_LOCATION) && !context.getWorld().isClient) {
             boolean[] bl = {false};
+            BlockPos[] destPos = {null};
             stack.get(VADataComponentTypes.PORTAL_CORE_LOCATION).pos().ifPresent(pos1 -> {
+                destPos[0] = pos1;
                 bl[0] = placePortalPair((ServerWorld) context.getWorld(), pos, pos1, context.getPlayer());
             });
-            stack.remove(VADataComponentTypes.PORTAL_CORE_LOCATION);
+            if (bl[0] || pos.equals(destPos[0])) stack.remove(VADataComponentTypes.PORTAL_CORE_LOCATION);
             if (bl[0]) {
                 sound = VASoundEvents.BLOCK_MINI_PORTAL_OPEN;
                 pitch = 1.1F;

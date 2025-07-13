@@ -10,6 +10,8 @@
     "ArmorTrimPatternsMixin",
     "AxeItemMixin",
     "BlockMixin",
+    "BrewingRecipyRegistryMixin",
+    "BrewingRecipyRegistryMixin$BuilderMixin",
     "BuiltinBiomesMixin",
     "BundleContentsComponentMixin",
     "CrossbowItemMixin",

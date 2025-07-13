@@ -183,7 +183,7 @@ public class MiniPortalBlock extends BlockWithEntity implements Waterloggable {
                 int duration = 0;
                 StatusEffectInstance effect = livingEntity.getStatusEffect(VAStatusEffects.IOLITE_INTERFERENCE);
                 if (effect != null) duration = effect.getDuration();
-                duration = Math.min((int)Math.max(600 * Math.sqrt(squaredDistance) / 256, duration), Integer.MAX_VALUE);
+                duration = Math.min((int)Math.max(600 * Math.sqrt(squaredDistance) / 128, duration), Integer.MAX_VALUE);
                 livingEntity.addStatusEffect(new StatusEffectInstance(VAStatusEffects.IOLITE_INTERFERENCE, duration, 0, false, true));
             }
             if (entity instanceof ServerPlayerEntity player) {

@@ -284,7 +284,6 @@ public class VAModelProvider {
                     VAItems.TOOL_GILD_SMITHING_TEMPLATE,
                     VAItems.STEEL_BOMB,
                     VAItems.IOLITE,
-                    VAItems.PORTAL_CORE,
                     VAItems.DRAINED_PORTAL_CORE,
                     VAItems.TOMATO,
                     VAItems.TOMATO_SOUP,
@@ -332,6 +331,8 @@ public class VAModelProvider {
                     VAItems.STEEL_AXE,
                     VAItems.STEEL_HOE
             );
+
+            registerPortalCore(generator, VAItems.PORTAL_CORE);
 
             generator.registerArmor(VAItems.STEEL_HELMET, VAArmorMaterial.STEEL.assetId(), HELMET_TRIM_ID_PREFIX, false);
             generator.registerArmor(VAItems.STEEL_CHESTPLATE, VAArmorMaterial.STEEL.assetId(), CHESTPLATE_TRIM_ID_PREFIX, false);
@@ -591,6 +592,15 @@ public class VAModelProvider {
                                     ItemModels.rangeDispatchEntry(unbaked10, 1.0F)
                                     )),
                             ItemModels.switchCase(CrossbowItem.ChargeType.ROCKET, unbaked6))));
+        }
+
+        public final void registerPortalCore(ItemModelGenerator generator, Item item) {
+            ItemModel.Unbaked base = ItemModels.basic(ModelIds.getItemModelId(item));
+            Models.GENERATED.upload(ModelIds.getItemModelId(item), TextureMap.layer0(TextureMap.getId(item)), generator.modelCollector);
+            ItemModel.Unbaked active = ItemModels.basic(generator.registerSubModel(item, "_active", Models.GENERATED));
+            generator.output.accept(item, ItemModels.condition(
+                    ItemModels.hasComponentProperty(VADataComponentTypes.PORTAL_CORE_LOCATION), active, base
+            ));
         }
 
         protected void registerSpectralFire(BlockStateModelGenerator generator) {
