@@ -1,5 +1,6 @@
 package com.github.suninvr.virtualadditions.registry;
 
+import com.github.suninvr.virtualadditions.VirtualAdditions;
 import net.fabricmc.fabric.api.registry.FabricBrewingRecipeRegistryBuilder;
 import net.minecraft.entity.effect.StatusEffectInstance;
 import net.minecraft.item.Items;
@@ -45,18 +46,29 @@ public class VAPotions {
 
     protected static void initBrewingRecipes() {
         FabricBrewingRecipeRegistryBuilder.BUILD.register(builder -> {
+
+            VirtualAdditions.skipBrewingRecipeAssert = true;
+
             builder.registerPotionType(VAItems.APPLICABLE_POTION);
             builder.registerItemRecipe(Items.POTION, VAItems.LUMWASP_MANDIBLE, VAItems.APPLICABLE_POTION);
-            builder.registerPotionRecipe(Potions.AWKWARD, VAItems.ROCK_SALT, FRAILTY);
+
+            builder.registerItemRecipe(Items.POTION, VAItems.WISDOM_BERRY, Items.EXPERIENCE_BOTTLE);
+
+            builder.registerRecipes(VAItems.ROCK_SALT, FRAILTY);
             builder.registerPotionRecipe(FRAILTY, Items.REDSTONE, LONG_FRAILTY);
             builder.registerPotionRecipe(FRAILTY, Items.GLOWSTONE_DUST, STRONG_FRAILTY);
-            builder.registerPotionRecipe(Potions.AWKWARD, Items.ROSE_BUSH, LOVE);
+
+            builder.registerRecipes(Items.ROSE_BUSH, LOVE);
             builder.registerPotionRecipe(LOVE, Items.REDSTONE, LONG_LOVE);
-            builder.registerPotionRecipe(Potions.AWKWARD, Items.ECHO_SHARD, SILENCE);
+
+            builder.registerRecipes(Items.ECHO_SHARD, SILENCE);
             builder.registerPotionRecipe(SILENCE, Items.FERMENTED_SPIDER_EYE, LOQUACITY);
             builder.registerPotionRecipe(LOQUACITY, Items.FERMENTED_SPIDER_EYE, SILENCE);
-            builder.registerPotionRecipe(Potions.AWKWARD, VAItems.SPECTRAL_POWDER, AURA);
+
+            builder.registerRecipes(VAItems.SPECTRAL_POWDER, AURA);
             builder.registerPotionRecipe(AURA, Items.REDSTONE, LONG_AURA);
+
+            VirtualAdditions.skipBrewingRecipeAssert = false;
         });
     }
 }

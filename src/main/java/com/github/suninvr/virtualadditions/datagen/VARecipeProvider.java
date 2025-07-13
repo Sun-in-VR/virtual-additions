@@ -463,14 +463,10 @@ public final class VARecipeProvider {
                     .input(Items.SUGAR)
                     .input(Items.EGG).criterion("has_sweet_berries", conditionsFromItem(Items.SWEET_BERRIES)).offerTo(this.exporter);
 
-            ShapelessRecipeJsonBuilder.create(this.registryLookup, RecipeCategory.FOOD, Items.EXPERIENCE_BOTTLE, 3)
-                    .input(Items.GLASS_BOTTLE, 3)
-                    .input(VAItems.WISDOM_BERRY).criterion("has_wisdom_berry", conditionsFromItem(VAItems.WISDOM_BERRY)).offerTo(this.exporter);
-
             ShapedRecipeJsonBuilder.create(this.registryLookup, RecipeCategory.TOOLS, VAItems.CLIMBING_ROPE, 4)
-                    .pattern(" # ")
-                    .pattern(" # ")
-                    .pattern(" l ")
+                    .pattern("#")
+                    .pattern("#")
+                    .pattern("l")
                     .input('#', Items.COPPER_INGOT).input('l', Items.LEAD)
                     .criterion("has_copper_ingot", conditionsFromItem(Items.COPPER_INGOT)).offerTo(this.exporter);
 

@@ -21,6 +21,7 @@ public class VirtualAdditions implements ModInitializer {
 	public static FeatureFlag PREVIEW;
 	private static boolean areBlocksInitialized = false;
 	public static boolean isDataGenerationActive = false;
+	public static boolean skipBrewingRecipeAssert = false;
 
 	public static Logger LOGGER = LogManager.getLogger();
 
