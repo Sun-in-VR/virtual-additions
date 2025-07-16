@@ -8,6 +8,9 @@ import net.fabricmc.fabric.api.itemgroup.v1.ItemGroupEvents;
 import net.minecraft.block.*;
 import net.minecraft.component.DataComponentTypes;
 import net.minecraft.component.type.*;
+import net.minecraft.enchantment.Enchantments;
+import net.minecraft.entity.attribute.EntityAttributeModifier;
+import net.minecraft.entity.attribute.EntityAttributes;
 import net.minecraft.item.*;
 import net.minecraft.item.equipment.EquipmentType;
 import net.minecraft.registry.RegistryKey;
@@ -218,6 +221,7 @@ public class VAItems {
     public static final Item STEEL_PICKAXE;
     public static final Item STEEL_AXE;
     public static final Item STEEL_HOE;
+    public static final Item STEEL_HALBERD;
     public static final Item STEEL_HELMET;
     public static final Item STEEL_CHESTPLATE;
     public static final Item STEEL_LEGGINGS;
@@ -449,6 +453,12 @@ public class VAItems {
     public static final Item DRAINED_PORTAL_CORE;
     public static final Item ENTANGLEMENT_DRIVE;
     public static final Item REMOTE_NOTIFIER;
+    public static final Item WOODEN_HALBERD;
+    public static final Item STONE_HALBERD;
+    public static final Item IRON_HALBERD;
+    public static final Item GOLDEN_HALBERD;
+    public static final Item DIAMOND_HALBERD;
+    public static final Item NETHERITE_HALBERD;
     public static final Item SALINE_SPAWN_EGG;
     public static final Item LUMWASP_SPAWN_EGG;
     public static final Item SPECTRE_SPAWN_EGG;
@@ -695,6 +705,17 @@ public class VAItems {
 
         //endregion
 
+        //region Halberd
+
+        WOODEN_HALBERD = register("wooden_halberd", GildedToolUtil.halberdSettings(new Item.Settings(), ToolMaterial.WOOD, 7.0F, -3.35F), ItemGroups.COMBAT, Items.NETHERITE_AXE);
+        STONE_HALBERD = register("stone_halberd", GildedToolUtil.halberdSettings(new Item.Settings(), ToolMaterial.STONE, 8.0F, -3.35F), ItemGroups.COMBAT, prev);
+        IRON_HALBERD = register("iron_halberd", GildedToolUtil.halberdSettings(new Item.Settings(), ToolMaterial.IRON, 9.0F, -3.35F), ItemGroups.COMBAT, prev);
+        GOLDEN_HALBERD = register("golden_halberd", GildedToolUtil.halberdSettings(new Item.Settings(), ToolMaterial.GOLD, 7.0F, -3.35F), ItemGroups.COMBAT, prev);
+        DIAMOND_HALBERD = register("diamond_halberd", GildedToolUtil.halberdSettings(new Item.Settings(), ToolMaterial.DIAMOND, 10.0F, -3.35F), ItemGroups.COMBAT, prev);
+        NETHERITE_HALBERD = register("netherite_halberd", GildedToolUtil.halberdSettings(new Item.Settings(), ToolMaterial.NETHERITE, 11.0F, -3.35F), ItemGroups.COMBAT, prev);
+
+        //endregion
+
         //region Steel
 
         RAW_STEEL_BLOCK = registerBlockItem("raw_steel_block", VABlocks.RAW_STEEL_BLOCK, ItemGroups.NATURAL, Items.RAW_GOLD_BLOCK);
@@ -717,8 +738,9 @@ public class VAItems {
         STEEL_SWORD = register("steel_sword", settings -> new Item(settings.sword(SteelToolMaterial.INSTANCE, 3, -2.4F)), new Item.Settings(), ItemGroups.COMBAT, Items.GOLDEN_SWORD);
         STEEL_SHOVEL = register("steel_shovel", settings -> new ShovelItem(SteelToolMaterial.INSTANCE, 1.5F, -3.0F, settings), new Item.Settings(), ItemGroups.TOOLS, Items.GOLDEN_HOE);
         STEEL_PICKAXE = register("steel_pickaxe", settings -> new Item(settings.pickaxe(SteelToolMaterial.INSTANCE, 1, -2.8F)), new Item.Settings(), ItemGroups.TOOLS, prev);
-        STEEL_AXE = register("steel_axe", settings -> new AxeItem(SteelToolMaterial.INSTANCE, 6.0F, -3.1F, settings), new Item.Settings(), at(ItemGroups.TOOLS, prev), at(ItemGroups.COMBAT, Items.GOLDEN_AXE));
+        STEEL_AXE = register("steel_axe", settings -> new AxeItem(SteelToolMaterial.INSTANCE, 5.5F, -3.1F, settings), new Item.Settings(), at(ItemGroups.TOOLS, prev), at(ItemGroups.COMBAT, Items.GOLDEN_AXE));
         STEEL_HOE = register("steel_hoe", settings -> new HoeItem(SteelToolMaterial.INSTANCE, -2, -1.0F, settings), new Item.Settings(), ItemGroups.TOOLS, prev);
+        STEEL_HALBERD = register("steel_halberd", GildedToolUtil.halberdSettings(new Item.Settings(), SteelToolMaterial.INSTANCE, 9.5F, -3.35F), ItemGroups.COMBAT, GOLDEN_HALBERD);
         STEEL_HELMET = register("steel_helmet", settings -> new Item(settings.armor(VAArmorMaterial.STEEL, EquipmentType.HELMET)), new Item.Settings().maxCount(1).maxDamage(EquipmentType.HELMET.getMaxDamage(24)), ItemGroups.COMBAT, Items.GOLDEN_BOOTS);
         STEEL_CHESTPLATE = register("steel_chestplate", settings -> new Item(settings.armor(VAArmorMaterial.STEEL, EquipmentType.CHESTPLATE)), new Item.Settings().maxCount(1).maxDamage(EquipmentType.CHESTPLATE.getMaxDamage(24)), ItemGroups.COMBAT, prev);
         STEEL_LEGGINGS = register("steel_leggings", settings -> new Item(settings.armor(VAArmorMaterial.STEEL, EquipmentType.LEGGINGS)), new Item.Settings().maxCount(1).maxDamage(EquipmentType.LEGGINGS.getMaxDamage(24)), ItemGroups.COMBAT, prev);
@@ -1054,11 +1076,11 @@ public class VAItems {
 
         //region Base Tool Sets
 
-        DIAMOND_TOOL_SET = new ToolSet(Items.DIAMOND_SWORD, Items.DIAMOND_SHOVEL, Items.DIAMOND_PICKAXE, Items.DIAMOND_AXE, Items.DIAMOND_HOE, ToolMaterial.DIAMOND, "diamond");
-        GOLDEN_TOOL_SET = new ToolSet(Items.GOLDEN_SWORD, Items.GOLDEN_SHOVEL, Items.GOLDEN_PICKAXE, Items.GOLDEN_AXE, Items.GOLDEN_HOE, ToolMaterial.GOLD, "golden");
-        IRON_TOOL_SET = new ToolSet(Items.IRON_SWORD, Items.IRON_SHOVEL, Items.IRON_PICKAXE, Items.IRON_AXE, Items.IRON_HOE, ToolMaterial.IRON, "iron");
-        NETHERITE_TOOL_SET = new ToolSet(Items.NETHERITE_SWORD, Items.NETHERITE_SHOVEL, Items.NETHERITE_PICKAXE, Items.NETHERITE_AXE, Items.NETHERITE_HOE, ToolMaterial.NETHERITE, "netherite");
-        STEEL_TOOL_SET = new ToolSet(STEEL_SWORD, STEEL_SHOVEL, STEEL_PICKAXE, STEEL_AXE, STEEL_HOE, SteelToolMaterial.INSTANCE, "steel");
+        DIAMOND_TOOL_SET = new ToolSet(Items.DIAMOND_SWORD, Items.DIAMOND_SHOVEL, Items.DIAMOND_PICKAXE, Items.DIAMOND_AXE, Items.DIAMOND_HOE, VAItems.DIAMOND_HALBERD, ToolMaterial.DIAMOND, "diamond");
+        GOLDEN_TOOL_SET = new ToolSet(Items.GOLDEN_SWORD, Items.GOLDEN_SHOVEL, Items.GOLDEN_PICKAXE, Items.GOLDEN_AXE, Items.GOLDEN_HOE, VAItems.GOLDEN_HALBERD, ToolMaterial.GOLD, "golden");
+        IRON_TOOL_SET = new ToolSet(Items.IRON_SWORD, Items.IRON_SHOVEL, Items.IRON_PICKAXE, Items.IRON_AXE, Items.IRON_HOE, VAItems.IRON_HALBERD, ToolMaterial.IRON, "iron");
+        NETHERITE_TOOL_SET = new ToolSet(Items.NETHERITE_SWORD, Items.NETHERITE_SHOVEL, Items.NETHERITE_PICKAXE, Items.NETHERITE_AXE, Items.NETHERITE_HOE, VAItems.NETHERITE_HALBERD, ToolMaterial.NETHERITE, "netherite");
+        STEEL_TOOL_SET = new ToolSet(STEEL_SWORD, STEEL_SHOVEL, STEEL_PICKAXE, STEEL_AXE, STEEL_HOE, VAItems.STEEL_HALBERD, SteelToolMaterial.INSTANCE, "steel");
 
         //endregion
 

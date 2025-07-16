@@ -66,6 +66,7 @@ public class VirtualAdditions implements ModInitializer {
 		VADyeColors.init();
 		VAEntityType.init();
 		VAEntityTypeTags.init();
+		VAEntityAttributes.init();
 		VAFeatures.init();
 		VAFluids.init();
 		VAGameEventTags.init();

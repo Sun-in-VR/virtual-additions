@@ -11,7 +11,6 @@ import com.github.suninvr.virtualadditions.registry.collection.ColorfulBlockSet;
 import net.fabricmc.fabric.api.datagen.v1.FabricDataGenerator;
 import net.fabricmc.fabric.api.datagen.v1.FabricDataOutput;
 import net.fabricmc.fabric.api.datagen.v1.provider.FabricTagProvider;
-import net.minecraft.block.Block;
 import net.minecraft.data.family.BlockFamily;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemConvertible;
@@ -26,8 +25,6 @@ import net.minecraft.util.Identifier;
 
 import java.util.Arrays;
 import java.util.concurrent.CompletableFuture;
-
-import static com.github.suninvr.virtualadditions.VirtualAdditions.idOf;
 
 @SuppressWarnings("SameParameterValue")
 public final class VAItemTagProvider {
@@ -188,7 +185,8 @@ public final class VAItemTagProvider {
                     .addOptionalTag(ItemTags.SHOVELS.id())
                     .addOptionalTag(ItemTags.PICKAXES.id())
                     .addOptionalTag(ItemTags.AXES.id())
-                    .addOptionalTag(ItemTags.HOES.id());
+                    .addOptionalTag(ItemTags.HOES.id())
+                    .addOptionalTag(VAItemTags.HALBERDS.id());
 
             addTo(VAItemTags.BASE_DYE, 
                     Items.RED_DYE,
@@ -298,6 +296,13 @@ public final class VAItemTagProvider {
             configureGildedToolSet(VAItems.IOLITE_TOOL_SETS);
             configureGildedToolSet(VAItems.QUARTZ_TOOL_SETS);
             configureGildedToolSet(VAItems.SCULK_TOOL_SETS);
+
+            addTo(VAItemTags.HALBERDS, VAItems.WOODEN_HALBERD, VAItems.STONE_HALBERD, VAItems.IRON_HALBERD, VAItems.GOLDEN_HALBERD, VAItems.STEEL_HALBERD, VAItems.DIAMOND_HALBERD, VAItems.NETHERITE_HALBERD);
+            getTagBuilder(VAItemTags.HALBERD_ENCHANTABLE).addOptionalTag(VAItemTags.HALBERDS.id());
+            getTagBuilder(ItemTags.SHARP_WEAPON_ENCHANTABLE).addOptionalTag(VAItemTags.HALBERDS.id());
+            getTagBuilder(ItemTags.DURABILITY_ENCHANTABLE).addOptionalTag(VAItemTags.HALBERDS.id());
+            getTagBuilder(ItemTags.VANISHING_ENCHANTABLE).addOptionalTag(VAItemTags.HALBERDS.id());
+            getTagBuilder(ItemTags.BREAKS_DECORATED_POTS).addOptionalTag(VAItemTags.HALBERDS.id());
 
             addTo(ItemTags.STONE_CRAFTING_MATERIALS, VAItems.PORPHYRY);
             addTo(ItemTags.STONE_TOOL_MATERIALS, VAItems.PORPHYRY);
@@ -440,6 +445,7 @@ public final class VAItemTagProvider {
                     addTo(type.getPickaxesTag(), set.PICKAXE());
                     addTo(type.getShovelsTag(), set.SHOVEL());
                     addTo(type.getSwordsTag(), set.SWORD());
+                    addTo(type.getHalberdsTag(), set.HALBERD());
                 }
                 if (set.NAME().contains("golden")) {
                     addTo(ItemTags.PIGLIN_LOVED, items);
@@ -453,6 +459,7 @@ public final class VAItemTagProvider {
             addTo(ItemTags.PICKAXES, set.PICKAXE());
             addTo(ItemTags.SHOVELS, set.SHOVEL());
             addTo(ItemTags.SWORDS, set.SWORD());
+            addTo(VAItemTags.HALBERDS, set.HALBERD());
 
             addTo(ItemTags.CLUSTER_MAX_HARVESTABLES, set.PICKAXE());
         }

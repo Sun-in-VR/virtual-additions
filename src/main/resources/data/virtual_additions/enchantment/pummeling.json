@@ -1,0 +1,36 @@
+{
+  "exclusive_set": "#minecraft:exclusive_set/damage",
+  "primary_items": "#virtual_additions:enchantable/halberd",
+  "anvil_cost": 1,
+  "description": {
+    "translate": "enchantment.virtual_additions.pummeling"
+  },
+  "effects": {
+    "minecraft:attributes": [
+      {
+        "amount": {
+          "type": "minecraft:linear",
+          "base": 0.5,
+          "per_level_above_first": 0.25
+        },
+        "attribute": "virtual_additions:critical_hit_factor",
+        "id": "virtual_additions:enchantment.pummeling",
+        "operation": "add_multiplied_base"
+      }
+    ]
+  },
+  "max_cost": {
+    "base": 51,
+    "per_level_above_first": 10
+  },
+  "max_level": 5,
+  "min_cost": {
+    "base": 1,
+    "per_level_above_first": 10
+  },
+  "slots": [
+    "mainhand"
+  ],
+  "supported_items": "#minecraft:enchantable/sharp_weapon",
+  "weight": 7
+}

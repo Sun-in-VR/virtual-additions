@@ -31,19 +31,17 @@ public class WitherSkeletonEntityMixin extends MobEntity {
             float d = localDifficulty.getLocalDifficulty() * 0.05F;
             boolean bow = random.nextFloat() > 0.85F;
             if (f > (1.0F - d)) {
-                if (!bow) this.equipStack(EquipmentSlot.MAINHAND, new ItemStack(Items.NETHERITE_SWORD));
+                this.equipStack(EquipmentSlot.MAINHAND, new ItemStack(VAItems.STONE_HALBERD));
                 this.equipStack(EquipmentSlot.HEAD, new ItemStack(Items.NETHERITE_HELMET));
                 this.equipStack(EquipmentSlot.CHEST, new ItemStack(Items.NETHERITE_CHESTPLATE));
                 this.equipStack(EquipmentSlot.LEGS, new ItemStack(Items.NETHERITE_LEGGINGS));
                 this.equipStack(EquipmentSlot.FEET, new ItemStack(Items.NETHERITE_BOOTS));
-                if (!bow) this.setEquipmentDropChance(EquipmentSlot.MAINHAND, 0.001F);
                 this.setEquipmentDropChance(EquipmentSlot.HEAD, 0.001F);
                 this.setEquipmentDropChance(EquipmentSlot.CHEST, 0.001F);
                 this.setEquipmentDropChance(EquipmentSlot.LEGS, 0.001F);
                 this.setEquipmentDropChance(EquipmentSlot.FEET, 0.001F);
                 ci.cancel();
-            }
-            if (bow) {
+            } else if (bow) {
                 this.equipStack(EquipmentSlot.MAINHAND, new ItemStack(Items.BOW));
                 ci.cancel();
             }

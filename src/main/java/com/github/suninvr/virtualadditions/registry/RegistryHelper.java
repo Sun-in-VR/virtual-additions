@@ -32,9 +32,9 @@ public class RegistryHelper {
 
     public static class ItemRegistryHelper {
 
-        public record ToolSet(Item SWORD, Item SHOVEL, Item PICKAXE, Item AXE, Item HOE, ToolMaterial MATERIAL, String NAME){
+        public record ToolSet(Item SWORD, Item SHOVEL, Item PICKAXE, Item AXE, Item HOE, Item HALBERD, ToolMaterial MATERIAL, String NAME){
             public Item[] getItems() {
-                return new Item[]{AXE, HOE, PICKAXE, SHOVEL, SWORD};
+                return new Item[]{AXE, HOE, PICKAXE, SHOVEL, SWORD, HALBERD};
             }
 
             public void forEach(Consumer<Item> consumer) {
@@ -43,6 +43,7 @@ public class RegistryHelper {
                 consumer.accept(PICKAXE);
                 consumer.accept(SHOVEL);
                 consumer.accept(SWORD);
+                consumer.accept(HALBERD);
             }
         }
 
@@ -205,6 +206,7 @@ public class RegistryHelper {
                     register(newName +"_pickaxe", settings -> new GildedPickaxeItem(type, baseSet.MATERIAL, baseSet.PICKAXE, settings), new Item.Settings()),
                     register(newName +"_axe", settings -> new GildedAxeItem(type, baseSet.MATERIAL, (AxeItem) baseSet.AXE, settings), new Item.Settings()),
                     register(newName +"_hoe", settings -> new GildedHoeItem(type, baseSet.MATERIAL, (HoeItem) baseSet.HOE, settings), new Item.Settings()),
+                    register(newName +"_halberd", settings -> new GildedHalberdItem(type, baseSet.MATERIAL, baseSet.HALBERD, settings), new Item.Settings()),
                     type.getModifiedMaterial(baseSet.MATERIAL).asToolMaterial(),
                     newName
             );
@@ -218,6 +220,7 @@ public class RegistryHelper {
                     register(newName +"_pickaxe", settings -> new GildedPickaxeItem(type, baseSet.MATERIAL, baseSet.PICKAXE, settings), baseSettings),
                     register(newName +"_axe", settings -> new GildedAxeItem(type, baseSet.MATERIAL, (AxeItem) baseSet.AXE, settings), baseSettings),
                     register(newName +"_hoe", settings -> new GildedHoeItem(type, baseSet.MATERIAL, (HoeItem) baseSet.HOE, settings), baseSettings),
+                    register(newName +"_halberd", settings -> new GildedHalberdItem(type, baseSet.MATERIAL, baseSet.HALBERD, settings), baseSettings),
                     type.getModifiedMaterial(baseSet.MATERIAL).asToolMaterial(),
                     newName
             );

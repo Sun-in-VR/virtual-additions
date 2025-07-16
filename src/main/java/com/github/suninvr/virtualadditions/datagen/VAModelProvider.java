@@ -332,6 +332,14 @@ public class VAModelProvider {
                     VAItems.STEEL_HOE
             );
 
+            registerHalberd(generator, VAItems.WOODEN_HALBERD);
+            registerHalberd(generator, VAItems.STONE_HALBERD);
+            registerHalberd(generator, VAItems.IRON_HALBERD);
+            registerHalberd(generator, VAItems.GOLDEN_HALBERD);
+            registerHalberd(generator, VAItems.STEEL_HALBERD);
+            registerHalberd(generator, VAItems.DIAMOND_HALBERD);
+            registerHalberd(generator, VAItems.NETHERITE_HALBERD);
+
             registerPortalCore(generator, VAItems.PORTAL_CORE);
 
             generator.registerArmor(VAItems.STEEL_HELMET, VAArmorMaterial.STEEL.assetId(), HELMET_TRIM_ID_PREFIX, false);
@@ -486,17 +494,25 @@ public class VAModelProvider {
             uploadGildedToolModel(itemModelGenerator, set.PICKAXE(), "_pickaxe");
             uploadGildedToolModel(itemModelGenerator, set.AXE(), "_axe");
             uploadGildedToolModel(itemModelGenerator, set.HOE(), "_hoe");
+            uploadGildedHalberdModels(itemModelGenerator, set.HALBERD());
         }
 
         public static void uploadGildedToolModel(ItemModelGenerator itemModelGenerator, Item item, String suffix) {
-            GildedToolItem gildedToolItem = item instanceof GildedToolItem ? (GildedToolItem) item : null;
-            if (gildedToolItem == null) return;
+            if (item instanceof GildedToolItem gildedToolItem) {
             Item baseItem = gildedToolItem.getBaseItem();
             Identifier base = ModelIds.getItemModelId(baseItem);
             Identifier gild = gildedToolItem.getGildType().getId().withSuffixedPath(suffix).withPrefixedPath("item/gilded_tools/");
             Identifier id = ModelIds.getItemModelId(item);
             VAModels.HANDHELD_TWO_LAYERS.upload(id, TextureMap.layered(base, gild), itemModelGenerator.modelCollector);
             itemModelGenerator.output.accept(item, ItemModels.basic(id));
+            }
+        }
+
+        public static void uploadGildedHalberdModels(ItemModelGenerator itemModelGenerator, Item item) {
+            if (item instanceof GildedToolItem gildedToolItem) {
+                Identifier gild = gildedToolItem.getGildType().getId().withSuffixedPath("_halberd").withPrefixedPath("item/gilded_tools/");
+                registerLayeredHalberd(itemModelGenerator, item, gildedToolItem.getBaseItem(), gild);
+            }
         }
 
         protected void registerSpotlight(BlockStateModelGenerator generator) {
@@ -601,6 +617,22 @@ public class VAModelProvider {
             generator.output.accept(item, ItemModels.condition(
                     ItemModels.hasComponentProperty(VADataComponentTypes.PORTAL_CORE_LOCATION), active, base
             ));
+        }
+
+        public static void registerHalberd(ItemModelGenerator generator, Item item) {
+            ItemModel.Unbaked base = ItemModels.basic(ModelIds.getItemModelId(item));
+            ItemModel.Unbaked inHand = ItemModels.basic(ModelIds.getItemSubModelId(item, "_in_hand"));
+            Models.HANDHELD.upload(ModelIds.getItemModelId(item), TextureMap.layer0(TextureMap.getId(item)), generator.modelCollector);
+            VAModels.HALBERD_IN_HAND.upload(ModelIds.getItemSubModelId(item, "_in_hand"), TextureMap.layer0(TextureMap.getSubId(item, "_in_hand")), generator.modelCollector);
+            generator.output.accept(item, createModelWithInHandVariant(base, inHand));
+        }
+
+        public static void registerLayeredHalberd(ItemModelGenerator generator, Item item, Item baseItem, Identifier layer) {
+            ItemModel.Unbaked base = ItemModels.basic(ModelIds.getItemModelId(item));
+            ItemModel.Unbaked inHand = ItemModels.basic(ModelIds.getItemSubModelId(item, "_in_hand"));
+            VAModels.HANDHELD_TWO_LAYERS.upload(ModelIds.getItemModelId(item), TextureMap.layered(TextureMap.getId(baseItem), layer), generator.modelCollector);
+            VAModels.HALBERD_IN_HAND_TWO_LAYERS.upload(ModelIds.getItemSubModelId(item, "_in_hand"), TextureMap.layered(TextureMap.getSubId(baseItem, "_in_hand"), layer.withSuffixedPath("_in_hand")), generator.modelCollector);
+            generator.output.accept(item, createModelWithInHandVariant(base, inHand));
         }
 
         protected void registerSpectralFire(BlockStateModelGenerator generator) {

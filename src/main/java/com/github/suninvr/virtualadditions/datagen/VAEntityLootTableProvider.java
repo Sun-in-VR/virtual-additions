@@ -117,7 +117,7 @@ public class VAEntityLootTableProvider {
                             .conditionally(AnyOfLootCondition.builder(
                                     RandomChanceWithEnchantedBonusLootCondition.builder(registries, 0.025F, 0.01F),
                                     AllOfLootCondition.builder(
-                                            RandomChanceWithEnchantedBonusLootCondition.builder(registries, 0.35F, 0.1F),
+                                            RandomChanceWithEnchantedBonusLootCondition.builder(registries, 0.4F, 0.2F),
                                             EntityPropertiesLootCondition.builder(LootContext.EntityTarget.THIS, EntityPredicate.Builder.create().equipment(EntityEquipmentPredicate.Builder.create().head(ItemPredicate.Builder.create().items(registryEntryLookup, Items.NETHERITE_HELMET))))
                                     )
                             ))

@@ -1,6 +1,7 @@
 package com.github.suninvr.virtualadditions.item;
 
 import com.github.suninvr.virtualadditions.VirtualAdditions;
+import com.github.suninvr.virtualadditions.registry.VAItemTags;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.component.DataComponentTypes;
@@ -40,6 +41,7 @@ public class GildType {
     private TagKey<Item> pickaxesTag;
     private TagKey<Item> shovelsTag;
     private TagKey<Item> swordsTag;
+    private TagKey<Item> halberdsTag;
     public record Modifier(Identifier id, ModifierType type, float value, BiFunction<Float, Float, Float> function, ModifierType.ToolType... appliesTo){
 
         public float apply(float f) {
@@ -261,6 +263,14 @@ public class GildType {
         return this.swordsTag;
     }
 
+    public TagKey<Item> getHalberdsTag() {
+        if (this.halberdsTag == null) {
+            Identifier id = this.id.withSuffixedPath("_gilded_halberds");
+            this.halberdsTag = TagKey.of(RegistryKeys.ITEM, id);
+        }
+        return this.halberdsTag;
+    }
+
     @Override
     public final boolean equals(Object obj) {
         return (obj instanceof GildType gildType && gildType.getId().equals(this.id)) || (obj instanceof Identifier identifier && identifier.equals(this.id));
@@ -285,7 +295,8 @@ public class GildType {
             SHOVEL,
             PICKAXE,
             AXE,
-            HOE;
+            HOE,
+            HALBERD;
 
             public boolean matches(Item item) {
                 return switch (this) {
@@ -294,6 +305,7 @@ public class GildType {
                     case PICKAXE -> Registries.ITEM.getId(item).getPath().contains("pickaxe");
                     case AXE -> item instanceof AxeItem;
                     case HOE -> item instanceof HoeItem;
+                    case HALBERD -> Registries.ITEM.getId(item).getPath().contains("halberd");
                 };
             }
         }

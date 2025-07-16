@@ -1,10 +1,12 @@
 package com.github.suninvr.virtualadditions.mixin;
 
+import com.github.suninvr.virtualadditions.VirtualAdditions;
 import com.github.suninvr.virtualadditions.entity.PlayerProjectionEntity;
 import com.github.suninvr.virtualadditions.interfaces.PlayerEntityInterface;
 import com.github.suninvr.virtualadditions.item.GildTypes;
 import com.github.suninvr.virtualadditions.item.GildedToolUtil;
 import com.github.suninvr.virtualadditions.registry.VADamageTypes;
+import com.github.suninvr.virtualadditions.registry.VAEntityAttributes;
 import com.github.suninvr.virtualadditions.registry.VAItems;
 import com.llamalad7.mixinextras.sugar.Local;
 import com.llamalad7.mixinextras.sugar.ref.LocalFloatRef;
@@ -12,6 +14,7 @@ import net.minecraft.block.BlockState;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.LivingEntity;
+import net.minecraft.entity.attribute.DefaultAttributeContainer;
 import net.minecraft.entity.attribute.EntityAttributes;
 import net.minecraft.entity.damage.DamageSource;
 import net.minecraft.entity.player.ItemCooldownManager;
@@ -19,11 +22,13 @@ import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.server.world.ServerWorld;
 import net.minecraft.world.World;
+import org.apache.logging.log4j.Level;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.Unique;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
+import org.spongepowered.asm.mixin.injection.ModifyVariable;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
@@ -52,6 +57,19 @@ public abstract class PlayerEntityMixin extends LivingEntity implements PlayerEn
     @Override
     public boolean virtualAdditions$hasProjectionEntity() {
         return this.projection != null;
+    }
+
+    @ModifyVariable(method = "attack", at = @At("STORE"), ordinal = 3)
+     float virtualAdditions$setCriticalHitDamage(float value, @Local(ordinal = 2) boolean bl3, @Local(ordinal = 0) float f, @Local(ordinal = 1) float g) {
+        if (bl3) {
+            float h = f + (f * 0.333333333F * ((float) this.getAttributeValue(VAEntityAttributes.CRITICAL_HIT_FACTOR) - 1));
+            return h + g;
+        } else return value;
+    }
+
+    @Inject(method = "createPlayerAttributes", at = @At("RETURN"), cancellable = true)
+    private static void virtualAdditions$createPlayerAttributes(CallbackInfoReturnable<DefaultAttributeContainer.Builder> cir) {
+        cir.setReturnValue(cir.getReturnValue().add(VAEntityAttributes.CRITICAL_HIT_FACTOR));
     }
 
     @Inject(method = "getBlockBreakingSpeed", at = @At(value = "INVOKE", target = "Lnet/minecraft/entity/effect/StatusEffectUtil;hasHaste(Lnet/minecraft/entity/LivingEntity;)Z", shift = At.Shift.BEFORE))

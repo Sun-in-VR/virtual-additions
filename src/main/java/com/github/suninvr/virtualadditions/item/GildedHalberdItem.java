@@ -1,0 +1,52 @@
+package com.github.suninvr.virtualadditions.item;
+
+import com.github.suninvr.virtualadditions.item.interfaces.GildedToolItem;
+import net.minecraft.component.type.TooltipDisplayComponent;
+import net.minecraft.entity.EquipmentSlot;
+import net.minecraft.entity.LivingEntity;
+import net.minecraft.item.Item;
+import net.minecraft.item.ItemStack;
+import net.minecraft.item.ToolMaterial;
+import net.minecraft.item.tooltip.TooltipType;
+import net.minecraft.screen.ScreenTexts;
+import net.minecraft.text.Style;
+import net.minecraft.text.Text;
+import net.minecraft.util.Formatting;
+
+import java.util.function.Consumer;
+
+public class GildedHalberdItem extends Item implements GildedToolItem {
+    private final GildType gildType;
+    private final Item baseItem;
+    private static final Text descriptionHeader = Text.translatable("item.minecraft.smithing_template.upgrade").formatted(Formatting.GRAY);
+    private final Text descriptionText;
+
+    public GildedHalberdItem(GildType gildType, ToolMaterial baseMaterial, Item baseItem, Settings settings) {
+        super(GildedToolUtil.settingsOf(gildType.getModifiedMaterial(baseMaterial).asToolMaterial().applySwordSettings(settings, baseMaterial.attackDamageBonus(), baseMaterial.speed()), baseItem, gildType));
+        this.gildType = gildType;
+        this.baseItem = baseItem;
+        this.descriptionText = ScreenTexts.space().append(Text.translatable(this.gildType.buildTooltipTranslationKey()).setStyle(Style.EMPTY.withColor(this.gildType.getColor())));
+    }
+
+    @Override
+    public GildType getGildType() {
+        return this.gildType;
+    }
+
+    @Override
+    public void appendTooltip(ItemStack stack, TooltipContext context, TooltipDisplayComponent displayComponent, Consumer<Text> textConsumer, TooltipType type) {
+        textConsumer.accept(descriptionHeader);
+        textConsumer.accept(this.descriptionText);
+        super.appendTooltip(stack, context, displayComponent, textConsumer, type);
+    }
+
+    @Override
+    public void postDamageEntity(ItemStack stack, LivingEntity target, LivingEntity attacker) {
+        stack.damage(1, attacker, EquipmentSlot.MAINHAND);
+    }
+
+    @Override
+    public Item getBaseItem() {
+        return baseItem;
+    }
+}

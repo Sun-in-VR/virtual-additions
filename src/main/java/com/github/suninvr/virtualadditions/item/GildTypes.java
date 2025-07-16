@@ -32,7 +32,7 @@ public class GildTypes {
     private static final BiFunction<Float, Float, Float> MULTIPLY = (attribute, modifier) -> attribute * modifier;
     private static final BiFunction<Float, Float, Float> MULTIPLY_ROUNDED_TENTHS = (attribute, modifier) -> Math.round(10 * (attribute * modifier)) / 10.0F;
 
-    public static final GildType AMETHYST = new GildType(idOf("amethyst"), 0x9A5CC6, miningSpeedModifier(1, ADD), attackSpeedModifier(0.8F, MULTIPLY_ROUNDED_TENTHS));
+    public static final GildType AMETHYST = new GildType(idOf("amethyst"), 0x9A5CC6, miningSpeedModifier(1, ADD), attackSpeedModifier(0.9F, MULTIPLY_ROUNDED_TENTHS, GildType.ModifierType.ToolType.SWORD, GildType.ModifierType.ToolType.AXE), attackSpeedModifier(0.95F, MULTIPLY_ROUNDED_TENTHS, GildType.ModifierType.ToolType.HALBERD));
     public static final GildType COPPER = new GildType(idOf("copper"), 0xB4684D, durabilityModifier(1.5F, MULTIPLY));
     public static final GildType EMERALD = new GildType(idOf("emerald"), 0x11A036, enchantabilityModifier(1.5F, MULTIPLY)){
         @Override

@@ -18,7 +18,9 @@
     "advancements.virtual_additions.story.gild_tool.title": "Specialized Equipment",
     "advancements.virtual_additions.story.gild_tool.description": "Craft a Gilded Tool at a Smithing Table",
     "advancements.virtual_additions.story.apply_all_gilds.title": "Tinkering with Tools",
-    "advancements.virtual_additions.story.apply_all_gilds.description": "Apply every Gild material to every type of Tool at least once",
+    "advancements.virtual_additions.story.apply_all_gilds.description": "Aptply every Gild material to every type of Tool at least once",
+
+    "attribute.virtual_additions.critical_hit_factor": "Critical Hit Factor",
 
     "biome.virtual_additions.wasp_den": "Wasp Den",
     "biome.virtual_additions.salty_caves": "Salty Caves",
@@ -419,6 +421,8 @@
     "entity.virtual_additions.soulbloom_boat": "Soulbloom Boat",
     "entity.virtual_additions.soulbloom_chest_boat": "Soulbloom Boat with Chest",
 
+    "enchantment.virtual_additions.pummeling": "Pummeling",
+
     "gild_type.virtual_additions.amethyst": "Amethyst Gild",
     "gild_type.virtual_additions.copper": "Copper Gild",
     "gild_type.virtual_additions.emerald": "Emerald Gild",
@@ -443,6 +447,7 @@
     "item.virtual_additions.steel_pickaxe": "Steel Pickaxe",
     "item.virtual_additions.steel_axe": "Steel Axe",
     "item.virtual_additions.steel_hoe": "Steel Hoe",
+    "item.virtual_additions.steel_halberd": "Steel Halberd",
     "item.virtual_additions.steel_bomb": "Steel Bomb",
     "item.virtual_additions.steel_helmet": "Steel Helmet",
     "item.virtual_additions.steel_chestplate": "Steel Chestplate",
@@ -510,6 +515,12 @@
     "item.virtual_additions.iolite": "Iolite",
     "item.virtual_additions.portal_core": "Portal Core",
     "item.virtual_additions.drained_portal_core": "Drained Portal Core",
+    "item.virtual_additions.wooden_halberd": "Wooden Halberd",
+    "item.virtual_additions.stone_halberd": "Stone Halberd",
+    "item.virtual_additions.iron_halberd": "Iron Halberd",
+    "item.virtual_additions.golden_halberd": "Golden Halberd",
+    "item.virtual_additions.diamond_halberd": "Diamond Halberd",
+    "item.virtual_additions.netherite_halberd": "Netherite Halberd",
     "item.virtual_additions.lightning_bottle": "Bottled Lightning",
     "item.virtual_additions.purple_egg": "Purple Egg",
     "item.virtual_additions.saline_spawn_egg": "Saline Spawn Egg",
