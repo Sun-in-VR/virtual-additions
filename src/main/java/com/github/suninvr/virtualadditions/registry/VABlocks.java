@@ -12,8 +12,8 @@ import net.minecraft.block.*;
 import net.minecraft.block.AbstractBlock.Settings;
 import net.minecraft.block.piston.PistonBehavior;
 import net.minecraft.entity.ai.pathing.PathNodeType;
-import net.minecraft.particle.EntityEffectParticleEffect;
 import net.minecraft.particle.ParticleTypes;
+import net.minecraft.particle.TintedParticleEffect;
 import net.minecraft.sound.BlockSoundGroup;
 import net.minecraft.sound.SoundEvents;
 import net.minecraft.util.ColorCode;
@@ -653,7 +653,7 @@ public class VABlocks {
         WITHERED_WALL_SIGN = register("withered_wall_sign", (settings) -> new CustomSignBlocks.CustomWallSignBlock(settings, WITHERED_WOODTYPE, DyeColor.WHITE), Settings.copy(WITHERED_SIGN).lootTable(WITHERED_SIGN.getLootTableKey()).strength(2.5F).mapColor(MapColor.BLACK));
         WITHERED_HANGING_SIGN = register("withered_hanging_sign", (settings) -> new CustomSignBlocks.CustomHangingSignBlock(settings, WITHERED_WOODTYPE, DyeColor.WHITE), Settings.copy(Blocks.CHERRY_HANGING_SIGN).strength(2.5F).mapColor(MapColor.BLACK));
         WITHERED_WALL_HANGING_SIGN = register("withered_wall_hanging_sign", (settings) -> new CustomSignBlocks.CustomWallHangingSignBlock(settings, WITHERED_WOODTYPE, DyeColor.WHITE), Settings.copy(Blocks.CHERRY_WALL_HANGING_SIGN).lootTable(WITHERED_HANGING_SIGN.getLootTableKey()).strength(2.5F).mapColor(MapColor.BLACK));
-        WITHERED_LEAVES = register("withered_leaves", (settings) -> new UntintedParticleLeavesBlock(0.025F, EntityEffectParticleEffect.create(ParticleTypes.TINTED_LEAVES, 0x464928), settings), Settings.copy(Blocks.CHERRY_LEAVES).sounds(BlockSoundGroup.MANGROVE_ROOTS).mapColor(MapColor.BLACK));
+        WITHERED_LEAVES = register("withered_leaves", (settings) -> new UntintedParticleLeavesBlock(0.025F, TintedParticleEffect.create(ParticleTypes.TINTED_LEAVES, 0x464928), settings), Settings.copy(Blocks.CHERRY_LEAVES).sounds(BlockSoundGroup.MANGROVE_ROOTS).mapColor(MapColor.BLACK));
         WITHERED_SAPLING = register("withered_sapling", (settings) -> new WitheredSaplingBlock(CustomSaplingGenerator.WITHERED, settings), Settings.copy(Blocks.CHERRY_SAPLING).mapColor(MapColor.BLACK));
         POTTED_WITHERED_SAPLING = register("potted_withered_sapling", (settings) -> new FlowerPotBlock(WITHERED_SAPLING, settings), Settings.copy(Blocks.FLOWER_POT));
 

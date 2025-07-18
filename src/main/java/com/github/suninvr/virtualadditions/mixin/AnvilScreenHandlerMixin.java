@@ -4,8 +4,11 @@ import com.github.suninvr.virtualadditions.item.GildType;
 import com.github.suninvr.virtualadditions.item.GildedToolUtil;
 import com.github.suninvr.virtualadditions.item.interfaces.GildedToolItem;
 import com.github.suninvr.virtualadditions.registry.VAItems;
+import com.llamalad7.mixinextras.injector.ModifyExpressionValue;
+import com.llamalad7.mixinextras.injector.ModifyReceiver;
 import com.llamalad7.mixinextras.injector.wrapoperation.Operation;
 import com.llamalad7.mixinextras.injector.wrapoperation.WrapOperation;
+import com.llamalad7.mixinextras.sugar.Local;
 import net.minecraft.component.DataComponentTypes;
 import net.minecraft.component.type.LoreComponent;
 import net.minecraft.enchantment.EnchantmentHelper;
@@ -59,24 +62,25 @@ public abstract class AnvilScreenHandlerMixin extends ForgingScreenHandler {
         else original.call(instance, i, stack);
     }
 
-    @Redirect(method = "updateResult", at = @At(value = "INVOKE", target = "Lnet/minecraft/inventory/CraftingResultInventory;setStack(ILnet/minecraft/item/ItemStack;)V", ordinal = 4))
-    void virtualAdditions$setStack(CraftingResultInventory instance, int slot, ItemStack stack) {
+    @WrapOperation(method = "updateResult", at = @At(value = "INVOKE", target = "Lnet/minecraft/inventory/CraftingResultInventory;setStack(ILnet/minecraft/item/ItemStack;)V", ordinal = 4))
+    void virtualAdditions$setStack(CraftingResultInventory instance, int slot, ItemStack stack, Operation<Void> original) {
         ItemStack baseStack = this.getSlot(0).getStack();
         ItemStack additionsStack = this.getSlot(1).getStack();
 
-        ItemStack baseBaseStack = GildedToolUtil.getBaseStack(baseStack);
-        ItemStack additionsBaseStack = GildedToolUtil.getBaseStack(additionsStack);
-        GildType baseType = GildedToolItem.getGildType(baseStack);
-        GildType additionsType = GildedToolItem.getGildType(additionsStack);
-
-        if (baseBaseStack.isOf(additionsBaseStack.getItem()) && !(baseType.equals(additionsType))) {
-            ItemStack resultStack = baseStack.copy();
-            resultStack.applyComponentsFrom(stack.getComponents());
-            this.levelCost.set(this.levelCost.get() + 3);
-            instance.setStack(slot, resultStack);
-        } else {
-            instance.setStack(slot, stack);
+        if (baseStack.getItem() instanceof GildedToolItem || additionsStack.getItem() instanceof GildedToolItem) {
+            ItemStack baseBaseStack = GildedToolUtil.getBaseStack(baseStack);
+            ItemStack additionsBaseStack = GildedToolUtil.getBaseStack(additionsStack);
+            GildType baseType = GildedToolItem.getGildType(baseStack);
+            GildType additionsType = GildedToolItem.getGildType(additionsStack);
+            if (baseBaseStack.isOf(additionsBaseStack.getItem()) && !(baseType.equals(additionsType))) {
+                ItemStack resultStack = baseStack.copy();
+                resultStack.applyComponentsFrom(stack.getComponents());
+                this.levelCost.set(this.levelCost.get() + 3);
+                instance.setStack(slot, resultStack);
+                return;
+            }
         }
+        original.call(instance, slot, stack);
     }
 
     @Inject(method = "updateResult", at = @At("HEAD"), cancellable = true)

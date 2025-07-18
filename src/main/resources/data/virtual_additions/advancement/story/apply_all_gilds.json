@@ -134,6 +134,30 @@
     "sculk_hoe": {
       "trigger": "minecraft:inventory_changed",
       "conditions": {"items": [{"items": "#virtual_additions:sculk_gilded_hoes"}]}
+    },
+    "amethyst_halberd": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {"items": [{"items": "#virtual_additions:amethyst_gilded_halberds"}]}
+    },
+    "copper_halberd": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {"items": [{"items": "#virtual_additions:copper_gilded_halberds"}]}
+    },
+    "emerald_halberd": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {"items": [{"items": "#virtual_additions:emerald_gilded_halberds"}]}
+    },
+    "iolite_halberd": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {"items": [{"items": "#virtual_additions:iolite_gilded_halberds"}]}
+    },
+    "quartz_halberd": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {"items": [{"items": "#virtual_additions:quartz_gilded_halberds"}]}
+    },
+    "sculk_halberd": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {"items": [{"items": "#virtual_additions:sculk_gilded_halberds"}]}
     }
   },
   "rewards": {
