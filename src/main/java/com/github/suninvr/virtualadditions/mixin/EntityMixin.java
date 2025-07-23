@@ -84,18 +84,6 @@ public abstract class EntityMixin implements Nameable, EntityLike, CommandOutput
         }
     }
 
-    @Environment(EnvType.CLIENT)
-    @Inject(method = "changeLookDirection", at = @At("HEAD"), cancellable = true)
-    void virtualAdditions$lockLookDirection(double cursorDeltaX, double cursorDeltaY, CallbackInfo ci) {
-        if (((Object)this) instanceof ClientPlayerEntity && MinecraftClient.getInstance().getCameraEntity() instanceof PlayerProjectionEntity entity) {
-            entity.changeLookDirection(cursorDeltaX, cursorDeltaY);
-            entity.lastYaw = entity.bodyYaw = entity.headYaw = entity.getYaw();
-            entity.updateLastAngles();
-            entity.lookDirectionChanged = true;
-            ci.cancel();
-        }
-    }
-
     @Inject(method = "updateWaterState", at = @At("RETURN"), cancellable = true)
     void virtualAdditions$updateAcidState(CallbackInfoReturnable<Boolean> cir) {
         boolean bl = this.updateMovementInFluid(VAFluids.ACID_TAG, 0);

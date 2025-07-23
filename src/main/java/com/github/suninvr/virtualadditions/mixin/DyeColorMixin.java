@@ -1,5 +1,8 @@
 package com.github.suninvr.virtualadditions.mixin;
 
+import com.llamalad7.mixinextras.injector.ModifyReturnValue;
+import com.llamalad7.mixinextras.injector.wrapoperation.Operation;
+import com.llamalad7.mixinextras.injector.wrapoperation.WrapOperation;
 import net.minecraft.block.MapColor;
 import net.minecraft.util.DyeColor;
 import org.spongepowered.asm.mixin.Mixin;
@@ -18,10 +21,10 @@ public class DyeColorMixin {
     @Unique
     private static DyeColor[] allValues;
 
-    @Inject(method = "values", at = @At("RETURN"), cancellable = true)
-    private static void virtualAdditions$values(CallbackInfoReturnable<DyeColor[]> cir) {
+    @ModifyReturnValue(method = "values", at = @At("RETURN"))
+    private static DyeColor[] virtualAdditions$addValues(DyeColor[] original) {
         if (allValues == null) {
-            allValues = cir.getReturnValue();
+            allValues = original;
             virtualAdditions$addVariant("chartreuse", 0xA3C115, MapColor.LIME, 0xA3C115, 0xA3C115);
             virtualAdditions$addVariant("maroon", 0x641003, MapColor.DARK_RED, 0x641003, 0x641003);
             virtualAdditions$addVariant("indigo", 0x5C21CC, MapColor.BLUE, 0x5C21CC, 0x5C21CC);
@@ -31,8 +34,24 @@ public class DyeColorMixin {
             virtualAdditions$addVariant("sinopia", 0xB1390A, MapColor.ORANGE, 0xB1390A, 0xB1390A);
             virtualAdditions$addVariant("lilac", 0xCF96D5, MapColor.PALE_PURPLE, 0xCF96D5, 0xCF96D5);
         }
-        cir.setReturnValue(allValues);
+        return allValues;
     }
+
+    //@Inject(method = "values", at = @At("RETURN"), cancellable = true)
+    //private static void virtualAdditions$values(CallbackInfoReturnable<DyeColor[]> cir) {
+    //    if (allValues == null) {
+    //        allValues = cir.getReturnValue();
+    //        virtualAdditions$addVariant("chartreuse", 0xA3C115, MapColor.LIME, 0xA3C115, 0xA3C115);
+    //        virtualAdditions$addVariant("maroon", 0x641003, MapColor.DARK_RED, 0x641003, 0x641003);
+    //        virtualAdditions$addVariant("indigo", 0x5C21CC, MapColor.BLUE, 0x5C21CC, 0x5C21CC);
+    //        virtualAdditions$addVariant("plum", 0xA24058, MapColor.DULL_PINK, 0xA24058, 0xA24058);
+    //        virtualAdditions$addVariant("viridian", 0x406C5F, MapColor.PALE_GREEN, 0x406C5F, 0x406C5F);
+    //        virtualAdditions$addVariant("tan", 0xC1906F, MapColor.TERRACOTTA_WHITE, 0xC1906F, 0xC1906F);
+    //        virtualAdditions$addVariant("sinopia", 0xB1390A, MapColor.ORANGE, 0xB1390A, 0xB1390A);
+    //        virtualAdditions$addVariant("lilac", 0xCF96D5, MapColor.PALE_PURPLE, 0xCF96D5, 0xCF96D5);
+    //    }
+    //    cir.setReturnValue(allValues);
+    //}
 
     @Invoker("<init>")
     public static DyeColor virtualAdditions$invokeInit(String internalName, int internalId, int id, String name, int color, MapColor mapColor, int fireworkColor, int dyeColor) {

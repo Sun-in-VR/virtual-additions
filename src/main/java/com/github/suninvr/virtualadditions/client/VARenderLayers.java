@@ -23,7 +23,7 @@ public class VARenderLayers {
                         .texture(new RenderPhase.Texture(texture, false))
                         .lightmap(RenderPhase.ENABLE_LIGHTMAP)
                         .build(true);
-                return RenderLayer.of("virtual_additions_mini_portal", 1536, true, false, RenderPipelines.OPAQUE_PARTICLE, multiPhaseParameters);
+                return RenderLayer.of("virtual_additions_mini_portal", 1536, false, false, RenderPipelines.OPAQUE_PARTICLE, multiPhaseParameters);
             }
     );
 
@@ -33,7 +33,7 @@ public class VARenderLayers {
                         .texture(new RenderPhase.Texture(texture, false))
                         .lightmap(RenderPhase.ENABLE_LIGHTMAP)
                         .build(true);
-                return RenderLayer.of("virtual_additions_mini_portal_translucent", 1536, true, true, RenderPipelines.TRANSLUCENT_PARTICLE, multiPhaseParameters);
+                return RenderLayer.of("virtual_additions_mini_portal_translucent", 1536, false, true, RenderPipelines.TRANSLUCENT_PARTICLE, multiPhaseParameters);
             }
     );
 

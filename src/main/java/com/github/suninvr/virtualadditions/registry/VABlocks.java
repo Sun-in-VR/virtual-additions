@@ -14,6 +14,7 @@ import net.minecraft.block.piston.PistonBehavior;
 import net.minecraft.entity.ai.pathing.PathNodeType;
 import net.minecraft.particle.ParticleTypes;
 import net.minecraft.particle.TintedParticleEffect;
+import net.minecraft.registry.Registries;
 import net.minecraft.sound.BlockSoundGroup;
 import net.minecraft.sound.SoundEvents;
 import net.minecraft.util.ColorCode;

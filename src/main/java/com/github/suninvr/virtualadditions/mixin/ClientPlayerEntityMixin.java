@@ -34,14 +34,6 @@ public abstract class ClientPlayerEntityMixin extends AbstractClientPlayerEntity
 
     @Shadow public Input input;
 
-    @Shadow public float lastRenderYaw;
-
-    @Shadow public float renderYaw;
-
-    @Shadow public float lastRenderPitch;
-
-    @Shadow public float renderPitch;
-
     @Shadow public abstract float getYaw(float tickProgress);
 
     @Shadow @Final private Cooldown itemDropCooldown;
@@ -58,10 +50,6 @@ public abstract class ClientPlayerEntityMixin extends AbstractClientPlayerEntity
             this.sidewaysSpeed = 0;
             this.forwardSpeed = 0;
             this.jumping = false;
-            this.lastRenderYaw = this.renderYaw;
-            this.lastRenderPitch = this.renderPitch;
-            this.renderPitch += (this.getPitch() - this.renderPitch) * 0.5F;
-            this.renderYaw += (this.getYaw() - this.renderYaw) * 0.5F;
             ci.cancel();
         }
     }

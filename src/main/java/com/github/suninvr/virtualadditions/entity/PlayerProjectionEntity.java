@@ -80,6 +80,18 @@ public class PlayerProjectionEntity extends LivingEntity {
     }
 
     @Override
+    protected void turnHead(float bodyRotation) {
+        if ((this.getPlayer() != null && this.getPlayer().isMainPlayer())) return;
+        super.turnHead(bodyRotation);
+    }
+
+    @Override
+    public void updateTrackedHeadRotation(float yaw, int interpolationSteps) {
+        if ((this.getPlayer() != null && this.getPlayer().isMainPlayer())) return;
+        super.updateTrackedHeadRotation(yaw, interpolationSteps);
+    }
+
+    @Override
     public void tickMovement() {
         super.tickMovement();
         if (this.player == null && this.dataTracker.get(PLAYER_ID) instanceof UUID playerId && !playerId.equals(EMPTY_ID)) {
