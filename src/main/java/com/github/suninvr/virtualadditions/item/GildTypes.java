@@ -66,10 +66,8 @@ public class GildTypes {
                 if (potency <= 0) return true;
 
                 List<BlockPos> posList = selectPositions(world, pos, state, potency);
-                //TODO: Rewrite DestructiveSculkBlock.placeState to use posList.
                 DestructiveSculkBlock.placeState(world, pos, state, player.getUuid(), tool, potency);
                 int i = posList.size();
-                player.increaseStat(Stats.USED.getOrCreateStat(tool.getItem()), i);
                 tool.damage(i, player, EquipmentSlot.MAINHAND);
                 player.getItemCooldownManager().set(tool, (int) ((i) / ((miningEfficiency / 20.0) + 1)));
             }
