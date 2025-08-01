@@ -127,7 +127,7 @@ public class EntanglementDriveBlockEntity extends BlockEntity implements NamedSc
     }
 
     public static <E extends BlockEntity> void tick(World world, BlockPos pos, BlockState state, EntanglementDriveBlockEntity blockEntity) {
-        if (world.isClient) {
+        if (world.isClient()) {
             return;
         }
         world.updateComparators(pos, VABlocks.ENTANGLEMENT_DRIVE);

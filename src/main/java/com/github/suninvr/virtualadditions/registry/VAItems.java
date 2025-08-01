@@ -29,6 +29,7 @@ import static com.github.suninvr.virtualadditions.registry.RegistryHelper.ItemRe
 public class VAItems {
     //region Declarations
 
+    public static final ToolSet COPPER_TOOL_SET;
     public static final ToolSet DIAMOND_TOOL_SET;
     public static final ToolSet GOLDEN_TOOL_SET;
     public static final ToolSet IRON_TOOL_SET;
@@ -116,6 +117,7 @@ public class VAItems {
     public static final Item SOULBLOOM_BUTTON;
     public static final Item SOULBLOOM_SIGN;
     public static final Item SOULBLOOM_HANGING_SIGN;
+    public static final Item SOULBLOOM_SHELF;
     public static final Item SOULBLOOM_LEAVES;
     public static final Item SOULBLOOM_HEDGE;
     public static final Item SOULBLOOM_SAPLING;
@@ -143,6 +145,7 @@ public class VAItems {
     public static final Item WITHERED_BUTTON;
     public static final Item WITHERED_SIGN;
     public static final Item WITHERED_HANGING_SIGN;
+    public static final Item WITHERED_SHELF;
     public static final Item WITHERED_LEAVES;
     public static final Item WITHERED_HEDGE;
     public static final Item WITHERED_SAPLING;
@@ -456,6 +459,7 @@ public class VAItems {
     public static final Item REMOTE_NOTIFIER;
     public static final Item WOODEN_HALBERD;
     public static final Item STONE_HALBERD;
+    public static final Item COPPER_HALBERD;
     public static final Item IRON_HALBERD;
     public static final Item GOLDEN_HALBERD;
     public static final Item DIAMOND_HALBERD;
@@ -464,6 +468,12 @@ public class VAItems {
     public static final Item LUMWASP_SPAWN_EGG;
     public static final Item SPECTRE_SPAWN_EGG;
 
+    public static final ToolSet AMETHYST_COPPER_TOOL_SET;
+    public static final ToolSet COPPER_COPPER_TOOL_SET;
+    public static final ToolSet EMERALD_COPPER_TOOL_SET;
+    public static final ToolSet IOLITE_COPPER_TOOL_SET;
+    public static final ToolSet QUARTZ_COPPER_TOOL_SET;
+    public static final ToolSet SCULK_COPPER_TOOL_SET;
     public static final ToolSet AMETHYST_DIAMOND_TOOL_SET;
     public static final ToolSet COPPER_DIAMOND_TOOL_SET;
     public static final ToolSet EMERALD_DIAMOND_TOOL_SET;
@@ -637,6 +647,7 @@ public class VAItems {
         SOULBLOOM_BUTTON = registerBlockItem("soulbloom_button", VABlocks.SOULBLOOM_BUTTON, ItemGroups.BUILDING_BLOCKS, prev);
         SOULBLOOM_SIGN = register("soulbloom_sign", settings ->  new SignItem(VABlocks.SOULBLOOM_SIGN, VABlocks.SOULBLOOM_WALL_SIGN, settings), new Item.Settings().translationKey(VABlocks.SOULBLOOM_SIGN.getTranslationKey()).maxCount(16), ItemGroups.FUNCTIONAL, Items.CHERRY_HANGING_SIGN);
         SOULBLOOM_HANGING_SIGN = register("soulbloom_hanging_sign", settings ->  new HangingSignItem(VABlocks.SOULBLOOM_HANGING_SIGN, VABlocks.SOULBLOOM_WALL_HANGING_SIGN, settings), new Item.Settings().translationKey(VABlocks.SOULBLOOM_HANGING_SIGN.getTranslationKey()).maxCount(16), ItemGroups.FUNCTIONAL, prev);
+        SOULBLOOM_SHELF = registerBlockItem("soulbloom_shelf", VABlocks.SOULBLOOM_SHELF, at(ItemGroups.FUNCTIONAL, Items.CHERRY_SHELF), at(ItemGroups.REDSTONE, Items.CHERRY_SHELF));
         SOULBLOOM_LEAVES = registerBlockItem("soulbloom_leaves", VABlocks.SOULBLOOM_LEAVES, ItemGroups.NATURAL, Items.CHERRY_LEAVES);
         SOULBLOOM_SAPLING = registerBlockItem("soulbloom_sapling", VABlocks.SOULBLOOM_SAPLING, ItemGroups.NATURAL, Items.CHERRY_SAPLING);
         SOULBLOOM_BOAT = register("soulbloom_boat", settings -> new BoatItem(VAEntityType.SOULBLOOM_BOAT, settings), new Item.Settings().maxCount(1), ItemGroups.TOOLS, Items.CHERRY_CHEST_BOAT);
@@ -675,6 +686,7 @@ public class VAItems {
         WITHERED_BUTTON = registerBlockItem("withered_button", VABlocks.WITHERED_BUTTON, ItemGroups.BUILDING_BLOCKS, prev);
         WITHERED_SIGN = register("withered_sign", settings ->  new SignItem(VABlocks.WITHERED_SIGN, VABlocks.WITHERED_WALL_SIGN, settings), new Item.Settings().translationKey(VABlocks.WITHERED_SIGN.getTranslationKey()).maxCount(16), ItemGroups.FUNCTIONAL, Items.WARPED_HANGING_SIGN);
         WITHERED_HANGING_SIGN = register("withered_hanging_sign", settings ->  new HangingSignItem(VABlocks.WITHERED_HANGING_SIGN, VABlocks.WITHERED_WALL_HANGING_SIGN, settings), new Item.Settings().translationKey(VABlocks.WITHERED_HANGING_SIGN.getTranslationKey()).maxCount(16), ItemGroups.FUNCTIONAL, prev);
+        WITHERED_SHELF = registerBlockItem("withered_shelf", VABlocks.WITHERED_SHELF, at(ItemGroups.FUNCTIONAL, Items.WARPED_SHELF), at(ItemGroups.REDSTONE, Items.WARPED_SHELF));
         WITHERED_LEAVES = registerBlockItem("withered_leaves", VABlocks.WITHERED_LEAVES, ItemGroups.NATURAL, Items.FLOWERING_AZALEA_LEAVES);
         WITHERED_SAPLING = registerBlockItem("withered_sapling", VABlocks.WITHERED_SAPLING, ItemGroups.NATURAL, Items.FLOWERING_AZALEA);
 
@@ -710,6 +722,7 @@ public class VAItems {
 
         WOODEN_HALBERD = register("wooden_halberd", GildedToolUtil.halberdSettings(new Item.Settings(), ToolMaterial.WOOD, 7.0F, -3.35F), ItemGroups.COMBAT, Items.NETHERITE_AXE);
         STONE_HALBERD = register("stone_halberd", GildedToolUtil.halberdSettings(new Item.Settings(), ToolMaterial.STONE, 8.0F, -3.35F), ItemGroups.COMBAT, prev);
+        COPPER_HALBERD = register("copper_halberd", GildedToolUtil.halberdSettings(new Item.Settings(), ToolMaterial.COPPER, 8.0F, -3.35F), ItemGroups.COMBAT, prev);
         IRON_HALBERD = register("iron_halberd", GildedToolUtil.halberdSettings(new Item.Settings(), ToolMaterial.IRON, 9.0F, -3.35F), ItemGroups.COMBAT, prev);
         GOLDEN_HALBERD = register("golden_halberd", GildedToolUtil.halberdSettings(new Item.Settings(), ToolMaterial.GOLD, 7.0F, -3.35F), ItemGroups.COMBAT, prev);
         DIAMOND_HALBERD = register("diamond_halberd", GildedToolUtil.halberdSettings(new Item.Settings(), ToolMaterial.DIAMOND, 10.0F, -3.35F), ItemGroups.COMBAT, prev);
@@ -1077,6 +1090,7 @@ public class VAItems {
 
         //region Base Tool Sets
 
+        COPPER_TOOL_SET = new ToolSet(Items.COPPER_SWORD, Items.COPPER_SHOVEL, Items.COPPER_PICKAXE, Items.COPPER_AXE, Items.COPPER_HOE, VAItems.COPPER_HALBERD, ToolMaterial.COPPER, "copper");
         DIAMOND_TOOL_SET = new ToolSet(Items.DIAMOND_SWORD, Items.DIAMOND_SHOVEL, Items.DIAMOND_PICKAXE, Items.DIAMOND_AXE, Items.DIAMOND_HOE, VAItems.DIAMOND_HALBERD, ToolMaterial.DIAMOND, "diamond");
         GOLDEN_TOOL_SET = new ToolSet(Items.GOLDEN_SWORD, Items.GOLDEN_SHOVEL, Items.GOLDEN_PICKAXE, Items.GOLDEN_AXE, Items.GOLDEN_HOE, VAItems.GOLDEN_HALBERD, ToolMaterial.GOLD, "golden");
         IRON_TOOL_SET = new ToolSet(Items.IRON_SWORD, Items.IRON_SHOVEL, Items.IRON_PICKAXE, Items.IRON_AXE, Items.IRON_HOE, VAItems.IRON_HALBERD, ToolMaterial.IRON, "iron");
@@ -1087,6 +1101,12 @@ public class VAItems {
 
         //region Gilded Tool Sets
 
+        AMETHYST_COPPER_TOOL_SET = registerGildedToolSet(COPPER_TOOL_SET, GildTypes.AMETHYST);
+        COPPER_COPPER_TOOL_SET = registerGildedToolSet(COPPER_TOOL_SET, GildTypes.COPPER);
+        EMERALD_COPPER_TOOL_SET = registerGildedToolSet(COPPER_TOOL_SET, GildTypes.EMERALD);
+        IOLITE_COPPER_TOOL_SET = registerGildedToolSet(COPPER_TOOL_SET, GildTypes.IOLITE);
+        QUARTZ_COPPER_TOOL_SET = registerGildedToolSet(COPPER_TOOL_SET, GildTypes.QUARTZ);
+        SCULK_COPPER_TOOL_SET = registerGildedToolSet(COPPER_TOOL_SET, GildTypes.SCULK);
         AMETHYST_DIAMOND_TOOL_SET = registerGildedToolSet(DIAMOND_TOOL_SET, GildTypes.AMETHYST);
         COPPER_DIAMOND_TOOL_SET = registerGildedToolSet(DIAMOND_TOOL_SET, GildTypes.COPPER);
         EMERALD_DIAMOND_TOOL_SET = registerGildedToolSet(DIAMOND_TOOL_SET, GildTypes.EMERALD);
@@ -1118,12 +1138,12 @@ public class VAItems {
         QUARTZ_STEEL_TOOL_SET = registerGildedToolSet(STEEL_TOOL_SET, GildTypes.QUARTZ);
         SCULK_STEEL_TOOL_SET = registerGildedToolSet(STEEL_TOOL_SET, GildTypes.SCULK);
         
-        AMETHYST_TOOL_SETS = new ToolSet[]{AMETHYST_DIAMOND_TOOL_SET, AMETHYST_IRON_TOOL_SET, AMETHYST_GOLDEN_TOOL_SET, AMETHYST_STEEL_TOOL_SET, AMETHYST_NETHERITE_TOOL_SET};
-        COPPER_TOOL_SETS = new ToolSet[]{COPPER_DIAMOND_TOOL_SET, COPPER_IRON_TOOL_SET, COPPER_GOLDEN_TOOL_SET, COPPER_STEEL_TOOL_SET, COPPER_NETHERITE_TOOL_SET};
-        EMERALD_TOOL_SETS = new ToolSet[]{EMERALD_DIAMOND_TOOL_SET, EMERALD_IRON_TOOL_SET, EMERALD_GOLDEN_TOOL_SET, EMERALD_STEEL_TOOL_SET, EMERALD_NETHERITE_TOOL_SET};
-        IOLITE_TOOL_SETS = new ToolSet[]{IOLITE_DIAMOND_TOOL_SET, IOLITE_IRON_TOOL_SET, IOLITE_GOLDEN_TOOL_SET, IOLITE_STEEL_TOOL_SET, IOLITE_NETHERITE_TOOL_SET};
-        QUARTZ_TOOL_SETS = new ToolSet[]{QUARTZ_DIAMOND_TOOL_SET, QUARTZ_IRON_TOOL_SET, QUARTZ_GOLDEN_TOOL_SET, QUARTZ_STEEL_TOOL_SET, QUARTZ_NETHERITE_TOOL_SET};
-        SCULK_TOOL_SETS = new ToolSet[]{SCULK_DIAMOND_TOOL_SET, SCULK_IRON_TOOL_SET, SCULK_GOLDEN_TOOL_SET, SCULK_STEEL_TOOL_SET, SCULK_NETHERITE_TOOL_SET};
+        AMETHYST_TOOL_SETS = new ToolSet[]{AMETHYST_COPPER_TOOL_SET, AMETHYST_DIAMOND_TOOL_SET, AMETHYST_IRON_TOOL_SET, AMETHYST_GOLDEN_TOOL_SET, AMETHYST_STEEL_TOOL_SET, AMETHYST_NETHERITE_TOOL_SET};
+        COPPER_TOOL_SETS = new ToolSet[]{COPPER_COPPER_TOOL_SET, COPPER_DIAMOND_TOOL_SET, COPPER_IRON_TOOL_SET, COPPER_GOLDEN_TOOL_SET, COPPER_STEEL_TOOL_SET, COPPER_NETHERITE_TOOL_SET};
+        EMERALD_TOOL_SETS = new ToolSet[]{EMERALD_COPPER_TOOL_SET, EMERALD_DIAMOND_TOOL_SET, EMERALD_IRON_TOOL_SET, EMERALD_GOLDEN_TOOL_SET, EMERALD_STEEL_TOOL_SET, EMERALD_NETHERITE_TOOL_SET};
+        IOLITE_TOOL_SETS = new ToolSet[]{IOLITE_COPPER_TOOL_SET, IOLITE_DIAMOND_TOOL_SET, IOLITE_IRON_TOOL_SET, IOLITE_GOLDEN_TOOL_SET, IOLITE_STEEL_TOOL_SET, IOLITE_NETHERITE_TOOL_SET};
+        QUARTZ_TOOL_SETS = new ToolSet[]{QUARTZ_COPPER_TOOL_SET, QUARTZ_DIAMOND_TOOL_SET, QUARTZ_IRON_TOOL_SET, QUARTZ_GOLDEN_TOOL_SET, QUARTZ_STEEL_TOOL_SET, QUARTZ_NETHERITE_TOOL_SET};
+        SCULK_TOOL_SETS = new ToolSet[]{SCULK_COPPER_TOOL_SET, SCULK_DIAMOND_TOOL_SET, SCULK_IRON_TOOL_SET, SCULK_GOLDEN_TOOL_SET, SCULK_STEEL_TOOL_SET, SCULK_NETHERITE_TOOL_SET};
 
         //endregion
 
@@ -1210,9 +1230,9 @@ public class VAItems {
 
         //region Spawn Eggs
 
-        SALINE_SPAWN_EGG = register("saline_spawn_egg", settings -> new SpawnEggItem(VAEntityType.SALINE, settings), new Item.Settings(), ItemGroups.SPAWN_EGGS, Items.RAVAGER_SPAWN_EGG);
-        LUMWASP_SPAWN_EGG = register("lumwasp_spawn_egg", settings -> new SpawnEggItem(VAEntityType.LUMWASP, settings), new Item.Settings(), ItemGroups.SPAWN_EGGS, Items.LLAMA_SPAWN_EGG);
-        SPECTRE_SPAWN_EGG = register("spectre_spawn_egg", settings -> new SpawnEggItem(VAEntityType.SPECTRE, settings), new Item.Settings(), ItemGroups.SPAWN_EGGS, Items.SNOW_GOLEM_SPAWN_EGG);
+        SALINE_SPAWN_EGG = register("saline_spawn_egg", SpawnEggItem::new, new Item.Settings().spawnEgg(VAEntityType.SALINE), ItemGroups.SPAWN_EGGS, Items.RAVAGER_SPAWN_EGG);
+        LUMWASP_SPAWN_EGG = register("lumwasp_spawn_egg", SpawnEggItem::new, new Item.Settings().spawnEgg(VAEntityType.LUMWASP), ItemGroups.SPAWN_EGGS, Items.LLAMA_SPAWN_EGG);
+        SPECTRE_SPAWN_EGG = register("spectre_spawn_egg", SpawnEggItem::new, new Item.Settings().spawnEgg(VAEntityType.SPECTRE), ItemGroups.SPAWN_EGGS, Items.SNOW_GOLEM_SPAWN_EGG);
 
         //endregion
     }

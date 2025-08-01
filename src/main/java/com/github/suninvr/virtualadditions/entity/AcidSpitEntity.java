@@ -75,7 +75,7 @@ public class AcidSpitEntity extends ProjectileEntity {
 
     protected void onBlockHit(BlockHitResult blockHitResult) {
         super.onBlockHit(blockHitResult);
-        if (!this.getWorld().isClient) {
+        if (!this.getWorld().isClient()) {
             this.discard();
         }
 

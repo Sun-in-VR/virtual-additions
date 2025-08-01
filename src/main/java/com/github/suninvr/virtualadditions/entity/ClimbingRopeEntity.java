@@ -43,7 +43,7 @@ public class ClimbingRopeEntity extends PersistentProjectileEntity {
     @Override
     protected void onBlockHit(BlockHitResult blockHitResult) {
         super.onBlockHit(blockHitResult);
-        if (this.getWorld().isClient) return;
+        if (this.getWorld().isClient()) return;
         BlockState state = this.getRopeState(blockHitResult);
         if (state != null) {
             BlockPos placePos = new BlockPos(blockHitResult.getBlockPos().offset(blockHitResult.getSide()));

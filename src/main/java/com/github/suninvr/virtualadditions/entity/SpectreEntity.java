@@ -103,7 +103,7 @@ public class SpectreEntity extends HostileEntity {
         super.tick();
         this.setNoGravity(true);
         if (this.isDead()) return;
-        if (!this.getWorld().isClient) {
+        if (!this.getWorld().isClient()) {
             if (this.checkBuffTarget() && this.isBuffingTarget()) {
                 int difficulty = this.getWorld().getDifficulty().getId();
                 if (this.age % 20 == 0) this.applyEffects(this.buffTarget, difficulty);
@@ -130,7 +130,7 @@ public class SpectreEntity extends HostileEntity {
     @Override
     public void onDataTrackerUpdate(List<DataTracker.SerializedEntry<?>> entries) {
         super.onDataTrackerUpdate(entries);
-        if (this.getWorld().isClient) this.refreshTarget();
+        if (this.getWorld().isClient()) this.refreshTarget();
     }
 
     @Environment(EnvType.CLIENT)

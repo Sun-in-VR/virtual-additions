@@ -47,20 +47,12 @@ public class CustomBedBlockEntityRenderer extends BedBlockEntityRenderer {
             BlockState blockState = bedBlockEntity.getCachedState();
             DoubleBlockProperties.PropertySource<? extends BedBlockEntity> propertySource = DoubleBlockProperties.toPropertySource(BlockEntityType.BED, BedBlock::getBedPart, BedBlock::getOppositePartDirection, ChestBlock.FACING, blockState, world, bedBlockEntity.getPos(), (worldx, pos) -> false);
             int k = ((Int2IntFunction)propertySource.apply(new LightmapCoordinatesRetriever())).get(i);
-            this.renderPart(matrixStack, vertexConsumerProvider, blockState.get(BedBlock.PART) == BedPart.HEAD ? this.bedHead : this.bedFoot, (Direction)blockState.get(BedBlock.FACING), spriteIdentifier, k, j, false);
+            this.renderPart(matrixStack, vertexConsumerProvider, blockState.get(BedBlock.PART) == BedPart.HEAD ? this.bedHead : this.bedFoot, blockState.get(BedBlock.FACING), spriteIdentifier, k, j, false);
         }
     }
 
     private void renderPart(MatrixStack matrices, VertexConsumerProvider vertexConsumers, ModelPart model, Direction direction, SpriteIdentifier sprite, int light, int overlay, boolean isFoot) {
-        matrices.push();
-        matrices.translate(0.0F, 0.5625F, isFoot ? -1.0F : 0.0F);
-        matrices.multiply(RotationAxis.POSITIVE_X.rotationDegrees(90.0F));
-        matrices.translate(0.5F, 0.5F, 0.5F);
-        matrices.multiply(RotationAxis.POSITIVE_Z.rotationDegrees(180.0F + direction.getPositiveHorizontalDegrees()));
-        matrices.translate(-0.5F, -0.5F, -0.5F);
-        VertexConsumer vertexConsumer = sprite.getVertexConsumer(vertexConsumers, RenderLayer::getEntitySolid);
-        model.render(matrices, vertexConsumer, light, overlay);
-        matrices.pop();
+
     }
 
     private static class ModelProvider implements EntityModelLayerRegistry.TexturedModelDataProvider {

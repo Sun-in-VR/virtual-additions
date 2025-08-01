@@ -235,9 +235,8 @@ public class ColoringStationScreen extends HandledScreen<ColoringStationScreenHa
         }
     }
 
-
     @Override
-    public boolean mouseClicked(double mouseX, double mouseY, int button) {
+    public boolean mouseClicked(double mouseX, double mouseY, int button, boolean bl) {
         this.mouseClicked = false;
         if (this.client != null && this.handler.canCraft()) {
             int i = this.x + 52;
@@ -258,7 +257,7 @@ public class ColoringStationScreen extends HandledScreen<ColoringStationScreenHa
                 this.mouseClicked = true;
             }
         }
-        return super.mouseClicked(mouseX, mouseY, button);
+        return super.mouseClicked(mouseX, mouseY, button, bl);
     }
 
     @Override

@@ -39,7 +39,7 @@ public class SteelTrapdoorBlock extends TrapdoorBlock {
 
     @Override
     protected void onExploded(BlockState state, ServerWorld world, BlockPos pos, Explosion explosion, BiConsumer<ItemStack, BlockPos> stackMerger) {
-        if (explosion.getDestructionType() == Explosion.DestructionType.TRIGGER_BLOCK && !world.isClient) toggleShutter(world, state, pos, null);
+        if (explosion.getDestructionType() == Explosion.DestructionType.TRIGGER_BLOCK && !world.isClient()) toggleShutter(world, state, pos, null);
         super.onExploded(state, world, pos, explosion, stackMerger);
     }
 

@@ -69,10 +69,12 @@ public class VABlockEntityType {
         BlockEntityType.SIGN.addSupportedBlock(VABlocks.SOULBLOOM_WALL_SIGN);
         BlockEntityType.HANGING_SIGN.addSupportedBlock(VABlocks.SOULBLOOM_HANGING_SIGN);
         BlockEntityType.HANGING_SIGN.addSupportedBlock(VABlocks.SOULBLOOM_WALL_HANGING_SIGN);
+        BlockEntityType.SHELF.addSupportedBlock(VABlocks.SOULBLOOM_SHELF);
         BlockEntityType.SIGN.addSupportedBlock(VABlocks.WITHERED_SIGN);
         BlockEntityType.SIGN.addSupportedBlock(VABlocks.WITHERED_WALL_SIGN);
         BlockEntityType.HANGING_SIGN.addSupportedBlock(VABlocks.WITHERED_HANGING_SIGN);
         BlockEntityType.HANGING_SIGN.addSupportedBlock(VABlocks.WITHERED_WALL_HANGING_SIGN);
+        BlockEntityType.SHELF.addSupportedBlock(VABlocks.WITHERED_SHELF);
     }
 
     public static void init(){}

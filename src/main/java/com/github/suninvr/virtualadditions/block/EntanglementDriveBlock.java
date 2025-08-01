@@ -19,6 +19,7 @@ import net.minecraft.text.Text;
 import net.minecraft.util.ActionResult;
 import net.minecraft.util.hit.BlockHitResult;
 import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.math.Direction;
 import net.minecraft.util.shape.VoxelShape;
 import net.minecraft.util.shape.VoxelShapes;
 import net.minecraft.world.BlockView;
@@ -53,7 +54,7 @@ public class EntanglementDriveBlock extends BlockWithEntity implements Inventory
 
     @Override
     public void neighborUpdate(BlockState state, World world, BlockPos pos, Block sourceBlock, @Nullable WireOrientation wireOrientation, boolean notify) {
-        if (!world.isClient) {
+        if (!world.isClient()) {
             if(world.isReceivingRedstonePower(pos)) world.setBlockState(pos, state.with(POWERED, true));
             else world.setBlockState(pos, state.with(POWERED, false));
         }
@@ -94,7 +95,7 @@ public class EntanglementDriveBlock extends BlockWithEntity implements Inventory
     }
 
     @Override
-    public int getComparatorOutput(BlockState state, World world, BlockPos pos) {
+    protected int getComparatorOutput(BlockState state, World world, BlockPos pos, Direction direction) {
         return ScreenHandler.calculateComparatorOutput( world.getBlockEntity(pos) );
     }
 

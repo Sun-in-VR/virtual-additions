@@ -16,18 +16,18 @@ public class VADispenserBehavior {
     private static ItemDispenserBehavior spawnEggBehavior = new ItemDispenserBehavior() {
         @Override
         public ItemStack dispenseSilently(BlockPointer pointer, ItemStack stack) {
-            Direction direction = pointer.state().get(DispenserBlock.FACING);
-            EntityType<?> entityType = ((SpawnEggItem)stack.getItem()).getEntityType(pointer.world().getRegistryManager(), stack);
+            //Direction direction = pointer.state().get(DispenserBlock.FACING);
+            //EntityType<?> entityType = ((SpawnEggItem)stack.getItem()).getEntityType(pointer.world().getRegistryManager(), stack);
 
-            try {
-                entityType.spawnFromItemStack(pointer.world(), stack, null, pointer.pos().offset(direction), SpawnReason.DISPENSER, direction != Direction.UP, false);
-            } catch (Exception var6) {
-                LOGGER.error("Error while dispensing spawn egg from dispenser at {}", pointer.pos(), var6);
-                return ItemStack.EMPTY;
-            }
+            //try {
+            //    entityType.spawnFromItemStack(pointer.world(), stack, null, pointer.pos().offset(direction), SpawnReason.DISPENSER, direction != Direction.UP, false);
+            //} catch (Exception var6) {
+            //    LOGGER.error("Error while dispensing spawn egg from dispenser at {}", pointer.pos(), var6);
+            //    return ItemStack.EMPTY;
+            //}
 
-            stack.decrement(1);
-            pointer.world().emitGameEvent(null, GameEvent.ENTITY_PLACE, pointer.pos());
+            //stack.decrement(1);
+            //pointer.world().emitGameEvent(null, GameEvent.ENTITY_PLACE, pointer.pos());
             return stack;
         }
     };

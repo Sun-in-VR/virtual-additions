@@ -75,7 +75,7 @@ public class SpotlightBlock extends BlockWithEntity {
     }
 
     public static void updateLightLocation(World world, BlockPos pos, BlockState state) {
-        if (world.isClient) return;
+        if (world.isClient()) return;
         if (!state.isOf(VABlocks.SPOTLIGHT)) return;
         SpotlightBlockEntity blockEntity = world.getBlockEntity(pos) instanceof SpotlightBlockEntity spotlightBlockEntity ? spotlightBlockEntity : null;
         if (blockEntity == null) return;

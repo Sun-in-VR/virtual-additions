@@ -5,11 +5,8 @@
         ]
     },
     "pack": {
-        "pack_format": 72,
         "description": "Preview for future Virtual Additions content",
-        "supported_formats": {
-            "min_inclusive": 1,
-            "max_inclusive": 255
-        }
+        "min_format": 82,
+        "max_format": 999
     }
 }

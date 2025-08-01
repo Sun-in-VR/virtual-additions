@@ -382,6 +382,7 @@ public final class VABlockTagProvider {
             addTo(BlockTags.LOGS_THAT_BURN, VABlocks.SOULBLOOM_LOG, VABlocks.SOULBLOOM_WOOD, VABlocks.STRIPPED_SOULBLOOM_LOG, VABlocks.STRIPPED_SOULBLOOM_WOOD);
             addTo(BlockTags.CEILING_HANGING_SIGNS, VABlocks.SOULBLOOM_HANGING_SIGN);
             addTo(BlockTags.WALL_HANGING_SIGNS, VABlocks.SOULBLOOM_WALL_HANGING_SIGN);
+            addTo(BlockTags.WOODEN_SHELVES, VABlocks.SOULBLOOM_SHELF);
             addTo(BlockTags.LEAVES, VABlocks.SOULBLOOM_LEAVES);
             addTo(BlockTags.SAPLINGS, VABlocks.SOULBLOOM_SAPLING);
 
@@ -389,6 +390,7 @@ public final class VABlockTagProvider {
             addTo(BlockTags.LOGS, VABlocks.WITHERED_LOG, VABlocks.WITHERED_WOOD, VABlocks.STRIPPED_WITHERED_LOG, VABlocks.STRIPPED_WITHERED_WOOD);
             addTo(BlockTags.CEILING_HANGING_SIGNS, VABlocks.WITHERED_HANGING_SIGN);
             addTo(BlockTags.WALL_HANGING_SIGNS, VABlocks.WITHERED_WALL_HANGING_SIGN);
+            addTo(BlockTags.WOODEN_SHELVES, VABlocks.WITHERED_SHELF);
             addTo(BlockTags.LEAVES, VABlocks.WITHERED_LEAVES);
             addTo(BlockTags.SAPLINGS, VABlocks.WITHERED_SAPLING);
         }

@@ -53,7 +53,7 @@ public abstract class AnvilScreenHandlerMixin extends ForgingScreenHandler {
     @WrapOperation(method = "onTakeOutput", at = @At(value = "INVOKE", target = "Lnet/minecraft/inventory/Inventory;setStack(ILnet/minecraft/item/ItemStack;)V"))
     void virtualAdditions$setEngravingChiselStack(Inventory instance, int i, ItemStack stack, Operation<Void> original) {
         ItemStack stack1 = instance.getStack(1);
-        ServerWorld world = this.player.getWorld().isClient ? null : (ServerWorld) this.player.getWorld();
+        ServerWorld world = this.player.getWorld().isClient() ? null : (ServerWorld) this.player.getWorld();
         if (!(world == null) && i == 1 && stack1.isOf(VAItems.ENGRAVING_CHISEL) && stack1.getDamage() < 63) {
             int j = player.isCreative() ? 0 : EnchantmentHelper.getItemDamage(world, stack1, 1);
             stack1.setDamage(stack1.getDamage() + j);

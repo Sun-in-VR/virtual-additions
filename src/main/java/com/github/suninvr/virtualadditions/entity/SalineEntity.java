@@ -81,9 +81,4 @@ public class SalineEntity extends ZombieEntity {
         }
     }
 
-    @Override
-    protected ItemStack getSkull() {
-        return ItemStack.EMPTY;
-    }
-
 }

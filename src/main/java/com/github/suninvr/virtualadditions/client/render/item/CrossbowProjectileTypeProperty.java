@@ -2,6 +2,7 @@ package com.github.suninvr.virtualadditions.client.render.item;
 
 import com.github.suninvr.virtualadditions.registry.VAItems;
 import com.mojang.serialization.MapCodec;
+import net.minecraft.class_11566;
 import net.minecraft.client.render.item.property.numeric.CrossbowPullProperty;
 import net.minecraft.client.render.item.property.numeric.NumericProperty;
 import net.minecraft.client.world.ClientWorld;
@@ -16,7 +17,7 @@ public class CrossbowProjectileTypeProperty implements NumericProperty {
     public static final MapCodec<CrossbowProjectileTypeProperty> CODEC = MapCodec.unit(new CrossbowProjectileTypeProperty());
 
     @Override
-    public float getValue(ItemStack stack, @Nullable ClientWorld world, @Nullable LivingEntity holder, int seed) {
+    public float getValue(ItemStack stack, @Nullable ClientWorld world, @Nullable class_11566 arg, int seed) {
         if (!stack.contains(DataComponentTypes.CHARGED_PROJECTILES)) return 0.0F;
         ChargedProjectilesComponent chargedProjectilesComponent = stack.getOrDefault(DataComponentTypes.CHARGED_PROJECTILES, ChargedProjectilesComponent.DEFAULT);
         if (chargedProjectilesComponent.isEmpty()) return 0.0F;

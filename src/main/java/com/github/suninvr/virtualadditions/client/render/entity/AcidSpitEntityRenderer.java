@@ -8,6 +8,7 @@ import net.minecraft.client.render.VertexConsumer;
 import net.minecraft.client.render.VertexConsumerProvider;
 import net.minecraft.client.render.entity.EntityRenderer;
 import net.minecraft.client.render.entity.EntityRendererFactory;
+import net.minecraft.client.render.entity.command.EntityRenderCommandQueue;
 import net.minecraft.client.render.entity.state.EntityRenderState;
 import net.minecraft.client.util.math.MatrixStack;
 import net.minecraft.util.Identifier;
@@ -23,19 +24,18 @@ public class AcidSpitEntityRenderer extends EntityRenderer<AcidSpitEntity, Entit
     }
 
     @Override
-    public void render(EntityRenderState state, MatrixStack matrices, VertexConsumerProvider vertexConsumers, int light) {
+    public void render(EntityRenderState renderState, MatrixStack matrices, EntityRenderCommandQueue queue) {
         matrices.push();
-        matrices.scale(0.5F, 0.5F, 0.5F);
-        matrices.multiply(this.dispatcher.getRotation());
-        matrices.multiply(RotationAxis.POSITIVE_Y.rotationDegrees(180.0F));
-        MatrixStack.Entry entry = matrices.peek();
-        VertexConsumer vertexConsumer = vertexConsumers.getBuffer(LAYER);
-        produceVertex(vertexConsumer, entry, light, 0.0F, 0, 0, 1);
-        produceVertex(vertexConsumer, entry, light, 1.0F, 0, 1, 1);
-        produceVertex(vertexConsumer, entry, light, 1.0F, 1, 1, 0);
-        produceVertex(vertexConsumer, entry, light, 0.0F, 1, 0, 0);
+        queue.pushCustom(matrices, LAYER, (matricesEntry, vertexConsumer) -> {
+            matricesEntry.scale(0.5F, 0.5f, 0.5f);
+            matricesEntry.rotate(this.dispatcher.getRotation());
+            matricesEntry.rotate(RotationAxis.POSITIVE_Y.rotationDegrees(180.0F));
+            produceVertex(vertexConsumer, matricesEntry, renderState.light, 0.0F, 0, 0, 1);
+            produceVertex(vertexConsumer, matricesEntry, renderState.light, 1.0F, 0, 1, 1);
+            produceVertex(vertexConsumer, matricesEntry, renderState.light, 1.0F, 1, 1, 0);
+            produceVertex(vertexConsumer, matricesEntry, renderState.light, 0.0F, 1, 0, 0);
+        });
         matrices.pop();
-        super.render(state, matrices, vertexConsumers, light);
     }
 
     @Override

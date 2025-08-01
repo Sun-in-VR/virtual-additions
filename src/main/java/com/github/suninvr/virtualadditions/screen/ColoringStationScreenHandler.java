@@ -298,7 +298,7 @@ public class ColoringStationScreenHandler extends ScreenHandler {
     private void updateInput(ItemStack stack) {
         this.selectedRecipe.set(-1);
         this.outputSlot.setStackNoCallbacks(ItemStack.EMPTY);
-        if (!this.world.isClient) {
+        if (!this.world.isClient()) {
             List<ColoringRecipeData> recipeDataList = new ArrayList<>();
             List<RecipeEntry<ColoringStationRecipe>> recipeEntries = new ArrayList<>();
             this.coloringRecipes = ((RecipeManagerInterface) this.world.getRecipeManager()).virtualAdditions$getColoringRecipes().filter(stack);
@@ -332,7 +332,7 @@ public class ColoringStationScreenHandler extends ScreenHandler {
     }
 
     void populateResult() {
-        if (this.world.isClient) return;
+        if (this.world.isClient()) return;
         Optional<RecipeEntry<ColoringStationRecipe>> optional;
         int i = this.selectedRecipe.get();
         if (!(this.recipeEntries == null) && !this.recipeEntries.isEmpty() && this.isInBounds(i)) {

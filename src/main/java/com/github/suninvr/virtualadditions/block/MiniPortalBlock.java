@@ -140,7 +140,7 @@ public class MiniPortalBlock extends BlockWithEntity implements Waterloggable {
     }
 
     @Override
-    protected int getComparatorOutput(BlockState state, World world, BlockPos pos) {
+    protected int getComparatorOutput(BlockState state, World world, BlockPos pos, Direction direction) {
         return state.get(STATE).equals(MiniPortalState.COOLDOWN) ? 15 : 0;
     }
 

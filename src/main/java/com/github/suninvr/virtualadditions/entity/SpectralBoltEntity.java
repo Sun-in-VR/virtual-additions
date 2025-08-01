@@ -38,7 +38,7 @@ public class SpectralBoltEntity extends ProjectileEntity {
 
     public void tick() {
         super.tick();
-        if (this.getWorld().isClient) {
+        if (this.getWorld().isClient()) {
             this.getWorld().addParticleClient(VAParticleTypes.SPECTRAL_POWER, this.getX(), this.getY(), this.getZ(), 0, 0, 0);
         }
         Vec3d vec3d = this.getVelocity();
@@ -71,7 +71,7 @@ public class SpectralBoltEntity extends ProjectileEntity {
 
     protected void onBlockHit(BlockHitResult blockHitResult) {
         super.onBlockHit(blockHitResult);
-        if (!this.getWorld().isClient) {
+        if (!this.getWorld().isClient()) {
             this.discard();
         }
 

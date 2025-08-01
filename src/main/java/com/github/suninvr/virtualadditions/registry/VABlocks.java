@@ -205,6 +205,7 @@ public class VABlocks {
     public static final Block SOULBLOOM_WALL_SIGN;
     public static final Block SOULBLOOM_HANGING_SIGN;
     public static final Block SOULBLOOM_WALL_HANGING_SIGN;
+    public static final Block SOULBLOOM_SHELF;
     public static final Block SOULBLOOM_LEAVES;
     public static final Block SOULBLOOM_SAPLING;
     public static final Block POTTED_SOULBLOOM_SAPLING;
@@ -236,6 +237,7 @@ public class VABlocks {
     public static final Block WITHERED_WALL_SIGN;
     public static final Block WITHERED_HANGING_SIGN;
     public static final Block WITHERED_WALL_HANGING_SIGN;
+    public static final Block WITHERED_SHELF;
     public static final Block WITHERED_LEAVES;
     public static final Block WITHERED_SAPLING;
     public static final Block POTTED_WITHERED_SAPLING;
@@ -622,6 +624,7 @@ public class VABlocks {
         SOULBLOOM_WALL_SIGN = register("soulbloom_wall_sign", (settings) -> new CustomSignBlocks.CustomWallSignBlock(settings, SOULBLOOM_WOODTYPE), Settings.copy(SOULBLOOM_SIGN).lootTable(SOULBLOOM_SIGN.getLootTableKey()));
         SOULBLOOM_HANGING_SIGN = register("soulbloom_hanging_sign", (settings) -> new CustomSignBlocks.CustomHangingSignBlock(settings, SOULBLOOM_WOODTYPE), Settings.copy(Blocks.CHERRY_HANGING_SIGN));
         SOULBLOOM_WALL_HANGING_SIGN = register("soulbloom_wall_hanging_sign", (settings) -> new CustomSignBlocks.CustomWallHangingSignBlock(settings, SOULBLOOM_WOODTYPE), Settings.copy(Blocks.CHERRY_WALL_HANGING_SIGN).lootTable(SOULBLOOM_HANGING_SIGN.getLootTableKey()));
+        SOULBLOOM_SHELF = register("soulbloom_shelf", ShelfBlock::new, Settings.copy(Blocks.CHERRY_SHELF));
         SOULBLOOM_LEAVES = register("soulbloom_leaves", (settings) -> new UntintedParticleLeavesBlock(0.1F, VAParticleTypes.SOULBLOOM_LEAVES, settings), Settings.copy(Blocks.CHERRY_LEAVES));
         SOULBLOOM_SAPLING = register("soulbloom_sapling", (settings) -> new SaplingBlock(CustomSaplingGenerator.SOULBLOOM, settings), Settings.copy(Blocks.CHERRY_SAPLING));
         POTTED_SOULBLOOM_SAPLING = register("potted_soulbloom_sapling", (settings) -> new FlowerPotBlock(SOULBLOOM_SAPLING, settings), Settings.copy(Blocks.FLOWER_POT));
@@ -650,10 +653,11 @@ public class VABlocks {
         WITHERED_TRAPDOOR = register("withered_trapdoor", (settings) -> new TrapdoorBlock( WITHERED, settings), Settings.copy(Blocks.WARPED_DOOR).mapColor(MapColor.BLACK).strength(5.0F, 6.0F));
         WITHERED_PRESSURE_PLATE = register("withered_pressure_plate", (settings) -> new PressurePlateBlock(WITHERED, settings), Settings.copy(Blocks.WARPED_PRESSURE_PLATE).strength(2.5F).mapColor(MapColor.BLACK));
         WITHERED_BUTTON = register("withered_button", (settings) -> new ButtonBlock(WITHERED, 30, settings), Settings.copy(Blocks.WARPED_BUTTON).strength(2.5F).mapColor(MapColor.BLACK));
-        WITHERED_SIGN = register("withered_sign", (settings) -> new CustomSignBlocks.CustomSignBlock(settings, WITHERED_WOODTYPE, DyeColor.WHITE), Settings.copy(Blocks.CHERRY_SIGN).strength(2.5F).mapColor(MapColor.BLACK));
-        WITHERED_WALL_SIGN = register("withered_wall_sign", (settings) -> new CustomSignBlocks.CustomWallSignBlock(settings, WITHERED_WOODTYPE, DyeColor.WHITE), Settings.copy(WITHERED_SIGN).lootTable(WITHERED_SIGN.getLootTableKey()).strength(2.5F).mapColor(MapColor.BLACK));
-        WITHERED_HANGING_SIGN = register("withered_hanging_sign", (settings) -> new CustomSignBlocks.CustomHangingSignBlock(settings, WITHERED_WOODTYPE, DyeColor.WHITE), Settings.copy(Blocks.CHERRY_HANGING_SIGN).strength(2.5F).mapColor(MapColor.BLACK));
-        WITHERED_WALL_HANGING_SIGN = register("withered_wall_hanging_sign", (settings) -> new CustomSignBlocks.CustomWallHangingSignBlock(settings, WITHERED_WOODTYPE, DyeColor.WHITE), Settings.copy(Blocks.CHERRY_WALL_HANGING_SIGN).lootTable(WITHERED_HANGING_SIGN.getLootTableKey()).strength(2.5F).mapColor(MapColor.BLACK));
+        WITHERED_SIGN = register("withered_sign", (settings) -> new CustomSignBlocks.CustomSignBlock(settings, WITHERED_WOODTYPE, DyeColor.WHITE), Settings.copy(Blocks.WARPED_SIGN).strength(2.5F).mapColor(MapColor.BLACK));
+        WITHERED_WALL_SIGN = register("withered_wall_sign", (settings) -> new CustomSignBlocks.CustomWallSignBlock(settings, WITHERED_WOODTYPE, DyeColor.WHITE), Settings.copy(Blocks.WARPED_SIGN).lootTable(WITHERED_SIGN.getLootTableKey()).strength(2.5F).mapColor(MapColor.BLACK));
+        WITHERED_HANGING_SIGN = register("withered_hanging_sign", (settings) -> new CustomSignBlocks.CustomHangingSignBlock(settings, WITHERED_WOODTYPE, DyeColor.WHITE), Settings.copy(Blocks.WARPED_HANGING_SIGN).strength(2.5F).mapColor(MapColor.BLACK));
+        WITHERED_WALL_HANGING_SIGN = register("withered_wall_hanging_sign", (settings) -> new CustomSignBlocks.CustomWallHangingSignBlock(settings, WITHERED_WOODTYPE, DyeColor.WHITE), Settings.copy(Blocks.WARPED_HANGING_SIGN).lootTable(WITHERED_HANGING_SIGN.getLootTableKey()).strength(2.5F).mapColor(MapColor.BLACK));
+        WITHERED_SHELF = register("withered_shelf", ShelfBlock::new, Settings.copy(Blocks.WARPED_SHELF).strength(2.5F).mapColor(MapColor.BLACK));
         WITHERED_LEAVES = register("withered_leaves", (settings) -> new UntintedParticleLeavesBlock(0.025F, TintedParticleEffect.create(ParticleTypes.TINTED_LEAVES, 0x464928), settings), Settings.copy(Blocks.CHERRY_LEAVES).sounds(BlockSoundGroup.MANGROVE_ROOTS).mapColor(MapColor.BLACK));
         WITHERED_SAPLING = register("withered_sapling", (settings) -> new WitheredSaplingBlock(CustomSaplingGenerator.WITHERED, settings), Settings.copy(Blocks.CHERRY_SAPLING).mapColor(MapColor.BLACK));
         POTTED_WITHERED_SAPLING = register("potted_withered_sapling", (settings) -> new FlowerPotBlock(WITHERED_SAPLING, settings), Settings.copy(Blocks.FLOWER_POT));

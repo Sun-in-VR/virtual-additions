@@ -30,7 +30,7 @@ public class TomatoItem extends Item implements ProjectileItem {
         ItemStack itemStack = user.getStackInHand(hand);
 
         world.playSound(null, user.getX(), user.getY(), user.getZ(), VASoundEvents.ENTITY_TOMATO_THROW, SoundCategory.NEUTRAL, 0.5F, 0.4F / (world.getRandom().nextFloat() * 0.4F + 0.8F));
-        if (!world.isClient) {
+        if (!world.isClient()) {
             ProjectileEntity.spawnWithVelocity(TomatoEntity::new, (ServerWorld) world, itemStack, user, 0.0F, 1.5F, 1.0F);
         }
 

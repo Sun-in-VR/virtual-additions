@@ -141,11 +141,13 @@ public class VAModelProvider {
             generator.createLogTexturePool(VABlocks.SOULBLOOM_LOG).log(VABlocks.SOULBLOOM_LOG).wood(VABlocks.SOULBLOOM_WOOD);
             generator.createLogTexturePool(VABlocks.STRIPPED_SOULBLOOM_LOG).log(VABlocks.STRIPPED_SOULBLOOM_LOG).wood(VABlocks.STRIPPED_SOULBLOOM_WOOD);
             generator.registerHangingSign(VABlocks.STRIPPED_SOULBLOOM_LOG, VABlocks.SOULBLOOM_HANGING_SIGN, VABlocks.SOULBLOOM_WALL_HANGING_SIGN);
+            generator.registerShelf(VABlocks.SOULBLOOM_SHELF);
 
             generator.registerNetherrackBottomCustomTop(VABlocks.NECROTIC_NYLIUM);
             generator.createLogTexturePool(VABlocks.WITHERED_LOG).log(VABlocks.WITHERED_LOG).wood(VABlocks.WITHERED_WOOD);
             generator.createLogTexturePool(VABlocks.STRIPPED_WITHERED_LOG).log(VABlocks.STRIPPED_WITHERED_LOG).wood(VABlocks.STRIPPED_WITHERED_WOOD);
             generator.registerHangingSign(VABlocks.STRIPPED_WITHERED_LOG, VABlocks.WITHERED_HANGING_SIGN, VABlocks.WITHERED_WALL_HANGING_SIGN);
+            generator.registerShelf(VABlocks.WITHERED_SHELF);
 
             registerSpectralFire(generator);
             generator.registerTorch(VABlocks.SPECTRAL_TORCH, VABlocks.SPECTRAL_WALL_TORCH);
@@ -334,6 +336,7 @@ public class VAModelProvider {
 
             registerHalberd(generator, VAItems.WOODEN_HALBERD);
             registerHalberd(generator, VAItems.STONE_HALBERD);
+            registerHalberd(generator, VAItems.COPPER_HALBERD);
             registerHalberd(generator, VAItems.IRON_HALBERD);
             registerHalberd(generator, VAItems.GOLDEN_HALBERD);
             registerHalberd(generator, VAItems.STEEL_HALBERD);

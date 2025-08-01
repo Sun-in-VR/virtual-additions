@@ -45,7 +45,7 @@ public class PortalCoreItem extends Item {
         float pitch = 0.8F;
         if (!context.getWorld().getBlockState(pos).isAir() && !context.getWorld().getBlockState(pos).isOf(Blocks.WATER)) return ActionResult.PASS;
         ItemStack stack = context.getStack();
-        if (stack.contains(VADataComponentTypes.PORTAL_CORE_LOCATION) && !context.getWorld().isClient) {
+        if (stack.contains(VADataComponentTypes.PORTAL_CORE_LOCATION) && !context.getWorld().isClient()) {
             boolean[] bl = {false};
             BlockPos[] destPos = {null};
             stack.get(VADataComponentTypes.PORTAL_CORE_LOCATION).pos().ifPresent(pos1 -> {

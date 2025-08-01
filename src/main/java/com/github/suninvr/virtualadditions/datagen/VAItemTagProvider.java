@@ -297,7 +297,7 @@ public final class VAItemTagProvider {
             configureGildedToolSet(VAItems.QUARTZ_TOOL_SETS);
             configureGildedToolSet(VAItems.SCULK_TOOL_SETS);
 
-            addTo(VAItemTags.HALBERDS, VAItems.WOODEN_HALBERD, VAItems.STONE_HALBERD, VAItems.IRON_HALBERD, VAItems.GOLDEN_HALBERD, VAItems.STEEL_HALBERD, VAItems.DIAMOND_HALBERD, VAItems.NETHERITE_HALBERD);
+            addTo(VAItemTags.HALBERDS, VAItems.WOODEN_HALBERD, VAItems.STONE_HALBERD, VAItems.COPPER_HALBERD, VAItems.IRON_HALBERD, VAItems.GOLDEN_HALBERD, VAItems.STEEL_HALBERD, VAItems.DIAMOND_HALBERD, VAItems.NETHERITE_HALBERD);
             getTagBuilder(VAItemTags.HALBERD_ENCHANTABLE).addOptionalTag(VAItemTags.HALBERDS.id());
             getTagBuilder(ItemTags.SHARP_WEAPON_ENCHANTABLE).addOptionalTag(VAItemTags.HALBERDS.id());
             getTagBuilder(ItemTags.DURABILITY_ENCHANTABLE).addOptionalTag(VAItemTags.HALBERDS.id());
@@ -313,6 +313,7 @@ public final class VAItemTagProvider {
             addTo(ItemTags.FENCES, VAItems.SOULBLOOM_FENCE);
             addTo(ItemTags.DOORS, VAItems.SOULBLOOM_DOOR);
             addTo(ItemTags.TRAPDOORS, VAItems.SOULBLOOM_TRAPDOOR);
+            addTo(ItemTags.WOODEN_SHELVES, VAItems.SOULBLOOM_SHELF);
             addTo(ItemTags.LEAVES, VAItems.SOULBLOOM_LEAVES);
             addTo(ItemTags.SAPLINGS, VAItems.SOULBLOOM_SAPLING);
             
@@ -323,6 +324,7 @@ public final class VAItemTagProvider {
             addTo(ItemTags.FENCES, VAItems.WITHERED_FENCE);
             addTo(ItemTags.DOORS, VAItems.WITHERED_DOOR);
             addTo(ItemTags.TRAPDOORS, VAItems.WITHERED_TRAPDOOR);
+            addTo(ItemTags.WOODEN_SHELVES, VAItems.WITHERED_SHELF);
             addTo(ItemTags.LEAVES, VAItems.WITHERED_LEAVES);
             addTo(ItemTags.SAPLINGS, VAItems.WITHERED_SAPLING);
 

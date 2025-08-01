@@ -34,7 +34,7 @@ public class AcidBucketItem extends BucketItem {
         if (!canPlace) {
             return hitResult != null && this.placeFluid(user, world, hitResult.getBlockPos().offset(hitResult.getSide()), null);
         } else if (world.getDimension().ultrawarm()) {
-            if (!world.isClient && !blockState.isLiquid() && destroyBlock) {
+            if (!world.isClient() && !blockState.isLiquid() && destroyBlock) {
                 world.breakBlock(pos, true);
             }
 
@@ -49,7 +49,7 @@ public class AcidBucketItem extends BucketItem {
 
             return true;
         } else {
-            if (!world.isClient && !blockState.isLiquid() && destroyBlock) {
+            if (!world.isClient() && !blockState.isLiquid() && destroyBlock) {
                 world.breakBlock(pos, true);
                 int i = pos.getX();
                 int j = pos.getY();

@@ -40,7 +40,7 @@ public class SteelDoorBlock extends DoorBlock {
 
     @Override
     protected void onExploded(BlockState state, ServerWorld world, BlockPos pos, Explosion explosion, BiConsumer<ItemStack, BlockPos> stackMerger) {
-        if (explosion.getDestructionType() == Explosion.DestructionType.TRIGGER_BLOCK && state.get(HALF) == DoubleBlockHalf.UPPER && !world.isClient) {
+        if (explosion.getDestructionType() == Explosion.DestructionType.TRIGGER_BLOCK && state.get(HALF) == DoubleBlockHalf.UPPER && !world.isClient()) {
             toggleShutter(world, state, pos, null);
         }
         super.onExploded(state, world, pos, explosion, stackMerger);

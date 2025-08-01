@@ -41,7 +41,7 @@ public class RemoteNotifierBlock extends Block {
 
     @Override
     protected ActionResult onUse(BlockState state, World world, BlockPos pos, PlayerEntity player, BlockHitResult hit) {
-        if (!world.isClient && player instanceof ServerPlayerEntity serverPlayer) {
+        if (!world.isClient() && player instanceof ServerPlayerEntity serverPlayer) {
             ItemStack stack = player.getMainHandStack();
             ServerPlayNetworking.send(serverPlayer, new RemoteNotifierS2CPayload(stack.getName().getString(), stack));
         }
@@ -50,7 +50,7 @@ public class RemoteNotifierBlock extends Block {
 
     @Override
     protected void neighborUpdate(BlockState state, World world, BlockPos pos, Block sourceBlock, @Nullable WireOrientation wireOrientation, boolean notify) {
-        if (state.isOf(this) && !world.isClient) {
+        if (state.isOf(this) && !world.isClient()) {
             boolean gettingPower = world.isReceivingRedstonePower(pos);
             boolean isPowered = state.get(POWERED);
             if (gettingPower && !isPowered) {
