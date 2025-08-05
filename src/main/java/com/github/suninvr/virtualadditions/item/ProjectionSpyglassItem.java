@@ -3,6 +3,7 @@ package com.github.suninvr.virtualadditions.item;
 import com.github.suninvr.virtualadditions.entity.PlayerProjectionEntity;
 import com.github.suninvr.virtualadditions.registry.VAItems;
 import com.github.suninvr.virtualadditions.registry.VASoundEvents;
+import net.minecraft.entity.Entity;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
@@ -24,8 +25,8 @@ public class ProjectionSpyglassItem extends SpyglassItem {
         return 12000;
     }
 
-    public static boolean isInUseBy(@Nullable PlayerEntity player) {
-        return player != null && player.isUsingItem() && player.getActiveItem().isOf(VAItems.SPECTRAL_SPYGLASS);
+    public static boolean isInUseBy(@Nullable Entity entity) {
+        return entity instanceof PlayerEntity player && player.isUsingItem() && player.getActiveItem().isOf(VAItems.SPECTRAL_SPYGLASS);
     }
 
     @Override
