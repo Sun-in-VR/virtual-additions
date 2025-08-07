@@ -422,6 +422,12 @@ public class VAModelProvider {
                     Items.LEATHER_LEGGINGS,
                     Items.LEATHER_BOOTS,
                     EquipmentAssetKeys.LEATHER, true);
+            registerArmorSetWithExtendedTrimMaterials(itemModelGenerator,
+                    Items.COPPER_HELMET,
+                    Items.COPPER_CHESTPLATE,
+                    Items.COPPER_LEGGINGS,
+                    Items.COPPER_BOOTS,
+                    EquipmentAssetKeys.COPPER, false);
 
             registerCrossbow(itemModelGenerator, Items.CROSSBOW);
         }

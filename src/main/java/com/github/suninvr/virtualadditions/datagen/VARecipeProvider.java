@@ -126,15 +126,10 @@ public final class VARecipeProvider {
 
             this.offerShapelessRecipe(RecipeCategory.MISC, VAItems.TOOL_GILD_SMITHING_TEMPLATE, 1, Pair.of(VAItems.STEEL_INGOT, 1), Pair.of(Items.DIAMOND, 1));
 
-            this.offer2x2FullRecipe(RecipeCategory.BUILDING_BLOCKS, VABlocks.CUT_STEEL, VAItems.STEEL_INGOT, 16);
-            this.offerStonecuttingRecipe(RecipeCategory.BUILDING_BLOCKS, VABlocks.CUT_STEEL, VAItems.STEEL_INGOT, 4);
-            this.offerStonecuttingRecipe(RecipeCategory.BUILDING_BLOCKS, VABlocks.CUT_STEEL_STAIRS, VAItems.STEEL_INGOT, 4);
-            this.offerStonecuttingRecipe(RecipeCategory.BUILDING_BLOCKS, VABlocks.CUT_STEEL_SLAB, VAItems.STEEL_INGOT, 8);
-            this.offerStonecuttingRecipe(RecipeCategory.BUILDING_BLOCKS, VABlocks.STEEL_GRATE, VAItems.STEEL_INGOT, 4);
-            this.offerStonecuttingRecipe(RecipeCategory.BUILDING_BLOCKS, VABlocks.CHISELED_STEEL, VAItems.STEEL_INGOT, 4);
+            ShapedRecipeJsonBuilder.create(this.registryLookup, RecipeCategory.BUILDING_BLOCKS, VABlocks.CUT_STEEL, 4).pattern("###").pattern("# #").pattern("###").input('#', VAItems.STEEL_NUGGET).criterion("steel_nugget", conditionsFromItem(VAItems.STEEL_NUGGET)).offerTo(this.exporter);
             this.createDoorRecipe(VABlocks.STEEL_DOOR, Ingredient.ofItems(VAItems.STEEL_INGOT)).criterion("steel_ingot", conditionsFromItem(VAItems.STEEL_INGOT)).offerTo(this.exporter);
             this.createTrapdoorRecipe(VABlocks.STEEL_TRAPDOOR, Ingredient.ofItems(VAItems.STEEL_INGOT)).criterion("steel_ingot", conditionsFromItem(VAItems.STEEL_INGOT)).offerTo(this.exporter);
-            ShapedRecipeJsonBuilder.create(this.registryLookup, RecipeCategory.DECORATIONS, VABlocks.STEEL_FENCE, 6).input('W', VABlocks.CUT_STEEL).input('#', VAItems.STEEL_INGOT).pattern("W#W").pattern("W#W").criterion("cut_steel", conditionsFromItem(VABlocks.CUT_STEEL)).offerTo(this.exporter);
+            ShapedRecipeJsonBuilder.create(this.registryLookup, RecipeCategory.DECORATIONS, VABlocks.STEEL_FENCE, 6).input('W', VABlocks.CUT_STEEL).input('#', VAItems.STEEL_NUGGET).pattern("W#W").pattern("W#W").criterion("cut_steel", conditionsFromItem(VABlocks.CUT_STEEL)).offerTo(this.exporter);
 
             this.offerSteelRecipeSet(VABlocks.STEEL_BLOCK, VABlocks.CUT_STEEL, VABlocks.CUT_STEEL_STAIRS, VABlocks.CUT_STEEL_SLAB, VABlocks.STEEL_GRATE, VABlocks.CHISELED_STEEL);
             this.offerSteelRecipeSet(VABlocks.EXPOSED_STEEL_BLOCK, VABlocks.EXPOSED_CUT_STEEL, VABlocks.EXPOSED_CUT_STEEL_STAIRS, VABlocks.EXPOSED_CUT_STEEL_SLAB, VABlocks.EXPOSED_STEEL_GRATE, VABlocks.EXPOSED_CHISELED_STEEL);
@@ -513,19 +508,19 @@ public final class VARecipeProvider {
                     .input('#', VAItems.STEEL_INGOT).input('s', Items.STRING).input('g', Items.GUNPOWDER)
                     .criterion("has_steel_ingot", conditionsFromItem(VAItems.STEEL_INGOT)).offerTo(this.exporter);
 
-            ShapedRecipeJsonBuilder.create(this.registryLookup, RecipeCategory.REDSTONE, VAItems.REDSTONE_BRIDGE, 3)
+            ShapedRecipeJsonBuilder.create(this.registryLookup, RecipeCategory.REDSTONE, VAItems.REDSTONE_BRIDGE, 1)
                     .pattern("#")
                     .pattern("r")
                     .pattern("#")
-                    .input('#', VAItems.STEEL_INGOT).input('r', Items.REDSTONE)
-                    .criterion("has_steel_ingot", conditionsFromItem(VAItems.STEEL_INGOT)).offerTo(this.exporter);
+                    .input('#', VAItems.STEEL_NUGGET).input('r', Items.REDSTONE)
+                    .criterion("has_steel_nugget", conditionsFromItem(VAItems.STEEL_NUGGET)).offerTo(this.exporter);
 
-            ShapedRecipeJsonBuilder.create(this.registryLookup, RecipeCategory.DECORATIONS, VAItems.CAGELIGHT, 3)
+            ShapedRecipeJsonBuilder.create(this.registryLookup, RecipeCategory.DECORATIONS, VAItems.CAGELIGHT, 1)
                     .pattern("#")
                     .pattern("g")
                     .pattern("#")
-                    .input('#', VAItems.STEEL_INGOT).input('g', Items.GLOWSTONE_DUST)
-                    .criterion("has_steel_ingot", conditionsFromItem(VAItems.STEEL_INGOT)).offerTo(this.exporter);
+                    .input('#', VAItems.STEEL_NUGGET).input('g', Items.GLOWSTONE_DUST)
+                    .criterion("has_steel_nugget", conditionsFromItem(VAItems.STEEL_NUGGET)).offerTo(this.exporter);
 
             ShapedRecipeJsonBuilder.create(this.registryLookup, RecipeCategory.MISC, VAItems.COLORING_STATION, 1)
                     .pattern("BB")
@@ -850,15 +845,12 @@ public final class VARecipeProvider {
             offerStonecuttingRecipe(RecipeCategory.BUILDING_BLOCKS, chiseled, cut, 1);
             ShapedRecipeJsonBuilder.create(this.registryLookup,RecipeCategory.DECORATIONS, cutStairs, 4).input('#', cut).pattern("#  ").pattern("## ").pattern("###").criterion("has_item", conditionsFromItem(cut)).offerTo(this.exporter);
             ShapedRecipeJsonBuilder.create(this.registryLookup,RecipeCategory.DECORATIONS, cutSlab, 6).input('#', cut).pattern("###").criterion("has_item", conditionsFromItem(cut)).offerTo(this.exporter);
-            offerStonecuttingRecipe(RecipeCategory.BUILDING_BLOCKS, cut, block, 36);
-            offerStonecuttingRecipe(RecipeCategory.BUILDING_BLOCKS, grate, block, 36);
-            offerStonecuttingRecipe(RecipeCategory.BUILDING_BLOCKS, chiseled, block, 36);
             ShapedRecipeJsonBuilder.create(this.registryLookup,RecipeCategory.DECORATIONS, chiseled, 1).input('#', cutSlab).pattern("#").pattern("#").criterion("has_item", conditionsFromItem(cutSlab)).offerTo(this.exporter);
             ShapedRecipeJsonBuilder.create(this.registryLookup,RecipeCategory.DECORATIONS, grate, 4).pattern(" # ").pattern("# #").pattern(" # ").input('#', cut).criterion("has_item", conditionsFromItem(cut)).offerTo(this.exporter);
         }
 
         public void offerJerkyFoodRecipe(Item input, Item jerky) {
-            ShapelessRecipeJsonBuilder.create(this.registryLookup, RecipeCategory.FOOD, jerky, 2)
+            ShapelessRecipeJsonBuilder.create(this.registryLookup, RecipeCategory.FOOD, jerky, 3)
                     .input(input)
                     .input(VAItems.ROCK_SALT, 2)
                     .criterion("has_item", conditionsFromItem(input)).offerTo(exporter);

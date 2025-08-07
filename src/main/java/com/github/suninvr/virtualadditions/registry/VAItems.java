@@ -647,7 +647,7 @@ public class VAItems {
         SOULBLOOM_BUTTON = registerBlockItem("soulbloom_button", VABlocks.SOULBLOOM_BUTTON, ItemGroups.BUILDING_BLOCKS, prev);
         SOULBLOOM_SIGN = register("soulbloom_sign", settings ->  new SignItem(VABlocks.SOULBLOOM_SIGN, VABlocks.SOULBLOOM_WALL_SIGN, settings), new Item.Settings().translationKey(VABlocks.SOULBLOOM_SIGN.getTranslationKey()).maxCount(16), ItemGroups.FUNCTIONAL, Items.CHERRY_HANGING_SIGN);
         SOULBLOOM_HANGING_SIGN = register("soulbloom_hanging_sign", settings ->  new HangingSignItem(VABlocks.SOULBLOOM_HANGING_SIGN, VABlocks.SOULBLOOM_WALL_HANGING_SIGN, settings), new Item.Settings().translationKey(VABlocks.SOULBLOOM_HANGING_SIGN.getTranslationKey()).maxCount(16), ItemGroups.FUNCTIONAL, prev);
-        SOULBLOOM_SHELF = registerBlockItem("soulbloom_shelf", VABlocks.SOULBLOOM_SHELF, at(ItemGroups.FUNCTIONAL, Items.CHERRY_SHELF), at(ItemGroups.REDSTONE, Items.CHERRY_SHELF));
+        SOULBLOOM_SHELF = registerBlockItem("soulbloom_shelf", VABlocks.SOULBLOOM_SHELF, at(ItemGroups.FUNCTIONAL, Items.CHERRY_SHELF));
         SOULBLOOM_LEAVES = registerBlockItem("soulbloom_leaves", VABlocks.SOULBLOOM_LEAVES, ItemGroups.NATURAL, Items.CHERRY_LEAVES);
         SOULBLOOM_SAPLING = registerBlockItem("soulbloom_sapling", VABlocks.SOULBLOOM_SAPLING, ItemGroups.NATURAL, Items.CHERRY_SAPLING);
         SOULBLOOM_BOAT = register("soulbloom_boat", settings -> new BoatItem(VAEntityType.SOULBLOOM_BOAT, settings), new Item.Settings().maxCount(1), ItemGroups.TOOLS, Items.CHERRY_CHEST_BOAT);
@@ -686,7 +686,7 @@ public class VAItems {
         WITHERED_BUTTON = registerBlockItem("withered_button", VABlocks.WITHERED_BUTTON, ItemGroups.BUILDING_BLOCKS, prev);
         WITHERED_SIGN = register("withered_sign", settings ->  new SignItem(VABlocks.WITHERED_SIGN, VABlocks.WITHERED_WALL_SIGN, settings), new Item.Settings().translationKey(VABlocks.WITHERED_SIGN.getTranslationKey()).maxCount(16), ItemGroups.FUNCTIONAL, Items.WARPED_HANGING_SIGN);
         WITHERED_HANGING_SIGN = register("withered_hanging_sign", settings ->  new HangingSignItem(VABlocks.WITHERED_HANGING_SIGN, VABlocks.WITHERED_WALL_HANGING_SIGN, settings), new Item.Settings().translationKey(VABlocks.WITHERED_HANGING_SIGN.getTranslationKey()).maxCount(16), ItemGroups.FUNCTIONAL, prev);
-        WITHERED_SHELF = registerBlockItem("withered_shelf", VABlocks.WITHERED_SHELF, at(ItemGroups.FUNCTIONAL, Items.WARPED_SHELF), at(ItemGroups.REDSTONE, Items.WARPED_SHELF));
+        WITHERED_SHELF = registerBlockItem("withered_shelf", VABlocks.WITHERED_SHELF, at(ItemGroups.FUNCTIONAL, Items.WARPED_SHELF));
         WITHERED_LEAVES = registerBlockItem("withered_leaves", VABlocks.WITHERED_LEAVES, ItemGroups.NATURAL, Items.FLOWERING_AZALEA_LEAVES);
         WITHERED_SAPLING = registerBlockItem("withered_sapling", VABlocks.WITHERED_SAPLING, ItemGroups.NATURAL, Items.FLOWERING_AZALEA);
 
@@ -1083,7 +1083,7 @@ public class VAItems {
         IOLITE_BLOCK = registerBlockItem("iolite_block", VABlocks.IOLITE_BLOCK, ItemGroups.BUILDING_BLOCKS, Items.NETHERITE_BLOCK);
         PORTAL_CORE = register("portal_core", PortalCoreItem::new, new Item.Settings().maxCount(1), ItemGroups.TOOLS, Items.TNT_MINECART);
         DRAINED_PORTAL_CORE = register("drained_portal_core", new Item.Settings().maxCount(1), ItemGroups.TOOLS, prev);
-        ENTANGLEMENT_DRIVE = register("entanglement_drive", settings ->  new BlockItem(VABlocks.ENTANGLEMENT_DRIVE, settings), new Item.Settings().rarity(Rarity.RARE).translationKey(VABlocks.ENTANGLEMENT_DRIVE.getTranslationKey()), ItemGroups.REDSTONE, prev);
+        ENTANGLEMENT_DRIVE = register("entanglement_drive", settings ->  new BlockItem(VABlocks.ENTANGLEMENT_DRIVE, settings), new Item.Settings().rarity(Rarity.RARE).translationKey(VABlocks.ENTANGLEMENT_DRIVE.getTranslationKey()), ItemGroups.REDSTONE, Items.DECORATED_POT);
         REMOTE_NOTIFIER = register("remote_notifier", settings ->  new BlockItem(VABlocks.REMOTE_NOTIFIER, settings), new Item.Settings().translationKey(VABlocks.REMOTE_NOTIFIER.getTranslationKey()).requires(VirtualAdditions.PREVIEW), ItemGroups.REDSTONE, prev);
 
         //endregion
