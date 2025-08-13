@@ -26,7 +26,7 @@ public class WitherSkeletonEntityMixin extends MobEntity {
 
     @Inject(method = "initEquipment", at = @At("HEAD"), cancellable = true)
     void virtualAdditions$initWitherSkeletonArmor(Random random, LocalDifficulty localDifficulty, CallbackInfo ci) {
-        if (this.getType().equals(EntityType.WITHER_SKELETON) && this.getWorld().getBiome(this.getBlockPos()).matchesKey(VABiomeKeys.WITHERED_WOODS)) {
+        if (this.getType().equals(EntityType.WITHER_SKELETON) && this.getEntityWorld().getBiome(this.getBlockPos()).matchesKey(VABiomeKeys.WITHERED_WOODS)) {
             float f = random.nextFloat();
             float d = localDifficulty.getLocalDifficulty() * 0.05F;
             boolean bow = random.nextFloat() > 0.85F;

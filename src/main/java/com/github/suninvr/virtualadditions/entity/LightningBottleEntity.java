@@ -45,8 +45,8 @@ public class LightningBottleEntity extends ThrownItemEntity {
 
     protected void onCollision(HitResult hitResult) {
         super.onCollision(hitResult);
-        if (this.getWorld() instanceof ServerWorld serverWorld) {
-            this.getWorld().syncWorldEvent(2002, this.getBlockPos(), 7860223);
+        if (this.getEntityWorld() instanceof ServerWorld serverWorld) {
+            this.getEntityWorld().syncWorldEvent(2002, this.getBlockPos(), 7860223);
 
             Optional<BlockPos> lightningRodPos = serverWorld.getPointOfInterestStorage()
                     .getNearestPosition(
@@ -70,9 +70,9 @@ public class LightningBottleEntity extends ThrownItemEntity {
     }
 
     private void summonLightningBolt(Vec3d pos) {
-        LightningEntity entity = new LightningEntity(EntityType.LIGHTNING_BOLT, this.getWorld());
+        LightningEntity entity = new LightningEntity(EntityType.LIGHTNING_BOLT, this.getEntityWorld());
         if (this.getOwner() instanceof ServerPlayerEntity serverPlayerEntity) entity.setChanneler(serverPlayerEntity);
         entity.setPos(pos.x, pos.y, pos.z);
-        this.getWorld().spawnEntity(entity);
+        this.getEntityWorld().spawnEntity(entity);
     }
 }

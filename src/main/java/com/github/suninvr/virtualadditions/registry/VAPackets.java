@@ -34,7 +34,7 @@ public class VAPackets {
 
         PayloadTypeRegistry.playC2S().register(PLAYER_PROJECTION_MOVEMENT_C2S_ID, PlayerProjectionMovementC2SPayload.CODEC);
         ServerPlayNetworking.registerGlobalReceiver(PLAYER_PROJECTION_MOVEMENT_C2S_ID, (payload, context) -> {
-            if (context.player().getWorld() != null && context.player().getWorld().getEntity(payload.entityId()) instanceof PlayerProjectionEntity entity) {
+            if (context.player().getEntityWorld() != null && context.player().getEntityWorld().getEntity(payload.entityId()) instanceof PlayerProjectionEntity entity) {
                 payload.pos().ifPresent(pos -> {
                     double dx = pos.x - entity.lastX;
                     double dy = pos.y - entity.lastY;

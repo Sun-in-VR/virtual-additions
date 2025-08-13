@@ -103,9 +103,9 @@ public class SpectreEntity extends HostileEntity {
         super.tick();
         this.setNoGravity(true);
         if (this.isDead()) return;
-        if (!this.getWorld().isClient()) {
+        if (!this.getEntityWorld().isClient()) {
             if (this.checkBuffTarget() && this.isBuffingTarget()) {
-                int difficulty = this.getWorld().getDifficulty().getId();
+                int difficulty = this.getEntityWorld().getDifficulty().getId();
                 if (this.age % 20 == 0) this.applyEffects(this.buffTarget, difficulty);
             }
         }
@@ -114,7 +114,7 @@ public class SpectreEntity extends HostileEntity {
     @Override
     public void tickMovement() {
         super.tickMovement();
-        if (this.getWorld().isClient()) {
+        if (this.getEntityWorld().isClient()) {
             if (this.age % 40 == 0) this.refreshTarget();
             this.spawnAmbientEffects();
             if (this.isBuffingTarget()) {
@@ -130,17 +130,17 @@ public class SpectreEntity extends HostileEntity {
     @Override
     public void onDataTrackerUpdate(List<DataTracker.SerializedEntry<?>> entries) {
         super.onDataTrackerUpdate(entries);
-        if (this.getWorld().isClient()) this.refreshTarget();
+        if (this.getEntityWorld().isClient()) this.refreshTarget();
     }
 
     @Environment(EnvType.CLIENT)
     private void refreshTarget() {
-        this.buffTarget = (LivingEntity) this.getWorld().getEntity(this.dataTracker.get(BUFF_TARGET));
+        this.buffTarget = (LivingEntity) this.getEntityWorld().getEntity(this.dataTracker.get(BUFF_TARGET));
     }
 
     private void spawnAmbientEffects() {
         if (this.age % 3 == 0) {
-            this.getWorld().addParticleClient(VAParticleTypes.SPECTRAL_FLAME, this.getParticleX(0.25), this.getBodyY(1), this.getParticleZ(0.25), 0.0, 0.0, 0.0);
+            this.getEntityWorld().addParticleClient(VAParticleTypes.SPECTRAL_FLAME, this.getParticleX(0.25), this.getBodyY(1), this.getParticleZ(0.25), 0.0, 0.0, 0.0);
         }
     }
 
@@ -148,11 +148,11 @@ public class SpectreEntity extends HostileEntity {
         if (buffTarget == null || this.isDead() || this.isRemoved()) return;
         for (int i = 0; i < 1; ++i) {
             Vec3d pos = new Vec3d(buffTarget.getParticleX(0.6), buffTarget.getRandomBodyY(), buffTarget.getParticleZ(0.6));
-            ParticleEffect effect = new TrailParticleEffect(pos, 0xE0EFFF, this.getWorld().random.nextInt(20) + 10);
-            this.getWorld().addParticleClient(effect, true, true, this.getParticleX(0.35), this.getBodyY(0.5), this.getParticleZ(0.35), 0.0, 0.0, 0.0);
+            ParticleEffect effect = new TrailParticleEffect(pos, 0xE0EFFF, this.getEntityWorld().random.nextInt(20) + 10);
+            this.getEntityWorld().addParticleClient(effect, true, true, this.getParticleX(0.35), this.getBodyY(0.5), this.getParticleZ(0.35), 0.0, 0.0, 0.0);
         }
-        if (this.buffTicks % 2 == 0) this.getWorld().addParticleClient(VAParticleTypes.SPECTRAL_POWER, buffTarget.getParticleX(1), buffTarget.getBodyY(0.25), buffTarget.getParticleZ(1), 0.0, 0.0, 0.0);
-        if (this.buffTicks % 50 == 0 && !this.isSilent()) this.getWorld().playSoundClient(this.getX(), this.getY(), this.getZ(), VASoundEvents.ENTITY_SPECTRE_EMPOWER_AMBIENT, SoundCategory.HOSTILE, 0.2F, 1.0F, true);
+        if (this.buffTicks % 2 == 0) this.getEntityWorld().addParticleClient(VAParticleTypes.SPECTRAL_POWER, buffTarget.getParticleX(1), buffTarget.getBodyY(0.25), buffTarget.getParticleZ(1), 0.0, 0.0, 0.0);
+        if (this.buffTicks % 50 == 0 && !this.isSilent()) this.getEntityWorld().playSoundClient(this.getX(), this.getY(), this.getZ(), VASoundEvents.ENTITY_SPECTRE_EMPOWER_AMBIENT, SoundCategory.HOSTILE, 0.2F, 1.0F, true);
     }
 
     private void applyEffects(LivingEntity buffTarget, int difficulty) {
@@ -166,7 +166,7 @@ public class SpectreEntity extends HostileEntity {
     public void setIsBuffing(boolean bl) {
         if (bl && this.isBuffingTarget()) return;
         this.dataTracker.set(IS_BUFFING_TARGET, bl);
-        if (bl && !this.isSilent() && checkBuffTarget()) this.getWorld().playSound(this, this.getX(), this.getY(), this.getZ(), VASoundEvents.ENTITY_SPECTRE_EMPOWER_START, SoundCategory.HOSTILE, 0.6F, 1.0F);
+        if (bl && !this.isSilent() && checkBuffTarget()) this.getEntityWorld().playSound(this, this.getX(), this.getY(), this.getZ(), VASoundEvents.ENTITY_SPECTRE_EMPOWER_START, SoundCategory.HOSTILE, 0.6F, 1.0F);
     }
 
     public boolean isBuffingTarget() {
@@ -202,7 +202,7 @@ public class SpectreEntity extends HostileEntity {
     }
 
     private boolean checkBuffTarget() {
-        if (this.buffTarget == null && buffTargetId != EMPTY_ID) this.setBuffTarget((MobEntity) this.getWorld().getEntity(buffTargetId));
+        if (this.buffTarget == null && buffTargetId != EMPTY_ID) this.setBuffTarget((MobEntity) this.getEntityWorld().getEntity(buffTargetId));
         if (this.buffTarget == null) return false;
         if (this.buffTarget.isDead() || this.buffTarget.isRemoved()) this.buffTarget = null;
         if (buffTarget == null) this.setIsBuffing(false);

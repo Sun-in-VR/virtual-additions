@@ -38,8 +38,8 @@ public class SpectralBoltEntity extends ProjectileEntity {
 
     public void tick() {
         super.tick();
-        if (this.getWorld().isClient()) {
-            this.getWorld().addParticleClient(VAParticleTypes.SPECTRAL_POWER, this.getX(), this.getY(), this.getZ(), 0, 0, 0);
+        if (this.getEntityWorld().isClient()) {
+            this.getEntityWorld().addParticleClient(VAParticleTypes.SPECTRAL_POWER, this.getX(), this.getY(), this.getZ(), 0, 0, 0);
         }
         Vec3d vec3d = this.getVelocity();
         HitResult hitResult = ProjectileUtil.getCollision(this, this::canHit);
@@ -48,7 +48,7 @@ public class SpectralBoltEntity extends ProjectileEntity {
         double e = this.getY() + vec3d.y;
         double f = this.getZ() + vec3d.z;
         this.updateRotation();
-        if (this.age > 30 || this.getWorld().getStatesInBox(this.getBoundingBox()).noneMatch(AbstractBlock.AbstractBlockState::isAir)) {
+        if (this.age > 30 || this.getEntityWorld().getStatesInBox(this.getBoundingBox()).noneMatch(AbstractBlock.AbstractBlockState::isAir)) {
             this.discard();
         } else {
             if (vec3d.length() < 5) this.setVelocity(vec3d.multiply(1.1F));
@@ -64,14 +64,14 @@ public class SpectralBoltEntity extends ProjectileEntity {
     protected void onEntityHit(EntityHitResult entityHitResult) {
         if (entityHitResult.getEntity() instanceof SpectreEntity) return;
         Entity entity = entityHitResult.getEntity();
-        World world = entity.getWorld();
+        World world = entity.getEntityWorld();
         if (world instanceof ServerWorld serverWorld) entity.damage(serverWorld, this.getDamageSources().mobProjectile(this, (LivingEntity) this.getOwner()), 0.5F + 0.5F * (world.getDifficulty().ordinal() - 1));
         this.discard();
     }
 
     protected void onBlockHit(BlockHitResult blockHitResult) {
         super.onBlockHit(blockHitResult);
-        if (!this.getWorld().isClient()) {
+        if (!this.getEntityWorld().isClient()) {
             this.discard();
         }
 

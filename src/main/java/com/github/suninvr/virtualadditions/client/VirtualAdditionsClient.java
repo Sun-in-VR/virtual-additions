@@ -67,7 +67,7 @@ public class VirtualAdditionsClient implements ClientModInitializer {
         });
 
         ClientPlayNetworking.registerGlobalReceiver(VAPackets.PLAYER_PROJECTION_S2C_ID, (payload, context) -> {
-            World world = context.player().getWorld();
+            World world = context.player().getEntityWorld();
             if (world != null) {
                 Entity entity = world.getEntity(payload.getEntityId());
                 if (entity instanceof PlayerProjectionEntity playerProjectionEntity) {

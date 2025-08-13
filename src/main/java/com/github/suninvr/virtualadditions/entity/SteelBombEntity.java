@@ -39,7 +39,7 @@ public class SteelBombEntity extends ThrownItemEntity {
 
         @Override
         public float calculateDamage(Explosion explosion, Entity entity, float amount) {
-            return Math.min(super.calculateDamage(explosion, entity, amount) * 1.25F, 12.0F);
+            return Math.min(super.calculateDamage(explosion, entity, amount) * 1.25F, 6.0F * explosion.getPower());
         }
     };
 
@@ -71,9 +71,9 @@ public class SteelBombEntity extends ThrownItemEntity {
     }
 
     protected void explode() {
-        if (!this.getWorld().isClient()) {
-            this.getWorld().createExplosion(this, this.getWorld().getDamageSources().explosion(this, this.getOwner()), this.explosionBehavior, this.getX(), this.getY(), this.getZ(), this.getExplosivePower(), this.isOnFire(), World.ExplosionSourceType.TNT);
-            this.getWorld().sendEntityStatus(this, (byte)3);
+        if (!this.getEntityWorld().isClient()) {
+            this.getEntityWorld().createExplosion(this, this.getEntityWorld().getDamageSources().explosion(this, this.getOwner()), this.explosionBehavior, this.getX(), this.getY(), this.getZ(), this.getExplosivePower(), this.isOnFire(), World.ExplosionSourceType.TNT);
+            this.getEntityWorld().sendEntityStatus(this, (byte)3);
             this.discard();
         }
     }
@@ -110,8 +110,8 @@ public class SteelBombEntity extends ThrownItemEntity {
         } else if (this.fuseLength == 0) {
             this.explode();
         }
-        if(this.getWorld().isClient() && !this.submergedInWater) {
-            getWorld().addParticleClient(ParticleTypes.CAMPFIRE_COSY_SMOKE, this.getX(), this.getY(), this.getZ(), 0.0F, 0.05F, 0.0F);
+        if(this.getEntityWorld().isClient() && !this.submergedInWater) {
+            this.getEntityWorld().addParticleClient(ParticleTypes.CAMPFIRE_COSY_SMOKE, this.getX(), this.getY(), this.getZ(), 0.0F, 0.05F, 0.0F);
         }
     }
 }

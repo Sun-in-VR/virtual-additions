@@ -45,7 +45,7 @@ public class AcidSpitEntity extends ProjectileEntity {
         this.updateRotation();
         float g = 0.99F;
         float h = -0.06F;
-        if (this.getWorld().getStatesInBox(this.getBoundingBox()).noneMatch(AbstractBlock.AbstractBlockState::isAir)) {
+        if (this.getEntityWorld().getStatesInBox(this.getBoundingBox()).noneMatch(AbstractBlock.AbstractBlockState::isAir)) {
             this.discard();
         } else if (this.isSubmergedInWater()) {
             this.discard();
@@ -68,14 +68,14 @@ public class AcidSpitEntity extends ProjectileEntity {
         super.onEntityHit(entityHitResult);
         if (entityHitResult.getEntity() instanceof LumwaspEntity) return;
         Entity entity = entityHitResult.getEntity();
-        World world = entity.getWorld();
+        World world = entity.getEntityWorld();
         if (world instanceof ServerWorld serverWorld) entity.damage(serverWorld, ((DamageSourcesInterface)this.getDamageSources()).virtualAdditions$acidSpit(this, this.getOwner() instanceof LivingEntity livingOwner ? livingOwner : this ), 1.0F + (world.getDifficulty().ordinal() - 1));
         this.discard();
     }
 
     protected void onBlockHit(BlockHitResult blockHitResult) {
         super.onBlockHit(blockHitResult);
-        if (!this.getWorld().isClient()) {
+        if (!this.getEntityWorld().isClient()) {
             this.discard();
         }
 

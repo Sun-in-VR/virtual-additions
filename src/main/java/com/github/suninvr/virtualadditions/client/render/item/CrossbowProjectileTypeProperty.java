@@ -2,22 +2,19 @@ package com.github.suninvr.virtualadditions.client.render.item;
 
 import com.github.suninvr.virtualadditions.registry.VAItems;
 import com.mojang.serialization.MapCodec;
-import net.minecraft.client.render.item.property.numeric.CrossbowPullProperty;
 import net.minecraft.client.render.item.property.numeric.NumericProperty;
 import net.minecraft.client.world.ClientWorld;
 import net.minecraft.component.DataComponentTypes;
 import net.minecraft.component.type.ChargedProjectilesComponent;
-import net.minecraft.entity.LivingEntity;
-import net.minecraft.item.CrossbowItem;
 import net.minecraft.item.ItemStack;
-import net.minecraft.util.EntityPos;
+import net.minecraft.util.HeldItemContext;
 import org.jetbrains.annotations.Nullable;
 
 public class CrossbowProjectileTypeProperty implements NumericProperty {
     public static final MapCodec<CrossbowProjectileTypeProperty> CODEC = MapCodec.unit(new CrossbowProjectileTypeProperty());
 
     @Override
-    public float getValue(ItemStack stack, @Nullable ClientWorld world, @Nullable EntityPos pos, int seed) {
+    public float getValue(ItemStack stack, @Nullable ClientWorld world, @Nullable HeldItemContext context, int seed) {
         if (!stack.contains(DataComponentTypes.CHARGED_PROJECTILES)) return 0.0F;
         ChargedProjectilesComponent chargedProjectilesComponent = stack.getOrDefault(DataComponentTypes.CHARGED_PROJECTILES, ChargedProjectilesComponent.DEFAULT);
         if (chargedProjectilesComponent.isEmpty()) return 0.0F;

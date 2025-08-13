@@ -54,7 +54,7 @@ public class PlayerProjectionEntity extends LivingEntity {
     }
 
     public static PlayerProjectionEntity createForPlayer(PlayerEntity player) {
-        PlayerProjectionEntity entity = VAEntityType.PLAYER_PROJECTION.create(player.getWorld(), SpawnReason.MOB_SUMMONED);
+        PlayerProjectionEntity entity = VAEntityType.PLAYER_PROJECTION.create(player.getEntityWorld(), SpawnReason.MOB_SUMMONED);
         if (entity == null) return null;
         Vec3d vec3d = player.getEyePos().add(player.getRotationVector().multiply(1.6));
         entity.setPos(vec3d.x, vec3d.y, vec3d.z);
@@ -62,7 +62,7 @@ public class PlayerProjectionEntity extends LivingEntity {
         entity.lastYaw = entity.bodyYaw = entity.headYaw = entity.getYaw();
         entity.player = player;
         entity.dataTracker.set(PLAYER_ID, player.getUuid());
-        player.getWorld().spawnEntity(entity);
+        player.getEntityWorld().spawnEntity(entity);
         if (player instanceof ServerPlayerEntity serverPlayerEntity) ServerPlayNetworking.send(serverPlayerEntity, new PlayerProjectionS2CPayload(entity.uuid));
         entity.setCustomName(player.getName());
         ((PlayerEntityInterface)(player)).virtualAdditions$setProjectionEntity(entity);
@@ -73,7 +73,7 @@ public class PlayerProjectionEntity extends LivingEntity {
     public void tick() {
         super.tick();
         if (this.getPlayer() == null || this.getPlayer().isRemoved() || !this.getPlayer().isUsingItem() || !this.getPlayer().getActiveItem().isOf(VAItems.SPECTRAL_SPYGLASS) || this.distanceTo(this.getPlayer()) > 72) {
-            if (!this.getWorld().isClient()) {
+            if (!this.getEntityWorld().isClient()) {
                 this.remove(RemovalReason.DISCARDED);
             }
         }
@@ -95,19 +95,19 @@ public class PlayerProjectionEntity extends LivingEntity {
     public void tickMovement() {
         super.tickMovement();
         if (this.player == null && this.dataTracker.get(PLAYER_ID) instanceof UUID playerId && !playerId.equals(EMPTY_ID)) {
-            this.player = this.getWorld().getPlayerByUuid(playerId);
+            this.player = this.getEntityWorld().getPlayerByUuid(playerId);
         }
-        if (this.getWorld().isClient() && this.player != null && this.age % 2 == 0) {
+        if (this.getEntityWorld().isClient() && this.player != null && this.age % 2 == 0) {
             this.spawnTrailParticles();
         }
     }
 
     public boolean isPhasingThroughWall() {
-        if (this.isPhasingThroughWallLastCheck != this.getWorld().getTime()) {
+        if (this.isPhasingThroughWallLastCheck != this.getEntityWorld().getTime()) {
             this.noClip = false;
             this.isPhasingThroughWall = this.isInsideWall();
             this.noClip = true;
-            this.isPhasingThroughWallLastCheck = this.getWorld().getTime();
+            this.isPhasingThroughWallLastCheck = this.getEntityWorld().getTime();
         }
         return this.isPhasingThroughWall;
     }
@@ -150,8 +150,8 @@ public class PlayerProjectionEntity extends LivingEntity {
         Vec3d playerRelative = this.player.getEyePos().subtract(this.getEyePos());
         Vec3d pos = new Vec3d(this.getParticleX(0.35), this.getRandomBodyY(), this.getParticleZ(0.35)).add(playerRelative.multiply(0.5 / Math.max(playerRelative.length(), 0.001)));
         Vec3d playerPos = new Vec3d(this.player.getParticleX(0.6), this.player.getRandomBodyY(), this.player.getParticleZ(0.6));
-        ParticleEffect effect = new TrailParticleEffect(playerPos, 0xE0EFFF, this.getWorld().random.nextInt(20) + 10);
-        this.getWorld().addParticleClient(effect, true, true, pos.x, pos.y, pos.z, 0.0, 0.0, 0.0);
+        ParticleEffect effect = new TrailParticleEffect(playerPos, 0xE0EFFF, this.getEntityWorld().random.nextInt(20) + 10);
+        this.getEntityWorld().addParticleClient(effect, true, true, pos.x, pos.y, pos.z, 0.0, 0.0, 0.0);
     }
 
     @Environment(EnvType.CLIENT)
@@ -172,7 +172,7 @@ public class PlayerProjectionEntity extends LivingEntity {
 
     @Override
     public void onDeath(DamageSource damageSource) {
-        if (this.getPlayer() != null && this.getWorld() instanceof ServerWorld serverWorld) {
+        if (this.getPlayer() != null && this.getEntityWorld() instanceof ServerWorld serverWorld) {
             this.player.damage(serverWorld, ((DamageSourcesInterface)this.getDamageSources()).virtualAdditions$soulDestroyed(this, damageSource.getAttacker()), 1000);
         }
     }

@@ -43,16 +43,16 @@ public class ClimbingRopeEntity extends PersistentProjectileEntity {
     @Override
     protected void onBlockHit(BlockHitResult blockHitResult) {
         super.onBlockHit(blockHitResult);
-        if (this.getWorld().isClient()) return;
+        if (this.getEntityWorld().isClient()) return;
         BlockState state = this.getRopeState(blockHitResult);
         if (state != null) {
             BlockPos placePos = new BlockPos(blockHitResult.getBlockPos().offset(blockHitResult.getSide()));
             if (this.getOwner() instanceof ServerPlayerEntity serverPlayerEntity) {
                 VAAdvancementCriteria.FIRE_CLIMBING_ROPE_FROM_CROSSBOW.trigger(serverPlayerEntity);
             }
-            this.getWorld().setBlockState(placePos, state);
-            this.getWorld().scheduleBlockTick(placePos, state.getBlock(), 1);
-            this.getWorld().playSound(this, placePos, state.getSoundGroup().getPlaceSound(), SoundCategory.BLOCKS,1.0F, 0.8F);
+            this.getEntityWorld().setBlockState(placePos, state);
+            this.getEntityWorld().scheduleBlockTick(placePos, state.getBlock(), 1);
+            this.getEntityWorld().playSound(this, placePos, state.getSoundGroup().getPlaceSound(), SoundCategory.BLOCKS,1.0F, 0.8F);
             this.discard();
         }
     }
@@ -65,15 +65,15 @@ public class ClimbingRopeEntity extends PersistentProjectileEntity {
 
     protected BlockState getRopeState(BlockHitResult result) {
         if (this.getItemStack().contains(DataComponentTypes.CAN_PLACE_ON)) {
-            CachedBlockPosition chachedPos = new CachedBlockPosition(this.getWorld(), result.getBlockPos(), false);
+            CachedBlockPosition chachedPos = new CachedBlockPosition(this.getEntityWorld(), result.getBlockPos(), false);
             if (!this.getItemStack().get(DataComponentTypes.CAN_PLACE_ON).check(chachedPos)) return null;
         }
         Direction dir = result.getSide();
         BlockPos pos = result.getBlockPos().offset(dir);
         if (dir != Direction.UP && this.getItemStack().isIn(VAItemTags.CLIMBING_ROPES) && this.getItemStack().getItem() instanceof BlockItem blockItem) {
-            BlockHalf half = ClimbingRopeAnchorBlock.getPlacementHeight(this.getWorld(), result.getBlockPos(), result.getSide());
+            BlockHalf half = ClimbingRopeAnchorBlock.getPlacementHeight(this.getEntityWorld(), result.getBlockPos(), result.getSide());
             BlockState state = blockItem.getBlock().getDefaultState().with(ClimbingRopeAnchorBlock.HALF, half).with(ClimbingRopeAnchorBlock.FACING, dir.getOpposite());
-            if (this.getWorld().getBlockState(pos).isAir() && ClimbingRopeAnchorBlock.canPlaceAt(blockItem.getBlock(), state, this.getWorld(), pos)) {
+            if (this.getEntityWorld().getBlockState(pos).isAir() && ClimbingRopeAnchorBlock.canPlaceAt(blockItem.getBlock(), state, this.getEntityWorld(), pos)) {
                 return state;
             }
         }

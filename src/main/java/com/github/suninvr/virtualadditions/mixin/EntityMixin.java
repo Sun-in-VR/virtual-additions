@@ -43,14 +43,12 @@ public abstract class EntityMixin implements Nameable, EntityLike, CommandOutput
 
     @Shadow protected Object2DoubleMap<TagKey<Fluid>> fluidHeight;
 
-    @Shadow public abstract World getWorld();
+    @Shadow public abstract World getEntityWorld();
 
     @Shadow public abstract boolean updateMovementInFluid(TagKey<Fluid> tag, double speed);
 
     @Shadow public abstract DamageSources getDamageSources();
     @Shadow public abstract BlockPos getBlockPos();
-    @Unique private Vec3d windVelocity;
-    @Unique private boolean isInWindCurrent;
     @SuppressWarnings("OptionalUsedAsFieldOrParameterType")
     @Shadow public Optional<BlockPos> supportingBlockPos;
     @Shadow public abstract boolean damage(ServerWorld world, DamageSource source, float amount);
@@ -63,7 +61,7 @@ public abstract class EntityMixin implements Nameable, EntityLike, CommandOutput
     void virtualAdditions$getPosWithYOffsetForHedge(float offset, CallbackInfoReturnable<BlockPos> cir) {
         if (this.supportingBlockPos.isPresent()) {
             BlockPos blockPos = this.supportingBlockPos.get();
-            BlockState blockState = this.getWorld().getBlockState(blockPos);
+            BlockState blockState = this.getEntityWorld().getBlockState(blockPos);
             if (blockState.isIn(VABlockTags.HEDGES)) {
                 cir.setReturnValue( blockPos );
             }

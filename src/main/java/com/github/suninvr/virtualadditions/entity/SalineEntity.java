@@ -58,8 +58,8 @@ public class SalineEntity extends ZombieEntity {
     public boolean tryAttack(ServerWorld world, Entity target) {
         boolean bl = super.tryAttack(world, target);
         if (bl && this.getMainHandStack().isEmpty() && target instanceof LivingEntity) {
-            Difficulty diff = this.getWorld().getDifficulty();
-            float f = this.getWorld().getLocalDifficulty(this.getBlockPos()).getLocalDifficulty();
+            Difficulty diff = this.getEntityWorld().getDifficulty();
+            float f = this.getEntityWorld().getLocalDifficulty(this.getBlockPos()).getLocalDifficulty();
             int g = diff == Difficulty.HARD ? 2 : 1;
             int h = diff == Difficulty.HARD ? 4 : 2;
             int i = ((LivingEntity) target).hasStatusEffect(VAStatusEffects.FRAILTY) ? Math.min(((LivingEntity) target).getStatusEffect(VAStatusEffects.FRAILTY).getAmplifier() + g, h) : 0;
@@ -77,7 +77,7 @@ public class SalineEntity extends ZombieEntity {
     protected void convertInWater() {
         this.convertTo(EntityType.ZOMBIE);
         if (!this.isSilent()) {
-            this.getWorld().syncWorldEvent(null, WorldEvents.HUSK_CONVERTS_TO_ZOMBIE, this.getBlockPos(), 0);
+            this.getEntityWorld().syncWorldEvent(null, WorldEvents.HUSK_CONVERTS_TO_ZOMBIE, this.getBlockPos(), 0);
         }
     }
 

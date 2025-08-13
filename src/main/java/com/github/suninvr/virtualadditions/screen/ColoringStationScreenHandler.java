@@ -143,7 +143,7 @@ public class ColoringStationScreenHandler extends ScreenHandler {
             }
         };
         this.dyeContentsAdder = new DyeContents();
-        this.world = playerInventory.player.getWorld();
+        this.world = playerInventory.player.getEntityWorld();
         this.playerInventory = playerInventory;
         this.context = context;
 

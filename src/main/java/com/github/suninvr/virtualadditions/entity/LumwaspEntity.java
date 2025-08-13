@@ -64,10 +64,10 @@ public class LumwaspEntity extends HostileEntity implements RangedAttackMob, Flu
         double g = target.getZ() - this.getZ();
         double h = Math.sqrt(e * e + g * g) * 0.20000000298023224;
         while (i <= 2) {
-            AcidSpitEntity projectile = new AcidSpitEntity(this.getWorld(), this);
+            AcidSpitEntity projectile = new AcidSpitEntity(this.getEntityWorld(), this);
             double f = d - projectile.getY();
             projectile.setVelocity(e, f + h, g, 1.6F, 10.0F);
-            this.getWorld().spawnEntity(projectile);
+            this.getEntityWorld().spawnEntity(projectile);
             i++;
         }
     }
@@ -190,7 +190,7 @@ public class LumwaspEntity extends HostileEntity implements RangedAttackMob, Flu
                 }
             } else {
                 int duration = 100;
-                duration += (this.getWorld().getDifficulty().getId() - 1) * 50;
+                duration += (this.getEntityWorld().getDifficulty().getId() - 1) * 50;
                 livingEntity.addStatusEffect(new StatusEffectInstance(StatusEffects.WEAKNESS, duration), this);
             }
 
@@ -242,7 +242,7 @@ public class LumwaspEntity extends HostileEntity implements RangedAttackMob, Flu
 
         public AlwaysEscapeSunlightGoal(PathAwareEntity mob, double speed) {
             super(mob, speed);
-            this.world = mob.getWorld();
+            this.world = mob.getEntityWorld();
         }
 
         @Override

@@ -30,7 +30,7 @@ public class ShovelItemMixin {
             if (blockState.isOf(Blocks.DIRT_PATH)) {
                 world.setBlockState(blockPos, Blocks.DIRT.getDefaultState());
                 world.emitGameEvent(GameEvent.BLOCK_CHANGE, blockPos, GameEvent.Emitter.of(player, Blocks.DIRT.getDefaultState()));
-                context.getStack().damage(1, player, LivingEntity.getSlotForHand(context.getHand()));
+                context.getStack().damage(1, player, context.getHand().method_73186());
                 world.playSound(player, blockPos, SoundEvents.ITEM_SHOVEL_FLATTEN, SoundCategory.BLOCKS, 1.0F, 1.0F);
                 cir.setReturnValue(ActionResult.SUCCESS);
             }

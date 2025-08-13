@@ -33,7 +33,7 @@ public abstract class AnimalEntityMixin extends PassiveEntity {
                 return;
             }
             int i = 500 / (Math.max(1, this.getStatusEffect(VAStatusEffects.LOVE).getAmplifier() + 1));
-            if (this.getWorld().getRandom().nextInt(i) < 1) {
+            if (this.getEntityWorld().getRandom().nextInt(i) < 1) {
                 this.lovePlayer(null);
                 this.removeStatusEffect(VAStatusEffects.LOVE);
             }
