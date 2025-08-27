@@ -54,8 +54,8 @@ public abstract class EntityMixin implements Nameable, EntityLike, CommandOutput
     @Shadow public abstract boolean damage(ServerWorld world, DamageSource source, float amount);
     @Shadow private World world;
 
-    private int ticksInAcid;
-    private boolean usedMiniPortalThisTick;
+    @Unique private int ticksInAcid;
+    @Unique private long lastUsedMiniPortal;
 
     @Inject(method = "getPosWithYOffset", at = @At("RETURN"), locals = LocalCapture.CAPTURE_FAILHARD, cancellable = true)
     void virtualAdditions$getPosWithYOffsetForHedge(float offset, CallbackInfoReturnable<BlockPos> cir) {
@@ -76,10 +76,6 @@ public abstract class EntityMixin implements Nameable, EntityLike, CommandOutput
         } else {
             this.ticksInAcid = Math.max(this.ticksInAcid - 1, 0);
         }
-        
-        if (this.usedMiniPortalThisTick) {
-            this.usedMiniPortalThisTick = false;
-        }
     }
 
     @Inject(method = "updateWaterState", at = @At("RETURN"), cancellable = true)
@@ -93,10 +89,10 @@ public abstract class EntityMixin implements Nameable, EntityLike, CommandOutput
     }
 
     public boolean virtualAdditions$hasUsedMiniPortalThisTick() {
-        return this.usedMiniPortalThisTick;
+        return this.world.getTime() == this.lastUsedMiniPortal;
     }
 
-    public void virtualAdditions$setUsedMiniPortalThisTick(boolean usedMiniPortalThisTick) {
-        this.usedMiniPortalThisTick = usedMiniPortalThisTick;
+    public void virtualAdditions$setUsedMiniPortal() {
+        this.lastUsedMiniPortal = this.world.getTime();
     }
 }

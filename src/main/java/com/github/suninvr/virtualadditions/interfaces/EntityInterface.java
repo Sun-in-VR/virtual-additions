@@ -7,5 +7,5 @@ public interface EntityInterface {
 
     boolean virtualAdditions$hasUsedMiniPortalThisTick();
 
-    void virtualAdditions$setUsedMiniPortalThisTick(boolean bl);
+    void virtualAdditions$setUsedMiniPortal();
 }

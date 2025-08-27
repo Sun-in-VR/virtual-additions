@@ -28,7 +28,7 @@ public class GildedToolUtil {
         return AttributeModifiersComponent.builder()
                 .add(EntityAttributes.ATTACK_DAMAGE, new EntityAttributeModifier(Item.BASE_ATTACK_DAMAGE_MODIFIER_ID, attackDamage, EntityAttributeModifier.Operation.ADD_VALUE), AttributeModifierSlot.MAINHAND)
                 .add(EntityAttributes.ATTACK_SPEED, new EntityAttributeModifier(Item.BASE_ATTACK_SPEED_MODIFIER_ID, attackSpeed, EntityAttributeModifier.Operation.ADD_VALUE), AttributeModifierSlot.MAINHAND)
-                .add(EntityAttributes.ENTITY_INTERACTION_RANGE, new EntityAttributeModifier(idOf("halberd_reach"), 0.85, EntityAttributeModifier.Operation.ADD_VALUE), AttributeModifierSlot.MAINHAND)
+                .add(EntityAttributes.ENTITY_INTERACTION_RANGE, new EntityAttributeModifier(idOf("halberd_reach"), 1, EntityAttributeModifier.Operation.ADD_VALUE), AttributeModifierSlot.MAINHAND)
                 .build();
     }
 

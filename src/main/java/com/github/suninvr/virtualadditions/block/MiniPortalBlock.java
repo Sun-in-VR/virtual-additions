@@ -3,7 +3,6 @@ package com.github.suninvr.virtualadditions.block;
 import com.github.suninvr.virtualadditions.block.entity.MiniPortalBlockEntity;
 import com.github.suninvr.virtualadditions.block.enums.MiniPortalState;
 import com.github.suninvr.virtualadditions.interfaces.EntityInterface;
-import com.github.suninvr.virtualadditions.particle.ColorfulPowerParticleEffect;
 import com.github.suninvr.virtualadditions.registry.*;
 import com.mojang.serialization.MapCodec;
 import net.minecraft.block.*;
@@ -30,7 +29,6 @@ import net.minecraft.state.property.BooleanProperty;
 import net.minecraft.state.property.EnumProperty;
 import net.minecraft.state.property.Properties;
 import net.minecraft.util.ActionResult;
-import net.minecraft.util.Colors;
 import net.minecraft.util.Hand;
 import net.minecraft.util.hit.BlockHitResult;
 import net.minecraft.util.math.*;
@@ -42,7 +40,6 @@ import net.minecraft.world.World;
 import net.minecraft.world.WorldView;
 import net.minecraft.world.block.WireOrientation;
 import net.minecraft.world.event.GameEvent;
-import net.minecraft.world.tick.ScheduledTickView;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.Optional;
@@ -146,8 +143,7 @@ public class MiniPortalBlock extends BlockWithEntity implements Waterloggable {
 
     protected boolean canTeleportEntity(Entity entity) {
         if (((EntityInterface)entity).virtualAdditions$hasUsedMiniPortalThisTick()) return false;
-        if (entity instanceof LivingEntity livingEntity && livingEntity.getStatusEffect(VAStatusEffects.IOLITE_INTERFERENCE) != null) return false;
-        return true;
+        return !(entity instanceof LivingEntity livingEntity) || livingEntity.getStatusEffect(VAStatusEffects.IOLITE_INTERFERENCE) == null;
     }
 
     @Override
@@ -172,7 +168,7 @@ public class MiniPortalBlock extends BlockWithEntity implements Waterloggable {
             double destY = (destination.getY() + (entity.getY() - origin.getY()));
             double destZ = (destination.getZ() + (entity.getZ() - origin.getZ()));
             entity.requestTeleport(destX, destY, destZ);
-            ((EntityInterface)entity).virtualAdditions$setUsedMiniPortalThisTick(true);
+            ((EntityInterface)entity).virtualAdditions$setUsedMiniPortal();
             int i = (int) Math.clamp((entity.getWidth() * entity.getWidth() * entity.getHeight() * 20.0F), 5, 50);
             ((ServerWorld) world).spawnParticles(particleEffect, destX, destY, destZ, i, entity.getWidth() * 0.45, entity.getHeight() * 0.25, entity.getWidth() * 0.45, 0);
             world.emitGameEvent(entity, GameEvent.TELEPORT, origin);
