@@ -5,9 +5,9 @@ import net.minecraft.client.render.OverlayTexture;
 import net.minecraft.client.render.RenderLayer;
 import net.minecraft.client.render.VertexConsumer;
 import net.minecraft.client.render.VertexConsumerProvider;
+import net.minecraft.client.render.command.OrderedRenderCommandQueue;
 import net.minecraft.client.render.entity.EntityRenderer;
 import net.minecraft.client.render.entity.EntityRendererFactory;
-import net.minecraft.client.render.entity.command.EntityRenderCommandQueue;
 import net.minecraft.client.render.entity.state.EntityRenderState;
 import net.minecraft.client.util.math.MatrixStack;
 import net.minecraft.util.Identifier;
@@ -22,10 +22,10 @@ public class SpectralBoltEntityRenderer extends EntityRenderer<SpectralBoltEntit
     }
 
     @Override
-    public void render(EntityRenderState renderState, MatrixStack matrices, EntityRenderCommandQueue queue) {
+    public void render(EntityRenderState renderState, MatrixStack matrices, OrderedRenderCommandQueue queue) {
         super.render(renderState, matrices, queue);
         matrices.push();
-        queue.pushCustom(matrices, LAYER, (matricesEntry, vertexConsumer) -> {
+        queue.submitCustom(matrices, LAYER, (matricesEntry, vertexConsumer) -> {
             float f = (30.0F - renderState.age) / 60.0F;
             matricesEntry.scale(f, f, f);
             matricesEntry.rotate(this.dispatcher.getRotation());

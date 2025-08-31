@@ -9,9 +9,12 @@ import net.minecraft.client.render.VertexConsumer;
 import net.minecraft.client.render.VertexConsumerProvider;
 import net.minecraft.client.render.block.entity.BlockEntityRenderer;
 import net.minecraft.client.render.block.entity.BlockEntityRendererFactory;
+import net.minecraft.client.render.command.ModelCommandRenderer;
+import net.minecraft.client.render.command.OrderedRenderCommandQueue;
 import net.minecraft.client.util.math.MatrixStack;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.math.Vec3d;
+import org.jetbrains.annotations.Nullable;
 
 public class MiniPortalBlockEntityRenderer implements BlockEntityRenderer<MiniPortalBlockEntity> {
     private static final Identifier TEXTURE = Identifier.of("virtual_additions", "textures/entity/mini_portal/open.png");
@@ -36,9 +39,9 @@ public class MiniPortalBlockEntityRenderer implements BlockEntityRenderer<MiniPo
     }
 
     @Override
-    public void render(MiniPortalBlockEntity entity, float tickProgress, MatrixStack matrices, VertexConsumerProvider vertexConsumers, int light, int overlay, Vec3d cameraPos) {
-        renderPortal(entity, tickProgress, matrices, vertexConsumers, 255, overlay, cameraPos, getGlowLayer(entity));
-        renderPortal(entity, tickProgress, matrices, vertexConsumers, 255, overlay, cameraPos, getBaseLayer(entity));
+    public void render(MiniPortalBlockEntity entity, float tickProgress, MatrixStack matrices, int light, int overlay, Vec3d cameraPos, @Nullable ModelCommandRenderer.CrumblingOverlayCommand crumblingOverlayCommand, OrderedRenderCommandQueue orderedRenderCommandQueue) {
+        renderPortal(entity, tickProgress, matrices, orderedRenderCommandQueue, 255, overlay, cameraPos, getGlowLayer(entity));
+        renderPortal(entity, tickProgress, matrices, orderedRenderCommandQueue, 255, overlay, cameraPos, getBaseLayer(entity));
     }
 
     private static RenderLayer getGlowLayer(MiniPortalBlockEntity blockEntity) {
@@ -53,18 +56,16 @@ public class MiniPortalBlockEntityRenderer implements BlockEntityRenderer<MiniPo
         return blockEntity.isBlocked() ? LAYER_BLOCKED : LAYER;
     }
 
-    private static void renderPortal(MiniPortalBlockEntity entity, float tickProgress, MatrixStack matrices, VertexConsumerProvider vertexConsumers, int light, int overlay, Vec3d cameraPos, RenderLayer layer) {
-        matrices.push();
-        matrices.translate(0.5, 0.5, 0.5);
-        matrices.multiply(MinecraftClient.getInstance().gameRenderer.getCamera().getRotation());
-        MatrixStack.Entry entry = matrices.peek();
-        VertexConsumer vertexConsumer = vertexConsumers.getBuffer(layer);
-        int color = entity.getDyeColor();
-        producePortalVertex(vertexConsumer, entry, light, 0, 0, 0, 1, color);
-        producePortalVertex(vertexConsumer, entry, light, 1, 0, 1, 1, color);
-        producePortalVertex(vertexConsumer, entry, light, 1, 1, 1, 0, color);
-        producePortalVertex(vertexConsumer, entry, light, 0, 1, 0, 0, color);
-        matrices.pop();
+    private static void renderPortal(MiniPortalBlockEntity entity, float tickProgress, MatrixStack matrices, OrderedRenderCommandQueue renderCommandQueue, int light, int overlay, Vec3d cameraPos, RenderLayer layer) {
+        renderCommandQueue.submitCustom(matrices, layer, (matricesEntry, vertexConsumer) -> {
+            matricesEntry.translate(0.5F, 0.5F, 0.5F);
+            matricesEntry.rotate(MinecraftClient.getInstance().gameRenderer.getCamera().getRotation());
+            int color = entity.getDyeColor();
+            producePortalVertex(vertexConsumer, matricesEntry, light, 0, 0, 0, 1, color);
+            producePortalVertex(vertexConsumer, matricesEntry, light, 1, 0, 1, 1, color);
+            producePortalVertex(vertexConsumer, matricesEntry, light, 1, 1, 1, 0, color);
+            producePortalVertex(vertexConsumer, matricesEntry, light, 0, 1, 0, 0, color);
+        });
     }
 
 

@@ -19,6 +19,8 @@ import net.minecraft.client.render.VertexConsumerProvider;
 import net.minecraft.client.render.block.entity.BedBlockEntityRenderer;
 import net.minecraft.client.render.block.entity.BlockEntityRendererFactory;
 import net.minecraft.client.render.block.entity.LightmapCoordinatesRetriever;
+import net.minecraft.client.render.command.ModelCommandRenderer;
+import net.minecraft.client.render.command.OrderedRenderCommandQueue;
 import net.minecraft.client.render.entity.model.EntityModelLayers;
 import net.minecraft.client.util.SpriteIdentifier;
 import net.minecraft.client.util.math.MatrixStack;
@@ -26,6 +28,7 @@ import net.minecraft.util.math.Direction;
 import net.minecraft.util.math.RotationAxis;
 import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.World;
+import org.jetbrains.annotations.Nullable;
 
 public class CustomBedBlockEntityRenderer extends BedBlockEntityRenderer {
     public static final ModelProvider HEAD_MODEL_PROVIDER = new ModelProvider(true);
@@ -40,18 +43,7 @@ public class CustomBedBlockEntityRenderer extends BedBlockEntityRenderer {
     }
 
     @Override
-    public void render(BedBlockEntity bedBlockEntity, float f, MatrixStack matrixStack, VertexConsumerProvider vertexConsumerProvider, int i, int j, Vec3d vec3d) {
-        World world = bedBlockEntity.getWorld();
-        if (world != null) {
-            SpriteIdentifier spriteIdentifier = VADyeColors.getBedTexture(bedBlockEntity.getColor());
-            BlockState blockState = bedBlockEntity.getCachedState();
-            DoubleBlockProperties.PropertySource<? extends BedBlockEntity> propertySource = DoubleBlockProperties.toPropertySource(BlockEntityType.BED, BedBlock::getBedPart, BedBlock::getOppositePartDirection, ChestBlock.FACING, blockState, world, bedBlockEntity.getPos(), (worldx, pos) -> false);
-            int k = ((Int2IntFunction)propertySource.apply(new LightmapCoordinatesRetriever())).get(i);
-            this.renderPart(matrixStack, vertexConsumerProvider, blockState.get(BedBlock.PART) == BedPart.HEAD ? this.bedHead : this.bedFoot, blockState.get(BedBlock.FACING), spriteIdentifier, k, j, false);
-        }
-    }
-
-    private void renderPart(MatrixStack matrices, VertexConsumerProvider vertexConsumers, ModelPart model, Direction direction, SpriteIdentifier sprite, int light, int overlay, boolean isFoot) {
+    public void render(BedBlockEntity bedBlockEntity, float f, MatrixStack matrixStack, int i, int j, Vec3d vec3d, @Nullable ModelCommandRenderer.CrumblingOverlayCommand crumblingOverlayCommand, OrderedRenderCommandQueue orderedRenderCommandQueue) {
 
     }
 

@@ -1,19 +1,16 @@
 package com.github.suninvr.virtualadditions.client.render.entity;
 
 import com.github.suninvr.virtualadditions.entity.AcidSpitEntity;
-import com.sun.jna.platform.win32.WinDef;
 import net.minecraft.client.render.OverlayTexture;
 import net.minecraft.client.render.RenderLayer;
 import net.minecraft.client.render.VertexConsumer;
-import net.minecraft.client.render.VertexConsumerProvider;
+import net.minecraft.client.render.command.OrderedRenderCommandQueue;
 import net.minecraft.client.render.entity.EntityRenderer;
 import net.minecraft.client.render.entity.EntityRendererFactory;
-import net.minecraft.client.render.entity.command.EntityRenderCommandQueue;
 import net.minecraft.client.render.entity.state.EntityRenderState;
 import net.minecraft.client.util.math.MatrixStack;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.math.RotationAxis;
-import org.joml.Matrix4f;
 
 public class AcidSpitEntityRenderer extends EntityRenderer<AcidSpitEntity, EntityRenderState> {
     private static final Identifier TEXTURE = Identifier.of("virtual_additions", "textures/entity/lumwasp/acid_spit.png");
@@ -24,9 +21,9 @@ public class AcidSpitEntityRenderer extends EntityRenderer<AcidSpitEntity, Entit
     }
 
     @Override
-    public void render(EntityRenderState renderState, MatrixStack matrices, EntityRenderCommandQueue queue) {
+    public void render(EntityRenderState renderState, MatrixStack matrices, OrderedRenderCommandQueue queue) {
         matrices.push();
-        queue.pushCustom(matrices, LAYER, (matricesEntry, vertexConsumer) -> {
+        queue.submitCustom(matrices, LAYER, (matricesEntry, vertexConsumer) -> {
             matricesEntry.scale(0.5F, 0.5f, 0.5f);
             matricesEntry.rotate(this.dispatcher.getRotation());
             matricesEntry.rotate(RotationAxis.POSITIVE_Y.rotationDegrees(180.0F));
