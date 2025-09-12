@@ -7,17 +7,18 @@ import net.minecraft.particle.ParticleGroup;
 import net.minecraft.particle.SimpleParticleType;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.MathHelper;
+import net.minecraft.util.math.random.Random;
 import net.minecraft.world.LightType;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.Optional;
 
 @SuppressWarnings("deprecation")
-public class GreencapSporeParticle extends SpriteBillboardParticle {
+public class GreencapSporeParticle extends BillboardParticle {
+
     protected GreencapSporeParticle(ClientWorld clientWorld, SpriteProvider spriteProvider, double d, double e, double f, double x, double y, double z) {
-        super(clientWorld, d, e, f, x, y, z);
+        super(clientWorld, d, e, f, x, y, z, spriteProvider.getFirst());
         this.setBoundingBoxSpacing(0.01F, 0.01F);
-        this.setSprite(spriteProvider);
         this.scale *= this.random.nextFloat() * 0.1F + 0.8F;
         this.maxAge = (int)(16.0 / (Math.random() * 0.8 + 0.2));
         this.collidesWithWorld = false;
@@ -45,13 +46,8 @@ public class GreencapSporeParticle extends SpriteBillboardParticle {
     }
 
     @Override
-    public void tick() {
-        super.tick();
-    }
-
-    @Override
-    public ParticleTextureSheet getType() {
-        return ParticleTextureSheet.PARTICLE_SHEET_OPAQUE;
+    protected RenderType getRenderType() {
+        return RenderType.field_62640;
     }
 
     public static class Factory implements ParticleFactory<SimpleParticleType> {
@@ -61,9 +57,8 @@ public class GreencapSporeParticle extends SpriteBillboardParticle {
             this.spriteProvider = spriteProvider;
         }
 
-        @Nullable
         @Override
-        public Particle createParticle(SimpleParticleType parameters, ClientWorld world, double x, double y, double z, double velocityX, double velocityY, double velocityZ) {
+        public @Nullable Particle createParticle(SimpleParticleType parameters, ClientWorld world, double x, double y, double z, double velocityX, double velocityY, double velocityZ, Random random) {
             GreencapSporeParticle particle = new GreencapSporeParticle(world, this.spriteProvider, x, y, z, 0.0, 0.0, 0.0) {
                 public Optional<ParticleGroup> getGroup() {
                     return Optional.of(ParticleGroup.SPORE_BLOSSOM_AIR);

@@ -2,8 +2,6 @@ package com.github.suninvr.virtualadditions.client;
 
 import com.github.suninvr.virtualadditions.VirtualAdditions;
 import com.github.suninvr.virtualadditions.block.RedstoneBridgeBlock;
-import com.github.suninvr.virtualadditions.client.render.block.CustomBedBlockEntityRenderer;
-import com.github.suninvr.virtualadditions.client.render.block.CustomShulkerBoxBlockEntityRenderer;
 import com.github.suninvr.virtualadditions.client.render.block.MiniPortalBlockEntityRenderer;
 import com.github.suninvr.virtualadditions.client.render.entity.*;
 import com.github.suninvr.virtualadditions.client.render.fog.PlayerProjectionPhasingFogModifier;
@@ -23,15 +21,11 @@ import net.minecraft.client.render.entity.BoatEntityRenderer;
 import net.minecraft.client.render.entity.FlyingItemEntityRenderer;
 import net.minecraft.client.render.entity.model.BoatEntityModel;
 import net.minecraft.client.render.entity.model.EntityModelLayer;
-import net.minecraft.client.render.fog.FogModifier;
 import net.minecraft.client.render.fog.FogRenderer;
 import net.minecraft.client.util.SpriteIdentifier;
 import net.minecraft.util.Identifier;
 import net.minecraft.world.biome.FoliageColors;
 import net.minecraft.world.biome.GrassColors;
-
-import java.util.ArrayList;
-import java.util.List;
 
 import static com.github.suninvr.virtualadditions.VirtualAdditions.idOf;
 
@@ -41,8 +35,6 @@ public class VARenderers {
     public static EntityModelLayer SPECTRE_OUTER_LAYER = new EntityModelLayer(Identifier.of("virtual_additions", "spectre_outer"), "main");
     public static EntityModelLayer SOULBLOOM_BOAT = new EntityModelLayer(Identifier.of("virtual_additions", "boat/soulbloom"), "main");
     public static EntityModelLayer SOULBLOOM_CHEST_BOAT = new EntityModelLayer(Identifier.of("virtual_additions", "chest_boat/soulbloom"), "main");
-    public static EntityModelLayer CUSTOM_BED_FOOT_LAYER = new EntityModelLayer(idOf("bed_foot"), "main");
-    public static EntityModelLayer CUSTOM_BED_HEAD_LAYER = new EntityModelLayer(idOf("bed_head"), "main");
     public static final SpriteIdentifier CHARTREUSE_SHULKER_BOX = new SpriteIdentifier(TexturedRenderLayers.SHULKER_BOXES_ATLAS_TEXTURE, VirtualAdditions.idOf("entity/shulker/shulker_chartreuse"));
     public static final SpriteIdentifier MAROON_SHULKER_BOX = new SpriteIdentifier(TexturedRenderLayers.SHULKER_BOXES_ATLAS_TEXTURE, VirtualAdditions.idOf("entity/shulker/shulker_maroon"));
     public static final SpriteIdentifier INDIGO_SHULKER_BOX = new SpriteIdentifier(TexturedRenderLayers.SHULKER_BOXES_ATLAS_TEXTURE, VirtualAdditions.idOf("entity/shulker/shulker_indigo"));
@@ -207,9 +199,6 @@ public class VARenderers {
     }
 
     private static void initBlockEntityRenderers() {
-
-        EntityModelLayerRegistry.registerModelLayer(CUSTOM_BED_FOOT_LAYER, CustomBedBlockEntityRenderer.FOOT_MODEL_PROVIDER);
-        EntityModelLayerRegistry.registerModelLayer(CUSTOM_BED_HEAD_LAYER, CustomBedBlockEntityRenderer.HEAD_MODEL_PROVIDER);
 
         BlockEntityRendererFactories.register( VABlockEntityType.MINI_PORTAL, MiniPortalBlockEntityRenderer::new );
 

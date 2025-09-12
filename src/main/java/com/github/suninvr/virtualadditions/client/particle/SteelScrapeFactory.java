@@ -6,6 +6,7 @@ import net.minecraft.client.particle.ParticleFactory;
 import net.minecraft.client.particle.SpriteProvider;
 import net.minecraft.client.world.ClientWorld;
 import net.minecraft.particle.SimpleParticleType;
+import net.minecraft.util.math.random.Random;
 import org.jetbrains.annotations.Nullable;
 
 public class SteelScrapeFactory implements ParticleFactory<SimpleParticleType> {
@@ -16,9 +17,8 @@ public class SteelScrapeFactory implements ParticleFactory<SimpleParticleType> {
         this.spriteProvider = spriteProvider;
     }
 
-    @Nullable
     @Override
-    public Particle createParticle(SimpleParticleType parameters, ClientWorld world, double x, double y, double z, double velocityX, double velocityY, double velocityZ) {
+    public @Nullable Particle createParticle(SimpleParticleType parameters, ClientWorld world, double x, double y, double z, double velocityX, double velocityY, double velocityZ, Random random) {
         GlowParticle glowParticle = new GlowParticle(world, x, y, z, 0.0, 0.0, 0.0, this.spriteProvider);
         if (world.random.nextBoolean()) {
             glowParticle.setColor(0.47f, 0.2f, 0.24f);
@@ -26,8 +26,6 @@ public class SteelScrapeFactory implements ParticleFactory<SimpleParticleType> {
             glowParticle.setColor(0.64f, 0.36f, 0.35f);
         }
         glowParticle.setVelocity(velocityX * 0.01, velocityY * 0.01, velocityZ * 0.01);
-        int j = 10;
-        int k = 40;
         glowParticle.setMaxAge(world.random.nextInt(30) + 10);
         return glowParticle;
     }

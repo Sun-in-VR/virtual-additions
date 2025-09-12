@@ -4,6 +4,7 @@ import com.github.suninvr.virtualadditions.block.entity.DyeContents;
 import com.github.suninvr.virtualadditions.screen.ColoringStationScreenHandler;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.gl.RenderPipelines;
+import net.minecraft.client.gui.Click;
 import net.minecraft.client.gui.DrawContext;
 import net.minecraft.client.gui.screen.Screen;
 import net.minecraft.client.gui.screen.ingame.HandledScreen;
@@ -236,7 +237,7 @@ public class ColoringStationScreen extends HandledScreen<ColoringStationScreenHa
     }
 
     @Override
-    public boolean mouseClicked(double mouseX, double mouseY, int button, boolean bl) {
+    public boolean mouseClicked(Click click, boolean doubled) {
         this.mouseClicked = false;
         if (this.client != null && this.handler.canCraft()) {
             int i = this.x + 52;
@@ -244,8 +245,8 @@ public class ColoringStationScreen extends HandledScreen<ColoringStationScreenHa
             int k = this.scrollOffset + 12;
             for (int l = this.scrollOffset; l < k; ++l) {
                 int m = l - this.scrollOffset;
-                double d = mouseX - (double)(i + m % 4 * 16);
-                double e = mouseY - (double)(j + m / 4 * 18);
+                double d = click.x() - (double)(i + m % 4 * 16);
+                double e = click.y() - (double)(j + m / 4 * 18);
                 if (!(d >= 0.0) || !(e >= 0.0) || !(d < 16.0) || !(e < 18.0) || !this.handler.onButtonClick(this.client.player, l)) continue;
                 MinecraftClient.getInstance().getSoundManager().play(PositionedSoundInstance.master(SoundEvents.UI_STONECUTTER_SELECT_RECIPE, 1.0f));
                 if (this.client.interactionManager != null) this.client.interactionManager.clickButton(this.handler.syncId, l);
@@ -253,24 +254,24 @@ public class ColoringStationScreen extends HandledScreen<ColoringStationScreenHa
             }
             i = this.x + 119;
             j = this.y + 9;
-            if (mouseX >= (double)i && mouseX < (double)(i + 12) && mouseY >= (double)j && mouseY < (double)(j + 54)) {
+            if (click.x() >= (double)i && click.x() < (double)(i + 12) && click.y() >= (double)j && click.y() < (double)(j + 54)) {
                 this.mouseClicked = true;
             }
         }
-        return super.mouseClicked(mouseX, mouseY, button, bl);
+        return super.mouseClicked(click, doubled);
     }
 
     @Override
-    public boolean mouseDragged(double mouseX, double mouseY, int button, double deltaX, double deltaY) {
+    public boolean mouseDragged(Click click, double offsetX, double offsetY) {
         if (this.mouseClicked && this.shouldScroll()) {
             int i = this.y + 14;
             int j = i + 54;
-            this.scrollAmount = ((float)mouseY - (float)i - 7.5f) / ((float)(j - i) - 15.0f);
+            this.scrollAmount = (float) ((click.y() - (float)i - 7.5f) / ((float)(j - i) - 15.0f));
             this.scrollAmount = MathHelper.clamp(this.scrollAmount, 0.0f, 1.0f);
             this.scrollOffset = (int)((double)(this.scrollAmount * (float)this.getMaxScroll()) + 0.5) * 4;
             return true;
         }
-        return super.mouseDragged(mouseX, mouseY, button, deltaX, deltaY);
+        return super.mouseDragged(click, offsetX, offsetY);
     }
 
     @Override

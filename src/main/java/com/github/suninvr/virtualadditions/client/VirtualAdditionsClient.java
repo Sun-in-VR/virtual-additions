@@ -42,8 +42,6 @@ public class VirtualAdditionsClient implements ClientModInitializer {
         ParticleFactoryRegistry.getInstance().register(VAParticleTypes.INTERFERENCE, PowerParticleFactory::new);
         ParticleFactoryRegistry.getInstance().register(VAParticleTypes.SPECTRAL_POWER, PowerParticleFactory::new);
         ParticleFactoryRegistry.getInstance().register(VAParticleTypes.COLORFUL_POWER, PowerParticleFactory.Color::new);
-        ParticleFactoryRegistry.getInstance().register(VAParticleTypes.IOLITE_ANCHOR_RING, IoliteRingParticle.Factory::new);
-        ParticleFactoryRegistry.getInstance().register(VAParticleTypes.IOLITE_TETHER_RING, IoliteRingParticle.Factory::new);
         ParticleFactoryRegistry.getInstance().register(VAParticleTypes.SPECTRAL_FLAME, FlameParticle.Factory::new);
         ParticleFactoryRegistry.getInstance().register(VAParticleTypes.SMALL_SPECTRAL_FLAME, FlameParticle.SmallFactory::new);
         ParticleFactoryRegistry.getInstance().register(VAParticleTypes.SPRING_LOTUS_POLLEN, SpringLotusPollenParticle.Factory::new);

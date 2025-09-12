@@ -9,14 +9,18 @@ import net.minecraft.client.render.VertexConsumer;
 import net.minecraft.client.render.VertexConsumerProvider;
 import net.minecraft.client.render.block.entity.BlockEntityRenderer;
 import net.minecraft.client.render.block.entity.BlockEntityRendererFactory;
+import net.minecraft.client.render.block.entity.state.BlockEntityRenderState;
 import net.minecraft.client.render.command.ModelCommandRenderer;
 import net.minecraft.client.render.command.OrderedRenderCommandQueue;
 import net.minecraft.client.util.math.MatrixStack;
+import net.minecraft.util.DyeColor;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.math.Vec3d;
 import org.jetbrains.annotations.Nullable;
 
-public class MiniPortalBlockEntityRenderer implements BlockEntityRenderer<MiniPortalBlockEntity> {
+import java.util.Optional;
+
+public class MiniPortalBlockEntityRenderer implements BlockEntityRenderer<MiniPortalBlockEntity, MiniPortalBlockEntityRenderState> {
     private static final Identifier TEXTURE = Identifier.of("virtual_additions", "textures/entity/mini_portal/open.png");
     private static final Identifier TEXTURE_BLOCKED = Identifier.of("virtual_additions", "textures/entity/mini_portal/blocked.png");
     private static final Identifier TEXTURE_GLOW = Identifier.of("virtual_additions", "textures/entity/mini_portal/open_glow.png");
@@ -38,38 +42,50 @@ public class MiniPortalBlockEntityRenderer implements BlockEntityRenderer<MiniPo
 
     }
 
-    @Override
-    public void render(MiniPortalBlockEntity entity, float tickProgress, MatrixStack matrices, int light, int overlay, Vec3d cameraPos, @Nullable ModelCommandRenderer.CrumblingOverlayCommand crumblingOverlayCommand, OrderedRenderCommandQueue orderedRenderCommandQueue) {
-        renderPortal(entity, tickProgress, matrices, orderedRenderCommandQueue, 255, overlay, cameraPos, getGlowLayer(entity));
-        renderPortal(entity, tickProgress, matrices, orderedRenderCommandQueue, 255, overlay, cameraPos, getBaseLayer(entity));
+    private static RenderLayer getGlowLayer(MiniPortalBlockEntityRenderState state) {
+        boolean dyed = state.dyeColor.isPresent();
+        if (dyed) return state.blocked ? LAYER_DYED_BLOCKED_GLOW : LAYER_DYED_GLOW;
+        return state.blocked ? LAYER_BLOCKED_GLOW : LAYER_GLOW;
     }
 
-    private static RenderLayer getGlowLayer(MiniPortalBlockEntity blockEntity) {
-        boolean dyed = blockEntity.isDyed();
-        if (dyed) return blockEntity.isBlocked() ? LAYER_DYED_BLOCKED_GLOW : LAYER_DYED_GLOW;
-        return blockEntity.isBlocked() ? LAYER_BLOCKED_GLOW : LAYER_GLOW;
+    private static RenderLayer getBaseLayer(MiniPortalBlockEntityRenderState state) {
+        boolean dyed = state.dyeColor.isPresent();
+        if (dyed) return state.blocked ? LAYER_DYED_BLOCKED : LAYER_DYED;
+        return state.blocked ? LAYER_BLOCKED : LAYER;
     }
 
-    private static RenderLayer getBaseLayer(MiniPortalBlockEntity blockEntity) {
-        boolean dyed = blockEntity.isDyed();
-        if (dyed) return blockEntity.isBlocked() ? LAYER_DYED_BLOCKED : LAYER_DYED;
-        return blockEntity.isBlocked() ? LAYER_BLOCKED : LAYER;
-    }
-
-    private static void renderPortal(MiniPortalBlockEntity entity, float tickProgress, MatrixStack matrices, OrderedRenderCommandQueue renderCommandQueue, int light, int overlay, Vec3d cameraPos, RenderLayer layer) {
+    private static void renderPortal(MiniPortalBlockEntityRenderState state, MatrixStack matrices, OrderedRenderCommandQueue renderCommandQueue, RenderLayer layer) {
         renderCommandQueue.submitCustom(matrices, layer, (matricesEntry, vertexConsumer) -> {
             matricesEntry.translate(0.5F, 0.5F, 0.5F);
             matricesEntry.rotate(MinecraftClient.getInstance().gameRenderer.getCamera().getRotation());
-            int color = entity.getDyeColor();
-            producePortalVertex(vertexConsumer, matricesEntry, light, 0, 0, 0, 1, color);
-            producePortalVertex(vertexConsumer, matricesEntry, light, 1, 0, 1, 1, color);
-            producePortalVertex(vertexConsumer, matricesEntry, light, 1, 1, 1, 0, color);
-            producePortalVertex(vertexConsumer, matricesEntry, light, 0, 1, 0, 0, color);
+            int color = state.dyeColor.map(DyeColor::getEntityColor).orElse(-1);
+            producePortalVertex(vertexConsumer, matricesEntry, 255, 0, 0, 0, 1, color);
+            producePortalVertex(vertexConsumer, matricesEntry, 255, 1, 0, 1, 1, color);
+            producePortalVertex(vertexConsumer, matricesEntry, 255, 1, 1, 1, 0, color);
+            producePortalVertex(vertexConsumer, matricesEntry, 255, 0, 1, 0, 0, color);
         });
     }
 
 
     private static void producePortalVertex(VertexConsumer vertexConsumer, MatrixStack.Entry matrix, int light, float x, int z, int textureU, int textureV, int color) {
         vertexConsumer.vertex(matrix, x - 0.5F, (float)z - 0.5F, 0.0F).color(color).texture((float)textureU, (float)textureV).overlay(OverlayTexture.DEFAULT_UV).light(light).normal(matrix, 0.0F, 1.0F, 0.0F);
+    }
+
+    @Override
+    public MiniPortalBlockEntityRenderState createRenderState() {
+        return new MiniPortalBlockEntityRenderState();
+    }
+
+    @Override
+    public void updateRenderState(MiniPortalBlockEntity blockEntity, MiniPortalBlockEntityRenderState state, float tickProgress, Vec3d cameraPos, @Nullable ModelCommandRenderer.CrumblingOverlayCommand crumblingOverlay) {
+        BlockEntityRenderer.super.updateRenderState(blockEntity, state, tickProgress, cameraPos, crumblingOverlay);
+        state.blocked = blockEntity.isBlocked();
+        state.dyeColor = Optional.ofNullable(blockEntity.getDyeColor());
+    }
+
+    @Override
+    public void render(MiniPortalBlockEntityRenderState state, MatrixStack matrices, OrderedRenderCommandQueue queue) {
+        renderPortal(state, matrices, queue, getGlowLayer(state));
+        renderPortal(state, matrices, queue, getBaseLayer(state));
     }
 }

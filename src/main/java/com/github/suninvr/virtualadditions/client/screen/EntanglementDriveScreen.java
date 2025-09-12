@@ -12,6 +12,8 @@ import net.minecraft.client.gui.screen.ingame.InventoryScreen;
 import net.minecraft.client.gui.screen.narration.NarrationMessageBuilder;
 import net.minecraft.client.gui.tooltip.Tooltip;
 import net.minecraft.client.gui.widget.PressableWidget;
+import net.minecraft.client.input.AbstractInput;
+import net.minecraft.client.input.MouseInput;
 import net.minecraft.client.render.GameRenderer;
 import net.minecraft.client.render.RenderLayer;
 import net.minecraft.entity.player.PlayerInventory;
@@ -102,6 +104,12 @@ public class EntanglementDriveScreen extends HandledScreen<EntanglementDriveScre
             super(x, y, 18, 18, Text.empty());
         }
 
+        @Override
+        public void onPress(AbstractInput input) {
+            ClientPlayNetworking.send(new EntanglementDriveC2SPayload(EntanglementDriveScreen.this.handler.getSelectedSlotIndex(), EntanglementDriveScreen.this.playerId));
+            EntanglementDriveScreen.this.handler.decrementPaymentSlot();
+        }
+
         public void renderWidget(DrawContext context, int mouseX, int mouseY, float delta) {
             //RenderSystem.setShaderTexture(0, BACKGROUND_TEXTURE);
 
@@ -119,14 +127,8 @@ public class EntanglementDriveScreen extends HandledScreen<EntanglementDriveScre
         }
 
         @Override
-        public void onPress() {
-            ClientPlayNetworking.send(new EntanglementDriveC2SPayload(EntanglementDriveScreen.this.handler.getSelectedSlotIndex(), EntanglementDriveScreen.this.playerId));
-            EntanglementDriveScreen.this.handler.decrementPaymentSlot();
-        }
-
-        @Override
-        protected boolean isValidClickButton(int button) {
-            return super.isValidClickButton(button) && !this.isDisabled() ;
+        protected boolean isValidClickButton(MouseInput input) {
+            return super.isValidClickButton(input) && !this.isDisabled() ;
         }
 
         public boolean isDisabled() {

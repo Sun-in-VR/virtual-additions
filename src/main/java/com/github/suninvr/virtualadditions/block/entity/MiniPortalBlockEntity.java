@@ -69,7 +69,7 @@ public class MiniPortalBlockEntity extends BlockEntity {
     }
 
     public ParticleEffect getParticleParameter() {
-        if (this.isDyed()) return new ColorfulPowerParticleEffect(ColorHelper.toVector(this.getDyeColor()));
+        if (this.isDyed()) return new ColorfulPowerParticleEffect(ColorHelper.toVector(this.getDyeColor().getEntityColor()));
         else return VAParticleTypes.INTERFERENCE;
     }
 
@@ -112,8 +112,8 @@ public class MiniPortalBlockEntity extends BlockEntity {
         return this.dyeColor != null;
     }
 
-    public int getDyeColor() {
-        return this.isDyed() ? this.dyeColor.getEntityColor() : -1;
+    public DyeColor getDyeColor() {
+        return this.dyeColor;
     }
 
 

@@ -30,7 +30,7 @@ public class HoeItemMixin {
             if (blockState.isOf(Blocks.FARMLAND)) {
                 world.setBlockState(blockPos, Blocks.DIRT.getDefaultState());
                 world.emitGameEvent(GameEvent.BLOCK_CHANGE, blockPos, GameEvent.Emitter.of(player, Blocks.DIRT.getDefaultState()));
-                context.getStack().damage(1, player, context.getHand().method_73186());
+                context.getStack().damage(1, player, context.getHand().getEquipmentSlot());
                 world.playSound(player, blockPos, SoundEvents.ITEM_HOE_TILL, SoundCategory.BLOCKS, 1.0F, 1.0F);
                 cir.setReturnValue(ActionResult.SUCCESS);
             }

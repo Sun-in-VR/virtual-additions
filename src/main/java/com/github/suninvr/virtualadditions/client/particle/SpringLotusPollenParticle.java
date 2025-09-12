@@ -4,14 +4,14 @@ import net.minecraft.client.particle.*;
 import net.minecraft.client.world.ClientWorld;
 import net.minecraft.particle.SimpleParticleType;
 import net.minecraft.util.math.MathHelper;
+import net.minecraft.util.math.random.Random;
 import org.jetbrains.annotations.Nullable;
 
 @SuppressWarnings("deprecation")
-public class SpringLotusPollenParticle extends SpriteBillboardParticle {
+public class SpringLotusPollenParticle extends BillboardParticle {
     protected SpringLotusPollenParticle(ClientWorld clientWorld, SpriteProvider spriteProvider, double d, double e, double f, double x, double y, double z) {
-        super(clientWorld, d, e, f, x, y, z);
+        super(clientWorld, d, e, f, x, y, z, spriteProvider.getFirst());
         this.setBoundingBoxSpacing(0.01F, 0.01F);
-        this.setSprite(spriteProvider);
         this.gravityStrength = 1.0F;
         this.scale *= this.random.nextFloat() * 0.1F + 0.8F;
         this.maxAge = (int)(16.0 / (Math.random() * 0.8 + 0.2));
@@ -20,8 +20,8 @@ public class SpringLotusPollenParticle extends SpriteBillboardParticle {
     }
 
     @Override
-    public ParticleTextureSheet getType() {
-        return ParticleTextureSheet.PARTICLE_SHEET_OPAQUE;
+    protected RenderType getRenderType() {
+        return RenderType.field_62640;
     }
 
     public static class Factory implements ParticleFactory<SimpleParticleType> {
@@ -31,9 +31,8 @@ public class SpringLotusPollenParticle extends SpriteBillboardParticle {
             this.spriteProvider = spriteProvider;
         }
 
-        @Nullable
         @Override
-        public Particle createParticle(SimpleParticleType parameters, ClientWorld world, double x, double y, double z, double velocityX, double velocityY, double velocityZ) {
+        public @Nullable Particle createParticle(SimpleParticleType parameters, ClientWorld world, double x, double y, double z, double velocityX, double velocityY, double velocityZ, Random random) {
             SpringLotusPollenParticle particle = new SpringLotusPollenParticle(world, this.spriteProvider, x, y, z, 0.0, 0.0, 0.0);
             particle.maxAge = MathHelper.nextBetween(world.random, 20, 100);
             particle.alpha = 50;
