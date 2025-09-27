@@ -12,6 +12,7 @@ import net.minecraft.client.render.block.entity.BlockEntityRendererFactory;
 import net.minecraft.client.render.block.entity.state.BlockEntityRenderState;
 import net.minecraft.client.render.command.ModelCommandRenderer;
 import net.minecraft.client.render.command.OrderedRenderCommandQueue;
+import net.minecraft.client.render.state.CameraRenderState;
 import net.minecraft.client.util.math.MatrixStack;
 import net.minecraft.util.DyeColor;
 import net.minecraft.util.Identifier;
@@ -54,10 +55,10 @@ public class MiniPortalBlockEntityRenderer implements BlockEntityRenderer<MiniPo
         return state.blocked ? LAYER_BLOCKED : LAYER;
     }
 
-    private static void renderPortal(MiniPortalBlockEntityRenderState state, MatrixStack matrices, OrderedRenderCommandQueue renderCommandQueue, RenderLayer layer) {
+    private static void renderPortal(MiniPortalBlockEntityRenderState state, MatrixStack matrices, OrderedRenderCommandQueue renderCommandQueue, CameraRenderState cameraRenderState, RenderLayer layer) {
         renderCommandQueue.submitCustom(matrices, layer, (matricesEntry, vertexConsumer) -> {
             matricesEntry.translate(0.5F, 0.5F, 0.5F);
-            matricesEntry.rotate(MinecraftClient.getInstance().gameRenderer.getCamera().getRotation());
+            matricesEntry.rotate(cameraRenderState.orientation);
             int color = state.dyeColor.map(DyeColor::getEntityColor).orElse(-1);
             producePortalVertex(vertexConsumer, matricesEntry, 255, 0, 0, 0, 1, color);
             producePortalVertex(vertexConsumer, matricesEntry, 255, 1, 0, 1, 1, color);
@@ -84,8 +85,8 @@ public class MiniPortalBlockEntityRenderer implements BlockEntityRenderer<MiniPo
     }
 
     @Override
-    public void render(MiniPortalBlockEntityRenderState state, MatrixStack matrices, OrderedRenderCommandQueue queue) {
-        renderPortal(state, matrices, queue, getGlowLayer(state));
-        renderPortal(state, matrices, queue, getBaseLayer(state));
+    public void render(MiniPortalBlockEntityRenderState state, MatrixStack matrices, OrderedRenderCommandQueue queue, CameraRenderState cameraRenderState) {
+        renderPortal(state, matrices, queue, cameraRenderState, getGlowLayer(state));
+        renderPortal(state, matrices, queue, cameraRenderState, getBaseLayer(state));
     }
 }

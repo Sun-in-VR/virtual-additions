@@ -22,11 +22,11 @@ public record PlayerProjectionMovementC2SPayload(UUID entityId, Optional<Vec3d> 
     );
 
     public static PlayerProjectionMovementC2SPayload createFull(PlayerProjectionEntity entity) {
-        return new PlayerProjectionMovementC2SPayload(entity.getUuid(), Optional.of(entity.getPos()), Optional.of(entity.getPitch()), Optional.of(entity.getYaw()));
+        return new PlayerProjectionMovementC2SPayload(entity.getUuid(), Optional.of(entity.getEntityPos()), Optional.of(entity.getPitch()), Optional.of(entity.getYaw()));
     }
 
     public static PlayerProjectionMovementC2SPayload createPosOnly(PlayerProjectionEntity entity) {
-        return new PlayerProjectionMovementC2SPayload(entity.getUuid(), Optional.of(entity.getPos()), Optional.empty(), Optional.empty());
+        return new PlayerProjectionMovementC2SPayload(entity.getUuid(), Optional.of(entity.getEntityPos()), Optional.empty(), Optional.empty());
     }
 
     public static PlayerProjectionMovementC2SPayload createAnglesOnly(PlayerProjectionEntity entity) {

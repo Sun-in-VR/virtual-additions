@@ -9,6 +9,7 @@ import net.minecraft.client.render.command.OrderedRenderCommandQueue;
 import net.minecraft.client.render.entity.EntityRenderer;
 import net.minecraft.client.render.entity.EntityRendererFactory;
 import net.minecraft.client.render.entity.state.EntityRenderState;
+import net.minecraft.client.render.state.CameraRenderState;
 import net.minecraft.client.util.math.MatrixStack;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.math.RotationAxis;
@@ -22,14 +23,13 @@ public class SpectralBoltEntityRenderer extends EntityRenderer<SpectralBoltEntit
     }
 
     @Override
-    public void render(EntityRenderState renderState, MatrixStack matrices, OrderedRenderCommandQueue queue) {
-        super.render(renderState, matrices, queue);
+    public void render(EntityRenderState renderState, MatrixStack matrices, OrderedRenderCommandQueue queue, CameraRenderState cameraState) {
+        super.render(renderState, matrices, queue, cameraState);
         matrices.push();
+        float f = (30.0F - renderState.age) / 60.0F;
+        matrices.scale(f, f, f);
+        matrices.multiply(cameraState.orientation);
         queue.submitCustom(matrices, LAYER, (matricesEntry, vertexConsumer) -> {
-            float f = (30.0F - renderState.age) / 60.0F;
-            matricesEntry.scale(f, f, f);
-            matricesEntry.rotate(this.dispatcher.getRotation());
-            matricesEntry.rotate(RotationAxis.POSITIVE_Y.rotationDegrees(180.0F));
             produceVertex(vertexConsumer, matricesEntry, renderState.light, 0.0F, 0, 0, 1);
             produceVertex(vertexConsumer, matricesEntry, renderState.light, 1.0F, 0, 1, 1);
             produceVertex(vertexConsumer, matricesEntry, renderState.light, 1.0F, 1, 1, 0);

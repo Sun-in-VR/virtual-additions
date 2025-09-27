@@ -47,7 +47,7 @@ public class GreencapSporeParticle extends BillboardParticle {
 
     @Override
     protected RenderType getRenderType() {
-        return RenderType.field_62640;
+        return RenderType.PARTICLE_ATLAS_OPAQUE;
     }
 
     public static class Factory implements ParticleFactory<SimpleParticleType> {

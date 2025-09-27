@@ -8,6 +8,7 @@ import net.minecraft.client.render.command.OrderedRenderCommandQueue;
 import net.minecraft.client.render.entity.EntityRenderer;
 import net.minecraft.client.render.entity.EntityRendererFactory;
 import net.minecraft.client.render.entity.state.EntityRenderState;
+import net.minecraft.client.render.state.CameraRenderState;
 import net.minecraft.client.util.math.MatrixStack;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.math.RotationAxis;
@@ -21,12 +22,11 @@ public class AcidSpitEntityRenderer extends EntityRenderer<AcidSpitEntity, Entit
     }
 
     @Override
-    public void render(EntityRenderState renderState, MatrixStack matrices, OrderedRenderCommandQueue queue) {
+    public void render(EntityRenderState renderState, MatrixStack matrices, OrderedRenderCommandQueue queue, CameraRenderState cameraRenderState) {
         matrices.push();
+        matrices.scale(0.5F, 0.5F, 0.5F);
+        matrices.multiply(cameraRenderState.orientation);
         queue.submitCustom(matrices, LAYER, (matricesEntry, vertexConsumer) -> {
-            matricesEntry.scale(0.5F, 0.5f, 0.5f);
-            matricesEntry.rotate(this.dispatcher.getRotation());
-            matricesEntry.rotate(RotationAxis.POSITIVE_Y.rotationDegrees(180.0F));
             produceVertex(vertexConsumer, matricesEntry, renderState.light, 0.0F, 0, 0, 1);
             produceVertex(vertexConsumer, matricesEntry, renderState.light, 1.0F, 0, 1, 1);
             produceVertex(vertexConsumer, matricesEntry, renderState.light, 1.0F, 1, 1, 0);

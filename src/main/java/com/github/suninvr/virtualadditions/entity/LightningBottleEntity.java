@@ -60,7 +60,7 @@ public class LightningBottleEntity extends ThrownItemEntity {
                 BlockPos blockPos = blockHitResult.getBlockPos().offset(blockHitResult.getSide());
                 this.summonLightningBolt(blockPos.toCenterPos().add(0.0, -0.5, 0.0));
             } else if (hitResult instanceof EntityHitResult entityHitResult) {
-                this.summonLightningBolt(entityHitResult.getEntity().getPos());
+                this.summonLightningBolt(entityHitResult.getEntity().getEntityPos());
             } else {
                 this.summonLightningBolt(hitResult.getPos());
             }

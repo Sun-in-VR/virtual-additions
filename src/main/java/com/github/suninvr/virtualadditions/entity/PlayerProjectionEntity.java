@@ -81,14 +81,17 @@ public class PlayerProjectionEntity extends LivingEntity {
 
     @Override
     protected void turnHead(float bodyRotation) {
-        if ((this.getPlayer() != null && this.getPlayer().isMainPlayer())) return;
         super.turnHead(bodyRotation);
     }
 
     @Override
     public void updateTrackedHeadRotation(float yaw, int interpolationSteps) {
-        if ((this.getPlayer() != null && this.getPlayer().isMainPlayer())) return;
         super.updateTrackedHeadRotation(yaw, interpolationSteps);
+    }
+
+    @Override
+    protected void lerpPosAndRotation(int step, double x, double y, double z, double yaw, double pitch) {
+        super.lerpPosAndRotation(step, x, y, z, yaw, pitch);
     }
 
     @Override
@@ -157,7 +160,7 @@ public class PlayerProjectionEntity extends LivingEntity {
     @Environment(EnvType.CLIENT)
     public void sendMovementPackets() {
         boolean anglesChanged = this.lookDirectionChanged;
-        boolean posChanged = this.getPos().x != this.lastX || this.getPos().y != this.lastY || this.getPos().z != this.lastZ;
+        boolean posChanged = this.getEntityPos().x != this.lastX || this.getEntityPos().y != this.lastY || this.getEntityPos().z != this.lastZ;
         PlayerProjectionMovementC2SPayload payload = null;
         if (anglesChanged && posChanged) {
             payload = PlayerProjectionMovementC2SPayload.createFull(this);

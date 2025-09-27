@@ -10,8 +10,8 @@ import org.spongepowered.asm.mixin.injection.At;
 
 @Mixin(TickManager.class)
 public class TickManagerMixin {
-    //@WrapOperation(method = "shouldSkipTick", at = @At(value = "CONSTANT", args = "classValue=net/minecraft/entity/player/PlayerEntity", opcode = Opcodes.INSTANCEOF))
-    //boolean virtualAdditions$shouldSkipTickForPlayerProjectionEntity(Object object, Operation<Boolean> original) {
-    //    return original.call(object) || object instanceof PlayerProjectionEntity;
-    //}
+    @WrapOperation(method = "shouldSkipTick", at = @At(value = "CONSTANT", args = "classValue=net/minecraft/entity/player/PlayerEntity", opcode = Opcodes.INSTANCEOF))
+    boolean virtualAdditions$shouldSkipTickForPlayerProjectionEntity(Object object, Operation<Boolean> original) {
+        return original.call(object) || object instanceof PlayerProjectionEntity;
+    }
 }
