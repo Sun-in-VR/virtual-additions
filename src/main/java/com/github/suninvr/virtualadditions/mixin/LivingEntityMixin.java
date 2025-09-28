@@ -14,19 +14,25 @@ import net.minecraft.entity.effect.StatusEffect;
 import net.minecraft.entity.effect.StatusEffectInstance;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
+import net.minecraft.particle.VibrationParticleEffect;
 import net.minecraft.registry.entry.RegistryEntry;
 import net.minecraft.server.world.ServerWorld;
+import net.minecraft.sound.SoundEvents;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Vec3d;
 import net.minecraft.util.shape.VoxelShapes;
 import net.minecraft.world.World;
+import net.minecraft.world.event.EntityPositionSource;
 import org.jetbrains.annotations.Nullable;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
+import org.spongepowered.asm.mixin.Unique;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
+
+import java.util.Collection;
 
 @SuppressWarnings("ConstantValue")
 @Mixin(LivingEntity.class)
@@ -38,7 +44,11 @@ public abstract class LivingEntityMixin extends Entity {
 
     @Shadow public abstract boolean hasStatusEffect(RegistryEntry<StatusEffect> effect);
 
-    private float experienceMultiplier = 1.0F;
+    @Shadow public abstract Collection<StatusEffectInstance> getStatusEffects();
+
+    @Unique private long lastHurtByFesteringWounds;
+
+    @Unique private float experienceMultiplier = 1.0F;
 
     public LivingEntityMixin(EntityType<?> type, World world) {
         super(type, world);
@@ -67,6 +77,27 @@ public abstract class LivingEntityMixin extends Entity {
     @Inject(method = "modifyAppliedDamage", at = @At("RETURN"), cancellable = true)
     void virtualAdditions$modifyAppliedDamageForFrailty(DamageSource source, float amount, CallbackInfoReturnable<Float> cir) {
         if (this.hasStatusEffect(VAStatusEffects.FRAILTY)) cir.setReturnValue(cir.getReturnValueF() * (1.0F + (0.2F * (this.getStatusEffect(VAStatusEffects.FRAILTY).getAmplifier() + 1))));
+    }
+
+    @Inject(method = "applyDamage", at = @At("TAIL"))
+    void virtualAdditions$spreadDamageForFesteringWoundsEffect(ServerWorld world, DamageSource source, float amount, CallbackInfo ci) {
+        if (this.hasStatusEffect(VAStatusEffects.FESTERING_WOUNDS) && this.lastHurtByFesteringWounds != world.getTime()) {
+            this.lastHurtByFesteringWounds = world.getTime();
+            world.getNonSpectatingEntities(LivingEntity.class, this.getBoundingBox().expand(12, 12, 12)).stream().filter(entity -> entity != (Object)this).forEach(entity -> {
+                if (entity.hasStatusEffect(VAStatusEffects.FESTERING_WOUNDS)) {
+                    if (entity.damage(world, source, amount)) {
+                        this.getStatusEffects().forEach(statusEffectInstance -> {
+                            RegistryEntry<StatusEffect> effect = statusEffectInstance.getEffectType();
+                            if (!entity.hasStatusEffect(effect) || entity.getStatusEffect(effect).compareTo(statusEffectInstance) < 0) {
+                                entity.addStatusEffect(statusEffectInstance);
+                            }
+                        });
+                        world.spawnParticles(new VibrationParticleEffect(new EntityPositionSource(entity, entity.getEyeHeight(entity.getPose())), 8), this.getX(), this.getEyeY(), this.getZ(), 1, 0, 0, 0, 0);
+                        world.playSound(entity, entity.getBlockPos(), SoundEvents.BLOCK_SCULK_CHARGE, entity.getSoundCategory(), 1.0F, 0.5F);
+                    }
+                };
+            });
+        }
     }
 
     @Inject(method = "isClimbing", at = @At("HEAD"), cancellable = true)

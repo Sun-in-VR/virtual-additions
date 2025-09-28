@@ -10,6 +10,7 @@ import net.minecraft.entity.Entity;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.attribute.EntityAttributes;
 import net.minecraft.entity.damage.DamageSource;
+import net.minecraft.entity.effect.StatusEffectInstance;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
@@ -82,6 +83,9 @@ public class HalberdItem extends Item {
                                 }
                                 if (hasAppliedPotion) {
                                     stack.get(VADataComponentTypes.EFFECTS_ON_HIT).forEachEffect(statusEffectInstance -> target.addStatusEffect(statusEffectInstance, player));
+                                }
+                                if (GildedToolUtil.getGildType(stack).equals(GildTypes.SCULK)) {
+                                    target.addStatusEffect(new StatusEffectInstance(VAStatusEffects.FESTERING_WOUNDS, 400));
                                 }
                                 entitiesHit.increment();
                                 player.increaseStat(Stats.DAMAGE_DEALT, Math.round((startingHealth - target.getHealth()) * 10.0F));

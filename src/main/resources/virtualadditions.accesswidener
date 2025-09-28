@@ -41,3 +41,5 @@ accessible field net/minecraft/client/render/fog/FogRenderer FOG_MODIFIERS Ljava
 accessible class net/minecraft/recipe/BrewingRecipeRegistry$Recipe
 accessible method net/minecraft/entity/LivingEntity getAttackKnockbackAgainst (Lnet/minecraft/entity/Entity;Lnet/minecraft/entity/damage/DamageSource;)F
 accessible class net/minecraft/client/render/item/HeldItemRenderer$HandRenderType
+accessible method net/minecraft/client/particle/SculkChargePopParticle <init> (Lnet/minecraft/client/world/ClientWorld;DDDDDDLnet/minecraft/client/particle/SpriteProvider;)V
+accessible method net/minecraft/client/particle/BillboardParticle setAlpha (F)V
