@@ -3,11 +3,13 @@ package com.github.suninvr.virtualadditions.registry;
 import com.github.suninvr.virtualadditions.component.EffectsOnHitComponent;
 import com.github.suninvr.virtualadditions.item.GildType;
 import com.github.suninvr.virtualadditions.item.GildTypes;
+import com.github.suninvr.virtualadditions.item.GildedToolUtil;
 import com.github.suninvr.virtualadditions.item.interfaces.GildedToolItem;
 import net.fabricmc.fabric.api.event.player.AttackEntityCallback;
 import net.fabricmc.fabric.api.event.player.PlayerBlockBreakEvents;
 import net.minecraft.component.ComponentMap;
 import net.minecraft.entity.LivingEntity;
+import net.minecraft.entity.effect.StatusEffectInstance;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.ActionResult;
 import net.minecraft.util.Hand;
@@ -15,12 +17,16 @@ import net.minecraft.util.Hand;
 public class VACallbacks{
 
     public static void init() {
-        //Applied Potion hit effects callback
         AttackEntityCallback.EVENT.register( ((player, world, hand, entity, hitResult) -> {
             if (player.isSpectator()) return ActionResult.PASS;
             if (!entity.isAlive()) return ActionResult.PASS;
             ItemStack stack = player.getStackInHand(hand);
             if (stack.isEmpty()) return ActionResult.PASS;
+
+            if (GildedToolUtil.getGildType(stack).equals(GildTypes.SCULK) && entity instanceof LivingEntity livingEntity) {
+                livingEntity.addStatusEffect(new StatusEffectInstance(VAStatusEffects.FESTERING_WOUNDS, 400));
+            }
+
             ComponentMap components = stack.getComponents();
             if (!components.contains(VADataComponentTypes.EFFECTS_ON_HIT)) return ActionResult.PASS;
             EffectsOnHitComponent component = components.get(VADataComponentTypes.EFFECTS_ON_HIT);

@@ -42,7 +42,7 @@ public class GildTypes {
     };
     public static final GildType IOLITE = new GildType(idOf("iolite"), 0x702bff, blockInteractionRangeModifier(3, ADD), entityInteractionRangeModifier(0.5F, ADD));
     public static final GildType QUARTZ = new GildType(idOf("quartz"), 0xE3D4C4, attackDamageModifier(2, ADD));
-    public static final GildType SCULK = new GildType(idOf("sculk"), 0x009295, miningSpeedModifier(0.4F, MULTIPLY), attackSpeedModifier(1.2F, MULTIPLY_ROUNDED_TENTHS, GildType.ModifierType.ToolType.SWORD)) {
+    public static final GildType SCULK = new GildType(idOf("sculk"), 0x009295, miningSpeedModifier(0.4F, MULTIPLY), attackSpeedModifier(1.2F, MULTIPLY_ROUNDED_TENTHS, GildType.ModifierType.ToolType.SWORD), attackDamageModifier(0.5F, MULTIPLY_ROUNDED_TENTHS)) {
         @Override
         public boolean isGildEffective(World world, PlayerEntity player, BlockPos pos, BlockState state, ItemStack tool) {
             return !player.getItemCooldownManager().isCoolingDown(tool) && !state.isOf(VABlocks.DESTRUCTIVE_SCULK) && state.getHardness(world, pos) > 0 && world.getBlockEntity(pos) == null && super.isGildEffective(world, player, pos, state, tool);

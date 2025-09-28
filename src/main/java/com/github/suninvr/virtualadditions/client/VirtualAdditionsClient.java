@@ -46,6 +46,7 @@ public class VirtualAdditionsClient implements ClientModInitializer {
         ParticleFactoryRegistry.getInstance().register(VAParticleTypes.SMALL_SPECTRAL_FLAME, FlameParticle.SmallFactory::new);
         ParticleFactoryRegistry.getInstance().register(VAParticleTypes.SPRING_LOTUS_POLLEN, SpringLotusPollenParticle.Factory::new);
         ParticleFactoryRegistry.getInstance().register(VAParticleTypes.SOUL_FIREFLY, FireflyParticle.Factory::new);
+        ParticleFactoryRegistry.getInstance().register(VAParticleTypes.STATIC_SCULK_CHARGE_POP, StaticSculkChargePopParticleFactory::new);
 
         HandledScreens.register(VAScreenHandler.ENTANGLEMENT_DRIVE, EntanglementDriveScreen::new);
         HandledScreens.register(VAScreenHandler.COLORING_STATION, ColoringStationScreen::new);

@@ -26,6 +26,7 @@ public class VAParticleTypes {
     public static final SimpleParticleType SMALL_SPECTRAL_FLAME;
     public static final SimpleParticleType SPRING_LOTUS_POLLEN;
     public static final SimpleParticleType SOUL_FIREFLY;
+    public static final SimpleParticleType STATIC_SCULK_CHARGE_POP;
     public static final ParticleType<ColorfulPowerParticleEffect> COLORFUL_POWER;
 
     static{
@@ -40,6 +41,7 @@ public class VAParticleTypes {
         SPECTRAL_POWER = register("spectral_power");
         SPRING_LOTUS_POLLEN = register("spring_lotus_pollen");
         SOUL_FIREFLY = register("soul_firefly");
+        STATIC_SCULK_CHARGE_POP = register("static_sculk_charge_pop");
         COLORFUL_POWER = register("colorful_power", false, type -> ColorfulPowerParticleEffect.CODEC, type -> ColorfulPowerParticleEffect.PACKET_CODEC);
     }
 

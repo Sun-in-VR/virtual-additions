@@ -19,6 +19,7 @@ public class VAStatusEffects {
     public static final RegistryEntry<StatusEffect> SILENCE;
     public static final RegistryEntry<StatusEffect> LOQUACITY;
     public static final RegistryEntry<StatusEffect> AURA;
+    public static final RegistryEntry<StatusEffect> FESTERING_WOUNDS;
 
     static {
         IOLITE_INTERFERENCE = Registry.registerReference(Registries.STATUS_EFFECT, idOf("iolite_interference"), new CustomStatusEffect(StatusEffectCategory.HARMFUL, 0x9a5bff, VAParticleTypes.INTERFERENCE));
@@ -27,6 +28,7 @@ public class VAStatusEffects {
         SILENCE = Registry.registerReference(Registries.STATUS_EFFECT, idOf("silence"), new SilenceAndLoquacityStatusEffect(StatusEffectCategory.NEUTRAL, 0x1987a1));
         LOQUACITY = Registry.registerReference(Registries.STATUS_EFFECT, idOf("loquacity"), new SilenceAndLoquacityStatusEffect(StatusEffectCategory.NEUTRAL, 0xe6785e, true));
         AURA = Registry.registerReference(Registries.STATUS_EFFECT, idOf("aura"), new AuraStatusEffect(StatusEffectCategory.NEUTRAL, 0x9dbad0));
+        FESTERING_WOUNDS = Registry.registerReference(Registries.STATUS_EFFECT, idOf("festering_wounds"), new CustomStatusEffect(StatusEffectCategory.HARMFUL, 0x1987a1, VAParticleTypes.STATIC_SCULK_CHARGE_POP));
     }
 
     public static void init(){}
