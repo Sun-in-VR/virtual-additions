@@ -15,7 +15,7 @@ import net.minecraft.util.Formatting;
 
 import java.util.function.Consumer;
 
-public class GildedHalberdItem extends Item implements GildedToolItem {
+public class GildedHalberdItem extends HalberdItem implements GildedToolItem {
     private final GildType gildType;
     private final Item baseItem;
     private static final Text descriptionHeader = Text.translatable("item.minecraft.smithing_template.upgrade").formatted(Formatting.GRAY);

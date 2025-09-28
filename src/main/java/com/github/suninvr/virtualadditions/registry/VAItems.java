@@ -720,13 +720,13 @@ public class VAItems {
 
         //region Halberd
 
-        WOODEN_HALBERD = register("wooden_halberd", GildedToolUtil.halberdSettings(new Item.Settings(), ToolMaterial.WOOD, 7.0F, -3.35F), ItemGroups.COMBAT, Items.NETHERITE_AXE);
-        STONE_HALBERD = register("stone_halberd", GildedToolUtil.halberdSettings(new Item.Settings(), ToolMaterial.STONE, 8.0F, -3.35F), ItemGroups.COMBAT, prev);
-        COPPER_HALBERD = register("copper_halberd", GildedToolUtil.halberdSettings(new Item.Settings(), ToolMaterial.COPPER, 8.0F, -3.35F), ItemGroups.COMBAT, prev);
-        IRON_HALBERD = register("iron_halberd", GildedToolUtil.halberdSettings(new Item.Settings(), ToolMaterial.IRON, 9.0F, -3.35F), ItemGroups.COMBAT, prev);
-        GOLDEN_HALBERD = register("golden_halberd", GildedToolUtil.halberdSettings(new Item.Settings(), ToolMaterial.GOLD, 7.0F, -3.35F), ItemGroups.COMBAT, prev);
-        DIAMOND_HALBERD = register("diamond_halberd", GildedToolUtil.halberdSettings(new Item.Settings(), ToolMaterial.DIAMOND, 10.0F, -3.35F), ItemGroups.COMBAT, prev);
-        NETHERITE_HALBERD = register("netherite_halberd", GildedToolUtil.halberdSettings(new Item.Settings(), ToolMaterial.NETHERITE, 11.0F, -3.35F), ItemGroups.COMBAT, prev);
+        WOODEN_HALBERD = register("wooden_halberd", HalberdItem::new, GildedToolUtil.halberdSettings(new Item.Settings(), ToolMaterial.WOOD, 7.0F, -3.35F), ItemGroups.COMBAT, Items.NETHERITE_AXE);
+        STONE_HALBERD = register("stone_halberd", HalberdItem::new, GildedToolUtil.halberdSettings(new Item.Settings(), ToolMaterial.STONE, 8.0F, -3.35F), ItemGroups.COMBAT, prev);
+        COPPER_HALBERD = register("copper_halberd", HalberdItem::new, GildedToolUtil.halberdSettings(new Item.Settings(), ToolMaterial.COPPER, 8.0F, -3.35F), ItemGroups.COMBAT, prev);
+        IRON_HALBERD = register("iron_halberd", HalberdItem::new, GildedToolUtil.halberdSettings(new Item.Settings(), ToolMaterial.IRON, 9.0F, -3.35F), ItemGroups.COMBAT, prev);
+        GOLDEN_HALBERD = register("golden_halberd", HalberdItem::new, GildedToolUtil.halberdSettings(new Item.Settings(), ToolMaterial.GOLD, 7.0F, -3.35F), ItemGroups.COMBAT, prev);
+        DIAMOND_HALBERD = register("diamond_halberd", HalberdItem::new, GildedToolUtil.halberdSettings(new Item.Settings(), ToolMaterial.DIAMOND, 10.0F, -3.35F), ItemGroups.COMBAT, prev);
+        NETHERITE_HALBERD = register("netherite_halberd", HalberdItem::new, GildedToolUtil.halberdSettings(new Item.Settings(), ToolMaterial.NETHERITE, 11.0F, -3.35F), ItemGroups.COMBAT, prev);
 
         //endregion
 
@@ -754,7 +754,7 @@ public class VAItems {
         STEEL_PICKAXE = register("steel_pickaxe", settings -> new Item(settings.pickaxe(SteelToolMaterial.INSTANCE, 1, -2.8F)), new Item.Settings(), ItemGroups.TOOLS, prev);
         STEEL_AXE = register("steel_axe", settings -> new AxeItem(SteelToolMaterial.INSTANCE, 5.5F, -3.1F, settings), new Item.Settings(), at(ItemGroups.TOOLS, prev), at(ItemGroups.COMBAT, Items.GOLDEN_AXE));
         STEEL_HOE = register("steel_hoe", settings -> new HoeItem(SteelToolMaterial.INSTANCE, -2, -1.0F, settings), new Item.Settings(), ItemGroups.TOOLS, prev);
-        STEEL_HALBERD = register("steel_halberd", GildedToolUtil.halberdSettings(new Item.Settings(), SteelToolMaterial.INSTANCE, 9.5F, -3.35F), ItemGroups.COMBAT, GOLDEN_HALBERD);
+        STEEL_HALBERD = register("steel_halberd", HalberdItem::new, GildedToolUtil.halberdSettings(new Item.Settings(), SteelToolMaterial.INSTANCE, 9.5F, -3.35F), ItemGroups.COMBAT, GOLDEN_HALBERD);
         STEEL_HELMET = register("steel_helmet", settings -> new Item(settings.armor(VAArmorMaterial.STEEL, EquipmentType.HELMET)), new Item.Settings().maxCount(1).maxDamage(EquipmentType.HELMET.getMaxDamage(24)), ItemGroups.COMBAT, Items.GOLDEN_BOOTS);
         STEEL_CHESTPLATE = register("steel_chestplate", settings -> new Item(settings.armor(VAArmorMaterial.STEEL, EquipmentType.CHESTPLATE)), new Item.Settings().maxCount(1).maxDamage(EquipmentType.CHESTPLATE.getMaxDamage(24)), ItemGroups.COMBAT, prev);
         STEEL_LEGGINGS = register("steel_leggings", settings -> new Item(settings.armor(VAArmorMaterial.STEEL, EquipmentType.LEGGINGS)), new Item.Settings().maxCount(1).maxDamage(EquipmentType.LEGGINGS.getMaxDamage(24)), ItemGroups.COMBAT, prev);

@@ -39,3 +39,5 @@ accessible class net/minecraft/entity/passive/SheepColors$ColorSelector
 accessible method net/minecraft/client/network/ClientPlayerEntity applyDirectionalMovementSpeedFactors (Lnet/minecraft/util/math/Vec2f;)Lnet/minecraft/util/math/Vec2f;
 accessible field net/minecraft/client/render/fog/FogRenderer FOG_MODIFIERS Ljava/util/List;
 accessible class net/minecraft/recipe/BrewingRecipeRegistry$Recipe
+accessible method net/minecraft/entity/LivingEntity getAttackKnockbackAgainst (Lnet/minecraft/entity/Entity;Lnet/minecraft/entity/damage/DamageSource;)F
+accessible class net/minecraft/client/render/item/HeldItemRenderer$HandRenderType

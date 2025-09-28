@@ -370,6 +370,55 @@ public final class VABlockTagProvider {
                     VABlocks.SPECTRAL_SAND
             ).addOptionalTag(BlockTags.NYLIUM.id());
 
+            addTo(VABlockTags.HALBERD_SWING_BREAKABLES,
+                    Blocks.SHORT_GRASS,
+                    Blocks.TALL_GRASS,
+                    Blocks.FERN,
+                    Blocks.LARGE_FERN,
+                    Blocks.SHORT_DRY_GRASS,
+                    Blocks.TALL_DRY_GRASS,
+                    Blocks.BUSH,
+                    Blocks.FIREFLY_BUSH,
+                    Blocks.DEAD_BUSH,
+                    Blocks.SWEET_BERRY_BUSH,
+                    Blocks.CACTUS_FLOWER,
+                    Blocks.SUGAR_CANE,
+                    VABlocks.FRAYED_SILK,
+                    Blocks.NETHER_SPROUTS,
+                    Blocks.CRIMSON_ROOTS,
+                    Blocks.WARPED_ROOTS,
+                    VABlocks.NECROTIC_ROOTS,
+                    Blocks.BROWN_MUSHROOM,
+                    Blocks.RED_MUSHROOM,
+                    VABlocks.GREENCAP_MUSHROOM,
+                    VABlocks.TALL_GREENCAP_MUSHROOMS,
+                    Blocks.CRIMSON_FUNGUS,
+                    Blocks.WARPED_FUNGUS,
+                    Blocks.VINE,
+                    Blocks.CAVE_VINES,
+                    Blocks.CAVE_VINES_PLANT,
+                    Blocks.WEEPING_VINES,
+                    Blocks.WEEPING_VINES_PLANT,
+                    Blocks.TWISTING_VINES,
+                    Blocks.TWISTING_VINES_PLANT,
+                    Blocks.PALE_HANGING_MOSS,
+                    VABlocks.GLOWING_SILK,
+                    Blocks.SEAGRASS,
+                    Blocks.TALL_SEAGRASS,
+                    Blocks.KELP,
+                    Blocks.KELP_PLANT,
+                    Blocks.SMALL_DRIPLEAF,
+                    Blocks.LILAC,
+                    Blocks.ROSE_BUSH,
+                    Blocks.PEONY,
+                    Blocks.PITCHER_PLANT,
+                    Blocks.DECORATED_POT,
+                    Blocks.COBWEB
+                    )
+                    .addOptionalTag(BlockTags.SMALL_FLOWERS.id())
+                    .addOptionalTag(BlockTags.CROPS.id())
+                    .addOptionalTag(BlockTags.LEAVES.id());
+
             addTo(BlockTags.HOE_MINEABLE, VABlocks.SOULBLOOM_LEAVES, VABlocks.WITHERED_LEAVES);
 
             configureOverworldStone(VABlocks.PORPHYRY);
