@@ -41,17 +41,18 @@ public class HeldItemRendererMixin {
     void virtualAdditions$applyHalberdOffset(AbstractClientPlayerEntity player, float tickProgress, float pitch, Hand hand, float swingProgress, ItemStack item, float equipProgress, MatrixStack matrices, OrderedRenderCommandQueue orderedRenderCommandQueue, int light, CallbackInfo ci, @Local Arm arm) {
         if (player.getActiveItem().getItem() instanceof HalberdItem) {
             int l = arm == Arm.RIGHT ? 1 : -1;
-            matrices.translate(l*0.25, 0.2F, 0);
-            //matrices.multiply(RotationAxis.POSITIVE_X.rotationDegrees(-10.25F));
+            matrices.translate(0, 0.2F, 0);
 
-            float m = item.getMaxUseTime(player) - (player.getItemUseTimeLeft() - tickProgress + 1.0F);
-            float fx = m / 20.0F;
+            float fx = HalberdItem.getSwingReadiness(item, player, item.getMaxUseTime(player) - player.getItemUseTime(), tickProgress);
             if (fx > 1.0F) {
                 fx = 1.0F;
             }
-            float efx = MathHelper.easeInOutSine((fx / 2) + 0.5F);
-            matrices.multiply(RotationAxis.POSITIVE_Y.rotationDegrees(l * (90 + -70 * efx)));
-            matrices.multiply(RotationAxis.POSITIVE_Z.rotationDegrees(l * -58.05F));
+            float efx = (float) Math.sin(Math.PI * (fx / 2))/2 + 0.5F;
+            matrices.multiply(RotationAxis.POSITIVE_Y.rotationDegrees(l * (60 + -40 * efx)));
+            matrices.multiply(RotationAxis.POSITIVE_X.rotationDegrees(l * (-5 * efx)));
+            matrices.multiply(RotationAxis.POSITIVE_Z.rotationDegrees(l * -18.05F + l*-60*efx));
+
+            float m = (item.getMaxUseTime(player) - (player.getItemUseTimeLeft() - tickProgress + 1.0F)) * fx;
 
             if (fx > 0.1F) {
                 float gx = MathHelper.sin((m - 0.1F) * 1.3F);
@@ -60,8 +61,8 @@ public class HeldItemRendererMixin {
                 matrices.translate(j * 0.0F, j * 0.004F, j * 0.0F);
             }
 
-            matrices.translate(0.0F, efx * 2F - 1.5F, efx * 0.2F);
-            matrices.scale(1.0F, 1.0F, 1.0F + fx * 0.2F);
+            matrices.translate(-0.3F * efx + 0.2, efx * 2.0F - 1.5F, 0.8F * efx - 0.7F);
+            //matrices.scale(1.0F, 1.0F, 1.0F + efx * 0.2F);
         }
     }
 }

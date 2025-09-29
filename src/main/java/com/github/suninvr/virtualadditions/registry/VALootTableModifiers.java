@@ -27,11 +27,9 @@ import net.minecraft.predicate.entity.EntityFlagsPredicate;
 import net.minecraft.predicate.entity.EntityPredicate;
 import net.minecraft.predicate.entity.LocationPredicate;
 import net.minecraft.predicate.item.ItemPredicate;
-import net.minecraft.registry.RegistryEntryLookup;
-import net.minecraft.registry.RegistryKey;
-import net.minecraft.registry.RegistryKeys;
-import net.minecraft.registry.RegistryWrapper;
+import net.minecraft.registry.*;
 import net.minecraft.registry.tag.BiomeTags;
+import net.minecraft.registry.tag.EnchantmentTags;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.biome.Biome;
 
@@ -85,6 +83,15 @@ public class VALootTableModifiers {
                         builder.with(ItemEntry.builder(STEEL_BOMB).apply(SetComponentsLootFunction.builder(VADataComponentTypes.EXPLOSIVE_CONTENTS, ExplosiveContentComponent.KEEP_BLOCKS)));
                     }
                     i[0]++;
+                });
+            }
+
+            if (LootTables.TRIAL_CHAMBERS_REWARD_RARE_CHEST.equals(key)) {
+                tableBuilder.modifyPools(builder -> {
+                    builder
+                            .with(ItemEntry.builder(IRON_HALBERD).weight(2).apply(new EnchantWithLevelsLootFunction.Builder(UniformLootNumberProvider.create(0, 10)).options(registries.getOrThrow(RegistryKeys.ENCHANTMENT).getOrThrow(EnchantmentTags.ON_RANDOM_LOOT))))
+                            .with(ItemEntry.builder(DIAMOND_HALBERD).apply(new EnchantWithLevelsLootFunction.Builder(UniformLootNumberProvider.create(5, 15)).options(registries.getOrThrow(RegistryKeys.ENCHANTMENT).getOrThrow(EnchantmentTags.ON_RANDOM_LOOT))))
+                    ;
                 });
             }
 

@@ -238,6 +238,13 @@
       "block/end_portal/eyeplace3"
     ]
   },
+  "item.halberd.swing": {
+    "subtitle": "subtitles.item.halberd.swing",
+    "sounds": [
+      "virtual_additions:item/halberd/swing01",
+      "virtual_additions:item/halberd/swing02"
+    ]
+  },
   "block.entanglement_drive.use": {
     "subtitle": "subtitles.block.entanglement_drive.use",
     "sounds": [

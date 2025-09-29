@@ -8,6 +8,7 @@ import net.minecraft.component.DataComponentTypes;
 import net.minecraft.component.type.AttributeModifierSlot;
 import net.minecraft.component.type.AttributeModifiersComponent;
 import net.minecraft.component.type.ToolComponent;
+import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.attribute.EntityAttribute;
 import net.minecraft.entity.attribute.EntityAttributeModifier;
 import net.minecraft.entity.attribute.EntityAttributes;
@@ -42,6 +43,7 @@ public class GildType {
     private TagKey<Item> shovelsTag;
     private TagKey<Item> swordsTag;
     private TagKey<Item> halberdsTag;
+
     public record Modifier(Identifier id, ModifierType type, float value, BiFunction<Float, Float, Float> function, ModifierType.ToolType... appliesTo){
 
         public float apply(float f) {
@@ -132,6 +134,14 @@ public class GildType {
      * **/
     public boolean onBlockBroken(World world, PlayerEntity player, BlockPos pos, BlockState state, ItemStack tool) {
         return true;
+    }
+
+    public boolean hasHitEffects() {
+        return false;
+    }
+
+    public void applyEffectsOnHit(World world, LivingEntity target, LivingEntity attacker) {
+
     }
 
     /**

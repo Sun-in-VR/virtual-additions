@@ -4,11 +4,11 @@
     "translate": "enchantment.virtual_additions.steadfast"
   },
   "effects": {
-    "virtual_additions:halberd_swing_cooldown": {
+    "virtual_additions:halberd_readiness_time": {
       "type": "minecraft:add",
       "value": {
         "type": "minecraft:linear",
-        "base": -15,
+        "base": -5,
         "per_level_above_first": -5
       }
     }
@@ -17,10 +17,10 @@
     "base": 50,
     "per_level_above_first": 0
   },
-  "max_level": 4,
+  "max_level": 3,
   "min_cost": {
-    "base": 17,
-    "per_level_above_first": 7
+    "base": 3,
+    "per_level_above_first": 8
   },
   "slots": [
     "hand"

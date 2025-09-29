@@ -15,8 +15,10 @@ import net.minecraft.client.data.*;
 import net.minecraft.client.render.item.model.ItemModel;
 import net.minecraft.client.render.item.model.SelectItemModel;
 import net.minecraft.client.render.item.property.bool.HasComponentProperty;
+import net.minecraft.client.render.item.property.bool.UsingItemProperty;
 import net.minecraft.client.render.item.property.numeric.CrossbowPullProperty;
 import net.minecraft.client.render.item.property.select.ChargeTypeProperty;
+import net.minecraft.client.render.item.property.select.DisplayContextProperty;
 import net.minecraft.client.render.item.property.select.TrimMaterialProperty;
 import net.minecraft.client.render.item.tint.ConstantTintSource;
 import net.minecraft.client.render.item.tint.DyeTintSource;
@@ -25,6 +27,7 @@ import net.minecraft.client.render.model.json.WeightedVariant;
 import net.minecraft.component.DataComponentTypes;
 import net.minecraft.item.CrossbowItem;
 import net.minecraft.item.Item;
+import net.minecraft.item.ItemDisplayContext;
 import net.minecraft.item.Items;
 import net.minecraft.item.equipment.EquipmentAsset;
 import net.minecraft.item.equipment.EquipmentAssetKeys;
@@ -631,17 +634,21 @@ public class VAModelProvider {
         public static void registerHalberd(ItemModelGenerator generator, Item item) {
             ItemModel.Unbaked base = ItemModels.basic(ModelIds.getItemModelId(item));
             ItemModel.Unbaked inHand = ItemModels.basic(ModelIds.getItemSubModelId(item, "_in_hand"));
+            ItemModel.Unbaked inUse = ItemModels.basic(ModelIds.getItemSubModelId(item, "_in_use"));
             Models.HANDHELD.upload(ModelIds.getItemModelId(item), TextureMap.layer0(TextureMap.getId(item)), generator.modelCollector);
             VAModels.HALBERD_IN_HAND.upload(ModelIds.getItemSubModelId(item, "_in_hand"), TextureMap.layer0(TextureMap.getSubId(item, "_in_hand")), generator.modelCollector);
-            generator.output.accept(item, createModelWithInHandVariant(base, inHand));
+            VAModels.HALBERD_IN_USE.upload(ModelIds.getItemSubModelId(item, "_in_use"), TextureMap.layer0(TextureMap.getSubId(item, "_in_hand")), generator.modelCollector);
+            generator.output.accept(item, createModelWithInHandAndInUseVariant(base, inHand, inUse));
         }
 
         public static void registerLayeredHalberd(ItemModelGenerator generator, Item item, Item baseItem, Identifier layer) {
             ItemModel.Unbaked base = ItemModels.basic(ModelIds.getItemModelId(item));
             ItemModel.Unbaked inHand = ItemModels.basic(ModelIds.getItemSubModelId(item, "_in_hand"));
+            ItemModel.Unbaked inUse = ItemModels.basic(ModelIds.getItemSubModelId(item, "_in_use"));
             VAModels.HANDHELD_TWO_LAYERS.upload(ModelIds.getItemModelId(item), TextureMap.layered(TextureMap.getId(baseItem), layer), generator.modelCollector);
             VAModels.HALBERD_IN_HAND_TWO_LAYERS.upload(ModelIds.getItemSubModelId(item, "_in_hand"), TextureMap.layered(TextureMap.getSubId(baseItem, "_in_hand"), layer.withSuffixedPath("_in_hand")), generator.modelCollector);
-            generator.output.accept(item, createModelWithInHandVariant(base, inHand));
+            VAModels.HALBERD_IN_USE_TWO_LAYERS.upload(ModelIds.getItemSubModelId(item, "_in_use"), TextureMap.layered(TextureMap.getSubId(baseItem, "_in_hand"), layer.withSuffixedPath("_in_hand")), generator.modelCollector);
+            generator.output.accept(item, createModelWithInHandAndInUseVariant(base, inHand, inUse));
         }
 
         protected void registerSpectralFire(BlockStateModelGenerator generator) {
@@ -693,6 +700,14 @@ public class VAModelProvider {
                 generator.register(item, model);
             }
         }
+    }
+
+    public static ItemModel.Unbaked createModelWithInHandAndInUseVariant(ItemModel.Unbaked model, ItemModel.Unbaked inHandModel, ItemModel.Unbaked inUseModel) {
+        return ItemModels.select(
+                new DisplayContextProperty(),
+                ItemModels.condition(new UsingItemProperty(), inUseModel, inHandModel),
+                ItemModels.switchCase(List.of(ItemDisplayContext.GUI, ItemDisplayContext.GROUND, ItemDisplayContext.FIXED, ItemDisplayContext.ON_SHELF), model)
+        );
     }
 
 

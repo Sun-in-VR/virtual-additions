@@ -5,10 +5,13 @@ import com.github.suninvr.virtualadditions.block.DestructiveSculkBlock;
 import com.github.suninvr.virtualadditions.registry.VABlockTags;
 import com.github.suninvr.virtualadditions.registry.VABlocks;
 import com.github.suninvr.virtualadditions.registry.VAGameRules;
+import com.github.suninvr.virtualadditions.registry.VAStatusEffects;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.ExperienceDroppingBlock;
 import net.minecraft.entity.EquipmentSlot;
+import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.attribute.EntityAttributes;
+import net.minecraft.entity.effect.StatusEffectInstance;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.particle.ParticleTypes;
@@ -72,6 +75,17 @@ public class GildTypes {
                 player.getItemCooldownManager().set(tool, (int) ((i) / ((miningEfficiency / 20.0) + 1)));
             }
             return false;
+        }
+
+        @Override
+        public boolean hasHitEffects() {
+            return true;
+        }
+
+        @Override
+        public void applyEffectsOnHit(World world, LivingEntity target, LivingEntity attacker) {
+            if (!target.hasStatusEffect(VAStatusEffects.FESTERING_WOUNDS)) world.playSound(target, target.getBlockPos(), SoundEvents.BLOCK_SCULK_SPREAD, target.getSoundCategory(), 1.5F, 1.0F);
+            target.addStatusEffect(new StatusEffectInstance(VAStatusEffects.FESTERING_WOUNDS, 400), attacker);
         }
 
         private static List<BlockPos> selectPositions(World world, BlockPos pos, BlockState state, int i){

@@ -413,7 +413,8 @@ public final class VABlockTagProvider {
                     Blocks.PEONY,
                     Blocks.PITCHER_PLANT,
                     Blocks.DECORATED_POT,
-                    Blocks.COBWEB
+                    Blocks.COBWEB,
+                    Blocks.BAMBOO
                     )
                     .addOptionalTag(BlockTags.SMALL_FLOWERS.id())
                     .addOptionalTag(BlockTags.CROPS.id())

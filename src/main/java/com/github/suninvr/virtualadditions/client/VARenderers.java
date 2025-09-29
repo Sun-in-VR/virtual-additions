@@ -8,10 +8,7 @@ import com.github.suninvr.virtualadditions.client.render.fog.PlayerProjectionPha
 import com.github.suninvr.virtualadditions.registry.*;
 import net.fabricmc.fabric.api.client.render.fluid.v1.FluidRenderHandlerRegistry;
 import net.fabricmc.fabric.api.client.render.fluid.v1.SimpleFluidRenderHandler;
-import net.fabricmc.fabric.api.client.rendering.v1.BlockRenderLayerMap;
-import net.fabricmc.fabric.api.client.rendering.v1.ColorProviderRegistry;
-import net.fabricmc.fabric.api.client.rendering.v1.EntityModelLayerRegistry;
-import net.fabricmc.fabric.api.client.rendering.v1.EntityRendererRegistry;
+import net.fabricmc.fabric.api.client.rendering.v1.*;
 import net.minecraft.block.RedstoneWireBlock;
 import net.minecraft.client.color.world.BiomeColors;
 import net.minecraft.client.render.BlockRenderLayer;
@@ -51,7 +48,8 @@ public class VARenderers {
     public static final SpriteIdentifier TAN_BED_TEXTURE = new SpriteIdentifier(TexturedRenderLayers.BEDS_ATLAS_TEXTURE, VirtualAdditions.idOf("entity/bed/tan"));
     public static final SpriteIdentifier SINOPIA_BED_TEXTURE = new SpriteIdentifier(TexturedRenderLayers.BEDS_ATLAS_TEXTURE, VirtualAdditions.idOf("entity/bed/sinopia"));
     public static final SpriteIdentifier LILAC_BED_TEXTURE = new SpriteIdentifier(TexturedRenderLayers.BEDS_ATLAS_TEXTURE, VirtualAdditions.idOf("entity/bed/lilac"));
-
+    public static final RenderStateDataKey<Boolean> IS_HOLDING_HALBERD = RenderStateDataKey.create(() -> "virtual_additions:is_using_halberd");
+    public static final RenderStateDataKey<Float> HALBERD_READINESS = RenderStateDataKey.create(() -> "virtual_additions:halberd_readiness");
     public static void init() {
         initBlockRenderLayers();
         initEntityRenderers();

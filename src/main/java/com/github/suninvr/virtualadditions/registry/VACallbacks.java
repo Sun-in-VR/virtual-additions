@@ -11,6 +11,7 @@ import net.minecraft.component.ComponentMap;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.effect.StatusEffectInstance;
 import net.minecraft.item.ItemStack;
+import net.minecraft.sound.SoundEvents;
 import net.minecraft.util.ActionResult;
 import net.minecraft.util.Hand;
 
@@ -23,8 +24,9 @@ public class VACallbacks{
             ItemStack stack = player.getStackInHand(hand);
             if (stack.isEmpty()) return ActionResult.PASS;
 
-            if (GildedToolUtil.getGildType(stack).equals(GildTypes.SCULK) && entity instanceof LivingEntity livingEntity) {
-                livingEntity.addStatusEffect(new StatusEffectInstance(VAStatusEffects.FESTERING_WOUNDS, 400));
+            GildType gildType;
+            if (entity instanceof LivingEntity livingEntity && (gildType = GildedToolUtil.getGildType(stack)).hasHitEffects()) {
+                gildType.applyEffectsOnHit(world, livingEntity, player);
             }
 
             ComponentMap components = stack.getComponents();

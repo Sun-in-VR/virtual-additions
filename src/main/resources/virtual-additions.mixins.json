@@ -57,6 +57,7 @@
     "WolfEntityMixin"
   ],
   "client": [
+    "BipedEntityModelMixin",
     "ClientPlayerEntityMixin",
     "ClientPlayerInteractionManagerMixin",
     "ClientPlayNetworkHandlerMixin",
