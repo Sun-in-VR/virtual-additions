@@ -2,6 +2,7 @@
   "replace": false,
   "values": [
     "virtual_additions:pummeling",
-    "virtual_additions:steadfast"
+    "virtual_additions:steadfast",
+    "virtual_additions:lunge_strike"
   ]
 }

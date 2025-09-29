@@ -1,0 +1,31 @@
+{
+  "anvil_cost": 4,
+  "description": {
+    "translate": "enchantment.virtual_additions.lunge_strike"
+  },
+  "effects": {
+    "virtual_additions:halberd_lunge": {
+      "type": "minecraft:add",
+      "value": {
+        "type": "minecraft:linear",
+        "base": 0.75,
+        "per_level_above_first": 0.75
+      }
+    }
+  },
+  "max_cost": {
+    "base": 50,
+    "per_level_above_first": 0
+  },
+  "max_level": 1,
+  "min_cost": {
+    "base": 15,
+    "per_level_above_first": 8
+  },
+  "slots": [
+    "hand"
+  ],
+  "supported_items": "#virtual_additions:enchantable/halberd",
+  "primary_items": "#virtual_additions:enchantable/halberd",
+  "weight": 2
+}

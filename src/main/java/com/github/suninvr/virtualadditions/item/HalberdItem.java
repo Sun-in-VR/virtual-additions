@@ -4,6 +4,7 @@ import com.github.suninvr.virtualadditions.registry.*;
 import net.minecraft.block.*;
 import net.minecraft.enchantment.EnchantmentHelper;
 import net.minecraft.entity.Entity;
+import net.minecraft.entity.EntityPose;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.attribute.EntityAttributes;
 import net.minecraft.entity.damage.DamageSource;
@@ -59,69 +60,91 @@ public class HalberdItem extends Item {
     }
 
     private void swingAttack(ItemStack stack, World world, PlayerEntity player, float readiness) {{
-            boolean isLookingUp = player.getPitch() <= -60;
-            boolean isLookingDown = player.getPitch() >= 60;
             if (world instanceof ServerWorld serverWorld) {
+                //Variable definitions
+                boolean vertical = player.getPitch() >= 60 || player.getPitch() <= -60;
                 boolean hasAppliedPotion = stack.contains(VADataComponentTypes.EFFECTS_ON_HIT);
                 GildType gildType = GildedToolUtil.getGildType(stack);
                 List<Entity> playerMounts = player.getRootVehicle().getPassengerList();
                 MutableInt entitiesHit = new MutableInt(0);
                 Vec3d playerRotation = player.getRotationVector();
                 Vec3d center = player.getEyePos().add(playerRotation.multiply(2.0));
-                Box box = !isLookingUp && !isLookingDown
-                        ? new Box(center.add(-2, -1, -2), center.add(2, 1, 2))
-                        : new Box(center.add(-1, -2, -1), center.add(1, 2, 1));
+                Box box = !vertical ? new Box(center.add(-2, -1, -2), center.add(2, 1, 2)) : new Box(center.add(-1, -2, -1), center.add(1, 2, 1));
+                MutableFloat lungePower = new MutableFloat(0.0F);
+                EnchantmentHelper.forEachEnchantment(stack, (enchantment, level) -> {
+                    enchantment.value().modifyValue(VAEnchantmentEffects.HALBERD_LUNGE_COMPONENT, player.getRandom(), level, lungePower);
+                });
+
+                // Damaging mobs found in the hitbox
                 serverWorld.getNonSpectatingEntities(LivingEntity.class, box).stream().filter(livingEntity ->
                                 livingEntity != player.getRootVehicle() && !playerMounts.contains(livingEntity))
                         .forEach(target -> {
+                            //Damaging a bob
                             float startingHealth = target.getHealth();
                             DamageSource source = player.getDamageSources().playerAttack(player);
                             float damage = EnchantmentHelper.getDamage(serverWorld, stack, target, source, (float) (player.getAttributeValue(EntityAttributes.ATTACK_DAMAGE) * readiness * 0.75F));
                             target.damage(serverWorld, source, damage);
+
+                            // Additional events on damage
                             float knockback = player.getAttackKnockbackAgainst(target, source) + 0.5F * readiness;
                             if (knockback > 0.0F) {
-                                target.takeKnockback(
-                                        knockback, player.getX() - target.getX(), player.getZ() - target.getZ()
-                                );
+                                target.takeKnockback(knockback + (lungePower.floatValue() * 1.5F), player.getX() - target.getX(), player.getZ() - target.getZ());
                             }
-                            if (hasAppliedPotion) {
-                                stack.get(VADataComponentTypes.EFFECTS_ON_HIT).forEachEffect(statusEffectInstance -> target.addStatusEffect(statusEffectInstance, player));
-                            }
+                            if (hasAppliedPotion) stack.get(VADataComponentTypes.EFFECTS_ON_HIT).forEachEffect(statusEffectInstance -> target.addStatusEffect(statusEffectInstance, player));
                             if (gildType.hasHitEffects()) gildType.applyEffectsOnHit(world, target, player);
                             entitiesHit.increment();
                             player.increaseStat(Stats.DAMAGE_DEALT, Math.round((startingHealth - target.getHealth()) * 10.0F));
                         });
 
-                if (readiness >= 0.75) BlockPos.stream(isLookingUp || isLookingDown ? box.expand(0, -1, 0) : box.expand(-1, 0, -1)).forEach(pos -> {
+                // Destroying blocks in a smaller hitbox
+                BlockPos.stream(vertical ? box.expand(0, -1, 0) : box.expand(-1, 0, -1)).forEach(pos -> {
                     if (tryBreakState(serverWorld, pos, player)) stack.damage(1, player, player.getActiveHand());
                 });
-                stack.damage(entitiesHit.getValue() / 2, player, player.getActiveHand());
+
+                // Events when at least one mob was hit
                 if (entitiesHit.getValue() > 0) {
-                    player.takeKnockback(
-                            0.333F, MathHelper.sin((player.getYaw() - 180) * (float) (Math.PI / 180.0)), -MathHelper.cos((player.getYaw() - 180) * (float) (Math.PI / 180.0)
-                            ));
-                    player.velocityModified = true;
-                    player.setSprinting(false);
-
                     if (hasAppliedPotion) stack.set(VADataComponentTypes.EFFECTS_ON_HIT, stack.get(VADataComponentTypes.EFFECTS_ON_HIT).decrementRemainingUses());
-
+                    stack.damage(entitiesHit.getValue() / 2, player, player.getActiveHand());
                     if (readiness >= 1) serverWorld.playSoundFromEntity(null, player, SoundEvents.ENTITY_PLAYER_ATTACK_CRIT, SoundCategory.PLAYERS, 1.0F, 1.0F);
                     else serverWorld.playSoundFromEntity(null, player, SoundEvents.ENTITY_PLAYER_ATTACK_WEAK, SoundCategory.PLAYERS, 1.0F, 1.0F);
                 }
-                serverWorld.playSoundFromEntity(null, player, VASoundEvents.ITEM_HALBERD_SWING, SoundCategory.PLAYERS, 1.0F, 1.0F);
-                Vec3d vec3d = player.getEyePos().add(playerRotation);
-                serverWorld.spawnParticles(ParticleTypes.SWEEP_ATTACK, false, true, vec3d.x, vec3d.y, vec3d.z, 1, 0, 0, 0, 0);
-                if (readiness >= 1) {
-                    if (isLookingUp || isLookingDown) serverWorld.spawnParticles(ParticleTypes.CRIT, false, true, center.x, center.y, center.z, 25, 0.25, 1.25, 0.25, 0.25);
-                    else serverWorld.spawnParticles(ParticleTypes.CRIT, false, true, center.x, center.y, center.z, 25, 1.25, 0.125, 1.25, 0.25);
-                }
+
+                // Events when a swing occurs
                 world.emitGameEvent(player, GameEvent.ITEM_INTERACT_FINISH, player.getEntityPos());
                 player.addExhaustion(0.1F + 0.05F * entitiesHit.getValue());
+                serverWorld.playSoundFromEntity(null, player, VASoundEvents.ITEM_HALBERD_SWING, SoundCategory.PLAYERS, 1.0F, 1.0F);
+                Vec3d vec3d = player.getEyePos().add(playerRotation);
+                applyPlayerMovement(player, stack, entitiesHit.getValue(), lungePower.floatValue());
+                serverWorld.spawnParticles(ParticleTypes.SWEEP_ATTACK, false, true, vec3d.x, vec3d.y, vec3d.z, 1, 0, 0, 0, 0);
+                if (readiness >= 1) {
+                    if (vertical) serverWorld.spawnParticles(ParticleTypes.CRIT, false, true, center.x, center.y, center.z, 25, 0.25, 1.25, 0.25, 0.25);
+                    else serverWorld.spawnParticles(ParticleTypes.CRIT, false, true, center.x, center.y, center.z, 25, 1.25, 0.125, 1.25, 0.25);
+                }
             }
+
+            // Client and Server events
             player.getItemCooldownManager().set(stack, (int) getSwingCooldown(stack, player));
             player.swingHand(player.getActiveHand(), true);
             player.resetLastAttackedTicks();
         }
+    }
+
+    private static void applyPlayerMovement(PlayerEntity player, ItemStack stack, int entitiesHit, float lungePower) {
+        if (player.hasVehicle()) return;
+        if (lungePower > 0 && !player.isGliding()) {
+            player.setVelocity(
+                    new Vec3d(
+                            MathHelper.sin((player.getYaw() + 180) * (float) (Math.PI / 180.0)),
+                            player.isOnGround() ? Math.min(0.4, player.getVelocity().y / 2.0 + lungePower) : player.getVelocity().y,
+                            -MathHelper.cos((player.getYaw() + 180) * (float) (Math.PI / 180.0)))
+                    .multiply(entitiesHit > 0 ? lungePower * 0.5 : lungePower));
+            player.velocityModified = true;
+            stack.damage(1, player, player.getActiveHand());
+        } else if (entitiesHit > 0) {
+            player.takeKnockback(0.333F, MathHelper.sin((player.getYaw() - 180) * (float) (Math.PI / 180.0)), -MathHelper.cos((player.getYaw() - 180) * (float) (Math.PI / 180.0)));
+            player.velocityModified = true;
+        }
+
     }
 
     public static float getSwingReadiness(ItemStack stack, LivingEntity user, int remainingUseTicks) {

@@ -105,6 +105,10 @@ public class SpringLotusBlock extends PlantBlock implements Fertilizable {
                     if (d < velocity.y) return;
                     entity.setVelocity(velocity.x, d, velocity.z);
                     entity.velocityModified = true;
+                    if (entity instanceof ServerPlayerEntity serverPlayerEntity) {
+                        serverPlayerEntity.currentExplosionImpactPos = serverPlayerEntity.getEntityPos();
+                        serverPlayerEntity.setIgnoreFallDamageFromCurrentExplosion(true);
+                    }
                 }
         );
         world.setBlockState(pos, state.with(COMPRESSION, 0).with(STATE, SpringLotusState.PUSHING));
