@@ -417,7 +417,6 @@ public final class VABlockTagProvider {
                     Blocks.BAMBOO
                     )
                     .addOptionalTag(BlockTags.SMALL_FLOWERS.id())
-                    .addOptionalTag(BlockTags.CROPS.id())
                     .addOptionalTag(BlockTags.LEAVES.id());
 
             addTo(BlockTags.HOE_MINEABLE, VABlocks.SOULBLOOM_LEAVES, VABlocks.WITHERED_LEAVES);
