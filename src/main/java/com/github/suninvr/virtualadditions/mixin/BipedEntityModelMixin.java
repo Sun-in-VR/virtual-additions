@@ -3,6 +3,7 @@ package com.github.suninvr.virtualadditions.mixin;
 import com.github.suninvr.virtualadditions.client.VARenderers;
 import net.minecraft.client.model.ModelPart;
 import net.minecraft.client.render.entity.model.BipedEntityModel;
+import net.minecraft.client.render.entity.model.EntityModel;
 import net.minecraft.client.render.entity.state.BipedEntityRenderState;
 import org.spongepowered.asm.mixin.Final;
 import org.spongepowered.asm.mixin.Mixin;
@@ -14,10 +15,16 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 import java.util.Objects;
 
 @Mixin(BipedEntityModel.class)
-public class BipedEntityModelMixin<T extends BipedEntityRenderState> {
+public abstract class BipedEntityModelMixin<T extends BipedEntityRenderState> extends EntityModel {
     @Shadow @Final public ModelPart leftArm;
 
     @Shadow @Final public ModelPart rightArm;
+
+    @Shadow @Final public ModelPart head;
+
+    protected BipedEntityModelMixin(ModelPart root) {
+        super(root);
+    }
 
     @Inject(method = "positionLeftArm", at = @At("HEAD"), cancellable = true)
     void virtualAdditions$positionLeftArmForHalberd(T state, BipedEntityModel.ArmPose armPose, CallbackInfo ci) {
@@ -25,6 +32,8 @@ public class BipedEntityModelMixin<T extends BipedEntityRenderState> {
             float f = state.getData(VARenderers.HALBERD_READINESS);
             float ef = (float) Math.sin(Math.PI * (f / 2));
             float eg = 1.0F - ef;
+            this.root.yaw = (float) ((ef * -55) * Math.PI / 180.0F);
+            this.head.yaw = (state.relativeHeadYaw + (ef * 55)) * (float) (Math.PI / 180.0);
             this.leftArm.pitch = (float) (-80.0F * (Math.PI / 180.0F));
             this.leftArm.yaw = (float) (ef * -40.0F * (Math.PI / 180.0F));
             this.leftArm.roll = (float) (eg * -20.0F * (Math.PI / 180.0F));
@@ -40,6 +49,8 @@ public class BipedEntityModelMixin<T extends BipedEntityRenderState> {
             float f = state.getData(VARenderers.HALBERD_READINESS);
             float ef = (float) Math.sin(Math.PI * (f / 2));
             float eg = 1.0F - ef;
+            this.root.yaw = (float) ((ef * 55) * Math.PI / 180.0F);
+            this.head.yaw = (state.relativeHeadYaw + (ef * -55)) * (float) (Math.PI / 180.0);
             this.rightArm.pitch = (float) (-80.0F * (Math.PI / 180.0F));
             this.rightArm.yaw = (float) (ef * 40.0F * (Math.PI / 180.0F));
             this.rightArm.roll = (float) (eg * 20.0F * (Math.PI / 180.0F));

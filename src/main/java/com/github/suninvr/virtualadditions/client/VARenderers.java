@@ -29,7 +29,7 @@ import static com.github.suninvr.virtualadditions.VirtualAdditions.idOf;
 public class VARenderers {
     public static EntityModelLayer LUMWASP_LAYER = new EntityModelLayer(Identifier.of("virtual_additions", "lumwasp"), "main");
     public static EntityModelLayer SPECTRE_LAYER = new EntityModelLayer(Identifier.of("virtual_additions", "spectre"), "main");
-    public static EntityModelLayer SPECTRE_OUTER_LAYER = new EntityModelLayer(Identifier.of("virtual_additions", "spectre_outer"), "main");
+    public static EntityModelLayer PLAYER_PROJECTION_LAYER = new EntityModelLayer(Identifier.of("virtual_additions", "player_projection"), "main");
     public static EntityModelLayer SOULBLOOM_BOAT = new EntityModelLayer(Identifier.of("virtual_additions", "boat/soulbloom"), "main");
     public static EntityModelLayer SOULBLOOM_CHEST_BOAT = new EntityModelLayer(Identifier.of("virtual_additions", "chest_boat/soulbloom"), "main");
     public static final SpriteIdentifier CHARTREUSE_SHULKER_BOX = new SpriteIdentifier(TexturedRenderLayers.SHULKER_BOXES_ATLAS_TEXTURE, VirtualAdditions.idOf("entity/shulker/shulker_chartreuse"));
@@ -180,6 +180,7 @@ public class VARenderers {
     private static void initEntityRenderers() {
         EntityModelLayerRegistry.registerModelLayer(LUMWASP_LAYER, LumwaspEntityModel::getTexturedModelData);
         EntityModelLayerRegistry.registerModelLayer(SPECTRE_LAYER, SpectreEntityModel::getTexturedModelData);
+        EntityModelLayerRegistry.registerModelLayer(PLAYER_PROJECTION_LAYER, PlayerProjectionEntityModel::getTexturedModelData);
         EntityModelLayerRegistry.registerModelLayer(SOULBLOOM_BOAT, BoatEntityModel::getTexturedModelData);
         EntityModelLayerRegistry.registerModelLayer(SOULBLOOM_CHEST_BOAT, BoatEntityModel::getChestTexturedModelData);
         EntityRendererRegistry.register(VAEntityType.CLIMBING_ROPE, ClimbingRopeEntityRenderer::new);

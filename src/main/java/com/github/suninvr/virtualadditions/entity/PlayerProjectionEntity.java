@@ -13,14 +13,12 @@ import net.fabricmc.fabric.api.client.networking.v1.ClientPlayNetworking;
 import net.fabricmc.fabric.api.networking.v1.ServerPlayNetworking;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.network.ClientPlayerEntity;
-import net.minecraft.entity.EntityType;
-import net.minecraft.entity.LivingEntity;
-import net.minecraft.entity.MovementType;
-import net.minecraft.entity.SpawnReason;
+import net.minecraft.entity.*;
 import net.minecraft.entity.damage.DamageSource;
 import net.minecraft.entity.data.DataTracker;
 import net.minecraft.entity.data.TrackedData;
 import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.entity.player.PlayerModelPart;
 import net.minecraft.particle.ParticleEffect;
 import net.minecraft.particle.TrailParticleEffect;
 import net.minecraft.server.network.ServerPlayerEntity;
@@ -33,13 +31,14 @@ import org.jetbrains.annotations.Nullable;
 
 import java.util.UUID;
 
-public class PlayerProjectionEntity extends LivingEntity {
+public class PlayerProjectionEntity extends PlayerLikeEntity {
     private static final TrackedData<UUID> PLAYER_ID = DataTracker.registerData(PlayerProjectionEntity.class, VATrackedDataHandlerRegistry.UUID);
     private static final UUID EMPTY_ID = UUID.fromString("0-0-0-0-0");
     private PlayerEntity player;
     private boolean isPhasingThroughWall;
     public boolean lookDirectionChanged = false;
     private long isPhasingThroughWallLastCheck = -1;
+    boolean isMainPlayer;
 
     public PlayerProjectionEntity(EntityType<? extends LivingEntity> entityType, World world) {
         super(entityType, world);
@@ -76,6 +75,8 @@ public class PlayerProjectionEntity extends LivingEntity {
             if (!this.getEntityWorld().isClient()) {
                 this.remove(RemovalReason.DISCARDED);
             }
+        } else {
+            this.isMainPlayer = this.getPlayer().isMainPlayer();
         }
     }
 
@@ -180,6 +181,11 @@ public class PlayerProjectionEntity extends LivingEntity {
         }
     }
 
+    @Override
+    public float getYaw(float tickProgress) {
+        return this.isControlledByMainPlayer() ? this.headYaw : super.getYaw();
+    }
+
     @Nullable
     @Override
     public LivingEntity getControllingPassenger() {
@@ -188,7 +194,7 @@ public class PlayerProjectionEntity extends LivingEntity {
 
     @Override
     protected boolean isControlledByMainPlayer() {
-        return this.player != null && this.player.isMainPlayer();
+        return this.isMainPlayer;
     }
 
     @Override
@@ -198,7 +204,17 @@ public class PlayerProjectionEntity extends LivingEntity {
 
     @Override
     public Arm getMainArm() {
-        return Arm.RIGHT;
+        return this.getPlayer() != null ? this.getPlayer().getMainArm() : super.getMainArm();
+    }
+
+    @Override
+    public boolean isModelPartVisible(PlayerModelPart part) {
+        return (part.getName().equals("head") || part.getName().equals("hat")) && super.isModelPartVisible(part);
+    }
+
+    @Override
+    public EntityDimensions getBaseDimensions(EntityPose pose) {
+        return this.getType().getDimensions().scaled(this.getScaleFactor());
     }
 
     public PlayerEntity getPlayer() {

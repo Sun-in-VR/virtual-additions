@@ -905,17 +905,17 @@ public final class VARecipeProvider {
         
         protected void createHalberdRecipe(ItemConvertible material, Item output) {
             ShapedRecipeJsonBuilder.create(this.registryLookup, RecipeCategory.COMBAT, output)
-                    .pattern("##/")
-                    .pattern("##/")
-                    .pattern("  /")
+                    .pattern("## ")
+                    .pattern("#/#")
+                    .pattern(" / ")
                     .input('#', material).input('/', Items.STICK).criterion("has_material", conditionsFromItem(material)).offerTo(exporter);
         }
 
         protected void createHalberdRecipe(TagKey<Item> material, Item output) {
             ShapedRecipeJsonBuilder.create(this.registryLookup, RecipeCategory.COMBAT, output)
-                    .pattern("##/")
-                    .pattern("##/")
-                    .pattern("  /")
+                    .pattern("## ")
+                    .pattern("#/#")
+                    .pattern(" / ")
                     .input('#', material).input('/', Items.STICK).criterion("has_material", conditionsFromTag(material)).offerTo(exporter);
         }
     }

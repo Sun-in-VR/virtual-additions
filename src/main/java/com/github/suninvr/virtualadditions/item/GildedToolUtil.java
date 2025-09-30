@@ -4,11 +4,15 @@ import com.github.suninvr.virtualadditions.item.interfaces.GildedToolItem;
 import net.minecraft.component.DataComponentTypes;
 import net.minecraft.component.type.AttributeModifierSlot;
 import net.minecraft.component.type.AttributeModifiersComponent;
+import net.minecraft.component.type.BlocksAttacksComponent;
 import net.minecraft.entity.attribute.EntityAttributeModifier;
 import net.minecraft.entity.attribute.EntityAttributes;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.ToolMaterial;
+
+import java.util.List;
+import java.util.Optional;
 
 import static com.github.suninvr.virtualadditions.VirtualAdditions.idOf;
 
@@ -17,11 +21,15 @@ public class GildedToolUtil {
     public static Item.Settings settingsOf(Item.Settings settings, Item baseItem, GildType type) {
         settings.translationKey(baseItem.getTranslationKey());
         if (baseItem.getComponents().contains(DataComponentTypes.DAMAGE_RESISTANT)) settings.fireproof();
+        if (baseItem.getComponents().contains(DataComponentTypes.BLOCKS_ATTACKS)) settings.component(DataComponentTypes.BLOCKS_ATTACKS, baseItem.getDefaultStack().get(DataComponentTypes.BLOCKS_ATTACKS));
         return settings.attributeModifiers(type.createAttributeModifiers(baseItem));
     }
 
     public static Item.Settings halberdSettings(Item.Settings settings, ToolMaterial material, float attackDamage, float attackSpeed) {
-        return material.applySwordSettings(settings, attackDamage, attackSpeed).attributeModifiers(halberdAttributes(attackDamage, attackSpeed));
+        return material
+                .applySwordSettings(settings, attackDamage, attackSpeed)
+                .attributeModifiers(halberdAttributes(attackDamage, attackSpeed))
+                .component(DataComponentTypes.BLOCKS_ATTACKS, new BlocksAttacksComponent(0.0F, 0.0F, List.of(), BlocksAttacksComponent.ItemDamage.DEFAULT, Optional.empty(), Optional.empty(), Optional.empty()));
     }
 
     public static AttributeModifiersComponent halberdAttributes(float attackDamage, float attackSpeed) {

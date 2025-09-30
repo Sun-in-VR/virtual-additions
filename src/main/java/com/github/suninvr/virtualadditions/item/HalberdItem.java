@@ -104,7 +104,7 @@ public class HalberdItem extends Item {
                 // Events when at least one mob was hit
                 if (entitiesHit.getValue() > 0) {
                     if (hasAppliedPotion) stack.set(VADataComponentTypes.EFFECTS_ON_HIT, stack.get(VADataComponentTypes.EFFECTS_ON_HIT).decrementRemainingUses());
-                    stack.damage(entitiesHit.getValue() / 2, player, player.getActiveHand());
+                    stack.damage(1, player, player.getActiveHand());
                     if (readiness >= 1) serverWorld.playSoundFromEntity(null, player, SoundEvents.ENTITY_PLAYER_ATTACK_CRIT, SoundCategory.PLAYERS, 1.0F, 1.0F);
                     else serverWorld.playSoundFromEntity(null, player, SoundEvents.ENTITY_PLAYER_ATTACK_WEAK, SoundCategory.PLAYERS, 1.0F, 1.0F);
                 }
@@ -130,12 +130,12 @@ public class HalberdItem extends Item {
     }
 
     private static void applyPlayerMovement(PlayerEntity player, ItemStack stack, int entitiesHit, float lungePower) {
-        if (player.hasVehicle()) return;
-        if (lungePower > 0 && !player.isGliding()) {
+        if (player.hasVehicle() || player.isGliding() || player.getAbilities().flying) return;
+        if (lungePower > 0) {
             player.setVelocity(
                     new Vec3d(
                             MathHelper.sin((player.getYaw() + 180) * (float) (Math.PI / 180.0)),
-                            player.isOnGround() ? Math.min(0.4, player.getVelocity().y / 2.0 + lungePower) : player.getVelocity().y,
+                            Math.min(0.4, player.getVelocity().y * 0.75 + lungePower),
                             -MathHelper.cos((player.getYaw() + 180) * (float) (Math.PI / 180.0)))
                     .multiply(entitiesHit > 0 ? lungePower * 0.5 : lungePower));
             player.velocityModified = true;
@@ -184,6 +184,7 @@ public class HalberdItem extends Item {
         EnchantmentHelper.forEachEnchantment(stack, (enchantment, level) -> {
             enchantment.value().modifyValue(VAEnchantmentEffects.HALBERD_SWING_COOLDOWN_COMPONENT, entity.getRandom(), level, mutableFloat);
         });
+        if (GildedToolUtil.getGildType(stack).equals(GildTypes.AMETHYST)) mutableFloat.add(-10.0F);
         if (mutableFloat.floatValue() <= 0) return 0;
         return mutableFloat.floatValue();
     }
