@@ -110,7 +110,7 @@ public class MiniPortalBlock extends BlockWithEntity implements Waterloggable {
     }
 
     @Override
-    protected void onEntityCollision(BlockState state, World world, BlockPos pos, Entity entity, EntityCollisionHandler handler) {
+    protected void onEntityCollision(BlockState state, World world, BlockPos pos, Entity entity, EntityCollisionHandler handler, boolean bl) {
         if (state.get(STATE).equals(MiniPortalState.POWERED)) return;
         Optional<BlockPos> destination = getDestination(world, pos);
         if (destination.isPresent() && state.get(STATE).canDepart) {

@@ -34,7 +34,7 @@ public class SpectralFireBlock extends AbstractFireBlock {
     }
 
     @Override
-    protected void onEntityCollision(BlockState state, World world, BlockPos pos, Entity entity, EntityCollisionHandler handler) {
+    protected void onEntityCollision(BlockState state, World world, BlockPos pos, Entity entity, EntityCollisionHandler handler, boolean bl) {
         handler.addEvent(CollisionEvent.FREEZE);
     }
 

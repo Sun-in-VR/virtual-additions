@@ -102,7 +102,7 @@ public class PlayerProjectionEntity extends PlayerLikeEntity {
     @Override
     public void tick() {
         super.tick();
-        if (this.getPlayer() == null || this.getPlayer().isRemoved() || !this.getPlayer().isUsingItem() || !this.getPlayer().getActiveItem().isOf(VAItems.SPECTRAL_SPYGLASS) || this.distanceTo(this.getPlayer()) > 80) {
+        if (this.getPlayer() == null || this.getPlayer().isRemoved() || !this.getPlayer().isUsingItem() || !this.getPlayer().getActiveItem().isOf(VAItems.SPECTRAL_SPYGLASS) || this.distanceTo(this.getPlayer()) > 120) {
             if (!this.getEntityWorld().isClient()) {
                 this.remove(RemovalReason.DISCARDED);
             }

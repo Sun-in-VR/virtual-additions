@@ -36,7 +36,7 @@ public class SilkFluffBlock extends Block {
     }
 
     @Override
-    public void onEntityCollision(BlockState state, World world, BlockPos pos, Entity entity, EntityCollisionHandler handler) {
+    public void onEntityCollision(BlockState state, World world, BlockPos pos, Entity entity, EntityCollisionHandler handler, boolean bl) {
         if (entity.getType().isIn(VAEntityTypeTags.PASSES_THROUGH_WEBBED_SILK)) entity.slowMovement(state, movement);
     }
 

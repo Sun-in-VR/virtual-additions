@@ -39,6 +39,9 @@ public class InGameHudMixin {
     private static final Identifier SPECTRAL_HALF_HEART_TEXTURE = VirtualAdditions.idOf("hud/heart/heart/spectral_half");
 
     @Unique
+    private boolean isPlayerProjection;
+
+    @Unique
     private void virtualAdditions$renderSpectralSpyglassOverlay(DrawContext context, float scale) {
         float f = (float)Math.min(context.getScaledWindowWidth(), context.getScaledWindowHeight());
         float h = Math.min((float)context.getScaledWindowWidth() / f, (float)context.getScaledWindowHeight() / f) * scale;
@@ -57,14 +60,17 @@ public class InGameHudMixin {
 
     @Inject(method = "getRiddenEntity", at = @At(value = "INVOKE", target = "Lnet/minecraft/entity/player/PlayerEntity;getVehicle()Lnet/minecraft/entity/Entity;"), cancellable = true)
     void virtualAdditions$getPlayerProjectionEntity(CallbackInfoReturnable<LivingEntity> cir) {
-        if (client.getCameraEntity() instanceof PlayerProjectionEntity playerProjectionEntity) {
+        if (client.getCameraEntity() instanceof PlayerProjectionEntity playerProjectionEntity && !playerProjectionEntity.isInvulnerable()) {
             cir.setReturnValue(playerProjectionEntity);
+            this.isPlayerProjection = true;
+        } else {
+            this.isPlayerProjection = false;
         }
     }
 
     @ModifyArg(method = "renderMountHealth", at = @At(value = "INVOKE", target = "Lnet/minecraft/client/gui/DrawContext;drawGuiTexture(Lcom/mojang/blaze3d/pipeline/RenderPipeline;Lnet/minecraft/util/Identifier;IIII)V", ordinal = 1), index = 1)
     Identifier virtualAdditions$renderProjectionHeart(Identifier sprite) {
-        if (client.getCameraEntity() instanceof PlayerProjectionEntity) {
+        if (this.isPlayerProjection) {
             return SPECTRAL_FULL_HEART_TEXTURE;
         }
         return sprite;
@@ -72,7 +78,7 @@ public class InGameHudMixin {
 
     @ModifyArg(method = "renderMountHealth", at = @At(value = "INVOKE", target = "Lnet/minecraft/client/gui/DrawContext;drawGuiTexture(Lcom/mojang/blaze3d/pipeline/RenderPipeline;Lnet/minecraft/util/Identifier;IIII)V", ordinal = 2), index = 1)
     Identifier virtualAdditions$renderProjectionHalfHeart(Identifier sprite) {
-        if (client.getCameraEntity() instanceof PlayerProjectionEntity) {
+        if (this.isPlayerProjection) {
             return SPECTRAL_HALF_HEART_TEXTURE;
         }
         return sprite;
