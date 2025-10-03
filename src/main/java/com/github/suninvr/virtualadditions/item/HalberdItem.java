@@ -125,6 +125,7 @@ public class HalberdItem extends Item {
             // Client and Server events
             player.getItemCooldownManager().set(stack, (int) getSwingCooldown(stack, player));
             player.swingHand(player.getActiveHand(), true);
+            player.incrementStat(Stats.USED.getOrCreateStat(stack.getItem()));
             player.resetLastAttackedTicks();
         }
     }

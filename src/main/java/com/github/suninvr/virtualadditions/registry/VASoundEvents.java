@@ -39,6 +39,8 @@ public class VASoundEvents {
     public static final SoundEvent BLOCK_MINI_PORTAL_OPEN;
     public static final SoundEvent ITEM_PORTAL_CORE_USE;
     public static final SoundEvent ITEM_HALBERD_SWING;
+    public static final SoundEvent ITEM_SPECTRAL_SPYGLASS_START;
+    public static final SoundEvent ITEM_SPECTRAL_SPYGLASS_AMBIENT;
     public static final SoundEvent BLOCK_ENTANGLEMENT_DRIVE_USE;
     public static final SoundEvent BLOCK_STEEL_DOOR_SHUTTER_OPEN;
     public static final SoundEvent BLOCK_STEEL_DOOR_SHUTTER_CLOSE;
@@ -77,6 +79,8 @@ public class VASoundEvents {
         BLOCK_MINI_PORTAL_OPEN = register("block.mini_portal.open");
         ITEM_PORTAL_CORE_USE = register("item.portal_core.use");
         ITEM_HALBERD_SWING = register("item.halberd.swing");
+        ITEM_SPECTRAL_SPYGLASS_START = register("item.spectral_spyglass.start");
+        ITEM_SPECTRAL_SPYGLASS_AMBIENT = register("item.spectral_spyglass.ambient");
         BLOCK_ENTANGLEMENT_DRIVE_USE = register("block.entanglement_drive.use");
         BLOCK_STEEL_DOOR_SHUTTER_OPEN = register("block.steel_door.shutter_open");
         BLOCK_STEEL_DOOR_SHUTTER_CLOSE = register("block.steel_door.shutter_close");

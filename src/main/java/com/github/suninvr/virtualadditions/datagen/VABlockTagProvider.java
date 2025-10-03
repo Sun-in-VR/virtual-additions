@@ -414,7 +414,8 @@ public final class VABlockTagProvider {
                     Blocks.PITCHER_PLANT,
                     Blocks.DECORATED_POT,
                     Blocks.COBWEB,
-                    Blocks.BAMBOO
+                    Blocks.BAMBOO,
+                    Blocks.MANGROVE_ROOTS
                     )
                     .addOptionalTag(BlockTags.SMALL_FLOWERS.id())
                     .addOptionalTag(BlockTags.LEAVES.id());

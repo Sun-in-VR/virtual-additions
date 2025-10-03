@@ -329,13 +329,15 @@ public final class VARecipeProvider {
             this.offerHedgeRecipe(VABlocks.SOULBLOOM_HEDGE, VABlocks.SOULBLOOM_LEAVES);
             this.offerBoatRecipe(VAItems.SOULBLOOM_BOAT, VABlocks.SOULBLOOM_PLANKS);
             this.offerChestBoatRecipe(VAItems.SOULBLOOM_CHEST_BOAT, VAItems.SOULBLOOM_BOAT);
-            
+            this.offerShelfRecipe(VAItems.SOULBLOOM_SHELF, VAItems.STRIPPED_SOULBLOOM_LOG);
+
             this.generateFamily(VACollections.WITHERED, FeatureFlags.VANILLA_FEATURES);
             this.offerBarkBlockRecipe(VAItems.WITHERED_WOOD, VAItems.WITHERED_LOG);
             this.offerBarkBlockRecipe(VAItems.STRIPPED_WITHERED_WOOD, VAItems.STRIPPED_WITHERED_LOG);
             this.offerPlanksRecipe2(VAItems.WITHERED_PLANKS, VAItemTags.WITHERED_LOGS, 4);
             this.offerHangingSignRecipe(VAItems.WITHERED_HANGING_SIGN, VAItems.STRIPPED_WITHERED_LOG);
             this.offerHedgeRecipe(VABlocks.WITHERED_HEDGE, VABlocks.WITHERED_LEAVES);
+            this.offerShelfRecipe(VAItems.WITHERED_SHELF, VAItems.STRIPPED_WITHERED_LOG);
 
 
             ShapedRecipeJsonBuilder.create(this.registryLookup, RecipeCategory.DECORATIONS, VAItems.BONE_PILE, 4)

@@ -245,6 +245,17 @@
       "virtual_additions:item/halberd/swing02"
     ]
   },
+  "item.spectral_spyglass.start": {
+    "subtitle": "subtitles.item.spectral_spyglass.start",
+    "sounds": [
+      "virtual_additions:item/spectral_spyglass/start"
+    ]
+  },
+  "item.spectral_spyglass.ambient": {
+    "sounds": [
+      "virtual_additions:item/spectral_spyglass/ambient"
+    ]
+  },
   "block.entanglement_drive.use": {
     "subtitle": "subtitles.block.entanglement_drive.use",
     "sounds": [

@@ -41,6 +41,7 @@ public class PlayerProjectionEntityModel extends EntityModel<PlayerProjectionEnt
         float headPitch = state.pitch;
         this.head.yaw = headYaw * 0.017453292F;
         this.head.pitch = headPitch  * 0.017453292F;
+        this.hat.visible = state.hatVisible;
     }
 }
 

@@ -6,4 +6,5 @@ import net.minecraft.entity.player.SkinTextures;
 
 public class PlayerProjectionEntityRenderState extends LivingEntityRenderState {
     public SkinTextures skinTextures = DefaultSkinHelper.getSteve();
+    public boolean hatVisible = false;
 }

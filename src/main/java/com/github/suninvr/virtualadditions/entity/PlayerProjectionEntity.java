@@ -6,24 +6,33 @@ import com.github.suninvr.virtualadditions.network.PlayerProjectionMovementC2SPa
 import com.github.suninvr.virtualadditions.network.PlayerProjectionS2CPayload;
 import com.github.suninvr.virtualadditions.registry.VAEntityType;
 import com.github.suninvr.virtualadditions.registry.VAItems;
+import com.github.suninvr.virtualadditions.registry.VASoundEvents;
 import com.github.suninvr.virtualadditions.registry.VATrackedDataHandlerRegistry;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
 import net.fabricmc.fabric.api.client.networking.v1.ClientPlayNetworking;
 import net.fabricmc.fabric.api.networking.v1.ServerPlayNetworking;
+import net.minecraft.block.BlockState;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.network.ClientPlayerEntity;
 import net.minecraft.entity.*;
+import net.minecraft.entity.attribute.DefaultAttributeContainer;
+import net.minecraft.entity.attribute.EntityAttributes;
 import net.minecraft.entity.damage.DamageSource;
 import net.minecraft.entity.data.DataTracker;
 import net.minecraft.entity.data.TrackedData;
+import net.minecraft.entity.mob.MobEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.PlayerModelPart;
 import net.minecraft.particle.ParticleEffect;
 import net.minecraft.particle.TrailParticleEffect;
+import net.minecraft.registry.tag.DamageTypeTags;
 import net.minecraft.server.network.ServerPlayerEntity;
 import net.minecraft.server.world.ServerWorld;
+import net.minecraft.sound.SoundCategory;
 import net.minecraft.util.Arm;
+import net.minecraft.util.math.Box;
+import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.math.Vec2f;
 import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.World;
@@ -46,6 +55,16 @@ public class PlayerProjectionEntity extends PlayerLikeEntity {
         this.setNoGravity(true);
     }
 
+    public static DefaultAttributeContainer createAttributes() {
+        return MobEntity.createMobAttributes()
+                .add(EntityAttributes.MAX_HEALTH, 16.0)
+                .add(EntityAttributes.FLYING_SPEED, 0.3)
+                .add(EntityAttributes.MOVEMENT_SPEED, 0.3)
+                .add(EntityAttributes.ATTACK_DAMAGE, 1.0)
+                .add(EntityAttributes.FOLLOW_RANGE, 16.0)
+                .build();
+    }
+
     @Override
     protected void initDataTracker(DataTracker.Builder builder) {
         super.initDataTracker(builder);
@@ -55,7 +74,7 @@ public class PlayerProjectionEntity extends PlayerLikeEntity {
     public static PlayerProjectionEntity createForPlayer(PlayerEntity player) {
         PlayerProjectionEntity entity = VAEntityType.PLAYER_PROJECTION.create(player.getEntityWorld(), SpawnReason.MOB_SUMMONED);
         if (entity == null) return null;
-        Vec3d vec3d = player.getEyePos().add(player.getRotationVector().multiply(1.6));
+        Vec3d vec3d = player.raycast(1.6F, 0, false).getPos().add(0, entity.getStandingEyeHeight() - entity.getHeight(), 0);
         entity.setPos(vec3d.x, vec3d.y, vec3d.z);
         entity.setRotation(player.getYaw(), player.getPitch());
         entity.lastYaw = entity.bodyYaw = entity.headYaw = entity.getYaw();
@@ -69,9 +88,21 @@ public class PlayerProjectionEntity extends PlayerLikeEntity {
     }
 
     @Override
+    public boolean isInvulnerable() {
+        if (this.player != null) return super.isInvulnerable() || this.player.getAbilities().invulnerable;
+        return super.isInvulnerable();
+    }
+
+    @Override
+    public boolean damage(ServerWorld world, DamageSource source, float amount) {
+        if (this.isInvulnerable() && !source.isIn(DamageTypeTags.BYPASSES_INVULNERABILITY)) return false;
+        return super.damage(world, source, amount);
+    }
+
+    @Override
     public void tick() {
         super.tick();
-        if (this.getPlayer() == null || this.getPlayer().isRemoved() || !this.getPlayer().isUsingItem() || !this.getPlayer().getActiveItem().isOf(VAItems.SPECTRAL_SPYGLASS) || this.distanceTo(this.getPlayer()) > 72) {
+        if (this.getPlayer() == null || this.getPlayer().isRemoved() || !this.getPlayer().isUsingItem() || !this.getPlayer().getActiveItem().isOf(VAItems.SPECTRAL_SPYGLASS) || this.distanceTo(this.getPlayer()) > 80) {
             if (!this.getEntityWorld().isClient()) {
                 this.remove(RemovalReason.DISCARDED);
             }
@@ -140,11 +171,19 @@ public class PlayerProjectionEntity extends PlayerLikeEntity {
         super.tickControlled(controllingPlayer, movementInput);
         if (controllingPlayer instanceof ClientPlayerEntity clientPlayerEntity) {
             Vec2f vec2f1 = ClientPlayerEntity.applyDirectionalMovementSpeedFactors(clientPlayerEntity.input.getMovementInput());
-            double d = clientPlayerEntity.input.playerInput.jump() ? 0.2 : clientPlayerEntity.input.playerInput.sneak() ? -0.2 : 0.0;
-            Vec3d vec3d = new Vec3d(vec2f1.x * 0.2, d , vec2f1.y * 0.2);
-            this.updateVelocity(0.15F, vec3d);
+            double vertical = clientPlayerEntity.input.playerInput.jump() ? 0.16 : clientPlayerEntity.input.playerInput.sneak() ? -0.16 : 0.0;
+            Vec3d movement = new Vec3d(vec2f1.x * 0.2, vertical , vec2f1.y * 0.2);
+            float speed = (float) this.getAttributeValue(EntityAttributes.FLYING_SPEED);
+            double distance = this.distanceTo(controllingPlayer);
+            if (distance > 64.0) {
+                Vec3d toPlayer = new Vec3d(controllingPlayer.getX() - this.getX(), controllingPlayer.getEyeY() - this.getEyeY(), controllingPlayer.getZ() - this.getZ());
+                toPlayer = toPlayer.normalize().multiply((distance - 64) * 0.05);
+                this.addVelocity(toPlayer);
+            }
+            this.updateVelocity(speed, movement);
             this.move(MovementType.SELF, this.getVelocity());
-            this.setVelocity(this.getVelocity().multiply(this.isPhasingThroughWall() ? 0.2F : 0.91F));
+            float g = this.isPhasingThroughWall() ? 0.0F : 0.8F;
+            this.setVelocity(this.getVelocity().multiply(g));
         }
     }
 

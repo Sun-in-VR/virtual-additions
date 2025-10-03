@@ -95,7 +95,7 @@ public class VAEntityType {
         ENTITY_ATTRIBUTES.put(LUMWASP, LumwaspEntity.createLumwaspAttributes());
         ENTITY_ATTRIBUTES.put(SALINE, SalineEntity.createSalineAttributes());
         ENTITY_ATTRIBUTES.put(SPECTRE, SpectreEntity.createSpectreAttributes());
-        ENTITY_ATTRIBUTES.put(PLAYER_PROJECTION, SpectreEntity.createSpectreAttributes());
+        ENTITY_ATTRIBUTES.put(PLAYER_PROJECTION, PlayerProjectionEntity.createAttributes());
     }
 
     public static void init(){

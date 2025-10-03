@@ -1,6 +1,7 @@
 package com.github.suninvr.virtualadditions.mixin;
 
 import com.github.suninvr.virtualadditions.client.sound.FlyingLumwaspSoundInstance;
+import com.github.suninvr.virtualadditions.client.sound.PlayerProjectionLoopSoundInstance;
 import com.github.suninvr.virtualadditions.entity.LumwaspEntity;
 import com.github.suninvr.virtualadditions.entity.PlayerProjectionEntity;
 import com.llamalad7.mixinextras.sugar.Local;
@@ -27,6 +28,10 @@ public abstract class ClientPlayNetworkHandlerMixin extends ClientCommonNetworkH
     void virtualAdditions$playLumwaspLoopSound(Entity entity, CallbackInfo ci) {
         if (entity instanceof LumwaspEntity lumwaspEntity && lumwaspEntity.isInAir()) {
             this.client.getSoundManager().playNextTick(new FlyingLumwaspSoundInstance(lumwaspEntity));
+        }
+
+        if (entity instanceof PlayerProjectionEntity playerProjectionEntity) {
+            this.client.getSoundManager().playNextTick(new PlayerProjectionLoopSoundInstance(playerProjectionEntity));
         }
     }
 
