@@ -31,21 +31,7 @@ public class PlayerProjectionEntityRenderer<T extends PlayerProjectionEntity> ex
 
     @Override
     public void render(PlayerProjectionEntityRenderState livingEntityRenderState, MatrixStack matrixStack, OrderedRenderCommandQueue orderedRenderCommandQueue, CameraRenderState cameraRenderState) {
-        matrixStack.push();
-        float g = livingEntityRenderState.baseScale;
-        matrixStack.scale(g, g, g);
-        this.setupTransforms(livingEntityRenderState, matrixStack, livingEntityRenderState.bodyYaw, g);
-        matrixStack.scale(-1.0F, -1.0F, 1.0F);
-        this.scale(livingEntityRenderState, matrixStack);
-        matrixStack.translate(0.0F, -1.501F, 0.0F);
-        RenderLayer renderLayer = this.getRenderLayer(livingEntityRenderState, true, true, livingEntityRenderState.hasOutline());
-        if (renderLayer != null) {
-            int i = getOverlay(livingEntityRenderState, this.getAnimationCounter(livingEntityRenderState));
-            int k = ColorHelper.mix(ColorHelper.getArgb(175, 255, 255, 255), this.getMixColor(livingEntityRenderState));
-            orderedRenderCommandQueue.submitModel(this.model, livingEntityRenderState, matrixStack, renderLayer, 255, i, k, null, livingEntityRenderState.outlineColor, null);
-        }
-
-        matrixStack.pop();
+        super.render(livingEntityRenderState, matrixStack, orderedRenderCommandQueue, cameraRenderState);
         RenderLayer glowRenderLayer = this.getGlowRenderLayer();
         if (glowRenderLayer != null) {
             orderedRenderCommandQueue.submitCustom(matrixStack, glowRenderLayer, (matricesEntry, vertexConsumer) -> {
@@ -67,8 +53,6 @@ public class PlayerProjectionEntityRenderer<T extends PlayerProjectionEntity> ex
     @Override
     public void updateRenderState(PlayerProjectionEntity livingEntity, PlayerProjectionEntityRenderState livingEntityRenderState, float f) {
         super.updateRenderState(livingEntity, livingEntityRenderState, f);
-        livingEntityRenderState.invisible = true;
-        livingEntityRenderState.invisibleToPlayer = false;
         if (livingEntity.getPlayer() instanceof ClientPlayerLikeEntity playerLike) {
             livingEntityRenderState.skinTextures = playerLike.getSkin();
             MinecraftClient minecraftClient = MinecraftClient.getInstance();
