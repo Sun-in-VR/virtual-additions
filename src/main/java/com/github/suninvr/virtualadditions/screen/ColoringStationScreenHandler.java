@@ -165,7 +165,7 @@ public class ColoringStationScreenHandler extends ScreenHandler {
                 ColoringStationScreenHandler.this.updateDyeInput();
                 ColoringStationScreenHandler.this.populateResult();
                 ColoringStationScreenHandler.this.context.run((world, pos) -> {
-                    long l = world.getTime();
+                    long l = world.method_75260();
                     if (ColoringStationScreenHandler.this.lastTakeTime != l) {
                         world.playSound(null, pos, SoundEvents.ITEM_DYE_USE, SoundCategory.BLOCKS, 1.0f, 1.0f);
                         ColoringStationScreenHandler.this.lastTakeTime = l;

@@ -10,9 +10,10 @@ import net.minecraft.particle.ParticleEffect;
 import net.minecraft.particle.ParticleType;
 import net.minecraft.util.dynamic.Codecs;
 import org.joml.Vector3f;
+import org.joml.Vector3fc;
 
 public class ColorfulPowerParticleEffect implements ParticleEffect {
-    private final Vector3f color;
+    private final Vector3fc color;
     public static final MapCodec<ColorfulPowerParticleEffect> CODEC = RecordCodecBuilder.mapCodec(
             instance -> instance.group(
                             Codecs.VECTOR_3F.fieldOf("color").forGetter(particle -> particle.color)
@@ -23,7 +24,7 @@ public class ColorfulPowerParticleEffect implements ParticleEffect {
             PacketCodecs.VECTOR_3F, particle -> particle.color, ColorfulPowerParticleEffect::new
     );
 
-    public ColorfulPowerParticleEffect(Vector3f color) {
+    public ColorfulPowerParticleEffect(Vector3fc color) {
         this.color = color;
     }
 
@@ -32,7 +33,7 @@ public class ColorfulPowerParticleEffect implements ParticleEffect {
         return VAParticleTypes.COLORFUL_POWER;
     }
 
-    public Vector3f getColor() {
+    public Vector3fc getColor() {
         return this.color;
     }
 }

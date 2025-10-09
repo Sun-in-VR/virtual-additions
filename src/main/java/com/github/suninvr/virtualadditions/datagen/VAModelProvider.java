@@ -12,6 +12,7 @@ import net.fabricmc.fabric.api.datagen.v1.FabricDataOutput;
 import net.minecraft.block.Block;
 import net.minecraft.block.CropBlock;
 import net.minecraft.client.data.*;
+import net.minecraft.client.item.ItemAsset;
 import net.minecraft.client.render.item.model.ItemModel;
 import net.minecraft.client.render.item.model.SelectItemModel;
 import net.minecraft.client.render.item.property.bool.HasComponentProperty;
@@ -337,6 +338,8 @@ public class VAModelProvider {
                     VAItems.STEEL_HOE
             );
 
+            generator.method_75342(VAItems.STEEL_SPEAR);
+
             registerHalberd(generator, VAItems.WOODEN_HALBERD);
             registerHalberd(generator, VAItems.STONE_HALBERD);
             registerHalberd(generator, VAItems.COPPER_HALBERD);
@@ -438,6 +441,8 @@ public class VAModelProvider {
 
     @SuppressWarnings("SameParameterValue")
     private abstract static class Provider extends FabricModelProvider {
+        protected static final ItemAsset.Properties HALBERD_PROPERTIES = new ItemAsset.Properties(true, false, 1.2F);
+
         private static final List<ItemModelGenerator.TrimMaterial> TRIM_MATERIALS_EXTENDED =
                 List.of(
                         new ItemModelGenerator.TrimMaterial(ArmorTrimAssets.QUARTZ, ArmorTrimMaterials.QUARTZ),
@@ -516,7 +521,7 @@ public class VAModelProvider {
             Identifier gild = gildedToolItem.getGildType().getId().withSuffixedPath(suffix).withPrefixedPath("item/gilded_tools/");
             Identifier id = ModelIds.getItemModelId(item);
             VAModels.HANDHELD_TWO_LAYERS.upload(id, TextureMap.layered(base, gild), itemModelGenerator.modelCollector);
-            itemModelGenerator.output.accept(item, ItemModels.basic(id));
+            itemModelGenerator.output.accept(item, ItemModels.basic(id), ItemAsset.Properties.DEFAULT);
             }
         }
 
@@ -538,7 +543,7 @@ public class VAModelProvider {
                                                     .register(false, spotlight)
                                                     .register(true, spotlightActive)
                                     )
-                                    .coordinate(BlockStateVariantMap.operations(Properties.ORIENTATION).generate(BlockStateModelGenerator::addJigsawOrientationToVariant))
+                                    .apply(BlockStateVariantMap.operations(Properties.ORIENTATION).generate(BlockStateModelGenerator::addJigsawOrientationToVariant))
                     );
         }
 
@@ -551,11 +556,11 @@ public class VAModelProvider {
             Identifier undyedItemIdentifier = generator.upload(item, Models.GENERATED);
             Identifier itemIdentifier = Registries.ITEM.getId(item).withPrefixedPath("item/");
             Identifier dyedItemIdentifier = Models.GENERATED_TWO_LAYERS.upload(ModelIds.getItemSubModelId(item, "_dyed"), TextureMap.layered(itemIdentifier.withSuffixedPath("_layer"), itemIdentifier.withSuffixedPath("_base")), generator.modelCollector);
-            generator.output.accept(item, ItemModels.condition(new HasComponentProperty(DataComponentTypes.DYED_COLOR, true), ItemModels.tinted(dyedItemIdentifier, new DyeTintSource(0xFFFFFF)), ItemModels.basic(undyedItemIdentifier)));
+            generator.output.accept(item, ItemModels.condition(new HasComponentProperty(DataComponentTypes.DYED_COLOR, true), ItemModels.tinted(dyedItemIdentifier, new DyeTintSource(0xFFFFFF)), ItemModels.basic(undyedItemIdentifier)), ItemAsset.Properties.DEFAULT);
         }
 
         public static void registerParentedTintedItemModel(BlockStateModelGenerator generator, Block block, Identifier parentModelId, TintSource... sources) {
-            generator.itemModelOutput.accept(block.asItem(), ItemModels.tinted(parentModelId, sources));
+            generator.itemModelOutput.accept(block.asItem(), ItemModels.tinted(parentModelId, sources), ItemAsset.Properties.DEFAULT);
         }
 
         public static void registerArmorSetWithExtendedTrimMaterials(ItemModelGenerator generator, Item helmet, Item chestplate, Item leggings, Item boots, RegistryKey<EquipmentAsset> equipmentKey, boolean dyeable) {
@@ -596,7 +601,7 @@ public class VAModelProvider {
                 unbaked2 = ItemModels.basic(identifier);
             }
 
-            generator.output.accept(item, ItemModels.select(new TrimMaterialProperty(), unbaked2, list));
+            generator.output.accept(item, ItemModels.select(new TrimMaterialProperty(), unbaked2, list), ItemAsset.Properties.DEFAULT);
         }
 
         public final void registerCrossbow(ItemModelGenerator generator, Item item) {
@@ -619,7 +624,7 @@ public class VAModelProvider {
                                     ItemModels.rangeDispatchEntry(unbaked9, 0.75F),
                                     ItemModels.rangeDispatchEntry(unbaked10, 1.0F)
                                     )),
-                            ItemModels.switchCase(CrossbowItem.ChargeType.ROCKET, unbaked6))));
+                            ItemModels.switchCase(CrossbowItem.ChargeType.ROCKET, unbaked6))), ItemAsset.Properties.DEFAULT);
         }
 
         public final void registerPortalCore(ItemModelGenerator generator, Item item) {
@@ -628,7 +633,7 @@ public class VAModelProvider {
             ItemModel.Unbaked active = ItemModels.basic(generator.registerSubModel(item, "_active", Models.GENERATED));
             generator.output.accept(item, ItemModels.condition(
                     ItemModels.hasComponentProperty(VADataComponentTypes.PORTAL_CORE_LOCATION), active, base
-            ));
+            ), ItemAsset.Properties.DEFAULT);
         }
 
         public static void registerHalberd(ItemModelGenerator generator, Item item) {
@@ -638,7 +643,7 @@ public class VAModelProvider {
             Models.HANDHELD.upload(ModelIds.getItemModelId(item), TextureMap.layer0(TextureMap.getId(item)), generator.modelCollector);
             VAModels.HALBERD_IN_HAND.upload(ModelIds.getItemSubModelId(item, "_in_hand"), TextureMap.layer0(TextureMap.getSubId(item, "_in_hand")), generator.modelCollector);
             VAModels.HALBERD_IN_USE.upload(ModelIds.getItemSubModelId(item, "_in_use"), TextureMap.layer0(TextureMap.getSubId(item, "_in_hand")), generator.modelCollector);
-            generator.output.accept(item, createModelWithInHandAndInUseVariant(base, inHand, inUse));
+            generator.output.accept(item, createModelWithInHandAndInUseVariant(base, inHand, inUse), HALBERD_PROPERTIES);
         }
 
         public static void registerLayeredHalberd(ItemModelGenerator generator, Item item, Item baseItem, Identifier layer) {
@@ -648,7 +653,7 @@ public class VAModelProvider {
             VAModels.HANDHELD_TWO_LAYERS.upload(ModelIds.getItemModelId(item), TextureMap.layered(TextureMap.getId(baseItem), layer), generator.modelCollector);
             VAModels.HALBERD_IN_HAND_TWO_LAYERS.upload(ModelIds.getItemSubModelId(item, "_in_hand"), TextureMap.layered(TextureMap.getSubId(baseItem, "_in_hand"), layer.withSuffixedPath("_in_hand")), generator.modelCollector);
             VAModels.HALBERD_IN_USE_TWO_LAYERS.upload(ModelIds.getItemSubModelId(item, "_in_use"), TextureMap.layered(TextureMap.getSubId(baseItem, "_in_hand"), layer.withSuffixedPath("_in_hand")), generator.modelCollector);
-            generator.output.accept(item, createModelWithInHandAndInUseVariant(base, inHand, inUse));
+            generator.output.accept(item, createModelWithInHandAndInUseVariant(base, inHand, inUse), HALBERD_PROPERTIES);
         }
 
         protected void registerSpectralFire(BlockStateModelGenerator generator) {

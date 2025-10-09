@@ -138,11 +138,11 @@ public class PlayerProjectionEntity extends PlayerLikeEntity {
     }
 
     public boolean isPhasingThroughWall() {
-        if (this.isPhasingThroughWallLastCheck != this.getEntityWorld().getTime()) {
+        if (this.isPhasingThroughWallLastCheck != this.getEntityWorld().method_75260()) {
             this.noClip = false;
             this.isPhasingThroughWall = this.isInsideWall();
             this.noClip = true;
-            this.isPhasingThroughWallLastCheck = this.getEntityWorld().getTime();
+            this.isPhasingThroughWallLastCheck = this.getEntityWorld().method_75260();
         }
         return this.isPhasingThroughWall;
     }

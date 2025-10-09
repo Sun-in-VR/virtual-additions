@@ -1,6 +1,8 @@
 package com.github.suninvr.virtualadditions.item;
 
 import com.github.suninvr.virtualadditions.item.interfaces.GildedToolItem;
+import net.minecraft.class_12122;
+import net.minecraft.class_12126;
 import net.minecraft.component.DataComponentTypes;
 import net.minecraft.component.type.AttributeModifierSlot;
 import net.minecraft.component.type.AttributeModifiersComponent;
@@ -29,7 +31,8 @@ public class GildedToolUtil {
         return material
                 .applySwordSettings(settings, attackDamage, attackSpeed)
                 .attributeModifiers(halberdAttributes(attackDamage, attackSpeed))
-                .component(DataComponentTypes.BLOCKS_ATTACKS, new BlocksAttacksComponent(0.0F, 0.0F, List.of(), BlocksAttacksComponent.ItemDamage.DEFAULT, Optional.empty(), Optional.empty(), Optional.empty()));
+                .component(DataComponentTypes.BLOCKS_ATTACKS, new BlocksAttacksComponent(0.0F, 0.0F, List.of(), BlocksAttacksComponent.ItemDamage.DEFAULT, Optional.empty(), Optional.empty(), Optional.empty()))
+				.component(DataComponentTypes.MINIMUM_ATTACK_CHARGE, 1.0F);
     }
 
     public static AttributeModifiersComponent halberdAttributes(float attackDamage, float attackSpeed) {

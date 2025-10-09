@@ -100,8 +100,8 @@ public class VAEntityType {
 
     public static void init(){
         SpawnRestriction.register(SALINE, SpawnRestriction.getLocation(SALINE), Heightmap.Type.MOTION_BLOCKING, HostileEntity::canSpawnInDark);
-        SpawnRestriction.register(LUMWASP, SpawnRestriction.getLocation(LUMWASP), Heightmap.Type.MOTION_BLOCKING, LumwaspEntity::canSpawnInDark);
-        SpawnRestriction.register(SPECTRE, SpawnRestriction.getLocation(SPECTRE), Heightmap.Type.MOTION_BLOCKING, SpectreEntity::canSpawnInDark);
+        SpawnRestriction.register(LUMWASP, SpawnRestriction.getLocation(LUMWASP), Heightmap.Type.MOTION_BLOCKING, LumwaspEntity::canSpawnLumwasp);
+        SpawnRestriction.register(SPECTRE, SpawnRestriction.getLocation(SPECTRE), Heightmap.Type.MOTION_BLOCKING, SpectreEntity::canSpawnSpectre);
     }
 
 

@@ -17,16 +17,16 @@ import org.jetbrains.annotations.Nullable;
 public class PlayerProjectionPhasingFogModifier extends FogModifier {
 
     @Override
-    public void applyStartEndModifier(FogData data, Entity cameraEntity, BlockPos cameraPos, ClientWorld world, float viewDistance, RenderTickCounter tickCounter) {
+    public boolean isDarknessModifier() {
+        return true;
+    }
+
+    @Override
+    public void applyStartEndModifier(FogData data, Camera camera, ClientWorld clientWorld, float f, RenderTickCounter renderTickCounter) {
         data.environmentalStart = 1.0F;
         data.environmentalEnd = 5.0F;
         data.skyEnd = 1.6F;
         data.cloudEnd = 1.6F;
-    }
-
-    @Override
-    public boolean isDarknessModifier() {
-        return true;
     }
 
     @Override

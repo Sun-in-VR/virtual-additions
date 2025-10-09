@@ -20,7 +20,7 @@ public class VARenderLayers {
     private static final Function<Identifier, RenderLayer> MINI_PORTAL = Util.memoize(
             texture -> {
                 RenderLayer.MultiPhaseParameters multiPhaseParameters = RenderLayer.MultiPhaseParameters.builder()
-                        .texture(new RenderPhase.Texture(texture, false))
+                        .texture(new RenderPhase.Texture(texture))
                         .lightmap(RenderPhase.ENABLE_LIGHTMAP)
                         .build(true);
                 return RenderLayer.of("virtual_additions_mini_portal", 1536, false, false, RenderPipelines.OPAQUE_PARTICLE, multiPhaseParameters);
@@ -30,7 +30,7 @@ public class VARenderLayers {
     private static final Function<Identifier, RenderLayer> MINI_PORTAL_TRANSLUCENT = Util.memoize(
             texture -> {
                 RenderLayer.MultiPhaseParameters multiPhaseParameters = RenderLayer.MultiPhaseParameters.builder()
-                        .texture(new RenderPhase.Texture(texture, false))
+                        .texture(new RenderPhase.Texture(texture))
                         .lightmap(RenderPhase.ENABLE_LIGHTMAP)
                         .build(true);
                 return RenderLayer.of("virtual_additions_mini_portal_translucent", 1536, false, true, RenderPipelines.TRANSLUCENT_PARTICLE, multiPhaseParameters);

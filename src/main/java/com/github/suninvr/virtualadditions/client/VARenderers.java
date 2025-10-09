@@ -129,10 +129,7 @@ public class VARenderers {
                 VABlocks.SPRING_LOTUS,
                 VABlocks.SOUL_SPROUT,
                 VABlocks.POTTED_SOUL_SPROUT,
-                VABlocks.WISDOM_BERRY
-        );
-
-        BlockRenderLayerMap.putBlocks(BlockRenderLayer.CUTOUT_MIPPED,
+                VABlocks.WISDOM_BERRY,
                 VABlocks.SOULBLOOM_LEAVES,
                 VABlocks.SOULBLOOM_HEDGE,
                 VABlocks.WITHERED_LEAVES,

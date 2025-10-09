@@ -24,6 +24,7 @@ public class VAItemTags {
     public static final TagKey<Item> ACCEPTS_APPLIED_EFFECTS = TagKey.of(RegistryKeys.ITEM, idOf("accepts_applied_effects"));
     public static final TagKey<Item> HALBERDS = TagKey.of(RegistryKeys.ITEM, idOf("halberds"));
     public static final TagKey<Item> HALBERD_ENCHANTABLE = TagKey.of(RegistryKeys.ITEM, idOf("enchantable/halberd"));
+    public static final TagKey<Item> PUMMELING_ENCHANTABLE = TagKey.of(RegistryKeys.ITEM, idOf("enchantable/pummeling"));
 
     private static TagKey<Item> register(String id) {
         return TagKey.of(Registries.ITEM.getKey(), idOf(id));

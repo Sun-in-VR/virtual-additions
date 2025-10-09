@@ -157,7 +157,7 @@ public class LumwaspEntity extends HostileEntity implements RangedAttackMob, Flu
         return super.canSpawn(world);
     }
 
-    public static boolean canSpawnInDark(EntityType<? extends HostileEntity> type, ServerWorldAccess world, SpawnReason spawnReason, BlockPos pos, Random random) {
+    public static boolean canSpawnLumwasp(EntityType<? extends HostileEntity> type, ServerWorldAccess world, SpawnReason spawnReason, BlockPos pos, Random random) {
         return world.getDifficulty() != Difficulty.PEACEFUL && (SpawnReason.isTrialSpawner(spawnReason) || LumwaspEntity.isSpawnDark(world, pos, random)) && HostileEntity.canMobSpawn(type, world, spawnReason, pos, random);
     }
 

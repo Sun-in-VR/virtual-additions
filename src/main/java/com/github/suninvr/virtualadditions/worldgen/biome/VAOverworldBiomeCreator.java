@@ -41,7 +41,7 @@ public class VAOverworldBiomeCreator {
 
         SpawnSettings.Builder spawners = new SpawnSettings.Builder();
         DefaultBiomeFeatures.addCaveMobs(spawners);
-        DefaultBiomeFeatures.addMonsters(spawners, 20, 5, 100, false);
+        DefaultBiomeFeatures.addMonsters(spawners, 20, 5, 0, 100, false);
         spawners.spawn(SpawnGroup.CREATURE, 1, new SpawnSettings.SpawnEntry(EntityType.WOLF, 1, 1));
 
         GenerationSettings.LookupBackedBuilder generation = new GenerationSettings.LookupBackedBuilder(featureLookup, carverLookup);
@@ -78,7 +78,7 @@ public class VAOverworldBiomeCreator {
 
         SpawnSettings.Builder spawners = new SpawnSettings.Builder();
         DefaultBiomeFeatures.addCaveMobs(spawners);
-        DefaultBiomeFeatures.addMonsters(spawners, 20, 5, 100, false);
+        DefaultBiomeFeatures.addMonsters(spawners, 20, 5, 0, 100, false);
         spawners.spawn(SpawnGroup.MONSTER, 75, new SpawnSettings.SpawnEntry(VAEntityType.SALINE, 4, 4));
 
         GenerationSettings.LookupBackedBuilder generation = new GenerationSettings.LookupBackedBuilder(featureLookup, carverLookup);

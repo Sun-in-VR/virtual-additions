@@ -1,6 +1,6 @@
 {
   "exclusive_set": "#minecraft:exclusive_set/damage",
-  "primary_items": "#virtual_additions:enchantable/halberd",
+  "primary_items": "#virtual_additions:enchantable/pummeling",
   "anvil_cost": 1,
   "description": {
     "translate": "enchantment.virtual_additions.pummeling"
@@ -31,6 +31,6 @@
   "slots": [
     "mainhand"
   ],
-  "supported_items": "#minecraft:enchantable/sharp_weapon",
+  "supported_items": "#virtual_additions:enchantable/pummeling",
   "weight": 7
 }

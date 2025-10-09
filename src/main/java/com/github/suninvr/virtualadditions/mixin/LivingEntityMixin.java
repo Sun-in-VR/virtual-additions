@@ -81,8 +81,8 @@ public abstract class LivingEntityMixin extends Entity {
 
     @Inject(method = "applyDamage", at = @At("TAIL"))
     void virtualAdditions$spreadDamageForFesteringWoundsEffect(ServerWorld world, DamageSource source, float amount, CallbackInfo ci) {
-        if (this.hasStatusEffect(VAStatusEffects.FESTERING_WOUNDS) && this.lastHurtByFesteringWounds != world.getTime()) {
-            this.lastHurtByFesteringWounds = world.getTime();
+        if (this.hasStatusEffect(VAStatusEffects.FESTERING_WOUNDS) && this.lastHurtByFesteringWounds != world.method_75260()) {
+            this.lastHurtByFesteringWounds = world.method_75260();
             world.getNonSpectatingEntities(LivingEntity.class, this.getBoundingBox().expand(12, 12, 12)).stream().filter(entity -> entity != (Object)this).forEach(entity -> {
                 if (entity.hasStatusEffect(VAStatusEffects.FESTERING_WOUNDS)) {
                     if (entity.damage(world, source, amount)) {

@@ -4,10 +4,11 @@ import net.minecraft.client.particle.SpriteProvider;
 import net.minecraft.client.particle.TrialSpawnerDetectionParticle;
 import net.minecraft.client.world.ClientWorld;
 import org.joml.Vector3f;
+import org.joml.Vector3fc;
 
 public class ColorfulPowerParticle extends TrialSpawnerDetectionParticle {
-    public ColorfulPowerParticle(ClientWorld world, double x, double y, double z, double velocityX, double velocityY, double velocityZ, float scale, Vector3f color, SpriteProvider spriteProvider) {
+    public ColorfulPowerParticle(ClientWorld world, double x, double y, double z, double velocityX, double velocityY, double velocityZ, float scale, Vector3fc color, SpriteProvider spriteProvider) {
         super(world, x, y, z, velocityX, velocityY, velocityZ, scale, spriteProvider);
-        this.setColor(color.x, color.y, color.z);
+        this.setColor(color.x(), color.y(), color.z());
     }
 }

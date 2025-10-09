@@ -58,6 +58,7 @@ public final class VAItemTagProvider {
             addTo(ItemTags.CHEST_ARMOR, VAItems.STEEL_CHESTPLATE);
             addTo(ItemTags.LEG_ARMOR, VAItems.STEEL_LEGGINGS);
             addTo(ItemTags.FOOT_ARMOR, VAItems.STEEL_BOOTS);
+            addTo(ItemTags.SPEARS, VAItems.STEEL_SPEAR);
             addTo(ItemTags.VILLAGER_PLANTABLE_SEEDS, VAItems.CORN_SEEDS, VAItems.TOMATO_SEEDS, VAItems.CABBAGE_SEEDS, VAItems.WISDOM_BERRY_SEEDS);
             addTo(ItemTags.DOORS, VAItems.STEEL_DOOR);
             addTo(ItemTags.TRAPDOORS, VAItems.STEEL_TRAPDOOR);
@@ -299,7 +300,12 @@ public final class VAItemTagProvider {
 
             addTo(VAItemTags.HALBERDS, VAItems.WOODEN_HALBERD, VAItems.STONE_HALBERD, VAItems.COPPER_HALBERD, VAItems.IRON_HALBERD, VAItems.GOLDEN_HALBERD, VAItems.STEEL_HALBERD, VAItems.DIAMOND_HALBERD, VAItems.NETHERITE_HALBERD);
             getTagBuilder(VAItemTags.HALBERD_ENCHANTABLE).addOptionalTag(VAItemTags.HALBERDS.id());
+            getTagBuilder(VAItemTags.PUMMELING_ENCHANTABLE)
+                    .addOptionalTag(VAItemTags.HALBERDS.id())
+                    .addOptionalTag(ItemTags.AXES.id())
+                    .addOptionalTag(ItemTags.SWORDS.id());
             getTagBuilder(ItemTags.SHARP_WEAPON_ENCHANTABLE).addOptionalTag(VAItemTags.HALBERDS.id());
+            getTagBuilder(ItemTags.MELEE_WEAPON_ENCHANTABLE).addOptionalTag(VAItemTags.HALBERDS.id());
             getTagBuilder(ItemTags.DURABILITY_ENCHANTABLE).addOptionalTag(VAItemTags.HALBERDS.id());
             getTagBuilder(ItemTags.VANISHING_ENCHANTABLE).addOptionalTag(VAItemTags.HALBERDS.id());
             getTagBuilder(ItemTags.BREAKS_DECORATED_POTS).addOptionalTag(VAItemTags.HALBERDS.id());
