@@ -88,7 +88,9 @@ public class HalberdItem extends Item {
                             // Additional events on damage
                             float knockback = player.getAttackKnockbackAgainst(target, source) + 0.5F * readiness;
                             if (knockback > 0.0F) {
-                                target.takeKnockback(knockback + (lungePower.floatValue() * 1.5F), player.getX() - target.getX(), player.getZ() - target.getZ());
+                                double velocity = player.getVelocity().horizontalLength() + 1.0;
+                                target.takeKnockback(knockback + (lungePower.floatValue() + (velocity * velocity) - 1), player.getX() - target.getX(), player.getZ() - target.getZ());
+                                target.velocityModified = true;
                             }
                             if (hasAppliedPotion) stack.get(VADataComponentTypes.EFFECTS_ON_HIT).forEachEffect(statusEffectInstance -> target.addStatusEffect(statusEffectInstance, player));
                             if (gildType.hasHitEffects()) gildType.applyEffectsOnHit(world, target, player);
@@ -131,8 +133,8 @@ public class HalberdItem extends Item {
     }
 
     private static void applyPlayerMovement(PlayerEntity player, ItemStack stack, int entitiesHit, float lungePower) {
-        if (player.hasVehicle() || player.isGliding() || player.getAbilities().flying) return;
-        if (lungePower > 0) {
+        if (player.hasVehicle() || player.getAbilities().flying) return;
+        if (lungePower > 0 && !player.isGliding()) {
             player.setVelocity(
                     new Vec3d(
                             MathHelper.sin((player.getYaw() + 180) * (float) (Math.PI / 180.0)),
@@ -142,7 +144,8 @@ public class HalberdItem extends Item {
             player.velocityModified = true;
             stack.damage(1, player, player.getActiveHand());
         } else if (entitiesHit > 0) {
-            player.takeKnockback(0.333F, MathHelper.sin((player.getYaw() - 180) * (float) (Math.PI / 180.0)), -MathHelper.cos((player.getYaw() - 180) * (float) (Math.PI / 180.0)));
+            if (player.isGliding()) player.setVelocity(player.getVelocity().multiply(0.25F));
+            player.takeKnockback(player.isGliding() ? 1.0F : 0.333F, MathHelper.sin((player.getYaw() - 180) * (float) (Math.PI / 180.0)), -MathHelper.cos((player.getYaw() - 180) * (float) (Math.PI / 180.0)));
             player.velocityModified = true;
         }
 
