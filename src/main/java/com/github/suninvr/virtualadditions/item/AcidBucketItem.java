@@ -33,7 +33,7 @@ public class AcidBucketItem extends BucketItem {
         canPlace = destroyBlock || canPlace;
         if (!canPlace) {
             return hitResult != null && this.placeFluid(user, world, hitResult.getBlockPos().offset(hitResult.getSide()), null);
-        } else if (world.getDimension().ultrawarm()) {
+        } else if (false) {
             if (!world.isClient() && !blockState.isLiquid() && destroyBlock) {
                 world.breakBlock(pos, true);
             }

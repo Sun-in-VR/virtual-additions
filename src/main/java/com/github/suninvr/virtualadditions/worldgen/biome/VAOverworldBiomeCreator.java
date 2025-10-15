@@ -30,14 +30,9 @@ public class VAOverworldBiomeCreator {
 
     public static Biome createSoulGrove(RegistryEntryLookup<PlacedFeature> featureLookup, RegistryEntryLookup<ConfiguredCarver<?>> carverLookup) {
         BiomeEffects.Builder effects = new BiomeEffects.Builder()
-                .skyColor(8103167)
-                .fogColor(12638463)
                 .waterColor(4159204)
-                .waterFogColor(329011)
                 .grassColor(6801570)
-                .foliageColor(6801570)
-                .moodSound(BiomeMoodSound.CAVE)
-                .music(MusicType.createIngameMusic(SoundEvents.MUSIC_OVERWORLD_DRIPSTONE_CAVES));
+                .foliageColor(6801570);
 
         SpawnSettings.Builder spawners = new SpawnSettings.Builder();
         DefaultBiomeFeatures.addCaveMobs(spawners);
@@ -69,12 +64,7 @@ public class VAOverworldBiomeCreator {
 
     public static Biome createSaltyCaves(RegistryEntryLookup<PlacedFeature> featureLookup, RegistryEntryLookup<ConfiguredCarver<?>> carverLookup) {
         BiomeEffects.Builder effects = new BiomeEffects.Builder()
-                .skyColor(8103167)
-                .fogColor(12638463)
-                .waterColor(16502975)
-                .waterFogColor(16563366)
-                .moodSound(BiomeMoodSound.CAVE)
-                .music(MusicType.createIngameMusic(SoundEvents.MUSIC_OVERWORLD_DRIPSTONE_CAVES));
+                .waterColor(16502975);
 
         SpawnSettings.Builder spawners = new SpawnSettings.Builder();
         DefaultBiomeFeatures.addCaveMobs(spawners);
@@ -109,12 +99,7 @@ public class VAOverworldBiomeCreator {
 
     public static Biome createWaspDen(RegistryEntryLookup<PlacedFeature> featureLookup, RegistryEntryLookup<ConfiguredCarver<?>> carverLookup) {
         BiomeEffects.Builder effects = new BiomeEffects.Builder()
-                .skyColor(8103167)
-                .fogColor(12638463)
-                .waterColor(4159204)
-                .waterFogColor(329011)
-                .moodSound(BiomeMoodSound.CAVE)
-                .music(MusicType.createIngameMusic(SoundEvents.MUSIC_OVERWORLD_DRIPSTONE_CAVES));
+                .waterColor(4159204);
 
         SpawnSettings.Builder spawners = new SpawnSettings.Builder();
         DefaultBiomeFeatures.addCaveMobs(spawners);

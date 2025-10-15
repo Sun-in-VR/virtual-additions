@@ -110,7 +110,7 @@ public class EntanglementDriveScreen extends HandledScreen<EntanglementDriveScre
             EntanglementDriveScreen.this.handler.decrementPaymentSlot();
         }
 
-        public void renderWidget(DrawContext context, int mouseX, int mouseY, float delta) {
+        public void method_75752(DrawContext context, int mouseX, int mouseY, float delta) {
             //RenderSystem.setShaderTexture(0, BACKGROUND_TEXTURE);
 
             if (this.isDisabled()) this.setTooltip(null);

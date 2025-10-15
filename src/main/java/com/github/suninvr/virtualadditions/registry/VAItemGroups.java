@@ -1,7 +1,9 @@
 package com.github.suninvr.virtualadditions.registry;
 
 import com.github.suninvr.virtualadditions.VirtualAdditions;
+import com.github.suninvr.virtualadditions.component.GildTypeComponent;
 import net.fabricmc.fabric.api.itemgroup.v1.FabricItemGroup;
+import net.fabricmc.fabric.api.itemgroup.v1.FabricItemGroupEntries;
 import net.fabricmc.fabric.api.itemgroup.v1.ItemGroupEvents;
 import net.minecraft.component.DataComponentTypes;
 import net.minecraft.component.type.ContainerLootComponent;
@@ -24,6 +26,11 @@ public class VAItemGroups {
             .icon(() -> new ItemStack(VAItems.IOLITE))
             .displayName(Text.of("Virtual Additions"))
             .build();
+    public static final RegistryKey<ItemGroup> GILDED_TOOLS_KEY = RegistryKey.of(Registries.ITEM_GROUP.getKey(), idOf("gilded_tools"));
+    public static final ItemGroup GILDED_TOOLS = FabricItemGroup.builder()
+            .icon(() -> new ItemStack(VAItems.TOOL_GILD_SMITHING_TEMPLATE))
+            .displayName(Text.of("Gilded Tools"))
+            .build();
     public static final RegistryKey<ItemGroup> LOOT_TABLES_KEY = RegistryKey.of(Registries.ITEM_GROUP.getKey(), idOf("loot_tables"));
     public static final ItemGroup LOOT_TABLES = FabricItemGroup.builder()
             .icon(() -> new ItemStack(Items.CHEST))
@@ -34,9 +41,42 @@ public class VAItemGroups {
         if (VirtualAdditions.DEBUG) {
             Registry.register(Registries.ITEM_GROUP, VIRTUAL_ADDITIONS_KEY, VIRTUAL_ADDITIONS);
             populateVirtualAdditionsGroup();
+            Registry.register(Registries.ITEM_GROUP, GILDED_TOOLS_KEY, GILDED_TOOLS);
+            populateGildedToolsGroup();
             Registry.register(Registries.ITEM_GROUP, LOOT_TABLES_KEY, LOOT_TABLES);
             populateLootTablesGroup();
         }
+
+    }
+
+    private static void populateGildedToolsGroup() {
+        ItemGroupEvents.modifyEntriesEvent(GILDED_TOOLS_KEY).register(group -> {
+            group.add(Items.SMITHING_TABLE);
+            group.add(VAItems.TOOL_GILD_SMITHING_TEMPLATE);
+            group.add(Items.AMETHYST_SHARD);
+            group.add(Items.COPPER_INGOT);
+            group.add(Items.EMERALD);
+            group.add(Items.QUARTZ);
+            group.add(Items.ECHO_SHARD);
+            group.add(VAItems.IOLITE);
+            addGildedTools(VAItems.COPPER_TOOL_SET, group);
+            addGildedTools(VAItems.IRON_TOOL_SET, group);
+            addGildedTools(VAItems.GOLDEN_TOOL_SET, group);
+            addGildedTools(VAItems.STEEL_TOOL_SET, group);
+            addGildedTools(VAItems.DIAMOND_TOOL_SET, group);
+            addGildedTools(VAItems.NETHERITE_TOOL_SET, group);
+        });
+    }
+
+    private static void addGildedTools(RegistryHelper.ItemRegistryHelper.ToolSet set, FabricItemGroupEntries group) {
+        VARegistries.GILD_TYPE.stream().forEach(type -> {
+            set.forEach(item -> {
+                ItemStack stack = new ItemStack(item);
+                stack.set(VADataComponentTypes.GILD_TYPE_COMPONENT, new GildTypeComponent(VARegistries.GILD_TYPE.getEntry(type)));
+                type.modifyStackOnCrafted(stack);
+                group.add(stack);
+            });
+        });
 
     }
 

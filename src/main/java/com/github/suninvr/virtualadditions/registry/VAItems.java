@@ -228,6 +228,7 @@ public class VAItems {
     public static final Item STEEL_LEGGINGS;
     public static final Item STEEL_BOOTS;
     public static final Item STEEL_HORSE_ARMOR;
+    public static final Item STEEL_NAUTILUS_ARMOR;
     public static final Item EXPOSED_STEEL_BLOCK;
     public static final Item EXPOSED_CUT_STEEL;
     public static final Item EXPOSED_CUT_STEEL_STAIRS;
@@ -707,13 +708,14 @@ public class VAItems {
         STEEL_PICKAXE = register("steel_pickaxe", settings -> new Item(settings.pickaxe(SteelToolMaterial.INSTANCE, 1, -2.8F)), new Item.Settings(), ItemGroups.TOOLS, prev);
         STEEL_AXE = register("steel_axe", settings -> new AxeItem(SteelToolMaterial.INSTANCE, 5.5F, -3.1F, settings), new Item.Settings(), at(ItemGroups.TOOLS, prev), at(ItemGroups.COMBAT, Items.GOLDEN_AXE));
         STEEL_HOE = register("steel_hoe", settings -> new HoeItem(SteelToolMaterial.INSTANCE, -2, -1.0F, settings), new Item.Settings(), ItemGroups.TOOLS, prev);
-        STEEL_SPEAR = register("steel_spear", new Item.Settings().method_75216(SteelToolMaterial.INSTANCE, 1.05F, 1.075F, 0.5F, 3.0F, 7.5F, 4.0F, 5.1F, 10.0F, 4.6F), ItemGroups.COMBAT, Items.GOLDEN_SPEAR);
+        STEEL_SPEAR = register("steel_spear", new Item.Settings().spear(SteelToolMaterial.INSTANCE, 1.05F, 1.075F, 0.5F, 3.0F, 7.5F, 4.0F, 5.1F, 10.0F, 4.6F), ItemGroups.COMBAT, Items.GOLDEN_SPEAR);
         STEEL_HALBERD = register("steel_halberd", HalberdItem::new, VAToolUtil.halberdSettings(new Item.Settings(), SteelToolMaterial.INSTANCE, 9.5F, -3.35F), ItemGroups.COMBAT, GOLDEN_HALBERD);
         STEEL_HELMET = register("steel_helmet", settings -> new Item(settings.armor(VAArmorMaterial.STEEL, EquipmentType.HELMET)), new Item.Settings().maxCount(1).maxDamage(EquipmentType.HELMET.getMaxDamage(24)), ItemGroups.COMBAT, Items.GOLDEN_BOOTS);
         STEEL_CHESTPLATE = register("steel_chestplate", settings -> new Item(settings.armor(VAArmorMaterial.STEEL, EquipmentType.CHESTPLATE)), new Item.Settings().maxCount(1).maxDamage(EquipmentType.CHESTPLATE.getMaxDamage(24)), ItemGroups.COMBAT, prev);
         STEEL_LEGGINGS = register("steel_leggings", settings -> new Item(settings.armor(VAArmorMaterial.STEEL, EquipmentType.LEGGINGS)), new Item.Settings().maxCount(1).maxDamage(EquipmentType.LEGGINGS.getMaxDamage(24)), ItemGroups.COMBAT, prev);
         STEEL_BOOTS = register("steel_boots", settings -> new Item(settings.armor(VAArmorMaterial.STEEL, EquipmentType.BOOTS)), new Item.Settings().maxCount(1).maxDamage(EquipmentType.BOOTS.getMaxDamage(24)), ItemGroups.COMBAT, prev);
         STEEL_HORSE_ARMOR = register("steel_horse_armor", new Item.Settings().horseArmor(VAArmorMaterial.STEEL), at(ItemGroups.COMBAT, Items.GOLDEN_HORSE_ARMOR));
+        STEEL_NAUTILUS_ARMOR = register("steel_nautilus_armor", new Item.Settings().nautilusArmor(VAArmorMaterial.STEEL), at(ItemGroups.COMBAT, Items.GOLDEN_NAUTILUS_ARMOR));
 
         //region Exposed Blocks
 

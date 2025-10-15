@@ -309,6 +309,7 @@ public class VAModelProvider {
                     VAItems.LUMWASP_SPAWN_EGG,
                     VAItems.SPECTRE_SPAWN_EGG,
                     VAItems.STEEL_HORSE_ARMOR,
+                    VAItems.STEEL_NAUTILUS_ARMOR,
                     VAItems.SOULBLOOM_BOAT,
                     VAItems.SOULBLOOM_CHEST_BOAT,
                     VAItems.SPECTRAL_POWDER,
@@ -333,7 +334,7 @@ public class VAModelProvider {
                     VAItems.STEEL_HOE
             );
 
-            generator.method_75342(VAItems.STEEL_SPEAR);
+            generator.registerSpear(VAItems.STEEL_SPEAR);
 
             registerHalberd(generator, VAItems.WOODEN_HALBERD);
             registerHalberd(generator, VAItems.STONE_HALBERD);

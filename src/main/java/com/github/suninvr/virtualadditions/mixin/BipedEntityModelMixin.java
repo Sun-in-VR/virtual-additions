@@ -26,8 +26,8 @@ public abstract class BipedEntityModelMixin<T extends BipedEntityRenderState> ex
         super(root);
     }
 
-    @Inject(method = "positionLeftArm", at = @At("HEAD"), cancellable = true)
-    void virtualAdditions$positionLeftArmForHalberd(T state, CallbackInfo ci) {
+    @Inject(method = "positionRightArm", at = @At("HEAD"), cancellable = true)
+    void virtualAdditions$positionRightArmForHalberd(T state, CallbackInfo ci) {
         if (state.isUsingItem && Boolean.TRUE.equals(state.getData(VARenderers.IS_HOLDING_HALBERD)) && Objects.nonNull(state.getData(VARenderers.HALBERD_READINESS))) {
             float f = state.getData(VARenderers.HALBERD_READINESS);
             float ef = (float) Math.sin(Math.PI * (f / 2));
@@ -43,8 +43,8 @@ public abstract class BipedEntityModelMixin<T extends BipedEntityRenderState> ex
             ci.cancel();
         }
     }
-    @Inject(method = "positionRightArm", at = @At("HEAD"), cancellable = true)
-    void virtualAdditions$positionRightArmForHalberd(T state, CallbackInfo ci) {
+    @Inject(method = "positionLeftArm", at = @At("HEAD"), cancellable = true)
+    void virtualAdditions$positionLeftArmForHalberd(T state, CallbackInfo ci) {
         if (state.isUsingItem && Boolean.TRUE.equals(state.getData(VARenderers.IS_HOLDING_HALBERD)) && Objects.nonNull(state.getData(VARenderers.HALBERD_READINESS))) {
             float f = state.getData(VARenderers.HALBERD_READINESS);
             float ef = (float) Math.sin(Math.PI * (f / 2));
