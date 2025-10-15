@@ -680,11 +680,9 @@ public class VAModelProvider {
         public static void registerHalberd(ItemModelGenerator generator, Item item) {
             ItemModel.Unbaked base = ItemModels.basic(ModelIds.getItemModelId(item));
             ItemModel.Unbaked inHand = ItemModels.basic(ModelIds.getItemSubModelId(item, "_in_hand"));
-            ItemModel.Unbaked inUse = ItemModels.basic(ModelIds.getItemSubModelId(item, "_in_use"));
             Models.HANDHELD.upload(ModelIds.getItemModelId(item), TextureMap.layer0(TextureMap.getId(item)), generator.modelCollector);
             VAModels.HALBERD_IN_HAND.upload(ModelIds.getItemSubModelId(item, "_in_hand"), TextureMap.layer0(TextureMap.getSubId(item, "_in_hand")), generator.modelCollector);
-            VAModels.HALBERD_IN_USE.upload(ModelIds.getItemSubModelId(item, "_in_use"), TextureMap.layer0(TextureMap.getSubId(item, "_in_hand")), generator.modelCollector);
-            generator.output.accept(item, createModelWithInHandAndInUseVariant(base, inHand, inUse), HALBERD_PROPERTIES);
+            generator.output.accept(item, createModelWithInHandVariant(base, inHand), HALBERD_PROPERTIES);
         }
 
         protected void registerSpectralFire(BlockStateModelGenerator generator) {
@@ -736,14 +734,6 @@ public class VAModelProvider {
                 generator.register(item, model);
             }
         }
-    }
-
-    public static ItemModel.Unbaked createModelWithInHandAndInUseVariant(ItemModel.Unbaked model, ItemModel.Unbaked inHandModel, ItemModel.Unbaked inUseModel) {
-        return ItemModels.select(
-                new DisplayContextProperty(),
-                ItemModels.condition(new UsingItemProperty(), inUseModel, inHandModel),
-                ItemModels.switchCase(List.of(ItemDisplayContext.GUI, ItemDisplayContext.GROUND, ItemDisplayContext.FIXED, ItemDisplayContext.ON_SHELF), model)
-        );
     }
 
 
