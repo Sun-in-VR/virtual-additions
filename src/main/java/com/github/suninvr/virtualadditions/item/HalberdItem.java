@@ -1,20 +1,18 @@
 package com.github.suninvr.virtualadditions.item;
 
+import com.github.suninvr.virtualadditions.registry.VAGildTypes;
 import com.github.suninvr.virtualadditions.registry.*;
 import net.minecraft.block.*;
 import net.minecraft.enchantment.EnchantmentHelper;
 import net.minecraft.entity.Entity;
-import net.minecraft.entity.EntityPose;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.attribute.EntityAttributes;
 import net.minecraft.entity.damage.DamageSource;
-import net.minecraft.entity.effect.StatusEffectInstance;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.consume.UseAction;
 import net.minecraft.particle.ParticleTypes;
-import net.minecraft.server.network.ServerPlayerEntity;
 import net.minecraft.server.world.ServerWorld;
 import net.minecraft.sound.SoundCategory;
 import net.minecraft.sound.SoundEvents;
@@ -25,7 +23,6 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Box;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.math.Vec3d;
-import net.minecraft.world.RaycastContext;
 import net.minecraft.world.World;
 import net.minecraft.world.event.GameEvent;
 import org.apache.commons.lang3.mutable.MutableFloat;
@@ -63,14 +60,13 @@ public class HalberdItem extends Item {
             if (world instanceof ServerWorld serverWorld) {
                 //Variable definitions
                 boolean vertical = player.getPitch() >= 60 || player.getPitch() <= -60;
-                boolean hasAppliedPotion = stack.contains(VADataComponentTypes.EFFECTS_ON_HIT);
-                GildType gildType = GildedToolUtil.getGildType(stack);
                 List<Entity> playerMounts = player.getRootVehicle().getPassengerList();
                 MutableInt entitiesHit = new MutableInt(0);
                 Vec3d playerRotation = player.getRotationVector();
                 Vec3d center = player.getEyePos().add(playerRotation.multiply(2.0));
                 Box box = !vertical ? new Box(center.add(-2, -1, -2), center.add(2, 1, 2)) : new Box(center.add(-1, -2, -1), center.add(1, 2, 1));
                 MutableFloat lungePower = new MutableFloat(0.0F);
+
                 EnchantmentHelper.forEachEnchantment(stack, (enchantment, level) -> {
                     enchantment.value().modifyValue(VAEnchantmentEffects.HALBERD_LUNGE_COMPONENT, player.getRandom(), level, lungePower);
                 });
@@ -92,8 +88,7 @@ public class HalberdItem extends Item {
                                 target.takeKnockback(knockback + (lungePower.floatValue() + (velocity * velocity) - 1), player.getX() - target.getX(), player.getZ() - target.getZ());
                                 target.velocityModified = true;
                             }
-                            if (hasAppliedPotion) stack.get(VADataComponentTypes.EFFECTS_ON_HIT).forEachEffect(statusEffectInstance -> target.addStatusEffect(statusEffectInstance, player));
-                            if (gildType.hasHitEffects()) gildType.applyEffectsOnHit(world, target, player);
+                            stack.postDamageEntity(target, player);
                             entitiesHit.increment();
                             player.increaseStat(Stats.DAMAGE_DEALT, Math.round((startingHealth - target.getHealth()) * 10.0F));
                         });
@@ -105,8 +100,6 @@ public class HalberdItem extends Item {
 
                 // Events when at least one mob was hit
                 if (entitiesHit.getValue() > 0) {
-                    if (hasAppliedPotion) stack.set(VADataComponentTypes.EFFECTS_ON_HIT, stack.get(VADataComponentTypes.EFFECTS_ON_HIT).decrementRemainingUses());
-                    stack.damage(1, player, player.getActiveHand());
                     if (readiness >= 1) serverWorld.playSoundFromEntity(null, player, SoundEvents.ENTITY_PLAYER_ATTACK_CRIT, SoundCategory.PLAYERS, 1.0F, 1.0F);
                     else serverWorld.playSoundFromEntity(null, player, SoundEvents.ENTITY_PLAYER_ATTACK_WEAK, SoundCategory.PLAYERS, 1.0F, 1.0F);
                 }
@@ -188,7 +181,7 @@ public class HalberdItem extends Item {
         EnchantmentHelper.forEachEnchantment(stack, (enchantment, level) -> {
             enchantment.value().modifyValue(VAEnchantmentEffects.HALBERD_SWING_COOLDOWN_COMPONENT, entity.getRandom(), level, mutableFloat);
         });
-        if (GildedToolUtil.getGildType(stack).equals(GildTypes.AMETHYST)) mutableFloat.add(-10.0F);
+        if (VAGildTypes.AMETHYST.equals(VAToolUtil.getGildType(stack))) mutableFloat.add(-10.0F);
         if (mutableFloat.floatValue() <= 0) return 0;
         return mutableFloat.floatValue();
     }

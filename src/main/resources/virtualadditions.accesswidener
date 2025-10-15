@@ -43,3 +43,6 @@ accessible method net/minecraft/entity/LivingEntity getAttackKnockbackAgainst (L
 accessible class net/minecraft/client/render/item/HeldItemRenderer$HandRenderType
 accessible method net/minecraft/client/particle/SculkChargePopParticle <init> (Lnet/minecraft/client/world/ClientWorld;DDDDDDLnet/minecraft/client/particle/SpriteProvider;)V
 accessible method net/minecraft/client/particle/BillboardParticle setAlpha (F)V
+accessible method net/minecraft/registry/Registries create (Lnet/minecraft/registry/RegistryKey;Ljava/lang/String;Lnet/minecraft/registry/Registries$Initializer;)Lnet/minecraft/registry/DefaultedRegistry;
+accessible class net/minecraft/registry/Registries$Initializer
+accessible field net/minecraft/advancement/Advancement$Builder sendsTelemetryEvent Z

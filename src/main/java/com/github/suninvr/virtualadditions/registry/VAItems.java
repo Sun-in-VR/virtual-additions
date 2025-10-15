@@ -8,12 +8,8 @@ import net.fabricmc.fabric.api.itemgroup.v1.ItemGroupEvents;
 import net.minecraft.block.*;
 import net.minecraft.component.DataComponentTypes;
 import net.minecraft.component.type.*;
-import net.minecraft.enchantment.Enchantments;
-import net.minecraft.entity.attribute.EntityAttributeModifier;
-import net.minecraft.entity.attribute.EntityAttributes;
 import net.minecraft.item.*;
 import net.minecraft.item.equipment.EquipmentType;
-import net.minecraft.registry.Registries;
 import net.minecraft.registry.RegistryKey;
 import net.minecraft.registry.RegistryKeys;
 import net.minecraft.registry.entry.LazyRegistryEntryReference;
@@ -469,50 +465,6 @@ public class VAItems {
     public static final Item LUMWASP_SPAWN_EGG;
     public static final Item SPECTRE_SPAWN_EGG;
 
-    public static final ToolSet AMETHYST_COPPER_TOOL_SET;
-    public static final ToolSet COPPER_COPPER_TOOL_SET;
-    public static final ToolSet EMERALD_COPPER_TOOL_SET;
-    public static final ToolSet IOLITE_COPPER_TOOL_SET;
-    public static final ToolSet QUARTZ_COPPER_TOOL_SET;
-    public static final ToolSet SCULK_COPPER_TOOL_SET;
-    public static final ToolSet AMETHYST_DIAMOND_TOOL_SET;
-    public static final ToolSet COPPER_DIAMOND_TOOL_SET;
-    public static final ToolSet EMERALD_DIAMOND_TOOL_SET;
-    public static final ToolSet IOLITE_DIAMOND_TOOL_SET;
-    public static final ToolSet QUARTZ_DIAMOND_TOOL_SET;
-    public static final ToolSet SCULK_DIAMOND_TOOL_SET;
-    public static final ToolSet AMETHYST_IRON_TOOL_SET;
-    public static final ToolSet COPPER_IRON_TOOL_SET ;
-    public static final ToolSet EMERALD_IRON_TOOL_SET;
-    public static final ToolSet IOLITE_IRON_TOOL_SET;
-    public static final ToolSet QUARTZ_IRON_TOOL_SET;
-    public static final ToolSet SCULK_IRON_TOOL_SET;
-    public static final ToolSet AMETHYST_GOLDEN_TOOL_SET;
-    public static final ToolSet COPPER_GOLDEN_TOOL_SET;
-    public static final ToolSet EMERALD_GOLDEN_TOOL_SET;
-    public static final ToolSet IOLITE_GOLDEN_TOOL_SET;
-    public static final ToolSet QUARTZ_GOLDEN_TOOL_SET;
-    public static final ToolSet SCULK_GOLDEN_TOOL_SET;
-    public static final ToolSet AMETHYST_NETHERITE_TOOL_SET;
-    public static final ToolSet COPPER_NETHERITE_TOOL_SET;
-    public static final ToolSet EMERALD_NETHERITE_TOOL_SET;
-    public static final ToolSet IOLITE_NETHERITE_TOOL_SET;
-    public static final ToolSet QUARTZ_NETHERITE_TOOL_SET;
-    public static final ToolSet SCULK_NETHERITE_TOOL_SET;
-    public static final ToolSet AMETHYST_STEEL_TOOL_SET;
-    public static final ToolSet COPPER_STEEL_TOOL_SET;
-    public static final ToolSet EMERALD_STEEL_TOOL_SET;
-    public static final ToolSet IOLITE_STEEL_TOOL_SET;
-    public static final ToolSet QUARTZ_STEEL_TOOL_SET;
-    public static final ToolSet SCULK_STEEL_TOOL_SET;
-    
-    public static final ToolSet[] AMETHYST_TOOL_SETS;
-    public static final ToolSet[] COPPER_TOOL_SETS;
-    public static final ToolSet[] EMERALD_TOOL_SETS;
-    public static final ToolSet[] IOLITE_TOOL_SETS;
-    public static final ToolSet[] QUARTZ_TOOL_SETS;
-    public static final ToolSet[] SCULK_TOOL_SETS;
-
     private static final Text TOOL_GILD_APPLIES_TO_TEXT;
     private static final Text TOOL_GILD_INGREDIENTS_TEXT;
     private static final Text TOOL_GILD_BASE_SLOT_DESCRIPTION_TEXT;
@@ -721,13 +673,13 @@ public class VAItems {
 
         //region Halberd
 
-        WOODEN_HALBERD = register("wooden_halberd", HalberdItem::new, GildedToolUtil.halberdSettings(new Item.Settings(), ToolMaterial.WOOD, 7.0F, -3.35F), ItemGroups.COMBAT, Items.NETHERITE_AXE);
-        STONE_HALBERD = register("stone_halberd", HalberdItem::new, GildedToolUtil.halberdSettings(new Item.Settings(), ToolMaterial.STONE, 8.0F, -3.35F), ItemGroups.COMBAT, prev);
-        COPPER_HALBERD = register("copper_halberd", HalberdItem::new, GildedToolUtil.halberdSettings(new Item.Settings(), ToolMaterial.COPPER, 8.0F, -3.35F), ItemGroups.COMBAT, prev);
-        IRON_HALBERD = register("iron_halberd", HalberdItem::new, GildedToolUtil.halberdSettings(new Item.Settings(), ToolMaterial.IRON, 9.0F, -3.35F), ItemGroups.COMBAT, prev);
-        GOLDEN_HALBERD = register("golden_halberd", HalberdItem::new, GildedToolUtil.halberdSettings(new Item.Settings(), ToolMaterial.GOLD, 7.0F, -3.35F), ItemGroups.COMBAT, prev);
-        DIAMOND_HALBERD = register("diamond_halberd", HalberdItem::new, GildedToolUtil.halberdSettings(new Item.Settings(), ToolMaterial.DIAMOND, 10.0F, -3.35F), ItemGroups.COMBAT, prev);
-        NETHERITE_HALBERD = register("netherite_halberd", HalberdItem::new, GildedToolUtil.halberdSettings(new Item.Settings().fireproof(), ToolMaterial.NETHERITE, 11.0F, -3.35F), ItemGroups.COMBAT, prev);
+        WOODEN_HALBERD = register("wooden_halberd", HalberdItem::new, VAToolUtil.halberdSettings(new Item.Settings(), ToolMaterial.WOOD, 7.0F, -3.35F), ItemGroups.COMBAT, Items.NETHERITE_AXE);
+        STONE_HALBERD = register("stone_halberd", HalberdItem::new, VAToolUtil.halberdSettings(new Item.Settings(), ToolMaterial.STONE, 8.0F, -3.35F), ItemGroups.COMBAT, prev);
+        COPPER_HALBERD = register("copper_halberd", HalberdItem::new, VAToolUtil.halberdSettings(new Item.Settings(), ToolMaterial.COPPER, 8.0F, -3.35F), ItemGroups.COMBAT, prev);
+        IRON_HALBERD = register("iron_halberd", HalberdItem::new, VAToolUtil.halberdSettings(new Item.Settings(), ToolMaterial.IRON, 9.0F, -3.35F), ItemGroups.COMBAT, prev);
+        GOLDEN_HALBERD = register("golden_halberd", HalberdItem::new, VAToolUtil.halberdSettings(new Item.Settings(), ToolMaterial.GOLD, 7.0F, -3.35F), ItemGroups.COMBAT, prev);
+        DIAMOND_HALBERD = register("diamond_halberd", HalberdItem::new, VAToolUtil.halberdSettings(new Item.Settings(), ToolMaterial.DIAMOND, 10.0F, -3.35F), ItemGroups.COMBAT, prev);
+        NETHERITE_HALBERD = register("netherite_halberd", HalberdItem::new, VAToolUtil.halberdSettings(new Item.Settings().fireproof(), ToolMaterial.NETHERITE, 11.0F, -3.35F), ItemGroups.COMBAT, prev);
 
         //endregion
 
@@ -756,7 +708,7 @@ public class VAItems {
         STEEL_AXE = register("steel_axe", settings -> new AxeItem(SteelToolMaterial.INSTANCE, 5.5F, -3.1F, settings), new Item.Settings(), at(ItemGroups.TOOLS, prev), at(ItemGroups.COMBAT, Items.GOLDEN_AXE));
         STEEL_HOE = register("steel_hoe", settings -> new HoeItem(SteelToolMaterial.INSTANCE, -2, -1.0F, settings), new Item.Settings(), ItemGroups.TOOLS, prev);
         STEEL_SPEAR = register("steel_spear", new Item.Settings().method_75216(SteelToolMaterial.INSTANCE, 1.05F, 1.075F, 0.5F, 3.0F, 7.5F, 4.0F, 5.1F, 10.0F, 4.6F), ItemGroups.COMBAT, Items.GOLDEN_SPEAR);
-        STEEL_HALBERD = register("steel_halberd", HalberdItem::new, GildedToolUtil.halberdSettings(new Item.Settings(), SteelToolMaterial.INSTANCE, 9.5F, -3.35F), ItemGroups.COMBAT, GOLDEN_HALBERD);
+        STEEL_HALBERD = register("steel_halberd", HalberdItem::new, VAToolUtil.halberdSettings(new Item.Settings(), SteelToolMaterial.INSTANCE, 9.5F, -3.35F), ItemGroups.COMBAT, GOLDEN_HALBERD);
         STEEL_HELMET = register("steel_helmet", settings -> new Item(settings.armor(VAArmorMaterial.STEEL, EquipmentType.HELMET)), new Item.Settings().maxCount(1).maxDamage(EquipmentType.HELMET.getMaxDamage(24)), ItemGroups.COMBAT, Items.GOLDEN_BOOTS);
         STEEL_CHESTPLATE = register("steel_chestplate", settings -> new Item(settings.armor(VAArmorMaterial.STEEL, EquipmentType.CHESTPLATE)), new Item.Settings().maxCount(1).maxDamage(EquipmentType.CHESTPLATE.getMaxDamage(24)), ItemGroups.COMBAT, prev);
         STEEL_LEGGINGS = register("steel_leggings", settings -> new Item(settings.armor(VAArmorMaterial.STEEL, EquipmentType.LEGGINGS)), new Item.Settings().maxCount(1).maxDamage(EquipmentType.LEGGINGS.getMaxDamage(24)), ItemGroups.COMBAT, prev);
@@ -1092,60 +1044,12 @@ public class VAItems {
 
         //region Base Tool Sets
 
-        COPPER_TOOL_SET = new ToolSet(Items.COPPER_SWORD, Items.COPPER_SHOVEL, Items.COPPER_PICKAXE, Items.COPPER_AXE, Items.COPPER_HOE, VAItems.COPPER_HALBERD, ToolMaterial.COPPER, "copper");
-        DIAMOND_TOOL_SET = new ToolSet(Items.DIAMOND_SWORD, Items.DIAMOND_SHOVEL, Items.DIAMOND_PICKAXE, Items.DIAMOND_AXE, Items.DIAMOND_HOE, VAItems.DIAMOND_HALBERD, ToolMaterial.DIAMOND, "diamond");
-        GOLDEN_TOOL_SET = new ToolSet(Items.GOLDEN_SWORD, Items.GOLDEN_SHOVEL, Items.GOLDEN_PICKAXE, Items.GOLDEN_AXE, Items.GOLDEN_HOE, VAItems.GOLDEN_HALBERD, ToolMaterial.GOLD, "golden");
-        IRON_TOOL_SET = new ToolSet(Items.IRON_SWORD, Items.IRON_SHOVEL, Items.IRON_PICKAXE, Items.IRON_AXE, Items.IRON_HOE, VAItems.IRON_HALBERD, ToolMaterial.IRON, "iron");
-        NETHERITE_TOOL_SET = new ToolSet(Items.NETHERITE_SWORD, Items.NETHERITE_SHOVEL, Items.NETHERITE_PICKAXE, Items.NETHERITE_AXE, Items.NETHERITE_HOE, VAItems.NETHERITE_HALBERD, ToolMaterial.NETHERITE, "netherite");
-        STEEL_TOOL_SET = new ToolSet(STEEL_SWORD, STEEL_SHOVEL, STEEL_PICKAXE, STEEL_AXE, STEEL_HOE, VAItems.STEEL_HALBERD, SteelToolMaterial.INSTANCE, "steel");
-
-        //endregion
-
-        //region Gilded Tool Sets
-
-        AMETHYST_COPPER_TOOL_SET = registerGildedToolSet(COPPER_TOOL_SET, GildTypes.AMETHYST);
-        COPPER_COPPER_TOOL_SET = registerGildedToolSet(COPPER_TOOL_SET, GildTypes.COPPER);
-        EMERALD_COPPER_TOOL_SET = registerGildedToolSet(COPPER_TOOL_SET, GildTypes.EMERALD);
-        IOLITE_COPPER_TOOL_SET = registerGildedToolSet(COPPER_TOOL_SET, GildTypes.IOLITE);
-        QUARTZ_COPPER_TOOL_SET = registerGildedToolSet(COPPER_TOOL_SET, GildTypes.QUARTZ);
-        SCULK_COPPER_TOOL_SET = registerGildedToolSet(COPPER_TOOL_SET, GildTypes.SCULK);
-        AMETHYST_DIAMOND_TOOL_SET = registerGildedToolSet(DIAMOND_TOOL_SET, GildTypes.AMETHYST);
-        COPPER_DIAMOND_TOOL_SET = registerGildedToolSet(DIAMOND_TOOL_SET, GildTypes.COPPER);
-        EMERALD_DIAMOND_TOOL_SET = registerGildedToolSet(DIAMOND_TOOL_SET, GildTypes.EMERALD);
-        IOLITE_DIAMOND_TOOL_SET = registerGildedToolSet(DIAMOND_TOOL_SET, GildTypes.IOLITE);
-        QUARTZ_DIAMOND_TOOL_SET = registerGildedToolSet(DIAMOND_TOOL_SET, GildTypes.QUARTZ);
-        SCULK_DIAMOND_TOOL_SET = registerGildedToolSet(DIAMOND_TOOL_SET, GildTypes.SCULK);
-        AMETHYST_IRON_TOOL_SET = registerGildedToolSet(IRON_TOOL_SET, GildTypes.AMETHYST);
-        COPPER_IRON_TOOL_SET = registerGildedToolSet(IRON_TOOL_SET, GildTypes.COPPER);
-        EMERALD_IRON_TOOL_SET = registerGildedToolSet(IRON_TOOL_SET, GildTypes.EMERALD);
-        IOLITE_IRON_TOOL_SET = registerGildedToolSet(IRON_TOOL_SET, GildTypes.IOLITE);
-        QUARTZ_IRON_TOOL_SET = registerGildedToolSet(IRON_TOOL_SET, GildTypes.QUARTZ);
-        SCULK_IRON_TOOL_SET = registerGildedToolSet(IRON_TOOL_SET, GildTypes.SCULK);
-        AMETHYST_GOLDEN_TOOL_SET = registerGildedToolSet(GOLDEN_TOOL_SET, GildTypes.AMETHYST);
-        COPPER_GOLDEN_TOOL_SET = registerGildedToolSet(GOLDEN_TOOL_SET, GildTypes.COPPER);
-        EMERALD_GOLDEN_TOOL_SET = registerGildedToolSet(GOLDEN_TOOL_SET, GildTypes.EMERALD);
-        IOLITE_GOLDEN_TOOL_SET = registerGildedToolSet(GOLDEN_TOOL_SET, GildTypes.IOLITE);
-        QUARTZ_GOLDEN_TOOL_SET = registerGildedToolSet(GOLDEN_TOOL_SET, GildTypes.QUARTZ);
-        SCULK_GOLDEN_TOOL_SET = registerGildedToolSet(GOLDEN_TOOL_SET, GildTypes.SCULK);
-        AMETHYST_NETHERITE_TOOL_SET = registerGildedToolSet(NETHERITE_TOOL_SET, GildTypes.AMETHYST, new Item.Settings().fireproof());
-        COPPER_NETHERITE_TOOL_SET = registerGildedToolSet(NETHERITE_TOOL_SET, GildTypes.COPPER, new Item.Settings().fireproof());
-        EMERALD_NETHERITE_TOOL_SET = registerGildedToolSet(NETHERITE_TOOL_SET, GildTypes.EMERALD, new Item.Settings().fireproof());
-        IOLITE_NETHERITE_TOOL_SET = registerGildedToolSet(NETHERITE_TOOL_SET, GildTypes.IOLITE, new Item.Settings().fireproof());
-        QUARTZ_NETHERITE_TOOL_SET = registerGildedToolSet(NETHERITE_TOOL_SET, GildTypes.QUARTZ, new Item.Settings().fireproof());
-        SCULK_NETHERITE_TOOL_SET = registerGildedToolSet(NETHERITE_TOOL_SET, GildTypes.SCULK, new Item.Settings().fireproof());
-        AMETHYST_STEEL_TOOL_SET = registerGildedToolSet(STEEL_TOOL_SET, GildTypes.AMETHYST, new Item.Settings().fireproof());
-        COPPER_STEEL_TOOL_SET = registerGildedToolSet(STEEL_TOOL_SET, GildTypes.COPPER);
-        EMERALD_STEEL_TOOL_SET = registerGildedToolSet(STEEL_TOOL_SET, GildTypes.EMERALD);
-        IOLITE_STEEL_TOOL_SET = registerGildedToolSet(STEEL_TOOL_SET, GildTypes.IOLITE);
-        QUARTZ_STEEL_TOOL_SET = registerGildedToolSet(STEEL_TOOL_SET, GildTypes.QUARTZ);
-        SCULK_STEEL_TOOL_SET = registerGildedToolSet(STEEL_TOOL_SET, GildTypes.SCULK);
-        
-        AMETHYST_TOOL_SETS = new ToolSet[]{AMETHYST_COPPER_TOOL_SET, AMETHYST_DIAMOND_TOOL_SET, AMETHYST_IRON_TOOL_SET, AMETHYST_GOLDEN_TOOL_SET, AMETHYST_STEEL_TOOL_SET, AMETHYST_NETHERITE_TOOL_SET};
-        COPPER_TOOL_SETS = new ToolSet[]{COPPER_COPPER_TOOL_SET, COPPER_DIAMOND_TOOL_SET, COPPER_IRON_TOOL_SET, COPPER_GOLDEN_TOOL_SET, COPPER_STEEL_TOOL_SET, COPPER_NETHERITE_TOOL_SET};
-        EMERALD_TOOL_SETS = new ToolSet[]{EMERALD_COPPER_TOOL_SET, EMERALD_DIAMOND_TOOL_SET, EMERALD_IRON_TOOL_SET, EMERALD_GOLDEN_TOOL_SET, EMERALD_STEEL_TOOL_SET, EMERALD_NETHERITE_TOOL_SET};
-        IOLITE_TOOL_SETS = new ToolSet[]{IOLITE_COPPER_TOOL_SET, IOLITE_DIAMOND_TOOL_SET, IOLITE_IRON_TOOL_SET, IOLITE_GOLDEN_TOOL_SET, IOLITE_STEEL_TOOL_SET, IOLITE_NETHERITE_TOOL_SET};
-        QUARTZ_TOOL_SETS = new ToolSet[]{QUARTZ_COPPER_TOOL_SET, QUARTZ_DIAMOND_TOOL_SET, QUARTZ_IRON_TOOL_SET, QUARTZ_GOLDEN_TOOL_SET, QUARTZ_STEEL_TOOL_SET, QUARTZ_NETHERITE_TOOL_SET};
-        SCULK_TOOL_SETS = new ToolSet[]{SCULK_COPPER_TOOL_SET, SCULK_DIAMOND_TOOL_SET, SCULK_IRON_TOOL_SET, SCULK_GOLDEN_TOOL_SET, SCULK_STEEL_TOOL_SET, SCULK_NETHERITE_TOOL_SET};
+        COPPER_TOOL_SET = new ToolSet(Items.COPPER_SWORD, Items.COPPER_SHOVEL, Items.COPPER_PICKAXE, Items.COPPER_AXE, Items.COPPER_HOE, VAItems.COPPER_HALBERD, Items.COPPER_SPEAR, ToolMaterial.COPPER, "copper");
+        DIAMOND_TOOL_SET = new ToolSet(Items.DIAMOND_SWORD, Items.DIAMOND_SHOVEL, Items.DIAMOND_PICKAXE, Items.DIAMOND_AXE, Items.DIAMOND_HOE, VAItems.DIAMOND_HALBERD, Items.DIAMOND_SPEAR, ToolMaterial.DIAMOND, "diamond");
+        GOLDEN_TOOL_SET = new ToolSet(Items.GOLDEN_SWORD, Items.GOLDEN_SHOVEL, Items.GOLDEN_PICKAXE, Items.GOLDEN_AXE, Items.GOLDEN_HOE, VAItems.GOLDEN_HALBERD, Items.GOLDEN_SPEAR, ToolMaterial.GOLD, "golden");
+        IRON_TOOL_SET = new ToolSet(Items.IRON_SWORD, Items.IRON_SHOVEL, Items.IRON_PICKAXE, Items.IRON_AXE, Items.IRON_HOE, VAItems.IRON_HALBERD, Items.IRON_SPEAR, ToolMaterial.IRON, "iron");
+        NETHERITE_TOOL_SET = new ToolSet(Items.NETHERITE_SWORD, Items.NETHERITE_SHOVEL, Items.NETHERITE_PICKAXE, Items.NETHERITE_AXE, Items.NETHERITE_HOE, VAItems.NETHERITE_HALBERD, Items.NETHERITE_SPEAR, ToolMaterial.NETHERITE, "netherite");
+        STEEL_TOOL_SET = new ToolSet(STEEL_SWORD, STEEL_SHOVEL, STEEL_PICKAXE, STEEL_AXE, STEEL_HOE, VAItems.STEEL_HALBERD, VAItems.STEEL_SPEAR, SteelToolMaterial.INSTANCE, "steel");
 
         //endregion
 

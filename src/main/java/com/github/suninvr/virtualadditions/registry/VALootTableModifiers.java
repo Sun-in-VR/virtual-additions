@@ -1,6 +1,7 @@
 package com.github.suninvr.virtualadditions.registry;
 
 import com.github.suninvr.virtualadditions.component.ExplosiveContentComponent;
+import com.github.suninvr.virtualadditions.component.GildTypeComponent;
 import net.fabricmc.fabric.api.loot.v3.LootTableEvents;
 import net.minecraft.block.Block;
 import net.minecraft.block.Blocks;
@@ -15,7 +16,6 @@ import net.minecraft.loot.LootPool;
 import net.minecraft.loot.LootTable;
 import net.minecraft.loot.LootTables;
 import net.minecraft.loot.condition.*;
-import net.minecraft.loot.context.LootContext;
 import net.minecraft.loot.entry.AlternativeEntry;
 import net.minecraft.loot.entry.ItemEntry;
 import net.minecraft.loot.function.*;
@@ -23,8 +23,6 @@ import net.minecraft.loot.provider.number.ConstantLootNumberProvider;
 import net.minecraft.loot.provider.number.UniformLootNumberProvider;
 import net.minecraft.predicate.BlockPredicate;
 import net.minecraft.predicate.StatePredicate;
-import net.minecraft.predicate.entity.EntityFlagsPredicate;
-import net.minecraft.predicate.entity.EntityPredicate;
 import net.minecraft.predicate.entity.LocationPredicate;
 import net.minecraft.predicate.item.ItemPredicate;
 import net.minecraft.registry.*;
@@ -197,10 +195,11 @@ public class VALootTableModifiers {
                 final int[] i = {0};
                 tableBuilder.modifyPools(builder -> {
                     if (i[0] == 0) {
-                        builder.with(ItemEntry.builder(EMERALD_DIAMOND_TOOL_SET.HOE())
+                        builder.with(ItemEntry.builder(Items.DIAMOND_HOE)
                                 .weight(2)
                                 .apply(SetCountLootFunction.builder(ConstantLootNumberProvider.create(1)))
                                 .apply(SetDamageLootFunction.builder(UniformLootNumberProvider.create(0.8F, 1), false))
+                                .apply(SetComponentsLootFunction.builder(VADataComponentTypes.GILD_TYPE_COMPONENT, new GildTypeComponent(VARegistries.GILD_TYPE.getEntry(VAGildTypes.EMERALD))))
                         );
                     }
                     i[0]++;

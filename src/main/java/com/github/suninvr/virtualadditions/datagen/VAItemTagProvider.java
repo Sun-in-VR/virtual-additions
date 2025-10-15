@@ -1,8 +1,5 @@
 package com.github.suninvr.virtualadditions.datagen;
 
-import com.github.suninvr.virtualadditions.item.GildType;
-import com.github.suninvr.virtualadditions.item.GildTypes;
-import com.github.suninvr.virtualadditions.item.GildedToolUtil;
 import com.github.suninvr.virtualadditions.registry.RegistryHelper;
 import com.github.suninvr.virtualadditions.registry.VACollections;
 import com.github.suninvr.virtualadditions.registry.VAItemTags;
@@ -172,22 +169,23 @@ public final class VAItemTagProvider {
                     Items.NETHER_STAR
             );
 
-            configureToolSets(VAItemTags.ACID_RESISTANT,
-                    VAItems.AMETHYST_NETHERITE_TOOL_SET,
-                    VAItems.COPPER_NETHERITE_TOOL_SET,
-                    VAItems.EMERALD_NETHERITE_TOOL_SET,
-                    VAItems.QUARTZ_NETHERITE_TOOL_SET,
-                    VAItems.SCULK_NETHERITE_TOOL_SET,
-                    VAItems.IOLITE_NETHERITE_TOOL_SET
-                    );
-
             addTo(VAItemTags.ACCEPTS_APPLIED_EFFECTS, Items.TRIDENT, Items.MACE)
                     .addOptionalTag(ItemTags.SWORDS.id())
                     .addOptionalTag(ItemTags.SHOVELS.id())
                     .addOptionalTag(ItemTags.PICKAXES.id())
                     .addOptionalTag(ItemTags.AXES.id())
                     .addOptionalTag(ItemTags.HOES.id())
+                    .addOptionalTag(ItemTags.SPEARS.id())
                     .addOptionalTag(VAItemTags.HALBERDS.id());
+
+            addTo(VAItemTags.ACCEPTS_TOOL_GILDS,
+                    Items.COPPER_SWORD, Items.COPPER_SHOVEL, Items.COPPER_PICKAXE, Items.COPPER_AXE, Items.COPPER_HOE, Items.COPPER_SPEAR, VAItems.COPPER_HALBERD,
+                    Items.IRON_SWORD, Items.IRON_SHOVEL, Items.IRON_PICKAXE, Items.IRON_AXE, Items.IRON_HOE, Items.IRON_SPEAR, VAItems.IRON_HALBERD,
+                    Items.GOLDEN_SWORD, Items.GOLDEN_SHOVEL, Items.GOLDEN_PICKAXE, Items.GOLDEN_AXE, Items.GOLDEN_HOE, Items.GOLDEN_SPEAR, VAItems.GOLDEN_HALBERD,
+                    VAItems.STEEL_SWORD, VAItems.STEEL_SHOVEL, VAItems.STEEL_PICKAXE, VAItems.STEEL_AXE, VAItems.STEEL_HOE, VAItems.STEEL_SPEAR, VAItems.STEEL_HALBERD,
+                    Items.DIAMOND_SWORD, Items.DIAMOND_SHOVEL, Items.DIAMOND_PICKAXE, Items.DIAMOND_AXE, Items.DIAMOND_HOE, Items.DIAMOND_SPEAR, VAItems.DIAMOND_HALBERD,
+                    Items.NETHERITE_SWORD, Items.NETHERITE_SHOVEL, Items.NETHERITE_PICKAXE, Items.NETHERITE_AXE, Items.NETHERITE_HOE, Items.NETHERITE_SPEAR, VAItems.NETHERITE_HALBERD
+            );
 
             addTo(VAItemTags.BASE_DYE, 
                     Items.RED_DYE,
@@ -291,12 +289,6 @@ public final class VAItemTagProvider {
             );
 
             configureToolSet(VAItems.STEEL_TOOL_SET);
-            configureGildedToolSet(VAItems.AMETHYST_TOOL_SETS);
-            configureGildedToolSet(VAItems.COPPER_TOOL_SETS);
-            configureGildedToolSet(VAItems.EMERALD_TOOL_SETS);
-            configureGildedToolSet(VAItems.IOLITE_TOOL_SETS);
-            configureGildedToolSet(VAItems.QUARTZ_TOOL_SETS);
-            configureGildedToolSet(VAItems.SCULK_TOOL_SETS);
 
             addTo(VAItemTags.HALBERDS, VAItems.WOODEN_HALBERD, VAItems.STONE_HALBERD, VAItems.COPPER_HALBERD, VAItems.IRON_HALBERD, VAItems.GOLDEN_HALBERD, VAItems.STEEL_HALBERD, VAItems.DIAMOND_HALBERD, VAItems.NETHERITE_HALBERD);
             getTagBuilder(VAItemTags.HALBERD_ENCHANTABLE).addOptionalTag(VAItemTags.HALBERDS.id());
@@ -437,27 +429,6 @@ public final class VAItemTagProvider {
                         case PRESSURE_PLATE -> addTo(ItemTags.WOODEN_PRESSURE_PLATES, block.asItem());
                     }
                 });
-            }
-        }
-
-        protected void configureGildedToolSet(RegistryHelper.ItemRegistryHelper.ToolSet... sets) {
-            for (RegistryHelper.ItemRegistryHelper.ToolSet set : sets) {
-                configureToolSet(set);
-                Item[] items = set.getItems();
-                GildType type = GildedToolUtil.getGildType(set.AXE());
-                if (type != GildTypes.NONE) {
-                    addTo(VAItemTags.GILDED_TOOLS, items);
-                    addTo(type.getTag(), items);
-                    addTo(type.getAxesTag(), set.AXE());
-                    addTo(type.getHoesTag(), set.HOE());
-                    addTo(type.getPickaxesTag(), set.PICKAXE());
-                    addTo(type.getShovelsTag(), set.SHOVEL());
-                    addTo(type.getSwordsTag(), set.SWORD());
-                    addTo(type.getHalberdsTag(), set.HALBERD());
-                }
-                if (set.NAME().contains("golden")) {
-                    addTo(ItemTags.PIGLIN_LOVED, items);
-                }
             }
         }
 

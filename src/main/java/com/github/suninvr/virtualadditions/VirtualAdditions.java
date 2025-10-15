@@ -1,5 +1,6 @@
 package com.github.suninvr.virtualadditions;
 
+import com.github.suninvr.virtualadditions.registry.VAGildTypes;
 import com.github.suninvr.virtualadditions.registry.*;
 import net.fabricmc.api.ModInitializer;
 import net.fabricmc.fabric.api.resource.ResourceManagerHelper;
@@ -53,6 +54,8 @@ public class VirtualAdditions implements ModInitializer {
 				}
 		);
 
+		VARegistries.init();
+
         VAAdvancementCriteria.init();
         VAArmorTrimMaterials.init();
         VAArmorTrimPatterns.init();
@@ -61,6 +64,7 @@ public class VirtualAdditions implements ModInitializer {
 		VABlockEntityType.init();
 		VABlockTags.init();
 		VACallbacks.init();
+		VACommands.init();
 		VADamageTypes.init();
 		VADataComponentTypes.init();
 		VADyeColors.init();
@@ -72,6 +76,7 @@ public class VirtualAdditions implements ModInitializer {
 		VAFluids.init();
 		VAGameEventTags.init();
 		VAGameRules.init();
+		VAGildTypes.init();
 		VAItems.init();
 		VALootTables.init();
 		VAItemGroups.init();

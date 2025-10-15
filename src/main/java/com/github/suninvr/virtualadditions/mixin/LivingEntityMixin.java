@@ -1,8 +1,8 @@
 package com.github.suninvr.virtualadditions.mixin;
 
 import com.github.suninvr.virtualadditions.entity.SpectreEntity;
-import com.github.suninvr.virtualadditions.item.GildTypes;
-import com.github.suninvr.virtualadditions.item.interfaces.GildedToolItem;
+import com.github.suninvr.virtualadditions.item.VAToolUtil;
+import com.github.suninvr.virtualadditions.registry.VAGildTypes;
 import com.github.suninvr.virtualadditions.registry.VABlockTags;
 import com.github.suninvr.virtualadditions.registry.VAStatusEffects;
 import net.minecraft.block.BlockState;
@@ -60,7 +60,7 @@ public abstract class LivingEntityMixin extends Entity {
             Entity entity = source.getAttacker();
             if (entity instanceof PlayerEntity playerEntity) {
                 ItemStack stack = playerEntity.getMainHandStack();
-                if (GildedToolItem.getGildType(stack).equals(GildTypes.EMERALD)) {
+                if (VAGildTypes.EMERALD.equals(VAToolUtil.getGildType(stack))) {
                     this.experienceMultiplier = 1.6F;
                 }
             }
@@ -81,8 +81,8 @@ public abstract class LivingEntityMixin extends Entity {
 
     @Inject(method = "applyDamage", at = @At("TAIL"))
     void virtualAdditions$spreadDamageForFesteringWoundsEffect(ServerWorld world, DamageSource source, float amount, CallbackInfo ci) {
-        if (this.hasStatusEffect(VAStatusEffects.FESTERING_WOUNDS) && this.lastHurtByFesteringWounds != world.method_75260()) {
-            this.lastHurtByFesteringWounds = world.method_75260();
+        if (this.hasStatusEffect(VAStatusEffects.FESTERING_WOUNDS) && this.lastHurtByFesteringWounds != world.getTime()) {
+            this.lastHurtByFesteringWounds = world.getTime();
             world.getNonSpectatingEntities(LivingEntity.class, this.getBoundingBox().expand(12, 12, 12)).stream().filter(entity -> entity != (Object)this).forEach(entity -> {
                 if (entity.hasStatusEffect(VAStatusEffects.FESTERING_WOUNDS)) {
                     if (entity.damage(world, source, amount)) {

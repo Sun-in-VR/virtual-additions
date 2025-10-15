@@ -94,7 +94,7 @@ public class SpotlightBlockEntity extends BlockEntity implements GameEventListen
         @Override
         public boolean listen(ServerWorld world, RegistryEntry<GameEvent> event, GameEvent.Emitter emitter, Vec3d emitterPos) {
             if (!event.isIn(VAGameEventTags.NOTIFIES_SPOTLIGHT)) return false;
-            if (!SpotlightBlockEntity.this.canUpdate(world.method_75260())) return false;
+            if (!SpotlightBlockEntity.this.canUpdate(world.getTime())) return false;
             Vec3d pos = this.getPositionSource().getPos(world).get();
             world.scheduleBlockTick(BlockPos.ofFloored(pos), VABlocks.SPOTLIGHT, 1);
             return true;

@@ -1,10 +1,9 @@
 package com.github.suninvr.virtualadditions.mixin;
 
-import com.github.suninvr.virtualadditions.VirtualAdditions;
 import com.github.suninvr.virtualadditions.entity.PlayerProjectionEntity;
 import com.github.suninvr.virtualadditions.interfaces.PlayerEntityInterface;
-import com.github.suninvr.virtualadditions.item.GildTypes;
-import com.github.suninvr.virtualadditions.item.GildedToolUtil;
+import com.github.suninvr.virtualadditions.item.VAToolUtil;
+import com.github.suninvr.virtualadditions.registry.VAGildTypes;
 import com.github.suninvr.virtualadditions.registry.VADamageTypes;
 import com.github.suninvr.virtualadditions.registry.VAEntityAttributes;
 import com.github.suninvr.virtualadditions.registry.VAItems;
@@ -22,7 +21,6 @@ import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.server.world.ServerWorld;
 import net.minecraft.world.World;
-import org.apache.logging.log4j.Level;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.Unique;
@@ -77,7 +75,7 @@ public abstract class PlayerEntityMixin extends LivingEntity implements PlayerEn
         if (f.get() <= 1.0F) return;
         PlayerEntity player = ((PlayerEntity)(Object)this);
         ItemStack stack = player.getMainHandStack();
-        if (GildedToolUtil.getGildType(stack).equals(GildTypes.SCULK)) {
+        if (VAGildTypes.SCULK.equals(VAToolUtil.getGildType(stack))) {
             f.set((float) (f.get() - player.getAttributeValue(EntityAttributes.MINING_EFFICIENCY)));
         }
     }

@@ -89,10 +89,10 @@ public abstract class EntityMixin implements Nameable, EntityLike, CommandOutput
     }
 
     public boolean virtualAdditions$hasUsedMiniPortalThisTick() {
-        return this.world.method_75260() == this.lastUsedMiniPortal;
+        return this.world.getTime() == this.lastUsedMiniPortal;
     }
 
     public void virtualAdditions$setUsedMiniPortal() {
-        this.lastUsedMiniPortal = this.world.method_75260();
+        this.lastUsedMiniPortal = this.world.getTime();
     }
 }

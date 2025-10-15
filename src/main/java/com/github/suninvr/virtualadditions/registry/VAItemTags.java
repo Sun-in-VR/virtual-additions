@@ -22,6 +22,7 @@ public class VAItemTags {
     public static final TagKey<Item> REPAIRS_STEEL_ARMOR = TagKey.of(RegistryKeys.ITEM, idOf("repairs_steel_armor"));
     public static final TagKey<Item> ROCK_SALT_ORES = TagKey.of(RegistryKeys.ITEM, idOf("rock_salt_ores"));
     public static final TagKey<Item> ACCEPTS_APPLIED_EFFECTS = TagKey.of(RegistryKeys.ITEM, idOf("accepts_applied_effects"));
+    public static final TagKey<Item> ACCEPTS_TOOL_GILDS = TagKey.of(RegistryKeys.ITEM, idOf("accepts_tool_gilds"));
     public static final TagKey<Item> HALBERDS = TagKey.of(RegistryKeys.ITEM, idOf("halberds"));
     public static final TagKey<Item> HALBERD_ENCHANTABLE = TagKey.of(RegistryKeys.ITEM, idOf("enchantable/halberd"));
     public static final TagKey<Item> PUMMELING_ENCHANTABLE = TagKey.of(RegistryKeys.ITEM, idOf("enchantable/pummeling"));

@@ -1,7 +1,11 @@
 {
   "display": {
     "icon": {
-      "id": "virtual_additions:amethyst_diamond_pickaxe"
+      "id": "virtual_additions:steel_pickaxe",
+      "components": {
+        "virtual_additions:gild_type": {
+          "type": "virtual_additions:amethyst"
+        }}
     },
     "title": {
       "translate": "advancements.virtual_additions.story.gild_tool.title"
@@ -15,14 +19,100 @@
   },
   "parent": "virtual_additions:story/smelt_steel",
   "criteria": {
-    "requirement": {
+    "amethyst": {
       "trigger": "minecraft:inventory_changed",
       "conditions": {
-        "items": [{
-          "items": "#virtual_additions:gilded_tools"
-          }]
+        "items": [
+          {
+            "components": {
+              "virtual_additions:gild_type": {
+                "type": "virtual_additions:amethyst"
+              }
+            }
+          }
+        ]
+      }
+    },
+    "copper": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "components": {
+              "virtual_additions:gild_type": {
+                "type": "virtual_additions:copper"
+              }
+            }
+          }
+        ]
+      }
+    },
+    "emerald": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "components": {
+              "virtual_additions:gild_type": {
+                "type": "virtual_additions:emerald"
+              }
+            }
+          }
+        ]
+      }
+    },
+    "quartz": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "components": {
+              "virtual_additions:gild_type": {
+                "type": "virtual_additions:quartz"
+              }
+            }
+          }
+        ]
+      }
+    },
+    "sculk": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "components": {
+              "virtual_additions:gild_type": {
+                "type": "virtual_additions:sculk"
+              }
+            }
+          }
+        ]
+      }
+    },
+    "iolite": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "components": {
+              "virtual_additions:gild_type": {
+                "type": "virtual_additions:iolite"
+              }
+            }
+          }
+        ]
       }
     }
   },
+  "requirements": [
+    [
+      "amethyst",
+      "copper",
+      "emerald",
+      "quartz",
+      "sculk",
+      "iolite"
+    ]
+  ],
   "sends_telemetry_event": false
 }

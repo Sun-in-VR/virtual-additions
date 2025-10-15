@@ -86,7 +86,7 @@ public class SpectreBuffEntityGoal extends Goal {
 
     @Override
     public boolean shouldContinue() {
-        return this.canStartTargetMob(this.target) && this.mob.getEntityWorld().method_75260() - this.targetLastSeen < 100;
+        return this.canStartTargetMob(this.target) && this.mob.getEntityWorld().getTime() - this.targetLastSeen < 100;
     }
 
     @Override
@@ -111,7 +111,7 @@ public class SpectreBuffEntityGoal extends Goal {
             this.mob.getLookControl().lookAt(this.target, 10.0F, this.mob.getMaxLookPitchChange());
             if (--this.updateCountdownTicks <= 0) {
                 boolean bl = this.mob.getVisibilityCache().canSee(this.target);
-                if (bl) this.targetLastSeen = this.mob.getEntityWorld().method_75260();
+                if (bl) this.targetLastSeen = this.mob.getEntityWorld().getTime();
                 this.updateCountdownTicks = this.getTickCount(10);
                 double targetY = this.target.getEyeY();
                 double d = this.mob.getX() - this.target.getX();

@@ -1,7 +1,5 @@
 package com.github.suninvr.virtualadditions.registry;
 
-import com.github.suninvr.virtualadditions.VirtualAdditions;
-import com.github.suninvr.virtualadditions.item.*;
 import net.fabricmc.fabric.api.itemgroup.v1.ItemGroupEvents;
 import net.minecraft.block.AbstractBlock;
 import net.minecraft.block.Block;
@@ -32,9 +30,9 @@ public class RegistryHelper {
 
     public static class ItemRegistryHelper {
 
-        public record ToolSet(Item SWORD, Item SHOVEL, Item PICKAXE, Item AXE, Item HOE, Item HALBERD, ToolMaterial MATERIAL, String NAME){
+        public record ToolSet(Item SWORD, Item SHOVEL, Item PICKAXE, Item AXE, Item HOE, Item HALBERD, Item SPEAR, ToolMaterial MATERIAL, String NAME){
             public Item[] getItems() {
-                return new Item[]{AXE, HOE, PICKAXE, SHOVEL, SWORD, HALBERD};
+                return new Item[]{AXE, HOE, PICKAXE, SHOVEL, SWORD, HALBERD, SPEAR};
             }
 
             public void forEach(Consumer<Item> consumer) {
@@ -44,6 +42,7 @@ public class RegistryHelper {
                 consumer.accept(SHOVEL);
                 consumer.accept(SWORD);
                 consumer.accept(HALBERD);
+                consumer.accept(SPEAR);
             }
         }
 
@@ -196,34 +195,6 @@ public class RegistryHelper {
 
         public static net.minecraft.item.Item registerBlockItem(String id, Block block, ItemGroupLocation[] locations, FeatureFlag... features) { // Create and register a block item, give several locations, assign required feature flags
             return register(id, new BlockItem(block, new Item.Settings().translationKey(block.getTranslationKey()).registryKey(RegistryKey.of(RegistryKeys.ITEM, idOf(id))).requires(features)), locations);
-        }
-
-        public static ToolSet registerGildedToolSet(ToolSet baseSet, GildType type) {
-            String newName = type.getId().getPath() +"_"+ baseSet.NAME;
-            return new ToolSet(
-                    register(newName +"_sword", settings -> new GildedSwordItem(type, baseSet.MATERIAL, baseSet.SWORD, settings), new Item.Settings()),
-                    register(newName +"_shovel", settings -> new GildedShovelItem(type, baseSet.MATERIAL, (ShovelItem) baseSet.SHOVEL, settings), new Item.Settings()),
-                    register(newName +"_pickaxe", settings -> new GildedPickaxeItem(type, baseSet.MATERIAL, baseSet.PICKAXE, settings), new Item.Settings()),
-                    register(newName +"_axe", settings -> new GildedAxeItem(type, baseSet.MATERIAL, (AxeItem) baseSet.AXE, settings), new Item.Settings()),
-                    register(newName +"_hoe", settings -> new GildedHoeItem(type, baseSet.MATERIAL, (HoeItem) baseSet.HOE, settings), new Item.Settings()),
-                    register(newName +"_halberd", settings -> new GildedHalberdItem(type, baseSet.MATERIAL, baseSet.HALBERD, settings), new Item.Settings()),
-                    type.getModifiedMaterial(baseSet.MATERIAL).asToolMaterial(),
-                    newName
-            );
-        }
-
-        public static ToolSet registerGildedToolSet(ToolSet baseSet, GildType type, Item.Settings baseSettings) {
-            String newName = type.getId().getPath() +"_"+ baseSet.NAME;
-            return new ToolSet(
-                    register(newName +"_sword", settings -> new GildedSwordItem(type, baseSet.MATERIAL, baseSet.SWORD, settings), baseSettings),
-                    register(newName +"_shovel", settings -> new GildedShovelItem(type, baseSet.MATERIAL, (ShovelItem) baseSet.SHOVEL, settings), baseSettings),
-                    register(newName +"_pickaxe", settings -> new GildedPickaxeItem(type, baseSet.MATERIAL, baseSet.PICKAXE, settings), baseSettings),
-                    register(newName +"_axe", settings -> new GildedAxeItem(type, baseSet.MATERIAL, (AxeItem) baseSet.AXE, settings), baseSettings),
-                    register(newName +"_hoe", settings -> new GildedHoeItem(type, baseSet.MATERIAL, (HoeItem) baseSet.HOE, settings), baseSettings),
-                    register(newName +"_halberd", settings -> new GildedHalberdItem(type, baseSet.MATERIAL, baseSet.HALBERD, settings), baseSettings),
-                    type.getModifiedMaterial(baseSet.MATERIAL).asToolMaterial(),
-                    newName
-            );
         }
     }
 }

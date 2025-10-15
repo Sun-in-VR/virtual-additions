@@ -2,8 +2,10 @@ package com.github.suninvr.virtualadditions.datagen;
 
 import com.github.suninvr.virtualadditions.block.SpotlightBlock;
 import com.github.suninvr.virtualadditions.client.render.item.CrossbowProjectileTypeProperty;
+import com.github.suninvr.virtualadditions.client.render.item.GildTypeProperty;
 import com.github.suninvr.virtualadditions.datagen.registry.VAModels;
-import com.github.suninvr.virtualadditions.item.interfaces.GildedToolItem;
+import com.github.suninvr.virtualadditions.item.gild.GildType;
+import com.github.suninvr.virtualadditions.registry.VAGildTypes;
 import com.github.suninvr.virtualadditions.registry.*;
 import com.github.suninvr.virtualadditions.registry.collection.ColorfulBlockSet;
 import net.fabricmc.fabric.api.client.datagen.v1.provider.FabricModelProvider;
@@ -44,10 +46,10 @@ import net.minecraft.world.biome.FoliageColors;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
-import java.util.Map;
 
 import static com.github.suninvr.virtualadditions.VirtualAdditions.idOf;
 import static net.minecraft.client.data.ItemModelGenerator.*;
+import static net.minecraft.client.data.ItemModelGenerator.createModelWithInHandVariant;
 
 public class VAModelProvider {
 
@@ -267,13 +269,6 @@ public class VAModelProvider {
 
         @Override
         public void generateItemModels(ItemModelGenerator generator) {
-            generateGildedToolItemModels(generator, VAItems.AMETHYST_TOOL_SETS);
-            generateGildedToolItemModels(generator, VAItems.COPPER_TOOL_SETS);
-            generateGildedToolItemModels(generator, VAItems.EMERALD_TOOL_SETS);
-            generateGildedToolItemModels(generator, VAItems.IOLITE_TOOL_SETS);
-            generateGildedToolItemModels(generator, VAItems.QUARTZ_TOOL_SETS);
-            generateGildedToolItemModels(generator, VAItems.SCULK_TOOL_SETS);
-
             registerSimpleItems(generator,
                     VAItems.CHARTREUSE_DYE,
                     VAItems.MAROON_DYE,
@@ -386,6 +381,8 @@ public class VAModelProvider {
 
         @Override
         public void generateItemModels(ItemModelGenerator itemModelGenerator) {
+            uploadGildedToolModels(itemModelGenerator, VAItems.COPPER_TOOL_SET, VAItems.IRON_TOOL_SET, VAItems.GOLDEN_TOOL_SET, VAItems.STEEL_TOOL_SET, VAItems.DIAMOND_TOOL_SET, VAItems.NETHERITE_TOOL_SET);
+
             registerArmorSetWithExtendedTrimMaterials(itemModelGenerator,
                     VAItems.STEEL_HELMET,
                     VAItems.STEEL_CHESTPLATE,
@@ -441,7 +438,8 @@ public class VAModelProvider {
 
     @SuppressWarnings("SameParameterValue")
     private abstract static class Provider extends FabricModelProvider {
-        protected static final ItemAsset.Properties HALBERD_PROPERTIES = new ItemAsset.Properties(true, false, 1.2F);
+        protected static final ItemAsset.Properties HALBERD_PROPERTIES = new ItemAsset.Properties(true, false, 1.7F);
+        protected static final ItemAsset.Properties SPEAR_PROPERTIES = new ItemAsset.Properties(true, false, 1.9F);
 
         private static final List<ItemModelGenerator.TrimMaterial> TRIM_MATERIALS_EXTENDED =
                 List.of(
@@ -460,6 +458,8 @@ public class VAModelProvider {
                         new ItemModelGenerator.TrimMaterial(VAArmorTrimAssets.ROCK_SALT, VAArmorTrimMaterials.ROCK_SALT),
                         new ItemModelGenerator.TrimMaterial(VAArmorTrimAssets.IOLITE, VAArmorTrimMaterials.IOLITE)
                 );
+
+        private static final List<GildType> GILD_TYPES = VARegistries.GILD_TYPE.stream().toList();
 
         public Provider(FabricDataOutput output) {
             super(output);
@@ -499,37 +499,77 @@ public class VAModelProvider {
             s.ifBanner(banner -> s.ifWallBanner(wallBanner -> g.registerBanner(banner, wallBanner, s.dye().getColor())));
         }
 
-        protected void generateGildedToolItemModels(ItemModelGenerator itemModelGenerator, RegistryHelper.ItemRegistryHelper.ToolSet... toolSets) {
-            for (RegistryHelper.ItemRegistryHelper.ToolSet set : toolSets) {
-                uploadGildedToolModels(itemModelGenerator, set);
+        public static void uploadGildedToolModels(ItemModelGenerator itemModelGenerator, RegistryHelper.ItemRegistryHelper.ToolSet... sets) {
+            for (RegistryHelper.ItemRegistryHelper.ToolSet set : sets) {
+                uploadGildedToolModel(itemModelGenerator, VAModels.HANDHELD_TWO_LAYERS, set.SWORD(), "_sword");
+                uploadGildedToolModel(itemModelGenerator, VAModels.HANDHELD_TWO_LAYERS, set.SHOVEL(), "_shovel");
+                uploadGildedToolModel(itemModelGenerator, VAModels.HANDHELD_TWO_LAYERS, set.PICKAXE(), "_pickaxe");
+                uploadGildedToolModel(itemModelGenerator, VAModels.HANDHELD_TWO_LAYERS, set.AXE(), "_axe");
+                uploadGildedToolModel(itemModelGenerator, VAModels.HANDHELD_TWO_LAYERS, set.HOE(), "_hoe");
+                uploadGildedHalberdModel(itemModelGenerator, set.HALBERD(), "_halberd");
+                uploadGildedSpearModel(itemModelGenerator, set.SPEAR(), "_spear");
             }
         }
 
-        public static void uploadGildedToolModels(ItemModelGenerator itemModelGenerator, RegistryHelper.ItemRegistryHelper.ToolSet set) {
-            uploadGildedToolModel(itemModelGenerator, set.SWORD(), "_sword");
-            uploadGildedToolModel(itemModelGenerator, set.SHOVEL(), "_shovel");
-            uploadGildedToolModel(itemModelGenerator, set.PICKAXE(), "_pickaxe");
-            uploadGildedToolModel(itemModelGenerator, set.AXE(), "_axe");
-            uploadGildedToolModel(itemModelGenerator, set.HOE(), "_hoe");
-            uploadGildedHalberdModels(itemModelGenerator, set.HALBERD());
+        public static void uploadGildedToolModel(ItemModelGenerator generator, Model layered, Item item, String suffix) {
+            Identifier itemModelId = ModelIds.getItemModelId(item);
+            List<SelectItemModel.SwitchCase<RegistryKey<GildType>>> list = new ArrayList<>(GILD_TYPES.size());
+
+            ItemModel.Unbaked baseModel = ItemModels.basic(itemModelId);
+
+            ItemModel.Unbaked gilded;
+            for (GildType type : GILD_TYPES) {
+                Identifier gildType = VARegistries.GILD_TYPE.getId(type);
+                Identifier gildLayer = gildType.withSuffixedPath(suffix).withPrefixedPath("item/gilded_tools/");
+                Identifier gildedItem = itemModelId.withSuffixedPath("_with_" + gildType.getPath() + "_gild");
+                gilded = ItemModels.basic(gildedItem);
+                list.add(ItemModels.switchCase(VARegistries.GILD_TYPE.getKey(type).get(), gilded));
+                layered.upload(gildedItem, TextureMap.layered(itemModelId, gildLayer), generator.modelCollector);
+            }
+
+            generator.output.accept(item, ItemModels.select(new GildTypeProperty(), baseModel, list), ItemAsset.Properties.DEFAULT);
         }
 
-        public static void uploadGildedToolModel(ItemModelGenerator itemModelGenerator, Item item, String suffix) {
-            if (item instanceof GildedToolItem gildedToolItem) {
-            Item baseItem = gildedToolItem.getBaseItem();
-            Identifier base = ModelIds.getItemModelId(baseItem);
-            Identifier gild = gildedToolItem.getGildType().getId().withSuffixedPath(suffix).withPrefixedPath("item/gilded_tools/");
-            Identifier id = ModelIds.getItemModelId(item);
-            VAModels.HANDHELD_TWO_LAYERS.upload(id, TextureMap.layered(base, gild), itemModelGenerator.modelCollector);
-            itemModelGenerator.output.accept(item, ItemModels.basic(id), ItemAsset.Properties.DEFAULT);
+        public static void uploadGildedHalberdModel(ItemModelGenerator generator, Item item, String suffix) {
+            Identifier itemModelId = ModelIds.getItemModelId(item);
+            List<SelectItemModel.SwitchCase<RegistryKey<GildType>>> list = new ArrayList<>(GILD_TYPES.size());
+
+            ItemModel.Unbaked baseModel = ItemModels.basic(itemModelId);
+            ItemModel.Unbaked inHandModel = ItemModels.basic(ModelIds.getItemSubModelId(item, "_in_hand"));
+
+            ItemModel.Unbaked gilded;
+            for (GildType type : GILD_TYPES) {
+                Identifier gildType = VARegistries.GILD_TYPE.getId(type);
+                Identifier gildLayer = gildType.withSuffixedPath(suffix).withPrefixedPath("item/gilded_tools/");
+                Identifier gildedItem = itemModelId.withSuffixedPath("_with_" + gildType.getPath() + "_gild");
+                gilded = createModelWithInHandVariant(ItemModels.basic(gildedItem), ItemModels.basic(gildedItem.withSuffixedPath("_in_hand")));
+                list.add(ItemModels.switchCase(VARegistries.GILD_TYPE.getKey(type).get(), gilded));
+                VAModels.HANDHELD_TWO_LAYERS.upload(gildedItem, TextureMap.layered(itemModelId, gildLayer), generator.modelCollector);
+                VAModels.HALBERD_IN_HAND_TWO_LAYERS.upload(gildedItem.withSuffixedPath("_in_hand"), TextureMap.layered(itemModelId.withSuffixedPath("_in_hand"), gildLayer.withSuffixedPath("_in_hand")), generator.modelCollector);
             }
+
+            generator.output.accept(item, ItemModels.select(new GildTypeProperty(), createModelWithInHandVariant(baseModel, inHandModel), list), HALBERD_PROPERTIES);
         }
 
-        public static void uploadGildedHalberdModels(ItemModelGenerator itemModelGenerator, Item item) {
-            if (item instanceof GildedToolItem gildedToolItem) {
-                Identifier gild = gildedToolItem.getGildType().getId().withSuffixedPath("_halberd").withPrefixedPath("item/gilded_tools/");
-                registerLayeredHalberd(itemModelGenerator, item, gildedToolItem.getBaseItem(), gild);
+        public static void uploadGildedSpearModel(ItemModelGenerator generator, Item item, String suffix) {
+            Identifier itemModelId = ModelIds.getItemModelId(item);
+            List<SelectItemModel.SwitchCase<RegistryKey<GildType>>> list = new ArrayList<>(GILD_TYPES.size());
+
+            ItemModel.Unbaked baseModel = ItemModels.basic(itemModelId);
+            ItemModel.Unbaked inHandModel = ItemModels.basic(ModelIds.getItemSubModelId(item, "_in_hand"));
+
+            ItemModel.Unbaked gilded;
+            for (GildType type : GILD_TYPES) {
+                Identifier gildType = VARegistries.GILD_TYPE.getId(type);
+                Identifier gildLayer = gildType.withSuffixedPath(suffix).withPrefixedPath("item/gilded_tools/");
+                Identifier gildedItem = itemModelId.withSuffixedPath("_with_" + gildType.getPath() + "_gild");
+                gilded = createModelWithInHandVariant(ItemModels.basic(gildedItem), ItemModels.basic(gildedItem.withSuffixedPath("_in_hand")));
+                list.add(ItemModels.switchCase(VARegistries.GILD_TYPE.getKey(type).get(), gilded));
+                Models.GENERATED_TWO_LAYERS.upload(gildedItem, TextureMap.layered(itemModelId, gildLayer), generator.modelCollector);
+                VAModels.SPEAR_IN_HAND_TWO_LAYERS.upload(gildedItem.withSuffixedPath("_in_hand"), TextureMap.layered(itemModelId.withSuffixedPath("_in_hand"), gildLayer.withSuffixedPath("_in_hand")), generator.modelCollector);
             }
+
+            generator.output.accept(item, ItemModels.select(new GildTypeProperty(), createModelWithInHandVariant(baseModel, inHandModel), list), SPEAR_PROPERTIES);
         }
 
         protected void registerSpotlight(BlockStateModelGenerator generator) {
@@ -643,16 +683,6 @@ public class VAModelProvider {
             Models.HANDHELD.upload(ModelIds.getItemModelId(item), TextureMap.layer0(TextureMap.getId(item)), generator.modelCollector);
             VAModels.HALBERD_IN_HAND.upload(ModelIds.getItemSubModelId(item, "_in_hand"), TextureMap.layer0(TextureMap.getSubId(item, "_in_hand")), generator.modelCollector);
             VAModels.HALBERD_IN_USE.upload(ModelIds.getItemSubModelId(item, "_in_use"), TextureMap.layer0(TextureMap.getSubId(item, "_in_hand")), generator.modelCollector);
-            generator.output.accept(item, createModelWithInHandAndInUseVariant(base, inHand, inUse), HALBERD_PROPERTIES);
-        }
-
-        public static void registerLayeredHalberd(ItemModelGenerator generator, Item item, Item baseItem, Identifier layer) {
-            ItemModel.Unbaked base = ItemModels.basic(ModelIds.getItemModelId(item));
-            ItemModel.Unbaked inHand = ItemModels.basic(ModelIds.getItemSubModelId(item, "_in_hand"));
-            ItemModel.Unbaked inUse = ItemModels.basic(ModelIds.getItemSubModelId(item, "_in_use"));
-            VAModels.HANDHELD_TWO_LAYERS.upload(ModelIds.getItemModelId(item), TextureMap.layered(TextureMap.getId(baseItem), layer), generator.modelCollector);
-            VAModels.HALBERD_IN_HAND_TWO_LAYERS.upload(ModelIds.getItemSubModelId(item, "_in_hand"), TextureMap.layered(TextureMap.getSubId(baseItem, "_in_hand"), layer.withSuffixedPath("_in_hand")), generator.modelCollector);
-            VAModels.HALBERD_IN_USE_TWO_LAYERS.upload(ModelIds.getItemSubModelId(item, "_in_use"), TextureMap.layered(TextureMap.getSubId(baseItem, "_in_hand"), layer.withSuffixedPath("_in_hand")), generator.modelCollector);
             generator.output.accept(item, createModelWithInHandAndInUseVariant(base, inHand, inUse), HALBERD_PROPERTIES);
         }
 

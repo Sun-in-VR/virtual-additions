@@ -1,52 +1,20 @@
 package com.github.suninvr.virtualadditions.registry;
 
-import com.github.suninvr.virtualadditions.component.EffectsOnHitComponent;
-import com.github.suninvr.virtualadditions.item.GildType;
-import com.github.suninvr.virtualadditions.item.GildTypes;
-import com.github.suninvr.virtualadditions.item.GildedToolUtil;
-import com.github.suninvr.virtualadditions.item.interfaces.GildedToolItem;
-import net.fabricmc.fabric.api.event.player.AttackEntityCallback;
+import com.github.suninvr.virtualadditions.item.gild.GildType;
 import net.fabricmc.fabric.api.event.player.PlayerBlockBreakEvents;
-import net.minecraft.component.ComponentMap;
-import net.minecraft.entity.LivingEntity;
-import net.minecraft.entity.effect.StatusEffectInstance;
 import net.minecraft.item.ItemStack;
-import net.minecraft.sound.SoundEvents;
-import net.minecraft.util.ActionResult;
 import net.minecraft.util.Hand;
 
 public class VACallbacks{
 
     public static void init() {
-        AttackEntityCallback.EVENT.register( ((player, world, hand, entity, hitResult) -> {
-            if (player.isSpectator()) return ActionResult.PASS;
-            if (!entity.isAlive()) return ActionResult.PASS;
-            ItemStack stack = player.getStackInHand(hand);
-            if (stack.isEmpty()) return ActionResult.PASS;
-
-            GildType gildType;
-            if (entity instanceof LivingEntity livingEntity && (gildType = GildedToolUtil.getGildType(stack)).hasHitEffects()) {
-                gildType.applyEffectsOnHit(world, livingEntity, player);
-            }
-
-            ComponentMap components = stack.getComponents();
-            if (!components.contains(VADataComponentTypes.EFFECTS_ON_HIT)) return ActionResult.PASS;
-            EffectsOnHitComponent component = components.get(VADataComponentTypes.EFFECTS_ON_HIT);
-            if (entity instanceof LivingEntity livingEntity && component.getRemainingUses() > 0) {
-                component.forEachEffect(livingEntity::addStatusEffect);
-                stack.set(VADataComponentTypes.EFFECTS_ON_HIT, component.decrementRemainingUses());
-            }
-
-            return ActionResult.PASS;
-        } ) );
 
         PlayerBlockBreakEvents.BEFORE.register( (world, player, pos, state, blockEntity) -> {
             if (player.isSpectator()) return true;
             if (player.isCreative()) return true;
             ItemStack tool = player.getStackInHand(Hand.MAIN_HAND);
-            GildType gild = GildedToolItem.getGildType(tool);
-            if (gild.equals(GildTypes.NONE)) return true;
-            if (gild.isGildEffective(world, player, pos, state, tool)) {
+            GildType gild;
+            if (tool.contains(VADataComponentTypes.GILD_TYPE_COMPONENT) && (gild = tool.get(VADataComponentTypes.GILD_TYPE_COMPONENT).type().value()).isGildEffective(world, player, pos, state, tool)) {
                 gild.emitBlockBreakingEffects(world, player, pos, tool);
                 return gild.onBlockBroken(world, player, pos, state, tool);
             }

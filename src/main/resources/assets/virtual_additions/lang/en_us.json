@@ -17,8 +17,8 @@
     "advancements.virtual_additions.story.smelt_steel.description": "Smelt Coal and Iron into a Steel Ingot",
     "advancements.virtual_additions.story.gild_tool.title": "Specialized Equipment",
     "advancements.virtual_additions.story.gild_tool.description": "Craft a Gilded Tool at a Smithing Table",
-    "advancements.virtual_additions.story.apply_all_gilds.title": "Tinkering with Tools",
-    "advancements.virtual_additions.story.apply_all_gilds.description": "Apply every Gild material to every type of Tool at least once",
+    "advancements.virtual_additions.story.gild_all_tools.title": "Tinkering with Tools",
+    "advancements.virtual_additions.story.gild_all_tools.description": "Craft every combination of tool type, tool material, and gild material available.",
 
     "attribute.virtual_additions.critical_hit_factor": "Critical Damage",
 
@@ -378,6 +378,9 @@
     "block.virtual_additions.warp_tether": "Warp Tether",
     "block.virtual_additions.entanglement_drive": "Entanglement Drive",
     "block.virtual_additions.coloring_station": "Coloring Station",
+
+    "commands.virtual_additions.gild.failed.incompatible": "%s cannot support that gild",
+    "commands.virtual_additions.gild.success": "Applied %s to %s's item",
 
     "container.virtual_additions.entanglement_drive": "Entangle Slots",
     "container.virtual_additions.entanglement_drive.select_slot_hint": "Click this slot to select it",

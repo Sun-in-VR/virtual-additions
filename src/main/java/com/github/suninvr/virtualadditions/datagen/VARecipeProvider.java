@@ -4,7 +4,9 @@ import com.github.suninvr.virtualadditions.VirtualAdditions;
 import com.github.suninvr.virtualadditions.block.entity.DyeContents;
 import com.github.suninvr.virtualadditions.datagen.recipe.ArmorColoringRecipeJsonBuilder;
 import com.github.suninvr.virtualadditions.datagen.recipe.ColoringRecipeJsonBuilder;
-import com.github.suninvr.virtualadditions.item.interfaces.GildedToolItem;
+import com.github.suninvr.virtualadditions.datagen.recipe.SmithingGildRecipeJsonBuilder;
+import com.github.suninvr.virtualadditions.item.gild.GildType;
+import com.github.suninvr.virtualadditions.registry.VAGildTypes;
 import com.github.suninvr.virtualadditions.registry.*;
 import com.github.suninvr.virtualadditions.registry.collection.ColorfulBlockSet;
 import net.fabricmc.fabric.api.datagen.v1.FabricDataGenerator;
@@ -229,18 +231,12 @@ public final class VARecipeProvider {
             this.createHalberdRecipe(Items.DIAMOND, VAItems.DIAMOND_HALBERD);
             this.offerNetheriteUpgradeRecipe(VAItems.DIAMOND_HALBERD, RecipeCategory.COMBAT, VAItems.NETHERITE_HALBERD);
 
-            this.offerToolGildRecipes(Items.AMETHYST_SHARD, VAItems.AMETHYST_TOOL_SETS);
-            this.offerToolGildRecipes(Items.COPPER_INGOT, VAItems.COPPER_TOOL_SETS);
-            this.offerToolGildRecipes(Items.EMERALD, VAItems.EMERALD_TOOL_SETS);
-            this.offerToolGildRecipes(VAItems.IOLITE, VAItems.IOLITE_TOOL_SETS);
-            this.offerToolGildRecipes(Items.QUARTZ, VAItems.QUARTZ_TOOL_SETS);
-            this.offerToolGildRecipes(Items.ECHO_SHARD, VAItems.SCULK_TOOL_SETS);
-            this.offerToolUpgradeRecipes(VAItems.AMETHYST_DIAMOND_TOOL_SET, VAItems.AMETHYST_NETHERITE_TOOL_SET);
-            this.offerToolUpgradeRecipes(VAItems.COPPER_DIAMOND_TOOL_SET, VAItems.COPPER_NETHERITE_TOOL_SET);
-            this.offerToolUpgradeRecipes(VAItems.EMERALD_DIAMOND_TOOL_SET, VAItems.EMERALD_NETHERITE_TOOL_SET);
-            this.offerToolUpgradeRecipes(VAItems.IOLITE_DIAMOND_TOOL_SET, VAItems.IOLITE_NETHERITE_TOOL_SET);
-            this.offerToolUpgradeRecipes(VAItems.QUARTZ_DIAMOND_TOOL_SET, VAItems.QUARTZ_NETHERITE_TOOL_SET);
-            this.offerToolUpgradeRecipes(VAItems.SCULK_DIAMOND_TOOL_SET, VAItems.SCULK_NETHERITE_TOOL_SET);
+            this.offerToolGildRecipe(VAItemTags.ACCEPTS_TOOL_GILDS, Items.AMETHYST_SHARD, VAGildTypes.AMETHYST);
+            this.offerToolGildRecipe(VAItemTags.ACCEPTS_TOOL_GILDS, Items.COPPER_INGOT, VAGildTypes.COPPER);
+            this.offerToolGildRecipe(VAItemTags.ACCEPTS_TOOL_GILDS, Items.EMERALD, VAGildTypes.EMERALD);
+            this.offerToolGildRecipe(VAItemTags.ACCEPTS_TOOL_GILDS, Items.QUARTZ, VAGildTypes.QUARTZ);
+            this.offerToolGildRecipe(VAItemTags.ACCEPTS_TOOL_GILDS, Items.ECHO_SHARD, VAGildTypes.SCULK);
+            this.offerToolGildRecipe(VAItemTags.ACCEPTS_TOOL_GILDS, VAItems.IOLITE, VAGildTypes.IOLITE);
 
             this.generateColorfulBlockSetRecipes(VACollections.CHARTREUSE, VAItems.CHARTREUSE_DYE);
             this.generateColorfulBlockSetRecipes(VACollections.MAROON, VAItems.MAROON_DYE);
@@ -761,30 +757,17 @@ public final class VARecipeProvider {
             }
         }
 
-        protected void offerToolGildRecipe(GildedToolItem result, Item addition) {
-            SmithingTransformRecipeJsonBuilder.create(
-                    Ingredient.ofItems(VAItems.TOOL_GILD_SMITHING_TEMPLATE),
-                    Ingredient.ofItems(result.getBaseItem()),
-                    Ingredient.ofItems(addition),
-                    RecipeCategory.TOOLS,
-                    result.asItem()
-            ).criterion("has_smithing_template", conditionsFromItem(VAItems.TOOL_GILD_SMITHING_TEMPLATE)).offerTo(this.exporter, idOf("smithing/" + getItemPath(result)).toString());
+        protected void offerToolGildRecipe(TagKey<Item> tag, Item addition, GildType type) {
+            offerToolGildRecipe(tag, Ingredient.ofItem(addition), type);
         }
-
-        protected void offerToolGildRecipes(Item addition, RegistryHelper.ItemRegistryHelper.ToolSet... sets) {
-            for (RegistryHelper.ItemRegistryHelper.ToolSet set : sets) {
-                for (Item item : set.getItems())
-                    if (item instanceof GildedToolItem gildedToolItem)
-                        offerToolGildRecipe(gildedToolItem, addition);
-            }
-        }
-
-        protected void offerToolUpgradeRecipes(RegistryHelper.ItemRegistryHelper.ToolSet input, RegistryHelper.ItemRegistryHelper.ToolSet output) {
-            offerNetheriteUpgradeRecipe(input.AXE(), output.AXE());
-            offerNetheriteUpgradeRecipe(input.HOE(), output.HOE());
-            offerNetheriteUpgradeRecipe(input.PICKAXE(), output.PICKAXE());
-            offerNetheriteUpgradeRecipe(input.SHOVEL(), output.SHOVEL());
-            offerNetheriteUpgradeRecipe(input.SWORD(), output.SWORD());
+        protected void offerToolGildRecipe(TagKey<Item> tag, Ingredient addition, GildType type) {
+            SmithingGildRecipeJsonBuilder.create(
+                    Ingredient.ofTag(this.registryLookup.getOrThrow(tag)),
+                    addition,
+                    VARegistries.GILD_TYPE.getEntry(type)
+            )
+                    .criterion("has_smithing_template", conditionsFromItem(VAItems.TOOL_GILD_SMITHING_TEMPLATE))
+                    .offerTo(this.exporter, idOf("smithing/" + VARegistries.GILD_TYPE.getId(type).getPath() + "_gild"));
         }
 
         protected void offerNetheriteUpgradeRecipe(Item input, Item result) {

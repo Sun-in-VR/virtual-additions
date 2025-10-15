@@ -67,6 +67,7 @@
     "MouseMixin",
     "NumericPropertiesMixin",
     "PlayerEntityRendererMixin",
+    "SelectPropertiesMixin",
     "TexturedRenderLayersMixin",
     "WorldEventHandlerMixin",
     "WorldRendererMixin"
