@@ -1,7 +1,6 @@
 package com.github.suninvr.virtualadditions.registry;
 
 import com.github.suninvr.virtualadditions.VirtualAdditions;
-import com.github.suninvr.virtualadditions.component.GildTypeComponent;
 import net.fabricmc.fabric.api.itemgroup.v1.FabricItemGroup;
 import net.fabricmc.fabric.api.itemgroup.v1.FabricItemGroupEntries;
 import net.fabricmc.fabric.api.itemgroup.v1.ItemGroupEvents;
@@ -72,7 +71,7 @@ public class VAItemGroups {
         VARegistries.GILD_TYPE.stream().forEach(type -> {
             set.forEach(item -> {
                 ItemStack stack = new ItemStack(item);
-                stack.set(VADataComponentTypes.GILD_TYPE_COMPONENT, new GildTypeComponent(VARegistries.GILD_TYPE.getEntry(type)));
+                stack.set(VADataComponentTypes.GILD_TYPE, type);
                 type.modifyStackOnCrafted(stack);
                 group.add(stack);
             });

@@ -1,6 +1,6 @@
 package com.github.suninvr.virtualadditions.mixin;
 
-import com.github.suninvr.virtualadditions.component.GildTypeComponent;
+import com.github.suninvr.virtualadditions.item.gild.GildType;
 import com.github.suninvr.virtualadditions.registry.VAGildTypes;
 import com.github.suninvr.virtualadditions.registry.VADataComponentTypes;
 import com.llamalad7.mixinextras.injector.wrapoperation.Operation;
@@ -9,6 +9,7 @@ import net.minecraft.block.BlockState;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.network.ClientPlayerInteractionManager;
 import net.minecraft.item.ItemStack;
+import net.minecraft.registry.entry.RegistryEntry;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.GameMode;
 import org.objectweb.asm.Opcodes;
@@ -44,10 +45,10 @@ public abstract class ClientPlayerInteractionManagerMixin {
         int cooldown = original;
         if (client.player == null && !getCurrentGameMode().equals(GameMode.CREATIVE)) return 5;
         ItemStack heldStack = client.player.getMainHandStack();
-        GildTypeComponent gild = heldStack.get(VADataComponentTypes.GILD_TYPE_COMPONENT);
+        GildType gild = heldStack.get(VADataComponentTypes.GILD_TYPE);
         if (heldStack.isSuitableFor(this.brokenState) && gild != null) {
             double d = Math.max(0, (client.player.getBlockBreakingSpeed(this.brokenState) / 10.0) - 1);
-            int y = (gild.type().value().equals(VAGildTypes.AMETHYST) ? 3 : 0) + (int) Math.floor(d);
+            int y = (VAGildTypes.AMETHYST.equals(gild) ? 3 : 0) + (int) Math.floor(d);
             cooldown = Math.max(0, cooldown - y);
         }
         return cooldown;

@@ -38,6 +38,8 @@ public abstract class PlayerEntityMixin extends LivingEntity implements PlayerEn
 
     @Unique private PlayerProjectionEntity projection = null;
 
+    @Unique long lastSwungHalberd;
+
     protected PlayerEntityMixin(EntityType<? extends LivingEntity> entityType, World world) {
         super(entityType, world);
     }
@@ -55,6 +57,16 @@ public abstract class PlayerEntityMixin extends LivingEntity implements PlayerEn
     @Override
     public boolean virtualAdditions$hasProjectionEntity() {
         return this.projection != null;
+    }
+
+    @Override
+    public void virtualAdditions$onHalberdSwing() {
+        this.lastSwungHalberd = this.getEntityWorld().getTime();
+    }
+
+    @Override
+    public long virtualAdditions$lastSwungHalberd() {
+        return this.lastSwungHalberd;
     }
 
     @ModifyVariable(method = "attack", at = @At("STORE"), ordinal = 3)

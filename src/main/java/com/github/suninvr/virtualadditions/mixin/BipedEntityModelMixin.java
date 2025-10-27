@@ -5,6 +5,7 @@ import net.minecraft.client.model.ModelPart;
 import net.minecraft.client.render.entity.model.BipedEntityModel;
 import net.minecraft.client.render.entity.model.EntityModel;
 import net.minecraft.client.render.entity.state.BipedEntityRenderState;
+import net.minecraft.util.Arm;
 import org.spongepowered.asm.mixin.Final;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
@@ -28,36 +29,71 @@ public abstract class BipedEntityModelMixin<T extends BipedEntityRenderState> ex
 
     @Inject(method = "positionRightArm", at = @At("HEAD"), cancellable = true)
     void virtualAdditions$positionRightArmForHalberd(T state, CallbackInfo ci) {
-        if (state.isUsingItem && Boolean.TRUE.equals(state.getData(VARenderers.IS_HOLDING_HALBERD)) && Objects.nonNull(state.getData(VARenderers.HALBERD_READINESS))) {
+        if (state.isUsingItem && Arm.LEFT.equals(state.getData(VARenderers.HOLDING_HALBERD_IN))) ci.cancel();
+        if (state.isUsingItem && Arm.RIGHT.equals(state.getData(VARenderers.HOLDING_HALBERD_IN)) && Objects.nonNull(state.getData(VARenderers.HALBERD_READINESS))) {
             float f = state.getData(VARenderers.HALBERD_READINESS);
             float ef = (float) Math.sin(Math.PI * (f / 2));
-            float eg = 1.0F - ef;
-            this.root.yaw = (float) ((ef * -55) * Math.PI / 180.0F);
-            this.head.yaw = (state.relativeHeadYaw + (ef * 55)) * (float) (Math.PI / 180.0);
-            this.leftArm.pitch = (float) (-80.0F * (Math.PI / 180.0F));
-            this.leftArm.yaw = (float) (ef * -40.0F * (Math.PI / 180.0F));
-            this.leftArm.roll = (float) (eg * -20.0F * (Math.PI / 180.0F));
-            this.rightArm.pitch = (float) ( (eg*40 + -95.0F) * (Math.PI / 180.0F));
-            this.rightArm.yaw = (float) ((-20.0F + -40.0F*eg) * (Math.PI / 180.0F));
-            this.rightArm.roll = (float) ((30.0F + 30.0 * ef) * (Math.PI / 180.0F));
-            ci.cancel();
-        }
-    }
-    @Inject(method = "positionLeftArm", at = @At("HEAD"), cancellable = true)
-    void virtualAdditions$positionLeftArmForHalberd(T state, CallbackInfo ci) {
-        if (state.isUsingItem && Boolean.TRUE.equals(state.getData(VARenderers.IS_HOLDING_HALBERD)) && Objects.nonNull(state.getData(VARenderers.HALBERD_READINESS))) {
-            float f = state.getData(VARenderers.HALBERD_READINESS);
-            float ef = (float) Math.sin(Math.PI * (f / 2));
-            float eg = 1.0F - ef;
             this.root.yaw = (float) ((ef * 55) * Math.PI / 180.0F);
             this.head.yaw = (state.relativeHeadYaw + (ef * -55)) * (float) (Math.PI / 180.0);
             this.rightArm.pitch = (float) (-80.0F * (Math.PI / 180.0F));
             this.rightArm.yaw = (float) (ef * 40.0F * (Math.PI / 180.0F));
-            this.rightArm.roll = (float) (eg * 20.0F * (Math.PI / 180.0F));
-            this.leftArm.pitch = (float) ( (eg*40 + -95.0F) * (Math.PI / 180.0F));
-            this.leftArm.yaw = (float) ((20.0F + 40.0F*eg) * (Math.PI / 180.0F));
-            this.leftArm.roll = (float) ((-30.0F + -30.0 * ef) * (Math.PI / 180.0F));
+            this.leftArm.pitch = (float) ( (-80.0F) * (Math.PI / 180.0F));
+            this.leftArm.yaw = (float) ((20.0F + 20.0F * ef) * (Math.PI / 180.0F));
             ci.cancel();
+        }
+        try {
+            float f = state.getData(VARenderers.TICKS_SINCE_HALBERD_USED);
+            if (f <= 12 && Arm.RIGHT.equals(state.getData(VARenderers.HOLDING_HALBERD_IN))) {
+                float df = Math.min(f*20, 90);
+                float dg = df / 90.0F;
+                this.root.yaw = (float) ((55 - df * 1.3333F) * (Math.PI/180.0F));
+                this.head.yaw = (state.relativeHeadYaw + (df * 1.3333F - 55)) * (float) (Math.PI / 180.0);
+
+                this.rightArm.pitch = (float) (-80.0F * (Math.PI / 180.0F));
+                this.rightArm.yaw = (float) ((40.0F - 50.0F * dg) * (Math.PI / 180.0F));
+                this.leftArm.pitch = (float) ( (-80.0F) * (Math.PI / 180.0F));
+                this.leftArm.yaw = (float) ((20.0F) * (Math.PI / 180.0F));
+                ci.cancel();
+            }
+        } catch (NullPointerException ignored) {
+
+        }
+    }
+    @Inject(method = "positionLeftArm", at = @At("HEAD"), cancellable = true)
+    void virtualAdditions$positionLeftArmForHalberd(T state, CallbackInfo ci) {
+        if (state.isUsingItem && Arm.RIGHT.equals(state.getData(VARenderers.HOLDING_HALBERD_IN))) ci.cancel();
+        if (state.isUsingItem && Arm.LEFT.equals(state.getData(VARenderers.HOLDING_HALBERD_IN)) && Objects.nonNull(state.getData(VARenderers.HALBERD_READINESS))) {
+            float f = state.getData(VARenderers.HALBERD_READINESS);
+            float ef = (float) Math.sin(Math.PI * (f / 2));
+            this.root.yaw = (float) ((ef * -55) * Math.PI / 180.0F);
+            this.head.yaw = (state.relativeHeadYaw + (ef * 55)) * (float) (Math.PI / 180.0);
+            this.leftArm.pitch = (float) (-80.0F * (Math.PI / 180.0F));
+            this.leftArm.yaw = (float) (ef * -40.0F * (Math.PI / 180.0F));
+            this.rightArm.pitch = (float) ( (-80.0F) * (Math.PI / 180.0F));
+            this.rightArm.yaw = (float) ((-20.0F - 20.0F*ef) * (Math.PI / 180.0F));
+            ci.cancel();
+        }
+        try {
+            float f = state.getData(VARenderers.TICKS_SINCE_HALBERD_USED);
+            if (f <= 12 && Arm.LEFT.equals(state.getData(VARenderers.HOLDING_HALBERD_IN))) {
+                float df = Math.min(f*20, 90);
+                float dg = df / 90.0F;
+                this.root.yaw = (float) ((df * 1.3333F - 55) * (Math.PI/180.0F));
+                this.head.yaw = (state.relativeHeadYaw + (55 - df * 1.3333F)) * (float) (Math.PI / 180.0);
+
+                this.leftArm.pitch = (float) (-80.0F * (Math.PI / 180.0F));
+                this.leftArm.yaw = (float) ((-40.0F + 50.0F * dg) * (Math.PI / 180.0F));
+                this.rightArm.pitch = (float) ((-80.0F) * (Math.PI / 180.0F));
+                this.rightArm.yaw = (float) ((-20.0F) * (Math.PI / 180.0F));
+
+                //this.rightArm.pitch = (float) (-80.0F * (Math.PI / 180.0F));
+                //this.rightArm.yaw = (float) ((40.0F - 50.0F * dg) * (Math.PI / 180.0F));
+                //this.leftArm.pitch = (float) ( (-80.0F) * (Math.PI / 180.0F));
+                //this.leftArm.yaw = (float) ((20.0F) * (Math.PI / 180.0F));
+                ci.cancel();
+            }
+        } catch (NullPointerException ignored) {
+
         }
     }
 }

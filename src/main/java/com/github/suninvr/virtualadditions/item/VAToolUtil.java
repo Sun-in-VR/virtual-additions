@@ -48,6 +48,6 @@ public class VAToolUtil {
 
     @Nullable
     public static GildType getGildType(ItemStack itemStack) {
-        return itemStack.contains(VADataComponentTypes.GILD_TYPE_COMPONENT) ? itemStack.get(VADataComponentTypes.GILD_TYPE_COMPONENT).type().value() : null;
+        return itemStack.contains(VADataComponentTypes.GILD_TYPE) ? itemStack.get(VADataComponentTypes.GILD_TYPE) : null;
     }
 }

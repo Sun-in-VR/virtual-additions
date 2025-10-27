@@ -4,6 +4,7 @@ import com.github.suninvr.virtualadditions.VirtualAdditions;
 import com.github.suninvr.virtualadditions.registry.VARegistries;
 import com.mojang.serialization.Codec;
 import net.minecraft.block.BlockState;
+import net.minecraft.component.ComponentsAccess;
 import net.minecraft.component.DataComponentTypes;
 import net.minecraft.component.type.AttributeModifierSlot;
 import net.minecraft.component.type.AttributeModifiersComponent;
@@ -13,6 +14,8 @@ import net.minecraft.entity.attribute.EntityAttributeModifier;
 import net.minecraft.entity.attribute.EntityAttributes;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.*;
+import net.minecraft.item.tooltip.TooltipAppender;
+import net.minecraft.item.tooltip.TooltipType;
 import net.minecraft.network.RegistryByteBuf;
 import net.minecraft.network.codec.PacketCodec;
 import net.minecraft.network.codec.PacketCodecs;
@@ -29,10 +32,15 @@ import org.jetbrains.annotations.Nullable;
 
 import java.util.*;
 import java.util.function.BiFunction;
+import java.util.function.Consumer;
 
-public class GildType {
+public class GildType implements TooltipAppender {
+    private static final Text descriptionHeader = Text.translatable("item.minecraft.smithing_template.upgrade").formatted(Formatting.GRAY);
+    private final Text descriptionText;
     public static final Codec<RegistryEntry<GildType>> ENTRY_CODEC = RegistryFixedCodec.of(VARegistries.GILD_TYPE_REGISTRY_KEY);
     public static final PacketCodec<RegistryByteBuf, RegistryEntry<GildType>> ENTRY_PACKET_CODEC = PacketCodecs.registryEntry(VARegistries.GILD_TYPE_REGISTRY_KEY);
+    public static final Codec<GildType> CODEC = RegistryFixedCodec.of(VARegistries.GILD_TYPE_REGISTRY_KEY).xmap(RegistryEntry::value, VARegistries.GILD_TYPE::getEntry);
+    public static final PacketCodec<RegistryByteBuf, GildType> PACKET_CODEC = PacketCodecs.registryEntry(VARegistries.GILD_TYPE_REGISTRY_KEY).xmap(RegistryEntry::value, VARegistries.GILD_TYPE::getEntry);
     private Text translationKey;
     private final ArrayList<StackModifier<?>> modifiers = new ArrayList<>();
     private final int color;
@@ -52,6 +60,7 @@ public class GildType {
     public GildType(int color, StackModifier<?>... modifiers) {
         this.color = color;
         this.modifiers.addAll(Arrays.asList(modifiers));
+        this.descriptionText = ScreenTexts.space().append(this.getTranslationKey()).withColor(color);
     }
 
     /**
@@ -112,5 +121,11 @@ public class GildType {
      */
     public int getColor() {
         return color;
+    }
+
+    @Override
+    public void appendTooltip(Item.TooltipContext context, Consumer<Text> textConsumer, TooltipType type, ComponentsAccess components) {
+        textConsumer.accept(descriptionHeader);
+        textConsumer.accept(this.descriptionText);
     }
 }

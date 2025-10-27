@@ -1,7 +1,6 @@
 package com.github.suninvr.virtualadditions.registry;
 
 import com.github.suninvr.virtualadditions.component.ExplosiveContentComponent;
-import com.github.suninvr.virtualadditions.component.GildTypeComponent;
 import net.fabricmc.fabric.api.loot.v3.LootTableEvents;
 import net.minecraft.block.Block;
 import net.minecraft.block.Blocks;
@@ -199,7 +198,7 @@ public class VALootTableModifiers {
                                 .weight(2)
                                 .apply(SetCountLootFunction.builder(ConstantLootNumberProvider.create(1)))
                                 .apply(SetDamageLootFunction.builder(UniformLootNumberProvider.create(0.8F, 1), false))
-                                .apply(SetComponentsLootFunction.builder(VADataComponentTypes.GILD_TYPE_COMPONENT, new GildTypeComponent(VARegistries.GILD_TYPE.getEntry(VAGildTypes.EMERALD))))
+                                .apply(SetComponentsLootFunction.builder(VADataComponentTypes.GILD_TYPE, VAGildTypes.EMERALD))
                         );
                     }
                     i[0]++;

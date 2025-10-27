@@ -1,6 +1,5 @@
 package com.github.suninvr.virtualadditions.recipe;
 
-import com.github.suninvr.virtualadditions.component.GildTypeComponent;
 import com.github.suninvr.virtualadditions.item.gild.GildType;
 import com.github.suninvr.virtualadditions.registry.VADataComponentTypes;
 import com.github.suninvr.virtualadditions.registry.VAItems;
@@ -33,9 +32,9 @@ public class SmithingGildRecipe implements SmithingRecipe {
 
     @Override
     public ItemStack craft(SmithingRecipeInput input, RegistryWrapper.WrapperLookup registries) {
-        if (input.base().contains(VADataComponentTypes.GILD_TYPE_COMPONENT)) return null;
+        if (input.base().contains(VADataComponentTypes.GILD_TYPE)) return null;
         ItemStack result = input.base().copyWithCount(1);
-        result.set(VADataComponentTypes.GILD_TYPE_COMPONENT, new GildTypeComponent(this.type));
+        result.set(VADataComponentTypes.GILD_TYPE, this.type.value());
         this.type.value().modifyStackOnCrafted(result);
         return result;
     }

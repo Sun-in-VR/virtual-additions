@@ -14,7 +14,7 @@ public class VACallbacks{
             if (player.isCreative()) return true;
             ItemStack tool = player.getStackInHand(Hand.MAIN_HAND);
             GildType gild;
-            if (tool.contains(VADataComponentTypes.GILD_TYPE_COMPONENT) && (gild = tool.get(VADataComponentTypes.GILD_TYPE_COMPONENT).type().value()).isGildEffective(world, player, pos, state, tool)) {
+            if (tool.contains(VADataComponentTypes.GILD_TYPE) && (gild = tool.get(VADataComponentTypes.GILD_TYPE)).isGildEffective(world, player, pos, state, tool)) {
                 gild.emitBlockBreakingEffects(world, player, pos, tool);
                 return gild.onBlockBroken(world, player, pos, state, tool);
             }

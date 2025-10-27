@@ -1,5 +1,6 @@
 package com.github.suninvr.virtualadditions.item;
 
+import com.github.suninvr.virtualadditions.interfaces.PlayerEntityInterface;
 import com.github.suninvr.virtualadditions.registry.VAGildTypes;
 import com.github.suninvr.virtualadditions.registry.*;
 import net.minecraft.block.*;
@@ -119,7 +120,7 @@ public class HalberdItem extends Item {
 
             // Client and Server events
             player.getItemCooldownManager().set(stack, (int) getSwingCooldown(stack, player));
-            player.swingHand(player.getActiveHand(), true);
+            ((PlayerEntityInterface)(player)).virtualAdditions$onHalberdSwing();
             player.incrementStat(Stats.USED.getOrCreateStat(stack.getItem()));
             player.resetTicksSinceLastAttack();
         }
@@ -188,11 +189,11 @@ public class HalberdItem extends Item {
 
     @Override
     public ActionResult use(World world, PlayerEntity user, Hand hand) {
-        //if (hand == Hand.OFF_HAND) return ActionResult.PASS;
+        if (hand == Hand.OFF_HAND) return ActionResult.PASS;
         ItemStack stack = user.getStackInHand(hand);
         if (getMaxReadiness(stack, user) <= 0) {
             swingAttack(stack, world, user, 1);
-            return ActionResult.SUCCESS;
+            return ActionResult.PASS;
         }
         user.setCurrentHand(hand);
         return ActionResult.CONSUME;

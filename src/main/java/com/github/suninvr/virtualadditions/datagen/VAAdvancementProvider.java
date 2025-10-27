@@ -1,6 +1,5 @@
 package com.github.suninvr.virtualadditions.datagen;
 
-import com.github.suninvr.virtualadditions.component.GildTypeComponent;
 import com.github.suninvr.virtualadditions.registry.VADataComponentTypes;
 import com.github.suninvr.virtualadditions.registry.VAGildTypes;
 import com.github.suninvr.virtualadditions.registry.VAItems;
@@ -25,7 +24,6 @@ import net.minecraft.registry.RegistryEntryLookup;
 import net.minecraft.registry.RegistryKeys;
 import net.minecraft.registry.RegistryWrapper;
 import net.minecraft.text.Text;
-import net.minecraft.util.Identifier;
 
 import java.util.concurrent.CompletableFuture;
 import java.util.function.Consumer;
@@ -46,7 +44,7 @@ public class VAAdvancementProvider {
         @Override
         public void generateAdvancement(RegistryWrapper.WrapperLookup wrapperLookup, Consumer<AdvancementEntry> consumer) {
             ItemStack stack = Items.DIAMOND_PICKAXE.getDefaultStack();
-            stack.set(VADataComponentTypes.GILD_TYPE_COMPONENT, new GildTypeComponent(VARegistries.GILD_TYPE.getEntry(VAGildTypes.SCULK)));
+            stack.set(VADataComponentTypes.GILD_TYPE, VAGildTypes.SCULK);
             Advancement.Builder gildAllToolsBuilder = Advancement.Builder.createUntelemetered()
                     .parent(Advancement.Builder.create().build(idOf("story/gild_tool")))
                     .display(
@@ -68,7 +66,7 @@ public class VAAdvancementProvider {
                                 .items(lookup, item)
                                 .components(
                                         ComponentsPredicate.Builder.create().exact(
-                                                ComponentMapPredicate.of(VADataComponentTypes.GILD_TYPE_COMPONENT, new GildTypeComponent(VARegistries.GILD_TYPE.getEntry(type)))
+                                                ComponentMapPredicate.of(VADataComponentTypes.GILD_TYPE, type)
                                         ).build()
                                 )
                         )

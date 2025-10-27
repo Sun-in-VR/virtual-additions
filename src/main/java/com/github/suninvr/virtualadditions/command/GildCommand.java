@@ -1,6 +1,5 @@
 package com.github.suninvr.virtualadditions.command;
 
-import com.github.suninvr.virtualadditions.component.GildTypeComponent;
 import com.github.suninvr.virtualadditions.item.gild.GildType;
 import com.github.suninvr.virtualadditions.registry.VADataComponentTypes;
 import com.github.suninvr.virtualadditions.registry.VAItemTags;
@@ -56,10 +55,10 @@ public class GildCommand {
         if (stack == null || stack.isEmpty()) {
             throw FAILED_ITEMLESS_EXCEPTION.create(entity.getName().getString());
         }
-        if (stack.contains(VADataComponentTypes.GILD_TYPE_COMPONENT) || Objects.isNull(type) || (!stack.isIn(VAItemTags.ACCEPTS_TOOL_GILDS)) && !force) {
+        if (stack.contains(VADataComponentTypes.GILD_TYPE) || Objects.isNull(type) || (!stack.isIn(VAItemTags.ACCEPTS_TOOL_GILDS)) && !force) {
             throw FAILED_INCOMPATIBLE_EXCEPTION.create(stack.getName());
         }
-        stack.set(VADataComponentTypes.GILD_TYPE_COMPONENT, new GildTypeComponent(VARegistries.GILD_TYPE.getEntry(type)));
+        stack.set(VADataComponentTypes.GILD_TYPE, type);
         type.modifyStackOnCrafted(stack);
         context.getSource().sendFeedback(() -> Text.translatable("commands.virtual_additions.gild.success", type.getTranslationKey().getString(), entity.getName()), false);
         return 1;

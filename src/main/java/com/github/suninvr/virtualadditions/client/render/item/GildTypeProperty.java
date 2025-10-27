@@ -1,6 +1,5 @@
 package com.github.suninvr.virtualadditions.client.render.item;
 
-import com.github.suninvr.virtualadditions.component.GildTypeComponent;
 import com.github.suninvr.virtualadditions.item.gild.GildType;
 import com.github.suninvr.virtualadditions.registry.VADataComponentTypes;
 import com.github.suninvr.virtualadditions.registry.VARegistries;
@@ -12,10 +11,10 @@ import net.minecraft.entity.LivingEntity;
 import net.minecraft.item.ItemDisplayContext;
 import net.minecraft.item.ItemStack;
 import net.minecraft.registry.RegistryKey;
+import net.minecraft.registry.entry.RegistryEntry;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.Objects;
-import java.util.Optional;
 
 public class GildTypeProperty implements SelectProperty<RegistryKey<GildType>> {
     public static final Codec<RegistryKey<GildType>> VALUE_CODEC = RegistryKey.createCodec(VARegistries.GILD_TYPE_REGISTRY_KEY);
@@ -26,10 +25,9 @@ public class GildTypeProperty implements SelectProperty<RegistryKey<GildType>> {
     @Override
     @Nullable
     public RegistryKey<GildType> getValue(ItemStack stack, @Nullable ClientWorld world, @Nullable LivingEntity user, int seed, ItemDisplayContext displayContext) {
-        GildTypeComponent type = stack.get(VADataComponentTypes.GILD_TYPE_COMPONENT);
-        if (Objects.isNull(type)) return null;
-        Optional<RegistryKey<GildType>> gildType = VARegistries.GILD_TYPE.getKey(type.type().value());
-        return gildType.get();
+        RegistryEntry<GildType> type = VARegistries.GILD_TYPE.getEntry(stack.get(VADataComponentTypes.GILD_TYPE));
+        if (Objects.isNull(type) || type.getKey().isEmpty()) return null;
+        return type.getKey().get();
     }
 
     @Override

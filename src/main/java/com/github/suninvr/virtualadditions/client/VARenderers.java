@@ -20,6 +20,8 @@ import net.minecraft.client.render.entity.model.BoatEntityModel;
 import net.minecraft.client.render.entity.model.EntityModelLayer;
 import net.minecraft.client.render.fog.FogRenderer;
 import net.minecraft.client.util.SpriteIdentifier;
+import net.minecraft.util.Arm;
+import net.minecraft.util.Hand;
 import net.minecraft.util.Identifier;
 import net.minecraft.world.biome.FoliageColors;
 import net.minecraft.world.biome.GrassColors;
@@ -49,7 +51,9 @@ public class VARenderers {
     public static final SpriteIdentifier SINOPIA_BED_TEXTURE = new SpriteIdentifier(TexturedRenderLayers.BEDS_ATLAS_TEXTURE, VirtualAdditions.idOf("entity/bed/sinopia"));
     public static final SpriteIdentifier LILAC_BED_TEXTURE = new SpriteIdentifier(TexturedRenderLayers.BEDS_ATLAS_TEXTURE, VirtualAdditions.idOf("entity/bed/lilac"));
     public static final RenderStateDataKey<Boolean> IS_HOLDING_HALBERD = RenderStateDataKey.create(() -> "virtual_additions:is_using_halberd");
+    public static final RenderStateDataKey<Arm> HOLDING_HALBERD_IN = RenderStateDataKey.create(() -> "virtual_additions:holding_halberd_in");
     public static final RenderStateDataKey<Float> HALBERD_READINESS = RenderStateDataKey.create(() -> "virtual_additions:halberd_readiness");
+    public static final RenderStateDataKey<Float> TICKS_SINCE_HALBERD_USED = RenderStateDataKey.create(() -> "virtual_additions:ticks_since_halberd_used");
     public static void init() {
         initBlockRenderLayers();
         initEntityRenderers();

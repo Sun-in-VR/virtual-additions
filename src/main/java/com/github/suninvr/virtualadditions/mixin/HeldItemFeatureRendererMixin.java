@@ -25,10 +25,13 @@ public class HeldItemFeatureRendererMixin<S extends ArmedEntityRenderState, M ex
     @Inject(method = "renderItem", at = @At(value = "INVOKE", target = "Lnet/minecraft/client/util/math/MatrixStack;translate(FFF)V"))
     void virualAdditions$renderHalberdInUse(S entityState, ItemRenderState itemRenderState, ItemStack itemStack, Arm arm, MatrixStack matrixStack, OrderedRenderCommandQueue orderedRenderCommandQueue, int i, CallbackInfo ci) {
         int flip = arm == Arm.LEFT ? -1 : 1;
-        if (Boolean.TRUE.equals(entityState.getData(VARenderers.IS_HOLDING_HALBERD)) && entityState instanceof BipedEntityRenderState bipedState && bipedState.isUsingItem && Objects.nonNull(bipedState.getData(VARenderers.HALBERD_READINESS))) {
+        boolean bl = Boolean.TRUE.equals(entityState.getData(VARenderers.IS_HOLDING_HALBERD));
+        boolean bl1 = bl && entityState instanceof BipedEntityRenderState bipedState && bipedState.isUsingItem && Objects.nonNull(bipedState.getData(VARenderers.HALBERD_READINESS));
+        boolean bl2 = bl && Objects.nonNull(entityState.getData(VARenderers.TICKS_SINCE_HALBERD_USED)) && entityState.getData(VARenderers.TICKS_SINCE_HALBERD_USED) < 12.0F;
+        if (bl1 || bl2) {
             matrixStack.multiply(RotationAxis.POSITIVE_Z.rotationDegrees(-80.0F * flip));
-            matrixStack.multiply(RotationAxis.POSITIVE_X.rotationDegrees(-47.0F));
-            matrixStack.translate(-0.05 * flip, -0.1, 0.05);
+            matrixStack.multiply(RotationAxis.POSITIVE_X.rotationDegrees(-34.0F));
+            matrixStack.translate(-0.05 * flip, 0.0, 0.05);
         }
     }
 }

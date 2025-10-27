@@ -9,4 +9,8 @@ public interface PlayerEntityInterface {
     PlayerProjectionEntity virtualAdditions$getProjectionEntity();
 
     boolean virtualAdditions$hasProjectionEntity();
+
+    void virtualAdditions$onHalberdSwing();
+
+    long virtualAdditions$lastSwungHalberd();
 }

@@ -1,7 +1,7 @@
 package com.github.suninvr.virtualadditions.mixin;
 
 import com.github.suninvr.virtualadditions.component.EffectsOnHitComponent;
-import com.github.suninvr.virtualadditions.component.GildTypeComponent;
+import com.github.suninvr.virtualadditions.item.gild.GildType;
 import com.github.suninvr.virtualadditions.registry.VADataComponentTypes;
 import net.minecraft.component.ComponentType;
 import net.minecraft.component.type.TooltipDisplayComponent;
@@ -34,14 +34,14 @@ public abstract class ItemStackMixin {
                     shift = At.Shift.AFTER))
     void virtualAdditions$appendTooltip(Item.TooltipContext context, TooltipDisplayComponent displayComponent, PlayerEntity player, TooltipType type, Consumer<Text> textConsumer, CallbackInfo ci) {
         this.appendComponentTooltip(VADataComponentTypes.EFFECTS_ON_HIT, context, displayComponent, textConsumer, type);
-        this.appendComponentTooltip(VADataComponentTypes.GILD_TYPE_COMPONENT, context, displayComponent, textConsumer, type);
+        this.appendComponentTooltip(VADataComponentTypes.GILD_TYPE, context, displayComponent, textConsumer, type);
     }
 
     @Inject(method = "postDamageEntity", at = @At("TAIL"))
     void virtualAdditions$postDamageEntity(LivingEntity target, LivingEntity user, CallbackInfo ci) {
-        GildTypeComponent gildType = ((ItemStack)(Object)(this)).get(VADataComponentTypes.GILD_TYPE_COMPONENT);
+        GildType gildType = ((ItemStack)(Object)(this)).get(VADataComponentTypes.GILD_TYPE);
         if (gildType != null) {
-            gildType.type().value().applyEffectsOnHit(user.getEntityWorld(), target, user);
+            gildType.applyEffectsOnHit(user.getEntityWorld(), target, user);
         }
         EffectsOnHitComponent effectsOnHit = ((ItemStack)(Object)(this)).get(VADataComponentTypes.EFFECTS_ON_HIT);
         if (effectsOnHit != null && effectsOnHit.getRemainingUses() > 0) {
@@ -50,13 +50,4 @@ public abstract class ItemStackMixin {
         }
 
     }
-
-    //@Shadow protected abstract <T extends TooltipAppender> void appendTooltip(ComponentType<T> componentType, Item.TooltipContext context, Consumer<Text> textConsumer, TooltipType type);
-//
-    //@Inject(method = "getTooltip", at = @At(value = "INVOKE", target = "Lnet/minecraft/item/ItemStack;appendTooltip(Lnet/minecraft/component/ComponentType;Lnet/minecraft/item/Item$TooltipContext;Ljava/util/function/Consumer;Lnet/minecraft/item/tooltip/TooltipType;)V", ordinal = 5, shift = At.Shift.AFTER))
-    //void virtualAdditions$getTooltip(Item.TooltipContext context, PlayerEntity player, TooltipType type, CallbackInfoReturnable<List<Text>> cir, @Local LocalRef<List<Text>> list) {
-    //    List<Text> texts = list.get();
-    //    this.appendTooltip(VADataComponentTypes.EFFECTS_ON_HIT, context, texts::add, type);
-    //    list.set(texts);
-    //}
 }
