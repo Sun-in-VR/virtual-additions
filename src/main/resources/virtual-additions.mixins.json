@@ -32,7 +32,6 @@
     "ItemMixin",
     "ItemStackMixin",
     "LivingEntityMixin",
-    "MobEntityMixin",
     "NetherrackBlockMixin",
     "OxidizableMixin",
     "PlayerEntityMixin",

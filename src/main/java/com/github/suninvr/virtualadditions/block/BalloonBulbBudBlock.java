@@ -2,59 +2,63 @@ package com.github.suninvr.virtualadditions.block;
 
 import com.github.suninvr.virtualadditions.registry.VABlocks;
 import com.mojang.serialization.MapCodec;
-import net.minecraft.block.*;
-import net.minecraft.server.world.ServerWorld;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.math.Vec3d;
-import net.minecraft.util.math.random.Random;
-import net.minecraft.util.shape.VoxelShape;
-import net.minecraft.world.BlockView;
-import net.minecraft.world.World;
-import net.minecraft.world.WorldView;
+import net.minecraft.core.BlockPos;
+import net.minecraft.server.level.ServerLevel;
+import net.minecraft.util.RandomSource;
+import net.minecraft.world.level.BlockGetter;
+import net.minecraft.world.level.Level;
+import net.minecraft.world.level.LevelReader;
+import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.BonemealableBlock;
+import net.minecraft.world.level.block.VegetationBlock;
+import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.phys.Vec3;
+import net.minecraft.world.phys.shapes.CollisionContext;
+import net.minecraft.world.phys.shapes.VoxelShape;
 
-public class BalloonBulbBudBlock extends PlantBlock implements Fertilizable {
-    public static final MapCodec<BalloonBulbBudBlock> CODEC = createCodec(BalloonBulbBudBlock::new);
-    private static final VoxelShape SHAPE = Block.createCuboidShape(6.0F, 0.0F, 6.0F, 10.0F, 6.0F, 10.0F);
-    public BalloonBulbBudBlock(Settings settings) {
+public class BalloonBulbBudBlock extends VegetationBlock implements BonemealableBlock {
+    public static final MapCodec<BalloonBulbBudBlock> CODEC = simpleCodec(BalloonBulbBudBlock::new);
+    private static final VoxelShape SHAPE = Block.box(6.0F, 0.0F, 6.0F, 10.0F, 6.0F, 10.0F);
+    public BalloonBulbBudBlock(Properties settings) {
         super(settings);
     }
 
     @Override
-    protected MapCodec<? extends PlantBlock> getCodec() {
+    protected MapCodec<? extends VegetationBlock> codec() {
         return CODEC;
     }
 
     @Override
-    public boolean isFertilizable(WorldView world, BlockPos pos, BlockState state) {
-        return world.getBlockState(pos.up()).isAir();
+    public boolean isValidBonemealTarget(LevelReader world, BlockPos pos, BlockState state) {
+        return world.getBlockState(pos.above()).isAir();
     }
 
     @Override
-    public boolean canGrow(World world, Random random, BlockPos pos, BlockState state) {
-        return world.getBlockState(pos.up()).isAir();
+    public boolean isBonemealSuccess(Level world, RandomSource random, BlockPos pos, BlockState state) {
+        return world.getBlockState(pos.above()).isAir();
     }
 
     @Override
-    public void grow(ServerWorld world, Random random, BlockPos pos, BlockState state) {
-        if (world.getBlockState(pos.up()).isAir()) {
-            world.setBlockState(pos.up(), VABlocks.BALLOON_BULB.getDefaultState());
-            world.setBlockState(pos, VABlocks.BALLOON_BULB_PLANT.getDefaultState());
+    public void performBonemeal(ServerLevel world, RandomSource random, BlockPos pos, BlockState state) {
+        if (world.getBlockState(pos.above()).isAir()) {
+            world.setBlockAndUpdate(pos.above(), VABlocks.BALLOON_BULB.defaultBlockState());
+            world.setBlockAndUpdate(pos, VABlocks.BALLOON_BULB_PLANT.defaultBlockState());
         }
     }
 
     @Override
-    public boolean hasRandomTicks(BlockState state) {
+    public boolean isRandomlyTicking(BlockState state) {
         return true;
     }
 
     @Override
-    public void randomTick(BlockState state, ServerWorld world, BlockPos pos, Random random) {
-        if (random.nextInt(5) == 1) grow(world, random, pos, state);
+    public void randomTick(BlockState state, ServerLevel world, BlockPos pos, RandomSource random) {
+        if (random.nextInt(5) == 1) performBonemeal(world, random, pos, state);
     }
 
     @Override
-    public VoxelShape getOutlineShape(BlockState state, BlockView world, BlockPos pos, ShapeContext context) {
-        Vec3d offset = state.getModelOffset(pos);
-        return SHAPE.offset(offset.x, 0, offset.z);
+    public VoxelShape getShape(BlockState state, BlockGetter world, BlockPos pos, CollisionContext context) {
+        Vec3 offset = state.getOffset(pos);
+        return SHAPE.move(offset.x, 0, offset.z);
     }
 }

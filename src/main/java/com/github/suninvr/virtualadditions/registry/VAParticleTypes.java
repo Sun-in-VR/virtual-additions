@@ -4,13 +4,13 @@ import com.github.suninvr.virtualadditions.VirtualAdditions;
 import com.github.suninvr.virtualadditions.particle.ColorfulPowerParticleEffect;
 import com.mojang.serialization.MapCodec;
 import net.fabricmc.fabric.api.particle.v1.FabricParticleTypes;
-import net.minecraft.network.RegistryByteBuf;
-import net.minecraft.network.codec.PacketCodec;
-import net.minecraft.particle.ParticleEffect;
-import net.minecraft.particle.ParticleType;
-import net.minecraft.particle.SimpleParticleType;
-import net.minecraft.registry.Registries;
-import net.minecraft.registry.Registry;
+import net.minecraft.core.Registry;
+import net.minecraft.core.particles.ParticleOptions;
+import net.minecraft.core.particles.ParticleType;
+import net.minecraft.core.particles.SimpleParticleType;
+import net.minecraft.core.registries.BuiltInRegistries;
+import net.minecraft.network.RegistryFriendlyByteBuf;
+import net.minecraft.network.codec.StreamCodec;
 
 import java.util.function.Function;
 
@@ -47,25 +47,25 @@ public class VAParticleTypes {
 
     public static void init() {}
 
-    private static <T extends ParticleEffect> ParticleType<T> register(String name, boolean alwaysShow, Function<ParticleType<T>, MapCodec<T>> codecGetter, Function<ParticleType<T>, PacketCodec<? super RegistryByteBuf, T>> packetCodecGetter) {
-        return Registry.register(Registries.PARTICLE_TYPE, VirtualAdditions.idOf(name), new ParticleType<T>(alwaysShow) {
+    private static <T extends ParticleOptions> ParticleType<T> register(String name, boolean alwaysShow, Function<ParticleType<T>, MapCodec<T>> codecGetter, Function<ParticleType<T>, StreamCodec<? super RegistryFriendlyByteBuf, T>> packetCodecGetter) {
+        return Registry.register(BuiltInRegistries.PARTICLE_TYPE, VirtualAdditions.idOf(name), new ParticleType<T>(alwaysShow) {
             @Override
-            public MapCodec<T> getCodec() {
+            public MapCodec<T> codec() {
                 return codecGetter.apply(this) ;
             }
 
             @Override
-            public PacketCodec<? super RegistryByteBuf, T> getPacketCodec() {
+            public StreamCodec<? super RegistryFriendlyByteBuf, T> streamCodec() {
                 return packetCodecGetter.apply(this);
             }
         });
     }
 
     private static SimpleParticleType register(String name, boolean alwaysShow) {
-        return Registry.register(Registries.PARTICLE_TYPE, VirtualAdditions.idOf(name), FabricParticleTypes.simple(alwaysShow));
+        return Registry.register(BuiltInRegistries.PARTICLE_TYPE, VirtualAdditions.idOf(name), FabricParticleTypes.simple(alwaysShow));
     }
 
     private static SimpleParticleType register(String name) {
-        return Registry.register(Registries.PARTICLE_TYPE, VirtualAdditions.idOf(name), FabricParticleTypes.simple(false));
+        return Registry.register(BuiltInRegistries.PARTICLE_TYPE, VirtualAdditions.idOf(name), FabricParticleTypes.simple(false));
     }
 }

@@ -9,23 +9,17 @@ import com.github.suninvr.virtualadditions.registry.VAPackets;
 import com.github.suninvr.virtualadditions.registry.VAParticleTypes;
 import com.github.suninvr.virtualadditions.registry.VAScreenHandler;
 import com.github.suninvr.virtualadditions.screen.ColoringStationScreenHandler;
-import com.mojang.brigadier.builder.LiteralArgumentBuilder;
 import net.fabricmc.api.ClientModInitializer;
-import net.fabricmc.fabric.api.client.command.v2.ClientCommandManager;
-import net.fabricmc.fabric.api.client.command.v2.ClientCommandRegistrationCallback;
 import net.fabricmc.fabric.api.client.networking.v1.ClientPlayNetworking;
 import net.fabricmc.fabric.api.client.particle.v1.ParticleFactoryRegistry;
-import net.minecraft.client.MinecraftClient;
-import net.minecraft.client.gui.screen.ingame.HandledScreens;
+import net.minecraft.client.gui.screens.MenuScreens;
+import net.minecraft.client.particle.FallingLeavesParticle;
 import net.minecraft.client.particle.FireflyParticle;
 import net.minecraft.client.particle.FlameParticle;
-import net.minecraft.client.particle.LeavesParticle;
-import net.minecraft.client.particle.WaterSplashParticle;
-import net.minecraft.entity.Entity;
-import net.minecraft.text.Text;
-import net.minecraft.world.World;
-
-import java.io.File;
+import net.minecraft.client.particle.SplashParticle;
+import net.minecraft.network.chat.Component;
+import net.minecraft.world.entity.Entity;
+import net.minecraft.world.level.Level;
 
 public class VirtualAdditionsClient implements ClientModInitializer {
 
@@ -35,30 +29,30 @@ public class VirtualAdditionsClient implements ClientModInitializer {
         VARenderers.init();
 
         ParticleFactoryRegistry.getInstance().register(VAParticleTypes.ACID_SPLASH_EMITTER, AcidSplashEmitterParticle.Factory::new);
-        ParticleFactoryRegistry.getInstance().register(VAParticleTypes.ACID_SPLASH, WaterSplashParticle.Factory::new);
+        ParticleFactoryRegistry.getInstance().register(VAParticleTypes.ACID_SPLASH, SplashParticle.Provider::new);
         ParticleFactoryRegistry.getInstance().register(VAParticleTypes.GREENCAP_SPORE, GreencapSporeParticle.Factory::new);
         ParticleFactoryRegistry.getInstance().register(VAParticleTypes.SCRAPE_STEEL, SteelScrapeFactory::new);
-        ParticleFactoryRegistry.getInstance().register(VAParticleTypes.SOULBLOOM_LEAVES, LeavesParticle.CherryLeavesFactory::new);
+        ParticleFactoryRegistry.getInstance().register(VAParticleTypes.SOULBLOOM_LEAVES, FallingLeavesParticle.CherryProvider::new);
         ParticleFactoryRegistry.getInstance().register(VAParticleTypes.INTERFERENCE, PowerParticleFactory::new);
         ParticleFactoryRegistry.getInstance().register(VAParticleTypes.SPECTRAL_POWER, PowerParticleFactory::new);
         ParticleFactoryRegistry.getInstance().register(VAParticleTypes.COLORFUL_POWER, PowerParticleFactory.Color::new);
-        ParticleFactoryRegistry.getInstance().register(VAParticleTypes.SPECTRAL_FLAME, FlameParticle.Factory::new);
-        ParticleFactoryRegistry.getInstance().register(VAParticleTypes.SMALL_SPECTRAL_FLAME, FlameParticle.SmallFactory::new);
+        ParticleFactoryRegistry.getInstance().register(VAParticleTypes.SPECTRAL_FLAME, FlameParticle.Provider::new);
+        ParticleFactoryRegistry.getInstance().register(VAParticleTypes.SMALL_SPECTRAL_FLAME, FlameParticle.SmallFlameProvider::new);
         ParticleFactoryRegistry.getInstance().register(VAParticleTypes.SPRING_LOTUS_POLLEN, SpringLotusPollenParticle.Factory::new);
-        ParticleFactoryRegistry.getInstance().register(VAParticleTypes.SOUL_FIREFLY, FireflyParticle.Factory::new);
+        ParticleFactoryRegistry.getInstance().register(VAParticleTypes.SOUL_FIREFLY, FireflyParticle.FireflyProvider::new);
         ParticleFactoryRegistry.getInstance().register(VAParticleTypes.STATIC_SCULK_CHARGE_POP, StaticSculkChargePopParticleFactory::new);
 
-        HandledScreens.register(VAScreenHandler.ENTANGLEMENT_DRIVE, EntanglementDriveScreen::new);
-        HandledScreens.register(VAScreenHandler.COLORING_STATION, ColoringStationScreen::new);
+        MenuScreens.register(VAScreenHandler.ENTANGLEMENT_DRIVE, EntanglementDriveScreen::new);
+        MenuScreens.register(VAScreenHandler.COLORING_STATION, ColoringStationScreen::new);
 
         ClientPlayNetworking.registerGlobalReceiver(VAPackets.REMOTE_NOTIFIER_S2C_ID, ((payload, context) -> {
-            if (context != null) context.client().getToastManager().add(new RemoteNotifierToast(payload.STACK(), Text.of(payload.TEXT())));
+            if (context != null) context.client().getToastManager().addToast(new RemoteNotifierToast(payload.STACK(), Component.nullToEmpty(payload.TEXT())));
         }));
 
         ClientPlayNetworking.registerGlobalReceiver(VAPackets.COLORING_STATION_S2C_ID, (payload, context) -> {
             if (context != null) {
-                if (context.client().currentScreen instanceof ColoringStationScreen coloringStationScreen) {
-                    coloringStationScreen.getScreenHandler().setRecipeData(payload.list());
+                if (context.client().screen instanceof ColoringStationScreen coloringStationScreen) {
+                    coloringStationScreen.getMenu().setRecipeData(payload.list());
                 } else {
                     ColoringStationScreenHandler.recipeDataOnLoad = payload.list();
                 }
@@ -66,7 +60,7 @@ public class VirtualAdditionsClient implements ClientModInitializer {
         });
 
         ClientPlayNetworking.registerGlobalReceiver(VAPackets.PLAYER_PROJECTION_S2C_ID, (payload, context) -> {
-            World world = context.player().getEntityWorld();
+            Level world = context.player().level();
             if (world != null) {
                 Entity entity = world.getEntity(payload.getEntityId());
                 if (entity instanceof PlayerProjectionEntity playerProjectionEntity) {

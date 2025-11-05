@@ -1,58 +1,51 @@
 package com.github.suninvr.virtualadditions.block;
 
 import com.github.suninvr.virtualadditions.registry.VABlocks;
-import com.github.suninvr.virtualadditions.registry.VAItems;
 import com.github.suninvr.virtualadditions.registry.VAParticleTypes;
 import com.github.suninvr.virtualadditions.registry.VAStatusEffects;
-import net.minecraft.block.BlockState;
-import net.minecraft.block.Fertilizable;
-import net.minecraft.block.FlowerBlock;
-import net.minecraft.entity.Entity;
-import net.minecraft.entity.EntityCollisionHandler;
-import net.minecraft.item.ItemStack;
-import net.minecraft.item.Items;
-import net.minecraft.server.world.ServerWorld;
-import net.minecraft.sound.SoundCategory;
-import net.minecraft.sound.SoundEvents;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.math.Vec3d;
-import net.minecraft.util.math.intprovider.IntProvider;
-import net.minecraft.util.math.intprovider.UniformIntProvider;
-import net.minecraft.util.math.random.Random;
-import net.minecraft.world.World;
-import net.minecraft.world.WorldView;
+import net.minecraft.core.BlockPos;
+import net.minecraft.server.level.ServerLevel;
+import net.minecraft.sounds.SoundEvents;
+import net.minecraft.sounds.SoundSource;
+import net.minecraft.util.RandomSource;
+import net.minecraft.world.level.Level;
+import net.minecraft.world.level.LevelReader;
+import net.minecraft.world.level.block.BonemealableBlock;
+import net.minecraft.world.level.block.FlowerBlock;
+import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.phys.Vec3;
 
-public class SoulSproutBlock extends FlowerBlock implements Fertilizable {
-    public SoulSproutBlock(Settings settings) {
+public class SoulSproutBlock extends FlowerBlock implements BonemealableBlock {
+    public SoulSproutBlock(Properties settings) {
         super(VAStatusEffects.AURA, 4, settings);
     }
 
     @Override
-    public void randomDisplayTick(BlockState state, World world, BlockPos pos, Random random) {
-        if (random.nextDouble() <= 0.003 && world.getBlockState(pos.up()).isAir()) {
-            Vec3d centerPos = pos.toCenterPos();
-            world.playSoundClient(centerPos.x, centerPos.y, centerPos.z, SoundEvents.BLOCK_EYEBLOSSOM_IDLE, SoundCategory.AMBIENT, 1, 1, true);
+    public void animateTick(BlockState state, Level world, BlockPos pos, RandomSource random) {
+        if (random.nextDouble() <= 0.003 && world.getBlockState(pos.above()).isAir()) {
+            Vec3 centerPos = pos.getCenter();
+            world.playLocalSound(centerPos.x, centerPos.y, centerPos.z, SoundEvents.EYEBLOSSOM_IDLE, SoundSource.AMBIENT, 1, 1, true);
         }
         if (random.nextDouble() <= 0.7) {
             double d = pos.getX() + random.nextDouble() * 10.0 - 5.0;
             double e = pos.getY() + random.nextDouble() * 5.0;
             double f = pos.getZ() + random.nextDouble() * 10.0 - 5.0;
-            world.addParticleClient(VAParticleTypes.SOUL_FIREFLY, d, e, f, 0.0, 0.0, 0.0);
+            world.addParticle(VAParticleTypes.SOUL_FIREFLY, d, e, f, 0.0, 0.0, 0.0);
         }
     }
 
     @Override
-    public boolean isFertilizable(WorldView world, BlockPos pos, BlockState state) {
-        return Fertilizable.canSpread(world, pos, state);
+    public boolean isValidBonemealTarget(LevelReader world, BlockPos pos, BlockState state) {
+        return BonemealableBlock.hasSpreadableNeighbourPos(world, pos, state);
     }
 
     @Override
-    public boolean canGrow(World world, Random random, BlockPos pos, BlockState state) {
+    public boolean isBonemealSuccess(Level world, RandomSource random, BlockPos pos, BlockState state) {
         return true;
     }
 
     @Override
-    public void grow(ServerWorld world, Random random, BlockPos pos, BlockState state) {
-        Fertilizable.findPosToSpreadTo(world, pos, state).ifPresent(posx -> world.setBlockState(posx, VABlocks.SOUL_SPROUT.getDefaultState()));
+    public void performBonemeal(ServerLevel world, RandomSource random, BlockPos pos, BlockState state) {
+        BonemealableBlock.findSpreadableNeighbourPos(world, pos, state).ifPresent(posx -> world.setBlockAndUpdate(posx, VABlocks.SOUL_SPROUT.defaultBlockState()));
     }
 }

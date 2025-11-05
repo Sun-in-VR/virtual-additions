@@ -1,18 +1,17 @@
 package com.github.suninvr.virtualadditions.mixin;
 
-import net.minecraft.block.BlockState;
-import net.minecraft.block.Blocks;
-import net.minecraft.entity.LivingEntity;
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.item.ItemUsageContext;
-import net.minecraft.item.ShovelItem;
-import net.minecraft.sound.SoundCategory;
-import net.minecraft.sound.SoundEvents;
-import net.minecraft.util.ActionResult;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.math.Direction;
-import net.minecraft.world.World;
-import net.minecraft.world.event.GameEvent;
+import net.minecraft.core.BlockPos;
+import net.minecraft.core.Direction;
+import net.minecraft.sounds.SoundEvents;
+import net.minecraft.sounds.SoundSource;
+import net.minecraft.world.InteractionResult;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.item.ShovelItem;
+import net.minecraft.world.item.context.UseOnContext;
+import net.minecraft.world.level.Level;
+import net.minecraft.world.level.block.Blocks;
+import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.gameevent.GameEvent;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
@@ -20,19 +19,19 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
 @Mixin(ShovelItem.class)
 public class ShovelItemMixin {
-    @Inject(method = "useOnBlock", at = @At("HEAD"), cancellable = true)
-    void virtualAdditions$undoPathBlock(ItemUsageContext context, CallbackInfoReturnable<ActionResult> cir) {
-        PlayerEntity player = context.getPlayer();
-        if (!(context.getSide() == Direction.DOWN) && player != null && player.isSneaking()) {
-            World world = context.getWorld();
-            BlockPos blockPos = context.getBlockPos();
+    @Inject(method = "useOn", at = @At("HEAD"), cancellable = true)
+    void virtualAdditions$undoPathBlock(UseOnContext context, CallbackInfoReturnable<InteractionResult> cir) {
+        Player player = context.getPlayer();
+        if (!(context.getClickedFace() == Direction.DOWN) && player != null && player.isShiftKeyDown()) {
+            Level world = context.getLevel();
+            BlockPos blockPos = context.getClickedPos();
             BlockState blockState = world.getBlockState(blockPos);
-            if (blockState.isOf(Blocks.DIRT_PATH)) {
-                world.setBlockState(blockPos, Blocks.DIRT.getDefaultState());
-                world.emitGameEvent(GameEvent.BLOCK_CHANGE, blockPos, GameEvent.Emitter.of(player, Blocks.DIRT.getDefaultState()));
-                context.getStack().damage(1, player, context.getHand().getEquipmentSlot());
-                world.playSound(player, blockPos, SoundEvents.ITEM_SHOVEL_FLATTEN, SoundCategory.BLOCKS, 1.0F, 1.0F);
-                cir.setReturnValue(ActionResult.SUCCESS);
+            if (blockState.is(Blocks.DIRT_PATH)) {
+                world.setBlockAndUpdate(blockPos, Blocks.DIRT.defaultBlockState());
+                world.gameEvent(GameEvent.BLOCK_CHANGE, blockPos, GameEvent.Context.of(player, Blocks.DIRT.defaultBlockState()));
+                context.getItemInHand().hurtAndBreak(1, player, context.getHand().asEquipmentSlot());
+                world.playSound(player, blockPos, SoundEvents.SHOVEL_FLATTEN, SoundSource.BLOCKS, 1.0F, 1.0F);
+                cir.setReturnValue(InteractionResult.SUCCESS);
             }
         }
     }

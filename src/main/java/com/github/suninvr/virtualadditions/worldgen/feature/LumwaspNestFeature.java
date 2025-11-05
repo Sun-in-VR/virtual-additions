@@ -4,34 +4,34 @@ import com.github.suninvr.virtualadditions.block.LumwaspNestBlock;
 import com.github.suninvr.virtualadditions.registry.VABlockTags;
 import com.github.suninvr.virtualadditions.registry.VABlocks;
 import com.mojang.serialization.Codec;
-import net.minecraft.block.BlockState;
-import net.minecraft.block.Blocks;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.math.random.Random;
-import net.minecraft.world.StructureWorldAccess;
-import net.minecraft.world.gen.feature.DefaultFeatureConfig;
-import net.minecraft.world.gen.feature.Feature;
-import net.minecraft.world.gen.feature.util.FeatureContext;
+import net.minecraft.core.BlockPos;
+import net.minecraft.util.RandomSource;
+import net.minecraft.world.level.WorldGenLevel;
+import net.minecraft.world.level.block.Blocks;
+import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.levelgen.feature.Feature;
+import net.minecraft.world.level.levelgen.feature.FeaturePlaceContext;
+import net.minecraft.world.level.levelgen.feature.configurations.NoneFeatureConfiguration;
 
-public class LumwaspNestFeature extends Feature<DefaultFeatureConfig> {
-    private static final BlockState SILK_BLOCK = VABlocks.SILK_BLOCK.getDefaultState();
-    private static final BlockState NEST = VABlocks.LUMWASP_NEST.getDefaultState();
-    private static final BlockState NEST_LARVAE = VABlocks.LUMWASP_NEST.getDefaultState().with(LumwaspNestBlock.LARVAE, true);
-    private static final BlockState ACID = VABlocks.ACID.getDefaultState();
-    private static final BlockState ACID_BLOCK = VABlocks.ACID_BLOCK.getDefaultState();
-    private static final BlockState GLOWING_SILK = VABlocks.GLOWING_SILK.getDefaultState();
-    private static final BlockState AIR = Blocks.AIR.getDefaultState();
+public class LumwaspNestFeature extends Feature<NoneFeatureConfiguration> {
+    private static final BlockState SILK_BLOCK = VABlocks.SILK_BLOCK.defaultBlockState();
+    private static final BlockState NEST = VABlocks.LUMWASP_NEST.defaultBlockState();
+    private static final BlockState NEST_LARVAE = VABlocks.LUMWASP_NEST.defaultBlockState().setValue(LumwaspNestBlock.LARVAE, true);
+    private static final BlockState ACID = VABlocks.ACID.defaultBlockState();
+    private static final BlockState ACID_BLOCK = VABlocks.ACID_BLOCK.defaultBlockState();
+    private static final BlockState GLOWING_SILK = VABlocks.GLOWING_SILK.defaultBlockState();
+    private static final BlockState AIR = Blocks.AIR.defaultBlockState();
 
-    public LumwaspNestFeature(Codec<DefaultFeatureConfig> configCodec) {
+    public LumwaspNestFeature(Codec<NoneFeatureConfiguration> configCodec) {
         super(configCodec);
     }
 
     @Override
-    public boolean generate(FeatureContext<DefaultFeatureConfig> context) {
+    public boolean place(FeaturePlaceContext<NoneFeatureConfiguration> context) {
 
-        StructureWorldAccess world = context.getWorld();
-        BlockPos origin = context.getOrigin();
-        Random random = context.getRandom();
+        WorldGenLevel world = context.level();
+        BlockPos origin = context.origin();
+        RandomSource random = context.random();
         boolean large = random.nextInt(4) == 1;
 
         if (!isValidSpace(world, origin, false)) return false;
@@ -43,22 +43,22 @@ public class LumwaspNestFeature extends Feature<DefaultFeatureConfig> {
         return true;
     }
 
-    private void generateSmall(StructureWorldAccess world, BlockPos origin, Random random) {
+    private void generateSmall(WorldGenLevel world, BlockPos origin, RandomSource random) {
         setBlockStateIfReplaceable(world, origin, SILK_BLOCK);
-        setBlockStateIfReplaceable(world, origin.add(1, 0, 0), SILK_BLOCK);
-        setBlockStateIfReplaceable(world, origin.add(-1, 0, 0), SILK_BLOCK);
-        setBlockStateIfReplaceable(world, origin.add(0, 0, 1), SILK_BLOCK);
-        setBlockStateIfReplaceable(world, origin.add(0, 0, -1), SILK_BLOCK);
+        setBlockStateIfReplaceable(world, origin.offset(1, 0, 0), SILK_BLOCK);
+        setBlockStateIfReplaceable(world, origin.offset(-1, 0, 0), SILK_BLOCK);
+        setBlockStateIfReplaceable(world, origin.offset(0, 0, 1), SILK_BLOCK);
+        setBlockStateIfReplaceable(world, origin.offset(0, 0, -1), SILK_BLOCK);
 
         for (int i = 0; i < 3; ++i) {
             for (int j = 0; j < 3; ++j) {
-                setBlockStateIfReplaceable(world, origin.add(i - 1, -1, j - 1), AIR);
+                setBlockStateIfReplaceable(world, origin.offset(i - 1, -1, j - 1), AIR);
             }
         }
 
         for (int i = 0; i < 5; ++i) {
             for (int j = 0; j < 5; ++j) {
-                setAcidState(world, origin.add(i - 2, -2, j - 2));
+                setAcidState(world, origin.offset(i - 2, -2, j - 2));
             }
         }
 
@@ -73,188 +73,188 @@ public class LumwaspNestFeature extends Feature<DefaultFeatureConfig> {
                 int m = -1 - j;
 
                 if (m != -3) {
-                    setBlockStateIfReplaceable(world, origin.add(k, m, l), SILK_BLOCK);
-                    setBlockStateIfReplaceable(world, origin.add(k, m, -l), SILK_BLOCK);
-                    setBlockStateIfReplaceable(world, origin.add(l, m, k), SILK_BLOCK);
-                    setBlockStateIfReplaceable(world, origin.add(-l, m, k), SILK_BLOCK);
+                    setBlockStateIfReplaceable(world, origin.offset(k, m, l), SILK_BLOCK);
+                    setBlockStateIfReplaceable(world, origin.offset(k, m, -l), SILK_BLOCK);
+                    setBlockStateIfReplaceable(world, origin.offset(l, m, k), SILK_BLOCK);
+                    setBlockStateIfReplaceable(world, origin.offset(-l, m, k), SILK_BLOCK);
                 } else {
-                    setRandomNestState(world, origin.add(k, m, l), random);
-                    setRandomNestState(world, origin.add(k, m, -l), random);
-                    setRandomNestState(world, origin.add(l, m, k), random);
-                    setRandomNestState(world, origin.add(-l, m, k), random);
+                    setRandomNestState(world, origin.offset(k, m, l), random);
+                    setRandomNestState(world, origin.offset(k, m, -l), random);
+                    setRandomNestState(world, origin.offset(l, m, k), random);
+                    setRandomNestState(world, origin.offset(-l, m, k), random);
                 }
             }
         }
         
         for (int i = 0; i < 2; ++i) {
             int j = i + 1;
-            setBlockStateIfReplaceable(world, origin.add(j, -j, j), SILK_BLOCK);
-            setBlockStateIfReplaceable(world, origin.add(j, -j, -j), SILK_BLOCK);
-            setBlockStateIfReplaceable(world, origin.add(-j, -j, j), SILK_BLOCK);
-            setBlockStateIfReplaceable(world, origin.add(-j, -j, -j), SILK_BLOCK);
+            setBlockStateIfReplaceable(world, origin.offset(j, -j, j), SILK_BLOCK);
+            setBlockStateIfReplaceable(world, origin.offset(j, -j, -j), SILK_BLOCK);
+            setBlockStateIfReplaceable(world, origin.offset(-j, -j, j), SILK_BLOCK);
+            setBlockStateIfReplaceable(world, origin.offset(-j, -j, -j), SILK_BLOCK);
         }
 
         for (int i = 0; i < 3; ++i) {
             for (int j = 0; j < 3; ++j) {
-                setRandomNestState(world, origin.add(i - 1, -3, j - 1), random);
+                setRandomNestState(world, origin.offset(i - 1, -3, j - 1), random);
             }
         }
     }
     
-    private void generateLarge(StructureWorldAccess world, BlockPos origin, Random random) {
+    private void generateLarge(WorldGenLevel world, BlockPos origin, RandomSource random) {
         // Layer 0
         for (int i = 0; i < 3; ++i) {
             for (int j = 0; j < 3; ++j) {
-                setBlockStateIfReplaceable(world, origin.add(i - 1, 0, j - 1), SILK_BLOCK);
+                setBlockStateIfReplaceable(world, origin.offset(i - 1, 0, j - 1), SILK_BLOCK);
             }
         }
 
         // Layer 1
         for (int i = 0; i < 3; ++i) {
             int j = i - 1;
-            setBlockStateIfReplaceable(world, origin.add(2, -1, j), SILK_BLOCK);
-            setBlockStateIfReplaceable(world, origin.add(-2, -1, j), SILK_BLOCK);
-            setBlockStateIfReplaceable(world, origin.add(j, -1, 2), SILK_BLOCK);
-            setBlockStateIfReplaceable(world, origin.add(j, -1, -2), SILK_BLOCK);
+            setBlockStateIfReplaceable(world, origin.offset(2, -1, j), SILK_BLOCK);
+            setBlockStateIfReplaceable(world, origin.offset(-2, -1, j), SILK_BLOCK);
+            setBlockStateIfReplaceable(world, origin.offset(j, -1, 2), SILK_BLOCK);
+            setBlockStateIfReplaceable(world, origin.offset(j, -1, -2), SILK_BLOCK);
         }
 
         for (int i = 0; i < 3; ++i) {
             for (int j = 0; j < 3; ++j) {
-                setBlockStateIfReplaceable(world, origin.add(i - 1, -1, j - 1), AIR);
+                setBlockStateIfReplaceable(world, origin.offset(i - 1, -1, j - 1), AIR);
             }
         }
 
         // Layer 2
         for (int i = 0; i < 3; ++i) {
             for (int j = 0; j < 3; ++j) {
-                setBlockStateIfReplaceable(world, origin.add(i - 1, -2, j - 1), AIR);
+                setBlockStateIfReplaceable(world, origin.offset(i - 1, -2, j - 1), AIR);
             }
         }
         for (int i = 0; i < 3; ++i) {
             int j = i - 1;
-            setBlockStateIfReplaceable(world, origin.add(2, -2, j), AIR);
-            setBlockStateIfReplaceable(world, origin.add(-2, -2, j), AIR);
-            setBlockStateIfReplaceable(world, origin.add(j, -2, 2), AIR);
-            setBlockStateIfReplaceable(world, origin.add(j, -2, -2), AIR);
-            setBlockStateIfReplaceable(world, origin.add(3, -2, j), SILK_BLOCK);
-            setBlockStateIfReplaceable(world, origin.add(-3, -2, j), SILK_BLOCK);
-            setBlockStateIfReplaceable(world, origin.add(j, -2, 3), SILK_BLOCK);
-            setBlockStateIfReplaceable(world, origin.add(j, -2, -3), SILK_BLOCK);
+            setBlockStateIfReplaceable(world, origin.offset(2, -2, j), AIR);
+            setBlockStateIfReplaceable(world, origin.offset(-2, -2, j), AIR);
+            setBlockStateIfReplaceable(world, origin.offset(j, -2, 2), AIR);
+            setBlockStateIfReplaceable(world, origin.offset(j, -2, -2), AIR);
+            setBlockStateIfReplaceable(world, origin.offset(3, -2, j), SILK_BLOCK);
+            setBlockStateIfReplaceable(world, origin.offset(-3, -2, j), SILK_BLOCK);
+            setBlockStateIfReplaceable(world, origin.offset(j, -2, 3), SILK_BLOCK);
+            setBlockStateIfReplaceable(world, origin.offset(j, -2, -3), SILK_BLOCK);
         }
 
-        setBlockStateIfReplaceable(world, origin.add(2, -2, 2), SILK_BLOCK);
-        setBlockStateIfReplaceable(world, origin.add(2, -2, -2), SILK_BLOCK);
-        setBlockStateIfReplaceable(world, origin.add(-2, -2, 2), SILK_BLOCK);
-        setBlockStateIfReplaceable(world, origin.add(-2, -2, -2), SILK_BLOCK);
+        setBlockStateIfReplaceable(world, origin.offset(2, -2, 2), SILK_BLOCK);
+        setBlockStateIfReplaceable(world, origin.offset(2, -2, -2), SILK_BLOCK);
+        setBlockStateIfReplaceable(world, origin.offset(-2, -2, 2), SILK_BLOCK);
+        setBlockStateIfReplaceable(world, origin.offset(-2, -2, -2), SILK_BLOCK);
 
         // Layer 3
         for (int i = 0; i < 5; ++i) {
             for (int j = 0; j < 5; ++j) {
-                setBlockStateIfReplaceable(world, origin.add(i - 2, -3, j - 2), AIR);
+                setBlockStateIfReplaceable(world, origin.offset(i - 2, -3, j - 2), AIR);
             }
         }
         for (int i = 0; i < 5; ++i) {
             int j = i - 2;
-            setBlockStateIfReplaceable(world, origin.add(3, -3, j), SILK_BLOCK);
-            setBlockStateIfReplaceable(world, origin.add(-3, -3, j), SILK_BLOCK);
-            setBlockStateIfReplaceable(world, origin.add(j, -3, 3), SILK_BLOCK);
-            setBlockStateIfReplaceable(world, origin.add(j, -3, -3), SILK_BLOCK);
+            setBlockStateIfReplaceable(world, origin.offset(3, -3, j), SILK_BLOCK);
+            setBlockStateIfReplaceable(world, origin.offset(-3, -3, j), SILK_BLOCK);
+            setBlockStateIfReplaceable(world, origin.offset(j, -3, 3), SILK_BLOCK);
+            setBlockStateIfReplaceable(world, origin.offset(j, -3, -3), SILK_BLOCK);
         }
 
         // Layer 4
         for (int i = 0; i < 5; ++i) {
             for (int j = 0; j < 5; ++j) {
-                setAcidState(world, origin.add(i - 2, -4, j - 2));
+                setAcidState(world, origin.offset(i - 2, -4, j - 2));
             }
         }
         for (int i = 0; i < 3; ++i) {
             int j = i - 1;
-            setAcidState(world, origin.add(3, -4, j));
-            setAcidState(world, origin.add(-3, -4, j));
-            setAcidState(world, origin.add(j, -4, 3));
-            setAcidState(world, origin.add(j, -4, -3));
-            setBlockStateIfReplaceable(world, origin.add(4, -4, j), SILK_BLOCK);
-            setBlockStateIfReplaceable(world, origin.add(-4, -4, j), SILK_BLOCK);
-            setBlockStateIfReplaceable(world, origin.add(j, -4, 4), SILK_BLOCK);
-            setBlockStateIfReplaceable(world, origin.add(j, -4, -4), SILK_BLOCK);
+            setAcidState(world, origin.offset(3, -4, j));
+            setAcidState(world, origin.offset(-3, -4, j));
+            setAcidState(world, origin.offset(j, -4, 3));
+            setAcidState(world, origin.offset(j, -4, -3));
+            setBlockStateIfReplaceable(world, origin.offset(4, -4, j), SILK_BLOCK);
+            setBlockStateIfReplaceable(world, origin.offset(-4, -4, j), SILK_BLOCK);
+            setBlockStateIfReplaceable(world, origin.offset(j, -4, 4), SILK_BLOCK);
+            setBlockStateIfReplaceable(world, origin.offset(j, -4, -4), SILK_BLOCK);
         }
 
-        setBlockStateIfReplaceable(world, origin.add(3, -4, 2), SILK_BLOCK);
-        setBlockStateIfReplaceable(world, origin.add(3, -4, -2), SILK_BLOCK);
-        setBlockStateIfReplaceable(world, origin.add(-3, -4, 2), SILK_BLOCK);
-        setBlockStateIfReplaceable(world, origin.add(-3, -4, -2), SILK_BLOCK);
-        setBlockStateIfReplaceable(world, origin.add(2, -4, 3), SILK_BLOCK);
-        setBlockStateIfReplaceable(world, origin.add(2, -4, -3), SILK_BLOCK);
-        setBlockStateIfReplaceable(world, origin.add(-2, -4, 3), SILK_BLOCK);
-        setBlockStateIfReplaceable(world, origin.add(-2, -4, -3), SILK_BLOCK);
+        setBlockStateIfReplaceable(world, origin.offset(3, -4, 2), SILK_BLOCK);
+        setBlockStateIfReplaceable(world, origin.offset(3, -4, -2), SILK_BLOCK);
+        setBlockStateIfReplaceable(world, origin.offset(-3, -4, 2), SILK_BLOCK);
+        setBlockStateIfReplaceable(world, origin.offset(-3, -4, -2), SILK_BLOCK);
+        setBlockStateIfReplaceable(world, origin.offset(2, -4, 3), SILK_BLOCK);
+        setBlockStateIfReplaceable(world, origin.offset(2, -4, -3), SILK_BLOCK);
+        setBlockStateIfReplaceable(world, origin.offset(-2, -4, 3), SILK_BLOCK);
+        setBlockStateIfReplaceable(world, origin.offset(-2, -4, -3), SILK_BLOCK);
 
         // Layer 5
         for (int i = 0; i < 5; ++i) {
             int j = i - 2;
-            setBlockStateIfReplaceable(world, origin.add(4, -5, j), SILK_BLOCK);
-            setBlockStateIfReplaceable(world, origin.add(-4, -5, j), SILK_BLOCK);
-            setBlockStateIfReplaceable(world, origin.add(j, -5, 4), SILK_BLOCK);
-            setBlockStateIfReplaceable(world, origin.add(j, -5, -4), SILK_BLOCK);
+            setBlockStateIfReplaceable(world, origin.offset(4, -5, j), SILK_BLOCK);
+            setBlockStateIfReplaceable(world, origin.offset(-4, -5, j), SILK_BLOCK);
+            setBlockStateIfReplaceable(world, origin.offset(j, -5, 4), SILK_BLOCK);
+            setBlockStateIfReplaceable(world, origin.offset(j, -5, -4), SILK_BLOCK);
         }
 
-        setBlockStateIfReplaceable(world, origin.add(3, -5, 3), SILK_BLOCK);
-        setBlockStateIfReplaceable(world, origin.add(3, -5, -3), SILK_BLOCK);
-        setBlockStateIfReplaceable(world, origin.add(-3, -5, 3), SILK_BLOCK);
-        setBlockStateIfReplaceable(world, origin.add(-3, -5, -3), SILK_BLOCK);
+        setBlockStateIfReplaceable(world, origin.offset(3, -5, 3), SILK_BLOCK);
+        setBlockStateIfReplaceable(world, origin.offset(3, -5, -3), SILK_BLOCK);
+        setBlockStateIfReplaceable(world, origin.offset(-3, -5, 3), SILK_BLOCK);
+        setBlockStateIfReplaceable(world, origin.offset(-3, -5, -3), SILK_BLOCK);
 
         for (int i = 0; i < 7; ++i) {
             for (int j = 0; j < 7; ++j) {
-                setAcidState(world, origin.add(i - 3, -5, j - 3));
+                setAcidState(world, origin.offset(i - 3, -5, j - 3));
             }
         }
 
         // Layer 6
 
-        setRandomNestState(world, origin.add(2, -6, 2), random);
-        setRandomNestState(world, origin.add(2, -6, -2), random);
-        setRandomNestState(world, origin.add(-2, -6, 2), random);
-        setRandomNestState(world, origin.add(-2, -6, -2), random);
+        setRandomNestState(world, origin.offset(2, -6, 2), random);
+        setRandomNestState(world, origin.offset(2, -6, -2), random);
+        setRandomNestState(world, origin.offset(-2, -6, 2), random);
+        setRandomNestState(world, origin.offset(-2, -6, -2), random);
         for (int i = 0; i < 5; ++i) {
             int j = i - 2;
-            setRandomNestState(world, origin.add(3, -6, j), random);
-            setRandomNestState(world, origin.add(-3, -6, j), random);
-            setRandomNestState(world, origin.add(j, -6, 3), random);
-            setRandomNestState(world, origin.add(j, -6, -3), random);
+            setRandomNestState(world, origin.offset(3, -6, j), random);
+            setRandomNestState(world, origin.offset(-3, -6, j), random);
+            setRandomNestState(world, origin.offset(j, -6, 3), random);
+            setRandomNestState(world, origin.offset(j, -6, -3), random);
         }
         for (int i = 0; i < 5; ++i) {
             for (int j = 0; j < 5; ++j) {
-                setAcidState(world, origin.add(i - 2, -6, j - 2));
+                setAcidState(world, origin.offset(i - 2, -6, j - 2));
             }
         }
 
         // Layer 7
         for (int i = 0; i < 3; ++i) {
             int j = i - 1;
-            setRandomNestState(world, origin.add(2, -7, j), random);
-            setRandomNestState(world, origin.add(-2, -7, j), random);
-            setRandomNestState(world, origin.add(j, -7, 2), random);
-            setRandomNestState(world, origin.add(j, -7, -2), random);
+            setRandomNestState(world, origin.offset(2, -7, j), random);
+            setRandomNestState(world, origin.offset(-2, -7, j), random);
+            setRandomNestState(world, origin.offset(j, -7, 2), random);
+            setRandomNestState(world, origin.offset(j, -7, -2), random);
         }
 
         for (int i = 0; i < 3; ++i) {
             for (int j = 0; j < 3; ++j) {
-                setRandomNestState(world, origin.add(i - 1, -7, j - 1), random);
+                setRandomNestState(world, origin.offset(i - 1, -7, j - 1), random);
             }
         }
 
     }
 
-    private void setRandomNestState(StructureWorldAccess world, BlockPos pos, Random random) {
+    private void setRandomNestState(WorldGenLevel world, BlockPos pos, RandomSource random) {
         boolean bl = random.nextInt(3) >= 1;
         BlockState state = bl ? NEST_LARVAE : NEST;
         setBlockStateIfReplaceable(world, pos, state);
-        if (bl && random.nextInt(2) == 0) setBlockStateIfReplaceable(world, pos.down(), GLOWING_SILK);
+        if (bl && random.nextInt(2) == 0) setBlockStateIfReplaceable(world, pos.below(), GLOWING_SILK);
     }
 
-    private boolean isValidSpace(StructureWorldAccess worldAccess, BlockPos origin, boolean large) {
+    private boolean isValidSpace(WorldGenLevel worldAccess, BlockPos origin, boolean large) {
         int height = large ? 9 : 6;
         for (int i = 0; i < height; ++i) {
-            BlockState state = worldAccess.getBlockState(origin.down(i));
+            BlockState state = worldAccess.getBlockState(origin.below(i));
             if ( (i < 2 && canReplace(state)) || state.isAir() ) continue;
             return false;
         }
@@ -263,16 +263,16 @@ public class LumwaspNestFeature extends Feature<DefaultFeatureConfig> {
     }
     
     private boolean canReplace(BlockState state) {
-        return state.isIn(VABlockTags.LUMWASP_NEST_REPLACEABLE) || state.isReplaceable();
+        return state.is(VABlockTags.LUMWASP_NEST_REPLACEABLE) || state.canBeReplaced();
     }
 
-    protected void setAcidState(StructureWorldAccess world, BlockPos pos) {
+    protected void setAcidState(WorldGenLevel world, BlockPos pos) {
         boolean bl = world.getRandom().nextInt(3) == 0;
         BlockState state = bl ? ACID_BLOCK : ACID;
-        if (world.getBlockState(pos).isAir()) setBlockState(world, pos, state);
+        if (world.getBlockState(pos).isAir()) setBlock(world, pos, state);
     }
     
-    protected void setBlockStateIfReplaceable(StructureWorldAccess world, BlockPos pos, BlockState state) {
-        if (canReplace(world.getBlockState(pos))) setBlockState(world, pos, state);
+    protected void setBlockStateIfReplaceable(WorldGenLevel world, BlockPos pos, BlockState state) {
+        if (canReplace(world.getBlockState(pos))) setBlock(world, pos, state);
     }
 }

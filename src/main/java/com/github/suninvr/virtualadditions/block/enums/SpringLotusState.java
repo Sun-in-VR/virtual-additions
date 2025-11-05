@@ -1,10 +1,10 @@
 package com.github.suninvr.virtualadditions.block.enums;
 
-import net.minecraft.util.StringIdentifiable;
+import net.minecraft.util.StringRepresentable;
 
 import java.util.Locale;
 
-public enum SpringLotusState implements StringIdentifiable {
+public enum SpringLotusState implements StringRepresentable {
     IDLE,
     PUSHING,
     OVER_COMPRESSED
@@ -13,7 +13,7 @@ public enum SpringLotusState implements StringIdentifiable {
     private final String name;
 
     @Override
-    public String asString() {
+    public String getSerializedName() {
         return this.name;
     }
 

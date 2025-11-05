@@ -2,45 +2,45 @@ package com.github.suninvr.virtualadditions.item;
 
 import com.github.suninvr.virtualadditions.entity.SteelBombEntity;
 import com.github.suninvr.virtualadditions.registry.VASoundEvents;
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.entity.projectile.ProjectileEntity;
-import net.minecraft.item.Item;
-import net.minecraft.item.ItemStack;
-import net.minecraft.item.ProjectileItem;
-import net.minecraft.server.world.ServerWorld;
-import net.minecraft.sound.SoundCategory;
-import net.minecraft.stat.Stats;
-import net.minecraft.util.ActionResult;
-import net.minecraft.util.Hand;
-import net.minecraft.util.math.Direction;
-import net.minecraft.util.math.Position;
-import net.minecraft.world.World;
+import net.minecraft.core.Direction;
+import net.minecraft.core.Position;
+import net.minecraft.server.level.ServerLevel;
+import net.minecraft.sounds.SoundSource;
+import net.minecraft.stats.Stats;
+import net.minecraft.world.InteractionHand;
+import net.minecraft.world.InteractionResult;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.entity.projectile.Projectile;
+import net.minecraft.world.item.Item;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.ProjectileItem;
+import net.minecraft.world.level.Level;
 
 public class SteelBombItem extends Item implements ProjectileItem {
 
-    public SteelBombItem(net.minecraft.item.Item.Settings settings) {
+    public SteelBombItem(net.minecraft.world.item.Item.Properties settings) {
         super(settings);
     }
 
-    public ActionResult use(World world, PlayerEntity user, Hand hand) {
-        ItemStack itemStack = user.getStackInHand(hand);
-        world.playSound(null, user.getX(), user.getY(), user.getZ(), VASoundEvents.ENTITY_STEEL_BOMB_THROW, SoundCategory.NEUTRAL, 0.5F, 0.4F / (world.getRandom().nextFloat() * 0.4F + 0.8F));
-        user.getItemCooldownManager().set(itemStack, 30);
-        if (!world.isClient()) {
-            ProjectileEntity.spawnWithVelocity(SteelBombEntity::new, (ServerWorld) world, itemStack, user, 0.0F, 1.5F, 1.0F);
+    public InteractionResult use(Level world, Player user, InteractionHand hand) {
+        ItemStack itemStack = user.getItemInHand(hand);
+        world.playSound(null, user.getX(), user.getY(), user.getZ(), VASoundEvents.ENTITY_STEEL_BOMB_THROW, SoundSource.NEUTRAL, 0.5F, 0.4F / (world.getRandom().nextFloat() * 0.4F + 0.8F));
+        user.getCooldowns().addCooldown(itemStack, 30);
+        if (!world.isClientSide()) {
+            Projectile.spawnProjectileFromRotation(SteelBombEntity::new, (ServerLevel) world, itemStack, user, 0.0F, 1.5F, 1.0F);
         }
 
-        user.incrementStat(Stats.USED.getOrCreateStat(this));
-        if (!user.getAbilities().creativeMode) {
-            itemStack.decrement(1);
+        user.awardStat(Stats.ITEM_USED.get(this));
+        if (!user.getAbilities().instabuild) {
+            itemStack.shrink(1);
         }
 
-        return ActionResult.SUCCESS;
+        return InteractionResult.SUCCESS;
     }
 
     @Override
-    public ProjectileEntity createEntity(World world, Position position, ItemStack itemStack, Direction direction) {
-        SteelBombEntity steelBombEntity = new SteelBombEntity(world, position.getX(), position.getY(), position.getZ());
+    public Projectile asProjectile(Level world, Position position, ItemStack itemStack, Direction direction) {
+        SteelBombEntity steelBombEntity = new SteelBombEntity(world, position.x(), position.y(), position.z());
         steelBombEntity.setItem(itemStack);
         return steelBombEntity;
     }

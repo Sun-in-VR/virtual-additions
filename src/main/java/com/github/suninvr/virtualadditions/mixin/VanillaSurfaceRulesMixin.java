@@ -3,14 +3,13 @@ package com.github.suninvr.virtualadditions.mixin;
 import com.github.suninvr.virtualadditions.registry.VABiomeKeys;
 import com.github.suninvr.virtualadditions.registry.VABlocks;
 import com.llamalad7.mixinextras.sugar.Local;
-import net.minecraft.block.Block;
-import net.minecraft.block.Blocks;
-import net.minecraft.registry.RegistryKey;
-import net.minecraft.util.math.noise.DoublePerlinNoiseSampler;
-import net.minecraft.world.biome.BiomeKeys;
-import net.minecraft.world.gen.YOffset;
-import net.minecraft.world.gen.surfacebuilder.MaterialRules;
-import net.minecraft.world.gen.surfacebuilder.VanillaSurfaceRules;
+import net.minecraft.data.worldgen.SurfaceRuleData;
+import net.minecraft.resources.ResourceKey;
+import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.Blocks;
+import net.minecraft.world.level.levelgen.SurfaceRules;
+import net.minecraft.world.level.levelgen.VerticalAnchor;
+import net.minecraft.world.level.levelgen.synth.NormalNoise;
 import org.spongepowered.asm.mixin.Final;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
@@ -19,73 +18,75 @@ import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
-@Mixin(VanillaSurfaceRules.class)
+@Mixin(SurfaceRuleData.class)
 public abstract class VanillaSurfaceRulesMixin {
+
+    @Shadow @Final private static SurfaceRules.RuleSource LAVA;
+    @Shadow @Final private static SurfaceRules.RuleSource WARPED_WART_BLOCK;
+    @Shadow @Final private static SurfaceRules.RuleSource WARPED_NYLIUM;
+    @Shadow @Final private static SurfaceRules.RuleSource BEDROCK;
+    @Shadow @Final private static SurfaceRules.RuleSource NETHERRACK;
+
     @Shadow
-    private static MaterialRules.MaterialRule block(Block block) {
+    protected static SurfaceRules.RuleSource makeStateRule(Block block) {
         return null;
     }
 
-    @Shadow @Final private static MaterialRules.MaterialRule LAVA;
-    @Shadow @Final private static MaterialRules.MaterialRule WARPED_WART_BLOCK;
-    @Shadow @Final private static MaterialRules.MaterialRule WARPED_NYLIUM;
-    @Shadow @Final private static MaterialRules.MaterialRule BEDROCK;
-    @Shadow @Final private static MaterialRules.MaterialRule NETHERRACK;
     @Unique
-    private static final MaterialRules.MaterialRule ANDESITE = block(Blocks.ANDESITE);
+    private static final SurfaceRules.RuleSource ANDESITE = makeStateRule(Blocks.ANDESITE);
     @Unique
-    private static final MaterialRules.MaterialRule DIORITE = block(Blocks.DIORITE);
+    private static final SurfaceRules.RuleSource DIORITE = makeStateRule(Blocks.DIORITE);
     @Unique
-    private static final MaterialRules.MaterialRule GRANITE = block(Blocks.GRANITE);
+    private static final SurfaceRules.RuleSource GRANITE = makeStateRule(Blocks.GRANITE);
     @Unique
-    private static final MaterialRules.MaterialRule HORNFELS = block(VABlocks.HORNFELS);
+    private static final SurfaceRules.RuleSource HORNFELS = makeStateRule(VABlocks.HORNFELS);
     @Unique
-    private static final MaterialRules.MaterialRule BLUESCHIST = block(VABlocks.BLUESCHIST);
+    private static final SurfaceRules.RuleSource BLUESCHIST = makeStateRule(VABlocks.BLUESCHIST);
     @Unique
-    private static final MaterialRules.MaterialRule SYENITE = block(VABlocks.SYENITE);
+    private static final SurfaceRules.RuleSource SYENITE = makeStateRule(VABlocks.SYENITE);
     @Unique
-    private static final MaterialRules.MaterialRule NECROTIC_NYLIUM = block(VABlocks.NECROTIC_NYLIUM);
+    private static final SurfaceRules.RuleSource NECROTIC_NYLIUM = makeStateRule(VABlocks.NECROTIC_NYLIUM);
 
-    @Inject(method = "createNetherSurfaceRule", at = @At("RETURN"), cancellable = true)
+    @Inject(method = "nether", at = @At("RETURN"), cancellable = true)
     private static void virtualAdditions$modifyNetherSurfaceRule(
-            CallbackInfoReturnable<MaterialRules.MaterialRule> cir,
-            @Local(ordinal = 0) MaterialRules.MaterialCondition above31,
-            @Local(ordinal = 1) MaterialRules.MaterialCondition above32,
-            @Local(ordinal = 2) MaterialRules.MaterialCondition above30StoneDepth,
-            @Local(ordinal = 3) MaterialRules.MaterialCondition below35StoneDepth,
-            @Local(ordinal = 4) MaterialRules.MaterialCondition belowTop5,
-            @Local(ordinal = 5) MaterialRules.MaterialCondition hole,
-            @Local(ordinal = 6) MaterialRules.MaterialCondition soulSandNoise,
-            @Local(ordinal = 7) MaterialRules.MaterialCondition gravelNoise,
-            @Local(ordinal = 8) MaterialRules.MaterialCondition patchNoise,
-            @Local(ordinal = 9) MaterialRules.MaterialCondition netherrackNoise,
-            @Local(ordinal = 10) MaterialRules.MaterialCondition netherWartNoise,
-            @Local(ordinal = 11) MaterialRules.MaterialCondition netherStateSelectorNoise,
-            @Local MaterialRules.MaterialRule gravelRule
+            CallbackInfoReturnable<SurfaceRules.RuleSource> cir,
+            @Local(ordinal = 0) SurfaceRules.ConditionSource above31,
+            @Local(ordinal = 1) SurfaceRules.ConditionSource above32,
+            @Local(ordinal = 2) SurfaceRules.ConditionSource above30StoneDepth,
+            @Local(ordinal = 3) SurfaceRules.ConditionSource below35StoneDepth,
+            @Local(ordinal = 4) SurfaceRules.ConditionSource belowTop5,
+            @Local(ordinal = 5) SurfaceRules.ConditionSource hole,
+            @Local(ordinal = 6) SurfaceRules.ConditionSource soulSandNoise,
+            @Local(ordinal = 7) SurfaceRules.ConditionSource gravelNoise,
+            @Local(ordinal = 8) SurfaceRules.ConditionSource patchNoise,
+            @Local(ordinal = 9) SurfaceRules.ConditionSource netherrackNoise,
+            @Local(ordinal = 10) SurfaceRules.ConditionSource netherWartNoise,
+            @Local(ordinal = 11) SurfaceRules.ConditionSource netherStateSelectorNoise,
+            @Local SurfaceRules.RuleSource gravelRule
     ) {
 
-        MaterialRules.MaterialCondition notBedrockFloorCondition = MaterialRules.not(MaterialRules.verticalGradient("bedrock_floor", YOffset.getBottom(), YOffset.aboveBottom(5)));
-        MaterialRules.MaterialCondition notBedrockRoofCondition = MaterialRules.verticalGradient("bedrock_roof", YOffset.belowTop(5), YOffset.getTop());
+        SurfaceRules.ConditionSource notBedrockFloorCondition = SurfaceRules.not(SurfaceRules.verticalGradient("bedrock_floor", VerticalAnchor.bottom(), VerticalAnchor.aboveBottom(5)));
+        SurfaceRules.ConditionSource notBedrockRoofCondition = SurfaceRules.verticalGradient("bedrock_roof", VerticalAnchor.belowTop(5), VerticalAnchor.top());
 
-        MaterialRules.MaterialRule necroticNyliumRule = MaterialRules.condition(
-                MaterialRules.STONE_DEPTH_FLOOR,
-                MaterialRules.sequence(
-                        MaterialRules.condition(MaterialRules.not(above30StoneDepth), MaterialRules.condition(hole, LAVA)),
-                        MaterialRules.condition(
-                                MaterialRules.biome(VABiomeKeys.WITHERED_WOODS),
-                                MaterialRules.condition(
-                                        MaterialRules.not(netherrackNoise),
-                                        MaterialRules.condition(above31, NECROTIC_NYLIUM)
+        SurfaceRules.RuleSource necroticNyliumRule = SurfaceRules.ifTrue(
+                SurfaceRules.ON_FLOOR,
+                SurfaceRules.sequence(
+                        SurfaceRules.ifTrue(SurfaceRules.not(above30StoneDepth), SurfaceRules.ifTrue(hole, LAVA)),
+                        SurfaceRules.ifTrue(
+                                SurfaceRules.isBiome(VABiomeKeys.WITHERED_WOODS),
+                                SurfaceRules.ifTrue(
+                                        SurfaceRules.not(netherrackNoise),
+                                        SurfaceRules.ifTrue(above31, NECROTIC_NYLIUM)
                                 )
                         )
                 )
         );
 
-        necroticNyliumRule = MaterialRules.condition(
-                notBedrockFloorCondition, MaterialRules.condition(notBedrockRoofCondition, necroticNyliumRule));
+        necroticNyliumRule = SurfaceRules.ifTrue(
+                notBedrockFloorCondition, SurfaceRules.ifTrue(notBedrockRoofCondition, necroticNyliumRule));
 
         cir.setReturnValue(
-                MaterialRules.sequence(
+                SurfaceRules.sequence(
                         necroticNyliumRule,
                         cir.getReturnValue()
                 )
@@ -107,14 +108,14 @@ public abstract class VanillaSurfaceRulesMixin {
     //}
 
     @Unique
-    private static MaterialRules.MaterialRule createAlternateStoneRule(MaterialRules.MaterialRule upperStateRule, MaterialRules.MaterialRule lowerStateRule, RegistryKey<DoublePerlinNoiseSampler.NoiseParameters> noiseParameters) {
-        MaterialRules.MaterialRule rule = MaterialRules.sequence(
-                MaterialRules.condition(
-                        MaterialRules.verticalGradient("deepslate", YOffset.fixed(0), YOffset.fixed(8)),
+    private static SurfaceRules.RuleSource createAlternateStoneRule(SurfaceRules.RuleSource upperStateRule, SurfaceRules.RuleSource lowerStateRule, ResourceKey<NormalNoise.NoiseParameters> noiseParameters) {
+        SurfaceRules.RuleSource rule = SurfaceRules.sequence(
+                SurfaceRules.ifTrue(
+                        SurfaceRules.verticalGradient("deepslate", VerticalAnchor.absolute(0), VerticalAnchor.absolute(8)),
                         lowerStateRule
                 ),
                 upperStateRule
         );
-        return MaterialRules.condition(MaterialRules.noiseThreshold(noiseParameters, 0.25, 0.9), rule);
+        return SurfaceRules.ifTrue(SurfaceRules.noiseCondition(noiseParameters, 0.25, 0.9), rule);
     }
 }

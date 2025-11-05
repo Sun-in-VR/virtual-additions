@@ -5,64 +5,67 @@ import com.github.suninvr.virtualadditions.registry.VABlocks;
 import com.github.suninvr.virtualadditions.registry.VAItems;
 import com.github.suninvr.virtualadditions.registry.VASoundEvents;
 import com.mojang.serialization.MapCodec;
-import net.minecraft.advancement.criterion.Criteria;
-import net.minecraft.block.*;
-import net.minecraft.entity.LivingEntity;
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.fluid.FluidState;
-import net.minecraft.fluid.Fluids;
-import net.minecraft.item.AutomaticItemPlacementContext;
-import net.minecraft.item.ItemStack;
-import net.minecraft.item.Items;
-import net.minecraft.server.network.ServerPlayerEntity;
-import net.minecraft.server.world.ServerWorld;
-import net.minecraft.sound.SoundCategory;
-import net.minecraft.sound.SoundEvents;
-import net.minecraft.state.StateManager;
-import net.minecraft.state.property.BooleanProperty;
-import net.minecraft.state.property.EnumProperty;
-import net.minecraft.state.property.Properties;
-import net.minecraft.util.ActionResult;
-import net.minecraft.util.Hand;
-import net.minecraft.util.hit.BlockHitResult;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.math.Direction;
-import net.minecraft.util.shape.VoxelShape;
-import net.minecraft.world.BlockView;
-import net.minecraft.world.World;
-import net.minecraft.world.WorldView;
-import net.minecraft.world.block.WireOrientation;
-import net.minecraft.world.event.GameEvent;
+import net.minecraft.advancements.CriteriaTriggers;
+import net.minecraft.core.BlockPos;
+import net.minecraft.core.Direction;
+import net.minecraft.server.level.ServerLevel;
+import net.minecraft.server.level.ServerPlayer;
+import net.minecraft.sounds.SoundEvents;
+import net.minecraft.sounds.SoundSource;
+import net.minecraft.world.InteractionHand;
+import net.minecraft.world.InteractionResult;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.Items;
+import net.minecraft.world.item.context.DirectionalPlaceContext;
+import net.minecraft.world.level.BlockGetter;
+import net.minecraft.world.level.Level;
+import net.minecraft.world.level.LevelReader;
+import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.Blocks;
+import net.minecraft.world.level.block.SimpleWaterloggedBlock;
+import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.block.state.StateDefinition;
+import net.minecraft.world.level.block.state.properties.BlockStateProperties;
+import net.minecraft.world.level.block.state.properties.BooleanProperty;
+import net.minecraft.world.level.block.state.properties.EnumProperty;
+import net.minecraft.world.level.gameevent.GameEvent;
+import net.minecraft.world.level.material.FluidState;
+import net.minecraft.world.level.material.Fluids;
+import net.minecraft.world.level.redstone.Orientation;
+import net.minecraft.world.phys.BlockHitResult;
+import net.minecraft.world.phys.shapes.CollisionContext;
+import net.minecraft.world.phys.shapes.VoxelShape;
 import org.jetbrains.annotations.Nullable;
 
 @SuppressWarnings("deprecation")
-public class ClimbingRopeBlock extends Block implements Waterloggable {
-    public static final MapCodec<ClimbingRopeBlock> CODEC = createCodec(ClimbingRopeBlock::new);
-    public static final EnumProperty<Direction> FACING = EnumProperty.of("facing", Direction.class, Direction.UP, Direction.NORTH, Direction.EAST, Direction.SOUTH, Direction.WEST);
-    public static final BooleanProperty WATERLOGGED = Properties.WATERLOGGED;
-    public static final BooleanProperty END = BooleanProperty.of("end");
+public class ClimbingRopeBlock extends Block implements SimpleWaterloggedBlock {
+    public static final MapCodec<ClimbingRopeBlock> CODEC = simpleCodec(ClimbingRopeBlock::new);
+    public static final EnumProperty<Direction> FACING = EnumProperty.create("facing", Direction.class, Direction.UP, Direction.NORTH, Direction.EAST, Direction.SOUTH, Direction.WEST);
+    public static final BooleanProperty WATERLOGGED = BlockStateProperties.WATERLOGGED;
+    public static final BooleanProperty END = BooleanProperty.create("end");
     protected static final VoxelShape EAST_SHAPE;
     protected static final VoxelShape WEST_SHAPE;
     protected static final VoxelShape SOUTH_SHAPE;
     protected static final VoxelShape NORTH_SHAPE;
     protected static final VoxelShape UP_SHAPE;
 
-    public ClimbingRopeBlock(Settings settings) {
+    public ClimbingRopeBlock(Properties settings) {
         super(settings);
-        this.setDefaultState(getStateManager().getDefaultState()
-                .with(FACING, Direction.UP)
-                .with(WATERLOGGED, false)
-                .with(END, true)
+        this.registerDefaultState(getStateDefinition().any()
+                .setValue(FACING, Direction.UP)
+                .setValue(WATERLOGGED, false)
+                .setValue(END, true)
         );
     }
 
     @Override
-    protected MapCodec<? extends Block> getCodec() {
+    protected MapCodec<? extends Block> codec() {
         return CODEC;
     }
 
-    public VoxelShape getOutlineShape(BlockState state, BlockView world, BlockPos pos, ShapeContext context) {
-        return switch (state.get(FACING)) {
+    public VoxelShape getShape(BlockState state, BlockGetter world, BlockPos pos, CollisionContext context) {
+        return switch (state.getValue(FACING)) {
             case NORTH -> NORTH_SHAPE;
             case SOUTH -> SOUTH_SHAPE;
             case WEST -> WEST_SHAPE;
@@ -72,69 +75,69 @@ public class ClimbingRopeBlock extends Block implements Waterloggable {
     }
 
     @Override
-    public void scheduledTick(BlockState state, ServerWorld world, BlockPos pos, net.minecraft.util.math.random.Random random) {
-        if (state.canPlaceAt(world, pos)) {
-            BlockPos belowPos = new BlockPos(pos.down());
+    public void tick(BlockState state, ServerLevel world, BlockPos pos, net.minecraft.util.RandomSource random) {
+        if (state.canSurvive(world, pos)) {
+            BlockPos belowPos = new BlockPos(pos.below());
             BlockState belowState = world.getBlockState(belowPos);
-            if (world.getBottomY() <= belowPos.getY() && (belowState.canReplace(new AutomaticItemPlacementContext(world, belowPos, Direction.DOWN, ItemStack.EMPTY, Direction.UP))) && !belowState.isOf(Blocks.LAVA) && !belowState.isOf(VABlocks.ACID)) {
-                BlockState newState = state.with(WATERLOGGED, world.getFluidState(belowPos).getFluid() == Fluids.WATER);
-                world.setBlockState(belowPos, newState);
-                world.setBlockState(pos, state.with(END, false));
-                world.playSound(null, belowPos, VASoundEvents.BLOCK_ROPE_EXTEND, SoundCategory.BLOCKS, 0.33F, 1.2F);
-                world.scheduleBlockTick(belowPos, VABlocks.CLIMBING_ROPE, 1);
-                world.emitGameEvent(null, GameEvent.BLOCK_PLACE, belowPos);
+            if (world.getMinY() <= belowPos.getY() && (belowState.canBeReplaced(new DirectionalPlaceContext(world, belowPos, Direction.DOWN, ItemStack.EMPTY, Direction.UP))) && !belowState.is(Blocks.LAVA) && !belowState.is(VABlocks.ACID)) {
+                BlockState newState = state.setValue(WATERLOGGED, world.getFluidState(belowPos).getType() == Fluids.WATER);
+                world.setBlockAndUpdate(belowPos, newState);
+                world.setBlockAndUpdate(pos, state.setValue(END, false));
+                world.playSound(null, belowPos, VASoundEvents.BLOCK_ROPE_EXTEND, SoundSource.BLOCKS, 0.33F, 1.2F);
+                world.scheduleTick(belowPos, VABlocks.CLIMBING_ROPE, 1);
+                world.gameEvent(null, GameEvent.BLOCK_PLACE, belowPos);
             }
         } else {
-            world.breakBlock(pos, true);
+            world.destroyBlock(pos, true);
         }
     }
 
     @Override
-    public void neighborUpdate(BlockState state, World world, BlockPos pos, Block sourceBlock, @Nullable WireOrientation wireOrientation, boolean notify) {
-        if (state.get(WATERLOGGED)) world.scheduleFluidTick(pos, Fluids.WATER, Fluids.WATER.getTickRate(world));
-        if (!state.canPlaceAt(world, pos)) world.scheduleBlockTick(pos, VABlocks.CLIMBING_ROPE, 1);
+    public void neighborChanged(BlockState state, Level world, BlockPos pos, Block sourceBlock, @Nullable Orientation wireOrientation, boolean notify) {
+        if (state.getValue(WATERLOGGED)) world.scheduleTick(pos, Fluids.WATER, Fluids.WATER.getTickDelay(world));
+        if (!state.canSurvive(world, pos)) world.scheduleTick(pos, VABlocks.CLIMBING_ROPE, 1);
     }
 
     @Override
-    public boolean canPlaceAt(BlockState state, WorldView world, BlockPos pos) {
-        return world.getBlockState(pos.up()).isIn(VABlockTags.CLIMBING_ROPES) && (world.getBlockState(new BlockPos(pos.down())).isIn(VABlockTags.CLIMBING_ROPES) || state.get(END));
+    public boolean canSurvive(BlockState state, LevelReader world, BlockPos pos) {
+        return world.getBlockState(pos.above()).is(VABlockTags.CLIMBING_ROPES) && (world.getBlockState(new BlockPos(pos.below())).is(VABlockTags.CLIMBING_ROPES) || state.getValue(END));
     }
 
     public FluidState getFluidState(BlockState state) {
-        return state.get(WATERLOGGED) ? Fluids.WATER.getStill(false) : super.getFluidState(state);
+        return state.getValue(WATERLOGGED) ? Fluids.WATER.getSource(false) : super.getFluidState(state);
     }
 
     @Override
-    protected ItemStack getPickStack(WorldView world, BlockPos pos, BlockState state, boolean bl) {
+    protected ItemStack getCloneItemStack(LevelReader world, BlockPos pos, BlockState state, boolean bl) {
         return new ItemStack(VAItems.CLIMBING_ROPE);
     }
 
     @Override
-    protected void appendProperties(StateManager.Builder<Block, BlockState> builder) {
+    protected void createBlockStateDefinition(StateDefinition.Builder<Block, BlockState> builder) {
         builder.add(FACING).add(WATERLOGGED).add(END);
     }
 
     @Override
-    protected ActionResult onUseWithItem(ItemStack stack, BlockState state, World world, BlockPos pos, PlayerEntity player, Hand hand, BlockHitResult hit) {
-        if (!state.get(END) && stack.isOf(Items.SHEARS)) {
-            world.setBlockState(pos, state.with(END, true));
-            if (world.getBlockState(pos.down()).isOf(VABlocks.CLIMBING_ROPE)) world.breakBlock(pos.down(), true, player);
-            stack.damage(1, player, hand.getEquipmentSlot());
-            world.playSound(player, pos, SoundEvents.ITEM_SHEARS_SNIP, SoundCategory.BLOCKS, 1.0F, 1.0F);
-            world.emitGameEvent(GameEvent.BLOCK_CHANGE, pos, GameEvent.Emitter.of(player, state));
-            if (player instanceof ServerPlayerEntity) {
-                Criteria.ITEM_USED_ON_BLOCK.trigger((ServerPlayerEntity)player, pos, stack);
+    protected InteractionResult useItemOn(ItemStack stack, BlockState state, Level world, BlockPos pos, Player player, InteractionHand hand, BlockHitResult hit) {
+        if (!state.getValue(END) && stack.is(Items.SHEARS)) {
+            world.setBlockAndUpdate(pos, state.setValue(END, true));
+            if (world.getBlockState(pos.below()).is(VABlocks.CLIMBING_ROPE)) world.destroyBlock(pos.below(), true, player);
+            stack.hurtAndBreak(1, player, hand.asEquipmentSlot());
+            world.playSound(player, pos, SoundEvents.SHEARS_SNIP, SoundSource.BLOCKS, 1.0F, 1.0F);
+            world.gameEvent(GameEvent.BLOCK_CHANGE, pos, GameEvent.Context.of(player, state));
+            if (player instanceof ServerPlayer) {
+                CriteriaTriggers.ITEM_USED_ON_BLOCK.trigger((ServerPlayer)player, pos, stack);
             }
-            return ActionResult.SUCCESS;
+            return InteractionResult.SUCCESS;
         }
-        return ActionResult.PASS;
+        return InteractionResult.PASS;
     }
 
     static {
-        WEST_SHAPE = Block.createCuboidShape(5.0D, 0.0D, 7.0D, 7.0D, 16.0D, 9.0D);
-        EAST_SHAPE = Block.createCuboidShape(9.0D, 0.0D, 7.0D, 11.0D, 16.0D, 9.0D);
-        NORTH_SHAPE = Block.createCuboidShape(7.0D, 0.0D, 5.0D, 9.0D, 16.0D, 7.0D);
-        SOUTH_SHAPE = Block.createCuboidShape(7.0D, 0.0D, 9.0D, 9.0D, 16.0D, 11.0D);
-        UP_SHAPE = Block.createCuboidShape(7.0D, 0.0D, 7.0D, 9.0D, 16.0D, 9.0D);
+        WEST_SHAPE = Block.box(5.0D, 0.0D, 7.0D, 7.0D, 16.0D, 9.0D);
+        EAST_SHAPE = Block.box(9.0D, 0.0D, 7.0D, 11.0D, 16.0D, 9.0D);
+        NORTH_SHAPE = Block.box(7.0D, 0.0D, 5.0D, 9.0D, 16.0D, 7.0D);
+        SOUTH_SHAPE = Block.box(7.0D, 0.0D, 9.0D, 9.0D, 16.0D, 11.0D);
+        UP_SHAPE = Block.box(7.0D, 0.0D, 7.0D, 9.0D, 16.0D, 9.0D);
     }
 }

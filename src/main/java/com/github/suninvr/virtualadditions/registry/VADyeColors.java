@@ -4,19 +4,19 @@ import com.github.suninvr.virtualadditions.block.entity.DyeContents;
 import com.github.suninvr.virtualadditions.client.VARenderers;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
-import net.minecraft.client.util.SpriteIdentifier;
-import net.minecraft.item.DyeItem;
-import net.minecraft.util.DyeColor;
+import net.minecraft.client.resources.model.Material;
+import net.minecraft.world.item.DyeColor;
+import net.minecraft.world.item.DyeItem;
 
 public class VADyeColors {
-    public static final DyeColor CHARTREUSE = DyeColor.byId("chartreuse", DyeColor.WHITE);
-    public static final DyeColor MAROON = DyeColor.byId("maroon", DyeColor.WHITE);
-    public static final DyeColor INDIGO = DyeColor.byId("indigo", DyeColor.WHITE);
-    public static final DyeColor PLUM = DyeColor.byId("plum", DyeColor.WHITE);
-    public static final DyeColor VIRIDIAN = DyeColor.byId("viridian", DyeColor.WHITE);
-    public static final DyeColor TAN = DyeColor.byId("tan", DyeColor.WHITE);
-    public static final DyeColor SINOPIA = DyeColor.byId("sinopia", DyeColor.WHITE);
-    public static final DyeColor LILAC = DyeColor.byId("lilac", DyeColor.WHITE);
+    public static final DyeColor CHARTREUSE = DyeColor.byName("chartreuse", DyeColor.WHITE);
+    public static final DyeColor MAROON = DyeColor.byName("maroon", DyeColor.WHITE);
+    public static final DyeColor INDIGO = DyeColor.byName("indigo", DyeColor.WHITE);
+    public static final DyeColor PLUM = DyeColor.byName("plum", DyeColor.WHITE);
+    public static final DyeColor VIRIDIAN = DyeColor.byName("viridian", DyeColor.WHITE);
+    public static final DyeColor TAN = DyeColor.byName("tan", DyeColor.WHITE);
+    public static final DyeColor SINOPIA = DyeColor.byName("sinopia", DyeColor.WHITE);
+    public static final DyeColor LILAC = DyeColor.byName("lilac", DyeColor.WHITE);
 
     public static final DyeContents WHITE_CONTENT = new DyeContents(0, 0, 0, 0, 0, 4);
     public static final DyeContents LIGHT_GRAY_CONTENT = new DyeContents(0, 0, 0, 0, 1, 3); // 3rd's
@@ -45,7 +45,7 @@ public class VADyeColors {
 
 
     @Environment(EnvType.CLIENT)
-    public static SpriteIdentifier getShulkerBoxTexture(DyeColor color) {
+    public static Material getShulkerBoxTexture(DyeColor color) {
         if (color == VADyeColors.CHARTREUSE) return VARenderers.CHARTREUSE_SHULKER_BOX;
         if (color == VADyeColors.MAROON) return VARenderers.MAROON_SHULKER_BOX;
         if (color == VADyeColors.INDIGO) return VARenderers.INDIGO_SHULKER_BOX;
@@ -58,7 +58,7 @@ public class VADyeColors {
     }
 
     @Environment(EnvType.CLIENT)
-    public static SpriteIdentifier getBedTexture(DyeColor color) {
+    public static Material getBedTexture(DyeColor color) {
         if (color == VADyeColors.CHARTREUSE) return VARenderers.CHARTREUSE_BED_TEXTURE;
         if (color == VADyeColors.MAROON) return VARenderers.MAROON_BED_TEXTURE;
         if (color == VADyeColors.INDIGO) return VARenderers.INDIGO_BED_TEXTURE;
@@ -71,7 +71,7 @@ public class VADyeColors {
     }
 
     public static DyeContents getContents(DyeItem item, int multiplier) {
-        return getContents(item.getColor(), multiplier);
+        return getContents(item.getDyeColor(), multiplier);
     }
 
     public static DyeContents getContents(DyeColor color, int multiplier) {

@@ -1,17 +1,16 @@
 package com.github.suninvr.virtualadditions.block.entity;
 
 import com.github.suninvr.virtualadditions.registry.VADyeColors;
-import net.minecraft.item.DyeItem;
-import net.minecraft.item.Item;
-import net.minecraft.item.ItemStack;
-import net.minecraft.item.Items;
-import net.minecraft.nbt.NbtCompound;
-import net.minecraft.network.PacketByteBuf;
-import net.minecraft.network.RegistryByteBuf;
-import net.minecraft.network.codec.PacketCodec;
-import net.minecraft.screen.PropertyDelegate;
-import net.minecraft.storage.ReadView;
-import net.minecraft.storage.WriteView;
+import net.minecraft.network.FriendlyByteBuf;
+import net.minecraft.network.RegistryFriendlyByteBuf;
+import net.minecraft.network.codec.StreamCodec;
+import net.minecraft.world.inventory.ContainerData;
+import net.minecraft.world.item.DyeItem;
+import net.minecraft.world.item.Item;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.Items;
+import net.minecraft.world.level.storage.ValueInput;
+import net.minecraft.world.level.storage.ValueOutput;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -19,14 +18,14 @@ import java.util.Objects;
 import java.util.Optional;
 
 public class DyeContents {
-    public static final PacketCodec<RegistryByteBuf, DyeContents> PACKET_CODEC = new PacketCodec<>() {
+    public static final StreamCodec<RegistryFriendlyByteBuf, DyeContents> PACKET_CODEC = new StreamCodec<>() {
         @Override
-        public DyeContents decode(RegistryByteBuf buf) {
+        public DyeContents decode(RegistryFriendlyByteBuf buf) {
             return new DyeContents(buf.readInt(), buf.readInt(), buf.readInt(), buf.readInt(), buf.readInt(), buf.readInt());
         }
 
         @Override
-        public void encode(RegistryByteBuf buf, DyeContents contents) {
+        public void encode(RegistryFriendlyByteBuf buf, DyeContents contents) {
             buf.writeInt(contents.getR());
             buf.writeInt(contents.getG());
             buf.writeInt(contents.getB());
@@ -55,12 +54,12 @@ public class DyeContents {
         this.setW(w);
     }
 
-    public DyeContents(PropertyDelegate propertyDelegate) {
+    public DyeContents(ContainerData propertyDelegate) {
         this(propertyDelegate.get(0), propertyDelegate.get(1), propertyDelegate.get(2), propertyDelegate.get(3), propertyDelegate.get(4), propertyDelegate.get(5));
     }
 
-    public static DyeContents from(ReadView view) {
-        Optional<int[]> contents = view.getOptionalIntArray("dye_contents");
+    public static DyeContents from(ValueInput view) {
+        Optional<int[]> contents = view.getIntArray("dye_contents");
         return contents.map(ints -> new DyeContents(
                 ints.length > 0 ? ints[0] : 0,
                 ints.length > 1 ? ints[1] : 0,
@@ -71,7 +70,7 @@ public class DyeContents {
         )).orElseGet(DyeContents::new);
     }
 
-    public static DyeContents from(PacketByteBuf buf) {
+    public static DyeContents from(FriendlyByteBuf buf) {
         return new DyeContents(buf.readInt(), buf.readInt(), buf.readInt(), buf.readInt(), buf.readInt(), buf.readInt());
     }
 
@@ -79,11 +78,11 @@ public class DyeContents {
         return new DyeContents(0, 0, 0, 0, 0, 0);
     }
 
-    public void to(WriteView view) {
+    public void to(ValueOutput view) {
         view.putIntArray("dye_contents", this.asIntArray());
     }
 
-    public void to(PacketByteBuf buf) {
+    public void to(FriendlyByteBuf buf) {
         buf.writeInt(this.getR());
         buf.writeInt(this.getG());
         buf.writeInt(this.getB());
@@ -238,7 +237,7 @@ public class DyeContents {
             DyeContents contents = VADyeColors.getContents(dyeItem, 8);
             while (!itemStack.isEmpty() && this.canAdd(contents)) {
                 this.add(contents);
-                itemStack.decrement(1);
+                itemStack.shrink(1);
             }
         }
     }

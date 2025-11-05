@@ -9,33 +9,33 @@ import com.github.suninvr.virtualadditions.registry.collection.ColorfulBlockSet;
 import net.fabricmc.fabric.api.datagen.v1.FabricDataGenerator;
 import net.fabricmc.fabric.api.datagen.v1.FabricDataOutput;
 import net.fabricmc.fabric.api.datagen.v1.provider.FabricBlockLootTableProvider;
-import net.minecraft.block.*;
-import net.minecraft.block.enums.BedPart;
-import net.minecraft.block.enums.DoubleBlockHalf;
-import net.minecraft.data.family.BlockFamily;
-import net.minecraft.data.loottable.BlockLootTableGenerator;
-import net.minecraft.enchantment.Enchantment;
-import net.minecraft.enchantment.Enchantments;
-import net.minecraft.item.Item;
-import net.minecraft.item.ItemConvertible;
-import net.minecraft.item.Items;
-import net.minecraft.loot.LootPool;
-import net.minecraft.loot.LootTable;
-import net.minecraft.loot.condition.*;
-import net.minecraft.loot.entry.AlternativeEntry;
-import net.minecraft.loot.entry.ItemEntry;
-import net.minecraft.loot.function.ApplyBonusLootFunction;
-import net.minecraft.loot.function.ExplosionDecayLootFunction;
-import net.minecraft.loot.function.SetCountLootFunction;
-import net.minecraft.loot.provider.number.ConstantLootNumberProvider;
-import net.minecraft.loot.provider.number.UniformLootNumberProvider;
-import net.minecraft.predicate.BlockPredicate;
-import net.minecraft.predicate.StatePredicate;
-import net.minecraft.predicate.entity.LocationPredicate;
-import net.minecraft.registry.RegistryEntryLookup;
-import net.minecraft.registry.RegistryKeys;
-import net.minecraft.registry.RegistryWrapper;
-import net.minecraft.util.math.BlockPos;
+import net.minecraft.advancements.critereon.BlockPredicate;
+import net.minecraft.advancements.critereon.LocationPredicate;
+import net.minecraft.advancements.critereon.StatePropertiesPredicate;
+import net.minecraft.core.BlockPos;
+import net.minecraft.core.HolderGetter;
+import net.minecraft.core.HolderLookup;
+import net.minecraft.core.registries.Registries;
+import net.minecraft.data.BlockFamily;
+import net.minecraft.data.loot.BlockLootSubProvider;
+import net.minecraft.world.item.Item;
+import net.minecraft.world.item.Items;
+import net.minecraft.world.item.enchantment.Enchantment;
+import net.minecraft.world.item.enchantment.Enchantments;
+import net.minecraft.world.level.ItemLike;
+import net.minecraft.world.level.block.*;
+import net.minecraft.world.level.block.state.properties.BedPart;
+import net.minecraft.world.level.block.state.properties.DoubleBlockHalf;
+import net.minecraft.world.level.storage.loot.LootPool;
+import net.minecraft.world.level.storage.loot.LootTable;
+import net.minecraft.world.level.storage.loot.entries.AlternativesEntry;
+import net.minecraft.world.level.storage.loot.entries.LootItem;
+import net.minecraft.world.level.storage.loot.functions.ApplyBonusCount;
+import net.minecraft.world.level.storage.loot.functions.ApplyExplosionDecay;
+import net.minecraft.world.level.storage.loot.functions.SetItemCountFunction;
+import net.minecraft.world.level.storage.loot.predicates.*;
+import net.minecraft.world.level.storage.loot.providers.number.ConstantValue;
+import net.minecraft.world.level.storage.loot.providers.number.UniformGenerator;
 
 import java.util.ArrayList;
 import java.util.concurrent.CompletableFuture;
@@ -53,7 +53,7 @@ public final class VABlockLootTableProvider {
 
     private static class BaseProvider extends Provider {
 
-        protected BaseProvider(FabricDataOutput dataOutput, CompletableFuture<RegistryWrapper.WrapperLookup> registryLookup) {
+        protected BaseProvider(FabricDataOutput dataOutput, CompletableFuture<HolderLookup.Provider> registryLookup) {
             super(dataOutput, registryLookup);
         }
 
@@ -185,39 +185,39 @@ public final class VABlockLootTableProvider {
                     VABlocks.SOUL_SPROUT
             );
 
-            this.addDrop(VABlocks.POTTED_GREENCAP_MUSHROOM, this.pottedPlantDrops(VABlocks.GREENCAP_MUSHROOM));
-            this.addDrop(VABlocks.POTTED_SOULBLOOM_SAPLING, this.pottedPlantDrops(VABlocks.SOULBLOOM_SAPLING));
-            this.addDrop(VABlocks.POTTED_WITHERED_SAPLING, this.pottedPlantDrops(VABlocks.WITHERED_SAPLING));
-            this.addDrop(VABlocks.POTTED_NECROTIC_ROOTS, this.pottedPlantDrops(VABlocks.NECROTIC_ROOTS));
-            this.addDrop(VABlocks.POTTED_SMALL_SPRING_LOTUS, this.pottedPlantDrops(VABlocks.SMALL_SPRING_LOTUS));
-            this.addDrop(VABlocks.POTTED_SOUL_SPROUT, this.pottedPlantDrops(VABlocks.SOUL_SPROUT));
+            this.add(VABlocks.POTTED_GREENCAP_MUSHROOM, this.createPotFlowerItemTable(VABlocks.GREENCAP_MUSHROOM));
+            this.add(VABlocks.POTTED_SOULBLOOM_SAPLING, this.createPotFlowerItemTable(VABlocks.SOULBLOOM_SAPLING));
+            this.add(VABlocks.POTTED_WITHERED_SAPLING, this.createPotFlowerItemTable(VABlocks.WITHERED_SAPLING));
+            this.add(VABlocks.POTTED_NECROTIC_ROOTS, this.createPotFlowerItemTable(VABlocks.NECROTIC_ROOTS));
+            this.add(VABlocks.POTTED_SMALL_SPRING_LOTUS, this.createPotFlowerItemTable(VABlocks.SMALL_SPRING_LOTUS));
+            this.add(VABlocks.POTTED_SOUL_SPROUT, this.createPotFlowerItemTable(VABlocks.SOUL_SPROUT));
 
-            this.addDrop(VABlocks.BLUE_PETALS, this.segmentedDrops(VABlocks.BLUE_PETALS));
+            this.add(VABlocks.BLUE_PETALS, this.createSegmentedBlockDrops(VABlocks.BLUE_PETALS));
 
-            this.addDrop(VABlocks.NECROTIC_NYLIUM, block -> this.drops(block, Blocks.NETHERRACK));
+            this.add(VABlocks.NECROTIC_NYLIUM, block -> this.createSingleItemTableWithSilkTouch(block, Blocks.NETHERRACK));
 
-            this.addDrop(VABlocks.BONE_LITTER, this.boneLitterDrops(VABlocks.BONE_LITTER));
-            this.addDrop(VABlocks.BONE_PILE, this.bonePileDrops(VABlocks.BONE_PILE));
+            this.add(VABlocks.BONE_LITTER, this.boneLitterDrops(VABlocks.BONE_LITTER));
+            this.add(VABlocks.BONE_PILE, this.bonePileDrops(VABlocks.BONE_PILE));
 
-            this.addDrop(VABlocks.MINI_PORTAL, VAItems.DRAINED_PORTAL_CORE);
+            this.dropOther(VABlocks.MINI_PORTAL, VAItems.DRAINED_PORTAL_CORE);
 
-            LootCondition.Builder tomatoBuilder = BlockStatePropertyLootCondition.builder(VABlocks.TOMATO)
-                    .properties(StatePredicate.Builder.create().exactMatch(CropBlock.AGE, 7));
-            this.addDrop(VABlocks.TOMATO, this.cropDrops(VABlocks.TOMATO, VAItems.TOMATO, VAItems.TOMATO_SEEDS, 1, 3, tomatoBuilder));
+            LootItemCondition.Builder tomatoBuilder = LootItemBlockStatePropertyCondition.hasBlockStateProperties(VABlocks.TOMATO)
+                    .setProperties(StatePropertiesPredicate.Builder.properties().hasProperty(CropBlock.AGE, 7));
+            this.add(VABlocks.TOMATO, this.cropDrops(VABlocks.TOMATO, VAItems.TOMATO, VAItems.TOMATO_SEEDS, 1, 3, tomatoBuilder));
 
-            LootCondition.Builder cabbageBuilder = BlockStatePropertyLootCondition.builder(VABlocks.CABBAGE)
-                    .properties(StatePredicate.Builder.create().exactMatch(CropBlock.AGE, 7));
-            this.addDrop(VABlocks.CABBAGE, this.cropDrops(VABlocks.CABBAGE, VAItems.CABBAGE, VAItems.CABBAGE_SEEDS, cabbageBuilder));
+            LootItemCondition.Builder cabbageBuilder = LootItemBlockStatePropertyCondition.hasBlockStateProperties(VABlocks.CABBAGE)
+                    .setProperties(StatePropertiesPredicate.Builder.properties().hasProperty(CropBlock.AGE, 7));
+            this.add(VABlocks.CABBAGE, this.createCropDrops(VABlocks.CABBAGE, VAItems.CABBAGE, VAItems.CABBAGE_SEEDS, cabbageBuilder));
 
-            LootCondition.Builder cottonBuilder = BlockStatePropertyLootCondition.builder(VABlocks.COTTON)
-                    .properties(StatePredicate.Builder.create().exactMatch(CropBlock.AGE, 7));
-            this.addDrop(VABlocks.COTTON, this.cropDrops(VABlocks.COTTON, VAItems.COTTON, VAItems.COTTON_SEEDS, 1, 2, cottonBuilder));
+            LootItemCondition.Builder cottonBuilder = LootItemBlockStatePropertyCondition.hasBlockStateProperties(VABlocks.COTTON)
+                    .setProperties(StatePropertiesPredicate.Builder.properties().hasProperty(CropBlock.AGE, 7));
+            this.add(VABlocks.COTTON, this.cropDrops(VABlocks.COTTON, VAItems.COTTON, VAItems.COTTON_SEEDS, 1, 2, cottonBuilder));
 
-            LootCondition.Builder wisdom_berryCropBuilder = BlockStatePropertyLootCondition.builder(VABlocks.WISDOM_BERRY)
-                    .properties(StatePredicate.Builder.create().exactMatch(CropBlock.AGE, 7));
-            this.addDrop(VABlocks.WISDOM_BERRY, this.plantCropDrops(VABlocks.WISDOM_BERRY, VAItems.WISDOM_BERRY, VAItems.WISDOM_BERRY_SEEDS, wisdom_berryCropBuilder));
+            LootItemCondition.Builder wisdom_berryCropBuilder = LootItemBlockStatePropertyCondition.hasBlockStateProperties(VABlocks.WISDOM_BERRY)
+                    .setProperties(StatePropertiesPredicate.Builder.properties().hasProperty(CropBlock.AGE, 7));
+            this.add(VABlocks.WISDOM_BERRY, this.plantCropDrops(VABlocks.WISDOM_BERRY, VAItems.WISDOM_BERRY, VAItems.WISDOM_BERRY_SEEDS, wisdom_berryCropBuilder));
 
-            this.addDrop(VABlocks.CORN_CROP, this.cornDrops());
+            this.add(VABlocks.CORN_CROP, this.cornDrops());
 
             addColorfulBlockSetDrops(VACollections.CHARTREUSE);
             addColorfulBlockSetDrops(VACollections.MAROON);
@@ -229,254 +229,254 @@ public final class VABlockLootTableProvider {
             addColorfulBlockSetDrops(VACollections.LILAC);
 
 
-            this.addDrop(VABlocks.STEEL_DOOR, this::doorDrops);
-            this.addDrop(VABlocks.EXPOSED_STEEL_DOOR, this::doorDrops);
-            this.addDrop(VABlocks.WEATHERED_STEEL_DOOR, this::doorDrops);
-            this.addDrop(VABlocks.OXIDIZED_STEEL_DOOR, this::doorDrops);
-            this.addDrop(VABlocks.WAXED_STEEL_DOOR, this::doorDrops);
-            this.addDrop(VABlocks.WAXED_EXPOSED_STEEL_DOOR, this::doorDrops);
-            this.addDrop(VABlocks.WAXED_WEATHERED_STEEL_DOOR, this::doorDrops);
-            this.addDrop(VABlocks.WAXED_OXIDIZED_STEEL_DOOR, this::doorDrops);
-            this.addDrop(VABlocks.HORNFELS, block -> this.drops(block, VABlocks.COBBLED_HORNFELS));
-            this.addDrop(VABlocks.BLUESCHIST, block -> this.drops(block, VABlocks.COBBLED_BLUESCHIST));
-            this.addDrop(VABlocks.SYENITE, block -> this.drops(block, VABlocks.COBBLED_SYENITE));
-            this.addDrop(VABlocks.LUMWASP_NEST, block -> this.drops(block, VABlocks.SILK_BLOCK));
-            this.addDrop(VABlocks.GLOWING_SILK, block -> this.drops(block, VAItems.SILK_THREAD));
-            this.addDrop(VABlocks.IOLITE_ORE, block -> this.oreDrops(block, VAItems.IOLITE));
-            this.addDrop(VABlocks.TALL_GREENCAP_MUSHROOMS, (Block block) -> this.dropsWithProperty(block, TallPlantBlock.HALF, DoubleBlockHalf.LOWER));
+            this.add(VABlocks.STEEL_DOOR, this::createDoorTable);
+            this.add(VABlocks.EXPOSED_STEEL_DOOR, this::createDoorTable);
+            this.add(VABlocks.WEATHERED_STEEL_DOOR, this::createDoorTable);
+            this.add(VABlocks.OXIDIZED_STEEL_DOOR, this::createDoorTable);
+            this.add(VABlocks.WAXED_STEEL_DOOR, this::createDoorTable);
+            this.add(VABlocks.WAXED_EXPOSED_STEEL_DOOR, this::createDoorTable);
+            this.add(VABlocks.WAXED_WEATHERED_STEEL_DOOR, this::createDoorTable);
+            this.add(VABlocks.WAXED_OXIDIZED_STEEL_DOOR, this::createDoorTable);
+            this.add(VABlocks.HORNFELS, block -> this.createSingleItemTableWithSilkTouch(block, VABlocks.COBBLED_HORNFELS));
+            this.add(VABlocks.BLUESCHIST, block -> this.createSingleItemTableWithSilkTouch(block, VABlocks.COBBLED_BLUESCHIST));
+            this.add(VABlocks.SYENITE, block -> this.createSingleItemTableWithSilkTouch(block, VABlocks.COBBLED_SYENITE));
+            this.add(VABlocks.LUMWASP_NEST, block -> this.createSingleItemTableWithSilkTouch(block, VABlocks.SILK_BLOCK));
+            this.add(VABlocks.GLOWING_SILK, block -> this.createSingleItemTableWithSilkTouch(block, VAItems.SILK_THREAD));
+            this.add(VABlocks.IOLITE_ORE, block -> this.createOreDrop(block, VAItems.IOLITE));
+            this.add(VABlocks.TALL_GREENCAP_MUSHROOMS, (Block block) -> this.createSinglePropConditionTable(block, DoublePlantBlock.HALF, DoubleBlockHalf.LOWER));
 
-            this.addDrop(VABlocks.ROCK_SALT_CRYSTAL, (block) -> this.drops(block, VAItems.ROCK_SALT, ConstantLootNumberProvider.create(2.0F)));
-            this.addDrop(VABlocks.ROCK_SALT_ORE, this::rockSaltOreDrops);
-            this.addDrop(VABlocks.DEEPSLATE_ROCK_SALT_ORE, this::rockSaltOreDrops);
+            this.add(VABlocks.ROCK_SALT_CRYSTAL, (block) -> this.createSingleItemTableWithSilkTouch(block, VAItems.ROCK_SALT, ConstantValue.exactly(2.0F)));
+            this.add(VABlocks.ROCK_SALT_ORE, this::rockSaltOreDrops);
+            this.add(VABlocks.DEEPSLATE_ROCK_SALT_ORE, this::rockSaltOreDrops);
 
-            this.addDrop(VABlocks.REDSTONE_BRIDGE);
+            this.dropSelf(VABlocks.REDSTONE_BRIDGE);
 
-            this.addDrop(VABlocks.SOULBLOOM_LEAVES, block ->  leavesDrops(VABlocks.SOULBLOOM_LEAVES, VABlocks.SOULBLOOM_SAPLING, SAPLING_DROP_CHANCE));
-            this.addDrop(VABlocks.WITHERED_LEAVES, block ->  leavesDrops(VABlocks.WITHERED_LEAVES, VABlocks.WITHERED_SAPLING, SAPLING_DROP_CHANCE));
+            this.add(VABlocks.SOULBLOOM_LEAVES, block ->  createLeavesDrops(VABlocks.SOULBLOOM_LEAVES, VABlocks.SOULBLOOM_SAPLING, NORMAL_LEAVES_SAPLING_CHANCES));
+            this.add(VABlocks.WITHERED_LEAVES, block ->  createLeavesDrops(VABlocks.WITHERED_LEAVES, VABlocks.WITHERED_SAPLING, NORMAL_LEAVES_SAPLING_CHANCES));
 
         }
     }
 
     private static class PreviewProvider extends Provider {
-        public PreviewProvider(FabricDataOutput output, CompletableFuture<RegistryWrapper.WrapperLookup> registryLookup) {
+        public PreviewProvider(FabricDataOutput output, CompletableFuture<HolderLookup.Provider> registryLookup) {
             super(output, registryLookup);
         }
 
         @Override
         public void generate() {
-            this.addDrop(VABlocks.BALLOON_BULB, block -> this.drops(VAItems.BALLOON_FRUIT));
+            this.add(VABlocks.BALLOON_BULB, block -> this.createSingleItemTable(VAItems.BALLOON_FRUIT));
 
-            this.addDrop(VABlocks.BALLOON_BULB_PLANT, block -> new LootTable.Builder().pool(LootPool.builder().with(ItemEntry.builder(VAItems.BALLOON_FRUIT).conditionally(BlockStatePropertyLootCondition.builder(VABlocks.BALLOON_BULB_PLANT).properties(StatePredicate.Builder.create().exactMatch(BalloonBulbPlantBlock.AGE, 3))).apply(SetCountLootFunction.builder(UniformLootNumberProvider.create(2, 3))))));
+            this.add(VABlocks.BALLOON_BULB_PLANT, block -> new LootTable.Builder().withPool(LootPool.lootPool().add(LootItem.lootTableItem(VAItems.BALLOON_FRUIT).when(LootItemBlockStatePropertyCondition.hasBlockStateProperties(VABlocks.BALLOON_BULB_PLANT).setProperties(StatePropertiesPredicate.Builder.properties().hasProperty(BalloonBulbPlantBlock.AGE, 3))).apply(SetItemCountFunction.setCount(UniformGenerator.between(2, 3))))));
         }
     }
 
     private static abstract class Provider extends FabricBlockLootTableProvider {
-        protected final RegistryEntryLookup<Enchantment> registryLookup;
+        protected final HolderGetter<Enchantment> registryLookup;
 
-        protected Provider(FabricDataOutput dataOutput, CompletableFuture<RegistryWrapper.WrapperLookup> registryLookup) {
+        protected Provider(FabricDataOutput dataOutput, CompletableFuture<HolderLookup.Provider> registryLookup) {
             super(dataOutput, registryLookup);
-            this.registryLookup = registries.getOrThrow(RegistryKeys.ENCHANTMENT);
+            this.registryLookup = registries.lookupOrThrow(Registries.ENCHANTMENT);
         }
 
         protected void addFamilyDrops(BlockFamily... blockFamilies) {
             for (BlockFamily family : blockFamilies) {
-                addDrop(family.getBaseBlock());
+                dropSelf(family.getBaseBlock());
                 family.getVariants().forEach(this::addDrop);
             }
         }
 
         protected void addColorfulBlockSetDrops(ColorfulBlockSet set) {
-            set.ifWool(this::addDrop);
-            set.ifCarpet(this::addDrop);
-            set.ifTerracotta(this::addDrop);
-            set.ifConcrete(this::addDrop);
-            set.ifConcretePowder(this::addDrop);
-            set.ifStainedGlass(this::addDropWithSilkTouch);
-            set.ifStainedGlassPane(this::addDropWithSilkTouch);
-            set.ifSilkbulb(this::addDrop);
+            set.ifWool(this::dropSelf);
+            set.ifCarpet(this::dropSelf);
+            set.ifTerracotta(this::dropSelf);
+            set.ifConcrete(this::dropSelf);
+            set.ifConcretePowder(this::dropSelf);
+            set.ifStainedGlass(this::dropWhenSilkTouch);
+            set.ifStainedGlassPane(this::dropWhenSilkTouch);
+            set.ifSilkbulb(this::dropSelf);
             set.ifCandle(block -> {
-                this.lootTables.put(block.getLootTableKey().get(), this.candleDrops(block));
-                set.ifCandleCake(candleCakeBlock -> this.lootTables.put(candleCakeBlock.getLootTableKey().get(), BlockLootTableGenerator.candleCakeDrops(block)));
+                this.map.put(block.getLootTable().get(), this.createCandleDrops(block));
+                set.ifCandleCake(candleCakeBlock -> this.map.put(candleCakeBlock.getLootTable().get(), BlockLootSubProvider.createCandleCakeDrops(block)));
             });
-            set.ifBed(block -> this.lootTables.put(block.getLootTableKey().get(), this.dropsWithProperty(block, BedBlock.PART, BedPart.HEAD)));
-            set.ifShulkerBox(block -> this.lootTables.put(block.getLootTableKey().get(), this.shulkerBoxDrops(block)));
-            set.ifBanner(block -> this.lootTables.put(block.getLootTableKey().get(), this.bannerDrops(block)));
-            set.ifGlazedTerracotta(this::addDrop);
+            set.ifBed(block -> this.map.put(block.getLootTable().get(), this.createSinglePropConditionTable(block, BedBlock.PART, BedPart.HEAD)));
+            set.ifShulkerBox(block -> this.map.put(block.getLootTable().get(), this.createShulkerBoxDrop(block)));
+            set.ifBanner(block -> this.map.put(block.getLootTable().get(), this.createBannerDrop(block)));
+            set.ifGlazedTerracotta(this::dropSelf);
         }
 
         protected void addDrop(BlockFamily.Variant variant, Block block) {
             switch (variant) {
-                case SLAB -> this.addDrop(block, this::slabDrops);
-                case DOOR -> this.addDrop(block, this::doorDrops);
-                default -> this.addDrop(block);
+                case SLAB -> this.add(block, this::createSlabItemTable);
+                case DOOR -> this.add(block, this::createDoorTable);
+                default -> this.dropSelf(block);
             }
         }
 
         protected void addSimpleDrops(Block... blocks) {
             for (Block block : blocks) {
-                this.addDrop(block);
+                this.dropSelf(block);
             }
         }
 
         @Override
-        public void addDrop(Block block) {
-            this.addDrop(block, block);
+        public void dropSelf(Block block) {
+            this.dropOther(block, block);
         }
 
         @Override
-        public void addDrop(Block block, ItemConvertible drop) {
-            this.addDrop(block, this.drops(drop));
+        public void dropOther(Block block, ItemLike drop) {
+            this.add(block, this.createSingleItemTable(drop));
         }
 
         @Override
-        public void addDrop(Block block, LootTable.Builder lootTable) {
-            this.lootTables.put(block.getLootTableKey().get(), lootTable.randomSequenceId(block.getLootTableKey().get().getValue()));
+        public void add(Block block, LootTable.Builder lootTable) {
+            this.map.put(block.getLootTable().get(), lootTable.setRandomSequence(block.getLootTable().get().location()));
         }
 
-        public LootTable.Builder cropDrops(Block crop, Item product, Item seeds, int minYield, int maxYield, LootCondition.Builder condition) {
-            RegistryWrapper.Impl<Enchantment> impl = this.registries.getOrThrow(RegistryKeys.ENCHANTMENT);
+        public LootTable.Builder cropDrops(Block crop, Item product, Item seeds, int minYield, int maxYield, LootItemCondition.Builder condition) {
+            HolderLookup.RegistryLookup<Enchantment> impl = this.registries.lookupOrThrow(Registries.ENCHANTMENT);
             return this.applyExplosionDecay(
                     crop,
-                    LootTable.builder()
-                            .pool(LootPool.builder()
-                                    .with(ItemEntry.builder(product)
-                                            .apply(SetCountLootFunction.builder(UniformLootNumberProvider.create(minYield, maxYield)))
-                                            .conditionally(condition)
-                                            .alternatively(ItemEntry.builder(seeds))
+                    LootTable.lootTable()
+                            .withPool(LootPool.lootPool()
+                                    .add(LootItem.lootTableItem(product)
+                                            .apply(SetItemCountFunction.setCount(UniformGenerator.between(minYield, maxYield)))
+                                            .when(condition)
+                                            .otherwise(LootItem.lootTableItem(seeds))
                                     )
                             )
-                            .pool(
-                                    LootPool.builder()
-                                            .conditionally(condition)
-                                            .with(ItemEntry.builder(seeds).apply(ApplyBonusLootFunction.binomialWithBonusCount(impl.getOrThrow(Enchantments.FORTUNE), 0.5714286F, 3)))
+                            .withPool(
+                                    LootPool.lootPool()
+                                            .when(condition)
+                                            .add(LootItem.lootTableItem(seeds).apply(ApplyBonusCount.addBonusBinomialDistributionCount(impl.getOrThrow(Enchantments.FORTUNE), 0.5714286F, 3)))
                             )
             );
         }
 
-        public LootTable.Builder plantCropDrops(Block crop, Item product, Item seeds, LootCondition.Builder condition) {
-            RegistryWrapper.Impl<Enchantment> impl = this.registries.getOrThrow(RegistryKeys.ENCHANTMENT);
+        public LootTable.Builder plantCropDrops(Block crop, Item product, Item seeds, LootItemCondition.Builder condition) {
+            HolderLookup.RegistryLookup<Enchantment> impl = this.registries.lookupOrThrow(Registries.ENCHANTMENT);
             return this.applyExplosionDecay(
                     crop,
-                    LootTable.builder()
-                            .pool(LootPool.builder()
-                                    .with(ItemEntry.builder(product)
-                                            .conditionally(condition)
-                                            .alternatively(ItemEntry.builder(seeds))
+                    LootTable.lootTable()
+                            .withPool(LootPool.lootPool()
+                                    .add(LootItem.lootTableItem(product)
+                                            .when(condition)
+                                            .otherwise(LootItem.lootTableItem(seeds))
                                     )
                             )
-                            .pool(
-                                    LootPool.builder()
-                                            .conditionally(condition)
-                                            .with(ItemEntry.builder(seeds).apply(ApplyBonusLootFunction.binomialWithBonusCount(impl.getOrThrow(Enchantments.FORTUNE), 0.5714286F, 3)))
+                            .withPool(
+                                    LootPool.lootPool()
+                                            .when(condition)
+                                            .add(LootItem.lootTableItem(seeds).apply(ApplyBonusCount.addBonusBinomialDistributionCount(impl.getOrThrow(Enchantments.FORTUNE), 0.5714286F, 3)))
                             )
             );
         }
 
         @Override
-        public LootTable.Builder oreDrops(Block dropWithSilkTouch, Item drop) {
-            return this.dropsWithSilkTouch(dropWithSilkTouch,
-                            this.applyExplosionDecay(dropWithSilkTouch, ItemEntry.builder(drop)
-                                    .apply(ApplyBonusLootFunction.oreDrops(this.registryLookup.getOrThrow(Enchantments.FORTUNE)))))
-                    .randomSequenceId(dropWithSilkTouch.getLootTableKey().get().getValue());
+        public LootTable.Builder createOreDrop(Block dropWithSilkTouch, Item drop) {
+            return this.createSilkTouchDispatchTable(dropWithSilkTouch,
+                            this.applyExplosionDecay(dropWithSilkTouch, LootItem.lootTableItem(drop)
+                                    .apply(ApplyBonusCount.addOreBonusCount(this.registryLookup.getOrThrow(Enchantments.FORTUNE)))))
+                    .setRandomSequence(dropWithSilkTouch.getLootTable().get().location());
         }
 
 
         public LootTable.Builder rockSaltOreDrops(Block drop) {
-            RegistryWrapper.Impl<Enchantment> impl = this.registries.getOrThrow(RegistryKeys.ENCHANTMENT);
-            return this.dropsWithSilkTouch(
+            HolderLookup.RegistryLookup<Enchantment> impl = this.registries.lookupOrThrow(Registries.ENCHANTMENT);
+            return this.createSilkTouchDispatchTable(
                     drop,
                     this.applyExplosionDecay(
                             drop,
-                            ItemEntry.builder(VAItems.ROCK_SALT)
-                                    .apply(SetCountLootFunction.builder(UniformLootNumberProvider.create(1.0F, 2.0F)))
-                                    .apply(ApplyBonusLootFunction.oreDrops(impl.getOrThrow(Enchantments.FORTUNE)))
+                            LootItem.lootTableItem(VAItems.ROCK_SALT)
+                                    .apply(SetItemCountFunction.setCount(UniformGenerator.between(1.0F, 2.0F)))
+                                    .apply(ApplyBonusCount.addOreBonusCount(impl.getOrThrow(Enchantments.FORTUNE)))
                     )
             );
         }
 
 
         public LootTable.Builder bonePileDrops(Block drop) {
-            return this.dropsWithSilkTouch(drop,
+            return this.createSilkTouchDispatchTable(drop,
                     this.applyExplosionDecay(drop,
-                            ItemEntry.builder(Items.BONE_MEAL)
-                                    .apply(SetCountLootFunction.builder(UniformLootNumberProvider.create(-1.0F, 1.0F)))
+                            LootItem.lootTableItem(Items.BONE_MEAL)
+                                    .apply(SetItemCountFunction.setCount(UniformGenerator.between(-1.0F, 1.0F)))
                     )
             );
         }
 
         protected LootTable.Builder cornDrops() {
-            RegistryWrapper.Impl<Enchantment> impl = this.registries.getOrThrow(RegistryKeys.ENCHANTMENT);
-            return LootTable.builder()
-                    .pool(createCornCropSeedsLoot(impl, CornCropBlock.Segment.TOP))
-                    .pool(createCornCropSeedsLoot(impl, CornCropBlock.Segment.MIDDLE))
-                    .pool(createCornCropSeedsLoot(impl, CornCropBlock.Segment.BOTTOM))
-                    .pool(createCornCropLoot(CornCropBlock.Segment.TOP))
-                    .pool(createCornCropLoot(CornCropBlock.Segment.MIDDLE))
-                    .pool(createCornCropLoot(CornCropBlock.Segment.BOTTOM))
-                    .apply(ExplosionDecayLootFunction.builder());
+            HolderLookup.RegistryLookup<Enchantment> impl = this.registries.lookupOrThrow(Registries.ENCHANTMENT);
+            return LootTable.lootTable()
+                    .withPool(createCornCropSeedsLoot(impl, CornCropBlock.Segment.TOP))
+                    .withPool(createCornCropSeedsLoot(impl, CornCropBlock.Segment.MIDDLE))
+                    .withPool(createCornCropSeedsLoot(impl, CornCropBlock.Segment.BOTTOM))
+                    .withPool(createCornCropLoot(CornCropBlock.Segment.TOP))
+                    .withPool(createCornCropLoot(CornCropBlock.Segment.MIDDLE))
+                    .withPool(createCornCropLoot(CornCropBlock.Segment.BOTTOM))
+                    .apply(ApplyExplosionDecay.explosionDecay());
         }
 
-        private LootPool.Builder createCornCropSeedsLoot(RegistryWrapper.Impl<Enchantment> impl, CornCropBlock.Segment segment) {
-            LootPool.Builder builder = LootPool.builder();
-            builder.with(ItemEntry.builder(VAItems.CORN_SEEDS).apply(ApplyBonusLootFunction.binomialWithBonusCount(impl.getOrThrow(Enchantments.FORTUNE), 0.5714286F, 3).conditionally(BlockStatePropertyLootCondition.builder(VABlocks.CORN_CROP).properties(StatePredicate.Builder.create().exactMatch(CornCropBlock.AGE, 7)))))
-                    .conditionally(BlockStatePropertyLootCondition.builder(VABlocks.CORN_CROP).properties(StatePredicate.Builder.create()
-                    .exactMatch(CornCropBlock.SEGMENT, segment)
+        private LootPool.Builder createCornCropSeedsLoot(HolderLookup.RegistryLookup<Enchantment> impl, CornCropBlock.Segment segment) {
+            LootPool.Builder builder = LootPool.lootPool();
+            builder.add(LootItem.lootTableItem(VAItems.CORN_SEEDS).apply(ApplyBonusCount.addBonusBinomialDistributionCount(impl.getOrThrow(Enchantments.FORTUNE), 0.5714286F, 3).when(LootItemBlockStatePropertyCondition.hasBlockStateProperties(VABlocks.CORN_CROP).setProperties(StatePropertiesPredicate.Builder.properties().hasProperty(CornCropBlock.AGE, 7)))))
+                    .when(LootItemBlockStatePropertyCondition.hasBlockStateProperties(VABlocks.CORN_CROP).setProperties(StatePropertiesPredicate.Builder.properties()
+                    .hasProperty(CornCropBlock.SEGMENT, segment)
             ));
             if (segment.equals(CornCropBlock.Segment.BOTTOM)) {
-                builder.conditionally(createCornCropSeedsLootCondition(segment, CornCropBlock.Segment.MIDDLE));
-                builder.conditionally(createCornCropSeedsLootCondition(segment, CornCropBlock.Segment.TOP));
+                builder.when(createCornCropSeedsLootCondition(segment, CornCropBlock.Segment.MIDDLE));
+                builder.when(createCornCropSeedsLootCondition(segment, CornCropBlock.Segment.TOP));
             }
             if (segment.equals(CornCropBlock.Segment.MIDDLE)) {
-                builder.conditionally(createCornCropSeedsLootCondition(segment, CornCropBlock.Segment.TOP));
-                builder.conditionally(createCornCropLootCondition(segment, CornCropBlock.Segment.BOTTOM));
+                builder.when(createCornCropSeedsLootCondition(segment, CornCropBlock.Segment.TOP));
+                builder.when(createCornCropLootCondition(segment, CornCropBlock.Segment.BOTTOM));
             }
             if (segment.equals(CornCropBlock.Segment.TOP)) {
-                builder.conditionally(createCornCropLootCondition(segment, CornCropBlock.Segment.MIDDLE));
-                builder.conditionally(createCornCropLootCondition(segment, CornCropBlock.Segment.BOTTOM));
+                builder.when(createCornCropLootCondition(segment, CornCropBlock.Segment.MIDDLE));
+                builder.when(createCornCropLootCondition(segment, CornCropBlock.Segment.BOTTOM));
             }
 
             return builder;
         }
 
         private LootPool.Builder createCornCropLoot(CornCropBlock.Segment segment) {
-            LootPool.Builder builder = LootPool.builder();
-            builder.with(ItemEntry.builder(VAItems.CORN)).conditionally(BlockStatePropertyLootCondition.builder(VABlocks.CORN_CROP).properties(StatePredicate.Builder.create()
-                    .exactMatch(CornCropBlock.SEGMENT, segment)
-                    .exactMatch(CornCropBlock.AGE, 7)
+            LootPool.Builder builder = LootPool.lootPool();
+            builder.add(LootItem.lootTableItem(VAItems.CORN)).when(LootItemBlockStatePropertyCondition.hasBlockStateProperties(VABlocks.CORN_CROP).setProperties(StatePropertiesPredicate.Builder.properties()
+                    .hasProperty(CornCropBlock.SEGMENT, segment)
+                    .hasProperty(CornCropBlock.AGE, 7)
             ));
-            if (!(segment.equals(CornCropBlock.Segment.BOTTOM))) builder.conditionally(createCornCropLootCondition(segment, CornCropBlock.Segment.BOTTOM, true));
-            if (!(segment.equals(CornCropBlock.Segment.MIDDLE))) builder.conditionally(createCornCropLootCondition(segment, CornCropBlock.Segment.MIDDLE, true));
-            if (!(segment.equals(CornCropBlock.Segment.TOP))) builder.conditionally(createCornCropLootCondition(segment, CornCropBlock.Segment.TOP, true));
-            return builder.apply(SetCountLootFunction.builder(UniformLootNumberProvider.create(1.0F, 2.0F)));
+            if (!(segment.equals(CornCropBlock.Segment.BOTTOM))) builder.when(createCornCropLootCondition(segment, CornCropBlock.Segment.BOTTOM, true));
+            if (!(segment.equals(CornCropBlock.Segment.MIDDLE))) builder.when(createCornCropLootCondition(segment, CornCropBlock.Segment.MIDDLE, true));
+            if (!(segment.equals(CornCropBlock.Segment.TOP))) builder.when(createCornCropLootCondition(segment, CornCropBlock.Segment.TOP, true));
+            return builder.apply(SetItemCountFunction.setCount(UniformGenerator.between(1.0F, 2.0F)));
         }
 
-        private LootCondition.Builder createCornCropSeedsLootCondition(CornCropBlock.Segment segment, CornCropBlock.Segment expectedSegment) {
-            return AnyOfLootCondition.builder(
+        private LootItemCondition.Builder createCornCropSeedsLootCondition(CornCropBlock.Segment segment, CornCropBlock.Segment expectedSegment) {
+            return AnyOfCondition.anyOf(
                     createCornCropLootCondition(segment, expectedSegment),
                     createCornCropSeedsAgeConditions(segment.minAge(), expectedSegment.minAge())
             );
         }
 
-        private LootCondition.Builder createCornCropLootCondition(CornCropBlock.Segment segment, CornCropBlock.Segment expectedSegment) {
+        private LootItemCondition.Builder createCornCropLootCondition(CornCropBlock.Segment segment, CornCropBlock.Segment expectedSegment) {
             int i = segment.getYOffset(expectedSegment);
-            return AnyOfLootCondition.builder(createCornCropStateConditions(expectedSegment, i, segment.minAge()));
+            return AnyOfCondition.anyOf(createCornCropStateConditions(expectedSegment, i, segment.minAge()));
         }
 
-        private LootCondition.Builder createCornCropLootCondition(CornCropBlock.Segment segment, CornCropBlock.Segment expectedSegment, boolean fullyGrown) {
+        private LootItemCondition.Builder createCornCropLootCondition(CornCropBlock.Segment segment, CornCropBlock.Segment expectedSegment, boolean fullyGrown) {
             if (!fullyGrown) return createCornCropLootCondition(segment, expectedSegment);
             int i = segment.getYOffset(expectedSegment);
-            return LocationCheckLootCondition.builder(LocationPredicate.Builder.create().block(BlockPredicate.Builder.create().state(StatePredicate.Builder.create().exactMatch(CornCropBlock.SEGMENT, expectedSegment).exactMatch(CornCropBlock.AGE, 7))), new BlockPos(0, i, 0));
+            return LocationCheck.checkLocation(LocationPredicate.Builder.location().setBlock(BlockPredicate.Builder.block().setProperties(StatePropertiesPredicate.Builder.properties().hasProperty(CornCropBlock.SEGMENT, expectedSegment).hasProperty(CornCropBlock.AGE, 7))), new BlockPos(0, i, 0));
         }
 
-        private LootCondition.Builder[] createCornCropStateConditions(CornCropBlock.Segment segment, int offset, int minAge) {
-            LootCondition.Builder[] builders = {};
-            ArrayList<LootCondition.Builder> buildersList = new ArrayList<>();
+        private LootItemCondition.Builder[] createCornCropStateConditions(CornCropBlock.Segment segment, int offset, int minAge) {
+            LootItemCondition.Builder[] builders = {};
+            ArrayList<LootItemCondition.Builder> buildersList = new ArrayList<>();
             int i = minAge;
             while (i < 8) {
                 buildersList.add(
-                        AllOfLootCondition.builder(
-                                BlockStatePropertyLootCondition.builder(VABlocks.CORN_CROP).properties(StatePredicate.Builder.create().exactMatch(CornCropBlock.AGE, i)),
-                                LocationCheckLootCondition.builder(LocationPredicate.Builder.create().block(BlockPredicate.Builder.create().state(StatePredicate.Builder.create().exactMatch(CornCropBlock.SEGMENT, segment).exactMatch(CornCropBlock.AGE, i))), new BlockPos(0, offset, 0))
+                        AllOfCondition.allOf(
+                                LootItemBlockStatePropertyCondition.hasBlockStateProperties(VABlocks.CORN_CROP).setProperties(StatePropertiesPredicate.Builder.properties().hasProperty(CornCropBlock.AGE, i)),
+                                LocationCheck.checkLocation(LocationPredicate.Builder.location().setBlock(BlockPredicate.Builder.block().setProperties(StatePropertiesPredicate.Builder.properties().hasProperty(CornCropBlock.SEGMENT, segment).hasProperty(CornCropBlock.AGE, i))), new BlockPos(0, offset, 0))
                         )
                 );
 
@@ -485,43 +485,43 @@ public final class VABlockLootTableProvider {
             return buildersList.toArray(builders);
         }
 
-        private LootCondition.Builder createCornCropSeedsAgeConditions(int minAge, int maxAge) {
-            LootCondition.Builder[] builders = {};
-            ArrayList<LootCondition.Builder> buildersList = new ArrayList<>();
+        private LootItemCondition.Builder createCornCropSeedsAgeConditions(int minAge, int maxAge) {
+            LootItemCondition.Builder[] builders = {};
+            ArrayList<LootItemCondition.Builder> buildersList = new ArrayList<>();
             int i = minAge;
             while (i < maxAge) {
                 buildersList.add(
-                        BlockStatePropertyLootCondition.builder(VABlocks.CORN_CROP).properties(StatePredicate.Builder.create().exactMatch(CornCropBlock.AGE, i))
+                        LootItemBlockStatePropertyCondition.hasBlockStateProperties(VABlocks.CORN_CROP).setProperties(StatePropertiesPredicate.Builder.properties().hasProperty(CornCropBlock.AGE, i))
                 );
                 i++;
             }
-            return AnyOfLootCondition.builder(buildersList.toArray(builders));
+            return AnyOfCondition.anyOf(buildersList.toArray(builders));
         }
 
 
         protected LootTable.Builder boneLitterDrops(Block segmented) {
-            return segmented instanceof Segmented segmented2 ? LootTable.builder().pool(
-                            LootPool.builder().rolls(ConstantLootNumberProvider.create(1.0F)).with(
-                                    AlternativeEntry.builder(
-                                            ItemEntry.builder(segmented)
+            return segmented instanceof SegmentableBlock segmented2 ? LootTable.lootTable().withPool(
+                            LootPool.lootPool().setRolls(ConstantValue.exactly(1.0F)).add(
+                                    AlternativesEntry.alternatives(
+                                            LootItem.lootTableItem(segmented)
                                                     .apply(
                                                             IntStream.rangeClosed(1, 4).boxed().toList(),
-                                                            count -> SetCountLootFunction.builder(ConstantLootNumberProvider.create(count))
-                                                                    .conditionally(
-                                                                            BlockStatePropertyLootCondition.builder(segmented).properties(StatePredicate.Builder.create().exactMatch(segmented2.getAmountProperty(), count))
+                                                            count -> SetItemCountFunction.setCount(ConstantValue.exactly(count))
+                                                                    .when(
+                                                                            LootItemBlockStatePropertyCondition.hasBlockStateProperties(segmented).setProperties(StatePropertiesPredicate.Builder.properties().hasProperty(segmented2.getSegmentAmountProperty(), count))
                                                                     )
                                                     )
-                                                    .conditionally(createSilkTouchCondition()),
-                                            ItemEntry.builder(Items.BONE_MEAL)
+                                                    .when(hasSilkTouch()),
+                                            LootItem.lootTableItem(Items.BONE_MEAL)
                                                     .apply(
                                                             IntStream.rangeClosed(1, 4).boxed().toList(),
-                                                            count -> SetCountLootFunction.builder(UniformLootNumberProvider.create(-1, count))
-                                                                    .conditionally(BlockStatePropertyLootCondition.builder(segmented).properties(StatePredicate.Builder.create().exactMatch(segmented2.getAmountProperty(), count)))
+                                                            count -> SetItemCountFunction.setCount(UniformGenerator.between(-1, count))
+                                                                    .when(LootItemBlockStatePropertyCondition.hasBlockStateProperties(segmented).setProperties(StatePropertiesPredicate.Builder.properties().hasProperty(segmented2.getSegmentAmountProperty(), count)))
                                                     )
                                     )
-                                    ).apply(ExplosionDecayLootFunction.builder())
+                                    ).apply(ApplyExplosionDecay.explosionDecay())
                     )
-                    : dropsNothing();
+                    : noDrop();
         }
     }
 }

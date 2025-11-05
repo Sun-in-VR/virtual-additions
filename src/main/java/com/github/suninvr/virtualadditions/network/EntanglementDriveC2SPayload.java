@@ -1,25 +1,25 @@
 package com.github.suninvr.virtualadditions.network;
 
 import com.github.suninvr.virtualadditions.registry.VAPackets;
-import net.minecraft.network.PacketByteBuf;
-import net.minecraft.network.codec.PacketCodec;
-import net.minecraft.network.packet.CustomPayload;
+import net.minecraft.network.FriendlyByteBuf;
+import net.minecraft.network.codec.StreamCodec;
+import net.minecraft.network.protocol.common.custom.CustomPacketPayload;
 
 import java.util.UUID;
 
-public class EntanglementDriveC2SPayload implements CustomPayload {
-    public static final PacketCodec<PacketByteBuf, EntanglementDriveC2SPayload> CODEC = PacketCodec.of(EntanglementDriveC2SPayload::write, EntanglementDriveC2SPayload::new);
+public class EntanglementDriveC2SPayload implements CustomPacketPayload {
+    public static final StreamCodec<FriendlyByteBuf, EntanglementDriveC2SPayload> CODEC = StreamCodec.ofMember(EntanglementDriveC2SPayload::write, EntanglementDriveC2SPayload::new);
     private final int slotIndex;
     private final UUID playerId;
 
-    private EntanglementDriveC2SPayload(PacketByteBuf buf) {
+    private EntanglementDriveC2SPayload(FriendlyByteBuf buf) {
         this.slotIndex = buf.readInt();
-        this.playerId = buf.readUuid();
+        this.playerId = buf.readUUID();
     }
 
-    private void write(PacketByteBuf buf) {
+    private void write(FriendlyByteBuf buf) {
         buf.writeInt(this.slotIndex);
-        buf.writeUuid(this.playerId);
+        buf.writeUUID(this.playerId);
     }
 
     public EntanglementDriveC2SPayload(int slotIndex, UUID playerId) {
@@ -36,7 +36,7 @@ public class EntanglementDriveC2SPayload implements CustomPayload {
     }
 
     @Override
-    public Id<? extends CustomPayload> getId() {
+    public Type<? extends CustomPacketPayload> type() {
         return VAPackets.ENTANGLEMENT_DRIVE_C2S_ID;
     }
 }

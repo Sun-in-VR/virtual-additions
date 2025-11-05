@@ -3,17 +3,16 @@ package com.github.suninvr.virtualadditions.worldgen.feature;
 import com.github.suninvr.virtualadditions.registry.VAFeatures;
 import com.mojang.serialization.MapCodec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
-import net.minecraft.block.BlockState;
-import net.minecraft.block.Waterloggable;
-import net.minecraft.state.property.Properties;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.math.Direction;
-import net.minecraft.util.math.random.Random;
-import net.minecraft.world.TestableWorld;
-import net.minecraft.world.gen.feature.TreeFeatureConfig;
-import net.minecraft.world.gen.foliage.FoliagePlacer;
-import net.minecraft.world.gen.trunk.TrunkPlacer;
-import net.minecraft.world.gen.trunk.TrunkPlacerType;
+import net.minecraft.core.BlockPos;
+import net.minecraft.core.Direction;
+import net.minecraft.util.RandomSource;
+import net.minecraft.world.level.LevelSimulatedReader;
+import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.block.state.properties.BlockStateProperties;
+import net.minecraft.world.level.levelgen.feature.configurations.TreeConfiguration;
+import net.minecraft.world.level.levelgen.feature.foliageplacers.FoliagePlacer;
+import net.minecraft.world.level.levelgen.feature.trunkplacers.TrunkPlacer;
+import net.minecraft.world.level.levelgen.feature.trunkplacers.TrunkPlacerType;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -21,54 +20,54 @@ import java.util.function.BiConsumer;
 
 public class WitheredTrunkPlacer extends TrunkPlacer {
     public static final MapCodec<WitheredTrunkPlacer> CODEC =
-            RecordCodecBuilder.mapCodec(instance -> WitheredTrunkPlacer.fillTrunkPlacerFields(instance).apply(instance, WitheredTrunkPlacer::new));
+            RecordCodecBuilder.mapCodec(instance -> WitheredTrunkPlacer.trunkPlacerParts(instance).apply(instance, WitheredTrunkPlacer::new));
 
     public WitheredTrunkPlacer(int baseHeight, int firstRandomHeight, int secondRandomHeight) {
         super(baseHeight, firstRandomHeight, secondRandomHeight);
     }
 
     @Override
-    protected TrunkPlacerType<?> getType() {
+    protected TrunkPlacerType<?> type() {
         return VAFeatures.TrunkPlacerTypes.WITHERED_TRUNK_PLACER;
     }
 
     @Override
-    public List<FoliagePlacer.TreeNode> generate(TestableWorld world, BiConsumer<BlockPos, BlockState> replacer, Random random, int height, BlockPos startPos, TreeFeatureConfig config) {
-        ArrayList<FoliagePlacer.TreeNode> nodes = new ArrayList<>();
+    public List<FoliagePlacer.FoliageAttachment> placeTrunk(LevelSimulatedReader world, BiConsumer<BlockPos, BlockState> replacer, RandomSource random, int height, BlockPos startPos, TreeConfiguration config) {
+        ArrayList<FoliagePlacer.FoliageAttachment> nodes = new ArrayList<>();
         int[][] branches = getBranches(random, height);
-        Direction direction = Direction.Type.HORIZONTAL.random(random);
+        Direction direction = Direction.Plane.HORIZONTAL.getRandomDirection(random);
         boolean bl = false;
         for (int i = 0; i < height; ++i) {
-            BlockPos pos = startPos.up(i);
-            this.getAndSetState(world, replacer, random, pos, config);
+            BlockPos pos = startPos.above(i);
+            this.placeLog(world, replacer, random, pos, config);
             for (int[] branch : branches) {
                 if (branch[0] == i) {
-                    FoliagePlacer.TreeNode node = placeBranch(world, replacer, random, pos, branch, direction, config);
+                    FoliagePlacer.FoliageAttachment node = placeBranch(world, replacer, random, pos, branch, direction, config);
                     if (node != null) {
                         nodes.add(node);
                     }
-                    direction = direction.rotateYClockwise();
+                    direction = direction.getClockWise();
                     if (!bl && random.nextInt(2) == 1) {
-                        direction = direction.rotateYClockwise();
+                        direction = direction.getClockWise();
                         bl = true;
                     }
                 }
             }
         }
-        nodes.add(new FoliagePlacer.TreeNode(startPos.up(height), 1, false));
+        nodes.add(new FoliagePlacer.FoliageAttachment(startPos.above(height), 1, false));
         return List.copyOf(nodes);
     }
 
-    private FoliagePlacer.TreeNode placeBranch(TestableWorld world, BiConsumer<BlockPos, BlockState> replacer, Random random, BlockPos branchPos, int[] branch, Direction direction, TreeFeatureConfig config) {
+    private FoliagePlacer.FoliageAttachment placeBranch(LevelSimulatedReader world, BiConsumer<BlockPos, BlockState> replacer, RandomSource random, BlockPos branchPos, int[] branch, Direction direction, TreeConfiguration config) {
 
-        this.getAndSetState(world, replacer, random, branchPos.offset(direction), config, state -> state.with(Properties.AXIS, direction.getAxis()));
+        this.placeLog(world, replacer, random, branchPos.relative(direction), config, state -> state.setValue(BlockStateProperties.AXIS, direction.getAxis()));
         for (int i = 0; i < branch[1]; i++) {
-            this.getAndSetState(world, replacer, random, branchPos.offset(direction, 2).up(i+1), config);
+            this.placeLog(world, replacer, random, branchPos.relative(direction, 2).above(i+1), config);
         }
-        return new FoliagePlacer.TreeNode(branchPos.offset(direction, 2).up(1 + branch[1]), 1, false);
+        return new FoliagePlacer.FoliageAttachment(branchPos.relative(direction, 2).above(1 + branch[1]), 1, false);
     }
 
-    private int[][] getBranches(Random random, int height) {
+    private int[][] getBranches(RandomSource random, int height) {
         ArrayList<int[]> branches = new ArrayList<>();
         branches.add(getRandomBranchHeight(random, height));
         branches.add(getRandomBranchHeight(random, height));
@@ -76,7 +75,7 @@ public class WitheredTrunkPlacer extends TrunkPlacer {
         return branches.toArray(new int[][]{});
     }
 
-    private int[] getRandomBranchHeight(Random random, int height) {
+    private int[] getRandomBranchHeight(RandomSource random, int height) {
         int min = height / 4;
         int max = height - min;
         if (max < min) return new int[]{-1};

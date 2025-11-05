@@ -5,51 +5,51 @@ import com.github.suninvr.virtualadditions.client.render.item.CrossbowProjectile
 import com.github.suninvr.virtualadditions.client.render.item.GildTypeProperty;
 import com.github.suninvr.virtualadditions.datagen.registry.VAModels;
 import com.github.suninvr.virtualadditions.item.gild.GildType;
-import com.github.suninvr.virtualadditions.registry.VAGildTypes;
 import com.github.suninvr.virtualadditions.registry.*;
 import com.github.suninvr.virtualadditions.registry.collection.ColorfulBlockSet;
 import net.fabricmc.fabric.api.client.datagen.v1.provider.FabricModelProvider;
 import net.fabricmc.fabric.api.datagen.v1.FabricDataGenerator;
 import net.fabricmc.fabric.api.datagen.v1.FabricDataOutput;
-import net.minecraft.block.Block;
-import net.minecraft.block.CropBlock;
-import net.minecraft.client.data.*;
-import net.minecraft.client.item.ItemAsset;
-import net.minecraft.client.render.item.model.ItemModel;
-import net.minecraft.client.render.item.model.SelectItemModel;
-import net.minecraft.client.render.item.property.bool.HasComponentProperty;
-import net.minecraft.client.render.item.property.bool.UsingItemProperty;
-import net.minecraft.client.render.item.property.numeric.CrossbowPullProperty;
-import net.minecraft.client.render.item.property.select.ChargeTypeProperty;
-import net.minecraft.client.render.item.property.select.DisplayContextProperty;
-import net.minecraft.client.render.item.property.select.TrimMaterialProperty;
-import net.minecraft.client.render.item.tint.ConstantTintSource;
-import net.minecraft.client.render.item.tint.DyeTintSource;
-import net.minecraft.client.render.item.tint.TintSource;
-import net.minecraft.client.render.model.json.WeightedVariant;
-import net.minecraft.component.DataComponentTypes;
-import net.minecraft.item.CrossbowItem;
-import net.minecraft.item.Item;
-import net.minecraft.item.ItemDisplayContext;
-import net.minecraft.item.Items;
-import net.minecraft.item.equipment.EquipmentAsset;
-import net.minecraft.item.equipment.EquipmentAssetKeys;
-import net.minecraft.item.equipment.trim.ArmorTrimAssets;
-import net.minecraft.item.equipment.trim.ArmorTrimMaterial;
-import net.minecraft.item.equipment.trim.ArmorTrimMaterials;
-import net.minecraft.registry.Registries;
-import net.minecraft.registry.RegistryKey;
-import net.minecraft.state.property.Properties;
-import net.minecraft.util.Identifier;
-import net.minecraft.world.biome.FoliageColors;
+import net.minecraft.client.color.item.Constant;
+import net.minecraft.client.color.item.Dye;
+import net.minecraft.client.color.item.ItemTintSource;
+import net.minecraft.client.data.models.BlockModelGenerators;
+import net.minecraft.client.data.models.ItemModelGenerators;
+import net.minecraft.client.data.models.MultiVariant;
+import net.minecraft.client.data.models.blockstates.MultiPartGenerator;
+import net.minecraft.client.data.models.blockstates.MultiVariantGenerator;
+import net.minecraft.client.data.models.blockstates.PropertyDispatch;
+import net.minecraft.client.data.models.model.*;
+import net.minecraft.client.renderer.item.ClientItem;
+import net.minecraft.client.renderer.item.ItemModel;
+import net.minecraft.client.renderer.item.SelectItemModel;
+import net.minecraft.client.renderer.item.properties.conditional.HasComponent;
+import net.minecraft.client.renderer.item.properties.numeric.CrossbowPull;
+import net.minecraft.client.renderer.item.properties.select.Charge;
+import net.minecraft.client.renderer.item.properties.select.TrimMaterialProperty;
+import net.minecraft.core.component.DataComponents;
+import net.minecraft.core.registries.BuiltInRegistries;
+import net.minecraft.resources.ResourceKey;
+import net.minecraft.resources.ResourceLocation;
+import net.minecraft.world.item.CrossbowItem;
+import net.minecraft.world.item.Item;
+import net.minecraft.world.item.Items;
+import net.minecraft.world.item.equipment.EquipmentAsset;
+import net.minecraft.world.item.equipment.EquipmentAssets;
+import net.minecraft.world.item.equipment.trim.MaterialAssetGroup;
+import net.minecraft.world.item.equipment.trim.TrimMaterial;
+import net.minecraft.world.item.equipment.trim.TrimMaterials;
+import net.minecraft.world.level.FoliageColor;
+import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.CropBlock;
+import net.minecraft.world.level.block.state.properties.BlockStateProperties;
 
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
 import static com.github.suninvr.virtualadditions.VirtualAdditions.idOf;
-import static net.minecraft.client.data.ItemModelGenerator.*;
-import static net.minecraft.client.data.ItemModelGenerator.createModelWithInHandVariant;
+import static net.minecraft.client.data.models.ItemModelGenerators.*;
 
 public class VAModelProvider {
 
@@ -67,25 +67,25 @@ public class VAModelProvider {
         }
 
         @Override
-        public void generateBlockStateModels(BlockStateModelGenerator generator) {
+        public void generateBlockStateModels(BlockModelGenerators generator) {
 
-            generator.registerCubeAllModelTexturePool(VABlocks.PORPHYRY).family(VACollections.PORPHYRY);
-            generator.registerCubeAllModelTexturePool(VABlocks.SOULBLOOM_PLANKS).family(VACollections.SOULBLOOM);
-            generator.registerCubeAllModelTexturePool(VABlocks.WITHERED_PLANKS).family(VACollections.WITHERED);
-            generator.registerCubeAllModelTexturePool(VABlocks.POLISHED_PORPHYRY).family(VACollections.POLISHED_PORPHYRY);
-            generator.registerCubeAllModelTexturePool(VABlocks.PORPHYRY_BRICKS).family(VACollections.PORPHYRY_BRICKS);
-            generator.registerCubeAllModelTexturePool(VABlocks.CUT_STEEL).family(VACollections.CUT_STEEL).parented(VABlocks.CUT_STEEL, VABlocks.WAXED_CUT_STEEL).parented(VABlocks.CHISELED_STEEL, VABlocks.WAXED_CHISELED_STEEL).family(VACollections.WAXED_CUT_STEEL);
-            generator.registerCubeAllModelTexturePool(VABlocks.EXPOSED_CUT_STEEL).family(VACollections.EXPOSED_CUT_STEEL).parented(VABlocks.EXPOSED_CUT_STEEL, VABlocks.WAXED_EXPOSED_CUT_STEEL).parented(VABlocks.EXPOSED_CHISELED_STEEL, VABlocks.WAXED_EXPOSED_CHISELED_STEEL).family(VACollections.WAXED_EXPOSED_CUT_STEEL);
-            generator.registerCubeAllModelTexturePool(VABlocks.WEATHERED_CUT_STEEL).family(VACollections.WEATHERED_CUT_STEEL).parented(VABlocks.WEATHERED_CUT_STEEL, VABlocks.WAXED_WEATHERED_CUT_STEEL).parented(VABlocks.WEATHERED_CHISELED_STEEL, VABlocks.WAXED_WEATHERED_CHISELED_STEEL).family(VACollections.WAXED_WEATHERED_CUT_STEEL);
-            generator.registerCubeAllModelTexturePool(VABlocks.OXIDIZED_CUT_STEEL).family(VACollections.OXIDIZED_CUT_STEEL).parented(VABlocks.OXIDIZED_CUT_STEEL, VABlocks.WAXED_OXIDIZED_CUT_STEEL).parented(VABlocks.OXIDIZED_CHISELED_STEEL, VABlocks.WAXED_OXIDIZED_CHISELED_STEEL).family(VACollections.WAXED_OXIDIZED_CUT_STEEL);
-            generator.registerCubeAllModelTexturePool(VABlocks.ROCK_SALT_BRICKS).family(VACollections.ROCK_SALT_BRICKS);
-            generator.registerCubeAllModelTexturePool(VABlocks.COBBLED_HORNFELS).family(VACollections.COBBLED_HORNFELS);
-            generator.registerCubeAllModelTexturePool(VABlocks.COBBLED_BLUESCHIST).family(VACollections.COBBLED_BLUESCHIST);
-            generator.registerCubeAllModelTexturePool(VABlocks.BLUESCHIST_BRICKS).family(VACollections.BLUESCHIST_BRICKS);
-            generator.registerCubeAllModelTexturePool(VABlocks.POLISHED_BLUESCHIST).family(VACollections.POLISHED_BLUESCHIST);
-            generator.registerCubeAllModelTexturePool(VABlocks.COBBLED_SYENITE).family(VACollections.COBBLED_SYENITE);
-            generator.registerCubeAllModelTexturePool(VABlocks.SYENITE_BRICKS).family(VACollections.SYENITE_BRICKS);
-            generator.registerCubeAllModelTexturePool(VABlocks.POLISHED_SYENITE).family(VACollections.POLISHED_SYENITE);
+            generator.family(VABlocks.PORPHYRY).generateFor(VACollections.PORPHYRY);
+            generator.family(VABlocks.SOULBLOOM_PLANKS).generateFor(VACollections.SOULBLOOM);
+            generator.family(VABlocks.WITHERED_PLANKS).generateFor(VACollections.WITHERED);
+            generator.family(VABlocks.POLISHED_PORPHYRY).generateFor(VACollections.POLISHED_PORPHYRY);
+            generator.family(VABlocks.PORPHYRY_BRICKS).generateFor(VACollections.PORPHYRY_BRICKS);
+            generator.family(VABlocks.CUT_STEEL).generateFor(VACollections.CUT_STEEL).donateModelTo(VABlocks.CUT_STEEL, VABlocks.WAXED_CUT_STEEL).donateModelTo(VABlocks.CHISELED_STEEL, VABlocks.WAXED_CHISELED_STEEL).generateFor(VACollections.WAXED_CUT_STEEL);
+            generator.family(VABlocks.EXPOSED_CUT_STEEL).generateFor(VACollections.EXPOSED_CUT_STEEL).donateModelTo(VABlocks.EXPOSED_CUT_STEEL, VABlocks.WAXED_EXPOSED_CUT_STEEL).donateModelTo(VABlocks.EXPOSED_CHISELED_STEEL, VABlocks.WAXED_EXPOSED_CHISELED_STEEL).generateFor(VACollections.WAXED_EXPOSED_CUT_STEEL);
+            generator.family(VABlocks.WEATHERED_CUT_STEEL).generateFor(VACollections.WEATHERED_CUT_STEEL).donateModelTo(VABlocks.WEATHERED_CUT_STEEL, VABlocks.WAXED_WEATHERED_CUT_STEEL).donateModelTo(VABlocks.WEATHERED_CHISELED_STEEL, VABlocks.WAXED_WEATHERED_CHISELED_STEEL).generateFor(VACollections.WAXED_WEATHERED_CUT_STEEL);
+            generator.family(VABlocks.OXIDIZED_CUT_STEEL).generateFor(VACollections.OXIDIZED_CUT_STEEL).donateModelTo(VABlocks.OXIDIZED_CUT_STEEL, VABlocks.WAXED_OXIDIZED_CUT_STEEL).donateModelTo(VABlocks.OXIDIZED_CHISELED_STEEL, VABlocks.WAXED_OXIDIZED_CHISELED_STEEL).generateFor(VACollections.WAXED_OXIDIZED_CUT_STEEL);
+            generator.family(VABlocks.ROCK_SALT_BRICKS).generateFor(VACollections.ROCK_SALT_BRICKS);
+            generator.family(VABlocks.COBBLED_HORNFELS).generateFor(VACollections.COBBLED_HORNFELS);
+            generator.family(VABlocks.COBBLED_BLUESCHIST).generateFor(VACollections.COBBLED_BLUESCHIST);
+            generator.family(VABlocks.BLUESCHIST_BRICKS).generateFor(VACollections.BLUESCHIST_BRICKS);
+            generator.family(VABlocks.POLISHED_BLUESCHIST).generateFor(VACollections.POLISHED_BLUESCHIST);
+            generator.family(VABlocks.COBBLED_SYENITE).generateFor(VACollections.COBBLED_SYENITE);
+            generator.family(VABlocks.SYENITE_BRICKS).generateFor(VACollections.SYENITE_BRICKS);
+            generator.family(VABlocks.POLISHED_SYENITE).generateFor(VACollections.POLISHED_SYENITE);
 
             registerSimpleBlockItems(generator,
                     VABlocks.HORNFELS,
@@ -144,81 +144,81 @@ public class VAModelProvider {
                     VABlocks.OXIDIZED_STEEL_GRATE
                     );
 
-            generator.createLogTexturePool(VABlocks.SOULBLOOM_LOG).log(VABlocks.SOULBLOOM_LOG).wood(VABlocks.SOULBLOOM_WOOD);
-            generator.createLogTexturePool(VABlocks.STRIPPED_SOULBLOOM_LOG).log(VABlocks.STRIPPED_SOULBLOOM_LOG).wood(VABlocks.STRIPPED_SOULBLOOM_WOOD);
-            generator.registerHangingSign(VABlocks.STRIPPED_SOULBLOOM_LOG, VABlocks.SOULBLOOM_HANGING_SIGN, VABlocks.SOULBLOOM_WALL_HANGING_SIGN);
-            generator.registerShelf(VABlocks.SOULBLOOM_SHELF, VABlocks.STRIPPED_SOULBLOOM_LOG);
+            generator.woodProvider(VABlocks.SOULBLOOM_LOG).logWithHorizontal(VABlocks.SOULBLOOM_LOG).wood(VABlocks.SOULBLOOM_WOOD);
+            generator.woodProvider(VABlocks.STRIPPED_SOULBLOOM_LOG).logWithHorizontal(VABlocks.STRIPPED_SOULBLOOM_LOG).wood(VABlocks.STRIPPED_SOULBLOOM_WOOD);
+            generator.createHangingSign(VABlocks.STRIPPED_SOULBLOOM_LOG, VABlocks.SOULBLOOM_HANGING_SIGN, VABlocks.SOULBLOOM_WALL_HANGING_SIGN);
+            generator.createShelf(VABlocks.SOULBLOOM_SHELF, VABlocks.STRIPPED_SOULBLOOM_LOG);
 
-            generator.registerNetherrackBottomCustomTop(VABlocks.NECROTIC_NYLIUM);
-            generator.createLogTexturePool(VABlocks.WITHERED_LOG).log(VABlocks.WITHERED_LOG).wood(VABlocks.WITHERED_WOOD);
-            generator.createLogTexturePool(VABlocks.STRIPPED_WITHERED_LOG).log(VABlocks.STRIPPED_WITHERED_LOG).wood(VABlocks.STRIPPED_WITHERED_WOOD);
-            generator.registerHangingSign(VABlocks.STRIPPED_WITHERED_LOG, VABlocks.WITHERED_HANGING_SIGN, VABlocks.WITHERED_WALL_HANGING_SIGN);
-            generator.registerShelf(VABlocks.WITHERED_SHELF, VABlocks.STRIPPED_WITHERED_LOG);
+            generator.createNyliumBlock(VABlocks.NECROTIC_NYLIUM);
+            generator.woodProvider(VABlocks.WITHERED_LOG).logWithHorizontal(VABlocks.WITHERED_LOG).wood(VABlocks.WITHERED_WOOD);
+            generator.woodProvider(VABlocks.STRIPPED_WITHERED_LOG).logWithHorizontal(VABlocks.STRIPPED_WITHERED_LOG).wood(VABlocks.STRIPPED_WITHERED_WOOD);
+            generator.createHangingSign(VABlocks.STRIPPED_WITHERED_LOG, VABlocks.WITHERED_HANGING_SIGN, VABlocks.WITHERED_WALL_HANGING_SIGN);
+            generator.createShelf(VABlocks.WITHERED_SHELF, VABlocks.STRIPPED_WITHERED_LOG);
 
             registerSpectralFire(generator);
-            generator.registerTorch(VABlocks.SPECTRAL_TORCH, VABlocks.SPECTRAL_WALL_TORCH);
-            generator.registerLantern(VABlocks.SPECTRAL_LANTERN);
+            generator.createNormalTorch(VABlocks.SPECTRAL_TORCH, VABlocks.SPECTRAL_WALL_TORCH);
+            generator.createLantern(VABlocks.SPECTRAL_LANTERN);
 
-            generator.registerFlowerbed(VABlocks.BLUE_PETALS);
+            generator.createFlowerBed(VABlocks.BLUE_PETALS);
 
-            generator.registerItemModel(VAItems.CABBAGE_SEEDS);
-            generator.registerItemModel(VAItems.CORN_SEEDS);
-            generator.registerItemModel(VAItems.COTTON_SEEDS);
-            generator.registerItemModel(VAItems.BALLOON_FRUIT);
+            generator.registerSimpleFlatItemModel(VAItems.CABBAGE_SEEDS);
+            generator.registerSimpleFlatItemModel(VAItems.CORN_SEEDS);
+            generator.registerSimpleFlatItemModel(VAItems.COTTON_SEEDS);
+            generator.registerSimpleFlatItemModel(VAItems.BALLOON_FRUIT);
 
-            generator.registerItemModel(VAItems.CLIMBING_ROPE);
-            generator.registerItemModel(VAItems.EXPOSED_CLIMBING_ROPE);
-            generator.registerItemModel(VAItems.WEATHERED_CLIMBING_ROPE);
-            generator.registerItemModel(VAItems.OXIDIZED_CLIMBING_ROPE);
-            generator.registerParentedItemModel(VABlocks.WAXED_CLIMBING_ROPE_ANCHOR, Registries.ITEM.getId(VAItems.CLIMBING_ROPE).withPrefixedPath("item/"));
-            generator.registerParentedItemModel(VABlocks.WAXED_EXPOSED_CLIMBING_ROPE_ANCHOR, Registries.ITEM.getId(VAItems.EXPOSED_CLIMBING_ROPE).withPrefixedPath("item/"));
-            generator.registerParentedItemModel(VABlocks.WAXED_WEATHERED_CLIMBING_ROPE_ANCHOR, Registries.ITEM.getId(VAItems.WEATHERED_CLIMBING_ROPE).withPrefixedPath("item/"));
-            generator.registerParentedItemModel(VABlocks.WAXED_OXIDIZED_CLIMBING_ROPE_ANCHOR, Registries.ITEM.getId(VAItems.OXIDIZED_CLIMBING_ROPE).withPrefixedPath("item/"));
-            generator.registerItemModel(VAItems.STEEL_DOOR);
-            generator.registerItemModel(VAItems.EXPOSED_STEEL_DOOR);
-            generator.registerItemModel(VAItems.WEATHERED_STEEL_DOOR);
-            generator.registerItemModel(VAItems.OXIDIZED_STEEL_DOOR);
-            generator.registerParentedItemModel(VABlocks.WAXED_STEEL_DOOR, Registries.ITEM.getId(VAItems.STEEL_DOOR).withPrefixedPath("item/"));
-            generator.registerParentedItemModel(VABlocks.WAXED_EXPOSED_STEEL_DOOR, Registries.ITEM.getId(VAItems.EXPOSED_STEEL_DOOR).withPrefixedPath("item/"));
-            generator.registerParentedItemModel(VABlocks.WAXED_WEATHERED_STEEL_DOOR, Registries.ITEM.getId(VAItems.WEATHERED_STEEL_DOOR).withPrefixedPath("item/"));
-            generator.registerParentedItemModel(VABlocks.WAXED_OXIDIZED_STEEL_DOOR, Registries.ITEM.getId(VAItems.OXIDIZED_STEEL_DOOR).withPrefixedPath("item/"));
+            generator.registerSimpleFlatItemModel(VAItems.CLIMBING_ROPE);
+            generator.registerSimpleFlatItemModel(VAItems.EXPOSED_CLIMBING_ROPE);
+            generator.registerSimpleFlatItemModel(VAItems.WEATHERED_CLIMBING_ROPE);
+            generator.registerSimpleFlatItemModel(VAItems.OXIDIZED_CLIMBING_ROPE);
+            generator.registerSimpleItemModel(VABlocks.WAXED_CLIMBING_ROPE_ANCHOR, BuiltInRegistries.ITEM.getKey(VAItems.CLIMBING_ROPE).withPrefix("item/"));
+            generator.registerSimpleItemModel(VABlocks.WAXED_EXPOSED_CLIMBING_ROPE_ANCHOR, BuiltInRegistries.ITEM.getKey(VAItems.EXPOSED_CLIMBING_ROPE).withPrefix("item/"));
+            generator.registerSimpleItemModel(VABlocks.WAXED_WEATHERED_CLIMBING_ROPE_ANCHOR, BuiltInRegistries.ITEM.getKey(VAItems.WEATHERED_CLIMBING_ROPE).withPrefix("item/"));
+            generator.registerSimpleItemModel(VABlocks.WAXED_OXIDIZED_CLIMBING_ROPE_ANCHOR, BuiltInRegistries.ITEM.getKey(VAItems.OXIDIZED_CLIMBING_ROPE).withPrefix("item/"));
+            generator.registerSimpleFlatItemModel(VAItems.STEEL_DOOR);
+            generator.registerSimpleFlatItemModel(VAItems.EXPOSED_STEEL_DOOR);
+            generator.registerSimpleFlatItemModel(VAItems.WEATHERED_STEEL_DOOR);
+            generator.registerSimpleFlatItemModel(VAItems.OXIDIZED_STEEL_DOOR);
+            generator.registerSimpleItemModel(VABlocks.WAXED_STEEL_DOOR, BuiltInRegistries.ITEM.getKey(VAItems.STEEL_DOOR).withPrefix("item/"));
+            generator.registerSimpleItemModel(VABlocks.WAXED_EXPOSED_STEEL_DOOR, BuiltInRegistries.ITEM.getKey(VAItems.EXPOSED_STEEL_DOOR).withPrefix("item/"));
+            generator.registerSimpleItemModel(VABlocks.WAXED_WEATHERED_STEEL_DOOR, BuiltInRegistries.ITEM.getKey(VAItems.WEATHERED_STEEL_DOOR).withPrefix("item/"));
+            generator.registerSimpleItemModel(VABlocks.WAXED_OXIDIZED_STEEL_DOOR, BuiltInRegistries.ITEM.getKey(VAItems.OXIDIZED_STEEL_DOOR).withPrefix("item/"));
 
-            generator.registerParentedItemModel(VABlocks.STEEL_TRAPDOOR, Registries.BLOCK.getId(VABlocks.STEEL_TRAPDOOR).withPrefixedPath("block/").withSuffixedPath("_bottom"));
-            generator.registerParentedItemModel(VABlocks.EXPOSED_STEEL_TRAPDOOR, Registries.BLOCK.getId(VABlocks.EXPOSED_STEEL_TRAPDOOR).withPrefixedPath("block/").withSuffixedPath("_bottom"));
-            generator.registerParentedItemModel(VABlocks.WEATHERED_STEEL_TRAPDOOR, Registries.BLOCK.getId(VABlocks.WEATHERED_STEEL_TRAPDOOR).withPrefixedPath("block/").withSuffixedPath("_bottom"));
-            generator.registerParentedItemModel(VABlocks.OXIDIZED_STEEL_TRAPDOOR, Registries.BLOCK.getId(VABlocks.OXIDIZED_STEEL_TRAPDOOR).withPrefixedPath("block/").withSuffixedPath("_bottom"));
-            generator.registerParentedItemModel(VABlocks.WAXED_STEEL_TRAPDOOR, Registries.BLOCK.getId(VABlocks.STEEL_TRAPDOOR).withPrefixedPath("block/").withSuffixedPath("_bottom"));
-            generator.registerParentedItemModel(VABlocks.WAXED_EXPOSED_STEEL_TRAPDOOR, Registries.BLOCK.getId(VABlocks.EXPOSED_STEEL_TRAPDOOR).withPrefixedPath("block/").withSuffixedPath("_bottom"));
-            generator.registerParentedItemModel(VABlocks.WAXED_WEATHERED_STEEL_TRAPDOOR, Registries.BLOCK.getId(VABlocks.WEATHERED_STEEL_TRAPDOOR).withPrefixedPath("block/").withSuffixedPath("_bottom"));
-            generator.registerParentedItemModel(VABlocks.WAXED_OXIDIZED_STEEL_TRAPDOOR, Registries.BLOCK.getId(VABlocks.OXIDIZED_STEEL_TRAPDOOR).withPrefixedPath("block/").withSuffixedPath("_bottom"));
+            generator.registerSimpleItemModel(VABlocks.STEEL_TRAPDOOR, BuiltInRegistries.BLOCK.getKey(VABlocks.STEEL_TRAPDOOR).withPrefix("block/").withSuffix("_bottom"));
+            generator.registerSimpleItemModel(VABlocks.EXPOSED_STEEL_TRAPDOOR, BuiltInRegistries.BLOCK.getKey(VABlocks.EXPOSED_STEEL_TRAPDOOR).withPrefix("block/").withSuffix("_bottom"));
+            generator.registerSimpleItemModel(VABlocks.WEATHERED_STEEL_TRAPDOOR, BuiltInRegistries.BLOCK.getKey(VABlocks.WEATHERED_STEEL_TRAPDOOR).withPrefix("block/").withSuffix("_bottom"));
+            generator.registerSimpleItemModel(VABlocks.OXIDIZED_STEEL_TRAPDOOR, BuiltInRegistries.BLOCK.getKey(VABlocks.OXIDIZED_STEEL_TRAPDOOR).withPrefix("block/").withSuffix("_bottom"));
+            generator.registerSimpleItemModel(VABlocks.WAXED_STEEL_TRAPDOOR, BuiltInRegistries.BLOCK.getKey(VABlocks.STEEL_TRAPDOOR).withPrefix("block/").withSuffix("_bottom"));
+            generator.registerSimpleItemModel(VABlocks.WAXED_EXPOSED_STEEL_TRAPDOOR, BuiltInRegistries.BLOCK.getKey(VABlocks.EXPOSED_STEEL_TRAPDOOR).withPrefix("block/").withSuffix("_bottom"));
+            generator.registerSimpleItemModel(VABlocks.WAXED_WEATHERED_STEEL_TRAPDOOR, BuiltInRegistries.BLOCK.getKey(VABlocks.WEATHERED_STEEL_TRAPDOOR).withPrefix("block/").withSuffix("_bottom"));
+            generator.registerSimpleItemModel(VABlocks.WAXED_OXIDIZED_STEEL_TRAPDOOR, BuiltInRegistries.BLOCK.getKey(VABlocks.OXIDIZED_STEEL_TRAPDOOR).withPrefix("block/").withSuffix("_bottom"));
 
-            generator.registerParentedItemModel(VABlocks.REDSTONE_BRIDGE, Registries.BLOCK.getId(VABlocks.REDSTONE_BRIDGE).withPrefixedPath("block/").withSuffixedPath("_inventory"));
+            generator.registerSimpleItemModel(VABlocks.REDSTONE_BRIDGE, BuiltInRegistries.BLOCK.getKey(VABlocks.REDSTONE_BRIDGE).withPrefix("block/").withSuffix("_inventory"));
 
-            generator.registerItemModel(VABlocks.ROCK_SALT_CRYSTAL, "_tip");
+            generator.registerSimpleFlatItemModel(VABlocks.ROCK_SALT_CRYSTAL, "_tip");
 
-            generator.registerParentedItemModel(VABlocks.SPRING_LOTUS, Registries.BLOCK.getId(VABlocks.SPRING_LOTUS).withPrefixedPath("block/").withSuffixedPath("_3"));
+            generator.registerSimpleItemModel(VABlocks.SPRING_LOTUS, BuiltInRegistries.BLOCK.getKey(VABlocks.SPRING_LOTUS).withPrefix("block/").withSuffix("_3"));
 
-            generator.registerItemModel(VABlocks.FRAYED_SILK);
-            generator.registerItemModel(VABlocks.GREENCAP_MUSHROOM);
-            generator.registerItemModel(VABlocks.TALL_GREENCAP_MUSHROOMS, "_top");
-            generator.registerItemModel(VABlocks.GLOWING_SILK);
+            generator.registerSimpleFlatItemModel(VABlocks.FRAYED_SILK);
+            generator.registerSimpleFlatItemModel(VABlocks.GREENCAP_MUSHROOM);
+            generator.registerSimpleFlatItemModel(VABlocks.TALL_GREENCAP_MUSHROOMS, "_top");
+            generator.registerSimpleFlatItemModel(VABlocks.GLOWING_SILK);
 
-            generator.registerItemModel(VAItems.SOULBLOOM_SAPLING, BlockStateModelGenerator.CrossType.NOT_TINTED.registerItemModel(generator, VABlocks.SOULBLOOM_SAPLING));
-            generator.registerItemModel(VAItems.WITHERED_SAPLING, BlockStateModelGenerator.CrossType.NOT_TINTED.registerItemModel(generator, VABlocks.WITHERED_SAPLING));
+            generator.registerSimpleItemModel(VAItems.SOULBLOOM_SAPLING, BlockModelGenerators.PlantType.NOT_TINTED.createItemModel(generator, VABlocks.SOULBLOOM_SAPLING));
+            generator.registerSimpleItemModel(VAItems.WITHERED_SAPLING, BlockModelGenerators.PlantType.NOT_TINTED.createItemModel(generator, VABlocks.WITHERED_SAPLING));
 
-            generator.registerItemModel(VAItems.NECROTIC_ROOTS, BlockStateModelGenerator.CrossType.NOT_TINTED.registerItemModel(generator, VABlocks.NECROTIC_ROOTS));
+            generator.registerSimpleItemModel(VAItems.NECROTIC_ROOTS, BlockModelGenerators.PlantType.NOT_TINTED.createItemModel(generator, VABlocks.NECROTIC_ROOTS));
 
-            generator.registerItemModel(VAItems.SMALL_SPRING_LOTUS, BlockStateModelGenerator.CrossType.NOT_TINTED.registerItemModel(generator, VABlocks.SMALL_SPRING_LOTUS));
-            generator.registerItemModel(VAItems.SOUL_SPROUT, BlockStateModelGenerator.CrossType.EMISSIVE_NOT_TINTED.registerItemModel(generator, VABlocks.SOUL_SPROUT));
+            generator.registerSimpleItemModel(VAItems.SMALL_SPRING_LOTUS, BlockModelGenerators.PlantType.NOT_TINTED.createItemModel(generator, VABlocks.SMALL_SPRING_LOTUS));
+            generator.registerSimpleItemModel(VAItems.SOUL_SPROUT, BlockModelGenerators.PlantType.EMISSIVE_NOT_TINTED.createItemModel(generator, VABlocks.SOUL_SPROUT));
 
-            generator.registerMirrorable(VABlocks.ROCK_SALT_BLOCK);
-            generator.registerSingleton(VABlocks.CHISELED_ROCK_SALT_BRICKS, TexturedModel.CUBE_COLUMN);
+            generator.createRotatedMirroredVariantBlock(VABlocks.ROCK_SALT_BLOCK);
+            generator.createTrivialBlock(VABlocks.CHISELED_ROCK_SALT_BRICKS, TexturedModel.COLUMN);
 
-            generator.registerCrop(VABlocks.TOMATO, CropBlock.AGE, 0, 1, 2, 3, 4, 5, 6, 7);
-            generator.registerCrop(VABlocks.WISDOM_BERRY, CropBlock.AGE, 0, 1, 1, 1, 2, 2, 2, 3);
+            generator.createCropBlock(VABlocks.TOMATO, CropBlock.AGE, 0, 1, 2, 3, 4, 5, 6, 7);
+            generator.createCropBlock(VABlocks.WISDOM_BERRY, CropBlock.AGE, 0, 1, 1, 1, 2, 2, 2, 3);
 
-            generator.registerLeafLitter(VABlocks.BONE_LITTER);
-            generator.registerTintableCross(VABlocks.BONE_PILE, BlockStateModelGenerator.CrossType.NOT_TINTED);
+            generator.createLeafLitter(VABlocks.BONE_LITTER);
+            generator.createCrossBlockWithDefaultItem(VABlocks.BONE_PILE, BlockModelGenerators.PlantType.NOT_TINTED);
 
             registerColorfulBlockSetModels( generator,VACollections.CHARTREUSE);
             registerColorfulBlockSetModels( generator,VACollections.MAROON);
@@ -229,14 +229,14 @@ public class VAModelProvider {
             registerColorfulBlockSetModels( generator,VACollections.SINOPIA);
             registerColorfulBlockSetModels( generator,VACollections.LILAC);
 
-            registerInventoryBlockItem(generator, VABlocks.OAK_HEDGE, new ConstantTintSource(FoliageColors.DEFAULT));
-            registerInventoryBlockItem(generator, VABlocks.SPRUCE_HEDGE, new ConstantTintSource(FoliageColors.SPRUCE));
-            registerInventoryBlockItem(generator, VABlocks.BIRCH_HEDGE, new ConstantTintSource(FoliageColors.BIRCH));
-            registerInventoryBlockItem(generator, VABlocks.JUNGLE_HEDGE, new ConstantTintSource(FoliageColors.DEFAULT));
-            registerInventoryBlockItem(generator, VABlocks.ACACIA_HEDGE, new ConstantTintSource(FoliageColors.DEFAULT));
-            registerInventoryBlockItem(generator, VABlocks.DARK_OAK_HEDGE, new ConstantTintSource(FoliageColors.DEFAULT));
+            registerInventoryBlockItem(generator, VABlocks.OAK_HEDGE, new Constant(FoliageColor.FOLIAGE_DEFAULT));
+            registerInventoryBlockItem(generator, VABlocks.SPRUCE_HEDGE, new Constant(FoliageColor.FOLIAGE_EVERGREEN));
+            registerInventoryBlockItem(generator, VABlocks.BIRCH_HEDGE, new Constant(FoliageColor.FOLIAGE_BIRCH));
+            registerInventoryBlockItem(generator, VABlocks.JUNGLE_HEDGE, new Constant(FoliageColor.FOLIAGE_DEFAULT));
+            registerInventoryBlockItem(generator, VABlocks.ACACIA_HEDGE, new Constant(FoliageColor.FOLIAGE_DEFAULT));
+            registerInventoryBlockItem(generator, VABlocks.DARK_OAK_HEDGE, new Constant(FoliageColor.FOLIAGE_DEFAULT));
             registerInventoryBlockItem(generator, VABlocks.PALE_OAK_HEDGE);
-            registerInventoryBlockItem(generator, VABlocks.MANGROVE_HEDGE, new ConstantTintSource(FoliageColors.MANGROVE));
+            registerInventoryBlockItem(generator, VABlocks.MANGROVE_HEDGE, new Constant(FoliageColor.FOLIAGE_MANGROVE));
             registerInventoryBlockItem(generator, VABlocks.CHERRY_HEDGE);
             registerInventoryBlockItem(generator, VABlocks.SOULBLOOM_HEDGE);
             registerInventoryBlockItem(generator, VABlocks.WITHERED_HEDGE);
@@ -246,29 +246,29 @@ public class VAModelProvider {
             registerColoringStation(generator);
             registerSpotlight(generator);
 
-            generator.registerFlowerPotPlant(VABlocks.SOULBLOOM_SAPLING, VABlocks.POTTED_SOULBLOOM_SAPLING, BlockStateModelGenerator.CrossType.NOT_TINTED);
-            generator.registerFlowerPotPlant(VABlocks.WITHERED_SAPLING, VABlocks.POTTED_WITHERED_SAPLING, BlockStateModelGenerator.CrossType.NOT_TINTED);
-            generator.registerFlowerPotPlant(VABlocks.GREENCAP_MUSHROOM, VABlocks.POTTED_GREENCAP_MUSHROOM, BlockStateModelGenerator.CrossType.NOT_TINTED);
-            generator.registerFlowerPotPlant(VABlocks.NECROTIC_ROOTS, VABlocks.POTTED_NECROTIC_ROOTS, BlockStateModelGenerator.CrossType.NOT_TINTED);
-            generator.registerFlowerPotPlant(VABlocks.SMALL_SPRING_LOTUS, VABlocks.POTTED_SMALL_SPRING_LOTUS, BlockStateModelGenerator.CrossType.NOT_TINTED);
-            generator.registerFlowerPotPlant(VABlocks.SOUL_SPROUT, VABlocks.POTTED_SOUL_SPROUT, BlockStateModelGenerator.CrossType.EMISSIVE_NOT_TINTED);
+            generator.createPlant(VABlocks.SOULBLOOM_SAPLING, VABlocks.POTTED_SOULBLOOM_SAPLING, BlockModelGenerators.PlantType.NOT_TINTED);
+            generator.createPlant(VABlocks.WITHERED_SAPLING, VABlocks.POTTED_WITHERED_SAPLING, BlockModelGenerators.PlantType.NOT_TINTED);
+            generator.createPlant(VABlocks.GREENCAP_MUSHROOM, VABlocks.POTTED_GREENCAP_MUSHROOM, BlockModelGenerators.PlantType.NOT_TINTED);
+            generator.createPlant(VABlocks.NECROTIC_ROOTS, VABlocks.POTTED_NECROTIC_ROOTS, BlockModelGenerators.PlantType.NOT_TINTED);
+            generator.createPlant(VABlocks.SMALL_SPRING_LOTUS, VABlocks.POTTED_SMALL_SPRING_LOTUS, BlockModelGenerators.PlantType.NOT_TINTED);
+            generator.createPlant(VABlocks.SOUL_SPROUT, VABlocks.POTTED_SOUL_SPROUT, BlockModelGenerators.PlantType.EMISSIVE_NOT_TINTED);
 
-            generator.registerParented(VABlocks.STEEL_GRATE, VABlocks.WAXED_STEEL_GRATE);
-            generator.registerParented(VABlocks.EXPOSED_STEEL_GRATE, VABlocks.WAXED_EXPOSED_STEEL_GRATE);
-            generator.registerParented(VABlocks.WEATHERED_STEEL_GRATE, VABlocks.WAXED_WEATHERED_STEEL_GRATE);
-            generator.registerParented(VABlocks.OXIDIZED_STEEL_GRATE, VABlocks.WAXED_OXIDIZED_STEEL_GRATE);
-            generator.registerParented(VABlocks.STEEL_BLOCK, VABlocks.WAXED_STEEL_BLOCK);
-            generator.registerParented(VABlocks.EXPOSED_STEEL_BLOCK, VABlocks.WAXED_EXPOSED_STEEL_BLOCK);
-            generator.registerParented(VABlocks.WEATHERED_STEEL_BLOCK, VABlocks.WAXED_WEATHERED_STEEL_BLOCK);
-            generator.registerParented(VABlocks.OXIDIZED_STEEL_BLOCK, VABlocks.WAXED_OXIDIZED_STEEL_BLOCK);
+            generator.copyModel(VABlocks.STEEL_GRATE, VABlocks.WAXED_STEEL_GRATE);
+            generator.copyModel(VABlocks.EXPOSED_STEEL_GRATE, VABlocks.WAXED_EXPOSED_STEEL_GRATE);
+            generator.copyModel(VABlocks.WEATHERED_STEEL_GRATE, VABlocks.WAXED_WEATHERED_STEEL_GRATE);
+            generator.copyModel(VABlocks.OXIDIZED_STEEL_GRATE, VABlocks.WAXED_OXIDIZED_STEEL_GRATE);
+            generator.copyModel(VABlocks.STEEL_BLOCK, VABlocks.WAXED_STEEL_BLOCK);
+            generator.copyModel(VABlocks.EXPOSED_STEEL_BLOCK, VABlocks.WAXED_EXPOSED_STEEL_BLOCK);
+            generator.copyModel(VABlocks.WEATHERED_STEEL_BLOCK, VABlocks.WAXED_WEATHERED_STEEL_BLOCK);
+            generator.copyModel(VABlocks.OXIDIZED_STEEL_BLOCK, VABlocks.WAXED_OXIDIZED_STEEL_BLOCK);
 
-            generator.registerParented(VABlocks.STEEL_BLOCK, VABlocks.REMOTE_NOTIFIER);
+            generator.copyModel(VABlocks.STEEL_BLOCK, VABlocks.REMOTE_NOTIFIER);
 
-            generator.registerBuiltinWithParticle(VABlocks.MINI_PORTAL, VABlocks.IOLITE_BLOCK);
+            generator.createParticleOnlyBlock(VABlocks.MINI_PORTAL, VABlocks.IOLITE_BLOCK);
         }
 
         @Override
-        public void generateItemModels(ItemModelGenerator generator) {
+        public void generateItemModels(ItemModelGenerators generator) {
             registerSimpleItems(generator,
                     VAItems.CHARTREUSE_DYE,
                     VAItems.MAROON_DYE,
@@ -326,7 +326,7 @@ public class VAModelProvider {
                     VAItems.ROBE_ARMOR_TRIM_SMITHING_TEMPLATE
             );
 
-            registerItems(generator, Models.HANDHELD,
+            registerItems(generator, ModelTemplates.FLAT_HANDHELD_ITEM,
                     VAItems.STEEL_SWORD,
                     VAItems.STEEL_SHOVEL,
                     VAItems.STEEL_PICKAXE,
@@ -334,7 +334,7 @@ public class VAModelProvider {
                     VAItems.STEEL_HOE
             );
 
-            generator.registerSpear(VAItems.STEEL_SPEAR);
+            generator.generateSpear(VAItems.STEEL_SPEAR);
 
             registerHalberd(generator, VAItems.WOODEN_HALBERD);
             registerHalberd(generator, VAItems.STONE_HALBERD);
@@ -347,26 +347,26 @@ public class VAModelProvider {
 
             registerPortalCore(generator, VAItems.PORTAL_CORE);
 
-            generator.registerArmor(VAItems.STEEL_HELMET, VAArmorMaterial.STEEL.assetId(), HELMET_TRIM_ID_PREFIX, false);
-            generator.registerArmor(VAItems.STEEL_CHESTPLATE, VAArmorMaterial.STEEL.assetId(), CHESTPLATE_TRIM_ID_PREFIX, false);
-            generator.registerArmor(VAItems.STEEL_LEGGINGS, VAArmorMaterial.STEEL.assetId(), LEGGINGS_TRIM_ID_PREFIX, false);
-            generator.registerArmor(VAItems.STEEL_BOOTS, VAArmorMaterial.STEEL.assetId(), BOOTS_TRIM_ID_PREFIX, false);
+            generator.generateTrimmableItem(VAItems.STEEL_HELMET, VAArmorMaterial.STEEL.assetId(), TRIM_PREFIX_HELMET, false);
+            generator.generateTrimmableItem(VAItems.STEEL_CHESTPLATE, VAArmorMaterial.STEEL.assetId(), TRIM_PREFIX_CHESTPLATE, false);
+            generator.generateTrimmableItem(VAItems.STEEL_LEGGINGS, VAArmorMaterial.STEEL.assetId(), TRIM_PREFIX_LEGGINGS, false);
+            generator.generateTrimmableItem(VAItems.STEEL_BOOTS, VAArmorMaterial.STEEL.assetId(), TRIM_PREFIX_BOOTS, false);
 
-            generator.registerBundle(VAItems.CHARTREUSE_BUNDLE);
-            generator.registerBundle(VAItems.MAROON_BUNDLE);
-            generator.registerBundle(VAItems.INDIGO_BUNDLE);
-            generator.registerBundle(VAItems.PLUM_BUNDLE);
-            generator.registerBundle(VAItems.VIRIDIAN_BUNDLE);
-            generator.registerBundle(VAItems.TAN_BUNDLE);
-            generator.registerBundle(VAItems.SINOPIA_BUNDLE);
-            generator.registerBundle(VAItems.LILAC_BUNDLE);
+            generator.generateBundleModels(VAItems.CHARTREUSE_BUNDLE);
+            generator.generateBundleModels(VAItems.MAROON_BUNDLE);
+            generator.generateBundleModels(VAItems.INDIGO_BUNDLE);
+            generator.generateBundleModels(VAItems.PLUM_BUNDLE);
+            generator.generateBundleModels(VAItems.VIRIDIAN_BUNDLE);
+            generator.generateBundleModels(VAItems.TAN_BUNDLE);
+            generator.generateBundleModels(VAItems.SINOPIA_BUNDLE);
+            generator.generateBundleModels(VAItems.LILAC_BUNDLE);
 
             registerTintableWithDefaultTexture(generator, VAItems.ENGRAVING_CHISEL);
             registerTintableWithDefaultTexture(generator, VAItems.ICE_CREAM);
 
             registerApplicablePotion(generator, VAItems.APPLICABLE_POTION);
 
-            generator.registerWithInHandModel(VAItems.SPECTRAL_SPYGLASS);
+            generator.generateSpyglass(VAItems.SPECTRAL_SPYGLASS);
         }
     }
 
@@ -376,12 +376,12 @@ public class VAModelProvider {
         }
 
         @Override
-        public void generateBlockStateModels(BlockStateModelGenerator blockStateModelGenerator) {
+        public void generateBlockStateModels(BlockModelGenerators blockStateModelGenerator) {
             haltModelGeneration = true;
         }
 
         @Override
-        public void generateItemModels(ItemModelGenerator itemModelGenerator) {
+        public void generateItemModels(ItemModelGenerators itemModelGenerator) {
             uploadGildedToolModels(itemModelGenerator, VAItems.COPPER_TOOL_SET, VAItems.IRON_TOOL_SET, VAItems.GOLDEN_TOOL_SET, VAItems.STEEL_TOOL_SET, VAItems.DIAMOND_TOOL_SET, VAItems.NETHERITE_TOOL_SET);
 
             registerArmorSetWithExtendedTrimMaterials(itemModelGenerator,
@@ -395,43 +395,43 @@ public class VAModelProvider {
                     Items.IRON_CHESTPLATE,
                     Items.IRON_LEGGINGS,
                     Items.IRON_BOOTS,
-                    EquipmentAssetKeys.IRON, false);
+                    EquipmentAssets.IRON, false);
             registerArmorSetWithExtendedTrimMaterials(itemModelGenerator,
                     Items.GOLDEN_HELMET,
                     Items.GOLDEN_CHESTPLATE,
                     Items.GOLDEN_LEGGINGS,
                     Items.GOLDEN_BOOTS,
-                    EquipmentAssetKeys.GOLD, false);
+                    EquipmentAssets.GOLD, false);
             registerArmorSetWithExtendedTrimMaterials(itemModelGenerator,
                     Items.DIAMOND_HELMET,
                     Items.DIAMOND_CHESTPLATE,
                     Items.DIAMOND_LEGGINGS,
                     Items.DIAMOND_BOOTS,
-                    EquipmentAssetKeys.DIAMOND, false);
+                    EquipmentAssets.DIAMOND, false);
             registerArmorSetWithExtendedTrimMaterials(itemModelGenerator,
                     Items.NETHERITE_HELMET,
                     Items.NETHERITE_CHESTPLATE,
                     Items.NETHERITE_LEGGINGS,
                     Items.NETHERITE_BOOTS,
-                    EquipmentAssetKeys.NETHERITE, false);
+                    EquipmentAssets.NETHERITE, false);
             registerArmorSetWithExtendedTrimMaterials(itemModelGenerator,
                     Items.CHAINMAIL_HELMET,
                     Items.CHAINMAIL_CHESTPLATE,
                     Items.CHAINMAIL_LEGGINGS,
                     Items.CHAINMAIL_BOOTS,
-                    EquipmentAssetKeys.CHAINMAIL, false);
+                    EquipmentAssets.CHAINMAIL, false);
             registerArmorSetWithExtendedTrimMaterials(itemModelGenerator,
                     Items.LEATHER_HELMET,
                     Items.LEATHER_CHESTPLATE,
                     Items.LEATHER_LEGGINGS,
                     Items.LEATHER_BOOTS,
-                    EquipmentAssetKeys.LEATHER, true);
+                    EquipmentAssets.LEATHER, true);
             registerArmorSetWithExtendedTrimMaterials(itemModelGenerator,
                     Items.COPPER_HELMET,
                     Items.COPPER_CHESTPLATE,
                     Items.COPPER_LEGGINGS,
                     Items.COPPER_BOOTS,
-                    EquipmentAssetKeys.COPPER, false);
+                    EquipmentAssets.COPPER, false);
 
             registerCrossbow(itemModelGenerator, Items.CROSSBOW);
         }
@@ -439,25 +439,25 @@ public class VAModelProvider {
 
     @SuppressWarnings("SameParameterValue")
     private abstract static class Provider extends FabricModelProvider {
-        protected static final ItemAsset.Properties HALBERD_PROPERTIES = new ItemAsset.Properties(true, false, 1.7F);
-        protected static final ItemAsset.Properties SPEAR_PROPERTIES = new ItemAsset.Properties(true, false, 1.9F);
+        protected static final ClientItem.Properties HALBERD_PROPERTIES = new ClientItem.Properties(true, false, 1.7F);
+        protected static final ClientItem.Properties SPEAR_PROPERTIES = new ClientItem.Properties(true, false, 1.9F);
 
-        private static final List<ItemModelGenerator.TrimMaterial> TRIM_MATERIALS_EXTENDED =
+        private static final List<ItemModelGenerators.TrimMaterialData> TRIM_MATERIALS_EXTENDED =
                 List.of(
-                        new ItemModelGenerator.TrimMaterial(ArmorTrimAssets.QUARTZ, ArmorTrimMaterials.QUARTZ),
-                        new ItemModelGenerator.TrimMaterial(ArmorTrimAssets.IRON, ArmorTrimMaterials.IRON),
-                        new ItemModelGenerator.TrimMaterial(ArmorTrimAssets.NETHERITE, ArmorTrimMaterials.NETHERITE),
-                        new ItemModelGenerator.TrimMaterial(ArmorTrimAssets.REDSTONE, ArmorTrimMaterials.REDSTONE),
-                        new ItemModelGenerator.TrimMaterial(ArmorTrimAssets.COPPER, ArmorTrimMaterials.COPPER),
-                        new ItemModelGenerator.TrimMaterial(ArmorTrimAssets.GOLD, ArmorTrimMaterials.GOLD),
-                        new ItemModelGenerator.TrimMaterial(ArmorTrimAssets.EMERALD, ArmorTrimMaterials.EMERALD),
-                        new ItemModelGenerator.TrimMaterial(ArmorTrimAssets.DIAMOND, ArmorTrimMaterials.DIAMOND),
-                        new ItemModelGenerator.TrimMaterial(ArmorTrimAssets.LAPIS, ArmorTrimMaterials.LAPIS),
-                        new ItemModelGenerator.TrimMaterial(ArmorTrimAssets.AMETHYST, ArmorTrimMaterials.AMETHYST),
-                        new ItemModelGenerator.TrimMaterial(ArmorTrimAssets.RESIN, ArmorTrimMaterials.RESIN),
-                        new ItemModelGenerator.TrimMaterial(VAArmorTrimAssets.STEEL, VAArmorTrimMaterials.STEEL),
-                        new ItemModelGenerator.TrimMaterial(VAArmorTrimAssets.ROCK_SALT, VAArmorTrimMaterials.ROCK_SALT),
-                        new ItemModelGenerator.TrimMaterial(VAArmorTrimAssets.IOLITE, VAArmorTrimMaterials.IOLITE)
+                        new ItemModelGenerators.TrimMaterialData(MaterialAssetGroup.QUARTZ, TrimMaterials.QUARTZ),
+                        new ItemModelGenerators.TrimMaterialData(MaterialAssetGroup.IRON, TrimMaterials.IRON),
+                        new ItemModelGenerators.TrimMaterialData(MaterialAssetGroup.NETHERITE, TrimMaterials.NETHERITE),
+                        new ItemModelGenerators.TrimMaterialData(MaterialAssetGroup.REDSTONE, TrimMaterials.REDSTONE),
+                        new ItemModelGenerators.TrimMaterialData(MaterialAssetGroup.COPPER, TrimMaterials.COPPER),
+                        new ItemModelGenerators.TrimMaterialData(MaterialAssetGroup.GOLD, TrimMaterials.GOLD),
+                        new ItemModelGenerators.TrimMaterialData(MaterialAssetGroup.EMERALD, TrimMaterials.EMERALD),
+                        new ItemModelGenerators.TrimMaterialData(MaterialAssetGroup.DIAMOND, TrimMaterials.DIAMOND),
+                        new ItemModelGenerators.TrimMaterialData(MaterialAssetGroup.LAPIS, TrimMaterials.LAPIS),
+                        new ItemModelGenerators.TrimMaterialData(MaterialAssetGroup.AMETHYST, TrimMaterials.AMETHYST),
+                        new ItemModelGenerators.TrimMaterialData(MaterialAssetGroup.RESIN, TrimMaterials.RESIN),
+                        new ItemModelGenerators.TrimMaterialData(VAArmorTrimAssets.STEEL, VAArmorTrimMaterials.STEEL),
+                        new ItemModelGenerators.TrimMaterialData(VAArmorTrimAssets.ROCK_SALT, VAArmorTrimMaterials.ROCK_SALT),
+                        new ItemModelGenerators.TrimMaterialData(VAArmorTrimAssets.IOLITE, VAArmorTrimMaterials.IOLITE)
                 );
 
         private static final List<GildType> GILD_TYPES = VARegistries.GILD_TYPE.stream().toList();
@@ -466,41 +466,41 @@ public class VAModelProvider {
             super(output);
         }
 
-        protected void registerColoringStation(BlockStateModelGenerator blockStateModelGenerator) {
-            TextureMap textureMap = new TextureMap()
-                    .put(TextureKey.PARTICLE, TextureMap.getSubId(VABlocks.COLORING_STATION, "_front"))
-                    .put(TextureKey.DOWN, TextureMap.getSubId(VABlocks.COLORING_STATION, "_bottom"))
-                    .put(TextureKey.UP, TextureMap.getSubId(VABlocks.COLORING_STATION, "_top"))
-                    .put(TextureKey.NORTH, TextureMap.getSubId(VABlocks.COLORING_STATION, "_front"))
-                    .put(TextureKey.SOUTH, TextureMap.getSubId(VABlocks.COLORING_STATION, "_front"))
-                    .put(TextureKey.EAST, TextureMap.getSubId(VABlocks.COLORING_STATION, "_side"))
-                    .put(TextureKey.WEST, TextureMap.getSubId(VABlocks.COLORING_STATION, "_side"));
-            blockStateModelGenerator.blockStateCollector.accept(BlockStateModelGenerator.createSingletonBlockState(VABlocks.COLORING_STATION, BlockStateModelGenerator.createWeightedVariant(Models.CUBE.upload(VABlocks.COLORING_STATION, textureMap, blockStateModelGenerator.modelCollector))));
+        protected void registerColoringStation(BlockModelGenerators blockStateModelGenerator) {
+            TextureMapping textureMap = new TextureMapping()
+                    .put(TextureSlot.PARTICLE, TextureMapping.getBlockTexture(VABlocks.COLORING_STATION, "_front"))
+                    .put(TextureSlot.DOWN, TextureMapping.getBlockTexture(VABlocks.COLORING_STATION, "_bottom"))
+                    .put(TextureSlot.UP, TextureMapping.getBlockTexture(VABlocks.COLORING_STATION, "_top"))
+                    .put(TextureSlot.NORTH, TextureMapping.getBlockTexture(VABlocks.COLORING_STATION, "_front"))
+                    .put(TextureSlot.SOUTH, TextureMapping.getBlockTexture(VABlocks.COLORING_STATION, "_front"))
+                    .put(TextureSlot.EAST, TextureMapping.getBlockTexture(VABlocks.COLORING_STATION, "_side"))
+                    .put(TextureSlot.WEST, TextureMapping.getBlockTexture(VABlocks.COLORING_STATION, "_side"));
+            blockStateModelGenerator.blockStateOutput.accept(BlockModelGenerators.createSimpleBlock(VABlocks.COLORING_STATION, BlockModelGenerators.plainVariant(ModelTemplates.CUBE.create(VABlocks.COLORING_STATION, textureMap, blockStateModelGenerator.modelOutput))));
         }
 
-        protected void registerColorfulBlockSetModels(BlockStateModelGenerator g, ColorfulBlockSet s) {
+        protected void registerColorfulBlockSetModels(BlockModelGenerators g, ColorfulBlockSet s) {
             s.ifWool(wool -> {
-                if (s.carpet() != null) g.registerWoolAndCarpet(wool, s.carpet());
-                else g.registerSimpleCubeAll(s.wool());
-                s.ifBed(bed -> g.registerBed(bed, wool, s.dye().getColor()));
+                if (s.carpet() != null) g.createFullAndCarpetBlocks(wool, s.carpet());
+                else g.createTrivialCube(s.wool());
+                s.ifBed(bed -> g.createBed(bed, wool, s.dye().getDyeColor()));
             });
-            if (s.terracotta() != null) g.registerSimpleCubeAll(s.terracotta());
-            if (s.concrete() != null) g.registerSimpleCubeAll(s.concrete());
-            if (s.concretePowder() != null) g.registerRandomHorizontalRotations(TexturedModel.CUBE_ALL,s.concretePowder());
+            if (s.terracotta() != null) g.createTrivialCube(s.terracotta());
+            if (s.concrete() != null) g.createTrivialCube(s.concrete());
+            if (s.concretePowder() != null) g.createColoredBlockWithRandomRotations(TexturedModel.CUBE,s.concretePowder());
             if (s.stainedGlass() != null) {
-                if (s.stainedGlassPane() != null) g.registerGlassAndPane(s.stainedGlass(), s.stainedGlassPane());
-                else g.registerSimpleCubeAll(s.stainedGlass());
+                if (s.stainedGlassPane() != null) g.createGlassBlocks(s.stainedGlass(), s.stainedGlassPane());
+                else g.createTrivialCube(s.stainedGlass());
             }
             if (s.silkbulb() != null) {
-                g.registerSimpleCubeAll(s.silkbulb());
+                g.createTrivialCube(s.silkbulb());
             };
-            if (s.candle() != null && s.candleCake() != null) g.registerCandle(s.candle(), s.candleCake());
-            s.ifShulkerBox(shulkerbox -> g.registerShulkerBox(shulkerbox, s.dye().getColor()));
-            s.ifGlazedTerracotta(block -> g.registerSouthDefaultHorizontalFacing(TexturedModel.TEMPLATE_GLAZED_TERRACOTTA, block));
-            s.ifBanner(banner -> s.ifWallBanner(wallBanner -> g.registerBanner(banner, wallBanner, s.dye().getColor())));
+            if (s.candle() != null && s.candleCake() != null) g.createCandleAndCandleCake(s.candle(), s.candleCake());
+            s.ifShulkerBox(shulkerbox -> g.createShulkerBox(shulkerbox, s.dye().getDyeColor()));
+            s.ifGlazedTerracotta(block -> g.createColoredBlockWithStateRotations(TexturedModel.GLAZED_TERRACOTTA, block));
+            s.ifBanner(banner -> s.ifWallBanner(wallBanner -> g.createBanner(banner, wallBanner, s.dye().getDyeColor())));
         }
 
-        public static void uploadGildedToolModels(ItemModelGenerator itemModelGenerator, RegistryHelper.ItemRegistryHelper.ToolSet... sets) {
+        public static void uploadGildedToolModels(ItemModelGenerators itemModelGenerator, RegistryHelper.ItemRegistryHelper.ToolSet... sets) {
             for (RegistryHelper.ItemRegistryHelper.ToolSet set : sets) {
                 uploadGildedToolModel(itemModelGenerator, VAModels.HANDHELD_TWO_LAYERS, set.SWORD(), "_sword");
                 uploadGildedToolModel(itemModelGenerator, VAModels.HANDHELD_TWO_LAYERS, set.SHOVEL(), "_shovel");
@@ -512,226 +512,226 @@ public class VAModelProvider {
             }
         }
 
-        public static void uploadGildedToolModel(ItemModelGenerator generator, Model layered, Item item, String suffix) {
-            Identifier itemModelId = ModelIds.getItemModelId(item);
-            List<SelectItemModel.SwitchCase<RegistryKey<GildType>>> list = new ArrayList<>(GILD_TYPES.size());
+        public static void uploadGildedToolModel(ItemModelGenerators generator, ModelTemplate layered, Item item, String suffix) {
+            ResourceLocation itemModelId = ModelLocationUtils.getModelLocation(item);
+            List<SelectItemModel.SwitchCase<ResourceKey<GildType>>> list = new ArrayList<>(GILD_TYPES.size());
 
-            ItemModel.Unbaked baseModel = ItemModels.basic(itemModelId);
-
-            ItemModel.Unbaked gilded;
-            for (GildType type : GILD_TYPES) {
-                Identifier gildType = VARegistries.GILD_TYPE.getId(type);
-                Identifier gildLayer = gildType.withSuffixedPath(suffix).withPrefixedPath("item/gilded_tools/");
-                Identifier gildedItem = itemModelId.withSuffixedPath("_with_" + gildType.getPath() + "_gild");
-                gilded = ItemModels.basic(gildedItem);
-                list.add(ItemModels.switchCase(VARegistries.GILD_TYPE.getKey(type).get(), gilded));
-                layered.upload(gildedItem, TextureMap.layered(itemModelId, gildLayer), generator.modelCollector);
-            }
-
-            generator.output.accept(item, ItemModels.select(new GildTypeProperty(), baseModel, list), ItemAsset.Properties.DEFAULT);
-        }
-
-        public static void uploadGildedHalberdModel(ItemModelGenerator generator, Item item, String suffix) {
-            Identifier itemModelId = ModelIds.getItemModelId(item);
-            List<SelectItemModel.SwitchCase<RegistryKey<GildType>>> list = new ArrayList<>(GILD_TYPES.size());
-
-            ItemModel.Unbaked baseModel = ItemModels.basic(itemModelId);
-            ItemModel.Unbaked inHandModel = ItemModels.basic(ModelIds.getItemSubModelId(item, "_in_hand"));
+            ItemModel.Unbaked baseModel = ItemModelUtils.plainModel(itemModelId);
 
             ItemModel.Unbaked gilded;
             for (GildType type : GILD_TYPES) {
-                Identifier gildType = VARegistries.GILD_TYPE.getId(type);
-                Identifier gildLayer = gildType.withSuffixedPath(suffix).withPrefixedPath("item/gilded_tools/");
-                Identifier gildedItem = itemModelId.withSuffixedPath("_with_" + gildType.getPath() + "_gild");
-                gilded = createModelWithInHandVariant(ItemModels.basic(gildedItem), ItemModels.basic(gildedItem.withSuffixedPath("_in_hand")));
-                list.add(ItemModels.switchCase(VARegistries.GILD_TYPE.getKey(type).get(), gilded));
-                VAModels.HANDHELD_TWO_LAYERS.upload(gildedItem, TextureMap.layered(itemModelId, gildLayer), generator.modelCollector);
-                VAModels.HALBERD_IN_HAND_TWO_LAYERS.upload(gildedItem.withSuffixedPath("_in_hand"), TextureMap.layered(itemModelId.withSuffixedPath("_in_hand"), gildLayer.withSuffixedPath("_in_hand")), generator.modelCollector);
+                ResourceLocation gildType = VARegistries.GILD_TYPE.getKey(type);
+                ResourceLocation gildLayer = gildType.withSuffix(suffix).withPrefix("item/gilded_tools/");
+                ResourceLocation gildedItem = itemModelId.withSuffix("_with_" + gildType.getPath() + "_gild");
+                gilded = ItemModelUtils.plainModel(gildedItem);
+                list.add(ItemModelUtils.when(VARegistries.GILD_TYPE.getResourceKey(type).get(), gilded));
+                layered.create(gildedItem, TextureMapping.layered(itemModelId, gildLayer), generator.modelOutput);
             }
 
-            generator.output.accept(item, ItemModels.select(new GildTypeProperty(), createModelWithInHandVariant(baseModel, inHandModel), list), HALBERD_PROPERTIES);
+            generator.itemModelOutput.accept(item, ItemModelUtils.select(new GildTypeProperty(), baseModel, list), ClientItem.Properties.DEFAULT);
         }
 
-        public static void uploadGildedSpearModel(ItemModelGenerator generator, Item item, String suffix) {
-            Identifier itemModelId = ModelIds.getItemModelId(item);
-            List<SelectItemModel.SwitchCase<RegistryKey<GildType>>> list = new ArrayList<>(GILD_TYPES.size());
+        public static void uploadGildedHalberdModel(ItemModelGenerators generator, Item item, String suffix) {
+            ResourceLocation itemModelId = ModelLocationUtils.getModelLocation(item);
+            List<SelectItemModel.SwitchCase<ResourceKey<GildType>>> list = new ArrayList<>(GILD_TYPES.size());
 
-            ItemModel.Unbaked baseModel = ItemModels.basic(itemModelId);
-            ItemModel.Unbaked inHandModel = ItemModels.basic(ModelIds.getItemSubModelId(item, "_in_hand"));
+            ItemModel.Unbaked baseModel = ItemModelUtils.plainModel(itemModelId);
+            ItemModel.Unbaked inHandModel = ItemModelUtils.plainModel(ModelLocationUtils.getModelLocation(item, "_in_hand"));
 
             ItemModel.Unbaked gilded;
             for (GildType type : GILD_TYPES) {
-                Identifier gildType = VARegistries.GILD_TYPE.getId(type);
-                Identifier gildLayer = gildType.withSuffixedPath(suffix).withPrefixedPath("item/gilded_tools/");
-                Identifier gildedItem = itemModelId.withSuffixedPath("_with_" + gildType.getPath() + "_gild");
-                gilded = createModelWithInHandVariant(ItemModels.basic(gildedItem), ItemModels.basic(gildedItem.withSuffixedPath("_in_hand")));
-                list.add(ItemModels.switchCase(VARegistries.GILD_TYPE.getKey(type).get(), gilded));
-                Models.GENERATED_TWO_LAYERS.upload(gildedItem, TextureMap.layered(itemModelId, gildLayer), generator.modelCollector);
-                VAModels.SPEAR_IN_HAND_TWO_LAYERS.upload(gildedItem.withSuffixedPath("_in_hand"), TextureMap.layered(itemModelId.withSuffixedPath("_in_hand"), gildLayer.withSuffixedPath("_in_hand")), generator.modelCollector);
+                ResourceLocation gildType = VARegistries.GILD_TYPE.getKey(type);
+                ResourceLocation gildLayer = gildType.withSuffix(suffix).withPrefix("item/gilded_tools/");
+                ResourceLocation gildedItem = itemModelId.withSuffix("_with_" + gildType.getPath() + "_gild");
+                gilded = createFlatModelDispatch(ItemModelUtils.plainModel(gildedItem), ItemModelUtils.plainModel(gildedItem.withSuffix("_in_hand")));
+                list.add(ItemModelUtils.when(VARegistries.GILD_TYPE.getResourceKey(type).get(), gilded));
+                VAModels.HANDHELD_TWO_LAYERS.create(gildedItem, TextureMapping.layered(itemModelId, gildLayer), generator.modelOutput);
+                VAModels.HALBERD_IN_HAND_TWO_LAYERS.create(gildedItem.withSuffix("_in_hand"), TextureMapping.layered(itemModelId.withSuffix("_in_hand"), gildLayer.withSuffix("_in_hand")), generator.modelOutput);
             }
 
-            generator.output.accept(item, ItemModels.select(new GildTypeProperty(), createModelWithInHandVariant(baseModel, inHandModel), list), SPEAR_PROPERTIES);
+            generator.itemModelOutput.accept(item, ItemModelUtils.select(new GildTypeProperty(), createFlatModelDispatch(baseModel, inHandModel), list), HALBERD_PROPERTIES);
         }
 
-        protected void registerSpotlight(BlockStateModelGenerator generator) {
-            WeightedVariant spotlight = BlockStateModelGenerator.createWeightedVariant(ModelIds.getBlockModelId(VABlocks.SPOTLIGHT));
-            WeightedVariant spotlightActive = BlockStateModelGenerator.createWeightedVariant(ModelIds.getBlockSubModelId(VABlocks.SPOTLIGHT, "_active"));
-            generator.blockStateCollector
+        public static void uploadGildedSpearModel(ItemModelGenerators generator, Item item, String suffix) {
+            ResourceLocation itemModelId = ModelLocationUtils.getModelLocation(item);
+            List<SelectItemModel.SwitchCase<ResourceKey<GildType>>> list = new ArrayList<>(GILD_TYPES.size());
+
+            ItemModel.Unbaked baseModel = ItemModelUtils.plainModel(itemModelId);
+            ItemModel.Unbaked inHandModel = ItemModelUtils.plainModel(ModelLocationUtils.getModelLocation(item, "_in_hand"));
+
+            ItemModel.Unbaked gilded;
+            for (GildType type : GILD_TYPES) {
+                ResourceLocation gildType = VARegistries.GILD_TYPE.getKey(type);
+                ResourceLocation gildLayer = gildType.withSuffix(suffix).withPrefix("item/gilded_tools/");
+                ResourceLocation gildedItem = itemModelId.withSuffix("_with_" + gildType.getPath() + "_gild");
+                gilded = createFlatModelDispatch(ItemModelUtils.plainModel(gildedItem), ItemModelUtils.plainModel(gildedItem.withSuffix("_in_hand")));
+                list.add(ItemModelUtils.when(VARegistries.GILD_TYPE.getResourceKey(type).get(), gilded));
+                ModelTemplates.TWO_LAYERED_ITEM.create(gildedItem, TextureMapping.layered(itemModelId, gildLayer), generator.modelOutput);
+                VAModels.SPEAR_IN_HAND_TWO_LAYERS.create(gildedItem.withSuffix("_in_hand"), TextureMapping.layered(itemModelId.withSuffix("_in_hand"), gildLayer.withSuffix("_in_hand")), generator.modelOutput);
+            }
+
+            generator.itemModelOutput.accept(item, ItemModelUtils.select(new GildTypeProperty(), createFlatModelDispatch(baseModel, inHandModel), list), SPEAR_PROPERTIES);
+        }
+
+        protected void registerSpotlight(BlockModelGenerators generator) {
+            MultiVariant spotlight = BlockModelGenerators.plainVariant(ModelLocationUtils.getModelLocation(VABlocks.SPOTLIGHT));
+            MultiVariant spotlightActive = BlockModelGenerators.plainVariant(ModelLocationUtils.getModelLocation(VABlocks.SPOTLIGHT, "_active"));
+            generator.blockStateOutput
                     .accept(
-                            VariantsBlockModelDefinitionCreator.of(VABlocks.SPOTLIGHT)
+                            MultiVariantGenerator.dispatch(VABlocks.SPOTLIGHT)
                                     .with(
-                                            BlockStateVariantMap.models(SpotlightBlock.POWERED)
-                                                    .register(false, spotlight)
-                                                    .register(true, spotlightActive)
+                                            PropertyDispatch.initial(SpotlightBlock.POWERED)
+                                                    .select(false, spotlight)
+                                                    .select(true, spotlightActive)
                                     )
-                                    .apply(BlockStateVariantMap.operations(Properties.ORIENTATION).generate(BlockStateModelGenerator::addJigsawOrientationToVariant))
+                                    .with(PropertyDispatch.modify(BlockStateProperties.ORIENTATION).generate(BlockModelGenerators::applyRotation))
                     );
         }
 
-        public final void registerApplicablePotion(ItemModelGenerator generator, Item item) {
-            Identifier identifier = generator.uploadTwoLayers(item, idOf("item/applicable_potion_overlay"), ModelIds.getItemModelId(item));
-            generator.registerPotionTinted(item, identifier);
+        public final void registerApplicablePotion(ItemModelGenerators generator, Item item) {
+            ResourceLocation identifier = generator.generateLayeredItem(item, idOf("item/applicable_potion_overlay"), ModelLocationUtils.getModelLocation(item));
+            generator.addPotionTint(item, identifier);
         }
 
-        public final void registerTintableWithDefaultTexture(ItemModelGenerator generator, Item item) {
-            Identifier undyedItemIdentifier = generator.upload(item, Models.GENERATED);
-            Identifier itemIdentifier = Registries.ITEM.getId(item).withPrefixedPath("item/");
-            Identifier dyedItemIdentifier = Models.GENERATED_TWO_LAYERS.upload(ModelIds.getItemSubModelId(item, "_dyed"), TextureMap.layered(itemIdentifier.withSuffixedPath("_layer"), itemIdentifier.withSuffixedPath("_base")), generator.modelCollector);
-            generator.output.accept(item, ItemModels.condition(new HasComponentProperty(DataComponentTypes.DYED_COLOR, true), ItemModels.tinted(dyedItemIdentifier, new DyeTintSource(0xFFFFFF)), ItemModels.basic(undyedItemIdentifier)), ItemAsset.Properties.DEFAULT);
+        public final void registerTintableWithDefaultTexture(ItemModelGenerators generator, Item item) {
+            ResourceLocation undyedItemIdentifier = generator.createFlatItemModel(item, ModelTemplates.FLAT_ITEM);
+            ResourceLocation itemIdentifier = BuiltInRegistries.ITEM.getKey(item).withPrefix("item/");
+            ResourceLocation dyedItemIdentifier = ModelTemplates.TWO_LAYERED_ITEM.create(ModelLocationUtils.getModelLocation(item, "_dyed"), TextureMapping.layered(itemIdentifier.withSuffix("_layer"), itemIdentifier.withSuffix("_base")), generator.modelOutput);
+            generator.itemModelOutput.accept(item, ItemModelUtils.conditional(new HasComponent(DataComponents.DYED_COLOR, true), ItemModelUtils.tintedModel(dyedItemIdentifier, new Dye(0xFFFFFF)), ItemModelUtils.plainModel(undyedItemIdentifier)), ClientItem.Properties.DEFAULT);
         }
 
-        public static void registerParentedTintedItemModel(BlockStateModelGenerator generator, Block block, Identifier parentModelId, TintSource... sources) {
-            generator.itemModelOutput.accept(block.asItem(), ItemModels.tinted(parentModelId, sources), ItemAsset.Properties.DEFAULT);
+        public static void registerParentedTintedItemModel(BlockModelGenerators generator, Block block, ResourceLocation parentModelId, ItemTintSource... sources) {
+            generator.itemModelOutput.accept(block.asItem(), ItemModelUtils.tintedModel(parentModelId, sources), ClientItem.Properties.DEFAULT);
         }
 
-        public static void registerArmorSetWithExtendedTrimMaterials(ItemModelGenerator generator, Item helmet, Item chestplate, Item leggings, Item boots, RegistryKey<EquipmentAsset> equipmentKey, boolean dyeable) {
-            registerArmorWithExtendedTrimMaterials(generator, helmet, equipmentKey, HELMET_TRIM_ID_PREFIX, dyeable);
-            registerArmorWithExtendedTrimMaterials(generator, chestplate, equipmentKey, CHESTPLATE_TRIM_ID_PREFIX, dyeable);
-            registerArmorWithExtendedTrimMaterials(generator, leggings, equipmentKey, LEGGINGS_TRIM_ID_PREFIX, dyeable);
-            registerArmorWithExtendedTrimMaterials(generator, boots, equipmentKey, BOOTS_TRIM_ID_PREFIX, dyeable);
+        public static void registerArmorSetWithExtendedTrimMaterials(ItemModelGenerators generator, Item helmet, Item chestplate, Item leggings, Item boots, ResourceKey<EquipmentAsset> equipmentKey, boolean dyeable) {
+            registerArmorWithExtendedTrimMaterials(generator, helmet, equipmentKey, TRIM_PREFIX_HELMET, dyeable);
+            registerArmorWithExtendedTrimMaterials(generator, chestplate, equipmentKey, TRIM_PREFIX_CHESTPLATE, dyeable);
+            registerArmorWithExtendedTrimMaterials(generator, leggings, equipmentKey, TRIM_PREFIX_LEGGINGS, dyeable);
+            registerArmorWithExtendedTrimMaterials(generator, boots, equipmentKey, TRIM_PREFIX_BOOTS, dyeable);
         }
 
-        public static void registerArmorWithExtendedTrimMaterials(ItemModelGenerator generator, Item item, RegistryKey<EquipmentAsset> equipmentKey, Identifier trimIdPrefix, boolean dyeable) {
-            Identifier identifier = ModelIds.getItemModelId(item);
-            Identifier identifier2 = TextureMap.getId(item);
-            Identifier identifier3 = TextureMap.getSubId(item, "_overlay");
-            List<SelectItemModel.SwitchCase<RegistryKey<ArmorTrimMaterial>>> list = new ArrayList<>(TRIM_MATERIALS_EXTENDED.size());
+        public static void registerArmorWithExtendedTrimMaterials(ItemModelGenerators generator, Item item, ResourceKey<EquipmentAsset> equipmentKey, ResourceLocation trimIdPrefix, boolean dyeable) {
+            ResourceLocation identifier = ModelLocationUtils.getModelLocation(item);
+            ResourceLocation identifier2 = TextureMapping.getItemTexture(item);
+            ResourceLocation identifier3 = TextureMapping.getItemTexture(item, "_overlay");
+            List<SelectItemModel.SwitchCase<ResourceKey<TrimMaterial>>> list = new ArrayList<>(TRIM_MATERIALS_EXTENDED.size());
 
-            ItemModelGenerator.TrimMaterial trimMaterial;
+            ItemModelGenerators.TrimMaterialData trimMaterial;
             ItemModel.Unbaked unbaked;
-            for(Iterator<ItemModelGenerator.TrimMaterial> iterator = TRIM_MATERIALS_EXTENDED.iterator(); iterator.hasNext(); list.add(ItemModels.switchCase(trimMaterial.materialKey, unbaked))) {
+            for(Iterator<ItemModelGenerators.TrimMaterialData> iterator = TRIM_MATERIALS_EXTENDED.iterator(); iterator.hasNext(); list.add(ItemModelUtils.when(trimMaterial.materialKey, unbaked))) {
                 trimMaterial = iterator.next();
-                Identifier identifier4 = identifier.withSuffixedPath("_" + trimMaterial.assets().base().suffix() + "_trim");
-                String var10001 = trimMaterial.assets().getAssetId(equipmentKey).suffix();
-                Identifier identifier5 = trimIdPrefix.withSuffixedPath("_" + var10001);
+                ResourceLocation identifier4 = identifier.withSuffix("_" + trimMaterial.assets().base().suffix() + "_trim");
+                String var10001 = trimMaterial.assets().assetId(equipmentKey).suffix();
+                ResourceLocation identifier5 = trimIdPrefix.withSuffix("_" + var10001);
                 if (dyeable) {
-                    generator.uploadArmor(identifier4, identifier2, identifier3, identifier5);
-                    unbaked = ItemModels.tinted(identifier4, new DyeTintSource(-6265536));
+                    generator.generateLayeredItem(identifier4, identifier2, identifier3, identifier5);
+                    unbaked = ItemModelUtils.tintedModel(identifier4, new Dye(-6265536));
                 } else {
-                    generator.uploadArmor(identifier4, identifier2, identifier5);
-                    unbaked = ItemModels.basic(identifier4);
+                    generator.generateLayeredItem(identifier4, identifier2, identifier5);
+                    unbaked = ItemModelUtils.plainModel(identifier4);
                 }
             }
 
             ItemModel.Unbaked unbaked2;
             if (dyeable) {
-                Models.GENERATED_TWO_LAYERS.upload(identifier, TextureMap.layered(identifier2, identifier3), generator.modelCollector);
-                unbaked2 = ItemModels.tinted(identifier, new DyeTintSource(-6265536));
+                ModelTemplates.TWO_LAYERED_ITEM.create(identifier, TextureMapping.layered(identifier2, identifier3), generator.modelOutput);
+                unbaked2 = ItemModelUtils.tintedModel(identifier, new Dye(-6265536));
             } else {
-                Models.GENERATED.upload(identifier, TextureMap.layer0(identifier2), generator.modelCollector);
-                unbaked2 = ItemModels.basic(identifier);
+                ModelTemplates.FLAT_ITEM.create(identifier, TextureMapping.layer0(identifier2), generator.modelOutput);
+                unbaked2 = ItemModelUtils.plainModel(identifier);
             }
 
-            generator.output.accept(item, ItemModels.select(new TrimMaterialProperty(), unbaked2, list), ItemAsset.Properties.DEFAULT);
+            generator.itemModelOutput.accept(item, ItemModelUtils.select(new TrimMaterialProperty(), unbaked2, list), ClientItem.Properties.DEFAULT);
         }
 
-        public final void registerCrossbow(ItemModelGenerator generator, Item item) {
-            ItemModel.Unbaked unbaked = ItemModels.basic(ModelIds.getItemModelId(item));
-            ItemModel.Unbaked unbaked2 = ItemModels.basic(generator.registerSubModel(item, "_pulling_0", Models.CROSSBOW));
-            ItemModel.Unbaked unbaked3 = ItemModels.basic(generator.registerSubModel(item, "_pulling_1", Models.CROSSBOW));
-            ItemModel.Unbaked unbaked4 = ItemModels.basic(generator.registerSubModel(item, "_pulling_2", Models.CROSSBOW));
-            ItemModel.Unbaked unbaked5 = ItemModels.basic(generator.registerSubModel(item, "_arrow", Models.CROSSBOW));
-            ItemModel.Unbaked unbaked6 = ItemModels.basic(generator.registerSubModel(item, "_firework", Models.CROSSBOW));
-            ItemModel.Unbaked unbaked7 = ItemModels.basic(generator.registerSubModel(item, "_climbing_rope", Models.CROSSBOW));
-            ItemModel.Unbaked unbaked8 = ItemModels.basic(generator.registerSubModel(item, "_exposed_climbing_rope", Models.CROSSBOW));
-            ItemModel.Unbaked unbaked9 = ItemModels.basic(generator.registerSubModel(item, "_weathered_climbing_rope", Models.CROSSBOW));
-            ItemModel.Unbaked unbaked10 = ItemModels.basic(generator.registerSubModel(item, "_oxidized_climbing_rope", Models.CROSSBOW));
-            generator.output.accept(item, ItemModels.condition(
-                    ItemModels.usingItemProperty(), ItemModels.rangeDispatch(new CrossbowPullProperty(), unbaked2, ItemModels.rangeDispatchEntry(unbaked3, 0.58F), ItemModels.rangeDispatchEntry(unbaked4, 1.0F)),
-                    ItemModels.select(new ChargeTypeProperty(), unbaked,
-                            ItemModels.switchCase(CrossbowItem.ChargeType.ARROW, ItemModels.rangeDispatch(new CrossbowProjectileTypeProperty(), unbaked5,
-                                    ItemModels.rangeDispatchEntry(unbaked7, 0.25F),
-                                    ItemModels.rangeDispatchEntry(unbaked8, 0.5F),
-                                    ItemModels.rangeDispatchEntry(unbaked9, 0.75F),
-                                    ItemModels.rangeDispatchEntry(unbaked10, 1.0F)
+        public final void registerCrossbow(ItemModelGenerators generator, Item item) {
+            ItemModel.Unbaked unbaked = ItemModelUtils.plainModel(ModelLocationUtils.getModelLocation(item));
+            ItemModel.Unbaked unbaked2 = ItemModelUtils.plainModel(generator.createFlatItemModel(item, "_pulling_0", ModelTemplates.CROSSBOW));
+            ItemModel.Unbaked unbaked3 = ItemModelUtils.plainModel(generator.createFlatItemModel(item, "_pulling_1", ModelTemplates.CROSSBOW));
+            ItemModel.Unbaked unbaked4 = ItemModelUtils.plainModel(generator.createFlatItemModel(item, "_pulling_2", ModelTemplates.CROSSBOW));
+            ItemModel.Unbaked unbaked5 = ItemModelUtils.plainModel(generator.createFlatItemModel(item, "_arrow", ModelTemplates.CROSSBOW));
+            ItemModel.Unbaked unbaked6 = ItemModelUtils.plainModel(generator.createFlatItemModel(item, "_firework", ModelTemplates.CROSSBOW));
+            ItemModel.Unbaked unbaked7 = ItemModelUtils.plainModel(generator.createFlatItemModel(item, "_climbing_rope", ModelTemplates.CROSSBOW));
+            ItemModel.Unbaked unbaked8 = ItemModelUtils.plainModel(generator.createFlatItemModel(item, "_exposed_climbing_rope", ModelTemplates.CROSSBOW));
+            ItemModel.Unbaked unbaked9 = ItemModelUtils.plainModel(generator.createFlatItemModel(item, "_weathered_climbing_rope", ModelTemplates.CROSSBOW));
+            ItemModel.Unbaked unbaked10 = ItemModelUtils.plainModel(generator.createFlatItemModel(item, "_oxidized_climbing_rope", ModelTemplates.CROSSBOW));
+            generator.itemModelOutput.accept(item, ItemModelUtils.conditional(
+                    ItemModelUtils.isUsingItem(), ItemModelUtils.rangeSelect(new CrossbowPull(), unbaked2, ItemModelUtils.override(unbaked3, 0.58F), ItemModelUtils.override(unbaked4, 1.0F)),
+                    ItemModelUtils.select(new Charge(), unbaked,
+                            ItemModelUtils.when(CrossbowItem.ChargeType.ARROW, ItemModelUtils.rangeSelect(new CrossbowProjectileTypeProperty(), unbaked5,
+                                    ItemModelUtils.override(unbaked7, 0.25F),
+                                    ItemModelUtils.override(unbaked8, 0.5F),
+                                    ItemModelUtils.override(unbaked9, 0.75F),
+                                    ItemModelUtils.override(unbaked10, 1.0F)
                                     )),
-                            ItemModels.switchCase(CrossbowItem.ChargeType.ROCKET, unbaked6))), ItemAsset.Properties.DEFAULT);
+                            ItemModelUtils.when(CrossbowItem.ChargeType.ROCKET, unbaked6))), ClientItem.Properties.DEFAULT);
         }
 
-        public final void registerPortalCore(ItemModelGenerator generator, Item item) {
-            ItemModel.Unbaked base = ItemModels.basic(ModelIds.getItemModelId(item));
-            Models.GENERATED.upload(ModelIds.getItemModelId(item), TextureMap.layer0(TextureMap.getId(item)), generator.modelCollector);
-            ItemModel.Unbaked active = ItemModels.basic(generator.registerSubModel(item, "_active", Models.GENERATED));
-            generator.output.accept(item, ItemModels.condition(
-                    ItemModels.hasComponentProperty(VADataComponentTypes.PORTAL_CORE_LOCATION), active, base
-            ), ItemAsset.Properties.DEFAULT);
+        public final void registerPortalCore(ItemModelGenerators generator, Item item) {
+            ItemModel.Unbaked base = ItemModelUtils.plainModel(ModelLocationUtils.getModelLocation(item));
+            ModelTemplates.FLAT_ITEM.create(ModelLocationUtils.getModelLocation(item), TextureMapping.layer0(TextureMapping.getItemTexture(item)), generator.modelOutput);
+            ItemModel.Unbaked active = ItemModelUtils.plainModel(generator.createFlatItemModel(item, "_active", ModelTemplates.FLAT_ITEM));
+            generator.itemModelOutput.accept(item, ItemModelUtils.conditional(
+                    ItemModelUtils.hasComponent(VADataComponentTypes.PORTAL_CORE_LOCATION), active, base
+            ), ClientItem.Properties.DEFAULT);
         }
 
-        public static void registerHalberd(ItemModelGenerator generator, Item item) {
-            ItemModel.Unbaked base = ItemModels.basic(ModelIds.getItemModelId(item));
-            ItemModel.Unbaked inHand = ItemModels.basic(ModelIds.getItemSubModelId(item, "_in_hand"));
-            Models.HANDHELD.upload(ModelIds.getItemModelId(item), TextureMap.layer0(TextureMap.getId(item)), generator.modelCollector);
-            VAModels.HALBERD_IN_HAND.upload(ModelIds.getItemSubModelId(item, "_in_hand"), TextureMap.layer0(TextureMap.getSubId(item, "_in_hand")), generator.modelCollector);
-            generator.output.accept(item, createModelWithInHandVariant(base, inHand), HALBERD_PROPERTIES);
+        public static void registerHalberd(ItemModelGenerators generator, Item item) {
+            ItemModel.Unbaked base = ItemModelUtils.plainModel(ModelLocationUtils.getModelLocation(item));
+            ItemModel.Unbaked inHand = ItemModelUtils.plainModel(ModelLocationUtils.getModelLocation(item, "_in_hand"));
+            ModelTemplates.FLAT_HANDHELD_ITEM.create(ModelLocationUtils.getModelLocation(item), TextureMapping.layer0(TextureMapping.getItemTexture(item)), generator.modelOutput);
+            VAModels.HALBERD_IN_HAND.create(ModelLocationUtils.getModelLocation(item, "_in_hand"), TextureMapping.layer0(TextureMapping.getItemTexture(item, "_in_hand")), generator.modelOutput);
+            generator.itemModelOutput.accept(item, createFlatModelDispatch(base, inHand), HALBERD_PROPERTIES);
         }
 
-        protected void registerSpectralFire(BlockStateModelGenerator generator) {
-            WeightedVariant weightedVariant = generator.getFireFloorModels(VABlocks.SPECTRAL_FIRE);
-            WeightedVariant weightedVariant2 = generator.getFireSideModels(VABlocks.SPECTRAL_FIRE);
-            generator.blockStateCollector
+        protected void registerSpectralFire(BlockModelGenerators generator) {
+            MultiVariant weightedVariant = generator.createFloorFireModels(VABlocks.SPECTRAL_FIRE);
+            MultiVariant weightedVariant2 = generator.createSideFireModels(VABlocks.SPECTRAL_FIRE);
+            generator.blockStateOutput
                     .accept(
-                            MultipartBlockModelDefinitionCreator.create(VABlocks.SPECTRAL_FIRE)
+                            MultiPartGenerator.multiPart(VABlocks.SPECTRAL_FIRE)
                                     .with(weightedVariant)
                                     .with(weightedVariant2)
-                                    .with(weightedVariant2.apply(BlockStateModelGenerator.ROTATE_Y_90))
-                                    .with(weightedVariant2.apply(BlockStateModelGenerator.ROTATE_Y_180))
-                                    .with(weightedVariant2.apply(BlockStateModelGenerator.ROTATE_Y_270))
+                                    .with(weightedVariant2.with(BlockModelGenerators.Y_ROT_90))
+                                    .with(weightedVariant2.with(BlockModelGenerators.Y_ROT_180))
+                                    .with(weightedVariant2.with(BlockModelGenerators.Y_ROT_270))
                     );
         }
 
-        protected static void registerSimpleBlockItem(BlockStateModelGenerator generator, Block block) {
-            generator.registerParentedItemModel(block, Registries.BLOCK.getId(block).withPrefixedPath("block/"));
+        protected static void registerSimpleBlockItem(BlockModelGenerators generator, Block block) {
+            generator.registerSimpleItemModel(block, BuiltInRegistries.BLOCK.getKey(block).withPrefix("block/"));
         }
 
-        protected static void registerInventoryBlockItem(BlockStateModelGenerator generator, Block block) {
-            generator.registerParentedItemModel(block, Registries.BLOCK.getId(block).withPrefixedPath("block/").withSuffixedPath("_inventory"));
+        protected static void registerInventoryBlockItem(BlockModelGenerators generator, Block block) {
+            generator.registerSimpleItemModel(block, BuiltInRegistries.BLOCK.getKey(block).withPrefix("block/").withSuffix("_inventory"));
         }
 
-        protected static void registerInventoryBlockItem(BlockStateModelGenerator generator, Block block, TintSource... sources) {
-            registerParentedTintedItemModel(generator, block, Registries.BLOCK.getId(block).withPrefixedPath("block/").withSuffixedPath("_inventory"), sources);
+        protected static void registerInventoryBlockItem(BlockModelGenerators generator, Block block, ItemTintSource... sources) {
+            registerParentedTintedItemModel(generator, block, BuiltInRegistries.BLOCK.getKey(block).withPrefix("block/").withSuffix("_inventory"), sources);
         }
         
-        protected static void registerSimpleBlockItems(BlockStateModelGenerator generator, Block... blocks) {
+        protected static void registerSimpleBlockItems(BlockModelGenerators generator, Block... blocks) {
             for (Block block : blocks) {
                 registerSimpleBlockItem(generator, block);
             }
         }
         
-        protected static void registerSimpleCubeAll(BlockStateModelGenerator generator, Block... blocks) {
+        protected static void registerSimpleCubeAll(BlockModelGenerators generator, Block... blocks) {
             for (Block block : blocks) {
-                generator.registerSimpleCubeAll(block);
+                generator.createTrivialCube(block);
             }
         }
 
-        protected static void registerSimpleItems(ItemModelGenerator generator, Item... items) {
+        protected static void registerSimpleItems(ItemModelGenerators generator, Item... items) {
             for (Item item : items) {
-                generator.register(item, Models.GENERATED);
+                generator.generateFlatItem(item, ModelTemplates.FLAT_ITEM);
             }
         }
 
-        protected static void registerItems(ItemModelGenerator generator, Model model, Item... items) {
+        protected static void registerItems(ItemModelGenerators generator, ModelTemplate model, Item... items) {
             for (Item item : items) {
-                generator.register(item, model);
+                generator.generateFlatItem(item, model);
             }
         }
     }

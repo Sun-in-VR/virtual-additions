@@ -2,47 +2,45 @@ package com.github.suninvr.virtualadditions.mixin;
 
 import com.github.suninvr.virtualadditions.registry.VABiomeKeys;
 import com.github.suninvr.virtualadditions.registry.VAItems;
-import net.minecraft.entity.EntityType;
-import net.minecraft.entity.EquipmentDropChances;
-import net.minecraft.entity.EquipmentSlot;
-import net.minecraft.entity.LivingEntity;
-import net.minecraft.entity.mob.MobEntity;
-import net.minecraft.entity.mob.WitherSkeletonEntity;
-import net.minecraft.item.ItemStack;
-import net.minecraft.item.Items;
-import net.minecraft.util.math.random.Random;
-import net.minecraft.world.LocalDifficulty;
-import net.minecraft.world.World;
+import net.minecraft.util.RandomSource;
+import net.minecraft.world.DifficultyInstance;
+import net.minecraft.world.entity.EntityType;
+import net.minecraft.world.entity.EquipmentSlot;
+import net.minecraft.world.entity.Mob;
+import net.minecraft.world.entity.monster.WitherSkeleton;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.Items;
+import net.minecraft.world.level.Level;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
-@Mixin(WitherSkeletonEntity.class)
-public class WitherSkeletonEntityMixin extends MobEntity {
-    protected WitherSkeletonEntityMixin(EntityType<? extends MobEntity> entityType, World world) {
+@Mixin(WitherSkeleton.class)
+public class WitherSkeletonEntityMixin extends Mob {
+    protected WitherSkeletonEntityMixin(EntityType<? extends Mob> entityType, Level world) {
         super(entityType, world);
     }
 
-    @Inject(method = "initEquipment", at = @At("HEAD"), cancellable = true)
-    void virtualAdditions$initWitherSkeletonArmor(Random random, LocalDifficulty localDifficulty, CallbackInfo ci) {
-        if (this.getType().equals(EntityType.WITHER_SKELETON) && this.getEntityWorld().getBiome(this.getBlockPos()).matchesKey(VABiomeKeys.WITHERED_WOODS)) {
+    @Inject(method = "populateDefaultEquipmentSlots", at = @At("HEAD"), cancellable = true)
+    void virtualAdditions$initWitherSkeletonArmor(RandomSource random, DifficultyInstance localDifficulty, CallbackInfo ci) {
+        if (this.getType().equals(EntityType.WITHER_SKELETON) && this.level().getBiome(this.blockPosition()).is(VABiomeKeys.WITHERED_WOODS)) {
             float f = random.nextFloat();
-            float d = localDifficulty.getLocalDifficulty() * 0.05F;
+            float d = localDifficulty.getEffectiveDifficulty() * 0.05F;
             boolean bow = random.nextFloat() > 0.85F;
             if (f > (1.0F - d)) {
-                this.equipStack(EquipmentSlot.MAINHAND, new ItemStack(VAItems.STONE_HALBERD));
-                this.equipStack(EquipmentSlot.HEAD, new ItemStack(Items.NETHERITE_HELMET));
-                this.equipStack(EquipmentSlot.CHEST, new ItemStack(Items.NETHERITE_CHESTPLATE));
-                this.equipStack(EquipmentSlot.LEGS, new ItemStack(Items.NETHERITE_LEGGINGS));
-                this.equipStack(EquipmentSlot.FEET, new ItemStack(Items.NETHERITE_BOOTS));
-                this.setEquipmentDropChance(EquipmentSlot.HEAD, 0.001F);
-                this.setEquipmentDropChance(EquipmentSlot.CHEST, 0.001F);
-                this.setEquipmentDropChance(EquipmentSlot.LEGS, 0.001F);
-                this.setEquipmentDropChance(EquipmentSlot.FEET, 0.001F);
+                this.setItemSlot(EquipmentSlot.MAINHAND, new ItemStack(VAItems.STONE_HALBERD));
+                this.setItemSlot(EquipmentSlot.HEAD, new ItemStack(Items.NETHERITE_HELMET));
+                this.setItemSlot(EquipmentSlot.CHEST, new ItemStack(Items.NETHERITE_CHESTPLATE));
+                this.setItemSlot(EquipmentSlot.LEGS, new ItemStack(Items.NETHERITE_LEGGINGS));
+                this.setItemSlot(EquipmentSlot.FEET, new ItemStack(Items.NETHERITE_BOOTS));
+                this.setDropChance(EquipmentSlot.HEAD, 0.001F);
+                this.setDropChance(EquipmentSlot.CHEST, 0.001F);
+                this.setDropChance(EquipmentSlot.LEGS, 0.001F);
+                this.setDropChance(EquipmentSlot.FEET, 0.001F);
                 ci.cancel();
             } else if (bow) {
-                this.equipStack(EquipmentSlot.MAINHAND, new ItemStack(Items.BOW));
+                this.setItemSlot(EquipmentSlot.MAINHAND, new ItemStack(Items.BOW));
                 ci.cancel();
             }
         }

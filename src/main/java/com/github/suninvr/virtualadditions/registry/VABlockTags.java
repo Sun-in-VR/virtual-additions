@@ -1,9 +1,9 @@
 package com.github.suninvr.virtualadditions.registry;
 
-import net.minecraft.block.Block;
-import net.minecraft.registry.Registries;
-import net.minecraft.registry.RegistryKeys;
-import net.minecraft.registry.tag.TagKey;
+import net.minecraft.core.registries.BuiltInRegistries;
+import net.minecraft.core.registries.Registries;
+import net.minecraft.tags.TagKey;
+import net.minecraft.world.level.block.Block;
 
 import static com.github.suninvr.virtualadditions.VirtualAdditions.idOf;
 
@@ -14,7 +14,7 @@ public class VABlockTags {
     public static final TagKey<Block> HEDGES = register("hedges");
     public static final TagKey<Block> ACID_UNBREAKABLE = register("acid_unbreakable");
     public static final TagKey<Block> LUMWASP_NEST_REPLACEABLE = register("lumwasp_nest_replaceable");
-    public static final TagKey<Block> SILKBULBS = TagKey.of(RegistryKeys.BLOCK, idOf("silkbulbs"));
+    public static final TagKey<Block> SILKBULBS = TagKey.create(Registries.BLOCK, idOf("silkbulbs"));
     public static final TagKey<Block> INCORRECT_FOR_STEEL_TOOL = register("incorrect_for_steel_tool");
     public static final TagKey<Block> USES_STEEL_SCRAPE_PARTICLES = register("uses_steel_scrape_particles");
     public static final TagKey<Block> SPECTRE_SPAWNABLE_ON = register("spectre_spawnable_on");
@@ -22,7 +22,7 @@ public class VABlockTags {
     public static final TagKey<Block> HALBERD_SWING_BREAKABLES = register("halberd_swing_breakables");
 
     private static TagKey<Block> register(String id) {
-        return TagKey.of(Registries.BLOCK.getKey(), idOf(id));
+        return TagKey.create(BuiltInRegistries.BLOCK.key(), idOf(id));
     }
 
     public static void init(){}

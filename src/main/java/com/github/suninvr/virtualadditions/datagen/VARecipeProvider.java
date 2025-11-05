@@ -6,26 +6,32 @@ import com.github.suninvr.virtualadditions.datagen.recipe.ArmorColoringRecipeJso
 import com.github.suninvr.virtualadditions.datagen.recipe.ColoringRecipeJsonBuilder;
 import com.github.suninvr.virtualadditions.datagen.recipe.SmithingGildRecipeJsonBuilder;
 import com.github.suninvr.virtualadditions.item.gild.GildType;
-import com.github.suninvr.virtualadditions.registry.VAGildTypes;
 import com.github.suninvr.virtualadditions.registry.*;
 import com.github.suninvr.virtualadditions.registry.collection.ColorfulBlockSet;
 import net.fabricmc.fabric.api.datagen.v1.FabricDataGenerator;
 import net.fabricmc.fabric.api.datagen.v1.FabricDataOutput;
 import net.fabricmc.fabric.api.datagen.v1.provider.FabricRecipeProvider;
-import net.minecraft.block.Block;
-import net.minecraft.block.Blocks;
-import net.minecraft.data.family.BlockFamily;
-import net.minecraft.data.recipe.*;
-import net.minecraft.item.*;
-import net.minecraft.recipe.CampfireCookingRecipe;
-import net.minecraft.recipe.Ingredient;
-import net.minecraft.recipe.RecipeSerializer;
-import net.minecraft.recipe.SmokingRecipe;
-import net.minecraft.recipe.book.RecipeCategory;
-import net.minecraft.registry.*;
-import net.minecraft.registry.tag.ItemTags;
-import net.minecraft.registry.tag.TagKey;
-import net.minecraft.resource.featuretoggle.FeatureFlags;
+import net.minecraft.core.HolderGetter;
+import net.minecraft.core.HolderLookup;
+import net.minecraft.core.registries.BuiltInRegistries;
+import net.minecraft.core.registries.Registries;
+import net.minecraft.data.BlockFamily;
+import net.minecraft.data.recipes.*;
+import net.minecraft.resources.ResourceKey;
+import net.minecraft.tags.ItemTags;
+import net.minecraft.tags.TagKey;
+import net.minecraft.world.flag.FeatureFlags;
+import net.minecraft.world.item.DyeItem;
+import net.minecraft.world.item.HoneycombItem;
+import net.minecraft.world.item.Item;
+import net.minecraft.world.item.Items;
+import net.minecraft.world.item.crafting.CampfireCookingRecipe;
+import net.minecraft.world.item.crafting.Ingredient;
+import net.minecraft.world.item.crafting.RecipeSerializer;
+import net.minecraft.world.item.crafting.SmokingRecipe;
+import net.minecraft.world.level.ItemLike;
+import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.Blocks;
 import org.apache.commons.lang3.tuple.Pair;
 import org.jetbrains.annotations.Nullable;
 
@@ -47,12 +53,12 @@ public final class VARecipeProvider {
     }
 
     private static class BaseProvider extends FabricRecipeProvider {
-        public BaseProvider(FabricDataOutput output, CompletableFuture<RegistryWrapper.WrapperLookup> registriesFuture) {
+        public BaseProvider(FabricDataOutput output, CompletableFuture<HolderLookup.Provider> registriesFuture) {
             super(output, registriesFuture);
         }
 
         @Override
-        protected RecipeGenerator getRecipeGenerator(RegistryWrapper.WrapperLookup registryLookup, RecipeExporter exporter) {
+        protected RecipeProvider createRecipeProvider(HolderLookup.Provider registryLookup, RecipeOutput exporter) {
             return new BaseGenerator(registryLookup, exporter);
         }
 
@@ -63,12 +69,12 @@ public final class VARecipeProvider {
     }
 
     private static class PreviewProvider extends FabricRecipeProvider {
-        public PreviewProvider(FabricDataOutput output, CompletableFuture<RegistryWrapper.WrapperLookup> registriesFuture) {
+        public PreviewProvider(FabricDataOutput output, CompletableFuture<HolderLookup.Provider> registriesFuture) {
             super(output, registriesFuture);
         }
 
         @Override
-        protected RecipeGenerator getRecipeGenerator(RegistryWrapper.WrapperLookup registryLookup, RecipeExporter exporter) {
+        protected RecipeProvider createRecipeProvider(HolderLookup.Provider registryLookup, RecipeOutput exporter) {
             return new PreviewGenerator(registryLookup, exporter);
         }
 
@@ -80,20 +86,20 @@ public final class VARecipeProvider {
 
     private static class BaseGenerator extends Generator {
 
-        protected BaseGenerator(RegistryWrapper.WrapperLookup registryLookup, RecipeExporter exporter) {
+        protected BaseGenerator(HolderLookup.Provider registryLookup, RecipeOutput exporter) {
             super(registryLookup, exporter);
         }
 
         @Override
-        public void generate() {
-            this.offerBlasting(List.of(VAItems.RAW_STEEL), RecipeCategory.MISC, VAItems.STEEL_INGOT, 1.0F, 100, "steel_ingot");
-            this.offerSmelting(List.of(VAItems.RAW_STEEL), RecipeCategory.MISC, VAItems.STEEL_INGOT, 1.0F, 200, "steel_ingot");
-            this.offerBlasting(List.of(VAItems.IOLITE_ORE), RecipeCategory.MISC, VAItems.IOLITE, 1.0F, 100, "iolite");
-            this.offerSmelting(List.of(VAItems.IOLITE_ORE), RecipeCategory.MISC, VAItems.IOLITE, 1.0F, 200, "iolite");
-            this.offerBlasting(List.of(VAItems.ROCK_SALT_ORE), RecipeCategory.MISC, VAItems.ROCK_SALT, 1.0F, 100, "rock_salt");
-            this.offerSmelting(List.of(VAItems.ROCK_SALT_ORE), RecipeCategory.MISC, VAItems.ROCK_SALT, 1.0F, 200, "rock_salt");
-            this.offerBlasting(List.of(VAItems.DEEPSLATE_ROCK_SALT_ORE), RecipeCategory.MISC, VAItems.ROCK_SALT, 1.0F, 100, "rock_salt");
-            this.offerSmelting(List.of(VAItems.DEEPSLATE_ROCK_SALT_ORE), RecipeCategory.MISC, VAItems.ROCK_SALT, 1.0F, 200, "rock_salt");
+        public void buildRecipes() {
+            this.oreBlasting(List.of(VAItems.RAW_STEEL), RecipeCategory.MISC, VAItems.STEEL_INGOT, 1.0F, 100, "steel_ingot");
+            this.oreSmelting(List.of(VAItems.RAW_STEEL), RecipeCategory.MISC, VAItems.STEEL_INGOT, 1.0F, 200, "steel_ingot");
+            this.oreBlasting(List.of(VAItems.IOLITE_ORE), RecipeCategory.MISC, VAItems.IOLITE, 1.0F, 100, "iolite");
+            this.oreSmelting(List.of(VAItems.IOLITE_ORE), RecipeCategory.MISC, VAItems.IOLITE, 1.0F, 200, "iolite");
+            this.oreBlasting(List.of(VAItems.ROCK_SALT_ORE), RecipeCategory.MISC, VAItems.ROCK_SALT, 1.0F, 100, "rock_salt");
+            this.oreSmelting(List.of(VAItems.ROCK_SALT_ORE), RecipeCategory.MISC, VAItems.ROCK_SALT, 1.0F, 200, "rock_salt");
+            this.oreBlasting(List.of(VAItems.DEEPSLATE_ROCK_SALT_ORE), RecipeCategory.MISC, VAItems.ROCK_SALT, 1.0F, 100, "rock_salt");
+            this.oreSmelting(List.of(VAItems.DEEPSLATE_ROCK_SALT_ORE), RecipeCategory.MISC, VAItems.ROCK_SALT, 1.0F, 200, "rock_salt");
 
             this.offerHedgeRecipe(VABlocks.OAK_HEDGE, Blocks.OAK_LEAVES);
             this.offerHedgeRecipe(VABlocks.SPRUCE_HEDGE, Blocks.SPRUCE_LEAVES);
@@ -107,31 +113,31 @@ public final class VARecipeProvider {
             this.offerHedgeRecipe(VABlocks.AZALEA_HEDGE, Blocks.AZALEA_LEAVES);
             this.offerHedgeRecipe(VABlocks.FLOWERING_AZALEA_HEDGE, Blocks.FLOWERING_AZALEA_LEAVES);
 
-            this.offerCompactingRecipe(RecipeCategory.MISC, VABlocks.STEEL_BLOCK, VAItems.STEEL_INGOT, "steel_ingot");
-            this.offerShapelessRecipe(VAItems.STEEL_INGOT, VABlocks.STEEL_BLOCK, "steel", 9);
-            this.offerShapelessRecipe(VAItems.STEEL_INGOT, VABlocks.WAXED_STEEL_BLOCK, "steel_ingot", 9);
-            this.offerCompactingRecipe(RecipeCategory.MISC, VABlocks.RAW_STEEL_BLOCK, VAItems.RAW_STEEL, "raw_steel");
-            this.offerShapelessRecipe(VAItems.RAW_STEEL, VABlocks.RAW_STEEL_BLOCK, "raw_steel", 9);
-            this.offerCompactingRecipe(RecipeCategory.MISC, VAItems.STEEL_INGOT, VAItems.STEEL_NUGGET, "steel_nugget");
-            this.offerShapelessRecipe(VAItems.STEEL_NUGGET, VAItems.STEEL_INGOT, "steel_nugget", 9);
+            this.threeByThreePacker(RecipeCategory.MISC, VABlocks.STEEL_BLOCK, VAItems.STEEL_INGOT, "steel_ingot");
+            this.oneToOneConversionRecipe(VAItems.STEEL_INGOT, VABlocks.STEEL_BLOCK, "steel", 9);
+            this.oneToOneConversionRecipe(VAItems.STEEL_INGOT, VABlocks.WAXED_STEEL_BLOCK, "steel_ingot", 9);
+            this.threeByThreePacker(RecipeCategory.MISC, VABlocks.RAW_STEEL_BLOCK, VAItems.RAW_STEEL, "raw_steel");
+            this.oneToOneConversionRecipe(VAItems.RAW_STEEL, VABlocks.RAW_STEEL_BLOCK, "raw_steel", 9);
+            this.threeByThreePacker(RecipeCategory.MISC, VAItems.STEEL_INGOT, VAItems.STEEL_NUGGET, "steel_nugget");
+            this.oneToOneConversionRecipe(VAItems.STEEL_NUGGET, VAItems.STEEL_INGOT, "steel_nugget", 9);
 
-            CookingRecipeJsonBuilder.createSmelting(Ingredient.ofItems(VAItems.STEEL_PICKAXE, VAItems.STEEL_SHOVEL, VAItems.STEEL_AXE, VAItems.STEEL_HOE, VAItems.STEEL_SWORD, VAItems.STEEL_SPEAR, VAItems.STEEL_HELMET, VAItems.STEEL_CHESTPLATE, VAItems.STEEL_LEGGINGS, VAItems.STEEL_BOOTS, VAItems.STEEL_HORSE_ARMOR, VAItems.STEEL_HALBERD), RecipeCategory.MISC, VAItems.STEEL_NUGGET, 0.1F, 200).criterion("has_steel_pickaxe", this.conditionsFromItem(VAItems.STEEL_PICKAXE)).criterion("has_steel_shovel", this.conditionsFromItem(VAItems.STEEL_SHOVEL)).criterion("has_steel_axe", this.conditionsFromItem(VAItems.STEEL_AXE)).criterion("has_steel_hoe", this.conditionsFromItem(VAItems.STEEL_HOE)).criterion("has_steel_sword", this.conditionsFromItem(VAItems.STEEL_SWORD)).criterion("has_steel_helmet", this.conditionsFromItem(VAItems.STEEL_HELMET)).criterion("has_steel_chestplate", this.conditionsFromItem(VAItems.STEEL_CHESTPLATE)).criterion("has_steel_leggings", this.conditionsFromItem(VAItems.STEEL_LEGGINGS)).criterion("has_steel_boots", this.conditionsFromItem(VAItems.STEEL_BOOTS)).criterion("has_steel_horse_armor", this.conditionsFromItem(VAItems.STEEL_HORSE_ARMOR)).offerTo(this.exporter, getSmeltingItemPath(VAItems.STEEL_NUGGET));
-            CookingRecipeJsonBuilder.createBlasting(Ingredient.ofItems(VAItems.STEEL_PICKAXE, VAItems.STEEL_SHOVEL, VAItems.STEEL_AXE, VAItems.STEEL_HOE, VAItems.STEEL_SWORD, VAItems.STEEL_SPEAR, VAItems.STEEL_HELMET, VAItems.STEEL_CHESTPLATE, VAItems.STEEL_LEGGINGS, VAItems.STEEL_BOOTS, VAItems.STEEL_HORSE_ARMOR, VAItems.STEEL_HALBERD), RecipeCategory.MISC, VAItems.STEEL_NUGGET, 0.1F, 200).criterion("has_steel_pickaxe", this.conditionsFromItem(VAItems.STEEL_PICKAXE)).criterion("has_steel_shovel", this.conditionsFromItem(VAItems.STEEL_SHOVEL)).criterion("has_steel_axe", this.conditionsFromItem(VAItems.STEEL_AXE)).criterion("has_steel_hoe", this.conditionsFromItem(VAItems.STEEL_HOE)).criterion("has_steel_sword", this.conditionsFromItem(VAItems.STEEL_SWORD)).criterion("has_steel_helmet", this.conditionsFromItem(VAItems.STEEL_HELMET)).criterion("has_steel_chestplate", this.conditionsFromItem(VAItems.STEEL_CHESTPLATE)).criterion("has_steel_leggings", this.conditionsFromItem(VAItems.STEEL_LEGGINGS)).criterion("has_steel_boots", this.conditionsFromItem(VAItems.STEEL_BOOTS)).criterion("has_steel_horse_armor", this.conditionsFromItem(VAItems.STEEL_HORSE_ARMOR)).offerTo(this.exporter, getBlastingItemPath(VAItems.STEEL_NUGGET));
-            CookingRecipeJsonBuilder.createSmelting(Ingredient.ofItems(VAItems.IRON_HALBERD), RecipeCategory.MISC, Items.IRON_NUGGET, 0.1F, 200).criterion("has_iron_pickaxe", this.conditionsFromItem(Items.IRON_PICKAXE)).criterion("has_iron_shovel", this.conditionsFromItem(Items.IRON_SHOVEL)).criterion("has_iron_axe", this.conditionsFromItem(Items.IRON_AXE)).criterion("has_iron_hoe", this.conditionsFromItem(Items.IRON_HOE)).criterion("has_iron_sword", this.conditionsFromItem(Items.IRON_SWORD)).criterion("has_iron_helmet", this.conditionsFromItem(Items.IRON_HELMET)).criterion("has_iron_chestplate", this.conditionsFromItem(Items.IRON_CHESTPLATE)).criterion("has_iron_leggings", this.conditionsFromItem(Items.IRON_LEGGINGS)).criterion("has_iron_boots", this.conditionsFromItem(Items.IRON_BOOTS)).criterion("has_iron_horse_armor", this.conditionsFromItem(Items.IRON_HORSE_ARMOR)).criterion("has_iron_halberd", this.conditionsFromItem(VAItems.IRON_HALBERD)).offerTo(this.exporter, idOf("iron_nugget_from_smelting_halberd").toString());
-            CookingRecipeJsonBuilder.createSmelting(Ingredient.ofItems(VAItems.GOLDEN_HALBERD), RecipeCategory.MISC, Items.GOLD_NUGGET, 0.1F, 200).criterion("has_golden_pickaxe", this.conditionsFromItem(Items.GOLDEN_PICKAXE)).criterion("has_golden_shovel", this.conditionsFromItem(Items.GOLDEN_SHOVEL)).criterion("has_golden_axe", this.conditionsFromItem(Items.GOLDEN_AXE)).criterion("has_golden_hoe", this.conditionsFromItem(Items.GOLDEN_HOE)).criterion("has_golden_sword", this.conditionsFromItem(Items.GOLDEN_SWORD)).criterion("has_golden_helmet", this.conditionsFromItem(Items.GOLDEN_HELMET)).criterion("has_golden_chestplate", this.conditionsFromItem(Items.GOLDEN_CHESTPLATE)).criterion("has_golden_leggings", this.conditionsFromItem(Items.GOLDEN_LEGGINGS)).criterion("has_golden_boots", this.conditionsFromItem(Items.GOLDEN_BOOTS)).criterion("has_golden_horse_armor", this.conditionsFromItem(Items.GOLDEN_HORSE_ARMOR)).criterion("has_golden_halberd", this.conditionsFromItem(VAItems.GOLDEN_HALBERD)).offerTo(this.exporter, idOf("gold_nugget_from_smelting_halberd").toString());
-            CookingRecipeJsonBuilder.createSmelting(Ingredient.ofItems(VAItems.COPPER_HALBERD), RecipeCategory.MISC, Items.COPPER_NUGGET, 0.1F, 200).criterion("has_copper_pickaxe", this.conditionsFromItem(Items.COPPER_PICKAXE)).criterion("has_copper_shovel", this.conditionsFromItem(Items.COPPER_SHOVEL)).criterion("has_copper_axe", this.conditionsFromItem(Items.COPPER_AXE)).criterion("has_copper_hoe", this.conditionsFromItem(Items.COPPER_HOE)).criterion("has_copper_sword", this.conditionsFromItem(Items.COPPER_SWORD)).criterion("has_copper_helmet", this.conditionsFromItem(Items.COPPER_HELMET)).criterion("has_copper_chestplate", this.conditionsFromItem(Items.COPPER_CHESTPLATE)).criterion("has_copper_leggings", this.conditionsFromItem(Items.COPPER_LEGGINGS)).criterion("has_copper_boots", this.conditionsFromItem(Items.COPPER_BOOTS)).criterion("has_copper_horse_armor", this.conditionsFromItem(Items.COPPER_HORSE_ARMOR)).criterion("has_copper_halberd", this.conditionsFromItem(VAItems.COPPER_HALBERD)).offerTo(this.exporter, idOf("copper_nugget_from_smelting_halberd").toString());
+            SimpleCookingRecipeBuilder.smelting(Ingredient.of(VAItems.STEEL_PICKAXE, VAItems.STEEL_SHOVEL, VAItems.STEEL_AXE, VAItems.STEEL_HOE, VAItems.STEEL_SWORD, VAItems.STEEL_SPEAR, VAItems.STEEL_HELMET, VAItems.STEEL_CHESTPLATE, VAItems.STEEL_LEGGINGS, VAItems.STEEL_BOOTS, VAItems.STEEL_HORSE_ARMOR, VAItems.STEEL_HALBERD), RecipeCategory.MISC, VAItems.STEEL_NUGGET, 0.1F, 200).unlockedBy("has_steel_pickaxe", this.has(VAItems.STEEL_PICKAXE)).unlockedBy("has_steel_shovel", this.has(VAItems.STEEL_SHOVEL)).unlockedBy("has_steel_axe", this.has(VAItems.STEEL_AXE)).unlockedBy("has_steel_hoe", this.has(VAItems.STEEL_HOE)).unlockedBy("has_steel_sword", this.has(VAItems.STEEL_SWORD)).unlockedBy("has_steel_helmet", this.has(VAItems.STEEL_HELMET)).unlockedBy("has_steel_chestplate", this.has(VAItems.STEEL_CHESTPLATE)).unlockedBy("has_steel_leggings", this.has(VAItems.STEEL_LEGGINGS)).unlockedBy("has_steel_boots", this.has(VAItems.STEEL_BOOTS)).unlockedBy("has_steel_horse_armor", this.has(VAItems.STEEL_HORSE_ARMOR)).save(this.output, getSmeltingRecipeName(VAItems.STEEL_NUGGET));
+            SimpleCookingRecipeBuilder.blasting(Ingredient.of(VAItems.STEEL_PICKAXE, VAItems.STEEL_SHOVEL, VAItems.STEEL_AXE, VAItems.STEEL_HOE, VAItems.STEEL_SWORD, VAItems.STEEL_SPEAR, VAItems.STEEL_HELMET, VAItems.STEEL_CHESTPLATE, VAItems.STEEL_LEGGINGS, VAItems.STEEL_BOOTS, VAItems.STEEL_HORSE_ARMOR, VAItems.STEEL_HALBERD), RecipeCategory.MISC, VAItems.STEEL_NUGGET, 0.1F, 200).unlockedBy("has_steel_pickaxe", this.has(VAItems.STEEL_PICKAXE)).unlockedBy("has_steel_shovel", this.has(VAItems.STEEL_SHOVEL)).unlockedBy("has_steel_axe", this.has(VAItems.STEEL_AXE)).unlockedBy("has_steel_hoe", this.has(VAItems.STEEL_HOE)).unlockedBy("has_steel_sword", this.has(VAItems.STEEL_SWORD)).unlockedBy("has_steel_helmet", this.has(VAItems.STEEL_HELMET)).unlockedBy("has_steel_chestplate", this.has(VAItems.STEEL_CHESTPLATE)).unlockedBy("has_steel_leggings", this.has(VAItems.STEEL_LEGGINGS)).unlockedBy("has_steel_boots", this.has(VAItems.STEEL_BOOTS)).unlockedBy("has_steel_horse_armor", this.has(VAItems.STEEL_HORSE_ARMOR)).save(this.output, getBlastingRecipeName(VAItems.STEEL_NUGGET));
+            SimpleCookingRecipeBuilder.smelting(Ingredient.of(VAItems.IRON_HALBERD), RecipeCategory.MISC, Items.IRON_NUGGET, 0.1F, 200).unlockedBy("has_iron_pickaxe", this.has(Items.IRON_PICKAXE)).unlockedBy("has_iron_shovel", this.has(Items.IRON_SHOVEL)).unlockedBy("has_iron_axe", this.has(Items.IRON_AXE)).unlockedBy("has_iron_hoe", this.has(Items.IRON_HOE)).unlockedBy("has_iron_sword", this.has(Items.IRON_SWORD)).unlockedBy("has_iron_helmet", this.has(Items.IRON_HELMET)).unlockedBy("has_iron_chestplate", this.has(Items.IRON_CHESTPLATE)).unlockedBy("has_iron_leggings", this.has(Items.IRON_LEGGINGS)).unlockedBy("has_iron_boots", this.has(Items.IRON_BOOTS)).unlockedBy("has_iron_horse_armor", this.has(Items.IRON_HORSE_ARMOR)).unlockedBy("has_iron_halberd", this.has(VAItems.IRON_HALBERD)).save(this.output, idOf("iron_nugget_from_smelting_halberd").toString());
+            SimpleCookingRecipeBuilder.smelting(Ingredient.of(VAItems.GOLDEN_HALBERD), RecipeCategory.MISC, Items.GOLD_NUGGET, 0.1F, 200).unlockedBy("has_golden_pickaxe", this.has(Items.GOLDEN_PICKAXE)).unlockedBy("has_golden_shovel", this.has(Items.GOLDEN_SHOVEL)).unlockedBy("has_golden_axe", this.has(Items.GOLDEN_AXE)).unlockedBy("has_golden_hoe", this.has(Items.GOLDEN_HOE)).unlockedBy("has_golden_sword", this.has(Items.GOLDEN_SWORD)).unlockedBy("has_golden_helmet", this.has(Items.GOLDEN_HELMET)).unlockedBy("has_golden_chestplate", this.has(Items.GOLDEN_CHESTPLATE)).unlockedBy("has_golden_leggings", this.has(Items.GOLDEN_LEGGINGS)).unlockedBy("has_golden_boots", this.has(Items.GOLDEN_BOOTS)).unlockedBy("has_golden_horse_armor", this.has(Items.GOLDEN_HORSE_ARMOR)).unlockedBy("has_golden_halberd", this.has(VAItems.GOLDEN_HALBERD)).save(this.output, idOf("gold_nugget_from_smelting_halberd").toString());
+            SimpleCookingRecipeBuilder.smelting(Ingredient.of(VAItems.COPPER_HALBERD), RecipeCategory.MISC, Items.COPPER_NUGGET, 0.1F, 200).unlockedBy("has_copper_pickaxe", this.has(Items.COPPER_PICKAXE)).unlockedBy("has_copper_shovel", this.has(Items.COPPER_SHOVEL)).unlockedBy("has_copper_axe", this.has(Items.COPPER_AXE)).unlockedBy("has_copper_hoe", this.has(Items.COPPER_HOE)).unlockedBy("has_copper_sword", this.has(Items.COPPER_SWORD)).unlockedBy("has_copper_helmet", this.has(Items.COPPER_HELMET)).unlockedBy("has_copper_chestplate", this.has(Items.COPPER_CHESTPLATE)).unlockedBy("has_copper_leggings", this.has(Items.COPPER_LEGGINGS)).unlockedBy("has_copper_boots", this.has(Items.COPPER_BOOTS)).unlockedBy("has_copper_horse_armor", this.has(Items.COPPER_HORSE_ARMOR)).unlockedBy("has_copper_halberd", this.has(VAItems.COPPER_HALBERD)).save(this.output, idOf("copper_nugget_from_smelting_halberd").toString());
 
-            this.offerCompactingRecipe(RecipeCategory.MISC, VABlocks.IOLITE_BLOCK, VAItems.IOLITE, "iolite");
-            this.offerShapelessRecipe(VAItems.IOLITE, VABlocks.IOLITE_BLOCK, "iolite", 9);
+            this.threeByThreePacker(RecipeCategory.MISC, VABlocks.IOLITE_BLOCK, VAItems.IOLITE, "iolite");
+            this.oneToOneConversionRecipe(VAItems.IOLITE, VABlocks.IOLITE_BLOCK, "iolite", 9);
 
             this.offerShapelessRecipe(RecipeCategory.MISC, VAItems.RAW_STEEL, 1, Pair.of(Items.RAW_IRON, 3), Pair.of(Items.COAL, 1));
 
             this.offerShapelessRecipe(RecipeCategory.MISC, VAItems.TOOL_GILD_SMITHING_TEMPLATE, 1, Pair.of(VAItems.STEEL_INGOT, 1), Pair.of(Items.DIAMOND, 1));
 
-            ShapedRecipeJsonBuilder.create(this.registryLookup, RecipeCategory.BUILDING_BLOCKS, VABlocks.CUT_STEEL, 4).pattern("###").pattern("# #").pattern("###").input('#', VAItems.STEEL_NUGGET).criterion("steel_nugget", conditionsFromItem(VAItems.STEEL_NUGGET)).offerTo(this.exporter);
-            this.createDoorRecipe(VABlocks.STEEL_DOOR, Ingredient.ofItems(VAItems.STEEL_INGOT)).criterion("steel_ingot", conditionsFromItem(VAItems.STEEL_INGOT)).offerTo(this.exporter);
-            this.createTrapdoorRecipe(VABlocks.STEEL_TRAPDOOR, Ingredient.ofItems(VAItems.STEEL_INGOT)).criterion("steel_ingot", conditionsFromItem(VAItems.STEEL_INGOT)).offerTo(this.exporter);
-            ShapedRecipeJsonBuilder.create(this.registryLookup, RecipeCategory.DECORATIONS, VABlocks.STEEL_FENCE, 6).input('W', VABlocks.CUT_STEEL).input('#', VAItems.STEEL_NUGGET).pattern("W#W").pattern("W#W").criterion("cut_steel", conditionsFromItem(VABlocks.CUT_STEEL)).offerTo(this.exporter);
+            ShapedRecipeBuilder.shaped(this.registryLookup, RecipeCategory.BUILDING_BLOCKS, VABlocks.CUT_STEEL, 4).pattern("###").pattern("# #").pattern("###").define('#', VAItems.STEEL_NUGGET).unlockedBy("steel_nugget", has(VAItems.STEEL_NUGGET)).save(this.output);
+            this.doorBuilder(VABlocks.STEEL_DOOR, Ingredient.of(VAItems.STEEL_INGOT)).unlockedBy("steel_ingot", has(VAItems.STEEL_INGOT)).save(this.output);
+            this.trapdoorBuilder(VABlocks.STEEL_TRAPDOOR, Ingredient.of(VAItems.STEEL_INGOT)).unlockedBy("steel_ingot", has(VAItems.STEEL_INGOT)).save(this.output);
+            ShapedRecipeBuilder.shaped(this.registryLookup, RecipeCategory.DECORATIONS, VABlocks.STEEL_FENCE, 6).define('W', VABlocks.CUT_STEEL).define('#', VAItems.STEEL_NUGGET).pattern("W#W").pattern("W#W").unlockedBy("cut_steel", has(VABlocks.CUT_STEEL)).save(this.output);
 
             this.offerSteelRecipeSet(VABlocks.STEEL_BLOCK, VABlocks.CUT_STEEL, VABlocks.CUT_STEEL_STAIRS, VABlocks.CUT_STEEL_SLAB, VABlocks.STEEL_GRATE, VABlocks.CHISELED_STEEL);
             this.offerSteelRecipeSet(VABlocks.EXPOSED_STEEL_BLOCK, VABlocks.EXPOSED_CUT_STEEL, VABlocks.EXPOSED_CUT_STEEL_STAIRS, VABlocks.EXPOSED_CUT_STEEL_SLAB, VABlocks.EXPOSED_STEEL_GRATE, VABlocks.EXPOSED_CHISELED_STEEL);
@@ -142,21 +148,21 @@ public final class VARecipeProvider {
             this.offerSteelRecipeSet(VABlocks.WAXED_WEATHERED_STEEL_BLOCK, VABlocks.WAXED_WEATHERED_CUT_STEEL, VABlocks.WAXED_WEATHERED_CUT_STEEL_STAIRS, VABlocks.WAXED_WEATHERED_CUT_STEEL_SLAB, VABlocks.WAXED_WEATHERED_STEEL_GRATE, VABlocks.WAXED_WEATHERED_CHISELED_STEEL);
             this.offerSteelRecipeSet(VABlocks.WAXED_OXIDIZED_STEEL_BLOCK, VABlocks.WAXED_OXIDIZED_CUT_STEEL, VABlocks.WAXED_OXIDIZED_CUT_STEEL_STAIRS, VABlocks.WAXED_OXIDIZED_CUT_STEEL_SLAB, VABlocks.WAXED_OXIDIZED_STEEL_GRATE, VABlocks.WAXED_OXIDIZED_CHISELED_STEEL);
 
-            this.offerSmelting(List.of(VABlocks.COBBLED_HORNFELS), RecipeCategory.BUILDING_BLOCKS, VABlocks.HORNFELS, 0.1F, 200, "hornfels");
+            this.oreSmelting(List.of(VABlocks.COBBLED_HORNFELS), RecipeCategory.BUILDING_BLOCKS, VABlocks.HORNFELS, 0.1F, 200, "hornfels");
             this.offerStonecuttingRecipes(VABlocks.HORNFELS, VACollections.POLISHED_HORNFELS, VACollections.HORNFELS_TILES);
             this.generateCuttableFamilyChain(VACollections.COBBLED_HORNFELS);
             this.generateCuttableFamilyChain(VACollections.POLISHED_HORNFELS, VACollections.HORNFELS_TILES);
             this.generateCuttableFamilyChain(VACollections.HORNFELS_TILES);
             this.offer2x2ConversionChain(VABlocks.HORNFELS, VABlocks.POLISHED_HORNFELS, VABlocks.HORNFELS_TILES);
 
-            this.offerSmelting(List.of(VABlocks.COBBLED_BLUESCHIST), RecipeCategory.BUILDING_BLOCKS, VABlocks.BLUESCHIST, 0.1F, 200, "blueschist");
+            this.oreSmelting(List.of(VABlocks.COBBLED_BLUESCHIST), RecipeCategory.BUILDING_BLOCKS, VABlocks.BLUESCHIST, 0.1F, 200, "blueschist");
             this.offerStonecuttingRecipes(VABlocks.BLUESCHIST, VACollections.POLISHED_BLUESCHIST, VACollections.BLUESCHIST_BRICKS);
             this.generateCuttableFamilyChain(VACollections.COBBLED_BLUESCHIST);
             this.generateCuttableFamilyChain(VACollections.POLISHED_BLUESCHIST, VACollections.BLUESCHIST_BRICKS);
             this.generateCuttableFamilyChain(VACollections.BLUESCHIST_BRICKS);
             this.offer2x2ConversionChain(VABlocks.BLUESCHIST, VABlocks.POLISHED_BLUESCHIST, VABlocks.BLUESCHIST_BRICKS);
 
-            this.offerSmelting(List.of(VABlocks.COBBLED_SYENITE), RecipeCategory.BUILDING_BLOCKS, VABlocks.SYENITE, 0.1F, 200, "syenite");
+            this.oreSmelting(List.of(VABlocks.COBBLED_SYENITE), RecipeCategory.BUILDING_BLOCKS, VABlocks.SYENITE, 0.1F, 200, "syenite");
             this.offerStonecuttingRecipes(VABlocks.SYENITE, VACollections.POLISHED_SYENITE, VACollections.SYENITE_BRICKS);
             this.generateCuttableFamilyChain(VACollections.COBBLED_SYENITE);
             this.generateCuttableFamilyChain(VACollections.POLISHED_SYENITE, VACollections.SYENITE_BRICKS);
@@ -179,48 +185,48 @@ public final class VARecipeProvider {
             this.offerCookingRecipes(VAItems.FRIED_EGG, List.of(Items.EGG, Items.BROWN_EGG, Items.BLUE_EGG, VAItems.PURPLE_EGG), 0.35F, "fried_egg");
             this.offerCookingRecipes(VAItems.ROASTED_CORN, VAItems.CORN, 0.35F, "corn");
 
-            ShapelessRecipeJsonBuilder.create(this.registryLookup, RecipeCategory.FOOD, VAItems.TOMATO_SOUP)
-                            .input(VAItems.TOMATO, 3).input(Items.BOWL).criterion("has_tomato", conditionsFromItem(VAItems.TOMATO)).offerTo(this.exporter);
+            ShapelessRecipeBuilder.shapeless(this.registryLookup, RecipeCategory.FOOD, VAItems.TOMATO_SOUP)
+                            .requires(VAItems.TOMATO, 3).requires(Items.BOWL).unlockedBy("has_tomato", has(VAItems.TOMATO)).save(this.output);
 
-            ShapelessRecipeJsonBuilder.create(this.registryLookup, RecipeCategory.FOOD, VAItems.SALAD)
-                            .input(VAItems.CABBAGE, 1).input(VAItems.TOMATO, 1).input(VAItems.ROASTED_CORN, 1).input(Items.BOWL).criterion("has_food", conditionsFromItem(VAItems.TOMATO)).offerTo(this.exporter);
+            ShapelessRecipeBuilder.shapeless(this.registryLookup, RecipeCategory.FOOD, VAItems.SALAD)
+                            .requires(VAItems.CABBAGE, 1).requires(VAItems.TOMATO, 1).requires(VAItems.ROASTED_CORN, 1).requires(Items.BOWL).unlockedBy("has_food", has(VAItems.TOMATO)).save(this.output);
 
             this.offerJerkyFoodRecipe(Items.COOKED_BEEF, VAItems.BEEF_JERKY);
             this.offerJerkyFoodRecipe(Items.COOKED_PORKCHOP, VAItems.PORK_JERKY);
             this.offerJerkyFoodRecipe(Items.COOKED_CHICKEN, VAItems.CHICKEN_JERKY);
             this.offerJerkyFoodRecipe(Items.COOKED_MUTTON, VAItems.MUTTON_JERKY);
 
-            ShapedRecipeJsonBuilder.create(this.registryLookup, RecipeCategory.FOOD, VAItems.CHEESE_WEDGE, 4)
+            ShapedRecipeBuilder.shaped(this.registryLookup, RecipeCategory.FOOD, VAItems.CHEESE_WEDGE, 4)
                             .pattern(" # ")
                             .pattern("#M#")
                             .pattern(" # ")
-                            .input('#', VAItems.ROCK_SALT).input('M', Items.MILK_BUCKET)
-                                    .criterion("has_item", conditionsFromItem(Items.MILK_BUCKET)).offerTo(this.exporter);
+                            .define('#', VAItems.ROCK_SALT).define('M', Items.MILK_BUCKET)
+                                    .unlockedBy("has_item", has(Items.MILK_BUCKET)).save(this.output);
 
-            ShapedRecipeJsonBuilder.create(this.registryLookup, RecipeCategory.FOOD, Items.LEATHER)
+            ShapedRecipeBuilder.shaped(this.registryLookup, RecipeCategory.FOOD, Items.LEATHER)
                             .pattern("###")
                             .pattern("#F#")
                             .pattern("###")
-                            .input('#', VAItems.ROCK_SALT).input('F', Items.ROTTEN_FLESH)
-                                    .criterion("has_item", conditionsFromItem(Items.ROTTEN_FLESH)).offerTo(this.exporter);
+                            .define('#', VAItems.ROCK_SALT).define('F', Items.ROTTEN_FLESH)
+                                    .unlockedBy("has_item", has(Items.ROTTEN_FLESH)).save(this.output);
 
-            this.offerCompactingRecipe(RecipeCategory.BUILDING_BLOCKS, VAItems.ROCK_SALT_BLOCK, VAItems.ROCK_SALT);
-            this.offerShapelessRecipe(VAItems.ROCK_SALT, VAItems.ROCK_SALT_BLOCK, "rock_salt", 9);
+            this.threeByThreePacker(RecipeCategory.BUILDING_BLOCKS, VAItems.ROCK_SALT_BLOCK, VAItems.ROCK_SALT);
+            this.oneToOneConversionRecipe(VAItems.ROCK_SALT, VAItems.ROCK_SALT_BLOCK, "rock_salt", 9);
 
-            this.offer2x2CompactingRecipe(RecipeCategory.BUILDING_BLOCKS, VABlocks.WEBBED_SILK, VAItems.SILK_THREAD);
-            this.offerCompactingRecipe(RecipeCategory.BUILDING_BLOCKS, VABlocks.SILK_BLOCK, VAItems.SILK_THREAD);
+            this.twoByTwoPacker(RecipeCategory.BUILDING_BLOCKS, VABlocks.WEBBED_SILK, VAItems.SILK_THREAD);
+            this.threeByThreePacker(RecipeCategory.BUILDING_BLOCKS, VABlocks.SILK_BLOCK, VAItems.SILK_THREAD);
 
-            ShapedRecipeJsonBuilder.create(this.registryLookup, RecipeCategory.TOOLS, VAItems.STEEL_AXE).input('#', Items.STICK).input('X', VAItems.STEEL_INGOT).pattern("XX").pattern("X#").pattern(" #").criterion("has_steel_ingot", conditionsFromItem(VAItems.STEEL_INGOT)).offerTo(this.exporter);
-            ShapedRecipeJsonBuilder.create(this.registryLookup, RecipeCategory.COMBAT, VAItems.STEEL_BOOTS).input('X', VAItems.STEEL_INGOT).pattern("X X").pattern("X X").criterion("has_steel_ingot", conditionsFromItem(VAItems.STEEL_INGOT)).offerTo(this.exporter);
-            ShapedRecipeJsonBuilder.create(this.registryLookup, RecipeCategory.COMBAT, VAItems.STEEL_CHESTPLATE).input('X', VAItems.STEEL_INGOT).pattern("X X").pattern("XXX").pattern("XXX").criterion("has_steel_ingot", conditionsFromItem(VAItems.STEEL_INGOT)).offerTo(this.exporter);
-            ShapedRecipeJsonBuilder.create(this.registryLookup, RecipeCategory.COMBAT, VAItems.STEEL_HELMET).input('X', VAItems.STEEL_INGOT).pattern("XXX").pattern("X X").criterion("has_steel_ingot", conditionsFromItem(VAItems.STEEL_INGOT)).offerTo(this.exporter);
-            ShapedRecipeJsonBuilder.create(this.registryLookup, RecipeCategory.COMBAT, VAItems.STEEL_HORSE_ARMOR).input('X', VAItems.STEEL_INGOT).pattern("X X").pattern("XXX").pattern("X X").criterion("has_steel_ingot", conditionsFromItem(VAItems.STEEL_INGOT)).offerTo(this.exporter);
-            ShapedRecipeJsonBuilder.create(this.registryLookup, RecipeCategory.TOOLS, VAItems.STEEL_HOE).input('#', Items.STICK).input('X', VAItems.STEEL_INGOT).pattern("XX").pattern(" #").pattern(" #").criterion("has_steel_ingot", conditionsFromItem(VAItems.STEEL_INGOT)).offerTo(this.exporter);
-            ShapedRecipeJsonBuilder.create(this.registryLookup, RecipeCategory.COMBAT, VAItems.STEEL_LEGGINGS).input('X', VAItems.STEEL_INGOT).pattern("XXX").pattern("X X").pattern("X X").criterion("has_steel_ingot", conditionsFromItem(VAItems.STEEL_INGOT)).offerTo(this.exporter);
-            ShapedRecipeJsonBuilder.create(this.registryLookup, RecipeCategory.TOOLS, VAItems.STEEL_PICKAXE).input('#', Items.STICK).input('X', VAItems.STEEL_INGOT).pattern("XXX").pattern(" # ").pattern(" # ").criterion("has_steel_ingot", conditionsFromItem(VAItems.STEEL_INGOT)).offerTo(this.exporter);
-            ShapedRecipeJsonBuilder.create(this.registryLookup, RecipeCategory.TOOLS, VAItems.STEEL_SHOVEL).input('#', Items.STICK).input('X', VAItems.STEEL_INGOT).pattern("X").pattern("#").pattern("#").criterion("has_steel_ingot", conditionsFromItem(VAItems.STEEL_INGOT)).offerTo(this.exporter);
-            ShapedRecipeJsonBuilder.create(this.registryLookup, RecipeCategory.COMBAT, VAItems.STEEL_SWORD).input('#', Items.STICK).input('X', VAItems.STEEL_INGOT).pattern("X").pattern("X").pattern("#").criterion("has_steel_ingot", conditionsFromItem(VAItems.STEEL_INGOT)).offerTo(this.exporter);
-            ShapedRecipeJsonBuilder.create(this.registryLookup, RecipeCategory.COMBAT, VAItems.STEEL_SPEAR).input('#', Items.STICK).input('X', VAItems.STEEL_INGOT).pattern("  X").pattern(" # ").pattern("#  ").criterion("has_steel_ingot", conditionsFromItem(VAItems.STEEL_INGOT)).offerTo(this.exporter);
+            ShapedRecipeBuilder.shaped(this.registryLookup, RecipeCategory.TOOLS, VAItems.STEEL_AXE).define('#', Items.STICK).define('X', VAItems.STEEL_INGOT).pattern("XX").pattern("X#").pattern(" #").unlockedBy("has_steel_ingot", has(VAItems.STEEL_INGOT)).save(this.output);
+            ShapedRecipeBuilder.shaped(this.registryLookup, RecipeCategory.COMBAT, VAItems.STEEL_BOOTS).define('X', VAItems.STEEL_INGOT).pattern("X X").pattern("X X").unlockedBy("has_steel_ingot", has(VAItems.STEEL_INGOT)).save(this.output);
+            ShapedRecipeBuilder.shaped(this.registryLookup, RecipeCategory.COMBAT, VAItems.STEEL_CHESTPLATE).define('X', VAItems.STEEL_INGOT).pattern("X X").pattern("XXX").pattern("XXX").unlockedBy("has_steel_ingot", has(VAItems.STEEL_INGOT)).save(this.output);
+            ShapedRecipeBuilder.shaped(this.registryLookup, RecipeCategory.COMBAT, VAItems.STEEL_HELMET).define('X', VAItems.STEEL_INGOT).pattern("XXX").pattern("X X").unlockedBy("has_steel_ingot", has(VAItems.STEEL_INGOT)).save(this.output);
+            ShapedRecipeBuilder.shaped(this.registryLookup, RecipeCategory.COMBAT, VAItems.STEEL_HORSE_ARMOR).define('X', VAItems.STEEL_INGOT).pattern("X X").pattern("XXX").pattern("X X").unlockedBy("has_steel_ingot", has(VAItems.STEEL_INGOT)).save(this.output);
+            ShapedRecipeBuilder.shaped(this.registryLookup, RecipeCategory.TOOLS, VAItems.STEEL_HOE).define('#', Items.STICK).define('X', VAItems.STEEL_INGOT).pattern("XX").pattern(" #").pattern(" #").unlockedBy("has_steel_ingot", has(VAItems.STEEL_INGOT)).save(this.output);
+            ShapedRecipeBuilder.shaped(this.registryLookup, RecipeCategory.COMBAT, VAItems.STEEL_LEGGINGS).define('X', VAItems.STEEL_INGOT).pattern("XXX").pattern("X X").pattern("X X").unlockedBy("has_steel_ingot", has(VAItems.STEEL_INGOT)).save(this.output);
+            ShapedRecipeBuilder.shaped(this.registryLookup, RecipeCategory.TOOLS, VAItems.STEEL_PICKAXE).define('#', Items.STICK).define('X', VAItems.STEEL_INGOT).pattern("XXX").pattern(" # ").pattern(" # ").unlockedBy("has_steel_ingot", has(VAItems.STEEL_INGOT)).save(this.output);
+            ShapedRecipeBuilder.shaped(this.registryLookup, RecipeCategory.TOOLS, VAItems.STEEL_SHOVEL).define('#', Items.STICK).define('X', VAItems.STEEL_INGOT).pattern("X").pattern("#").pattern("#").unlockedBy("has_steel_ingot", has(VAItems.STEEL_INGOT)).save(this.output);
+            ShapedRecipeBuilder.shaped(this.registryLookup, RecipeCategory.COMBAT, VAItems.STEEL_SWORD).define('#', Items.STICK).define('X', VAItems.STEEL_INGOT).pattern("X").pattern("X").pattern("#").unlockedBy("has_steel_ingot", has(VAItems.STEEL_INGOT)).save(this.output);
+            ShapedRecipeBuilder.shaped(this.registryLookup, RecipeCategory.COMBAT, VAItems.STEEL_SPEAR).define('#', Items.STICK).define('X', VAItems.STEEL_INGOT).pattern("  X").pattern(" # ").pattern("#  ").unlockedBy("has_steel_ingot", has(VAItems.STEEL_INGOT)).save(this.output);
 
             this.createHalberdRecipe(ItemTags.PLANKS, VAItems.WOODEN_HALBERD);
             this.createHalberdRecipe(ItemTags.STONE_TOOL_MATERIALS, VAItems.STONE_HALBERD);
@@ -229,7 +235,7 @@ public final class VARecipeProvider {
             this.createHalberdRecipe(Items.GOLD_INGOT, VAItems.GOLDEN_HALBERD);
             this.createHalberdRecipe(VAItems.STEEL_INGOT, VAItems.STEEL_HALBERD);
             this.createHalberdRecipe(Items.DIAMOND, VAItems.DIAMOND_HALBERD);
-            this.offerNetheriteUpgradeRecipe(VAItems.DIAMOND_HALBERD, RecipeCategory.COMBAT, VAItems.NETHERITE_HALBERD);
+            this.netheriteSmithing(VAItems.DIAMOND_HALBERD, RecipeCategory.COMBAT, VAItems.NETHERITE_HALBERD);
 
             this.offerToolGildRecipe(VAItemTags.ACCEPTS_TOOL_GILDS, Items.AMETHYST_SHARD, VAGildTypes.AMETHYST);
             this.offerToolGildRecipe(VAItemTags.ACCEPTS_TOOL_GILDS, Items.COPPER_INGOT, VAGildTypes.COPPER);
@@ -251,31 +257,31 @@ public final class VARecipeProvider {
             this.completeDyablesRecipes(wool, vanillaWool, virtualAdditionsWool, "wool", RecipeCategory.BUILDING_BLOCKS);
             this.completeDyablesRecipes(carpets, vanillaCarpets, virtualAdditionsCarpets, "carpet", RecipeCategory.BUILDING_BLOCKS);
             this.completeDyablesRecipes(harnesses, vanillaHarnesses, virtualAdditionsHarnesses, "harness", RecipeCategory.BUILDING_BLOCKS);
-            this.offerDyeablesRecipes(dyes, silkbulbs, VAItems.SILKBULB, "silkbulb", RecipeCategory.BUILDING_BLOCKS);
+            this.colorWithDye(dyes, silkbulbs, VAItems.SILKBULB, "silkbulb", RecipeCategory.BUILDING_BLOCKS);
 
-            TransmuteRecipeJsonBuilder.create(RecipeCategory.TOOLS, Ingredient.ofTag(this.registryLookup.getOrThrow(ItemTags.BUNDLES)), Ingredient.ofItems(VAItems.CHARTREUSE_DYE), VAItems.CHARTREUSE_BUNDLE).criterion(hasItem(VAItems.CHARTREUSE_DYE), this.conditionsFromItem(VAItems.CHARTREUSE_DYE)).group("bundle_dye").offerTo(exporter);
-            TransmuteRecipeJsonBuilder.create(RecipeCategory.TOOLS, Ingredient.ofTag(this.registryLookup.getOrThrow(ItemTags.BUNDLES)), Ingredient.ofItems(VAItems.MAROON_DYE), VAItems.MAROON_BUNDLE).criterion(hasItem(VAItems.MAROON_DYE), this.conditionsFromItem(VAItems.MAROON_DYE)).group("bundle_dye").offerTo(exporter);
-            TransmuteRecipeJsonBuilder.create(RecipeCategory.TOOLS, Ingredient.ofTag(this.registryLookup.getOrThrow(ItemTags.BUNDLES)), Ingredient.ofItems(VAItems.INDIGO_DYE), VAItems.INDIGO_BUNDLE).criterion(hasItem(VAItems.INDIGO_DYE), this.conditionsFromItem(VAItems.INDIGO_DYE)).group("bundle_dye").offerTo(exporter);
-            TransmuteRecipeJsonBuilder.create(RecipeCategory.TOOLS, Ingredient.ofTag(this.registryLookup.getOrThrow(ItemTags.BUNDLES)), Ingredient.ofItems(VAItems.PLUM_DYE), VAItems.PLUM_BUNDLE).criterion(hasItem(VAItems.PLUM_DYE), this.conditionsFromItem(VAItems.PLUM_DYE)).group("bundle_dye").offerTo(exporter);
-            TransmuteRecipeJsonBuilder.create(RecipeCategory.TOOLS, Ingredient.ofTag(this.registryLookup.getOrThrow(ItemTags.BUNDLES)), Ingredient.ofItems(VAItems.VIRIDIAN_DYE), VAItems.VIRIDIAN_BUNDLE).criterion(hasItem(VAItems.VIRIDIAN_DYE), this.conditionsFromItem(VAItems.VIRIDIAN_DYE)).group("bundle_dye").offerTo(exporter);
-            TransmuteRecipeJsonBuilder.create(RecipeCategory.TOOLS, Ingredient.ofTag(this.registryLookup.getOrThrow(ItemTags.BUNDLES)), Ingredient.ofItems(VAItems.TAN_DYE), VAItems.TAN_BUNDLE).criterion(hasItem(VAItems.TAN_DYE), this.conditionsFromItem(VAItems.TAN_DYE)).group("bundle_dye").offerTo(exporter);
-            TransmuteRecipeJsonBuilder.create(RecipeCategory.TOOLS, Ingredient.ofTag(this.registryLookup.getOrThrow(ItemTags.BUNDLES)), Ingredient.ofItems(VAItems.SINOPIA_DYE), VAItems.SINOPIA_BUNDLE).criterion(hasItem(VAItems.SINOPIA_DYE), this.conditionsFromItem(VAItems.SINOPIA_DYE)).group("bundle_dye").offerTo(exporter);
-            TransmuteRecipeJsonBuilder.create(RecipeCategory.TOOLS, Ingredient.ofTag(this.registryLookup.getOrThrow(ItemTags.BUNDLES)), Ingredient.ofItems(VAItems.LILAC_DYE), VAItems.LILAC_BUNDLE).criterion(hasItem(VAItems.LILAC_DYE), this.conditionsFromItem(VAItems.LILAC_DYE)).group("bundle_dye").offerTo(exporter);
+            TransmuteRecipeBuilder.transmute(RecipeCategory.TOOLS, Ingredient.of(this.registryLookup.getOrThrow(ItemTags.BUNDLES)), Ingredient.of(VAItems.CHARTREUSE_DYE), VAItems.CHARTREUSE_BUNDLE).unlockedBy(getHasName(VAItems.CHARTREUSE_DYE), this.has(VAItems.CHARTREUSE_DYE)).group("bundle_dye").save(output);
+            TransmuteRecipeBuilder.transmute(RecipeCategory.TOOLS, Ingredient.of(this.registryLookup.getOrThrow(ItemTags.BUNDLES)), Ingredient.of(VAItems.MAROON_DYE), VAItems.MAROON_BUNDLE).unlockedBy(getHasName(VAItems.MAROON_DYE), this.has(VAItems.MAROON_DYE)).group("bundle_dye").save(output);
+            TransmuteRecipeBuilder.transmute(RecipeCategory.TOOLS, Ingredient.of(this.registryLookup.getOrThrow(ItemTags.BUNDLES)), Ingredient.of(VAItems.INDIGO_DYE), VAItems.INDIGO_BUNDLE).unlockedBy(getHasName(VAItems.INDIGO_DYE), this.has(VAItems.INDIGO_DYE)).group("bundle_dye").save(output);
+            TransmuteRecipeBuilder.transmute(RecipeCategory.TOOLS, Ingredient.of(this.registryLookup.getOrThrow(ItemTags.BUNDLES)), Ingredient.of(VAItems.PLUM_DYE), VAItems.PLUM_BUNDLE).unlockedBy(getHasName(VAItems.PLUM_DYE), this.has(VAItems.PLUM_DYE)).group("bundle_dye").save(output);
+            TransmuteRecipeBuilder.transmute(RecipeCategory.TOOLS, Ingredient.of(this.registryLookup.getOrThrow(ItemTags.BUNDLES)), Ingredient.of(VAItems.VIRIDIAN_DYE), VAItems.VIRIDIAN_BUNDLE).unlockedBy(getHasName(VAItems.VIRIDIAN_DYE), this.has(VAItems.VIRIDIAN_DYE)).group("bundle_dye").save(output);
+            TransmuteRecipeBuilder.transmute(RecipeCategory.TOOLS, Ingredient.of(this.registryLookup.getOrThrow(ItemTags.BUNDLES)), Ingredient.of(VAItems.TAN_DYE), VAItems.TAN_BUNDLE).unlockedBy(getHasName(VAItems.TAN_DYE), this.has(VAItems.TAN_DYE)).group("bundle_dye").save(output);
+            TransmuteRecipeBuilder.transmute(RecipeCategory.TOOLS, Ingredient.of(this.registryLookup.getOrThrow(ItemTags.BUNDLES)), Ingredient.of(VAItems.SINOPIA_DYE), VAItems.SINOPIA_BUNDLE).unlockedBy(getHasName(VAItems.SINOPIA_DYE), this.has(VAItems.SINOPIA_DYE)).group("bundle_dye").save(output);
+            TransmuteRecipeBuilder.transmute(RecipeCategory.TOOLS, Ingredient.of(this.registryLookup.getOrThrow(ItemTags.BUNDLES)), Ingredient.of(VAItems.LILAC_DYE), VAItems.LILAC_BUNDLE).unlockedBy(getHasName(VAItems.LILAC_DYE), this.has(VAItems.LILAC_DYE)).group("bundle_dye").save(output);
 
-            TransmuteRecipeJsonBuilder.create(RecipeCategory.TOOLS, Ingredient.ofItems(Items.SHULKER_BOX), Ingredient.ofItems(VAItems.CHARTREUSE_DYE), VAItems.CHARTREUSE_SHULKER_BOX).criterion("has_shulker_box", this.conditionsFromItem(Items.SHULKER_BOX)).offerTo(exporter);
-            TransmuteRecipeJsonBuilder.create(RecipeCategory.TOOLS, Ingredient.ofItems(Items.SHULKER_BOX), Ingredient.ofItems(VAItems.MAROON_DYE), VAItems.MAROON_SHULKER_BOX).criterion("has_shulker_box", this.conditionsFromItem(Items.SHULKER_BOX)).offerTo(exporter);
-            TransmuteRecipeJsonBuilder.create(RecipeCategory.TOOLS, Ingredient.ofItems(Items.SHULKER_BOX), Ingredient.ofItems(VAItems.INDIGO_DYE), VAItems.INDIGO_SHULKER_BOX).criterion("has_shulker_box", this.conditionsFromItem(Items.SHULKER_BOX)).offerTo(exporter);
-            TransmuteRecipeJsonBuilder.create(RecipeCategory.TOOLS, Ingredient.ofItems(Items.SHULKER_BOX), Ingredient.ofItems(VAItems.PLUM_DYE), VAItems.PLUM_SHULKER_BOX).criterion("has_shulker_box", this.conditionsFromItem(Items.SHULKER_BOX)).offerTo(exporter);
-            TransmuteRecipeJsonBuilder.create(RecipeCategory.TOOLS, Ingredient.ofItems(Items.SHULKER_BOX), Ingredient.ofItems(VAItems.VIRIDIAN_DYE), VAItems.VIRIDIAN_SHULKER_BOX).criterion("has_shulker_box", this.conditionsFromItem(Items.SHULKER_BOX)).offerTo(exporter);
-            TransmuteRecipeJsonBuilder.create(RecipeCategory.TOOLS, Ingredient.ofItems(Items.SHULKER_BOX), Ingredient.ofItems(VAItems.TAN_DYE), VAItems.TAN_SHULKER_BOX).criterion("has_shulker_box", this.conditionsFromItem(Items.SHULKER_BOX)).offerTo(exporter);
-            TransmuteRecipeJsonBuilder.create(RecipeCategory.TOOLS, Ingredient.ofItems(Items.SHULKER_BOX), Ingredient.ofItems(VAItems.SINOPIA_DYE), VAItems.SINOPIA_SHULKER_BOX).criterion("has_shulker_box", this.conditionsFromItem(Items.SHULKER_BOX)).offerTo(exporter);
-            TransmuteRecipeJsonBuilder.create(RecipeCategory.TOOLS, Ingredient.ofItems(Items.SHULKER_BOX), Ingredient.ofItems(VAItems.LILAC_DYE), VAItems.LILAC_SHULKER_BOX).criterion("has_shulker_box", this.conditionsFromItem(Items.SHULKER_BOX)).offerTo(exporter);
+            TransmuteRecipeBuilder.transmute(RecipeCategory.TOOLS, Ingredient.of(Items.SHULKER_BOX), Ingredient.of(VAItems.CHARTREUSE_DYE), VAItems.CHARTREUSE_SHULKER_BOX).unlockedBy("has_shulker_box", this.has(Items.SHULKER_BOX)).save(output);
+            TransmuteRecipeBuilder.transmute(RecipeCategory.TOOLS, Ingredient.of(Items.SHULKER_BOX), Ingredient.of(VAItems.MAROON_DYE), VAItems.MAROON_SHULKER_BOX).unlockedBy("has_shulker_box", this.has(Items.SHULKER_BOX)).save(output);
+            TransmuteRecipeBuilder.transmute(RecipeCategory.TOOLS, Ingredient.of(Items.SHULKER_BOX), Ingredient.of(VAItems.INDIGO_DYE), VAItems.INDIGO_SHULKER_BOX).unlockedBy("has_shulker_box", this.has(Items.SHULKER_BOX)).save(output);
+            TransmuteRecipeBuilder.transmute(RecipeCategory.TOOLS, Ingredient.of(Items.SHULKER_BOX), Ingredient.of(VAItems.PLUM_DYE), VAItems.PLUM_SHULKER_BOX).unlockedBy("has_shulker_box", this.has(Items.SHULKER_BOX)).save(output);
+            TransmuteRecipeBuilder.transmute(RecipeCategory.TOOLS, Ingredient.of(Items.SHULKER_BOX), Ingredient.of(VAItems.VIRIDIAN_DYE), VAItems.VIRIDIAN_SHULKER_BOX).unlockedBy("has_shulker_box", this.has(Items.SHULKER_BOX)).save(output);
+            TransmuteRecipeBuilder.transmute(RecipeCategory.TOOLS, Ingredient.of(Items.SHULKER_BOX), Ingredient.of(VAItems.TAN_DYE), VAItems.TAN_SHULKER_BOX).unlockedBy("has_shulker_box", this.has(Items.SHULKER_BOX)).save(output);
+            TransmuteRecipeBuilder.transmute(RecipeCategory.TOOLS, Ingredient.of(Items.SHULKER_BOX), Ingredient.of(VAItems.SINOPIA_DYE), VAItems.SINOPIA_SHULKER_BOX).unlockedBy("has_shulker_box", this.has(Items.SHULKER_BOX)).save(output);
+            TransmuteRecipeBuilder.transmute(RecipeCategory.TOOLS, Ingredient.of(Items.SHULKER_BOX), Ingredient.of(VAItems.LILAC_DYE), VAItems.LILAC_SHULKER_BOX).unlockedBy("has_shulker_box", this.has(Items.SHULKER_BOX)).save(output);
 
             this.createColoringRecipeSet(ItemTags.BUNDLES, bundles);
             this.createColoringRecipeSet(ItemTags.HARNESSES, harnesses);
 
             for(int i = 0; i < virtualAdditionsHarnesses.size(); ++i) {
-                this.offerHarness(virtualAdditionsHarnesses.get(i), virtualAdditionsWool.get(i));
+                this.harness(virtualAdditionsHarnesses.get(i), virtualAdditionsWool.get(i));
             }
 
             this.offerColoringStationRecipes(
@@ -305,282 +311,282 @@ public final class VARecipeProvider {
                     VACollections.LILAC
             );
 
-            this.offerSmithingTrimRecipe(VAItems.EXOSKELETON_ARMOR_TRIM_SMITHING_TEMPLATE, VAArmorTrimPatterns.EXOSKELETON, RegistryKey.of(RegistryKeys.RECIPE, idOf("exoskeleton_armor_trim_smithing_template_smithing_trim")));
-            this.offerSmithingTemplateCopyingRecipe(VAItems.EXOSKELETON_ARMOR_TRIM_SMITHING_TEMPLATE, VAItems.SILK_BLOCK);
+            this.trimSmithing(VAItems.EXOSKELETON_ARMOR_TRIM_SMITHING_TEMPLATE, VAArmorTrimPatterns.EXOSKELETON, ResourceKey.create(Registries.RECIPE, idOf("exoskeleton_armor_trim_smithing_template_smithing_trim")));
+            this.copySmithingTemplate(VAItems.EXOSKELETON_ARMOR_TRIM_SMITHING_TEMPLATE, VAItems.SILK_BLOCK);
 
-            this.offerSmithingTrimRecipe(VAItems.ROBE_ARMOR_TRIM_SMITHING_TEMPLATE, VAArmorTrimPatterns.ROBE, RegistryKey.of(RegistryKeys.RECIPE, idOf("robe_armor_trim_smithing_template_smithing_trim")));
-            this.offerSmithingTemplateCopyingRecipe(VAItems.ROBE_ARMOR_TRIM_SMITHING_TEMPLATE, VAItems.SPECTRAL_SAND);
+            this.trimSmithing(VAItems.ROBE_ARMOR_TRIM_SMITHING_TEMPLATE, VAArmorTrimPatterns.ROBE, ResourceKey.create(Registries.RECIPE, idOf("robe_armor_trim_smithing_template_smithing_trim")));
+            this.copySmithingTemplate(VAItems.ROBE_ARMOR_TRIM_SMITHING_TEMPLATE, VAItems.SPECTRAL_SAND);
 
             this.offerStonecuttingRecipes(VABlocks.ROCK_SALT_BLOCK, VACollections.ROCK_SALT_BRICKS);
             this.generateCuttableFamilyChain(VACollections.ROCK_SALT_BRICKS);
             this.offer2x2ConversionChain(VABlocks.ROCK_SALT_BLOCK, VABlocks.ROCK_SALT_BRICKS);
-            this.offerChiseledBlockRecipe(RecipeCategory.BUILDING_BLOCKS, VAItems.CHISELED_ROCK_SALT_BRICKS, VAItems.ROCK_SALT_BRICK_SLAB);
-            this.offerStonecuttingRecipe(RecipeCategory.BUILDING_BLOCKS, VAItems.CHISELED_ROCK_SALT_BRICKS, VAItems.ROCK_SALT_BRICKS);
-            this.offerStonecuttingRecipe(RecipeCategory.BUILDING_BLOCKS, VAItems.CHISELED_ROCK_SALT_BRICKS, VAItems.ROCK_SALT_BLOCK);
+            this.chiseled(RecipeCategory.BUILDING_BLOCKS, VAItems.CHISELED_ROCK_SALT_BRICKS, VAItems.ROCK_SALT_BRICK_SLAB);
+            this.stonecutterResultFromBase(RecipeCategory.BUILDING_BLOCKS, VAItems.CHISELED_ROCK_SALT_BRICKS, VAItems.ROCK_SALT_BRICKS);
+            this.stonecutterResultFromBase(RecipeCategory.BUILDING_BLOCKS, VAItems.CHISELED_ROCK_SALT_BRICKS, VAItems.ROCK_SALT_BLOCK);
 
-            this.generateFamily(VACollections.SOULBLOOM, FeatureFlags.VANILLA_FEATURES);
-            this.offerBarkBlockRecipe(VAItems.SOULBLOOM_WOOD, VAItems.SOULBLOOM_LOG);
-            this.offerBarkBlockRecipe(VAItems.STRIPPED_SOULBLOOM_WOOD, VAItems.STRIPPED_SOULBLOOM_LOG);
-            this.offerPlanksRecipe2(VAItems.SOULBLOOM_PLANKS, VAItemTags.SOULBLOOM_LOGS, 4);
-            this.offerHangingSignRecipe(VAItems.SOULBLOOM_HANGING_SIGN, VAItems.STRIPPED_SOULBLOOM_LOG);
+            this.generateRecipes(VACollections.SOULBLOOM, FeatureFlags.VANILLA_SET);
+            this.woodFromLogs(VAItems.SOULBLOOM_WOOD, VAItems.SOULBLOOM_LOG);
+            this.woodFromLogs(VAItems.STRIPPED_SOULBLOOM_WOOD, VAItems.STRIPPED_SOULBLOOM_LOG);
+            this.planksFromLog(VAItems.SOULBLOOM_PLANKS, VAItemTags.SOULBLOOM_LOGS, 4);
+            this.hangingSign(VAItems.SOULBLOOM_HANGING_SIGN, VAItems.STRIPPED_SOULBLOOM_LOG);
             this.offerHedgeRecipe(VABlocks.SOULBLOOM_HEDGE, VABlocks.SOULBLOOM_LEAVES);
-            this.offerBoatRecipe(VAItems.SOULBLOOM_BOAT, VABlocks.SOULBLOOM_PLANKS);
-            this.offerChestBoatRecipe(VAItems.SOULBLOOM_CHEST_BOAT, VAItems.SOULBLOOM_BOAT);
-            this.offerShelfRecipe(VAItems.SOULBLOOM_SHELF, VAItems.STRIPPED_SOULBLOOM_LOG);
+            this.woodenBoat(VAItems.SOULBLOOM_BOAT, VABlocks.SOULBLOOM_PLANKS);
+            this.chestBoat(VAItems.SOULBLOOM_CHEST_BOAT, VAItems.SOULBLOOM_BOAT);
+            this.shelf(VAItems.SOULBLOOM_SHELF, VAItems.STRIPPED_SOULBLOOM_LOG);
 
-            this.generateFamily(VACollections.WITHERED, FeatureFlags.VANILLA_FEATURES);
-            this.offerBarkBlockRecipe(VAItems.WITHERED_WOOD, VAItems.WITHERED_LOG);
-            this.offerBarkBlockRecipe(VAItems.STRIPPED_WITHERED_WOOD, VAItems.STRIPPED_WITHERED_LOG);
-            this.offerPlanksRecipe2(VAItems.WITHERED_PLANKS, VAItemTags.WITHERED_LOGS, 4);
-            this.offerHangingSignRecipe(VAItems.WITHERED_HANGING_SIGN, VAItems.STRIPPED_WITHERED_LOG);
+            this.generateRecipes(VACollections.WITHERED, FeatureFlags.VANILLA_SET);
+            this.woodFromLogs(VAItems.WITHERED_WOOD, VAItems.WITHERED_LOG);
+            this.woodFromLogs(VAItems.STRIPPED_WITHERED_WOOD, VAItems.STRIPPED_WITHERED_LOG);
+            this.planksFromLog(VAItems.WITHERED_PLANKS, VAItemTags.WITHERED_LOGS, 4);
+            this.hangingSign(VAItems.WITHERED_HANGING_SIGN, VAItems.STRIPPED_WITHERED_LOG);
             this.offerHedgeRecipe(VABlocks.WITHERED_HEDGE, VABlocks.WITHERED_LEAVES);
-            this.offerShelfRecipe(VAItems.WITHERED_SHELF, VAItems.STRIPPED_WITHERED_LOG);
+            this.shelf(VAItems.WITHERED_SHELF, VAItems.STRIPPED_WITHERED_LOG);
 
 
-            ShapedRecipeJsonBuilder.create(this.registryLookup, RecipeCategory.DECORATIONS, VAItems.BONE_PILE, 4)
+            ShapedRecipeBuilder.shaped(this.registryLookup, RecipeCategory.DECORATIONS, VAItems.BONE_PILE, 4)
                     .pattern("bBb")
-                    .input('B', Items.BONE_BLOCK).input('b', Items.BONE)
-                    .criterion("has_bone_block", conditionsFromItem(Items.BONE_BLOCK)).offerTo(exporter);
-            ShapelessRecipeJsonBuilder.create(this.registryLookup, RecipeCategory.DECORATIONS, VAItems.BONE_LITTER, 2)
-                            .input(VAItems.BONE_PILE).criterion("has_bone_pile", conditionsFromItem(VAItems.BONE_PILE)).offerTo(exporter);
-            ShapelessRecipeJsonBuilder.create(this.registryLookup, RecipeCategory.MISC, Items.BONE_MEAL)
-                            .input(VAItems.BONE_LITTER).criterion("has_bone_litter", conditionsFromItem(VAItems.BONE_PILE)).offerTo(exporter);
+                    .define('B', Items.BONE_BLOCK).define('b', Items.BONE)
+                    .unlockedBy("has_bone_block", has(Items.BONE_BLOCK)).save(output);
+            ShapelessRecipeBuilder.shapeless(this.registryLookup, RecipeCategory.DECORATIONS, VAItems.BONE_LITTER, 2)
+                            .requires(VAItems.BONE_PILE).unlockedBy("has_bone_pile", has(VAItems.BONE_PILE)).save(output);
+            ShapelessRecipeBuilder.shapeless(this.registryLookup, RecipeCategory.MISC, Items.BONE_MEAL)
+                            .requires(VAItems.BONE_LITTER).unlockedBy("has_bone_litter", has(VAItems.BONE_PILE)).save(output);
 
-            offerCompactingRecipe(RecipeCategory.BUILDING_BLOCKS, VABlocks.SPECTRAL_SAND, VAItems.SPECTRAL_POWDER);
+            threeByThreePacker(RecipeCategory.BUILDING_BLOCKS, VABlocks.SPECTRAL_SAND, VAItems.SPECTRAL_POWDER);
 
-            ShapedRecipeJsonBuilder.create(this.registryLookup, RecipeCategory.BUILDING_BLOCKS, VAItems.SPECTRAL_TORCH, 4)
+            ShapedRecipeBuilder.shaped(this.registryLookup, RecipeCategory.BUILDING_BLOCKS, VAItems.SPECTRAL_TORCH, 4)
                             .pattern("c")
                             .pattern("/")
                             .pattern("p")
-                            .input('c', Items.COAL).input('/', Items.STICK).input('p', VAItems.SPECTRAL_POWDER)
-                    .criterion("has_spectral_powder", conditionsFromItem(VAItems.SPECTRAL_POWDER)).offerTo(exporter);
+                            .define('c', Items.COAL).define('/', Items.STICK).define('p', VAItems.SPECTRAL_POWDER)
+                    .unlockedBy("has_spectral_powder", has(VAItems.SPECTRAL_POWDER)).save(output);
 
-            ShapedRecipeJsonBuilder.create(this.registryLookup, RecipeCategory.BUILDING_BLOCKS, VAItems.SPECTRAL_LANTERN)
+            ShapedRecipeBuilder.shaped(this.registryLookup, RecipeCategory.BUILDING_BLOCKS, VAItems.SPECTRAL_LANTERN)
                             .pattern("iii")
                             .pattern("iti")
                             .pattern("iii")
-                            .input('i', Items.IRON_NUGGET).input('t', VAItems.SPECTRAL_TORCH)
-                    .criterion("has_spectral_torch", conditionsFromItem(VAItems.SPECTRAL_TORCH)).offerTo(exporter);
+                            .define('i', Items.IRON_NUGGET).define('t', VAItems.SPECTRAL_TORCH)
+                    .unlockedBy("has_spectral_torch", has(VAItems.SPECTRAL_TORCH)).save(output);
 
-            ShapedRecipeJsonBuilder.create(this.registryLookup, RecipeCategory.TOOLS, VAItems.SPECTRAL_SPYGLASS)
+            ShapedRecipeBuilder.shaped(this.registryLookup, RecipeCategory.TOOLS, VAItems.SPECTRAL_SPYGLASS)
                             .pattern("sss")
                             .pattern("sps")
                             .pattern("sss")
-                            .input('s', VAItems.SPECTRAL_POWDER).input('p', Items.SPYGLASS)
-                    .criterion("has_spectral_powder", conditionsFromItem(VAItems.SPECTRAL_POWDER)).offerTo(exporter);
+                            .define('s', VAItems.SPECTRAL_POWDER).define('p', Items.SPYGLASS)
+                    .unlockedBy("has_spectral_powder", has(VAItems.SPECTRAL_POWDER)).save(output);
 
 
-            ShapelessRecipeJsonBuilder.create(this.registryLookup, RecipeCategory.MISC, VAItems.MAROON_DYE, 2)
-                    .input(Ingredient.ofItems(Items.RED_DYE), 1)
-                    .input(Ingredient.ofItems(Items.BLACK_DYE), 1)
-                    .criterion("has_dye", conditionsFromItem(Items.RED_DYE)).offerTo(this.exporter);
+            ShapelessRecipeBuilder.shapeless(this.registryLookup, RecipeCategory.MISC, VAItems.MAROON_DYE, 2)
+                    .requires(Ingredient.of(Items.RED_DYE), 1)
+                    .requires(Ingredient.of(Items.BLACK_DYE), 1)
+                    .unlockedBy("has_dye", has(Items.RED_DYE)).save(this.output);
 
 
-            ShapelessRecipeJsonBuilder.create(this.registryLookup, RecipeCategory.MISC, VAItems.CHARTREUSE_DYE, 2).group("chartreuse_dye")
-                    .input(Ingredient.ofItems(Items.LIME_DYE), 1)
-                    .input(Ingredient.ofItems(Items.YELLOW_DYE), 1)
-                    .criterion("has_dye", conditionsFromItem(Items.LIME_DYE)).offerTo(this.exporter);
+            ShapelessRecipeBuilder.shapeless(this.registryLookup, RecipeCategory.MISC, VAItems.CHARTREUSE_DYE, 2).group("chartreuse_dye")
+                    .requires(Ingredient.of(Items.LIME_DYE), 1)
+                    .requires(Ingredient.of(Items.YELLOW_DYE), 1)
+                    .unlockedBy("has_dye", has(Items.LIME_DYE)).save(this.output);
 
-            ShapelessRecipeJsonBuilder.create(this.registryLookup, RecipeCategory.MISC, VAItems.CHARTREUSE_DYE, 3).group("chartreuse_dye")
-                    .input(Ingredient.ofItems(Items.GREEN_DYE), 1)
-                    .input(Ingredient.ofItems(Items.WHITE_DYE), 1)
-                    .input(Ingredient.ofItems(Items.YELLOW_DYE), 1)
-                    .criterion("has_dye", conditionsFromItem(Items.YELLOW_DYE)).offerTo(this.exporter, idOf("chartreuse_dye_from_green_white_yellow_dye").toString());
+            ShapelessRecipeBuilder.shapeless(this.registryLookup, RecipeCategory.MISC, VAItems.CHARTREUSE_DYE, 3).group("chartreuse_dye")
+                    .requires(Ingredient.of(Items.GREEN_DYE), 1)
+                    .requires(Ingredient.of(Items.WHITE_DYE), 1)
+                    .requires(Ingredient.of(Items.YELLOW_DYE), 1)
+                    .unlockedBy("has_dye", has(Items.YELLOW_DYE)).save(this.output, idOf("chartreuse_dye_from_green_white_yellow_dye").toString());
 
-            ShapelessRecipeJsonBuilder.create(this.registryLookup, RecipeCategory.MISC, VAItems.INDIGO_DYE, 2).group("indigo_dye")
-                    .input(Ingredient.ofItems(Items.BLUE_DYE), 1)
-                    .input(Ingredient.ofItems(Items.PURPLE_DYE), 1)
-                    .criterion("has_dye", conditionsFromItem(Items.PURPLE_DYE)).offerTo(this.exporter);
+            ShapelessRecipeBuilder.shapeless(this.registryLookup, RecipeCategory.MISC, VAItems.INDIGO_DYE, 2).group("indigo_dye")
+                    .requires(Ingredient.of(Items.BLUE_DYE), 1)
+                    .requires(Ingredient.of(Items.PURPLE_DYE), 1)
+                    .unlockedBy("has_dye", has(Items.PURPLE_DYE)).save(this.output);
 
-            ShapelessRecipeJsonBuilder.create(this.registryLookup, RecipeCategory.MISC, VAItems.INDIGO_DYE, 3).group("indigo_dye")
-                    .input(Ingredient.ofItems(Items.BLUE_DYE), 2)
-                    .input(Ingredient.ofItems(Items.RED_DYE), 1)
-                    .criterion("has_dye", conditionsFromItem(Items.BLUE_DYE)).offerTo(this.exporter, idOf("indigo_dye_from_blue_blue_red_dye").toString());
+            ShapelessRecipeBuilder.shapeless(this.registryLookup, RecipeCategory.MISC, VAItems.INDIGO_DYE, 3).group("indigo_dye")
+                    .requires(Ingredient.of(Items.BLUE_DYE), 2)
+                    .requires(Ingredient.of(Items.RED_DYE), 1)
+                    .unlockedBy("has_dye", has(Items.BLUE_DYE)).save(this.output, idOf("indigo_dye_from_blue_blue_red_dye").toString());
 
-            ShapelessRecipeJsonBuilder.create(this.registryLookup, RecipeCategory.MISC, VAItems.PLUM_DYE, 2).group("plum_dye")
-                    .input(Ingredient.ofItems(Items.PURPLE_DYE), 1)
-                    .input(Ingredient.ofItems(VAItems.MAROON_DYE), 1)
-                    .criterion("has_dye", conditionsFromItem(Items.PURPLE_DYE)).offerTo(this.exporter);
+            ShapelessRecipeBuilder.shapeless(this.registryLookup, RecipeCategory.MISC, VAItems.PLUM_DYE, 2).group("plum_dye")
+                    .requires(Ingredient.of(Items.PURPLE_DYE), 1)
+                    .requires(Ingredient.of(VAItems.MAROON_DYE), 1)
+                    .unlockedBy("has_dye", has(Items.PURPLE_DYE)).save(this.output);
 
-            ShapelessRecipeJsonBuilder.create(this.registryLookup, RecipeCategory.MISC, VAItems.PLUM_DYE, 3).group("plum_dye")
-                    .input(Ingredient.ofItems(Items.BLUE_DYE), 1)
-                    .input(Ingredient.ofItems(Items.RED_DYE), 1)
-                    .input(Ingredient.ofItems(VAItems.MAROON_DYE), 1)
-                    .criterion("has_dye", conditionsFromItem(VAItems.MAROON_DYE)).offerTo(this.exporter, idOf("plum_from_blue_red_maroon_dye").toString());
+            ShapelessRecipeBuilder.shapeless(this.registryLookup, RecipeCategory.MISC, VAItems.PLUM_DYE, 3).group("plum_dye")
+                    .requires(Ingredient.of(Items.BLUE_DYE), 1)
+                    .requires(Ingredient.of(Items.RED_DYE), 1)
+                    .requires(Ingredient.of(VAItems.MAROON_DYE), 1)
+                    .unlockedBy("has_dye", has(VAItems.MAROON_DYE)).save(this.output, idOf("plum_from_blue_red_maroon_dye").toString());
 
-            ShapelessRecipeJsonBuilder.create(this.registryLookup, RecipeCategory.MISC, VAItems.PLUM_DYE, 4).group("plum_dye")
-                    .input(Ingredient.ofItems(Items.BLUE_DYE), 1)
-                    .input(Ingredient.ofItems(Items.RED_DYE), 2)
-                    .input(Ingredient.ofItems(Items.BLACK_DYE), 1)
-                    .criterion("has_dye", conditionsFromItem(Items.RED_DYE)).offerTo(this.exporter, idOf("plum_from_blue_red_red_black_dye").toString());
+            ShapelessRecipeBuilder.shapeless(this.registryLookup, RecipeCategory.MISC, VAItems.PLUM_DYE, 4).group("plum_dye")
+                    .requires(Ingredient.of(Items.BLUE_DYE), 1)
+                    .requires(Ingredient.of(Items.RED_DYE), 2)
+                    .requires(Ingredient.of(Items.BLACK_DYE), 1)
+                    .unlockedBy("has_dye", has(Items.RED_DYE)).save(this.output, idOf("plum_from_blue_red_red_black_dye").toString());
 
-            ShapelessRecipeJsonBuilder.create(this.registryLookup, RecipeCategory.MISC, VAItems.VIRIDIAN_DYE, 2).group("viridian_dye")
-                    .input(Ingredient.ofItems(Items.GREEN_DYE), 1)
-                    .input(Ingredient.ofItems(Items.CYAN_DYE), 1)
-                    .criterion("has_dye", conditionsFromItem(Items.CYAN_DYE)).offerTo(this.exporter);
+            ShapelessRecipeBuilder.shapeless(this.registryLookup, RecipeCategory.MISC, VAItems.VIRIDIAN_DYE, 2).group("viridian_dye")
+                    .requires(Ingredient.of(Items.GREEN_DYE), 1)
+                    .requires(Ingredient.of(Items.CYAN_DYE), 1)
+                    .unlockedBy("has_dye", has(Items.CYAN_DYE)).save(this.output);
 
-            ShapelessRecipeJsonBuilder.create(this.registryLookup, RecipeCategory.MISC, VAItems.VIRIDIAN_DYE, 3).group("viridian_dye")
-                    .input(Ingredient.ofItems(Items.GREEN_DYE), 2)
-                    .input(Ingredient.ofItems(Items.BLUE_DYE), 1)
-                    .criterion("has_dye", conditionsFromItem(Items.GREEN_DYE)).offerTo(this.exporter, idOf("viridian_from_green_green_blue_dye").toString());
+            ShapelessRecipeBuilder.shapeless(this.registryLookup, RecipeCategory.MISC, VAItems.VIRIDIAN_DYE, 3).group("viridian_dye")
+                    .requires(Ingredient.of(Items.GREEN_DYE), 2)
+                    .requires(Ingredient.of(Items.BLUE_DYE), 1)
+                    .unlockedBy("has_dye", has(Items.GREEN_DYE)).save(this.output, idOf("viridian_from_green_green_blue_dye").toString());
 
-            ShapelessRecipeJsonBuilder.create(this.registryLookup, RecipeCategory.MISC, VAItems.TAN_DYE, 2).group("tan_dye")
-                    .input(Ingredient.ofItems(Items.ORANGE_DYE), 1)
-                    .input(Ingredient.ofItems(Items.GRAY_DYE), 1)
-                    .criterion("has_dye", conditionsFromItem(Items.ORANGE_DYE)).offerTo(this.exporter);
+            ShapelessRecipeBuilder.shapeless(this.registryLookup, RecipeCategory.MISC, VAItems.TAN_DYE, 2).group("tan_dye")
+                    .requires(Ingredient.of(Items.ORANGE_DYE), 1)
+                    .requires(Ingredient.of(Items.GRAY_DYE), 1)
+                    .unlockedBy("has_dye", has(Items.ORANGE_DYE)).save(this.output);
 
-            ShapelessRecipeJsonBuilder.create(this.registryLookup, RecipeCategory.MISC, VAItems.TAN_DYE, 3).group("tan_dye")
-                    .input(Ingredient.ofItems(Items.RED_DYE), 1)
-                    .input(Ingredient.ofItems(Items.YELLOW_DYE), 1)
-                    .input(Ingredient.ofItems(Items.GRAY_DYE), 1)
-                    .criterion("has_dye", conditionsFromItem(Items.GRAY_DYE)).offerTo(this.exporter, idOf("tan_from_red_yellow_gray_dye").toString());
+            ShapelessRecipeBuilder.shapeless(this.registryLookup, RecipeCategory.MISC, VAItems.TAN_DYE, 3).group("tan_dye")
+                    .requires(Ingredient.of(Items.RED_DYE), 1)
+                    .requires(Ingredient.of(Items.YELLOW_DYE), 1)
+                    .requires(Ingredient.of(Items.GRAY_DYE), 1)
+                    .unlockedBy("has_dye", has(Items.GRAY_DYE)).save(this.output, idOf("tan_from_red_yellow_gray_dye").toString());
 
-            ShapelessRecipeJsonBuilder.create(this.registryLookup, RecipeCategory.MISC, VAItems.TAN_DYE, 4).group("tan_dye")
-                    .input(Ingredient.ofItems(Items.RED_DYE), 1)
-                    .input(Ingredient.ofItems(Items.YELLOW_DYE), 1)
-                    .input(Ingredient.ofItems(Items.WHITE_DYE), 1)
-                    .input(Ingredient.ofItems(Items.BLACK_DYE), 1)
-                    .criterion("has_dye", conditionsFromItem(Items.RED_DYE)).offerTo(this.exporter, idOf("tan_from_red_yellow_black_white_dye").toString());
+            ShapelessRecipeBuilder.shapeless(this.registryLookup, RecipeCategory.MISC, VAItems.TAN_DYE, 4).group("tan_dye")
+                    .requires(Ingredient.of(Items.RED_DYE), 1)
+                    .requires(Ingredient.of(Items.YELLOW_DYE), 1)
+                    .requires(Ingredient.of(Items.WHITE_DYE), 1)
+                    .requires(Ingredient.of(Items.BLACK_DYE), 1)
+                    .unlockedBy("has_dye", has(Items.RED_DYE)).save(this.output, idOf("tan_from_red_yellow_black_white_dye").toString());
 
-            ShapelessRecipeJsonBuilder.create(this.registryLookup, RecipeCategory.MISC, VAItems.SINOPIA_DYE, 2).group("sinopia_dye")
-                    .input(Ingredient.ofItems(Items.RED_DYE), 1)
-                    .input(Ingredient.ofItems(Items.ORANGE_DYE), 1)
-                    .criterion("has_dye", conditionsFromItem(Items.ORANGE_DYE)).offerTo(this.exporter);
+            ShapelessRecipeBuilder.shapeless(this.registryLookup, RecipeCategory.MISC, VAItems.SINOPIA_DYE, 2).group("sinopia_dye")
+                    .requires(Ingredient.of(Items.RED_DYE), 1)
+                    .requires(Ingredient.of(Items.ORANGE_DYE), 1)
+                    .unlockedBy("has_dye", has(Items.ORANGE_DYE)).save(this.output);
 
-            ShapelessRecipeJsonBuilder.create(this.registryLookup, RecipeCategory.MISC, VAItems.SINOPIA_DYE, 3).group("sinopia_dye")
-                    .input(Ingredient.ofItems(Items.RED_DYE), 2)
-                    .input(Ingredient.ofItems(Items.YELLOW_DYE), 1)
-                    .criterion("has_dye", conditionsFromItem(Items.RED_DYE)).offerTo(this.exporter, idOf("sinopia_from_red_red_yellow_dye").toString());
+            ShapelessRecipeBuilder.shapeless(this.registryLookup, RecipeCategory.MISC, VAItems.SINOPIA_DYE, 3).group("sinopia_dye")
+                    .requires(Ingredient.of(Items.RED_DYE), 2)
+                    .requires(Ingredient.of(Items.YELLOW_DYE), 1)
+                    .unlockedBy("has_dye", has(Items.RED_DYE)).save(this.output, idOf("sinopia_from_red_red_yellow_dye").toString());
 
-            ShapelessRecipeJsonBuilder.create(this.registryLookup, RecipeCategory.MISC, VAItems.LILAC_DYE, 2).group("lilac_dye")
-                    .input(Ingredient.ofItems(Items.WHITE_DYE), 1)
-                    .input(Ingredient.ofItems(Items.PURPLE_DYE), 1)
-                    .criterion("has_dye", conditionsFromItem(Items.PURPLE_DYE)).offerTo(this.exporter);
+            ShapelessRecipeBuilder.shapeless(this.registryLookup, RecipeCategory.MISC, VAItems.LILAC_DYE, 2).group("lilac_dye")
+                    .requires(Ingredient.of(Items.WHITE_DYE), 1)
+                    .requires(Ingredient.of(Items.PURPLE_DYE), 1)
+                    .unlockedBy("has_dye", has(Items.PURPLE_DYE)).save(this.output);
 
-            ShapelessRecipeJsonBuilder.create(this.registryLookup, RecipeCategory.MISC, VAItems.LILAC_DYE, 3).group("lilac_dye")
-                    .input(Ingredient.ofItems(Items.WHITE_DYE), 1)
-                    .input(Ingredient.ofItems(Items.RED_DYE), 1)
-                    .input(Ingredient.ofItems(Items.BLUE_DYE), 1)
-                    .criterion("has_dye", conditionsFromItem(Items.WHITE_DYE)).offerTo(this.exporter, idOf("lilac_from_white_red_blue_dye").toString());
+            ShapelessRecipeBuilder.shapeless(this.registryLookup, RecipeCategory.MISC, VAItems.LILAC_DYE, 3).group("lilac_dye")
+                    .requires(Ingredient.of(Items.WHITE_DYE), 1)
+                    .requires(Ingredient.of(Items.RED_DYE), 1)
+                    .requires(Ingredient.of(Items.BLUE_DYE), 1)
+                    .unlockedBy("has_dye", has(Items.WHITE_DYE)).save(this.output, idOf("lilac_from_white_red_blue_dye").toString());
 
-            ShapelessRecipeJsonBuilder.create(this.registryLookup, RecipeCategory.FOOD, VAItems.SWEET_BERRY_PIE, 1)
-                    .input(Items.SWEET_BERRIES, 3)
-                    .input(Items.SUGAR)
-                    .input(Items.EGG).criterion("has_sweet_berries", conditionsFromItem(Items.SWEET_BERRIES)).offerTo(this.exporter);
+            ShapelessRecipeBuilder.shapeless(this.registryLookup, RecipeCategory.FOOD, VAItems.SWEET_BERRY_PIE, 1)
+                    .requires(Items.SWEET_BERRIES, 3)
+                    .requires(Items.SUGAR)
+                    .requires(Items.EGG).unlockedBy("has_sweet_berries", has(Items.SWEET_BERRIES)).save(this.output);
 
-            ShapedRecipeJsonBuilder.create(this.registryLookup, RecipeCategory.TOOLS, VAItems.CLIMBING_ROPE, 4)
+            ShapedRecipeBuilder.shaped(this.registryLookup, RecipeCategory.TOOLS, VAItems.CLIMBING_ROPE, 4)
                     .pattern("#")
                     .pattern("#")
                     .pattern("l")
-                    .input('#', Items.COPPER_INGOT).input('l', Items.LEAD)
-                    .criterion("has_copper_ingot", conditionsFromItem(Items.COPPER_INGOT)).offerTo(this.exporter);
+                    .define('#', Items.COPPER_INGOT).define('l', Items.LEAD)
+                    .unlockedBy("has_copper_ingot", has(Items.COPPER_INGOT)).save(this.output);
 
-            ShapedRecipeJsonBuilder.create(this.registryLookup, RecipeCategory.BUILDING_BLOCKS, VABlocks.SILKBULB, 1)
+            ShapedRecipeBuilder.shaped(this.registryLookup, RecipeCategory.BUILDING_BLOCKS, VABlocks.SILKBULB, 1)
                     .pattern("###")
                     .pattern("#b#")
                     .pattern("###")
-                    .input('#', VAItems.SILK_THREAD).input('b', VAItems.ACID_BLOCK)
-                    .criterion("has_acid_block", conditionsFromItem(VAItems.ACID_BLOCK)).offerTo(this.exporter);
+                    .define('#', VAItems.SILK_THREAD).define('b', VAItems.ACID_BLOCK)
+                    .unlockedBy("has_acid_block", has(VAItems.ACID_BLOCK)).save(this.output);
 
-            ShapedRecipeJsonBuilder.create(this.registryLookup, RecipeCategory.REDSTONE, VABlocks.ENTANGLEMENT_DRIVE, 1)
+            ShapedRecipeBuilder.shaped(this.registryLookup, RecipeCategory.REDSTONE, VABlocks.ENTANGLEMENT_DRIVE, 1)
                     .pattern("s#s")
                     .pattern("sNs")
                     .pattern("s#s")
-                    .input('#', VAItems.IOLITE).input('s', VAItems.STEEL_INGOT).input('N', Items.NETHER_STAR)
-                    .criterion("has_iolite", conditionsFromItem(VAItems.IOLITE)).offerTo(this.exporter);
+                    .define('#', VAItems.IOLITE).define('s', VAItems.STEEL_INGOT).define('N', Items.NETHER_STAR)
+                    .unlockedBy("has_iolite", has(VAItems.IOLITE)).save(this.output);
 
-            ShapedRecipeJsonBuilder.create(this.registryLookup, RecipeCategory.TRANSPORTATION, VAItems.PORTAL_CORE, 1)
+            ShapedRecipeBuilder.shaped(this.registryLookup, RecipeCategory.TRANSPORTATION, VAItems.PORTAL_CORE, 1)
                     .pattern("eee")
                     .pattern("eye")
                     .pattern("eee")
-                    .input('e', VAItems.IOLITE).input('y', Items.ENDER_PEARL)
-                    .criterion("has_iolite", conditionsFromItem(VAItems.IOLITE)).group("portal_core").offerTo(this.exporter);
+                    .define('e', VAItems.IOLITE).define('y', Items.ENDER_PEARL)
+                    .unlockedBy("has_iolite", has(VAItems.IOLITE)).group("portal_core").save(this.output);
 
-            ShapelessRecipeJsonBuilder.create(this.registryLookup, RecipeCategory.TRANSPORTATION, VAItems.PORTAL_CORE, 1)
-                     .input(VAItems.DRAINED_PORTAL_CORE)
-                     .input(VAItems.IOLITE, 2)
-                     .criterion("has_drained_portal_core", conditionsFromItem(VAItems.DRAINED_PORTAL_CORE)).group("portal_core").offerTo(this.exporter, "portal_core_restoration");
+            ShapelessRecipeBuilder.shapeless(this.registryLookup, RecipeCategory.TRANSPORTATION, VAItems.PORTAL_CORE, 1)
+                     .requires(VAItems.DRAINED_PORTAL_CORE)
+                     .requires(VAItems.IOLITE, 2)
+                     .unlockedBy("has_drained_portal_core", has(VAItems.DRAINED_PORTAL_CORE)).group("portal_core").save(this.output, "portal_core_restoration");
 
-            ShapedRecipeJsonBuilder.create(this.registryLookup, RecipeCategory.COMBAT, VAItems.STEEL_BOMB, 4)
+            ShapedRecipeBuilder.shaped(this.registryLookup, RecipeCategory.COMBAT, VAItems.STEEL_BOMB, 4)
                     .pattern(" s ")
                     .pattern("#g#")
-                    .input('#', VAItems.STEEL_INGOT).input('s', Items.STRING).input('g', Items.GUNPOWDER)
-                    .criterion("has_steel_ingot", conditionsFromItem(VAItems.STEEL_INGOT)).offerTo(this.exporter);
+                    .define('#', VAItems.STEEL_INGOT).define('s', Items.STRING).define('g', Items.GUNPOWDER)
+                    .unlockedBy("has_steel_ingot", has(VAItems.STEEL_INGOT)).save(this.output);
 
-            ShapedRecipeJsonBuilder.create(this.registryLookup, RecipeCategory.REDSTONE, VAItems.REDSTONE_BRIDGE, 1)
+            ShapedRecipeBuilder.shaped(this.registryLookup, RecipeCategory.REDSTONE, VAItems.REDSTONE_BRIDGE, 1)
                     .pattern("#")
                     .pattern("r")
                     .pattern("#")
-                    .input('#', VAItems.STEEL_NUGGET).input('r', Items.REDSTONE)
-                    .criterion("has_steel_nugget", conditionsFromItem(VAItems.STEEL_NUGGET)).offerTo(this.exporter);
+                    .define('#', VAItems.STEEL_NUGGET).define('r', Items.REDSTONE)
+                    .unlockedBy("has_steel_nugget", has(VAItems.STEEL_NUGGET)).save(this.output);
 
-            ShapedRecipeJsonBuilder.create(this.registryLookup, RecipeCategory.DECORATIONS, VAItems.CAGELIGHT, 1)
+            ShapedRecipeBuilder.shaped(this.registryLookup, RecipeCategory.DECORATIONS, VAItems.CAGELIGHT, 1)
                     .pattern("#")
                     .pattern("g")
                     .pattern("#")
-                    .input('#', VAItems.STEEL_NUGGET).input('g', Items.GLOWSTONE_DUST)
-                    .criterion("has_steel_nugget", conditionsFromItem(VAItems.STEEL_NUGGET)).offerTo(this.exporter);
+                    .define('#', VAItems.STEEL_NUGGET).define('g', Items.GLOWSTONE_DUST)
+                    .unlockedBy("has_steel_nugget", has(VAItems.STEEL_NUGGET)).save(this.output);
 
-            ShapedRecipeJsonBuilder.create(this.registryLookup, RecipeCategory.MISC, VAItems.COLORING_STATION, 1)
+            ShapedRecipeBuilder.shaped(this.registryLookup, RecipeCategory.MISC, VAItems.COLORING_STATION, 1)
                     .pattern("BB")
                     .pattern("##")
                     .pattern("##")
-                    .input('#', Ingredient.ofTag(this.registryLookup.getOrThrow(ItemTags.PLANKS))).input('B', Ingredient.ofTag(this.registryLookup.getOrThrow(ItemTags.WOOL)))
-                    .criterion("has_wool", conditionsFromTag(ItemTags.WOOL)).offerTo(this.exporter);
+                    .define('#', Ingredient.of(this.registryLookup.getOrThrow(ItemTags.PLANKS))).define('B', Ingredient.of(this.registryLookup.getOrThrow(ItemTags.WOOL)))
+                    .unlockedBy("has_wool", has(ItemTags.WOOL)).save(this.output);
 
-            ShapedRecipeJsonBuilder.create(this.registryLookup, RecipeCategory.REDSTONE, VAItems.SPOTLIGHT, 1)
+            ShapedRecipeBuilder.shaped(this.registryLookup, RecipeCategory.REDSTONE, VAItems.SPOTLIGHT, 1)
                     .pattern("ssa")
                     .pattern("rga")
                     .pattern("ssa")
-                    .input('a', Items.AMETHYST_SHARD).input('g', Items.GLOWSTONE).input('s', VAItems.STEEL_INGOT).input('r', Items.REDSTONE)
-                    .criterion("has_glowstone", conditionsFromItem(Items.GLOWSTONE)).offerTo(this.exporter);
+                    .define('a', Items.AMETHYST_SHARD).define('g', Items.GLOWSTONE).define('s', VAItems.STEEL_INGOT).define('r', Items.REDSTONE)
+                    .unlockedBy("has_glowstone", has(Items.GLOWSTONE)).save(this.output);
 
-            ShapedRecipeJsonBuilder.create(this.registryLookup, RecipeCategory.FOOD, VAItems.ICE_CREAM, 1)
+            ShapedRecipeBuilder.shaped(this.registryLookup, RecipeCategory.FOOD, VAItems.ICE_CREAM, 1)
                     .pattern(" s ")
                     .pattern("bmb")
                     .pattern(" w ")
-                    .input('s', VAItems.ROCK_SALT).input('b', Items.SNOWBALL).input('m', Items.MILK_BUCKET).input('w', Items.BOWL)
-                    .criterion("has_milk", conditionsFromItem(Items.MILK_BUCKET)).offerTo(this.exporter);
+                    .define('s', VAItems.ROCK_SALT).define('b', Items.SNOWBALL).define('m', Items.MILK_BUCKET).define('w', Items.BOWL)
+                    .unlockedBy("has_milk", has(Items.MILK_BUCKET)).save(this.output);
 
-            ShapedRecipeJsonBuilder.create(this.registryLookup, RecipeCategory.DECORATIONS, VAItems.ENGRAVING_CHISEL, 1)
+            ShapedRecipeBuilder.shaped(this.registryLookup, RecipeCategory.DECORATIONS, VAItems.ENGRAVING_CHISEL, 1)
                     .pattern("c")
                     .pattern("s")
                     .pattern("c")
-                    .input('c', ItemTags.STONE_CRAFTING_MATERIALS)
-                    .input('s', VAItems.STEEL_INGOT)
-                    .criterion("has_steel_ingot", conditionsFromItem(VAItems.STEEL_INGOT)).offerTo(this.exporter);
+                    .define('c', ItemTags.STONE_CRAFTING_MATERIALS)
+                    .define('s', VAItems.STEEL_INGOT)
+                    .unlockedBy("has_steel_ingot", has(VAItems.STEEL_INGOT)).save(this.output);
 
-            ShapelessRecipeJsonBuilder.create(this.registryLookup, RecipeCategory.DECORATIONS, Items.LIGHT_BLUE_DYE)
-                    .input(VAItems.BLUE_PETALS)
-                    .criterion("has_blue_petals", conditionsFromItem(VAItems.BLUE_PETALS))
-                            .offerTo(this.exporter, "virtual_additions:light_blue_dye_from_blue_petals");
+            ShapelessRecipeBuilder.shapeless(this.registryLookup, RecipeCategory.DECORATIONS, Items.LIGHT_BLUE_DYE)
+                    .requires(VAItems.BLUE_PETALS)
+                    .unlockedBy("has_blue_petals", has(VAItems.BLUE_PETALS))
+                            .save(this.output, "virtual_additions:light_blue_dye_from_blue_petals");
 
-            ShapelessRecipeJsonBuilder.create(this.registryLookup, RecipeCategory.DECORATIONS, VAItems.PLUM_DYE)
-                    .input(VAItems.SMALL_SPRING_LOTUS)
-                    .criterion("has_small_spring_lotus", conditionsFromItem(VAItems.SMALL_SPRING_LOTUS))
-                            .offerTo(this.exporter, "virtual_additions:orange_dye_from_small_spring_lotus");
+            ShapelessRecipeBuilder.shapeless(this.registryLookup, RecipeCategory.DECORATIONS, VAItems.PLUM_DYE)
+                    .requires(VAItems.SMALL_SPRING_LOTUS)
+                    .unlockedBy("has_small_spring_lotus", has(VAItems.SMALL_SPRING_LOTUS))
+                            .save(this.output, "virtual_additions:orange_dye_from_small_spring_lotus");
 
-            ShapelessRecipeJsonBuilder.create(this.registryLookup, RecipeCategory.DECORATIONS, Items.LIGHT_BLUE_DYE)
-                    .input(VAItems.SOUL_SPROUT)
-                    .criterion("has_soul_sprout", conditionsFromItem(VAItems.SOUL_SPROUT))
-                    .offerTo(this.exporter, "virtual_additions:orange_dye_from_soul_sprout");
+            ShapelessRecipeBuilder.shapeless(this.registryLookup, RecipeCategory.DECORATIONS, Items.LIGHT_BLUE_DYE)
+                    .requires(VAItems.SOUL_SPROUT)
+                    .unlockedBy("has_soul_sprout", has(VAItems.SOUL_SPROUT))
+                    .save(this.output, "virtual_additions:orange_dye_from_soul_sprout");
 
-            this.offerWaxingRecipes(exporter);
+            this.offerWaxingRecipes(output);
         }
     }
 
     private static class PreviewGenerator extends Generator {
 
-        protected PreviewGenerator(RegistryWrapper.WrapperLookup registryLookup, RecipeExporter exporter) {
+        protected PreviewGenerator(HolderLookup.Provider registryLookup, RecipeOutput exporter) {
             super(registryLookup, exporter);
         }
 
         @Override
-        public void generate() {
+        public void buildRecipes() {
 
         }
     }
-    private abstract static class Generator extends RecipeGenerator {
+    private abstract static class Generator extends RecipeProvider {
         protected static final DyeContents WHITE_COST = VADyeColors.WHITE_CONTENT;
         protected static final DyeContents LIGHT_GRAY_COST = VADyeColors.LIGHT_GRAY_CONTENT;
         protected static final DyeContents GRAY_COST = VADyeColors.GRAY_CONTENT;
@@ -631,50 +637,50 @@ public final class VARecipeProvider {
         protected static final List<Item> bundles = List.of(Items.BLACK_BUNDLE, Items.BLUE_BUNDLE, Items.BROWN_BUNDLE, Items.CYAN_BUNDLE, Items.GRAY_BUNDLE, Items.GREEN_BUNDLE, Items.LIGHT_BLUE_BUNDLE, Items.LIGHT_GRAY_BUNDLE, Items.LIME_BUNDLE, Items.MAGENTA_BUNDLE, Items.ORANGE_BUNDLE, Items.PINK_BUNDLE, Items.PURPLE_BUNDLE, Items.RED_BUNDLE, Items.YELLOW_BUNDLE, Items.WHITE_BUNDLE, VAItems.CHARTREUSE_BUNDLE, VAItems.MAROON_BUNDLE, VAItems.INDIGO_BUNDLE, VAItems.PLUM_BUNDLE, VAItems.VIRIDIAN_BUNDLE, VAItems.TAN_BUNDLE, VAItems.SINOPIA_BUNDLE, VAItems.LILAC_BUNDLE);
 
 
-        protected final RegistryEntryLookup<Item> registryLookup;
+        protected final HolderGetter<Item> registryLookup;
         
-        protected Generator(RegistryWrapper.WrapperLookup registryLookup, RecipeExporter exporter) {
+        protected Generator(HolderLookup.Provider registryLookup, RecipeOutput exporter) {
             super(registryLookup, exporter);
-            this.registryLookup = registries.getOrThrow(RegistryKeys.ITEM);
+            this.registryLookup = registries.lookupOrThrow(Registries.ITEM);
         }
 
-        protected void offerCookingRecipes(ItemConvertible output, List<ItemConvertible> inputs, float experience, String group) {
-            offerSmelting(inputs, RecipeCategory.FOOD, output, experience, 200, group);
-            this.offerMultipleOptions(RecipeSerializer.SMOKING, SmokingRecipe::new, inputs, RecipeCategory.FOOD, output, experience, 100, group, "_from_smoking");
-            this.offerMultipleOptions(RecipeSerializer.CAMPFIRE_COOKING, CampfireCookingRecipe::new, inputs, RecipeCategory.FOOD, output, experience, 600, group, "_from_campfire_cooking");
+        protected void offerCookingRecipes(ItemLike output, List<ItemLike> inputs, float experience, String group) {
+            oreSmelting(inputs, RecipeCategory.FOOD, output, experience, 200, group);
+            this.oreCooking(RecipeSerializer.SMOKING_RECIPE, SmokingRecipe::new, inputs, RecipeCategory.FOOD, output, experience, 100, group, "_from_smoking");
+            this.oreCooking(RecipeSerializer.CAMPFIRE_COOKING_RECIPE, CampfireCookingRecipe::new, inputs, RecipeCategory.FOOD, output, experience, 600, group, "_from_campfire_cooking");
         }
 
-        protected void offerCookingRecipes(ItemConvertible output, ItemConvertible input, float experience, String group) {
-            offerSmelting(List.of(input), RecipeCategory.FOOD, output, experience, 200, group);
-            offerFoodCookingRecipe("smoking", RecipeSerializer.SMOKING, SmokingRecipe::new, 100, input, output, experience);
-            offerFoodCookingRecipe("campfire_cooking", RecipeSerializer.CAMPFIRE_COOKING, CampfireCookingRecipe::new, 600, input, output, experience);
+        protected void offerCookingRecipes(ItemLike output, ItemLike input, float experience, String group) {
+            oreSmelting(List.of(input), RecipeCategory.FOOD, output, experience, 200, group);
+            simpleCookingRecipe("smoking", RecipeSerializer.SMOKING_RECIPE, SmokingRecipe::new, 100, input, output, experience);
+            simpleCookingRecipe("campfire_cooking", RecipeSerializer.CAMPFIRE_COOKING_RECIPE, CampfireCookingRecipe::new, 600, input, output, experience);
         }
 
-        protected void offerColoringRecipe(ItemConvertible input, ItemConvertible output, DyeContents cost, int index) {
-            ColoringRecipeJsonBuilder.create(Ingredient.ofItems(input), cost, output, index).offerTo(this.exporter, idOf(getItemPath(output)).withSuffixedPath("_coloring"));
+        protected void offerColoringRecipe(ItemLike input, ItemLike output, DyeContents cost, int index) {
+            ColoringRecipeJsonBuilder.create(Ingredient.of(input), cost, output, index).offerTo(this.output, idOf(getItemName(output)).withSuffix("_coloring"));
         }
 
-        protected void offerColoringRecipe(ItemConvertible output, DyeContents cost, int index) {
-            ColoringRecipeJsonBuilder.create(null, cost, output, index).offerTo(this.exporter, idOf(getItemPath(output)).withSuffixedPath("_coloring"));
+        protected void offerColoringRecipe(ItemLike output, DyeContents cost, int index) {
+            ColoringRecipeJsonBuilder.create(null, cost, output, index).offerTo(this.output, idOf(getItemName(output)).withSuffix("_coloring"));
         }
 
-        protected void offerColoringRecipe(TagKey<Item> input, ItemConvertible output, DyeContents cost, int index) {
-            ColoringRecipeJsonBuilder.create(Ingredient.ofTag(this.registryLookup.getOrThrow(input)), cost, output, index).offerTo(this.exporter, idOf(getItemPath(output)).withSuffixedPath("_coloring"));
+        protected void offerColoringRecipe(TagKey<Item> input, ItemLike output, DyeContents cost, int index) {
+            ColoringRecipeJsonBuilder.create(Ingredient.of(this.registryLookup.getOrThrow(input)), cost, output, index).offerTo(this.output, idOf(getItemName(output)).withSuffix("_coloring"));
         }
 
         protected void offerArmorColoringRecipe(DyeItem input, int i) {
-            ArmorColoringRecipeJsonBuilder.create(Ingredient.ofItems(input), i).offerTo(this.exporter, idOf(input.getColor().asString()).withSuffixedPath("_armor_coloring"));
+            ArmorColoringRecipeJsonBuilder.create(Ingredient.of(input), i).offerTo(this.output, idOf(input.getDyeColor().getSerializedName()).withSuffix("_armor_coloring"));
         }
 
         protected void offer2x2ConversionChain(Block... blocks) {
             for (int i = 0; i < blocks.length - 1; i++) {
                 Block input = blocks[i];
                 Block output = blocks[i + 1];
-                String id = Registries.BLOCK.getId(output).getPath() + "_from_compacting_" + Registries.BLOCK.getId(input).getPath();
-                ShapedRecipeJsonBuilder.create(this.registryLookup, RecipeCategory.BUILDING_BLOCKS, output, 4)
+                String id = BuiltInRegistries.BLOCK.getKey(output).getPath() + "_from_compacting_" + BuiltInRegistries.BLOCK.getKey(input).getPath();
+                ShapedRecipeBuilder.shaped(this.registryLookup, RecipeCategory.BUILDING_BLOCKS, output, 4)
                         .pattern("##")
                         .pattern("##")
-                        .input('#', input).criterion(hasItem(input), conditionsFromItem(input)).offerTo(this.exporter, idOf(id).toString());
+                        .define('#', input).unlockedBy(getHasName(input), has(input)).save(this.output, idOf(id).toString());
             }
         }
 
@@ -701,7 +707,7 @@ public final class VARecipeProvider {
         }
 
         protected void generateCuttableFamilyChain(BlockFamily baseFamily, BlockFamily... subFamilies) {
-            generateFamily(baseFamily, FeatureFlags.VANILLA_FEATURES);
+            generateRecipes(baseFamily, FeatureFlags.VANILLA_SET);
             offerStonecuttingRecipes(baseFamily, baseFamily);
             for (BlockFamily subFamily : subFamilies) {
                 offerStonecuttingRecipes(baseFamily, subFamily);
@@ -710,136 +716,136 @@ public final class VARecipeProvider {
 
         protected void generateColorfulBlockSetRecipes(ColorfulBlockSet set, Item dye) {
             set.ifWool(wool -> {
-                set.ifBed( bed -> offerBedRecipe(bed, wool));
-                set.ifBanner(banner -> offerBannerRecipe(banner, wool));
-                set.ifCarpet(carpet -> offerCarpetRecipe(carpet, wool));
+                set.ifBed( bed -> bedFromPlanksAndWool(bed, wool));
+                set.ifBanner(banner -> banner(banner, wool));
+                set.ifCarpet(carpet -> carpet(carpet, wool));
             });
-            set.ifConcretePowder( block -> offerConcretePowderDyeingRecipe(block, dye));
-            set.ifTerracotta(block -> offerTerracottaDyeingRecipe(block, dye));
+            set.ifConcretePowder( block -> concretePowder(block, dye));
+            set.ifTerracotta(block -> coloredTerracottaFromTerracottaAndDye(block, dye));
             set.ifStainedGlass(block -> {
-                offerStainedGlassDyeingRecipe(block, dye);
+                stainedGlassFromGlassAndDye(block, dye);
                 set.ifStainedGlassPane(pane -> {
-                    offerStainedGlassPaneRecipe(pane, block);
-                    offerStainedGlassPaneDyeingRecipe(pane, dye);
+                    stainedGlassPaneFromStainedGlass(pane, block);
+                    stainedGlassPaneFromGlassPaneAndDye(pane, dye);
                 });
             });
-            set.ifCandle(block -> offerCandleDyeingRecipe(block, dye));
+            set.ifCandle(block -> candle(block, dye));
         }
 
         protected void offerStonecuttingRecipes(BlockFamily baseFamily, BlockFamily... resultFamilies) {
             Block block;
             for (BlockFamily resultFamily : resultFamilies) {
                 if (!baseFamily.getBaseBlock().equals(resultFamily.getBaseBlock()))
-                    offerStonecuttingRecipe(RecipeCategory.BUILDING_BLOCKS, resultFamily.getBaseBlock(), baseFamily.getBaseBlock());
-                if ((block = resultFamily.getVariant(BlockFamily.Variant.STAIRS)) != null)
-                    offerStonecuttingRecipe(RecipeCategory.BUILDING_BLOCKS, block, baseFamily.getBaseBlock());
-                if ((block = resultFamily.getVariant(BlockFamily.Variant.SLAB)) != null)
-                    offerStonecuttingRecipe(RecipeCategory.BUILDING_BLOCKS, block, baseFamily.getBaseBlock(), 2);
-                if ((block = resultFamily.getVariant(BlockFamily.Variant.WALL)) != null)
-                    offerStonecuttingRecipe(RecipeCategory.BUILDING_BLOCKS, block, baseFamily.getBaseBlock());
-                if ((block = resultFamily.getVariant(BlockFamily.Variant.CHISELED)) != null)
-                    offerStonecuttingRecipe(RecipeCategory.BUILDING_BLOCKS, block, baseFamily.getBaseBlock());
+                    stonecutterResultFromBase(RecipeCategory.BUILDING_BLOCKS, resultFamily.getBaseBlock(), baseFamily.getBaseBlock());
+                if ((block = resultFamily.get(BlockFamily.Variant.STAIRS)) != null)
+                    stonecutterResultFromBase(RecipeCategory.BUILDING_BLOCKS, block, baseFamily.getBaseBlock());
+                if ((block = resultFamily.get(BlockFamily.Variant.SLAB)) != null)
+                    stonecutterResultFromBase(RecipeCategory.BUILDING_BLOCKS, block, baseFamily.getBaseBlock(), 2);
+                if ((block = resultFamily.get(BlockFamily.Variant.WALL)) != null)
+                    stonecutterResultFromBase(RecipeCategory.BUILDING_BLOCKS, block, baseFamily.getBaseBlock());
+                if ((block = resultFamily.get(BlockFamily.Variant.CHISELED)) != null)
+                    stonecutterResultFromBase(RecipeCategory.BUILDING_BLOCKS, block, baseFamily.getBaseBlock());
             }
         }
 
         protected void offerStonecuttingRecipes(Block baseBlock, BlockFamily... resultFamilies) {
             Block block;
             for (BlockFamily resultFamily : resultFamilies) {
-                offerStonecuttingRecipe(RecipeCategory.BUILDING_BLOCKS, resultFamily.getBaseBlock(), baseBlock);
-                if ((block = resultFamily.getVariant(BlockFamily.Variant.STAIRS)) != null)
-                    offerStonecuttingRecipe(RecipeCategory.BUILDING_BLOCKS, block, baseBlock);
-                if ((block = resultFamily.getVariant(BlockFamily.Variant.SLAB)) != null)
-                    offerStonecuttingRecipe(RecipeCategory.BUILDING_BLOCKS, block, baseBlock, 2);
-                if ((block = resultFamily.getVariant(BlockFamily.Variant.WALL)) != null)
-                    offerStonecuttingRecipe(RecipeCategory.BUILDING_BLOCKS, block, baseBlock);
-                if ((block = resultFamily.getVariant(BlockFamily.Variant.CHISELED)) != null)
-                    offerStonecuttingRecipe(RecipeCategory.BUILDING_BLOCKS, block, baseBlock);
+                stonecutterResultFromBase(RecipeCategory.BUILDING_BLOCKS, resultFamily.getBaseBlock(), baseBlock);
+                if ((block = resultFamily.get(BlockFamily.Variant.STAIRS)) != null)
+                    stonecutterResultFromBase(RecipeCategory.BUILDING_BLOCKS, block, baseBlock);
+                if ((block = resultFamily.get(BlockFamily.Variant.SLAB)) != null)
+                    stonecutterResultFromBase(RecipeCategory.BUILDING_BLOCKS, block, baseBlock, 2);
+                if ((block = resultFamily.get(BlockFamily.Variant.WALL)) != null)
+                    stonecutterResultFromBase(RecipeCategory.BUILDING_BLOCKS, block, baseBlock);
+                if ((block = resultFamily.get(BlockFamily.Variant.CHISELED)) != null)
+                    stonecutterResultFromBase(RecipeCategory.BUILDING_BLOCKS, block, baseBlock);
             }
         }
 
         protected void offerToolGildRecipe(TagKey<Item> tag, Item addition, GildType type) {
-            offerToolGildRecipe(tag, Ingredient.ofItem(addition), type);
+            offerToolGildRecipe(tag, Ingredient.of(addition), type);
         }
         protected void offerToolGildRecipe(TagKey<Item> tag, Ingredient addition, GildType type) {
             SmithingGildRecipeJsonBuilder.create(
-                    Ingredient.ofTag(this.registryLookup.getOrThrow(tag)),
+                    Ingredient.of(this.registryLookup.getOrThrow(tag)),
                     addition,
-                    VARegistries.GILD_TYPE.getEntry(type)
+                    VARegistries.GILD_TYPE.wrapAsHolder(type)
             )
-                    .criterion("has_smithing_template", conditionsFromItem(VAItems.TOOL_GILD_SMITHING_TEMPLATE))
-                    .offerTo(this.exporter, idOf("smithing/" + VARegistries.GILD_TYPE.getId(type).getPath() + "_gild"));
+                    .criterion("has_smithing_template", has(VAItems.TOOL_GILD_SMITHING_TEMPLATE))
+                    .offerTo(this.output, idOf("smithing/" + VARegistries.GILD_TYPE.getKey(type).getPath() + "_gild"));
         }
 
         protected void offerNetheriteUpgradeRecipe(Item input, Item result) {
-            SmithingTransformRecipeJsonBuilder.create(
-                            Ingredient.ofItems(Items.NETHERITE_UPGRADE_SMITHING_TEMPLATE),
-                            Ingredient.ofItems(input),
-                            Ingredient.ofItems(Items.NETHERITE_INGOT),
+            SmithingTransformRecipeBuilder.smithing(
+                            Ingredient.of(Items.NETHERITE_UPGRADE_SMITHING_TEMPLATE),
+                            Ingredient.of(input),
+                            Ingredient.of(Items.NETHERITE_INGOT),
                             RecipeCategory.TOOLS,
                             result)
-                    .criterion("has_netherite_ingot", conditionsFromItem(Items.NETHERITE_INGOT))
-                    .offerTo(this.exporter, idOf("smithing/" + getItemPath(result) + "_upgrade").toString());
+                    .unlocks("has_netherite_ingot", has(Items.NETHERITE_INGOT))
+                    .save(this.output, idOf("smithing/" + getItemName(result) + "_upgrade").toString());
         }
 
         @SafeVarargs
-        protected final void offerShapelessRecipe(RecipeCategory category, ItemConvertible output, int count, Pair<ItemConvertible, Integer>... input) {
-            ShapelessRecipeJsonBuilder builder = ShapelessRecipeJsonBuilder.create(this.registryLookup, category, output, count);
-            builder.criterion(hasItem(input[0].getLeft()), conditionsFromItem(input[0].getLeft()));
-            for (Pair<ItemConvertible, Integer> itemProvider : input) {
-                builder.input(itemProvider.getLeft(), itemProvider.getRight());
+        protected final void offerShapelessRecipe(RecipeCategory category, ItemLike output, int count, Pair<ItemLike, Integer>... input) {
+            ShapelessRecipeBuilder builder = ShapelessRecipeBuilder.shapeless(this.registryLookup, category, output, count);
+            builder.unlockedBy(getHasName(input[0].getLeft()), has(input[0].getLeft()));
+            for (Pair<ItemLike, Integer> itemProvider : input) {
+                builder.requires(itemProvider.getLeft(), itemProvider.getRight());
             }
-            builder.offerTo(this.exporter);
+            builder.save(this.output);
         }
 
         @SafeVarargs
-        protected final void offerShapelessRecipe(RecipeCategory category, ItemConvertible output, int count, String group, Pair<ItemConvertible, Integer>... input) {
-            ShapelessRecipeJsonBuilder builder = ShapelessRecipeJsonBuilder.create(this.registryLookup, category, output, count);
-            builder.criterion(hasItem(input[0].getLeft()), conditionsFromItem(input[0].getLeft()));
-            for (Pair<ItemConvertible, Integer> itemProvider : input) {
-                builder.input(itemProvider.getLeft(), itemProvider.getRight());
+        protected final void offerShapelessRecipe(RecipeCategory category, ItemLike output, int count, String group, Pair<ItemLike, Integer>... input) {
+            ShapelessRecipeBuilder builder = ShapelessRecipeBuilder.shapeless(this.registryLookup, category, output, count);
+            builder.unlockedBy(getHasName(input[0].getLeft()), has(input[0].getLeft()));
+            for (Pair<ItemLike, Integer> itemProvider : input) {
+                builder.requires(itemProvider.getLeft(), itemProvider.getRight());
             }
             builder.group(group);
-            builder.offerTo(this.exporter);
+            builder.save(this.output);
         }
 
-        protected void offer2x2FullRecipe(RecipeCategory category, ItemConvertible output, ItemConvertible input, int count) {
-            ShapedRecipeJsonBuilder.create(this.registryLookup, category, output, count).input('#', input).pattern("##").pattern("##").criterion(hasItem(input), conditionsFromItem(input)).offerTo(this.exporter, idOf(getItemPath(output) + "_from_" + getItemPath(input)).toString());
+        protected void offer2x2FullRecipe(RecipeCategory category, ItemLike output, ItemLike input, int count) {
+            ShapedRecipeBuilder.shaped(this.registryLookup, category, output, count).define('#', input).pattern("##").pattern("##").unlockedBy(getHasName(input), has(input)).save(this.output, idOf(getItemName(output) + "_from_" + getItemName(input)).toString());
         }
 
-        protected void offer2x2FullRecipe(RecipeCategory category, ItemConvertible output, ItemConvertible input, int count, String group) {
-            ShapedRecipeJsonBuilder.create(this.registryLookup, category, output, count).input('#', input).pattern("##").pattern("##").group(group).criterion(hasItem(input), conditionsFromItem(input)).offerTo(this.exporter, idOf(getItemPath(output) + "_from_" + getItemPath(input)).toString());
+        protected void offer2x2FullRecipe(RecipeCategory category, ItemLike output, ItemLike input, int count, String group) {
+            ShapedRecipeBuilder.shaped(this.registryLookup, category, output, count).define('#', input).pattern("##").pattern("##").group(group).unlockedBy(getHasName(input), has(input)).save(this.output, idOf(getItemName(output) + "_from_" + getItemName(input)).toString());
         }
 
-        protected void offerHedgeRecipe(ItemConvertible output, ItemConvertible input) {
-            ShapedRecipeJsonBuilder.create(this.registryLookup, RecipeCategory.BUILDING_BLOCKS, output, 6)
+        protected void offerHedgeRecipe(ItemLike output, ItemLike input) {
+            ShapedRecipeBuilder.shaped(this.registryLookup, RecipeCategory.BUILDING_BLOCKS, output, 6)
                     .pattern("###")
                     .pattern("###")
-                    .input('#', input).criterion("has_leaves", conditionsFromItem(input)).group("hedges").offerTo(this.exporter);
+                    .define('#', input).unlockedBy("has_leaves", has(input)).group("hedges").save(this.output);
         }
 
-        public void offerWaxingRecipes(RecipeExporter exporter) {
-            HoneycombItem.UNWAXED_TO_WAXED_BLOCKS.get().forEach((unwaxed, waxed) -> {
-                if (!VirtualAdditions.isFromMod(Registries.BLOCK.getId(unwaxed))) return;
-                ShapelessRecipeJsonBuilder.create(this.registryLookup, RecipeCategory.BUILDING_BLOCKS, waxed).input(unwaxed).input(Items.HONEYCOMB).group(RecipeGenerator.getItemPath(waxed)).criterion(RecipeGenerator.hasItem(unwaxed), this.conditionsFromItem(unwaxed)).offerTo(this.exporter, idOf(RecipeGenerator.convertBetween(waxed, Items.HONEYCOMB)).toString());
+        public void offerWaxingRecipes(RecipeOutput exporter) {
+            HoneycombItem.WAXABLES.get().forEach((unwaxed, waxed) -> {
+                if (!VirtualAdditions.isFromMod(BuiltInRegistries.BLOCK.getKey(unwaxed))) return;
+                ShapelessRecipeBuilder.shapeless(this.registryLookup, RecipeCategory.BUILDING_BLOCKS, waxed).requires(unwaxed).requires(Items.HONEYCOMB).group(RecipeProvider.getItemName(waxed)).unlockedBy(RecipeProvider.getHasName(unwaxed), this.has(unwaxed)).save(this.output, idOf(RecipeProvider.getConversionRecipeName(waxed, Items.HONEYCOMB)).toString());
             });
         }
 
         public void offerSteelRecipeSet(Block block, Block cut, Block cutStairs, Block cutSlab, Block grate, Block chiseled){
-            offerStonecuttingRecipe(RecipeCategory.BUILDING_BLOCKS, cutStairs, cut);
-            offerStonecuttingRecipe(RecipeCategory.BUILDING_BLOCKS, cutSlab, cut, 2);
-            offerStonecuttingRecipe(RecipeCategory.BUILDING_BLOCKS, grate, cut, 1);
-            offerStonecuttingRecipe(RecipeCategory.BUILDING_BLOCKS, chiseled, cut, 1);
-            ShapedRecipeJsonBuilder.create(this.registryLookup,RecipeCategory.DECORATIONS, cutStairs, 4).input('#', cut).pattern("#  ").pattern("## ").pattern("###").criterion("has_item", conditionsFromItem(cut)).offerTo(this.exporter);
-            ShapedRecipeJsonBuilder.create(this.registryLookup,RecipeCategory.DECORATIONS, cutSlab, 6).input('#', cut).pattern("###").criterion("has_item", conditionsFromItem(cut)).offerTo(this.exporter);
-            ShapedRecipeJsonBuilder.create(this.registryLookup,RecipeCategory.DECORATIONS, chiseled, 1).input('#', cutSlab).pattern("#").pattern("#").criterion("has_item", conditionsFromItem(cutSlab)).offerTo(this.exporter);
-            ShapedRecipeJsonBuilder.create(this.registryLookup,RecipeCategory.DECORATIONS, grate, 4).pattern(" # ").pattern("# #").pattern(" # ").input('#', cut).criterion("has_item", conditionsFromItem(cut)).offerTo(this.exporter);
+            stonecutterResultFromBase(RecipeCategory.BUILDING_BLOCKS, cutStairs, cut);
+            stonecutterResultFromBase(RecipeCategory.BUILDING_BLOCKS, cutSlab, cut, 2);
+            stonecutterResultFromBase(RecipeCategory.BUILDING_BLOCKS, grate, cut, 1);
+            stonecutterResultFromBase(RecipeCategory.BUILDING_BLOCKS, chiseled, cut, 1);
+            ShapedRecipeBuilder.shaped(this.registryLookup,RecipeCategory.DECORATIONS, cutStairs, 4).define('#', cut).pattern("#  ").pattern("## ").pattern("###").unlockedBy("has_item", has(cut)).save(this.output);
+            ShapedRecipeBuilder.shaped(this.registryLookup,RecipeCategory.DECORATIONS, cutSlab, 6).define('#', cut).pattern("###").unlockedBy("has_item", has(cut)).save(this.output);
+            ShapedRecipeBuilder.shaped(this.registryLookup,RecipeCategory.DECORATIONS, chiseled, 1).define('#', cutSlab).pattern("#").pattern("#").unlockedBy("has_item", has(cutSlab)).save(this.output);
+            ShapedRecipeBuilder.shaped(this.registryLookup,RecipeCategory.DECORATIONS, grate, 4).pattern(" # ").pattern("# #").pattern(" # ").define('#', cut).unlockedBy("has_item", has(cut)).save(this.output);
         }
 
         public void offerJerkyFoodRecipe(Item input, Item jerky) {
-            ShapelessRecipeJsonBuilder.create(this.registryLookup, RecipeCategory.FOOD, jerky, 3)
-                    .input(input)
-                    .input(VAItems.ROCK_SALT, 2)
-                    .criterion("has_item", conditionsFromItem(input)).offerTo(exporter);
+            ShapelessRecipeBuilder.shapeless(this.registryLookup, RecipeCategory.FOOD, jerky, 3)
+                    .requires(input)
+                    .requires(VAItems.ROCK_SALT, 2)
+                    .unlockedBy("has_item", has(input)).save(output);
         }
         
         public void completeDyablesRecipes(List<Item> allItems, List<Item> vanillaItems, List<Item> moddedItems, String group, RecipeCategory recipeCategory) {
@@ -856,12 +862,12 @@ public final class VARecipeProvider {
                     stream = Stream.concat(stream, Stream.of(undyed));
                 }
 
-                this.createShapeless(category, dyedItem).input(dye).input(Ingredient.ofItems(stream)).group(group).criterion("has_needed_dye", this.conditionsFromItem(dye)).offerTo(this.exporter, "virtual_additions:dye_" + getItemPath(dyedItem));
+                this.shapeless(category, dyedItem).requires(dye).requires(Ingredient.of(stream)).group(group).unlockedBy("has_needed_dye", this.has(dye)).save(this.output, "virtual_additions:dye_" + getItemName(dyedItem));
             }
 
         }
 
-        public void offerDyeablesRecipes(List<Item> dyes, List<Item> dyeables, @Nullable Item undyed, String group, RecipeCategory category) {
+        public void colorWithDye(List<Item> dyes, List<Item> dyeables, @Nullable Item undyed, String group, RecipeCategory category) {
             for(int i = 0; i < dyes.size(); ++i) {
                 Item item = dyes.get(i);
                 Item item2 = dyeables.get(i);
@@ -870,7 +876,7 @@ public final class VARecipeProvider {
                     stream = Stream.concat(stream, Stream.of(undyed));
                 }
 
-                this.createShapeless(category, item2).input(item).input(Ingredient.ofItems(stream)).group(group).criterion("has_needed_dye", this.conditionsFromItem(item)).offerTo(this.exporter, "virtual_additions:dye_" + getItemPath(item2));
+                this.shapeless(category, item2).requires(item).requires(Ingredient.of(stream)).group(group).unlockedBy("has_needed_dye", this.has(item)).save(this.output, "virtual_additions:dye_" + getItemName(item2));
             }
 
         }
@@ -880,29 +886,29 @@ public final class VARecipeProvider {
                 DyeContents cost = dyeCosts.get(i);
                 Item dyedItem = items.get(i);
                 
-                ColoringRecipeJsonBuilder.create(Ingredient.ofTag(this.registryLookup.getOrThrow(inputTag)), 
+                ColoringRecipeJsonBuilder.create(Ingredient.of(this.registryLookup.getOrThrow(inputTag)), 
                         cost, dyedItem, VADyeColors.getIndex(cost))
-                        .offerTo(this.exporter, idOf(getItemPath(dyedItem)).withSuffixedPath("_coloring"));
+                        .offerTo(this.output, idOf(getItemName(dyedItem)).withSuffix("_coloring"));
 
             }
             
 
         }
         
-        protected void createHalberdRecipe(ItemConvertible material, Item output) {
-            ShapedRecipeJsonBuilder.create(this.registryLookup, RecipeCategory.COMBAT, output)
+        protected void createHalberdRecipe(ItemLike material, Item output) {
+            ShapedRecipeBuilder.shaped(this.registryLookup, RecipeCategory.COMBAT, output)
                     .pattern("## ")
                     .pattern("#/#")
                     .pattern(" / ")
-                    .input('#', material).input('/', Items.STICK).criterion("has_material", conditionsFromItem(material)).offerTo(exporter);
+                    .define('#', material).define('/', Items.STICK).unlockedBy("has_material", has(material)).save(this.output);
         }
 
         protected void createHalberdRecipe(TagKey<Item> material, Item output) {
-            ShapedRecipeJsonBuilder.create(this.registryLookup, RecipeCategory.COMBAT, output)
+            ShapedRecipeBuilder.shaped(this.registryLookup, RecipeCategory.COMBAT, output)
                     .pattern("## ")
                     .pattern("#/#")
                     .pattern(" / ")
-                    .input('#', material).input('/', Items.STICK).criterion("has_material", conditionsFromTag(material)).offerTo(exporter);
+                    .define('#', material).define('/', Items.STICK).unlockedBy("has_material", has(material)).save(this.output);
         }
     }
 

@@ -5,75 +5,73 @@ import com.github.suninvr.virtualadditions.block.entity.SpotlightLightBlockEntit
 import com.github.suninvr.virtualadditions.block.enums.LightStatus;
 import com.github.suninvr.virtualadditions.registry.VABlocks;
 import com.mojang.serialization.MapCodec;
-import net.minecraft.block.*;
-import net.minecraft.block.entity.BlockEntity;
-import net.minecraft.fluid.FluidState;
-import net.minecraft.fluid.Fluids;
-import net.minecraft.server.world.ServerWorld;
-import net.minecraft.state.StateManager;
-import net.minecraft.state.property.BooleanProperty;
-import net.minecraft.state.property.EnumProperty;
-import net.minecraft.state.property.Properties;
-import net.minecraft.util.BlockMirror;
-import net.minecraft.util.BlockRotation;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.math.Direction;
-import net.minecraft.util.math.random.Random;
-import net.minecraft.util.shape.VoxelShape;
-import net.minecraft.util.shape.VoxelShapes;
-import net.minecraft.world.BlockView;
-import net.minecraft.world.World;
-import net.minecraft.world.WorldAccess;
-import net.minecraft.world.WorldView;
-import net.minecraft.world.tick.ScheduledTickView;
+import net.minecraft.core.BlockPos;
+import net.minecraft.core.Direction;
+import net.minecraft.util.RandomSource;
+import net.minecraft.world.level.BlockGetter;
+import net.minecraft.world.level.LevelAccessor;
+import net.minecraft.world.level.LevelReader;
+import net.minecraft.world.level.ScheduledTickAccess;
+import net.minecraft.world.level.block.*;
+import net.minecraft.world.level.block.entity.BlockEntity;
+import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.block.state.StateDefinition;
+import net.minecraft.world.level.block.state.properties.BlockStateProperties;
+import net.minecraft.world.level.block.state.properties.BooleanProperty;
+import net.minecraft.world.level.block.state.properties.EnumProperty;
+import net.minecraft.world.level.material.FluidState;
+import net.minecraft.world.level.material.Fluids;
+import net.minecraft.world.phys.shapes.CollisionContext;
+import net.minecraft.world.phys.shapes.Shapes;
+import net.minecraft.world.phys.shapes.VoxelShape;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.ArrayList;
 import java.util.List;
 
 @SuppressWarnings("deprecation")
-public class SpotlightLightBlock extends BlockWithEntity implements Waterloggable {
-    public static final MapCodec<SpotlightLightBlock> CODEC = createCodec(SpotlightLightBlock::new);
-    public static BooleanProperty WATERLOGGED = Properties.WATERLOGGED;
-    public static BooleanProperty LIT = Properties.LIT;
-    public static EnumProperty<LightStatus> NORTH = EnumProperty.of("north", LightStatus.class);
-    public static EnumProperty<LightStatus> EAST = EnumProperty.of("east", LightStatus.class);
-    public static EnumProperty<LightStatus> SOUTH = EnumProperty.of("south", LightStatus.class);
-    public static EnumProperty<LightStatus> WEST = EnumProperty.of("west", LightStatus.class);
-    public static EnumProperty<LightStatus> UP = EnumProperty.of("up", LightStatus.class);
-    public static EnumProperty<LightStatus> DOWN = EnumProperty.of("down", LightStatus.class);
+public class SpotlightLightBlock extends BaseEntityBlock implements SimpleWaterloggedBlock {
+    public static final MapCodec<SpotlightLightBlock> CODEC = simpleCodec(SpotlightLightBlock::new);
+    public static BooleanProperty WATERLOGGED = BlockStateProperties.WATERLOGGED;
+    public static BooleanProperty LIT = BlockStateProperties.LIT;
+    public static EnumProperty<LightStatus> NORTH = EnumProperty.create("north", LightStatus.class);
+    public static EnumProperty<LightStatus> EAST = EnumProperty.create("east", LightStatus.class);
+    public static EnumProperty<LightStatus> SOUTH = EnumProperty.create("south", LightStatus.class);
+    public static EnumProperty<LightStatus> WEST = EnumProperty.create("west", LightStatus.class);
+    public static EnumProperty<LightStatus> UP = EnumProperty.create("up", LightStatus.class);
+    public static EnumProperty<LightStatus> DOWN = EnumProperty.create("down", LightStatus.class);
 
-    public SpotlightLightBlock(Settings settings) {
+    public SpotlightLightBlock(Properties settings) {
         super(settings);
-        this.setDefaultState(getStateManager().getDefaultState()
-                .with(WATERLOGGED, false)
-                .with(LIT, false)
-                .with(NORTH, LightStatus.NONE)
-                .with(EAST, LightStatus.NONE)
-                .with(SOUTH, LightStatus.NONE)
-                .with(WEST, LightStatus.NONE)
-                .with(UP, LightStatus.NONE)
-                .with(DOWN, LightStatus.NONE)
+        this.registerDefaultState(getStateDefinition().any()
+                .setValue(WATERLOGGED, false)
+                .setValue(LIT, false)
+                .setValue(NORTH, LightStatus.NONE)
+                .setValue(EAST, LightStatus.NONE)
+                .setValue(SOUTH, LightStatus.NONE)
+                .setValue(WEST, LightStatus.NONE)
+                .setValue(UP, LightStatus.NONE)
+                .setValue(DOWN, LightStatus.NONE)
         );
     }
 
-    public static void updateSources(WorldAccess world, BlockPos pos, BlockState state) {
-        if (!state.isOf(VABlocks.SPOTLIGHT_LIGHT)) return;
-        SpotlightLightBlock.getSources(world, pos, state).forEach(pos2 -> world.scheduleBlockTick(pos2, VABlocks.SPOTLIGHT, 1));
+    public static void updateSources(LevelAccessor world, BlockPos pos, BlockState state) {
+        if (!state.is(VABlocks.SPOTLIGHT_LIGHT)) return;
+        SpotlightLightBlock.getSources(world, pos, state).forEach(pos2 -> world.scheduleTick(pos2, VABlocks.SPOTLIGHT, 1));
     }
 
-    public static List<BlockPos> getSources(WorldAccess world, BlockPos pos, BlockState state) {
+    public static List<BlockPos> getSources(LevelAccessor world, BlockPos pos, BlockState state) {
         List<BlockPos> posList = new ArrayList<>();
-        for (Direction dir : Direction.values()) if (state.get(getDirectionProperty(dir)).hasLight()) posList.add(findSource(world, pos, dir));
+        for (Direction dir : Direction.values()) if (state.getValue(getDirectionProperty(dir)).hasLight()) posList.add(findSource(world, pos, dir));
         return posList;
     }
 
-    protected static BlockPos findSource(WorldAccess world, BlockPos pos, Direction dir) {
+    protected static BlockPos findSource(LevelAccessor world, BlockPos pos, Direction dir) {
         int i = 0;
-        BlockPos blockPos = BlockPos.ORIGIN;
+        BlockPos blockPos = BlockPos.ZERO;
         while (i < 33) {
             i++;
-            blockPos = pos.offset(dir, i);
+            blockPos = pos.relative(dir, i);
             if (world.getBlockEntity(blockPos) instanceof SpotlightBlockEntity spotlightBlockEntity && spotlightBlockEntity.getLightLocation().equals(pos)) return blockPos;
         }
         return blockPos;
@@ -91,65 +89,65 @@ public class SpotlightLightBlock extends BlockWithEntity implements Waterloggabl
     }
 
     @Override
-    protected MapCodec<? extends BlockWithEntity> getCodec() {
+    protected MapCodec<? extends BaseEntityBlock> codec() {
         return CODEC;
     }
 
     @Override
-    public VoxelShape getOutlineShape(BlockState state, BlockView world, BlockPos pos, ShapeContext context) {
-            return VoxelShapes.empty();
+    public VoxelShape getShape(BlockState state, BlockGetter world, BlockPos pos, CollisionContext context) {
+            return Shapes.empty();
     }
 
     @Override
-    protected boolean isTransparent(BlockState state) {
+    protected boolean propagatesSkylightDown(BlockState state) {
         return true;
     }
 
     @Override
-    public BlockRenderType getRenderType(BlockState state) {
-        return BlockRenderType.INVISIBLE;
+    public RenderShape getRenderShape(BlockState state) {
+        return RenderShape.INVISIBLE;
     }
 
     @Override
-    public float getAmbientOcclusionLightLevel(BlockState state, BlockView world, BlockPos pos) {
+    public float getShadeBrightness(BlockState state, BlockGetter world, BlockPos pos) {
         return 1.0F;
     }
 
     @Nullable
     public static LightStatus getStatus(BlockState state, Direction direction) {
-        if (state.isOf(VABlocks.SPOTLIGHT_LIGHT)) {
+        if (state.is(VABlocks.SPOTLIGHT_LIGHT)) {
             return switch (direction) {
-                case NORTH -> state.get(NORTH);
-                case EAST -> state.get(EAST);
-                case SOUTH -> state.get(SOUTH);
-                case WEST -> state.get(WEST);
-                case UP -> state.get(UP);
-                case DOWN -> state.get(DOWN);
+                case NORTH -> state.getValue(NORTH);
+                case EAST -> state.getValue(EAST);
+                case SOUTH -> state.getValue(SOUTH);
+                case WEST -> state.getValue(WEST);
+                case UP -> state.getValue(UP);
+                case DOWN -> state.getValue(DOWN);
             };
         }
         return null;
     }
 
     @Override
-    protected BlockState rotate(BlockState state, BlockRotation rotation) {
+    protected BlockState rotate(BlockState state, Rotation rotation) {
         LightStatus north = getStatus(state, rotation.rotate(Direction.SOUTH));
         LightStatus east = getStatus(state, rotation.rotate(Direction.WEST));
         LightStatus south = getStatus(state, rotation.rotate(Direction.NORTH));
         LightStatus west = getStatus(state, rotation.rotate(Direction.EAST));
-        return state.with(NORTH, north).with(EAST, east).with(SOUTH, south).with(WEST, west);
+        return state.setValue(NORTH, north).setValue(EAST, east).setValue(SOUTH, south).setValue(WEST, west);
     }
 
     @Override
-    protected BlockState mirror(BlockState state, BlockMirror mirror) {
+    protected BlockState mirror(BlockState state, Mirror mirror) {
         LightStatus north = getStatus(state, mirror.getRotation(Direction.NORTH).rotate(Direction.NORTH));
         LightStatus east = getStatus(state, mirror.getRotation(Direction.EAST).rotate(Direction.EAST));
         LightStatus south = getStatus(state, mirror.getRotation(Direction.SOUTH).rotate(Direction.SOUTH));
         LightStatus west = getStatus(state, mirror.getRotation(Direction.WEST).rotate(Direction.WEST));
-        return state.with(NORTH, north).with(EAST, east).with(SOUTH, south).with(WEST, west);
+        return state.setValue(NORTH, north).setValue(EAST, east).setValue(SOUTH, south).setValue(WEST, west);
     }
 
     public static boolean isLit(BlockState state) {
-        if (state.isOf(VABlocks.SPOTLIGHT_LIGHT)) {
+        if (state.is(VABlocks.SPOTLIGHT_LIGHT)) {
             LightStatus status;
             for (Direction direction : Direction.values()) {
                 status = getStatus(state, direction);
@@ -160,7 +158,7 @@ public class SpotlightLightBlock extends BlockWithEntity implements Waterloggabl
     }
 
     public static boolean shouldRemove(BlockState state) {
-        if (state.isOf(VABlocks.SPOTLIGHT_LIGHT)) {
+        if (state.is(VABlocks.SPOTLIGHT_LIGHT)) {
             LightStatus status;
             for (Direction direction : Direction.values()) { 
                 status = getStatus(state, direction);
@@ -171,30 +169,30 @@ public class SpotlightLightBlock extends BlockWithEntity implements Waterloggabl
     }
 
     public static BlockState getUpdatedLightState(BlockState state) {
-        if (!state.isOf(VABlocks.SPOTLIGHT_LIGHT)) return state;
-        if (shouldRemove(state)) return state.get(WATERLOGGED) ? Blocks.WATER.getDefaultState() : Blocks.AIR.getDefaultState();
-        return state.with(LIT, isLit(state));
+        if (!state.is(VABlocks.SPOTLIGHT_LIGHT)) return state;
+        if (shouldRemove(state)) return state.getValue(WATERLOGGED) ? Blocks.WATER.defaultBlockState() : Blocks.AIR.defaultBlockState();
+        return state.setValue(LIT, isLit(state));
     }
 
     @Override
-    protected void appendProperties(StateManager.Builder<Block, BlockState> builder) {
+    protected void createBlockStateDefinition(StateDefinition.Builder<Block, BlockState> builder) {
         builder.add(WATERLOGGED).add(LIT).add(NORTH).add(EAST).add(SOUTH).add(WEST).add(UP).add(DOWN);
     }
 
     @Override
     public FluidState getFluidState(BlockState state) {
-        return state.get(WATERLOGGED) ? Fluids.WATER.getStill(false) : super.getFluidState(state);
+        return state.getValue(WATERLOGGED) ? Fluids.WATER.getSource(false) : super.getFluidState(state);
     }
 
     @Override
-    protected BlockState getStateForNeighborUpdate(BlockState state, WorldView world, ScheduledTickView tickView, BlockPos pos, Direction direction, BlockPos neighborPos, BlockState neighborState, Random random) {
-        if (state.get(WATERLOGGED)) tickView.scheduleFluidTick(pos, Fluids.WATER, Fluids.WATER.getTickRate(world));
-        return state.with(LIT, isLit(state));
+    protected BlockState updateShape(BlockState state, LevelReader world, ScheduledTickAccess tickView, BlockPos pos, Direction direction, BlockPos neighborPos, BlockState neighborState, RandomSource random) {
+        if (state.getValue(WATERLOGGED)) tickView.scheduleTick(pos, Fluids.WATER, Fluids.WATER.getTickDelay(world));
+        return state.setValue(LIT, isLit(state));
     }
 
     @Nullable
     @Override
-    public BlockEntity createBlockEntity(BlockPos pos, BlockState state) {
+    public BlockEntity newBlockEntity(BlockPos pos, BlockState state) {
         return new SpotlightLightBlockEntity(pos, state);
     }
 }

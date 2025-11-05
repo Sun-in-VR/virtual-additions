@@ -1,10 +1,10 @@
 package com.github.suninvr.virtualadditions.block.enums;
 
-import net.minecraft.util.StringIdentifiable;
+import net.minecraft.util.StringRepresentable;
 
 import java.util.Locale;
 
-public enum HangingBlockShape implements StringIdentifiable {
+public enum HangingBlockShape implements StringRepresentable {
     SINGLE(true),
     BASE(false),
     STRAIGHT(false),
@@ -15,7 +15,7 @@ public enum HangingBlockShape implements StringIdentifiable {
 
 
     @Override
-    public String asString() {
+    public String getSerializedName() {
         return this.name;
     }
 

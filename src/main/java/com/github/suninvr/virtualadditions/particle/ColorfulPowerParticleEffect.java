@@ -3,25 +3,24 @@ package com.github.suninvr.virtualadditions.particle;
 import com.github.suninvr.virtualadditions.registry.VAParticleTypes;
 import com.mojang.serialization.MapCodec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
-import net.minecraft.network.RegistryByteBuf;
-import net.minecraft.network.codec.PacketCodec;
-import net.minecraft.network.codec.PacketCodecs;
-import net.minecraft.particle.ParticleEffect;
-import net.minecraft.particle.ParticleType;
-import net.minecraft.util.dynamic.Codecs;
-import org.joml.Vector3f;
+import net.minecraft.core.particles.ParticleOptions;
+import net.minecraft.core.particles.ParticleType;
+import net.minecraft.network.RegistryFriendlyByteBuf;
+import net.minecraft.network.codec.ByteBufCodecs;
+import net.minecraft.network.codec.StreamCodec;
+import net.minecraft.util.ExtraCodecs;
 import org.joml.Vector3fc;
 
-public class ColorfulPowerParticleEffect implements ParticleEffect {
+public class ColorfulPowerParticleEffect implements ParticleOptions {
     private final Vector3fc color;
     public static final MapCodec<ColorfulPowerParticleEffect> CODEC = RecordCodecBuilder.mapCodec(
             instance -> instance.group(
-                            Codecs.VECTOR_3F.fieldOf("color").forGetter(particle -> particle.color)
+                            ExtraCodecs.VECTOR3F.fieldOf("color").forGetter(particle -> particle.color)
                     )
                     .apply(instance, ColorfulPowerParticleEffect::new));
 
-    public static final PacketCodec<RegistryByteBuf, ColorfulPowerParticleEffect> PACKET_CODEC = PacketCodec.tuple(
-            PacketCodecs.VECTOR_3F, particle -> particle.color, ColorfulPowerParticleEffect::new
+    public static final StreamCodec<RegistryFriendlyByteBuf, ColorfulPowerParticleEffect> PACKET_CODEC = StreamCodec.composite(
+            ByteBufCodecs.VECTOR3F, particle -> particle.color, ColorfulPowerParticleEffect::new
     );
 
     public ColorfulPowerParticleEffect(Vector3fc color) {

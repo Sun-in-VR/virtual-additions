@@ -1,8 +1,8 @@
 package com.github.suninvr.virtualadditions.client.render.entity;
 
-import net.minecraft.block.Oxidizable;
-import net.minecraft.client.render.entity.state.ProjectileEntityRenderState;
+import net.minecraft.client.renderer.entity.state.ArrowRenderState;
+import net.minecraft.world.level.block.WeatheringCopper;
 
-public class ClimbingRopeEntityRenderState extends ProjectileEntityRenderState {
-    public Oxidizable.OxidationLevel oxidationLevel;
+public class ClimbingRopeEntityRenderState extends ArrowRenderState {
+    public WeatheringCopper.WeatherState oxidationLevel;
 }

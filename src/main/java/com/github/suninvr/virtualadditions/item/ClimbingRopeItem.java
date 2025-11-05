@@ -1,22 +1,22 @@
 package com.github.suninvr.virtualadditions.item;
 
 import com.github.suninvr.virtualadditions.entity.ClimbingRopeEntity;
-import net.minecraft.block.Block;
-import net.minecraft.entity.projectile.ProjectileEntity;
-import net.minecraft.item.BlockItem;
-import net.minecraft.item.ItemStack;
-import net.minecraft.item.ProjectileItem;
-import net.minecraft.util.math.Direction;
-import net.minecraft.util.math.Position;
-import net.minecraft.world.World;
+import net.minecraft.core.Direction;
+import net.minecraft.core.Position;
+import net.minecraft.world.entity.projectile.Projectile;
+import net.minecraft.world.item.BlockItem;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.ProjectileItem;
+import net.minecraft.world.level.Level;
+import net.minecraft.world.level.block.Block;
 
 public class ClimbingRopeItem extends BlockItem implements ProjectileItem {
-    public ClimbingRopeItem(Block block, net.minecraft.item.Item.Settings settings) {
+    public ClimbingRopeItem(Block block, net.minecraft.world.item.Item.Properties settings) {
         super(block, settings);
     }
 
     @Override
-    public ProjectileEntity createEntity(World world, Position position, ItemStack itemStack, Direction direction) {
-        return new ClimbingRopeEntity(position.getX(), position.getY(), position.getZ(), world, itemStack, null);
+    public Projectile asProjectile(Level world, Position position, ItemStack itemStack, Direction direction) {
+        return new ClimbingRopeEntity(position.x(), position.y(), position.z(), world, itemStack, null);
     }
 }

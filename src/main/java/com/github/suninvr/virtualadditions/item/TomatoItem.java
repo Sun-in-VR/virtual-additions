@@ -2,48 +2,48 @@ package com.github.suninvr.virtualadditions.item;
 
 import com.github.suninvr.virtualadditions.entity.TomatoEntity;
 import com.github.suninvr.virtualadditions.registry.VASoundEvents;
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.entity.projectile.ProjectileEntity;
-import net.minecraft.item.Item;
-import net.minecraft.item.ItemStack;
-import net.minecraft.item.ProjectileItem;
-import net.minecraft.server.world.ServerWorld;
-import net.minecraft.sound.SoundCategory;
-import net.minecraft.stat.Stats;
-import net.minecraft.util.ActionResult;
-import net.minecraft.util.Hand;
-import net.minecraft.util.math.Direction;
-import net.minecraft.util.math.Position;
-import net.minecraft.world.World;
+import net.minecraft.core.Direction;
+import net.minecraft.core.Position;
+import net.minecraft.server.level.ServerLevel;
+import net.minecraft.sounds.SoundSource;
+import net.minecraft.stats.Stats;
+import net.minecraft.world.InteractionHand;
+import net.minecraft.world.InteractionResult;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.entity.projectile.Projectile;
+import net.minecraft.world.item.Item;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.ProjectileItem;
+import net.minecraft.world.level.Level;
 
 public class TomatoItem extends Item implements ProjectileItem {
-    public TomatoItem(Item.Settings settings) {
+    public TomatoItem(Item.Properties settings) {
         super(settings);
     }
 
     @Override
-    public ActionResult use(World world, PlayerEntity user, Hand hand) {
-        if (!user.isSneaking()) {
+    public InteractionResult use(Level world, Player user, InteractionHand hand) {
+        if (!user.isShiftKeyDown()) {
             return super.use(world, user, hand);
         }
 
-        ItemStack itemStack = user.getStackInHand(hand);
+        ItemStack itemStack = user.getItemInHand(hand);
 
-        world.playSound(null, user.getX(), user.getY(), user.getZ(), VASoundEvents.ENTITY_TOMATO_THROW, SoundCategory.NEUTRAL, 0.5F, 0.4F / (world.getRandom().nextFloat() * 0.4F + 0.8F));
-        if (!world.isClient()) {
-            ProjectileEntity.spawnWithVelocity(TomatoEntity::new, (ServerWorld) world, itemStack, user, 0.0F, 1.5F, 1.0F);
+        world.playSound(null, user.getX(), user.getY(), user.getZ(), VASoundEvents.ENTITY_TOMATO_THROW, SoundSource.NEUTRAL, 0.5F, 0.4F / (world.getRandom().nextFloat() * 0.4F + 0.8F));
+        if (!world.isClientSide()) {
+            Projectile.spawnProjectileFromRotation(TomatoEntity::new, (ServerLevel) world, itemStack, user, 0.0F, 1.5F, 1.0F);
         }
 
-        user.incrementStat(Stats.USED.getOrCreateStat(this));
-        if (!user.getAbilities().creativeMode) {
-            itemStack.decrement(1);
+        user.awardStat(Stats.ITEM_USED.get(this));
+        if (!user.getAbilities().instabuild) {
+            itemStack.shrink(1);
         }
 
-        return ActionResult.SUCCESS;
+        return InteractionResult.SUCCESS;
     }
 
     @Override
-    public ProjectileEntity createEntity(World world, Position pos, ItemStack stack, Direction direction) {
-        return new TomatoEntity(world, pos.getX(), pos.getY(), pos.getZ(), stack);
+    public Projectile asProjectile(Level world, Position pos, ItemStack stack, Direction direction) {
+        return new TomatoEntity(world, pos.x(), pos.y(), pos.z(), stack);
     }
 }

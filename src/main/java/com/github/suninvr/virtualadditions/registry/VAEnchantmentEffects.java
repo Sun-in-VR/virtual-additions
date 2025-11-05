@@ -1,31 +1,31 @@
 package com.github.suninvr.virtualadditions.registry;
 
-import net.minecraft.component.ComponentType;
-import net.minecraft.enchantment.Enchantment;
-import net.minecraft.enchantment.effect.EnchantmentValueEffect;
-import net.minecraft.registry.Registries;
-import net.minecraft.registry.Registry;
-import net.minecraft.registry.RegistryKey;
-import net.minecraft.registry.RegistryKeys;
+import net.minecraft.core.Registry;
+import net.minecraft.core.component.DataComponentType;
+import net.minecraft.core.registries.BuiltInRegistries;
+import net.minecraft.core.registries.Registries;
+import net.minecraft.resources.ResourceKey;
+import net.minecraft.world.item.enchantment.Enchantment;
+import net.minecraft.world.item.enchantment.effects.EnchantmentValueEffect;
 
 import java.util.function.UnaryOperator;
 
 import static com.github.suninvr.virtualadditions.VirtualAdditions.idOf;
 
 public class VAEnchantmentEffects {
-    public static final RegistryKey<Enchantment> STEADFAST = RegistryKey.of(RegistryKeys.ENCHANTMENT, idOf("steadfast"));
-    public static final ComponentType<EnchantmentValueEffect> HALBERD_SWING_COOLDOWN_COMPONENT = registerComponent(
-            "halberd_swing_cooldown", builder -> builder.codec(EnchantmentValueEffect.CODEC)
+    public static final ResourceKey<Enchantment> STEADFAST = ResourceKey.create(Registries.ENCHANTMENT, idOf("steadfast"));
+    public static final DataComponentType<EnchantmentValueEffect> HALBERD_SWING_COOLDOWN_COMPONENT = registerComponent(
+            "halberd_swing_cooldown", builder -> builder.persistent(EnchantmentValueEffect.CODEC)
     );
-    public static final ComponentType<EnchantmentValueEffect> HALBERD_READINESS_TIME_COMPONENT = registerComponent(
-            "halberd_readiness_time", builder -> builder.codec(EnchantmentValueEffect.CODEC)
+    public static final DataComponentType<EnchantmentValueEffect> HALBERD_READINESS_TIME_COMPONENT = registerComponent(
+            "halberd_readiness_time", builder -> builder.persistent(EnchantmentValueEffect.CODEC)
     );
-    public static final ComponentType<EnchantmentValueEffect> HALBERD_LUNGE_COMPONENT = registerComponent(
-            "halberd_lunge", builder -> builder.codec(EnchantmentValueEffect.CODEC)
+    public static final DataComponentType<EnchantmentValueEffect> HALBERD_LUNGE_COMPONENT = registerComponent(
+            "halberd_lunge", builder -> builder.persistent(EnchantmentValueEffect.CODEC)
     );
 
-    private static <T> ComponentType<T> registerComponent(String id, UnaryOperator<ComponentType.Builder<T>> builderOperator) {
-        return Registry.register(Registries.ENCHANTMENT_EFFECT_COMPONENT_TYPE, idOf(id), ((ComponentType.Builder)builderOperator.apply(ComponentType.builder())).build());
+    private static <T> DataComponentType<T> registerComponent(String id, UnaryOperator<DataComponentType.Builder<T>> builderOperator) {
+        return Registry.register(BuiltInRegistries.ENCHANTMENT_EFFECT_COMPONENT_TYPE, idOf(id), ((DataComponentType.Builder)builderOperator.apply(DataComponentType.builder())).build());
     }
 
     public static void init() {

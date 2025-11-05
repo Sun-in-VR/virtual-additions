@@ -5,20 +5,17 @@ import com.github.suninvr.virtualadditions.registry.VARecipeType;
 import com.mojang.serialization.Codec;
 import com.mojang.serialization.MapCodec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
-import net.minecraft.block.ShulkerBoxBlock;
-import net.minecraft.item.BlockItem;
-import net.minecraft.item.BundleItem;
-import net.minecraft.item.ItemStack;
-import net.minecraft.network.RegistryByteBuf;
-import net.minecraft.network.codec.PacketCodec;
-import net.minecraft.recipe.*;
-import net.minecraft.recipe.book.RecipeBookCategories;
-import net.minecraft.recipe.book.RecipeBookCategory;
-import net.minecraft.recipe.display.SlotDisplay;
-import net.minecraft.recipe.input.RecipeInput;
-import net.minecraft.registry.DynamicRegistryManager;
-import net.minecraft.registry.RegistryWrapper;
-import net.minecraft.world.World;
+import net.minecraft.core.HolderLookup;
+import net.minecraft.core.RegistryAccess;
+import net.minecraft.network.RegistryFriendlyByteBuf;
+import net.minecraft.network.codec.StreamCodec;
+import net.minecraft.world.item.BlockItem;
+import net.minecraft.world.item.BundleItem;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.crafting.*;
+import net.minecraft.world.item.crafting.display.SlotDisplay;
+import net.minecraft.world.level.Level;
+import net.minecraft.world.level.block.ShulkerBoxBlock;
 
 import java.util.List;
 import java.util.Optional;
@@ -28,7 +25,7 @@ public class ColoringRecipe implements Recipe<RecipeInput>, ColoringStationRecip
     public final int index;
     protected final Optional<Ingredient> ingredient;
     protected final ItemStack result;
-    private IngredientPlacement ingredientPlacement;
+    private PlacementInfo ingredientPlacement;
 
     public ColoringRecipe(Optional<Ingredient> ingredient, ItemStack result, DyeContents cost, int index) {
         this.ingredient = ingredient;
@@ -45,22 +42,22 @@ public class ColoringRecipe implements Recipe<RecipeInput>, ColoringStationRecip
     }
 
     @Override
-    public boolean matches(RecipeInput inventory, World world) {
-        return this.ingredient.map(value -> value.test(inventory.getStackInSlot(0))).orElseGet(() -> inventory.getStackInSlot(0).isEmpty());
+    public boolean matches(RecipeInput inventory, Level world) {
+        return this.ingredient.map(value -> value.test(inventory.getItem(0))).orElseGet(() -> inventory.getItem(0).isEmpty());
     }
 
     @Override
-    public ItemStack craft(RecipeInput inventory, RegistryWrapper.WrapperLookup wrapperLookup) {
-        ItemStack stack = inventory.getStackInSlot(1);
+    public ItemStack assemble(RecipeInput inventory, HolderLookup.Provider wrapperLookup) {
+        ItemStack stack = inventory.getItem(1);
         if ((stack.getItem() instanceof BlockItem blockItem && blockItem.getBlock() instanceof ShulkerBoxBlock) || stack.getItem() instanceof BundleItem) {
-            return stack.copyComponentsToNewStack(this.result.getItem(), this.result.getCount());
+            return stack.transmuteCopy(this.result.getItem(), this.result.getCount());
         }
         return this.result.copy();
     }
 
-    public ItemStack craftWithDye(RecipeInput inventory, DynamicRegistryManager registryManager, DyeContents contents) {
-        if (contents.canAdd(this.cost.copyAndMultiply(-1)) && !inventory.getStackInSlot(0).isOf(this.result.getItem())) {
-            return craft(inventory, registryManager);
+    public ItemStack craftWithDye(RecipeInput inventory, RegistryAccess registryManager, DyeContents contents) {
+        if (contents.canAdd(this.cost.copyAndMultiply(-1)) && !inventory.getItem(0).is(this.result.getItem())) {
+            return assemble(inventory, registryManager);
         }
         return ItemStack.EMPTY;
     }
@@ -80,16 +77,16 @@ public class ColoringRecipe implements Recipe<RecipeInput>, ColoringStationRecip
     }
 
     @Override
-    public IngredientPlacement getIngredientPlacement() {
+    public PlacementInfo placementInfo() {
         if (this.ingredientPlacement == null) {
-            this.ingredientPlacement = IngredientPlacement.forMultipleSlots(List.of(this.ingredient));
+            this.ingredientPlacement = PlacementInfo.createFromOptionals(List.of(this.ingredient));
         }
 
         return this.ingredientPlacement;
     }
 
     @Override
-    public RecipeBookCategory getRecipeBookCategory() {
+    public RecipeBookCategory recipeBookCategory() {
         return RecipeBookCategories.STONECUTTER;
     }
 
@@ -105,12 +102,12 @@ public class ColoringRecipe implements Recipe<RecipeInput>, ColoringStationRecip
         return ingredient;
     }
 
-    public SlotDisplay.StackSlotDisplay getStackSlotDisplay() {
-        return new SlotDisplay.StackSlotDisplay(this.result);
+    public SlotDisplay.ItemStackSlotDisplay getStackSlotDisplay() {
+        return new SlotDisplay.ItemStackSlotDisplay(this.result);
     };
 
     @Override
-    public ItemStack getResultStack(DynamicRegistryManager registryManager, ItemStack input) {
+    public ItemStack getResultStack(RegistryAccess registryManager, ItemStack input) {
         return this.getResult();
     }
 
@@ -133,7 +130,7 @@ public class ColoringRecipe implements Recipe<RecipeInput>, ColoringStationRecip
                         Codec.INT.optionalFieldOf("index", 0).forGetter(recipe -> recipe.index)
                 ).apply(instance, ColoringRecipe::new)
         );
-        private static final PacketCodec<RegistryByteBuf, ColoringRecipe> PACKET_CODEC = PacketCodec.ofStatic(Serializer::write, Serializer::read);
+        private static final StreamCodec<RegistryFriendlyByteBuf, ColoringRecipe> PACKET_CODEC = StreamCodec.of(Serializer::write, Serializer::read);
 
         @Override
         public MapCodec<ColoringRecipe> codec() {
@@ -141,21 +138,21 @@ public class ColoringRecipe implements Recipe<RecipeInput>, ColoringStationRecip
         }
 
         @Override
-        public PacketCodec<RegistryByteBuf, ColoringRecipe> packetCodec() {
+        public StreamCodec<RegistryFriendlyByteBuf, ColoringRecipe> streamCodec() {
             return PACKET_CODEC;
         }
 
-        private static ColoringRecipe read(RegistryByteBuf buf) {
-            Optional<Ingredient> ingredient = Ingredient.OPTIONAL_PACKET_CODEC.decode(buf);
-            ItemStack stack = ItemStack.PACKET_CODEC.decode(buf);
+        private static ColoringRecipe read(RegistryFriendlyByteBuf buf) {
+            Optional<Ingredient> ingredient = Ingredient.OPTIONAL_CONTENTS_STREAM_CODEC.decode(buf);
+            ItemStack stack = ItemStack.STREAM_CODEC.decode(buf);
             DyeContents cost = DyeContents.PACKET_CODEC.decode(buf);
             int index = buf.readInt();
             return new ColoringRecipe(ingredient, stack, cost, index);
         }
 
-        private static void write(RegistryByteBuf buf, ColoringRecipe recipe) {
-            Ingredient.OPTIONAL_PACKET_CODEC.encode(buf, recipe.ingredient);
-            ItemStack.PACKET_CODEC.encode(buf, recipe.result);
+        private static void write(RegistryFriendlyByteBuf buf, ColoringRecipe recipe) {
+            Ingredient.OPTIONAL_CONTENTS_STREAM_CODEC.encode(buf, recipe.ingredient);
+            ItemStack.STREAM_CODEC.encode(buf, recipe.result);
             DyeContents.PACKET_CODEC.encode(buf, recipe.cost);
             buf.writeInt(recipe.index);
         }

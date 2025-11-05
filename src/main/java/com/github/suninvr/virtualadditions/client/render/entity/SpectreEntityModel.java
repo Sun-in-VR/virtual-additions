@@ -1,10 +1,11 @@
 package com.github.suninvr.virtualadditions.client.render.entity;
 
-import com.github.suninvr.virtualadditions.entity.SpectreEntity;
-import net.minecraft.client.model.*;
-import net.minecraft.client.render.entity.model.EntityModel;
-import net.minecraft.client.render.entity.state.LivingEntityRenderState;
-import net.minecraft.entity.LivingEntity;
+import net.minecraft.client.model.EntityModel;
+import net.minecraft.client.model.geom.ModelPart;
+import net.minecraft.client.model.geom.PartPose;
+import net.minecraft.client.model.geom.builders.*;
+import net.minecraft.client.renderer.entity.state.LivingEntityRenderState;
+import net.minecraft.world.entity.LivingEntity;
 
 public class SpectreEntityModel<T extends LivingEntity> extends EntityModel<LivingEntityRenderState> {
     private final ModelPart head;
@@ -14,23 +15,23 @@ public class SpectreEntityModel<T extends LivingEntity> extends EntityModel<Livi
         this.head = root.getChild("head");
     }
 
-    public static TexturedModelData getTexturedModelData() {
-        ModelData modelData = new ModelData();
-        ModelPartData modelPartData = modelData.getRoot();
-        ModelPartData head = modelPartData.addChild("head", ModelPartBuilder.create()
-                        .uv(0, 0)
-                        .cuboid("head", -3, -3, -3, 6, 6, 6, new Dilation(0.0F))
-                , ModelTransform.origin(0, 20, 0));
-        return TexturedModelData.of(modelData, 32, 16);
+    public static LayerDefinition getTexturedModelData() {
+        MeshDefinition modelData = new MeshDefinition();
+        PartDefinition modelPartData = modelData.getRoot();
+        PartDefinition head = modelPartData.addOrReplaceChild("head", CubeListBuilder.create()
+                        .texOffs(0, 0)
+                        .addBox("head", -3, -3, -3, 6, 6, 6, new CubeDeformation(0.0F))
+                , PartPose.offset(0, 20, 0));
+        return LayerDefinition.create(modelData, 32, 16);
     }
 
     @Override
-    public void setAngles(LivingEntityRenderState state) {
-        super.setAngles(state);
-        float headYaw = state.relativeHeadYaw;
-        float headPitch = state.pitch;
-        this.head.yaw = headYaw * 0.017453292F;
-        this.head.pitch = headPitch  * 0.017453292F;
+    public void setupAnim(LivingEntityRenderState object) {
+        super.setupAnim(object);
+        float headYaw = object.yRot;
+        float headPitch = object.xRot;
+        this.head.yRot = headYaw * 0.017453292F;
+        this.head.xRot = headPitch  * 0.017453292F;
     }
 }
 

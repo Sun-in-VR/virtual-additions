@@ -5,29 +5,29 @@ import com.github.suninvr.virtualadditions.registry.VADataComponentTypes;
 import com.github.suninvr.virtualadditions.registry.VARegistries;
 import com.mojang.serialization.Codec;
 import com.mojang.serialization.MapCodec;
-import net.minecraft.client.render.item.property.select.SelectProperty;
-import net.minecraft.client.world.ClientWorld;
-import net.minecraft.entity.LivingEntity;
-import net.minecraft.item.ItemDisplayContext;
-import net.minecraft.item.ItemStack;
-import net.minecraft.registry.RegistryKey;
-import net.minecraft.registry.entry.RegistryEntry;
+import net.minecraft.client.multiplayer.ClientLevel;
+import net.minecraft.client.renderer.item.properties.select.SelectItemModelProperty;
+import net.minecraft.core.Holder;
+import net.minecraft.resources.ResourceKey;
+import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.item.ItemDisplayContext;
+import net.minecraft.world.item.ItemStack;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.Objects;
 
-public class GildTypeProperty implements SelectProperty<RegistryKey<GildType>> {
-    public static final Codec<RegistryKey<GildType>> VALUE_CODEC = RegistryKey.createCodec(VARegistries.GILD_TYPE_REGISTRY_KEY);
-    public static final SelectProperty.Type<GildTypeProperty, RegistryKey<GildType>> TYPE = SelectProperty.Type.create(
+public class GildTypeProperty implements SelectItemModelProperty<ResourceKey<GildType>> {
+    public static final Codec<ResourceKey<GildType>> VALUE_CODEC = ResourceKey.codec(VARegistries.GILD_TYPE_REGISTRY_KEY);
+    public static final SelectItemModelProperty.Type<GildTypeProperty, ResourceKey<GildType>> TYPE = SelectItemModelProperty.Type.create(
             MapCodec.unit(new GildTypeProperty()), VALUE_CODEC
     );
 
     @Override
     @Nullable
-    public RegistryKey<GildType> getValue(ItemStack stack, @Nullable ClientWorld world, @Nullable LivingEntity user, int seed, ItemDisplayContext displayContext) {
-        RegistryEntry<GildType> type = VARegistries.GILD_TYPE.getEntry(stack.get(VADataComponentTypes.GILD_TYPE));
-        if (Objects.isNull(type) || type.getKey().isEmpty()) return null;
-        return type.getKey().get();
+    public ResourceKey<GildType> get(ItemStack stack, @Nullable ClientLevel world, @Nullable LivingEntity user, int seed, ItemDisplayContext displayContext) {
+        Holder<GildType> type = VARegistries.GILD_TYPE.wrapAsHolder(stack.get(VADataComponentTypes.GILD_TYPE));
+        if (Objects.isNull(type) || type.unwrapKey().isEmpty()) return null;
+        return type.unwrapKey().get();
     }
 
     @Override
@@ -36,7 +36,7 @@ public class GildTypeProperty implements SelectProperty<RegistryKey<GildType>> {
     }
 
     @Override
-    public Type getType() {
+    public Type type() {
         return TYPE;
     }
 }

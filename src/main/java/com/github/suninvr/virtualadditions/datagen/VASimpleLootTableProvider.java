@@ -8,37 +8,37 @@ import com.google.common.collect.Maps;
 import net.fabricmc.fabric.api.datagen.v1.FabricDataGenerator;
 import net.fabricmc.fabric.api.datagen.v1.FabricDataOutput;
 import net.fabricmc.fabric.api.datagen.v1.provider.SimpleFabricLootTableProvider;
-import net.minecraft.component.DataComponentTypes;
+import net.minecraft.advancements.critereon.DataComponentMatchers;
+import net.minecraft.advancements.critereon.EntityPredicate;
+import net.minecraft.core.HolderLookup;
+import net.minecraft.core.component.DataComponentExactPredicate;
+import net.minecraft.core.component.DataComponents;
+import net.minecraft.core.registries.Registries;
 import net.minecraft.data.DataProvider;
-import net.minecraft.data.loottable.EntityLootTableGenerator;
-import net.minecraft.entity.passive.ChickenVariants;
-import net.minecraft.item.Item;
-import net.minecraft.item.ItemConvertible;
-import net.minecraft.item.Items;
-import net.minecraft.loot.LootPool;
-import net.minecraft.loot.LootTable;
-import net.minecraft.loot.LootTables;
-import net.minecraft.loot.condition.EntityPropertiesLootCondition;
-import net.minecraft.loot.condition.LootCondition;
-import net.minecraft.loot.condition.RandomChanceLootCondition;
-import net.minecraft.loot.context.LootContext;
-import net.minecraft.loot.context.LootContextTypes;
-import net.minecraft.loot.entry.AlternativeEntry;
-import net.minecraft.loot.entry.ItemEntry;
-import net.minecraft.loot.entry.LeafEntry;
-import net.minecraft.loot.function.*;
-import net.minecraft.loot.provider.number.ConstantLootNumberProvider;
-import net.minecraft.loot.provider.number.LootNumberProvider;
-import net.minecraft.loot.provider.number.UniformLootNumberProvider;
-import net.minecraft.predicate.component.ComponentMapPredicate;
-import net.minecraft.predicate.component.ComponentsPredicate;
-import net.minecraft.predicate.entity.EntityPredicate;
-import net.minecraft.registry.RegistryKey;
-import net.minecraft.registry.RegistryKeys;
-import net.minecraft.registry.RegistryWrapper;
-import net.minecraft.registry.entry.LazyRegistryEntryReference;
-import net.minecraft.util.DyeColor;
-import net.minecraft.util.context.ContextType;
+import net.minecraft.data.loot.EntityLootSubProvider;
+import net.minecraft.resources.ResourceKey;
+import net.minecraft.util.context.ContextKeySet;
+import net.minecraft.world.entity.animal.ChickenVariants;
+import net.minecraft.world.item.DyeColor;
+import net.minecraft.world.item.EitherHolder;
+import net.minecraft.world.item.Item;
+import net.minecraft.world.item.Items;
+import net.minecraft.world.level.ItemLike;
+import net.minecraft.world.level.storage.loot.BuiltInLootTables;
+import net.minecraft.world.level.storage.loot.LootContext;
+import net.minecraft.world.level.storage.loot.LootPool;
+import net.minecraft.world.level.storage.loot.LootTable;
+import net.minecraft.world.level.storage.loot.entries.AlternativesEntry;
+import net.minecraft.world.level.storage.loot.entries.LootItem;
+import net.minecraft.world.level.storage.loot.entries.LootPoolSingletonContainer;
+import net.minecraft.world.level.storage.loot.functions.*;
+import net.minecraft.world.level.storage.loot.parameters.LootContextParamSets;
+import net.minecraft.world.level.storage.loot.predicates.LootItemCondition;
+import net.minecraft.world.level.storage.loot.predicates.LootItemEntityPropertyCondition;
+import net.minecraft.world.level.storage.loot.predicates.LootItemRandomChanceCondition;
+import net.minecraft.world.level.storage.loot.providers.number.ConstantValue;
+import net.minecraft.world.level.storage.loot.providers.number.NumberProvider;
+import net.minecraft.world.level.storage.loot.providers.number.UniformGenerator;
 
 import java.util.Map;
 import java.util.concurrent.CompletableFuture;
@@ -54,97 +54,97 @@ public class VASimpleLootTableProvider {
     public static FabricDataGenerator.Pack.RegistryDependentFactory<DataProvider> base() {return BaseProvider::new;}
 
     public static class BaseProvider extends Provider {
-        public BaseProvider(FabricDataOutput output, CompletableFuture<RegistryWrapper.WrapperLookup> registryLookup) {
-            super(output, registryLookup, LootContextTypes.CHEST);
+        public BaseProvider(FabricDataOutput output, CompletableFuture<HolderLookup.Provider> registryLookup) {
+            super(output, registryLookup, LootContextParamSets.CHEST);
         }
 
         @Override
-        public void accept(BiConsumer<RegistryKey<LootTable>, LootTable.Builder> lootTableBiConsumer) {
-            lootTableBiConsumer.accept(VALootTables.CEMETERY_GRAVES, LootTable.builder()
-                    .pool(LootPool.builder().conditionally(RandomChanceLootCondition.builder(0.6F))
-                            .with(item(Items.IRON_HELMET).apply(damage(0.15F, 0.8F)).apply(enchant(3, 0.4F)).weight(7))
-                            .with(item(Items.IRON_CHESTPLATE).apply(damage(0.15F, 0.8F)).apply(enchant(3, 0.4F)).weight(7))
-                            .with(item(Items.IRON_LEGGINGS).apply(damage(0.15F, 0.8F)).apply(enchant(3, 0.4F)).weight(7))
-                            .with(item(Items.IRON_BOOTS).apply(damage(0.15F, 0.8F)).apply(enchant(3, 0.4F)).weight(7))
-                            .with(item(Items.IRON_SWORD).apply(damage(0.15F, 0.8F)).apply(enchant(3, 0.4F)).weight(7))
-                            .with(item(Items.IRON_SHOVEL).apply(damage(0.15F, 0.8F)).apply(enchant(3, 0.4F)).weight(7))
-                            .with(item(Items.IRON_PICKAXE).apply(damage(0.15F, 0.8F)).apply(enchant(3, 0.4F)).weight(7))
-                            .with(item(Items.IRON_AXE).apply(damage(0.15F, 0.8F)).apply(enchant(3, 0.4F)).weight(7))
-                            .with(item(Items.IRON_HOE).apply(damage(0.15F, 0.8F)).apply(enchant(3, 0.4F)).weight(7))
-                            .with(item(VAItems.STEEL_HELMET).apply(damage(0.15F, 0.8F)).apply(enchant(3, 0.4F)).weight(3))
-                            .with(item(VAItems.STEEL_CHESTPLATE).apply(damage(0.15F, 0.8F)).apply(enchant(3, 0.4F)).weight(3))
-                            .with(item(VAItems.STEEL_LEGGINGS).apply(damage(0.15F, 0.8F)).apply(enchant(3, 0.4F)).weight(3))
-                            .with(item(VAItems.STEEL_BOOTS).apply(damage(0.15F, 0.8F)).apply(enchant(3, 0.4F)).weight(3))
-                            .with(item(VAItems.STEEL_SWORD).apply(damage(0.15F, 0.8F)).apply(enchant(3, 0.4F)).weight(3))
-                            .with(item(VAItems.STEEL_SHOVEL).apply(damage(0.15F, 0.8F)).apply(enchant(3, 0.4F)).weight(3))
-                            .with(item(VAItems.STEEL_PICKAXE).apply(damage(0.15F, 0.8F)).apply(enchant(3, 0.4F)).weight(3))
-                            .with(item(VAItems.STEEL_AXE).apply(damage(0.15F, 0.8F)).apply(enchant(3, 0.4F)).weight(3))
-                            .with(item(VAItems.STEEL_HOE).apply(damage(0.15F, 0.8F)).apply(enchant(3, 0.4F)).weight(3))
+        public void generate(BiConsumer<ResourceKey<LootTable>, LootTable.Builder> lootTableBiConsumer) {
+            lootTableBiConsumer.accept(VALootTables.CEMETERY_GRAVES, LootTable.lootTable()
+                    .withPool(LootPool.lootPool().when(LootItemRandomChanceCondition.randomChance(0.6F))
+                            .add(item(Items.IRON_HELMET).apply(damage(0.15F, 0.8F)).apply(enchant(3, 0.4F)).setWeight(7))
+                            .add(item(Items.IRON_CHESTPLATE).apply(damage(0.15F, 0.8F)).apply(enchant(3, 0.4F)).setWeight(7))
+                            .add(item(Items.IRON_LEGGINGS).apply(damage(0.15F, 0.8F)).apply(enchant(3, 0.4F)).setWeight(7))
+                            .add(item(Items.IRON_BOOTS).apply(damage(0.15F, 0.8F)).apply(enchant(3, 0.4F)).setWeight(7))
+                            .add(item(Items.IRON_SWORD).apply(damage(0.15F, 0.8F)).apply(enchant(3, 0.4F)).setWeight(7))
+                            .add(item(Items.IRON_SHOVEL).apply(damage(0.15F, 0.8F)).apply(enchant(3, 0.4F)).setWeight(7))
+                            .add(item(Items.IRON_PICKAXE).apply(damage(0.15F, 0.8F)).apply(enchant(3, 0.4F)).setWeight(7))
+                            .add(item(Items.IRON_AXE).apply(damage(0.15F, 0.8F)).apply(enchant(3, 0.4F)).setWeight(7))
+                            .add(item(Items.IRON_HOE).apply(damage(0.15F, 0.8F)).apply(enchant(3, 0.4F)).setWeight(7))
+                            .add(item(VAItems.STEEL_HELMET).apply(damage(0.15F, 0.8F)).apply(enchant(3, 0.4F)).setWeight(3))
+                            .add(item(VAItems.STEEL_CHESTPLATE).apply(damage(0.15F, 0.8F)).apply(enchant(3, 0.4F)).setWeight(3))
+                            .add(item(VAItems.STEEL_LEGGINGS).apply(damage(0.15F, 0.8F)).apply(enchant(3, 0.4F)).setWeight(3))
+                            .add(item(VAItems.STEEL_BOOTS).apply(damage(0.15F, 0.8F)).apply(enchant(3, 0.4F)).setWeight(3))
+                            .add(item(VAItems.STEEL_SWORD).apply(damage(0.15F, 0.8F)).apply(enchant(3, 0.4F)).setWeight(3))
+                            .add(item(VAItems.STEEL_SHOVEL).apply(damage(0.15F, 0.8F)).apply(enchant(3, 0.4F)).setWeight(3))
+                            .add(item(VAItems.STEEL_PICKAXE).apply(damage(0.15F, 0.8F)).apply(enchant(3, 0.4F)).setWeight(3))
+                            .add(item(VAItems.STEEL_AXE).apply(damage(0.15F, 0.8F)).apply(enchant(3, 0.4F)).setWeight(3))
+                            .add(item(VAItems.STEEL_HOE).apply(damage(0.15F, 0.8F)).apply(enchant(3, 0.4F)).setWeight(3))
                     )
-                    .pool(LootPool.builder().rolls(uniform(2.0F, 5.0F))
-                            .with(item(Items.BONE, 3, 10).weight(12))
-                            .with(item(Items.ROTTEN_FLESH, 3, 10).weight(8))
-                            .with(item(Items.EMERALD, 2, 8).weight(3))
-                            .with(item(Items.LEATHER, 1, 5).weight(3))
+                    .withPool(LootPool.lootPool().setRolls(uniform(2.0F, 5.0F))
+                            .add(item(Items.BONE, 3, 10).setWeight(12))
+                            .add(item(Items.ROTTEN_FLESH, 3, 10).setWeight(8))
+                            .add(item(Items.EMERALD, 2, 8).setWeight(3))
+                            .add(item(Items.LEATHER, 1, 5).setWeight(3))
                     )
             );
 
-            lootTableBiConsumer.accept(VALootTables.CEMETERY, LootTable.builder(
-                    ).pool(LootPool.builder().conditionally(chance(0.25F))
-                            .with(item(Items.DIAMOND, 1, 3))
-                            .with(item(VAItems.ROBE_ARMOR_TRIM_SMITHING_TEMPLATE))
-                    ).pool(LootPool.builder().rolls(uniform(2.0F, 4.0F))
-                            .with(item(VAItems.SPECTRAL_POWDER, 2, 8).weight(10))
-                            .with(item(VAItems.SPECTRAL_TORCH, 2, 8).weight(8))
-                            .with(item(VAItems.SPECTRAL_SAND, 2, 8).weight(5))
-                            .with(item(VAItems.STEEL_INGOT, 2, 4).weight(2))
-                    ).pool(LootPool.builder().rolls(uniform(2.0F, 5.0f))
-                            .with(item(Items.LEATHER, 1, 5))
-                            .with(item(Items.BONE, 1, 5))
-                            .with(item(VAItems.BONE_LITTER, 2, 10))
+            lootTableBiConsumer.accept(VALootTables.CEMETERY, LootTable.lootTable(
+                    ).withPool(LootPool.lootPool().when(chance(0.25F))
+                            .add(item(Items.DIAMOND, 1, 3))
+                            .add(item(VAItems.ROBE_ARMOR_TRIM_SMITHING_TEMPLATE))
+                    ).withPool(LootPool.lootPool().setRolls(uniform(2.0F, 4.0F))
+                            .add(item(VAItems.SPECTRAL_POWDER, 2, 8).setWeight(10))
+                            .add(item(VAItems.SPECTRAL_TORCH, 2, 8).setWeight(8))
+                            .add(item(VAItems.SPECTRAL_SAND, 2, 8).setWeight(5))
+                            .add(item(VAItems.STEEL_INGOT, 2, 4).setWeight(2))
+                    ).withPool(LootPool.lootPool().setRolls(uniform(2.0F, 5.0f))
+                            .add(item(Items.LEATHER, 1, 5))
+                            .add(item(Items.BONE, 1, 5))
+                            .add(item(VAItems.BONE_LITTER, 2, 10))
                     )
             );
         }
     }
 
     public static class EnhancementsShearingProvider extends Provider {
-        public EnhancementsShearingProvider(FabricDataOutput fabricDataOutput, CompletableFuture<RegistryWrapper.WrapperLookup> registryLookup) {
-            super(fabricDataOutput, registryLookup, LootContextTypes.SHEARING);
+        public EnhancementsShearingProvider(FabricDataOutput fabricDataOutput, CompletableFuture<HolderLookup.Provider> registryLookup) {
+            super(fabricDataOutput, registryLookup, LootContextParamSets.SHEARING);
         }
 
         @Override
-        public void accept(BiConsumer<RegistryKey<LootTable>, LootTable.Builder> lootTableBiConsumer) {
+        public void generate(BiConsumer<ResourceKey<LootTable>, LootTable.Builder> lootTableBiConsumer) {
             lootTableBiConsumer.accept(
-                LootTables.SHEEP_SHEARING,
-                LootTable.builder()
-                        .pool(EntityLootTableGenerator.createForSheep(LootTables.SHEEP_SHEARING_FROM_DYE_COLOR))
+                BuiltInLootTables.SHEAR_SHEEP,
+                LootTable.lootTable()
+                        .withPool(EntityLootSubProvider.createSheepDispatchPool(BuiltInLootTables.SHEAR_SHEEP_BY_DYE))
             );
 
             WOOL_FROM_DYE_COLOR
                     .forEach(
                             (color, wool) -> lootTableBiConsumer.accept(
-                                    LootTables.SHEEP_SHEARING_FROM_DYE_COLOR.get(color),
-                                    LootTable.builder().pool(LootPool.builder().rolls(UniformLootNumberProvider.create(1.0F, 3.0F)).with(ItemEntry.builder(wool)))
+                                    BuiltInLootTables.SHEAR_SHEEP_BY_DYE.get(color),
+                                    LootTable.lootTable().withPool(LootPool.lootPool().setRolls(UniformGenerator.between(1.0F, 3.0F)).add(LootItem.lootTableItem(wool)))
                             )
                     );
         }
     }
 
     public static class EnhancementsEntitiesProvider extends Provider {
-        CompletableFuture<RegistryWrapper.WrapperLookup> registryLookup;
+        CompletableFuture<HolderLookup.Provider> registryLookup;
 
-        public EnhancementsEntitiesProvider(FabricDataOutput fabricDataOutput, CompletableFuture<RegistryWrapper.WrapperLookup> registryLookup) {
-            super(fabricDataOutput, registryLookup, LootContextTypes.ENTITY);
+        public EnhancementsEntitiesProvider(FabricDataOutput fabricDataOutput, CompletableFuture<HolderLookup.Provider> registryLookup) {
+            super(fabricDataOutput, registryLookup, LootContextParamSets.ENTITY);
             this.registryLookup = registryLookup;
         }
 
         @Override
-        public void accept(BiConsumer<RegistryKey<LootTable>, LootTable.Builder> lootTableBiConsumer) {
+        public void generate(BiConsumer<ResourceKey<LootTable>, LootTable.Builder> lootTableBiConsumer) {
             WOOL_FROM_DYE_COLOR
                     .forEach(
                             (color, wool) -> lootTableBiConsumer.accept(
-                                    LootTables.SHEEP_DROPS_FROM_DYE_COLOR.get(color),
-                                    LootTable.builder().pool(LootPool.builder().with(ItemEntry.builder(wool)))
+                                    BuiltInLootTables.SHEEP_BY_DYE.get(color),
+                                    LootTable.lootTable().withPool(LootPool.lootPool().add(LootItem.lootTableItem(wool)))
                             )
                     );
 
@@ -153,22 +153,22 @@ public class VASimpleLootTableProvider {
     }
 
     public static class EnhancementsGiftProvider extends Provider {
-        CompletableFuture<RegistryWrapper.WrapperLookup> registryLookup;
+        CompletableFuture<HolderLookup.Provider> registryLookup;
 
-        public EnhancementsGiftProvider(FabricDataOutput fabricDataOutput, CompletableFuture<RegistryWrapper.WrapperLookup> registryLookup) {
-            super(fabricDataOutput, registryLookup, LootContextTypes.GIFT);
+        public EnhancementsGiftProvider(FabricDataOutput fabricDataOutput, CompletableFuture<HolderLookup.Provider> registryLookup) {
+            super(fabricDataOutput, registryLookup, LootContextParamSets.GIFT);
             this.registryLookup = registryLookup;
         }
 
         @Override
-        public void accept(BiConsumer<RegistryKey<LootTable>, LootTable.Builder> lootTableBiConsumer) {
-            lootTableBiConsumer.accept(LootTables.CHICKEN_LAY_GAMEPLAY,
-                    LootTable.builder().pool(LootPool.builder().with(
-                            AlternativeEntry.builder(
-                                    ItemEntry.builder(Items.EGG).conditionally(EntityPropertiesLootCondition.builder(LootContext.EntityReference.THIS, EntityPredicate.Builder.create().components(ComponentsPredicate.Builder.create().exact(ComponentMapPredicate.of(DataComponentTypes.CHICKEN_VARIANT, new LazyRegistryEntryReference<>(ChickenVariants.TEMPERATE))).build()))),
-                                    ItemEntry.builder(Items.BROWN_EGG).conditionally(EntityPropertiesLootCondition.builder(LootContext.EntityReference.THIS, EntityPredicate.Builder.create().components(ComponentsPredicate.Builder.create().exact(ComponentMapPredicate.of(DataComponentTypes.CHICKEN_VARIANT, new LazyRegistryEntryReference<>(ChickenVariants.WARM))).build()))),
-                                    ItemEntry.builder(Items.BLUE_EGG).conditionally(EntityPropertiesLootCondition.builder(LootContext.EntityReference.THIS, EntityPredicate.Builder.create().components(ComponentsPredicate.Builder.create().exact(ComponentMapPredicate.of(DataComponentTypes.CHICKEN_VARIANT, new LazyRegistryEntryReference<>(ChickenVariants.COLD))).build()))),
-                                    ItemEntry.builder(VAItems.PURPLE_EGG).conditionally(EntityPropertiesLootCondition.builder(LootContext.EntityReference.THIS, EntityPredicate.Builder.create().components(ComponentsPredicate.Builder.create().exact(ComponentMapPredicate.of(DataComponentTypes.CHICKEN_VARIANT, new LazyRegistryEntryReference<>(RegistryKey.of(RegistryKeys.CHICKEN_VARIANT, idOf("enchanted"))))).build())))
+        public void generate(BiConsumer<ResourceKey<LootTable>, LootTable.Builder> lootTableBiConsumer) {
+            lootTableBiConsumer.accept(BuiltInLootTables.CHICKEN_LAY,
+                    LootTable.lootTable().withPool(LootPool.lootPool().add(
+                            AlternativesEntry.alternatives(
+                                    LootItem.lootTableItem(Items.EGG).when(LootItemEntityPropertyCondition.hasProperties(LootContext.EntityTarget.THIS, EntityPredicate.Builder.entity().components(DataComponentMatchers.Builder.components().exact(DataComponentExactPredicate.expect(DataComponents.CHICKEN_VARIANT, new EitherHolder<>(ChickenVariants.TEMPERATE))).build()))),
+                                    LootItem.lootTableItem(Items.BROWN_EGG).when(LootItemEntityPropertyCondition.hasProperties(LootContext.EntityTarget.THIS, EntityPredicate.Builder.entity().components(DataComponentMatchers.Builder.components().exact(DataComponentExactPredicate.expect(DataComponents.CHICKEN_VARIANT, new EitherHolder<>(ChickenVariants.WARM))).build()))),
+                                    LootItem.lootTableItem(Items.BLUE_EGG).when(LootItemEntityPropertyCondition.hasProperties(LootContext.EntityTarget.THIS, EntityPredicate.Builder.entity().components(DataComponentMatchers.Builder.components().exact(DataComponentExactPredicate.expect(DataComponents.CHICKEN_VARIANT, new EitherHolder<>(ChickenVariants.COLD))).build()))),
+                                    LootItem.lootTableItem(VAItems.PURPLE_EGG).when(LootItemEntityPropertyCondition.hasProperties(LootContext.EntityTarget.THIS, EntityPredicate.Builder.entity().components(DataComponentMatchers.Builder.components().exact(DataComponentExactPredicate.expect(DataComponents.CHICKEN_VARIANT, new EitherHolder<>(ResourceKey.create(Registries.CHICKEN_VARIANT, idOf("enchanted"))))).build())))
                             )
                     ))
                     );
@@ -178,65 +178,65 @@ public class VASimpleLootTableProvider {
     }
 
     protected static abstract class Provider extends SimpleFabricLootTableProvider {
-        protected final RegistryWrapper.WrapperLookup registryLookup;
+        protected final HolderLookup.Provider registryLookup;
 
-        public Provider(FabricDataOutput output, CompletableFuture<RegistryWrapper.WrapperLookup> registryLookup, ContextType contextType) {
+        public Provider(FabricDataOutput output, CompletableFuture<HolderLookup.Provider> registryLookup, ContextKeySet contextType) {
             super(output, registryLookup, contextType);
-            RegistryWrapper.WrapperLookup[] lookup = {null};
+            HolderLookup.Provider[] lookup = {null};
             registryLookup.thenAccept(wrapperLookup -> lookup[0] = wrapperLookup);
             this.registryLookup = lookup[0];
         }
 
-        protected static LeafEntry.Builder<?> item(Item item) {
-            return ItemEntry.builder(item);
+        protected static LootPoolSingletonContainer.Builder<?> item(Item item) {
+            return LootItem.lootTableItem(item);
         }
 
-        protected static LeafEntry.Builder<?> item(Item item, LootNumberProvider count) {
-            return ItemEntry.builder(item).apply(SetCountLootFunction.builder(count));
+        protected static LootPoolSingletonContainer.Builder<?> item(Item item, NumberProvider count) {
+            return LootItem.lootTableItem(item).apply(SetItemCountFunction.setCount(count));
         }
 
-        protected static LeafEntry.Builder<?> item(Item item, int min, int max) {
-            return ItemEntry.builder(item).apply(SetCountLootFunction.builder(uniform(min, max)));
+        protected static LootPoolSingletonContainer.Builder<?> item(Item item, int min, int max) {
+            return LootItem.lootTableItem(item).apply(SetItemCountFunction.setCount(uniform(min, max)));
         }
 
-        protected static LeafEntry.Builder<?> item(Item item, int count) {
-            return ItemEntry.builder(item).apply(SetCountLootFunction.builder(constant(count)));
+        protected static LootPoolSingletonContainer.Builder<?> item(Item item, int count) {
+            return LootItem.lootTableItem(item).apply(SetItemCountFunction.setCount(constant(count)));
         }
 
-        protected static LootNumberProvider uniform(float min, float max) {
-            return UniformLootNumberProvider.create(min, max);
+        protected static NumberProvider uniform(float min, float max) {
+            return UniformGenerator.between(min, max);
         }
 
-        protected static LootNumberProvider constant(float count) {
-            return ConstantLootNumberProvider.create(count);
+        protected static NumberProvider constant(float count) {
+            return ConstantValue.exactly(count);
         }
 
-        protected static LootFunction.Builder damage(float min, float max) {
-            return SetDamageLootFunction.builder(uniform(min, max));
+        protected static LootItemFunction.Builder damage(float min, float max) {
+            return SetItemDamageFunction.setDamage(uniform(min, max));
         }
 
-        protected LootFunction.Builder enchant() {
-            return EnchantRandomlyLootFunction.builder(this.registryLookup);
+        protected LootItemFunction.Builder enchant() {
+            return EnchantRandomlyFunction.randomApplicableEnchantment(this.registryLookup);
         }
 
-        protected LootFunction.Builder enchant(LootNumberProvider levels) {
-            return EnchantWithLevelsLootFunction.builder(this.registryLookup, levels);
+        protected LootItemFunction.Builder enchant(NumberProvider levels) {
+            return EnchantWithLevelsFunction.enchantWithLevels(this.registryLookup, levels);
         }
 
-        protected LootFunction.Builder enchant(int levels) {
-            return EnchantWithLevelsLootFunction.builder(this.registryLookup, constant(levels));
+        protected LootItemFunction.Builder enchant(int levels) {
+            return EnchantWithLevelsFunction.enchantWithLevels(this.registryLookup, constant(levels));
         }
 
-        protected LootFunction.Builder enchant(int levels, float probability) {
-            return EnchantWithLevelsLootFunction.builder(this.registryLookup, constant(levels))
-                    .conditionally(RandomChanceLootCondition.builder(probability));
+        protected LootItemFunction.Builder enchant(int levels, float probability) {
+            return EnchantWithLevelsFunction.enchantWithLevels(this.registryLookup, constant(levels))
+                    .when(LootItemRandomChanceCondition.randomChance(probability));
         }
 
-        protected LootCondition.Builder chance(float probability) {
-            return RandomChanceLootCondition.builder(probability);
+        protected LootItemCondition.Builder chance(float probability) {
+            return LootItemRandomChanceCondition.randomChance(probability);
         }
 
-        protected static Map<DyeColor, ItemConvertible> WOOL_FROM_DYE_COLOR = Maps.newEnumMap(
+        protected static Map<DyeColor, ItemLike> WOOL_FROM_DYE_COLOR = Maps.newEnumMap(
                 Map.ofEntries(
                         Map.entry(VADyeColors.CHARTREUSE, VABlocks.CHARTREUSE_WOOL),
                         Map.entry(VADyeColors.MAROON, VABlocks.MAROON_WOOL),

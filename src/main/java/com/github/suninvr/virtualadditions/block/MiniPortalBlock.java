@@ -5,227 +5,238 @@ import com.github.suninvr.virtualadditions.block.enums.MiniPortalState;
 import com.github.suninvr.virtualadditions.interfaces.EntityInterface;
 import com.github.suninvr.virtualadditions.registry.*;
 import com.mojang.serialization.MapCodec;
-import net.minecraft.block.*;
-import net.minecraft.block.entity.BlockEntity;
-import net.minecraft.component.DataComponentTypes;
-import net.minecraft.entity.Entity;
-import net.minecraft.entity.EntityCollisionHandler;
-import net.minecraft.entity.LivingEntity;
-import net.minecraft.entity.effect.StatusEffectInstance;
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.fluid.FluidState;
-import net.minecraft.fluid.Fluids;
-import net.minecraft.item.*;
-import net.minecraft.particle.ParticleEffect;
-import net.minecraft.potion.Potions;
-import net.minecraft.predicate.entity.EntityPredicates;
-import net.minecraft.server.network.ServerPlayerEntity;
-import net.minecraft.server.world.ServerWorld;
-import net.minecraft.sound.SoundCategory;
-import net.minecraft.sound.SoundEvents;
-import net.minecraft.stat.Stats;
-import net.minecraft.state.StateManager;
-import net.minecraft.state.property.BooleanProperty;
-import net.minecraft.state.property.EnumProperty;
-import net.minecraft.state.property.Properties;
-import net.minecraft.util.ActionResult;
-import net.minecraft.util.Hand;
-import net.minecraft.util.hit.BlockHitResult;
-import net.minecraft.util.math.*;
-import net.minecraft.util.math.random.Random;
-import net.minecraft.util.shape.VoxelShape;
-import net.minecraft.util.shape.VoxelShapes;
-import net.minecraft.world.BlockView;
-import net.minecraft.world.World;
-import net.minecraft.world.WorldView;
-import net.minecraft.world.block.WireOrientation;
-import net.minecraft.world.event.GameEvent;
+import net.minecraft.core.BlockPos;
+import net.minecraft.core.Direction;
+import net.minecraft.core.component.DataComponents;
+import net.minecraft.core.particles.ParticleOptions;
+import net.minecraft.server.level.ServerLevel;
+import net.minecraft.server.level.ServerPlayer;
+import net.minecraft.sounds.SoundEvents;
+import net.minecraft.sounds.SoundSource;
+import net.minecraft.stats.Stats;
+import net.minecraft.util.RandomSource;
+import net.minecraft.world.InteractionHand;
+import net.minecraft.world.InteractionResult;
+import net.minecraft.world.effect.MobEffectInstance;
+import net.minecraft.world.entity.Entity;
+import net.minecraft.world.entity.EntitySelector;
+import net.minecraft.world.entity.InsideBlockEffectApplier;
+import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.item.DyeItem;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.ItemUtils;
+import net.minecraft.world.item.Items;
+import net.minecraft.world.item.alchemy.Potions;
+import net.minecraft.world.item.context.BlockPlaceContext;
+import net.minecraft.world.level.BlockGetter;
+import net.minecraft.world.level.Level;
+import net.minecraft.world.level.LevelReader;
+import net.minecraft.world.level.block.BaseEntityBlock;
+import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.SimpleWaterloggedBlock;
+import net.minecraft.world.level.block.entity.BlockEntity;
+import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.block.state.StateDefinition;
+import net.minecraft.world.level.block.state.properties.BlockStateProperties;
+import net.minecraft.world.level.block.state.properties.BooleanProperty;
+import net.minecraft.world.level.block.state.properties.EnumProperty;
+import net.minecraft.world.level.gameevent.GameEvent;
+import net.minecraft.world.level.material.FluidState;
+import net.minecraft.world.level.material.Fluids;
+import net.minecraft.world.level.redstone.Orientation;
+import net.minecraft.world.phys.AABB;
+import net.minecraft.world.phys.BlockHitResult;
+import net.minecraft.world.phys.Vec3;
+import net.minecraft.world.phys.shapes.CollisionContext;
+import net.minecraft.world.phys.shapes.Shapes;
+import net.minecraft.world.phys.shapes.VoxelShape;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.Optional;
 import java.util.function.Consumer;
 
-public class MiniPortalBlock extends BlockWithEntity implements Waterloggable {
-    public static final MapCodec<MiniPortalBlock> CODEC = createCodec(MiniPortalBlock::new);
-    private final VoxelShape SHAPE = createColumnShape(10, 3, 13);
-    private final Box BOX = VoxelShapes.fullCube().getBoundingBox();
-    public static final EnumProperty<MiniPortalState> STATE = EnumProperty.of("state", MiniPortalState.class);
-    public static final BooleanProperty WATERLOGGED = Properties.WATERLOGGED;
+public class MiniPortalBlock extends BaseEntityBlock implements SimpleWaterloggedBlock {
+    public static final MapCodec<MiniPortalBlock> CODEC = simpleCodec(MiniPortalBlock::new);
+    private final VoxelShape SHAPE = column(10, 3, 13);
+    private final AABB BOX = Shapes.block().bounds();
+    public static final EnumProperty<MiniPortalState> STATE = EnumProperty.create("state", MiniPortalState.class);
+    public static final BooleanProperty WATERLOGGED = BlockStateProperties.WATERLOGGED;
 
-    public MiniPortalBlock(Settings settings) {
+    public MiniPortalBlock(Properties settings) {
         super(settings);
-        this.setDefaultState(getStateManager().getDefaultState()
-                .with(STATE, MiniPortalState.OPEN)
-                .with(WATERLOGGED, false)
+        this.registerDefaultState(getStateDefinition().any()
+                .setValue(STATE, MiniPortalState.OPEN)
+                .setValue(WATERLOGGED, false)
         );
     }
 
     @Override
-    protected void appendProperties(StateManager.Builder<Block, BlockState> builder) {
+    protected void createBlockStateDefinition(StateDefinition.Builder<Block, BlockState> builder) {
         builder.add(STATE, WATERLOGGED);
     }
 
     @Override
-    protected MapCodec<? extends BlockWithEntity> getCodec() {
+    protected MapCodec<? extends BaseEntityBlock> codec() {
         return CODEC;
     }
 
     @Override
-    protected ActionResult onUseWithItem(ItemStack stack, BlockState state, World world, BlockPos pos, PlayerEntity player, Hand hand, BlockHitResult hit) {
-        if (stack.getItem() instanceof DyeItem dyeItem && world.getBlockEntity(pos) instanceof MiniPortalBlockEntity entity && entity.setDyeColor(dyeItem.getColor())) {
-            stack.decrementUnlessCreative(1, player);
-            world.playSound(null, pos, SoundEvents.ITEM_DYE_USE, SoundCategory.BLOCKS);
-            return ActionResult.SUCCESS;
+    protected InteractionResult useItemOn(ItemStack stack, BlockState state, Level world, BlockPos pos, Player player, InteractionHand hand, BlockHitResult hit) {
+        if (stack.getItem() instanceof DyeItem dyeItem && world.getBlockEntity(pos) instanceof MiniPortalBlockEntity entity && entity.setDyeColor(dyeItem.getDyeColor())) {
+            stack.consume(1, player);
+            world.playSound(null, pos, SoundEvents.DYE_USE, SoundSource.BLOCKS);
+            return InteractionResult.SUCCESS;
         }
-        if (stack.isOf(Items.POTION) && stack.contains(DataComponentTypes.POTION_CONTENTS) && stack.get(DataComponentTypes.POTION_CONTENTS).matches(Potions.WATER)&& world.getBlockEntity(pos) instanceof MiniPortalBlockEntity entity && entity.setDyeColor(null)) {
-            player.setStackInHand(hand, ItemUsage.exchangeStack(stack, player, new ItemStack(Items.GLASS_BOTTLE)));
-            player.incrementStat(Stats.USED.getOrCreateStat(stack.getItem()));
-            world.playSound(null, pos, SoundEvents.ITEM_BOTTLE_EMPTY, SoundCategory.BLOCKS, 1.0F, 1.0F);
-            world.emitGameEvent(null, GameEvent.FLUID_PLACE, pos);
-            return ActionResult.SUCCESS;
+        if (stack.is(Items.POTION) && stack.has(DataComponents.POTION_CONTENTS) && stack.get(DataComponents.POTION_CONTENTS).is(Potions.WATER)&& world.getBlockEntity(pos) instanceof MiniPortalBlockEntity entity && entity.setDyeColor(null)) {
+            player.setItemInHand(hand, ItemUtils.createFilledResult(stack, player, new ItemStack(Items.GLASS_BOTTLE)));
+            player.awardStat(Stats.ITEM_USED.get(stack.getItem()));
+            world.playSound(null, pos, SoundEvents.BOTTLE_EMPTY, SoundSource.BLOCKS, 1.0F, 1.0F);
+            world.gameEvent(null, GameEvent.FLUID_PLACE, pos);
+            return InteractionResult.SUCCESS;
         }
-        return super.onUseWithItem(stack, state, world, pos, player, hand, hit);
+        return super.useItemOn(stack, state, world, pos, player, hand, hit);
     }
 
     @Nullable
     @Override
-    public BlockEntity createBlockEntity(BlockPos pos, BlockState state) {
+    public BlockEntity newBlockEntity(BlockPos pos, BlockState state) {
         return new MiniPortalBlockEntity(pos, state);
     }
 
     @Override
-    protected VoxelShape getCollisionShape(BlockState state, BlockView world, BlockPos pos, ShapeContext context) {
-        return VoxelShapes.empty();
+    protected VoxelShape getCollisionShape(BlockState state, BlockGetter world, BlockPos pos, CollisionContext context) {
+        return Shapes.empty();
     }
 
     @Override
-    protected VoxelShape getOutlineShape(BlockState state, BlockView world, BlockPos pos, ShapeContext context) {
+    protected VoxelShape getShape(BlockState state, BlockGetter world, BlockPos pos, CollisionContext context) {
         return SHAPE;
     }
 
     @Override
-    public void randomDisplayTick(BlockState state, World world, BlockPos pos, Random random) {
-        Vec3d particlePos = pos.toCenterPos().addRandom(random, 1);
-        if (world.getBlockEntity(pos) instanceof MiniPortalBlockEntity miniPortalBlockEntity) world.addParticleClient(miniPortalBlockEntity.getParticleParameter(), particlePos.x, particlePos.y, particlePos.z, 0, 0,0);
+    public void animateTick(BlockState state, Level world, BlockPos pos, RandomSource random) {
+        Vec3 particlePos = pos.getCenter().offsetRandom(random, 1);
+        if (world.getBlockEntity(pos) instanceof MiniPortalBlockEntity miniPortalBlockEntity) world.addParticle(miniPortalBlockEntity.getParticleParameter(), particlePos.x, particlePos.y, particlePos.z, 0, 0,0);
     }
 
     @Override
-    protected void onEntityCollision(BlockState state, World world, BlockPos pos, Entity entity, EntityCollisionHandler handler, boolean bl) {
-        if (state.get(STATE).equals(MiniPortalState.POWERED)) return;
+    protected void entityInside(BlockState state, Level world, BlockPos pos, Entity entity, InsideBlockEffectApplier handler, boolean bl) {
+        if (state.getValue(STATE).equals(MiniPortalState.POWERED)) return;
         Optional<BlockPos> destination = getDestination(world, pos);
-        if (destination.isPresent() && state.get(STATE).canDepart) {
+        if (destination.isPresent() && state.getValue(STATE).canDepart) {
             MiniPortalBlockEntity blockEntity = (MiniPortalBlockEntity) world.getBlockEntity(pos);
             BlockState destState = world.getBlockState(destination.get());
-            if (!destState.isOf(this)) return;
-            if (destState.get(STATE).canArrive && canTeleportEntity(entity)) {
-                world.setBlockState(pos, state.with(STATE, MiniPortalState.COOLDOWN));
-                world.setBlockState(destination.get(), destState.with(STATE, MiniPortalState.COOLDOWN));
-                world.scheduleBlockTick(pos, this, 20);
-                world.scheduleBlockTick(destination.get(), this, 20);
+            if (!destState.is(this)) return;
+            if (destState.getValue(STATE).canArrive && canTeleportEntity(entity)) {
+                world.setBlockAndUpdate(pos, state.setValue(STATE, MiniPortalState.COOLDOWN));
+                world.setBlockAndUpdate(destination.get(), destState.setValue(STATE, MiniPortalState.COOLDOWN));
+                world.scheduleTick(pos, this, 20);
+                world.scheduleTick(destination.get(), this, 20);
                 teleportEntity(world, pos, destination.get(), entity, blockEntity.getParticleParameter());
             } else {
-                world.playSound(null, pos, VASoundEvents.BLOCK_MINI_PORTAL_FAIL, SoundCategory.BLOCKS, 1.0F, 1.6F);
-                world.setBlockState(pos, state.with(STATE, MiniPortalState.BLOCKED));
-                world.scheduleBlockTick(pos, this, 20);
+                world.playSound(null, pos, VASoundEvents.BLOCK_MINI_PORTAL_FAIL, SoundSource.BLOCKS, 1.0F, 1.6F);
+                world.setBlockAndUpdate(pos, state.setValue(STATE, MiniPortalState.BLOCKED));
+                world.scheduleTick(pos, this, 20);
             }
         }
     }
 
     @Override
-    protected boolean hasComparatorOutput(BlockState state) {
+    protected boolean hasAnalogOutputSignal(BlockState state) {
         return true;
     }
 
     @Override
-    protected int getComparatorOutput(BlockState state, World world, BlockPos pos, Direction direction) {
-        return state.get(STATE).equals(MiniPortalState.COOLDOWN) ? 15 : 0;
+    protected int getAnalogOutputSignal(BlockState state, Level world, BlockPos pos, Direction direction) {
+        return state.getValue(STATE).equals(MiniPortalState.COOLDOWN) ? 15 : 0;
     }
 
     protected boolean canTeleportEntity(Entity entity) {
         if (((EntityInterface)entity).virtualAdditions$hasUsedMiniPortalThisTick()) return false;
-        return !(entity instanceof LivingEntity livingEntity) || livingEntity.getStatusEffect(VAStatusEffects.IOLITE_INTERFERENCE) == null;
+        return !(entity instanceof LivingEntity livingEntity) || livingEntity.getEffect(VAStatusEffects.IOLITE_INTERFERENCE) == null;
     }
 
     @Override
-    protected void scheduledTick(BlockState state, ServerWorld world, BlockPos pos, Random random) {
-        super.scheduledTick(state, world, pos, random);
-        if (state.get(STATE).equals(MiniPortalState.POWERED)) return;
-        int entityCount = getEntityCount(world, BOX.offset(pos));
+    protected void tick(BlockState state, ServerLevel world, BlockPos pos, RandomSource random) {
+        super.tick(state, world, pos, random);
+        if (state.getValue(STATE).equals(MiniPortalState.POWERED)) return;
+        int entityCount = getEntityCount(world, BOX.move(pos));
         if (entityCount > 0) {
-            if (!state.get(STATE).equals(MiniPortalState.BLOCKED)) world.setBlockState(pos, state.with(STATE, MiniPortalState.BLOCKED));
-            world.scheduleBlockTick(pos, this, 20);
+            if (!state.getValue(STATE).equals(MiniPortalState.BLOCKED)) world.setBlockAndUpdate(pos, state.setValue(STATE, MiniPortalState.BLOCKED));
+            world.scheduleTick(pos, this, 20);
         } else {
-            world.playSound(null, pos, VASoundEvents.BLOCK_MINI_PORTAL_RECHARGE, SoundCategory.BLOCKS, 1.0F, 1.6F);
-            world.setBlockState(pos, state.with(STATE, MiniPortalState.OPEN));
+            world.playSound(null, pos, VASoundEvents.BLOCK_MINI_PORTAL_RECHARGE, SoundSource.BLOCKS, 1.0F, 1.6F);
+            world.setBlockAndUpdate(pos, state.setValue(STATE, MiniPortalState.OPEN));
         }
     }
 
-    public void teleportEntity(World world, BlockPos origin, BlockPos destination, Entity entity, ParticleEffect particleEffect) {
-        if (!world.isClient() && world instanceof ServerWorld serverWorld){
+    public void teleportEntity(Level world, BlockPos origin, BlockPos destination, Entity entity, ParticleOptions particleEffect) {
+        if (!world.isClientSide() && world instanceof ServerLevel serverWorld){
             if (destination == null) return;
-            double squaredDistance = origin.getSquaredDistance(destination);
+            double squaredDistance = origin.distSqr(destination);
             double destX = (destination.getX() + (entity.getX() - origin.getX()));
             double destY = (destination.getY() + (entity.getY() - origin.getY()));
             double destZ = (destination.getZ() + (entity.getZ() - origin.getZ()));
-            entity.requestTeleport(destX, destY, destZ);
+            entity.teleportTo(destX, destY, destZ);
             ((EntityInterface)entity).virtualAdditions$setUsedMiniPortal();
-            int i = (int) Math.clamp((entity.getWidth() * entity.getWidth() * entity.getHeight() * 20.0F), 5, 50);
-            ((ServerWorld) world).spawnParticles(particleEffect, destX, destY, destZ, i, entity.getWidth() * 0.45, entity.getHeight() * 0.25, entity.getWidth() * 0.45, 0);
-            world.emitGameEvent(entity, GameEvent.TELEPORT, origin);
-            world.emitGameEvent(entity, GameEvent.TELEPORT, destination);
-            world.playSound(null, origin, VASoundEvents.BLOCK_MINI_PORTAL_DEPART, SoundCategory.BLOCKS, 1.0F, 1.0F);
-            world.playSound(null, destination, VASoundEvents.BLOCK_MINI_PORTAL_ARRIVE, SoundCategory.BLOCKS, 1.0F, 1.0F);
-            if (serverWorld.getGameRules().getBoolean(VAGameRules.IOLITE_INTERFERENCE) && entity instanceof LivingEntity livingEntity && !livingEntity.isInCreativeMode()) {
+            int i = (int) Math.clamp((entity.getBbWidth() * entity.getBbWidth() * entity.getBbHeight() * 20.0F), 5, 50);
+            ((ServerLevel) world).sendParticles(particleEffect, destX, destY, destZ, i, entity.getBbWidth() * 0.45, entity.getBbHeight() * 0.25, entity.getBbWidth() * 0.45, 0);
+            world.gameEvent(entity, GameEvent.TELEPORT, origin);
+            world.gameEvent(entity, GameEvent.TELEPORT, destination);
+            world.playSound(null, origin, VASoundEvents.BLOCK_MINI_PORTAL_DEPART, SoundSource.BLOCKS, 1.0F, 1.0F);
+            world.playSound(null, destination, VASoundEvents.BLOCK_MINI_PORTAL_ARRIVE, SoundSource.BLOCKS, 1.0F, 1.0F);
+            if (serverWorld.getGameRules().getBoolean(VAGameRules.IOLITE_INTERFERENCE) && entity instanceof LivingEntity livingEntity && !livingEntity.hasInfiniteMaterials()) {
                 int duration = 0;
-                StatusEffectInstance effect = livingEntity.getStatusEffect(VAStatusEffects.IOLITE_INTERFERENCE);
+                MobEffectInstance effect = livingEntity.getEffect(VAStatusEffects.IOLITE_INTERFERENCE);
                 if (effect != null) duration = effect.getDuration();
                 duration = Math.min((int)Math.max(600 * Math.sqrt(squaredDistance) / 128, duration), Integer.MAX_VALUE);
-                livingEntity.addStatusEffect(new StatusEffectInstance(VAStatusEffects.IOLITE_INTERFERENCE, duration, 0, false, true));
+                livingEntity.addEffect(new MobEffectInstance(VAStatusEffects.IOLITE_INTERFERENCE, duration, 0, false, true));
             }
-            if (entity instanceof ServerPlayerEntity player) {
+            if (entity instanceof ServerPlayer player) {
                 VAAdvancementCriteria.USE_TELEPORTER.trigger(player);
             }
         }
     }
 
     @Override
-    protected ItemStack getPickStack(WorldView world, BlockPos pos, BlockState state, boolean includeData) {
-        return VAItems.PORTAL_CORE.getDefaultStack();
+    protected ItemStack getCloneItemStack(LevelReader world, BlockPos pos, BlockState state, boolean includeData) {
+        return VAItems.PORTAL_CORE.getDefaultInstance();
     }
 
-    protected static int getEntityCount(World world, Box box) {
-        return world.getEntitiesByClass(Entity.class, box, EntityPredicates.EXCEPT_SPECTATOR).size();
+    protected static int getEntityCount(Level world, AABB box) {
+        return world.getEntitiesOfClass(Entity.class, box, EntitySelector.NO_SPECTATORS).size();
     }
 
-    protected static Optional<BlockPos> getDestination(World world, BlockPos pos) {
+    protected static Optional<BlockPos> getDestination(Level world, BlockPos pos) {
         BlockPos[] dest = {null};
         ifBlockEntity(world, pos, entity -> dest[0] = entity.getDestination());
         return Optional.ofNullable(dest[0]);
     }
 
-    protected static void ifBlockEntity(World world, BlockPos pos, Consumer<MiniPortalBlockEntity> consumer) {
+    protected static void ifBlockEntity(Level world, BlockPos pos, Consumer<MiniPortalBlockEntity> consumer) {
         world.getBlockEntity(pos, VABlockEntityType.MINI_PORTAL).ifPresent(consumer);
     }
 
     @Nullable
     @Override
-    public BlockState getPlacementState(ItemPlacementContext ctx) {
-        FluidState fluidState = ctx.getWorld().getFluidState(ctx.getBlockPos());
-        return super.getPlacementState(ctx).with(WATERLOGGED, fluidState.isOf(Fluids.WATER));
+    public BlockState getStateForPlacement(BlockPlaceContext ctx) {
+        FluidState fluidState = ctx.getLevel().getFluidState(ctx.getClickedPos());
+        return super.getStateForPlacement(ctx).setValue(WATERLOGGED, fluidState.is(Fluids.WATER));
     }
 
     @Override
-    protected void neighborUpdate(BlockState state, World world, BlockPos pos, Block sourceBlock, @Nullable WireOrientation wireOrientation, boolean notify) {
-        if (state.get(WATERLOGGED)) world.scheduleFluidTick(pos, Fluids.WATER, Fluids.WATER.getTickRate(world));
-        if (world.isReceivingRedstonePower(pos) && !state.get(STATE).equals(MiniPortalState.POWERED)) {
-            world.setBlockState(pos, state.with(STATE, MiniPortalState.POWERED));
-        } else if (!world.isReceivingRedstonePower(pos) && state.get(STATE).equals(MiniPortalState.POWERED)) {
-            world.setBlockState(pos, state.with(STATE, MiniPortalState.OPEN));
+    protected void neighborChanged(BlockState state, Level world, BlockPos pos, Block sourceBlock, @Nullable Orientation wireOrientation, boolean notify) {
+        if (state.getValue(WATERLOGGED)) world.scheduleTick(pos, Fluids.WATER, Fluids.WATER.getTickDelay(world));
+        if (world.hasNeighborSignal(pos) && !state.getValue(STATE).equals(MiniPortalState.POWERED)) {
+            world.setBlockAndUpdate(pos, state.setValue(STATE, MiniPortalState.POWERED));
+        } else if (!world.hasNeighborSignal(pos) && state.getValue(STATE).equals(MiniPortalState.POWERED)) {
+            world.setBlockAndUpdate(pos, state.setValue(STATE, MiniPortalState.OPEN));
         }
     }
 
     @Override
     protected FluidState getFluidState(BlockState state) {
-        return state.get(WATERLOGGED) ? Fluids.WATER.getStill(false) : Fluids.EMPTY.getDefaultState();
+        return state.getValue(WATERLOGGED) ? Fluids.WATER.getSource(false) : Fluids.EMPTY.defaultFluidState();
     }
 }

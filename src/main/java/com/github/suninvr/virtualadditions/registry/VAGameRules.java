@@ -2,12 +2,12 @@ package com.github.suninvr.virtualadditions.registry;
 
 import net.fabricmc.fabric.api.gamerule.v1.GameRuleFactory;
 import net.fabricmc.fabric.api.gamerule.v1.GameRuleRegistry;
-import net.minecraft.world.GameRules;
+import net.minecraft.world.level.GameRules;
 
 public class VAGameRules {
-    public static final GameRules.Key<GameRules.BooleanRule> IOLITE_INTERFERENCE;
-    public static final GameRules.Key<GameRules.IntRule> MINI_PORTAL_MAX_CREATION_RANGE;
-    public static final GameRules.Key<GameRules.IntRule> SCULK_GILD_BLOCK_SELECTION_MAXIMUM;
+    public static final GameRules.Key<GameRules.BooleanValue> IOLITE_INTERFERENCE;
+    public static final GameRules.Key<GameRules.IntegerValue> MINI_PORTAL_MAX_CREATION_RANGE;
+    public static final GameRules.Key<GameRules.IntegerValue> SCULK_GILD_BLOCK_SELECTION_MAXIMUM;
 
     static {
         IOLITE_INTERFERENCE = GameRuleRegistry.register("ioliteInterference", GameRules.Category.PLAYER, GameRuleFactory.createBooleanRule(true));

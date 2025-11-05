@@ -2,20 +2,18 @@ package com.github.suninvr.virtualadditions.mixin;
 
 import com.github.suninvr.virtualadditions.registry.VAItems;
 import com.google.common.collect.ImmutableMap;
-import net.minecraft.entity.passive.VillagerEntity;
-import net.minecraft.item.Item;
+import net.minecraft.world.entity.npc.Villager;
+import net.minecraft.world.item.Item;
 import org.spongepowered.asm.mixin.*;
 
 import java.util.ArrayList;
 import java.util.Map;
-import java.util.Set;
 
-@Mixin(VillagerEntity.class)
+@Mixin(Villager.class)
 public class VillagerEntityMixin {
 
-    @Shadow @Final @Mutable
-    public static Map<Item, Integer> ITEM_FOOD_VALUES;
 
+    @Shadow @Final public static Map<Item, Integer> FOOD_POINTS;
     @Unique
     private static final Map<Item, Integer> virtualAddition$ITEM_FOOD_VALUES = ImmutableMap.of(
             VAItems.CORN, 1,
@@ -25,8 +23,8 @@ public class VillagerEntityMixin {
     );
 
     static {
-        ArrayList<Item> newItemFoodKeys = new ArrayList<>(ITEM_FOOD_VALUES.keySet());
-        ArrayList<Integer> newItemFoodValues = new ArrayList<>(ITEM_FOOD_VALUES.values());
+        ArrayList<Item> newItemFoodKeys = new ArrayList<>(FOOD_POINTS.keySet());
+        ArrayList<Integer> newItemFoodValues = new ArrayList<>(FOOD_POINTS.values());
         newItemFoodKeys.addAll(virtualAddition$ITEM_FOOD_VALUES.keySet());
         newItemFoodValues.addAll(virtualAddition$ITEM_FOOD_VALUES.values());
         ArrayList<Map.Entry<Item, Integer>> entries = new ArrayList<>();
@@ -35,6 +33,6 @@ public class VillagerEntityMixin {
             entries.add(Map.entry(newItemFoodKeys.get(i), newItemFoodValues.get(i)));
             i++;
         }
-        ITEM_FOOD_VALUES = ImmutableMap.ofEntries(entries.toArray(new Map.Entry[]{}));
+        FOOD_POINTS = ImmutableMap.ofEntries(entries.toArray(new Map.Entry[]{}));
     }
 }

@@ -1,39 +1,36 @@
 package com.github.suninvr.virtualadditions.mixin;
 
 import com.github.suninvr.virtualadditions.registry.VAItems;
-import com.google.common.collect.ImmutableMap;
-import it.unimi.dsi.fastutil.ints.Int2ObjectMap;
-import net.minecraft.item.Items;
-import net.minecraft.village.TradeOffers;
+import net.minecraft.world.entity.npc.VillagerTrades;
 import org.apache.commons.lang3.tuple.Pair;
 import org.spongepowered.asm.mixin.*;
 
 import java.util.ArrayList;
 import java.util.List;
 
-@Mixin(TradeOffers.class)
+@Mixin(VillagerTrades.class)
 public abstract class TradeOffersMixin {
     @Shadow @Final @Mutable
-    public static List<Pair<TradeOffers.Factory[], Integer>> WANDERING_TRADER_TRADES;
+    public static List<Pair<VillagerTrades.ItemListing[], Integer>> WANDERING_TRADER_TRADES;
 
-    @Unique private static final TradeOffers.Factory SOULBLOOM_SAPLING_TRADE_OFFER = new TradeOffers.SellItemFactory(VAItems.SOULBLOOM_SAPLING, 5, 1, 8, 1);
-    @Unique private static final TradeOffers.Factory SOULBLOOM_LOG_TRADE_OFFER = new TradeOffers.SellItemFactory(VAItems.SOULBLOOM_LOG, 1, 8, 4, 1);
-    @Unique private static final TradeOffers.Factory CHARTREUSE_DYE_TRADE_OFFER = new TradeOffers.SellItemFactory(VAItems.CHARTREUSE_DYE, 1, 3, 12, 1);
-    @Unique private static final TradeOffers.Factory MAROON_DYE_TRADE_OFFER = new TradeOffers.SellItemFactory(VAItems.MAROON_DYE, 1, 3, 12, 1);
-    @Unique private static final TradeOffers.Factory INDIGO_DYE_TRADE_OFFER = new TradeOffers.SellItemFactory(VAItems.INDIGO_DYE, 1, 3, 12, 1);
-    @Unique private static final TradeOffers.Factory PLUM_DYE_TRADE_OFFER = new TradeOffers.SellItemFactory(VAItems.PLUM_DYE, 1, 3, 12, 1);
-    @Unique private static final TradeOffers.Factory VIRIDIAN_DYE_TRADE_OFFER = new TradeOffers.SellItemFactory(VAItems.VIRIDIAN_DYE, 1, 3, 12, 1);
-    @Unique private static final TradeOffers.Factory TAN_DYE_TRADE_OFFER = new TradeOffers.SellItemFactory(VAItems.TAN_DYE, 1, 3, 12, 1);
-    @Unique private static final TradeOffers.Factory SINOPIA_DYE_TRADE_OFFER = new TradeOffers.SellItemFactory(VAItems.SINOPIA_DYE, 1, 3, 12, 1);
-    @Unique private static final TradeOffers.Factory LILAC_DYE_TRADE_OFFER = new TradeOffers.SellItemFactory(VAItems.LILAC_DYE, 1, 3, 12, 1);
-    @Unique private static final TradeOffers.Factory LIGHTNING_BOTTLE_TRADE_OFFER = new TradeOffers.SellItemFactory(VAItems.LIGHTNING_BOTTLE, 15, 1, 12, 1);
-    @Unique private static final TradeOffers.Factory SPRING_LOTUS_TRADE_OFFER = new TradeOffers.SellItemFactory(VAItems.SMALL_SPRING_LOTUS, 1, 1, 12, 1);
+    @Unique private static final VillagerTrades.ItemListing SOULBLOOM_SAPLING_TRADE_OFFER = new VillagerTrades.ItemsForEmeralds(VAItems.SOULBLOOM_SAPLING, 5, 1, 8, 1);
+    @Unique private static final VillagerTrades.ItemListing SOULBLOOM_LOG_TRADE_OFFER = new VillagerTrades.ItemsForEmeralds(VAItems.SOULBLOOM_LOG, 1, 8, 4, 1);
+    @Unique private static final VillagerTrades.ItemListing CHARTREUSE_DYE_TRADE_OFFER = new VillagerTrades.ItemsForEmeralds(VAItems.CHARTREUSE_DYE, 1, 3, 12, 1);
+    @Unique private static final VillagerTrades.ItemListing MAROON_DYE_TRADE_OFFER = new VillagerTrades.ItemsForEmeralds(VAItems.MAROON_DYE, 1, 3, 12, 1);
+    @Unique private static final VillagerTrades.ItemListing INDIGO_DYE_TRADE_OFFER = new VillagerTrades.ItemsForEmeralds(VAItems.INDIGO_DYE, 1, 3, 12, 1);
+    @Unique private static final VillagerTrades.ItemListing PLUM_DYE_TRADE_OFFER = new VillagerTrades.ItemsForEmeralds(VAItems.PLUM_DYE, 1, 3, 12, 1);
+    @Unique private static final VillagerTrades.ItemListing VIRIDIAN_DYE_TRADE_OFFER = new VillagerTrades.ItemsForEmeralds(VAItems.VIRIDIAN_DYE, 1, 3, 12, 1);
+    @Unique private static final VillagerTrades.ItemListing TAN_DYE_TRADE_OFFER = new VillagerTrades.ItemsForEmeralds(VAItems.TAN_DYE, 1, 3, 12, 1);
+    @Unique private static final VillagerTrades.ItemListing SINOPIA_DYE_TRADE_OFFER = new VillagerTrades.ItemsForEmeralds(VAItems.SINOPIA_DYE, 1, 3, 12, 1);
+    @Unique private static final VillagerTrades.ItemListing LILAC_DYE_TRADE_OFFER = new VillagerTrades.ItemsForEmeralds(VAItems.LILAC_DYE, 1, 3, 12, 1);
+    @Unique private static final VillagerTrades.ItemListing LIGHTNING_BOTTLE_TRADE_OFFER = new VillagerTrades.ItemsForEmeralds(VAItems.LIGHTNING_BOTTLE, 15, 1, 12, 1);
+    @Unique private static final VillagerTrades.ItemListing SPRING_LOTUS_TRADE_OFFER = new VillagerTrades.ItemsForEmeralds(VAItems.SMALL_SPRING_LOTUS, 1, 1, 12, 1);
 
     static {
-        ArrayList<Pair<TradeOffers.Factory[], Integer>> TRADES = new ArrayList<>();
-        ArrayList<TradeOffers.Factory> BUY_ITEM_TRADES = new ArrayList<>(List.of(WANDERING_TRADER_TRADES.getFirst().getLeft()));
-        ArrayList<TradeOffers.Factory> SELL_ITEM_TRADES = new ArrayList<>(List.of(WANDERING_TRADER_TRADES.get(1).getLeft()));
-        ArrayList<TradeOffers.Factory> SELL_ITEM_TRADES_2 = new ArrayList<>(List.of(WANDERING_TRADER_TRADES.get(2).getLeft()));
+        ArrayList<Pair<VillagerTrades.ItemListing[], Integer>> TRADES = new ArrayList<>();
+        ArrayList<VillagerTrades.ItemListing> BUY_ITEM_TRADES = new ArrayList<>(List.of(WANDERING_TRADER_TRADES.getFirst().getLeft()));
+        ArrayList<VillagerTrades.ItemListing> SELL_ITEM_TRADES = new ArrayList<>(List.of(WANDERING_TRADER_TRADES.get(1).getLeft()));
+        ArrayList<VillagerTrades.ItemListing> SELL_ITEM_TRADES_2 = new ArrayList<>(List.of(WANDERING_TRADER_TRADES.get(2).getLeft()));
 
         SELL_ITEM_TRADES.add(SOULBLOOM_LOG_TRADE_OFFER);
 
@@ -49,9 +46,9 @@ public abstract class TradeOffersMixin {
         SELL_ITEM_TRADES_2.add(LIGHTNING_BOTTLE_TRADE_OFFER);
         SELL_ITEM_TRADES_2.add(SPRING_LOTUS_TRADE_OFFER);
 
-        TRADES.add(Pair.of(BUY_ITEM_TRADES.toArray(new TradeOffers.Factory[]{}), WANDERING_TRADER_TRADES.getFirst().getRight()));
-        TRADES.add(Pair.of(SELL_ITEM_TRADES.toArray(new TradeOffers.Factory[]{}), WANDERING_TRADER_TRADES.get(1).getRight()));
-        TRADES.add(Pair.of(SELL_ITEM_TRADES_2.toArray(new TradeOffers.Factory[]{}), WANDERING_TRADER_TRADES.get(2).getRight()));
+        TRADES.add(Pair.of(BUY_ITEM_TRADES.toArray(new VillagerTrades.ItemListing[]{}), WANDERING_TRADER_TRADES.getFirst().getRight()));
+        TRADES.add(Pair.of(SELL_ITEM_TRADES.toArray(new VillagerTrades.ItemListing[]{}), WANDERING_TRADER_TRADES.get(1).getRight()));
+        TRADES.add(Pair.of(SELL_ITEM_TRADES_2.toArray(new VillagerTrades.ItemListing[]{}), WANDERING_TRADER_TRADES.get(2).getRight()));
 
         //TRADES.add(Pair.of(new TradeOffers.Factory[]{
         //        LIGHTNING_BOTTLE_TRADE_OFFER

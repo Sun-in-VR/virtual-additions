@@ -1,21 +1,19 @@
 package com.github.suninvr.virtualadditions.registry;
 
-import net.minecraft.block.DispenserBlock;
-import net.minecraft.block.ShulkerBoxBlock;
-import net.minecraft.block.dispenser.*;
-import net.minecraft.entity.EntityType;
-import net.minecraft.entity.SpawnReason;
-import net.minecraft.item.*;
-import net.minecraft.util.math.BlockPointer;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.math.Direction;
-import net.minecraft.world.World;
-import net.minecraft.world.event.GameEvent;
+import net.minecraft.core.BlockPos;
+import net.minecraft.core.dispenser.*;
+import net.minecraft.world.item.DispensibleContainerItem;
+import net.minecraft.world.item.Item;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.Items;
+import net.minecraft.world.level.Level;
+import net.minecraft.world.level.block.DispenserBlock;
+import net.minecraft.world.level.block.ShulkerBoxBlock;
 
 public class VADispenserBehavior {
-    private static ItemDispenserBehavior spawnEggBehavior = new ItemDispenserBehavior() {
+    private static DefaultDispenseItemBehavior spawnEggBehavior = new DefaultDispenseItemBehavior() {
         @Override
-        public ItemStack dispenseSilently(BlockPointer pointer, ItemStack stack) {
+        public ItemStack execute(BlockSource pointer, ItemStack stack) {
             //Direction direction = pointer.state().get(DispenserBlock.FACING);
             //EntityType<?> entityType = ((SpawnEggItem)stack.getItem()).getEntityType(pointer.world().getRegistryManager(), stack);
 
@@ -45,31 +43,31 @@ public class VADispenserBehavior {
         Item[] climbingRopes = {VAItems.CLIMBING_ROPE, VAItems.WAXED_CLIMBING_ROPE, VAItems.EXPOSED_CLIMBING_ROPE, VAItems.WAXED_EXPOSED_CLIMBING_ROPE, VAItems.WEATHERED_CLIMBING_ROPE, VAItems.WAXED_WEATHERED_CLIMBING_ROPE, VAItems.OXIDIZED_CLIMBING_ROPE, VAItems.WAXED_OXIDIZED_CLIMBING_ROPE};
 
         for (Item item : climbingRopes) {
-            DispenserBehavior climbingRopeBehavior = new ProjectileDispenserBehavior(item);
+            DispenseItemBehavior climbingRopeBehavior = new ProjectileDispenseBehavior(item);
             DispenserBlock.registerBehavior(item, climbingRopeBehavior);
         }
 
-        DispenserBlock.registerBehavior(ShulkerBoxBlock.get(VADyeColors.CHARTREUSE).asItem(), new BlockPlacementDispenserBehavior());
-        DispenserBlock.registerBehavior(ShulkerBoxBlock.get(VADyeColors.MAROON).asItem(), new BlockPlacementDispenserBehavior());
-        DispenserBlock.registerBehavior(ShulkerBoxBlock.get(VADyeColors.INDIGO).asItem(), new BlockPlacementDispenserBehavior());
-        DispenserBlock.registerBehavior(ShulkerBoxBlock.get(VADyeColors.PLUM).asItem(), new BlockPlacementDispenserBehavior());
-        DispenserBlock.registerBehavior(ShulkerBoxBlock.get(VADyeColors.VIRIDIAN).asItem(), new BlockPlacementDispenserBehavior());
-        DispenserBlock.registerBehavior(ShulkerBoxBlock.get(VADyeColors.TAN).asItem(), new BlockPlacementDispenserBehavior());
-        DispenserBlock.registerBehavior(ShulkerBoxBlock.get(VADyeColors.SINOPIA).asItem(), new BlockPlacementDispenserBehavior());
-        DispenserBlock.registerBehavior(ShulkerBoxBlock.get(VADyeColors.LILAC).asItem(), new BlockPlacementDispenserBehavior());
+        DispenserBlock.registerBehavior(ShulkerBoxBlock.getBlockByColor(VADyeColors.CHARTREUSE).asItem(), new ShulkerBoxDispenseBehavior());
+        DispenserBlock.registerBehavior(ShulkerBoxBlock.getBlockByColor(VADyeColors.MAROON).asItem(), new ShulkerBoxDispenseBehavior());
+        DispenserBlock.registerBehavior(ShulkerBoxBlock.getBlockByColor(VADyeColors.INDIGO).asItem(), new ShulkerBoxDispenseBehavior());
+        DispenserBlock.registerBehavior(ShulkerBoxBlock.getBlockByColor(VADyeColors.PLUM).asItem(), new ShulkerBoxDispenseBehavior());
+        DispenserBlock.registerBehavior(ShulkerBoxBlock.getBlockByColor(VADyeColors.VIRIDIAN).asItem(), new ShulkerBoxDispenseBehavior());
+        DispenserBlock.registerBehavior(ShulkerBoxBlock.getBlockByColor(VADyeColors.TAN).asItem(), new ShulkerBoxDispenseBehavior());
+        DispenserBlock.registerBehavior(ShulkerBoxBlock.getBlockByColor(VADyeColors.SINOPIA).asItem(), new ShulkerBoxDispenseBehavior());
+        DispenserBlock.registerBehavior(ShulkerBoxBlock.getBlockByColor(VADyeColors.LILAC).asItem(), new ShulkerBoxDispenseBehavior());
 
-        DispenserBlock.registerBehavior(VAItems.SOULBLOOM_BOAT, new BoatDispenserBehavior(VAEntityType.SOULBLOOM_BOAT));
-        DispenserBlock.registerBehavior(VAItems.SOULBLOOM_CHEST_BOAT, new BoatDispenserBehavior(VAEntityType.SOULBLOOM_CHEST_BOAT));
+        DispenserBlock.registerBehavior(VAItems.SOULBLOOM_BOAT, new BoatDispenseItemBehavior(VAEntityType.SOULBLOOM_BOAT));
+        DispenserBlock.registerBehavior(VAItems.SOULBLOOM_CHEST_BOAT, new BoatDispenseItemBehavior(VAEntityType.SOULBLOOM_CHEST_BOAT));
 
-        DispenserBlock.registerBehavior(VAItems.ACID_BUCKET, new ItemDispenserBehavior() {
-            private final ItemDispenserBehavior fallbackBehavior = new ItemDispenserBehavior();
+        DispenserBlock.registerBehavior(VAItems.ACID_BUCKET, new DefaultDispenseItemBehavior() {
+            private final DefaultDispenseItemBehavior fallbackBehavior = new DefaultDispenseItemBehavior();
 
-            public ItemStack dispenseSilently(BlockPointer pointer, ItemStack stack) {
-                FluidModificationItem fluidModificationItem = (FluidModificationItem) stack.getItem();
-                BlockPos blockPos = pointer.pos().offset(pointer.state().get(DispenserBlock.FACING));
-                World world = pointer.world();
-                if (fluidModificationItem.placeFluid(null, world, blockPos, null)) {
-                    fluidModificationItem.onEmptied(null, world, stack, blockPos);
+            public ItemStack execute(BlockSource pointer, ItemStack stack) {
+                DispensibleContainerItem fluidModificationItem = (DispensibleContainerItem) stack.getItem();
+                BlockPos blockPos = pointer.pos().relative(pointer.state().getValue(DispenserBlock.FACING));
+                Level world = pointer.level();
+                if (fluidModificationItem.emptyContents(null, world, blockPos, null)) {
+                    fluidModificationItem.checkExtraContent(null, world, stack, blockPos);
                     return new ItemStack(Items.BUCKET);
                 } else {
                     return this.fallbackBehavior.dispense(pointer, stack);

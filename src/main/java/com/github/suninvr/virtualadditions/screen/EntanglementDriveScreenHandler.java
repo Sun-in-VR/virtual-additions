@@ -4,79 +4,71 @@ import com.github.suninvr.virtualadditions.VirtualAdditions;
 import com.github.suninvr.virtualadditions.block.entity.EntanglementDriveBlockEntity;
 import com.github.suninvr.virtualadditions.registry.VAItems;
 import com.github.suninvr.virtualadditions.registry.VAScreenHandler;
-import com.mojang.datafixers.util.Pair;
-import net.minecraft.component.EnchantmentEffectComponentTypes;
-import net.minecraft.enchantment.Enchantment;
-import net.minecraft.enchantment.EnchantmentHelper;
-import net.minecraft.enchantment.Enchantments;
-import net.minecraft.entity.EquipmentSlot;
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.entity.player.PlayerInventory;
-import net.minecraft.inventory.Inventory;
-import net.minecraft.inventory.SimpleInventory;
-import net.minecraft.item.ItemStack;
-import net.minecraft.registry.BuiltinRegistries;
-import net.minecraft.registry.RegistryEntryLookup;
-import net.minecraft.registry.RegistryKeys;
-import net.minecraft.screen.*;
-import net.minecraft.screen.slot.Slot;
-import net.minecraft.screen.slot.SlotActionType;
-import net.minecraft.util.Identifier;
-import net.minecraft.util.Uuids;
-import net.minecraft.util.math.MathHelper;
+import net.minecraft.core.UUIDUtil;
+import net.minecraft.resources.ResourceLocation;
+import net.minecraft.util.Mth;
+import net.minecraft.world.Container;
+import net.minecraft.world.SimpleContainer;
+import net.minecraft.world.entity.EquipmentSlot;
+import net.minecraft.world.entity.player.Inventory;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.inventory.*;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.enchantment.EnchantmentEffectComponents;
+import net.minecraft.world.item.enchantment.EnchantmentHelper;
 
 import java.util.Optional;
 import java.util.UUID;
 
 @SuppressWarnings("unused")
-public class EntanglementDriveScreenHandler extends ScreenHandler {
+public class EntanglementDriveScreenHandler extends AbstractContainerMenu {
 
-    public static final Identifier ENTANGLEMENT_DRIVE_ACTIVE_SLOT_SYNC_ID = VirtualAdditions.idOf("entanglement_drive_active_slot_sync");
-    public static final Identifier ENTANGLEMENT_DRIVE_SELECTED_SLOT_SYNC_ID = VirtualAdditions.idOf("entanglement_drive_selected_slot_sync");
-    public static final Identifier EMPTY_IOLITE_SLOT = VirtualAdditions.idOf("container/slot/iolite_dark");
-    static final Identifier[] EMPTY_ARMOR_SLOT_TEXTURES;
+    public static final ResourceLocation ENTANGLEMENT_DRIVE_ACTIVE_SLOT_SYNC_ID = VirtualAdditions.idOf("entanglement_drive_active_slot_sync");
+    public static final ResourceLocation ENTANGLEMENT_DRIVE_SELECTED_SLOT_SYNC_ID = VirtualAdditions.idOf("entanglement_drive_selected_slot_sync");
+    public static final ResourceLocation EMPTY_IOLITE_SLOT = VirtualAdditions.idOf("container/slot/iolite_dark");
+    static final ResourceLocation[] EMPTY_ARMOR_SLOT_TEXTURES;
     private static final EquipmentSlot[] EQUIPMENT_SLOT_ORDER;
-    private final Inventory inventory;
-    private final PlayerInventory playerInventory;
+    private final Container inventory;
+    private final Inventory playerInventory;
     private final Slot paymentSlot;
     private int selectedSlotIndex;
-    private final ScreenHandlerContext context;
-    private final PropertyDelegate propertyDelegate;
-    private final Property isSamePlayer;
+    private final ContainerLevelAccess context;
+    private final ContainerData propertyDelegate;
+    private final DataSlot isSamePlayer;
     private final UUID playerId;
     private static final UUID nullId = UUID.fromString("0-0-0-0-0");
 
-    public EntanglementDriveScreenHandler(int syncId, PlayerInventory playerInventory) {
-        this(syncId, playerInventory, ScreenHandlerContext.EMPTY, new ArrayPropertyDelegate(5));
+    public EntanglementDriveScreenHandler(int syncId, Inventory playerInventory) {
+        this(syncId, playerInventory, ContainerLevelAccess.NULL, new SimpleContainerData(5));
     }
-    public EntanglementDriveScreenHandler(int syncid, PlayerInventory inventory, ScreenHandlerContext context, PropertyDelegate delegate) {
+    public EntanglementDriveScreenHandler(int syncid, Inventory inventory, ContainerLevelAccess context, ContainerData delegate) {
         super(VAScreenHandler.ENTANGLEMENT_DRIVE, syncid);
         this.context = context;
         this.selectedSlotIndex = -1;
         this.propertyDelegate = delegate;
-        this.addProperties(propertyDelegate);
-        this.isSamePlayer = Property.create();
-        this.addProperty(this.isSamePlayer);
-        this.playerId = inventory.player.getUuid();
+        this.addDataSlots(propertyDelegate);
+        this.isSamePlayer = DataSlot.standalone();
+        this.addDataSlot(this.isSamePlayer);
+        this.playerId = inventory.player.getUUID();
         if (!inventory.player.isSpectator()) {
             this.isSamePlayer.set(getActivePlayerId().equals(this.playerId) ? 1 : 0);
         } else {
             this.isSamePlayer.set(0);
         }
         this.playerInventory = inventory;
-        this.inventory = new SimpleInventory(1) {
+        this.inventory = new SimpleContainer(1) {
             @Override
-            public void markDirty() {
-                EntanglementDriveScreenHandler.this.onContentChanged(this);
-                super.markDirty();
+            public void setChanged() {
+                EntanglementDriveScreenHandler.this.slotsChanged(this);
+                super.setChanged();
             }
             @Override
-            public boolean isValid(int slot, ItemStack stack) {
-                return stack.isOf(VAItems.IOLITE);
+            public boolean canPlaceItem(int slot, ItemStack stack) {
+                return stack.is(VAItems.IOLITE);
             }
 
             @Override
-            public int getMaxCountPerStack() {
+            public int getMaxStackSize() {
                 return 1;
             }
         };
@@ -98,45 +90,45 @@ public class EntanglementDriveScreenHandler extends ScreenHandler {
             final EquipmentSlot equipmentSlot = EQUIPMENT_SLOT_ORDER[3 - i];
             this.addSlot(new Slot(inventory, 36 + i, 8, 62 - i * 18) {
 
-                public int getMaxItemCount() {
+                public int getMaxStackSize() {
                     return 1;
                 }
 
-                public boolean canInsert(ItemStack stack) {
-                    return equipmentSlot == EntanglementDriveScreenHandler.this.playerInventory.player.getPreferredEquipmentSlot(stack);
+                public boolean mayPlace(ItemStack stack) {
+                    return equipmentSlot == EntanglementDriveScreenHandler.this.playerInventory.player.getEquipmentSlotForItem(stack);
                 }
 
-                public boolean canTakeItems(PlayerEntity playerEntity) {
-                    ItemStack itemStack = this.getStack();
-                    return (itemStack.isEmpty() || playerEntity.isCreative() || !EnchantmentHelper.hasAnyEnchantmentsWith(itemStack, EnchantmentEffectComponentTypes.PREVENT_ARMOR_CHANGE)) && super.canTakeItems(playerEntity);
+                public boolean mayPickup(Player playerEntity) {
+                    ItemStack itemStack = this.getItem();
+                    return (itemStack.isEmpty() || playerEntity.isCreative() || !EnchantmentHelper.has(itemStack, EnchantmentEffectComponents.PREVENT_ARMOR_CHANGE)) && super.mayPickup(playerEntity);
                 }
 
-                public Identifier getBackgroundSprite() {
-                    return EMPTY_ARMOR_SLOT_TEXTURES[equipmentSlot.getEntitySlotId()];
+                public ResourceLocation getNoItemIcon() {
+                    return EMPTY_ARMOR_SLOT_TEXTURES[equipmentSlot.getIndex()];
                 }
             });
         } // Equipment slots ( 36 - 39 )
 
         this.addSlot(new Slot(inventory, 40, 77, 62) {
-            public Identifier getBackgroundSprite() {
-                return PlayerScreenHandler.EMPTY_OFF_HAND_SLOT_TEXTURE;
+            public ResourceLocation getNoItemIcon() {
+                return InventoryMenu.EMPTY_ARMOR_SLOT_SHIELD;
             }
         }); // Offhand Slot ( 40 )
 
         this.paymentSlot = this.addSlot(new Slot(this.inventory, 0, 91, 30) {
             @Override
-            public boolean canInsert(ItemStack stack) {
-                return stack.isOf(VAItems.IOLITE);
+            public boolean mayPlace(ItemStack stack) {
+                return stack.is(VAItems.IOLITE);
             }
 
-            public Identifier getBackgroundSprite() {
+            public ResourceLocation getNoItemIcon() {
                 return EMPTY_IOLITE_SLOT;
             }
         }); // Payment Slot ( 42 )
     }
 
     public Optional<EntanglementDriveBlockEntity> getEntity() {
-        return this.context.get((world, pos) -> world.getBlockEntity(pos) instanceof EntanglementDriveBlockEntity e ? e : null);
+        return this.context.evaluate((world, pos) -> world.getBlockEntity(pos) instanceof EntanglementDriveBlockEntity e ? e : null);
     }
 
     public Slot getActiveSlot() {
@@ -164,7 +156,7 @@ public class EntanglementDriveScreenHandler extends ScreenHandler {
     }
 
     public boolean isSelectingSlot() {
-        return this.paymentSlot.getStack().isOf(VAItems.IOLITE);
+        return this.paymentSlot.getItem().is(VAItems.IOLITE);
     }
 
     public boolean isSlotSelected() {
@@ -180,10 +172,10 @@ public class EntanglementDriveScreenHandler extends ScreenHandler {
     }
 
     @Override
-    public void onSlotClick(int slotIndex, int button, SlotActionType actionType, PlayerEntity player) {
-        int i = MathHelper.clamp(slotIndex, 0, 40);
-        if (!this.isSelectingSlot() || !this.getCursorStack().isEmpty() || i != slotIndex) {
-            super.onSlotClick(slotIndex, button, actionType, player);
+    public void clicked(int slotIndex, int button, ClickType actionType, Player player) {
+        int i = Mth.clamp(slotIndex, 0, 40);
+        if (!this.isSelectingSlot() || !this.getCarried().isEmpty() || i != slotIndex) {
+            super.clicked(slotIndex, button, actionType, player);
             return;
         }
         if (button != 0) return;
@@ -191,78 +183,78 @@ public class EntanglementDriveScreenHandler extends ScreenHandler {
     }
 
     @Override
-    public ItemStack quickMove(PlayerEntity player, int slot) {
+    public ItemStack quickMoveStack(Player player, int slot) {
         ItemStack itemStack = ItemStack.EMPTY;
         Slot slotFrom = this.getSlot(slot);
-        if (slotFrom != null && slotFrom.hasStack()) {
-            ItemStack itemStack2 = slotFrom.getStack();
+        if (slotFrom != null && slotFrom.hasItem()) {
+            ItemStack itemStack2 = slotFrom.getItem();
             itemStack = itemStack2.copy();
 
-            if (!this.paymentSlot.hasStack() && this.paymentSlot.canInsert(itemStack2) ) {
-                if (this.insertItem(itemStack2, 41, 42, false)) { // To payment
+            if (!this.paymentSlot.hasItem() && this.paymentSlot.mayPlace(itemStack2) ) {
+                if (this.moveItemStackTo(itemStack2, 41, 42, false)) { // To payment
                     return ItemStack.EMPTY;
                 }
             }
 
             if (slot == 42) { // From Payment
-                if (!this.insertItem(itemStack2, 4, 40, true)) { // To Hotbar + Inventory
+                if (!this.moveItemStackTo(itemStack2, 4, 40, true)) { // To Hotbar + Inventory
                     return ItemStack.EMPTY;
                 }
 
-                slotFrom.onQuickTransfer(itemStack2, itemStack);
+                slotFrom.onQuickCraft(itemStack2, itemStack);
             } else if (slot >= 4 && slot < 31) { // From Inventory
-                if (!this.insertItem(itemStack2, 31, 40, false)) { // To Hotbar
+                if (!this.moveItemStackTo(itemStack2, 31, 40, false)) { // To Hotbar
                     return ItemStack.EMPTY;
                 }
             } else if (slot >= 32 && slot < 40) { // From Hotbar
-                if (!this.insertItem(itemStack2, 4, 31, false)) { // To Inventory
+                if (!this.moveItemStackTo(itemStack2, 4, 31, false)) { // To Inventory
                     return ItemStack.EMPTY;
                 }
-            } else if (!this.insertItem(itemStack2, 4, 40, false)) { // To Hotbar + Inventory
+            } else if (!this.moveItemStackTo(itemStack2, 4, 40, false)) { // To Hotbar + Inventory
                 return ItemStack.EMPTY;
             }
 
             if (itemStack2.isEmpty()) {
-                slotFrom.setStackNoCallbacks(ItemStack.EMPTY);
+                slotFrom.set(ItemStack.EMPTY);
             } else {
-                slotFrom.markDirty();
+                slotFrom.setChanged();
             }
 
             if (itemStack2.getCount() == itemStack.getCount()) {
                 return ItemStack.EMPTY;
             }
 
-            slotFrom.onTakeItem(player, itemStack2);
+            slotFrom.onTake(player, itemStack2);
         }
 
         return itemStack;
     }
 
     @Override
-    public boolean canUse(PlayerEntity player) {
+    public boolean stillValid(Player player) {
         return true;
     }
 
     @Override
-    public void onClosed(PlayerEntity player) {
-        super.onClosed(player);
-        this.context.run((world, pos) -> this.dropInventory(player, this.inventory));
+    public void removed(Player player) {
+        super.removed(player);
+        this.context.execute((world, pos) -> this.clearContainer(player, this.inventory));
     }
 
     static {
-        EMPTY_ARMOR_SLOT_TEXTURES = new Identifier[]{PlayerScreenHandler.EMPTY_BOOTS_SLOT_TEXTURE, PlayerScreenHandler.EMPTY_LEGGINGS_SLOT_TEXTURE, PlayerScreenHandler.EMPTY_CHESTPLATE_SLOT_TEXTURE, PlayerScreenHandler.EMPTY_HELMET_SLOT_TEXTURE};
+        EMPTY_ARMOR_SLOT_TEXTURES = new ResourceLocation[]{InventoryMenu.EMPTY_ARMOR_SLOT_BOOTS, InventoryMenu.EMPTY_ARMOR_SLOT_LEGGINGS, InventoryMenu.EMPTY_ARMOR_SLOT_CHESTPLATE, InventoryMenu.EMPTY_ARMOR_SLOT_HELMET};
         EQUIPMENT_SLOT_ORDER = new EquipmentSlot[]{EquipmentSlot.HEAD, EquipmentSlot.CHEST, EquipmentSlot.LEGS, EquipmentSlot.FEET};
     }
 
     public UUID getActivePlayerId() {
-        return Uuids.toUuid(new int[]{this.propertyDelegate.get(1), this.propertyDelegate.get(2), this.propertyDelegate.get(3), this.propertyDelegate.get(4)});
+        return UUIDUtil.uuidFromIntArray(new int[]{this.propertyDelegate.get(1), this.propertyDelegate.get(2), this.propertyDelegate.get(3), this.propertyDelegate.get(4)});
     }
 
     public void setActivePlayerId(UUID uuid) {
         this.getEntity().ifPresent(entity -> {
             entity.setPlayerId(uuid);
         });
-        int[] idArray = Uuids.toIntArray(uuid);
+        int[] idArray = UUIDUtil.uuidToIntArray(uuid);
         this.propertyDelegate.set(1, idArray[0]);
         this.propertyDelegate.set(2, idArray[1]);
         this.propertyDelegate.set(3, idArray[2]);
@@ -271,6 +263,6 @@ public class EntanglementDriveScreenHandler extends ScreenHandler {
     }
 
     public void decrementPaymentSlot() {
-        this.paymentSlot.getStack().decrement(1);
+        this.paymentSlot.getItem().shrink(1);
     }
 }

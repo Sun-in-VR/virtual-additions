@@ -5,185 +5,183 @@ import com.github.suninvr.virtualadditions.block.enums.LightStatus;
 import com.github.suninvr.virtualadditions.registry.VABlockTags;
 import com.github.suninvr.virtualadditions.registry.VABlocks;
 import com.mojang.serialization.MapCodec;
-import net.minecraft.block.*;
-import net.minecraft.block.entity.BlockEntity;
-import net.minecraft.block.enums.Orientation;
-import net.minecraft.entity.LivingEntity;
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.fluid.Fluids;
-import net.minecraft.item.ItemPlacementContext;
-import net.minecraft.item.ItemStack;
-import net.minecraft.server.world.ServerWorld;
-import net.minecraft.state.StateManager;
-import net.minecraft.state.property.BooleanProperty;
-import net.minecraft.state.property.EnumProperty;
-import net.minecraft.state.property.Properties;
-import net.minecraft.util.BlockMirror;
-import net.minecraft.util.BlockRotation;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.math.Direction;
-import net.minecraft.util.math.random.Random;
-import net.minecraft.world.World;
-import net.minecraft.world.block.WireOrientation;
+import net.minecraft.core.BlockPos;
+import net.minecraft.core.Direction;
+import net.minecraft.core.FrontAndTop;
+import net.minecraft.server.level.ServerLevel;
+import net.minecraft.util.RandomSource;
+import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.context.BlockPlaceContext;
+import net.minecraft.world.level.Level;
+import net.minecraft.world.level.block.*;
+import net.minecraft.world.level.block.entity.BlockEntity;
+import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.block.state.StateDefinition;
+import net.minecraft.world.level.block.state.properties.BlockStateProperties;
+import net.minecraft.world.level.block.state.properties.BooleanProperty;
+import net.minecraft.world.level.block.state.properties.EnumProperty;
+import net.minecraft.world.level.material.Fluids;
+import net.minecraft.world.level.redstone.Orientation;
 import org.jetbrains.annotations.Nullable;
 
-public class SpotlightBlock extends BlockWithEntity {
-    public static final MapCodec<SpotlightBlock> CODEC = createCodec(SpotlightBlock::new);
-    public static final EnumProperty<Orientation> ORIENTATION = Properties.ORIENTATION;
-    public static final BooleanProperty POWERED = Properties.POWERED;
+public class SpotlightBlock extends BaseEntityBlock {
+    public static final MapCodec<SpotlightBlock> CODEC = simpleCodec(SpotlightBlock::new);
+    public static final EnumProperty<FrontAndTop> ORIENTATION = BlockStateProperties.ORIENTATION;
+    public static final BooleanProperty POWERED = BlockStateProperties.POWERED;
 
-    public SpotlightBlock(Settings settings) {
+    public SpotlightBlock(Properties settings) {
         super(settings);
-        this.setDefaultState(getStateManager().getDefaultState()
-                .with(ORIENTATION, Orientation.EAST_UP)
-                .with(POWERED, false)
+        this.registerDefaultState(getStateDefinition().any()
+                .setValue(ORIENTATION, FrontAndTop.EAST_UP)
+                .setValue(POWERED, false)
         );
     }
 
     @Override
-    protected MapCodec<? extends BlockWithEntity> getCodec() {
+    protected MapCodec<? extends BaseEntityBlock> codec() {
         return CODEC;
     }
 
     @Override
-    protected void appendProperties(StateManager.Builder<Block, BlockState> builder) {
+    protected void createBlockStateDefinition(StateDefinition.Builder<Block, BlockState> builder) {
         builder.add(ORIENTATION).add(POWERED);
     }
 
     @Override
-    public void onPlaced(World world, BlockPos pos, BlockState state, @Nullable LivingEntity placer, ItemStack itemStack) {
-        if (state.isOf(this) && state.get(POWERED)) updateLightLocation(world, pos, state);
+    public void setPlacedBy(Level world, BlockPos pos, BlockState state, @Nullable LivingEntity placer, ItemStack itemStack) {
+        if (state.is(this) && state.getValue(POWERED)) updateLightLocation(world, pos, state);
     }
 
     @Override
-    protected void scheduledTick(BlockState state, ServerWorld world, BlockPos pos, Random random) {
+    protected void tick(BlockState state, ServerLevel world, BlockPos pos, RandomSource random) {
         updateLightLocation(world, pos, state);
     }
 
     @Override
-    public void neighborUpdate(BlockState state, World world, BlockPos pos, Block sourceBlock, @Nullable WireOrientation wireOrientation, boolean notify) {
-        boolean redstonePower = world.isReceivingRedstonePower(pos);
-        boolean isPowered = state.get(POWERED);
+    public void neighborChanged(BlockState state, Level world, BlockPos pos, Block sourceBlock, @Nullable Orientation wireOrientation, boolean notify) {
+        boolean redstonePower = world.hasNeighborSignal(pos);
+        boolean isPowered = state.getValue(POWERED);
         if (redstonePower && !isPowered) {
             updateLightLocation(world, pos, state);
-            world.setBlockState(pos, state.with(POWERED, true));
+            world.setBlockAndUpdate(pos, state.setValue(POWERED, true));
             setLightState(world, pos, LightStatus.LIT);
         } else if (!redstonePower && isPowered) {
-            world.setBlockState(pos, state.with(POWERED, false));
+            world.setBlockAndUpdate(pos, state.setValue(POWERED, false));
             setLightState(world, pos, LightStatus.UNLIT);
         }
     }
 
-    public static void updateLightLocation(World world, BlockPos pos, BlockState state) {
-        if (world.isClient()) return;
-        if (!state.isOf(VABlocks.SPOTLIGHT)) return;
+    public static void updateLightLocation(Level world, BlockPos pos, BlockState state) {
+        if (world.isClientSide()) return;
+        if (!state.is(VABlocks.SPOTLIGHT)) return;
         SpotlightBlockEntity blockEntity = world.getBlockEntity(pos) instanceof SpotlightBlockEntity spotlightBlockEntity ? spotlightBlockEntity : null;
         if (blockEntity == null) return;
 
         //Initialize position and state variables.
-        Direction direction = state.get(SpotlightBlock.ORIENTATION).getFacing();
+        Direction direction = state.getValue(SpotlightBlock.ORIENTATION).front();
         BlockPos newLightPos = findLightLocation(world, pos, direction);
         BlockPos oldLightPos = blockEntity.getLightLocation();
         BlockState newLightState = world.getBlockState(newLightPos);
         BlockState oldLightState = world.getBlockState(oldLightPos);
-        boolean isWater = newLightState.isOf(Blocks.WATER) && world.getFluidState(newLightPos).isEqualAndStill(Fluids.WATER);
+        boolean isWater = newLightState.is(Blocks.WATER) && world.getFluidState(newLightPos).isSourceOfType(Fluids.WATER);
 
-        if (newLightState.isOf(VABlocks.SPOTLIGHT_LIGHT) || newLightState.isAir() || isWater) {
-            BlockState lightState = SpotlightBlock.getLightState(world, pos, (newLightState.isOf(VABlocks.SPOTLIGHT_LIGHT) ? newLightState : VABlocks.SPOTLIGHT_LIGHT.getDefaultState().with(Properties.WATERLOGGED, isWater)));
-            world.setBlockState(newLightPos, lightState);
+        if (newLightState.is(VABlocks.SPOTLIGHT_LIGHT) || newLightState.isAir() || isWater) {
+            BlockState lightState = SpotlightBlock.getLightState(world, pos, (newLightState.is(VABlocks.SPOTLIGHT_LIGHT) ? newLightState : VABlocks.SPOTLIGHT_LIGHT.defaultBlockState().setValue(BlockStateProperties.WATERLOGGED, isWater)));
+            world.setBlockAndUpdate(newLightPos, lightState);
             blockEntity.setLightLocation(newLightPos);
         }
 
-        if (!oldLightPos.equals(newLightPos) && oldLightState.isOf(VABlocks.SPOTLIGHT_LIGHT)) {
+        if (!oldLightPos.equals(newLightPos) && oldLightState.is(VABlocks.SPOTLIGHT_LIGHT)) {
             BlockState lightState = SpotlightBlock.getLightState(state, oldLightState, LightStatus.NONE);
-            world.setBlockState(oldLightPos, lightState);
+            world.setBlockAndUpdate(oldLightPos, lightState);
         }
     }
 
-    private static BlockPos findLightLocation(World world, BlockPos startPos, Direction direction) {
-        BlockPos pos = new BlockPos(startPos.offset(direction));
-        if (!world.isAir(pos) && !world.getBlockState(pos).isIn(VABlockTags.SPOTLIGHT_PERMEABLE)) return pos;
+    private static BlockPos findLightLocation(Level world, BlockPos startPos, Direction direction) {
+        BlockPos pos = new BlockPos(startPos.relative(direction));
+        if (!world.isEmptyBlock(pos) && !world.getBlockState(pos).is(VABlockTags.SPOTLIGHT_PERMEABLE)) return pos;
         int i = 0;
 
         BlockPos finalPos = pos;
-        BlockPos offsetPos = new BlockPos(pos.offset(direction));
+        BlockPos offsetPos = new BlockPos(pos.relative(direction));
         BlockState offsetState = world.getBlockState(offsetPos);
-        while ((world.isAir(offsetPos) || offsetState.isOf(VABlocks.SPOTLIGHT_LIGHT) || offsetState.isIn(VABlockTags.SPOTLIGHT_PERMEABLE)) && i < 31) {
-            pos = new BlockPos(pos.offset(direction));
-            offsetPos = new BlockPos(pos.offset(direction));
+        while ((world.isEmptyBlock(offsetPos) || offsetState.is(VABlocks.SPOTLIGHT_LIGHT) || offsetState.is(VABlockTags.SPOTLIGHT_PERMEABLE)) && i < 31) {
+            pos = new BlockPos(pos.relative(direction));
+            offsetPos = new BlockPos(pos.relative(direction));
             offsetState = world.getBlockState(offsetPos);
             i++;
-            if (world.isAir(pos) || world.getBlockState(pos).isOf(Blocks.WATER) || world.getBlockState(pos).isOf(VABlocks.SPOTLIGHT_LIGHT)) finalPos = pos;
+            if (world.isEmptyBlock(pos) || world.getBlockState(pos).is(Blocks.WATER) || world.getBlockState(pos).is(VABlocks.SPOTLIGHT_LIGHT)) finalPos = pos;
         }
 
         return finalPos;
     }
 
-    public static void setLightState(World world, BlockPos pos, LightStatus status) {
+    public static void setLightState(Level world, BlockPos pos, LightStatus status) {
         setLightState(world, pos, world.getBlockState(pos), status);
     }
 
-    public static void setLightState(World world, BlockPos pos, BlockState state, LightStatus status) {
-        if (!state.isOf(VABlocks.SPOTLIGHT)) return;
+    public static void setLightState(Level world, BlockPos pos, BlockState state, LightStatus status) {
+        if (!state.is(VABlocks.SPOTLIGHT)) return;
         BlockEntity blockEntity = world.getBlockEntity(pos);
-        if (!world.isClient() && blockEntity instanceof SpotlightBlockEntity spotlightBlockEntity) {
+        if (!world.isClientSide() && blockEntity instanceof SpotlightBlockEntity spotlightBlockEntity) {
             BlockPos lightPos = spotlightBlockEntity.getLightLocation();
             setLightState(world, state, lightPos, world.getBlockState(lightPos), status);
         }
     }
 
-    public static void setLightState(World world, BlockState state, BlockPos lightPos, BlockState lightState, LightStatus status) {
-        if (!state.isOf(VABlocks.SPOTLIGHT)) return;
+    public static void setLightState(Level world, BlockState state, BlockPos lightPos, BlockState lightState, LightStatus status) {
+        if (!state.is(VABlocks.SPOTLIGHT)) return;
         BlockState updatedLightState = getLightState(state, lightState, status);
-        world.setBlockState(lightPos, updatedLightState);
+        world.setBlockAndUpdate(lightPos, updatedLightState);
     }
 
-    public static BlockState getLightState(World world, BlockPos pos, BlockState lightState) {
+    public static BlockState getLightState(Level world, BlockPos pos, BlockState lightState) {
         BlockState state = world.getBlockState(pos);
-        if (!state.isOf(VABlocks.SPOTLIGHT)) return lightState;
-        LightStatus status = state.get(POWERED) ? LightStatus.LIT : LightStatus.UNLIT;
+        if (!state.is(VABlocks.SPOTLIGHT)) return lightState;
+        LightStatus status = state.getValue(POWERED) ? LightStatus.LIT : LightStatus.UNLIT;
         return getLightState(state, lightState, status);
     }
 
     public static BlockState getLightState(BlockState state, BlockState lightState, LightStatus status) {
-        if (!lightState.isOf(VABlocks.SPOTLIGHT_LIGHT)) return lightState;
-        if (!state.isOf(VABlocks.SPOTLIGHT)) return lightState;
-        Direction direction = state.get(ORIENTATION).getFacing().getOpposite();
-        return SpotlightLightBlock.getUpdatedLightState(lightState.with(SpotlightLightBlock.getDirectionProperty(direction), status));
+        if (!lightState.is(VABlocks.SPOTLIGHT_LIGHT)) return lightState;
+        if (!state.is(VABlocks.SPOTLIGHT)) return lightState;
+        Direction direction = state.getValue(ORIENTATION).front().getOpposite();
+        return SpotlightLightBlock.getUpdatedLightState(lightState.setValue(SpotlightLightBlock.getDirectionProperty(direction), status));
     }
 
     @Nullable
     @Override
-    public BlockEntity createBlockEntity(BlockPos pos, BlockState state) {
+    public BlockEntity newBlockEntity(BlockPos pos, BlockState state) {
         return new SpotlightBlockEntity(pos, state);
     }
 
     @Override
-    public BlockRenderType getRenderType(BlockState state) {
-        return BlockRenderType.MODEL;
+    public RenderShape getRenderShape(BlockState state) {
+        return RenderShape.MODEL;
     }
 
     @Nullable
     @Override
-    public BlockState getPlacementState(ItemPlacementContext ctx) {
-        World world = ctx.getWorld();
-        BlockPos pos = ctx.getBlockPos();
-        Direction facingDirection = ctx.getPlayerLookDirection();
+    public BlockState getStateForPlacement(BlockPlaceContext ctx) {
+        Level world = ctx.getLevel();
+        BlockPos pos = ctx.getClickedPos();
+        Direction facingDirection = ctx.getNearestLookingDirection();
         Direction rotationDirection = switch (facingDirection) {
-            case DOWN -> ctx.getHorizontalPlayerFacing();
-            case UP -> ctx.getHorizontalPlayerFacing().getOpposite();
+            case DOWN -> ctx.getHorizontalDirection();
+            case UP -> ctx.getHorizontalDirection().getOpposite();
             case NORTH, SOUTH, WEST, EAST -> Direction.UP;
         };
-        return this.getDefaultState().with(ORIENTATION, Orientation.byDirections(facingDirection, rotationDirection)).with(POWERED, world.isReceivingRedstonePower(pos));
+        return this.defaultBlockState().setValue(ORIENTATION, FrontAndTop.fromFrontAndTop(facingDirection, rotationDirection)).setValue(POWERED, world.hasNeighborSignal(pos));
     }
 
     @Override
-    protected BlockState rotate(BlockState state, BlockRotation rotation) {
-        return state.with(ORIENTATION, rotation.getDirectionTransformation().mapJigsawOrientation((Orientation)state.get(ORIENTATION)));
+    protected BlockState rotate(BlockState state, Rotation rotation) {
+        return state.setValue(ORIENTATION, rotation.rotation().rotate((FrontAndTop)state.getValue(ORIENTATION)));
     }
 
     @Override
-    protected BlockState mirror(BlockState state, BlockMirror mirror) {
-        return state.with(ORIENTATION, mirror.getDirectionTransformation().mapJigsawOrientation((Orientation)state.get(ORIENTATION)));
+    protected BlockState mirror(BlockState state, Mirror mirror) {
+        return state.setValue(ORIENTATION, mirror.rotation().rotate((FrontAndTop)state.getValue(ORIENTATION)));
     }
 }

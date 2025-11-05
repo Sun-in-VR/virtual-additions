@@ -1,21 +1,17 @@
 package com.github.suninvr.virtualadditions.datagen.recipe;
 
 import com.github.suninvr.virtualadditions.recipe.ArmorColoringRecipe;
-import net.minecraft.advancement.Advancement;
-import net.minecraft.advancement.AdvancementRequirements;
-import net.minecraft.advancement.AdvancementRewards;
-import net.minecraft.advancement.criterion.RecipeUnlockedCriterion;
-import net.minecraft.data.recipe.RecipeExporter;
-import net.minecraft.item.DyeItem;
-import net.minecraft.recipe.Ingredient;
-import net.minecraft.recipe.Recipe;
-import net.minecraft.registry.Registries;
-import net.minecraft.registry.RegistryKey;
-import net.minecraft.registry.RegistryKeys;
-import net.minecraft.util.Identifier;
+import net.minecraft.advancements.Advancement;
+import net.minecraft.advancements.AdvancementRequirements;
+import net.minecraft.advancements.AdvancementRewards;
+import net.minecraft.advancements.critereon.RecipeUnlockedTrigger;
+import net.minecraft.core.registries.Registries;
+import net.minecraft.data.recipes.RecipeOutput;
+import net.minecraft.resources.ResourceKey;
+import net.minecraft.resources.ResourceLocation;
+import net.minecraft.world.item.crafting.Ingredient;
+import net.minecraft.world.item.crafting.Recipe;
 import org.jetbrains.annotations.Nullable;
-
-import static com.github.suninvr.virtualadditions.VirtualAdditions.idOf;
 
 public class ArmorColoringRecipeJsonBuilder {
     private final Ingredient dye;
@@ -30,11 +26,11 @@ public class ArmorColoringRecipeJsonBuilder {
         return new ArmorColoringRecipeJsonBuilder(input, index);
     }
 
-    public void offerTo(RecipeExporter exporter, Identifier recipeId) {
+    public void offerTo(RecipeOutput exporter, ResourceLocation recipeId) {
         if (this.dye == null) return;
-        RegistryKey<Recipe<?>> registryKey = RegistryKey.of(RegistryKeys.RECIPE, recipeId);
+        ResourceKey<Recipe<?>> registryKey = ResourceKey.create(Registries.RECIPE, recipeId);
         ArmorColoringRecipe recipe = new ArmorColoringRecipe(this.dye, this.index);
-        Advancement.Builder builder = exporter.getAdvancementBuilder().criterion("has_the_recipe", RecipeUnlockedCriterion.create(registryKey)).rewards(AdvancementRewards.Builder.recipe(registryKey)).criteriaMerger(AdvancementRequirements.CriterionMerger.OR);
-        exporter.accept(registryKey, recipe, builder.build(recipeId.withPrefixedPath("recipes/coloring/")));
+        Advancement.Builder builder = exporter.advancement().addCriterion("has_the_recipe", RecipeUnlockedTrigger.unlocked(registryKey)).rewards(AdvancementRewards.Builder.recipe(registryKey)).requirements(AdvancementRequirements.Strategy.OR);
+        exporter.accept(registryKey, recipe, builder.build(recipeId.withPrefix("recipes/coloring/")));
     }
 }

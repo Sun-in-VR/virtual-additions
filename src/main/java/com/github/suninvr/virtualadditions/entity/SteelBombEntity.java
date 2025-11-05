@@ -4,76 +4,76 @@ import com.github.suninvr.virtualadditions.component.ExplosiveContentComponent;
 import com.github.suninvr.virtualadditions.registry.VADataComponentTypes;
 import com.github.suninvr.virtualadditions.registry.VAEntityType;
 import com.github.suninvr.virtualadditions.registry.VAItems;
-import net.minecraft.block.BlockState;
-import net.minecraft.entity.*;
-import net.minecraft.entity.projectile.thrown.ThrownItemEntity;
-import net.minecraft.item.Item;
-import net.minecraft.item.ItemStack;
-import net.minecraft.particle.ParticleTypes;
-import net.minecraft.server.world.ServerWorld;
-import net.minecraft.util.hit.EntityHitResult;
-import net.minecraft.util.hit.HitResult;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.world.BlockView;
-import net.minecraft.world.World;
-import net.minecraft.world.explosion.EntityExplosionBehavior;
-import net.minecraft.world.explosion.Explosion;
-import net.minecraft.world.explosion.ExplosionBehavior;
+import net.minecraft.core.BlockPos;
+import net.minecraft.core.particles.ParticleTypes;
+import net.minecraft.server.level.ServerLevel;
+import net.minecraft.world.entity.Entity;
+import net.minecraft.world.entity.EntityType;
+import net.minecraft.world.entity.ExperienceOrb;
+import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.entity.item.ItemEntity;
+import net.minecraft.world.entity.projectile.ThrowableItemProjectile;
+import net.minecraft.world.item.Item;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.level.*;
+import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.phys.EntityHitResult;
+import net.minecraft.world.phys.HitResult;
 
-public class SteelBombEntity extends ThrownItemEntity {
+public class SteelBombEntity extends ThrowableItemProjectile {
     ItemStack stack;
     int fuseLength;
 
-    private final ExplosionBehavior explosionBehavior = new EntityExplosionBehavior(this) {
+    private final ExplosionDamageCalculator explosionBehavior = new EntityBasedExplosionDamageCalculator(this) {
         @Override
-        public boolean canDestroyBlock(Explosion explosion, BlockView world, BlockPos pos, BlockState state, float power) {
+        public boolean shouldBlockExplode(Explosion explosion, BlockGetter world, BlockPos pos, BlockState state, float power) {
             ExplosiveContentComponent component = SteelBombEntity.this.stack.get(VADataComponentTypes.EXPLOSIVE_CONTENTS);
             if (component != null && !component.shouldDestroyBlocks()) return false;
-            return super.canDestroyBlock(explosion, world, pos, state, power);
+            return super.shouldBlockExplode(explosion, world, pos, state, power);
         }
 
         @Override
-        public boolean shouldDamage(Explosion explosion, Entity entity) {
-            return !(entity instanceof ItemEntity) && !(entity instanceof ExperienceOrbEntity);
+        public boolean shouldDamageEntity(Explosion explosion, Entity entity) {
+            return !(entity instanceof ItemEntity) && !(entity instanceof ExperienceOrb);
         }
 
         @Override
-        public float calculateDamage(Explosion explosion, Entity entity, float amount) {
-            return Math.min(super.calculateDamage(explosion, entity, amount) * 1.25F, 6.0F * explosion.getPower());
+        public float getEntityDamageAmount(Explosion explosion, Entity entity, float amount) {
+            return Math.min(super.getEntityDamageAmount(explosion, entity, amount) * 1.25F, 6.0F * explosion.radius());
         }
     };
 
-    public SteelBombEntity(EntityType<? extends ThrownItemEntity> entityType, World world) {
+    public SteelBombEntity(EntityType<? extends ThrowableItemProjectile> entityType, Level world) {
         super(entityType, world);
     }
 
-    public SteelBombEntity(World world, LivingEntity owner) {
-        super(VAEntityType.STEEL_BOMB, owner, world, VAItems.STEEL_BOMB.getDefaultStack());
+    public SteelBombEntity(Level world, LivingEntity owner) {
+        super(VAEntityType.STEEL_BOMB, owner, world, VAItems.STEEL_BOMB.getDefaultInstance());
     }
 
-    public SteelBombEntity(World world, double x, double y, double z) {
-        super(VAEntityType.STEEL_BOMB, x, y, z, world, VAItems.STEEL_BOMB.getDefaultStack());
+    public SteelBombEntity(Level world, double x, double y, double z) {
+        super(VAEntityType.STEEL_BOMB, x, y, z, world, VAItems.STEEL_BOMB.getDefaultInstance());
     }
 
-    public SteelBombEntity(ServerWorld serverWorld, LivingEntity livingEntity, ItemStack itemStack) {
+    public SteelBombEntity(ServerLevel serverWorld, LivingEntity livingEntity, ItemStack itemStack) {
         super(VAEntityType.STEEL_BOMB, livingEntity, serverWorld, itemStack);
     }
 
-    protected void onCollision(HitResult hitResult) {
-        super.onCollision(hitResult);
+    protected void onHit(HitResult hitResult) {
+        super.onHit(hitResult);
         this.explode();
         this.discard();
     }
 
     @Override
-    protected void onEntityHit(EntityHitResult entityHitResult) {
-        super.onEntityHit(entityHitResult);
+    protected void onHitEntity(EntityHitResult entityHitResult) {
+        super.onHitEntity(entityHitResult);
     }
 
     protected void explode() {
-        if (!this.getEntityWorld().isClient()) {
-            this.getEntityWorld().createExplosion(this, this.getEntityWorld().getDamageSources().explosion(this, this.getOwner()), this.explosionBehavior, this.getX(), this.getY(), this.getZ(), this.getExplosivePower(), this.isOnFire(), World.ExplosionSourceType.TNT);
-            this.getEntityWorld().sendEntityStatus(this, (byte)3);
+        if (!this.level().isClientSide()) {
+            this.level().explode(this, this.level().damageSources().explosion(this, this.getOwner()), this.explosionBehavior, this.getX(), this.getY(), this.getZ(), this.getExplosivePower(), this.isOnFire(), Level.ExplosionInteraction.TNT);
+            this.level().broadcastEntityEvent(this, (byte)3);
             this.discard();
         }
     }
@@ -110,8 +110,8 @@ public class SteelBombEntity extends ThrownItemEntity {
         } else if (this.fuseLength == 0) {
             this.explode();
         }
-        if(this.getEntityWorld().isClient() && !this.submergedInWater) {
-            this.getEntityWorld().addParticleClient(ParticleTypes.CAMPFIRE_COSY_SMOKE, this.getX(), this.getY(), this.getZ(), 0.0F, 0.05F, 0.0F);
+        if(this.level().isClientSide() && !this.wasEyeInWater) {
+            this.level().addParticle(ParticleTypes.CAMPFIRE_COSY_SMOKE, this.getX(), this.getY(), this.getZ(), 0.0F, 0.05F, 0.0F);
         }
     }
 }

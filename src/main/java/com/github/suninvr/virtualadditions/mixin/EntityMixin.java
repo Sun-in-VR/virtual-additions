@@ -1,30 +1,24 @@
 package com.github.suninvr.virtualadditions.mixin;
 
-import com.github.suninvr.virtualadditions.entity.PlayerProjectionEntity;
 import com.github.suninvr.virtualadditions.interfaces.DamageSourcesInterface;
 import com.github.suninvr.virtualadditions.interfaces.EntityInterface;
 import com.github.suninvr.virtualadditions.registry.VABlockTags;
 import com.github.suninvr.virtualadditions.registry.VAFluids;
 import com.github.suninvr.virtualadditions.registry.VAItemTags;
 import it.unimi.dsi.fastutil.objects.Object2DoubleMap;
-import net.fabricmc.api.EnvType;
-import net.fabricmc.api.Environment;
-import net.minecraft.block.BlockState;
-import net.minecraft.client.MinecraftClient;
-import net.minecraft.client.network.ClientPlayerEntity;
-import net.minecraft.entity.Entity;
-import net.minecraft.entity.ItemEntity;
-import net.minecraft.entity.damage.DamageSource;
-import net.minecraft.entity.damage.DamageSources;
-import net.minecraft.fluid.Fluid;
-import net.minecraft.registry.tag.TagKey;
-import net.minecraft.server.command.CommandOutput;
-import net.minecraft.server.world.ServerWorld;
-import net.minecraft.util.Nameable;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.math.Vec3d;
-import net.minecraft.world.World;
-import net.minecraft.world.entity.EntityLike;
+import net.minecraft.commands.CommandSource;
+import net.minecraft.core.BlockPos;
+import net.minecraft.server.level.ServerLevel;
+import net.minecraft.tags.TagKey;
+import net.minecraft.world.Nameable;
+import net.minecraft.world.damagesource.DamageSource;
+import net.minecraft.world.damagesource.DamageSources;
+import net.minecraft.world.entity.Entity;
+import net.minecraft.world.entity.item.ItemEntity;
+import net.minecraft.world.level.Level;
+import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.entity.EntityAccess;
+import net.minecraft.world.level.material.Fluid;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.Unique;
@@ -37,62 +31,56 @@ import org.spongepowered.asm.mixin.injection.callback.LocalCapture;
 import java.util.Optional;
 
 @Mixin(Entity.class)
-public abstract class EntityMixin implements Nameable, EntityLike, CommandOutput, EntityInterface {
-
-    @Shadow protected boolean firstUpdate;
+public abstract class EntityMixin implements Nameable, EntityAccess, CommandSource, EntityInterface {
 
     @Shadow protected Object2DoubleMap<TagKey<Fluid>> fluidHeight;
-
-    @Shadow public abstract World getEntityWorld();
-
-    @Shadow public abstract boolean updateMovementInFluid(TagKey<Fluid> tag, double speed);
-
-    @Shadow public abstract DamageSources getDamageSources();
-    @Shadow public abstract BlockPos getBlockPos();
-    @SuppressWarnings("OptionalUsedAsFieldOrParameterType")
-    @Shadow public Optional<BlockPos> supportingBlockPos;
-    @Shadow public abstract boolean damage(ServerWorld world, DamageSource source, float amount);
-    @Shadow private World world;
-
+    @Shadow public abstract BlockPos blockPosition();
+    @Shadow public Optional<BlockPos> mainSupportingBlockPos;
+    @Shadow public abstract Level level();
+    @Shadow private Level level;
+    @Shadow public abstract boolean hurtServer(ServerLevel serverLevel, DamageSource damageSource, float f);
+    @Shadow public abstract DamageSources damageSources();
+    @Shadow public abstract boolean updateFluidHeightAndDoFluidPushing(TagKey<Fluid> tagKey, double d);
+    @Shadow protected boolean firstTick;
     @Unique private int ticksInAcid;
     @Unique private long lastUsedMiniPortal;
 
-    @Inject(method = "getPosWithYOffset", at = @At("RETURN"), locals = LocalCapture.CAPTURE_FAILHARD, cancellable = true)
+    @Inject(method = "getOnPos(F)Lnet/minecraft/core/BlockPos;", at = @At("RETURN"), locals = LocalCapture.CAPTURE_FAILHARD, cancellable = true)
     void virtualAdditions$getPosWithYOffsetForHedge(float offset, CallbackInfoReturnable<BlockPos> cir) {
-        if (this.supportingBlockPos.isPresent()) {
-            BlockPos blockPos = this.supportingBlockPos.get();
-            BlockState blockState = this.getEntityWorld().getBlockState(blockPos);
-            if (blockState.isIn(VABlockTags.HEDGES)) {
+        if (this.mainSupportingBlockPos.isPresent()) {
+            BlockPos blockPos = this.mainSupportingBlockPos.get();
+            BlockState blockState = this.level().getBlockState(blockPos);
+            if (blockState.is(VABlockTags.HEDGES)) {
                 cir.setReturnValue( blockPos );
             }
         }
     }
 
-    @Inject(method = "baseTick", at = @At(value = "INVOKE", target = "Lnet/minecraft/util/profiler/Profiler;pop()V", shift = At.Shift.BEFORE))
+    @Inject(method = "baseTick", at = @At(value = "INVOKE", target = "Lnet/minecraft/util/profiling/ProfilerFiller;pop()V", shift = At.Shift.BEFORE))
     void virtualAdditions$baseTickInAcid(CallbackInfo ci) {
-        if(this.world instanceof ServerWorld serverWorld && this.virtualAdditions$isInAcid() && (!( (Entity)(Object)this instanceof ItemEntity itemEntity) || !itemEntity.getStack().isIn(VAItemTags.ACID_RESISTANT))) {
-            if (this.ticksInAcid >= 20) this.damage(serverWorld, ((DamageSourcesInterface)this.getDamageSources()).virtualAdditions$acid() , 4.0F);
+        if(this.level instanceof ServerLevel serverWorld && this.virtualAdditions$isInAcid() && (!( (Entity)(Object)this instanceof ItemEntity itemEntity) || !itemEntity.getItem().is(VAItemTags.ACID_RESISTANT))) {
+            if (this.ticksInAcid >= 20) this.hurtServer(serverWorld, ((DamageSourcesInterface)this.damageSources()).virtualAdditions$acid() , 4.0F);
             this.ticksInAcid = Math.min(this.ticksInAcid + 1, 20);
         } else {
             this.ticksInAcid = Math.max(this.ticksInAcid - 1, 0);
         }
     }
 
-    @Inject(method = "updateWaterState", at = @At("RETURN"), cancellable = true)
+    @Inject(method = "updateInWaterStateAndDoFluidPushing", at = @At("RETURN"), cancellable = true)
     void virtualAdditions$updateAcidState(CallbackInfoReturnable<Boolean> cir) {
-        boolean bl = this.updateMovementInFluid(VAFluids.ACID_TAG, 0);
+        boolean bl = this.updateFluidHeightAndDoFluidPushing(VAFluids.ACID_TAG, 0);
         if (bl) cir.setReturnValue(true);
     }
 
     public boolean virtualAdditions$isInAcid() {
-        return !this.firstUpdate && this.fluidHeight.getDouble(VAFluids.ACID_TAG) > 0.0;
+        return !this.firstTick && this.fluidHeight.getDouble(VAFluids.ACID_TAG) > 0.0;
     }
 
     public boolean virtualAdditions$hasUsedMiniPortalThisTick() {
-        return this.world.getTime() == this.lastUsedMiniPortal;
+        return this.level.getGameTime() == this.lastUsedMiniPortal;
     }
 
     public void virtualAdditions$setUsedMiniPortal() {
-        this.lastUsedMiniPortal = this.world.getTime();
+        this.lastUsedMiniPortal = this.level.getGameTime();
     }
 }

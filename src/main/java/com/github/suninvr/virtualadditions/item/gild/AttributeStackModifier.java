@@ -1,95 +1,94 @@
 package com.github.suninvr.virtualadditions.item.gild;
 
-import net.minecraft.component.ComponentType;
-import net.minecraft.component.DataComponentTypes;
-import net.minecraft.component.type.AttributeModifierSlot;
-import net.minecraft.component.type.AttributeModifiersComponent;
-import net.minecraft.entity.attribute.EntityAttribute;
-import net.minecraft.entity.attribute.EntityAttributeModifier;
-import net.minecraft.item.Item;
-import net.minecraft.registry.entry.RegistryEntry;
-import net.minecraft.registry.tag.TagKey;
-import net.minecraft.screen.ScreenTexts;
-import net.minecraft.text.Text;
-import net.minecraft.util.Formatting;
+import net.minecraft.ChatFormatting;
+import net.minecraft.core.Holder;
+import net.minecraft.core.component.DataComponents;
+import net.minecraft.network.chat.CommonComponents;
+import net.minecraft.network.chat.Component;
+import net.minecraft.tags.TagKey;
+import net.minecraft.world.entity.EquipmentSlotGroup;
+import net.minecraft.world.entity.ai.attributes.Attribute;
+import net.minecraft.world.entity.ai.attributes.AttributeModifier;
+import net.minecraft.world.item.Item;
+import net.minecraft.world.item.component.ItemAttributeModifiers;
 
 import java.util.ArrayList;
 import java.util.List;
 
 import static com.github.suninvr.virtualadditions.VirtualAdditions.idOf;
 
-public class AttributeStackModifier extends StackModifier<AttributeModifiersComponent>{
-    private final List<AttributeModifiersComponent.Entry> attributeModifiers;
+public class AttributeStackModifier extends StackModifier<ItemAttributeModifiers>{
+    private final List<ItemAttributeModifiers.Entry> attributeModifiers;
     
-    public AttributeStackModifier(AttributeModifiersComponent.Entry... attributeModifiers) {
-        super(DataComponentTypes.ATTRIBUTE_MODIFIERS);
+    public AttributeStackModifier(ItemAttributeModifiers.Entry... attributeModifiers) {
+        super(DataComponents.ATTRIBUTE_MODIFIERS);
         this.attributeModifiers = List.of(attributeModifiers);
     }
     
-    public AttributeStackModifier(TagKey<Item> appliesTo, AttributeModifiersComponent.Entry... attributeModifiers) {
-        super(DataComponentTypes.ATTRIBUTE_MODIFIERS, appliesTo);
+    public AttributeStackModifier(TagKey<Item> appliesTo, ItemAttributeModifiers.Entry... attributeModifiers) {
+        super(DataComponents.ATTRIBUTE_MODIFIERS, appliesTo);
         this.attributeModifiers = List.of(attributeModifiers);
     }
     
-    public AttributeStackModifier(TagKey<Item> appliesTo, RegistryEntry<EntityAttribute> attribute, AttributeModifierSlot slot, EntityAttributeModifier modifier) {
-        super(DataComponentTypes.ATTRIBUTE_MODIFIERS, appliesTo);
+    public AttributeStackModifier(TagKey<Item> appliesTo, Holder<Attribute> attribute, EquipmentSlotGroup slot, AttributeModifier modifier) {
+        super(DataComponents.ATTRIBUTE_MODIFIERS, appliesTo);
         this.attributeModifiers = List.of(
-                new AttributeModifiersComponent.Entry(attribute, modifier, slot, 
-                        new AttributeModifiersComponent.Display.Override(ScreenTexts.space().append(
-                                Text.translatable("attribute.modifier.equals." + modifier.operation().getId(),
-                                AttributeModifiersComponent.DECIMAL_FORMAT.format(modifier.value()),
-                                Text.translatable(attribute.value().getTranslationKey())).formatted(Formatting.DARK_GREEN)))));
+                new ItemAttributeModifiers.Entry(attribute, modifier, slot, 
+                        new ItemAttributeModifiers.Display.OverrideText(CommonComponents.space().append(
+                                Component.translatable("attribute.modifier.equals." + modifier.operation().id(),
+                                ItemAttributeModifiers.ATTRIBUTE_MODIFIER_FORMAT.format(modifier.amount()),
+                                Component.translatable(attribute.value().getDescriptionId())).withStyle(ChatFormatting.DARK_GREEN)))));
     }
     
     @SafeVarargs
-    public AttributeStackModifier(RegistryEntry<EntityAttribute> attribute, float f, EntityAttributeModifier.Operation operation, TagKey<Item>... appliesTo) {
-        super(DataComponentTypes.ATTRIBUTE_MODIFIERS, stack -> {
-            for (TagKey<Item> tag : appliesTo) if (stack.isIn(tag)) return true;
+    public AttributeStackModifier(Holder<Attribute> attribute, float f, AttributeModifier.Operation operation, TagKey<Item>... appliesTo) {
+        super(DataComponents.ATTRIBUTE_MODIFIERS, stack -> {
+            for (TagKey<Item> tag : appliesTo) if (stack.is(tag)) return true;
             return false;
         });
-        EntityAttributeModifier modifier = new EntityAttributeModifier(idOf(attribute.getKey().map(key -> key.getValue().getPath()).orElse("") + "_from_gilded_tool"), f, operation);
+        AttributeModifier modifier = new AttributeModifier(idOf(attribute.unwrapKey().map(key -> key.location().getPath()).orElse("") + "_from_gilded_tool"), f, operation);
         this.attributeModifiers = List.of(
-                new AttributeModifiersComponent.Entry(attribute, modifier, AttributeModifierSlot.MAINHAND, 
-                        new AttributeModifiersComponent.Display.Override(ScreenTexts.space().append(
-                                Text.translatable("attribute.modifier.equals." + modifier.operation().getId(),
-                                AttributeModifiersComponent.DECIMAL_FORMAT.format(modifier.value()),
-                                Text.translatable(attribute.value().getTranslationKey())).formatted(Formatting.DARK_GREEN)))));
+                new ItemAttributeModifiers.Entry(attribute, modifier, EquipmentSlotGroup.MAINHAND, 
+                        new ItemAttributeModifiers.Display.OverrideText(CommonComponents.space().append(
+                                Component.translatable("attribute.modifier.equals." + modifier.operation().id(),
+                                ItemAttributeModifiers.ATTRIBUTE_MODIFIER_FORMAT.format(modifier.amount()),
+                                Component.translatable(attribute.value().getDescriptionId())).withStyle(ChatFormatting.DARK_GREEN)))));
     }
 
-    public AttributeStackModifier(RegistryEntry<EntityAttribute> attribute, float f, EntityAttributeModifier.Operation operation) {
-        super(DataComponentTypes.ATTRIBUTE_MODIFIERS, ALWAYS_TRUE);
-        EntityAttributeModifier modifier = new EntityAttributeModifier(idOf(attribute.getKey().map(key -> key.getValue().getPath()).orElse("") + "_from_gilded_tool"), f, operation);
+    public AttributeStackModifier(Holder<Attribute> attribute, float f, AttributeModifier.Operation operation) {
+        super(DataComponents.ATTRIBUTE_MODIFIERS, ALWAYS_TRUE);
+        AttributeModifier modifier = new AttributeModifier(idOf(attribute.unwrapKey().map(key -> key.location().getPath()).orElse("") + "_from_gilded_tool"), f, operation);
         this.attributeModifiers = List.of(
-                new AttributeModifiersComponent.Entry(attribute, modifier, AttributeModifierSlot.MAINHAND,
-                        new AttributeModifiersComponent.Display.Override(ScreenTexts.space().append(
-                                Text.translatable("attribute.modifier.equals." + modifier.operation().getId(),
-                                AttributeModifiersComponent.DECIMAL_FORMAT.format(modifier.value()),
-                                Text.translatable(attribute.value().getTranslationKey())).formatted(Formatting.DARK_GREEN)))));
+                new ItemAttributeModifiers.Entry(attribute, modifier, EquipmentSlotGroup.MAINHAND,
+                        new ItemAttributeModifiers.Display.OverrideText(CommonComponents.space().append(
+                                Component.translatable("attribute.modifier.equals." + modifier.operation().id(),
+                                ItemAttributeModifiers.ATTRIBUTE_MODIFIER_FORMAT.format(modifier.amount()),
+                                Component.translatable(attribute.value().getDescriptionId())).withStyle(ChatFormatting.DARK_GREEN)))));
     }
 
     @Override
-    protected AttributeModifiersComponent modifyComponent(AttributeModifiersComponent component) {
-        ArrayList<AttributeModifiersComponent.Entry> gildModifiers = new ArrayList<>(this.attributeModifiers);
-        ArrayList<AttributeModifiersComponent.Entry> baseModifiers = new ArrayList<>(component.modifiers());
-        ArrayList<AttributeModifiersComponent.Entry> appliedModifiers = new ArrayList<>(baseModifiers);
-        for (AttributeModifiersComponent.Entry modifier : gildModifiers) {
+    protected ItemAttributeModifiers modifyComponent(ItemAttributeModifiers component) {
+        ArrayList<ItemAttributeModifiers.Entry> gildModifiers = new ArrayList<>(this.attributeModifiers);
+        ArrayList<ItemAttributeModifiers.Entry> baseModifiers = new ArrayList<>(component.modifiers());
+        ArrayList<ItemAttributeModifiers.Entry> appliedModifiers = new ArrayList<>(baseModifiers);
+        for (ItemAttributeModifiers.Entry modifier : gildModifiers) {
             boolean modifiedExisting = false;
-            for (AttributeModifiersComponent.Entry modifier1 : baseModifiers) {
+            for (ItemAttributeModifiers.Entry modifier1 : baseModifiers) {
                 if (modifier1.attribute().equals(modifier.attribute()) && modifier1.slot().equals(modifier.slot())) {
                     modifiedExisting = true;
-                    double d = modifier1.modifier().value();
-                    double e = modifier.modifier().value();
+                    double d = modifier1.modifier().amount();
+                    double e = modifier.modifier().amount();
                     d += switch (modifier.modifier().operation()) {
                         case ADD_VALUE -> e;
                         case ADD_MULTIPLIED_BASE, ADD_MULTIPLIED_TOTAL -> e * d;
                     };
-                    EntityAttributeModifier combinedModifier = new EntityAttributeModifier(modifier1.modifier().id(), d, modifier1.modifier().operation());
+                    AttributeModifier combinedModifier = new AttributeModifier(modifier1.modifier().id(), d, modifier1.modifier().operation());
                     appliedModifiers.remove(modifier1);
-                    appliedModifiers.add(new AttributeModifiersComponent.Entry(modifier1.attribute(), combinedModifier, modifier1.slot(), modifier1.display()));
+                    appliedModifiers.add(new ItemAttributeModifiers.Entry(modifier1.attribute(), combinedModifier, modifier1.slot(), modifier1.display()));
                 }
             }
             if (!modifiedExisting) appliedModifiers.add(modifier);
         }
-        return new AttributeModifiersComponent(appliedModifiers);
+        return new ItemAttributeModifiers(appliedModifiers);
     }
 }

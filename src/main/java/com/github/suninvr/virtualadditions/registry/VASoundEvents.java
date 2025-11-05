@@ -1,9 +1,9 @@
 package com.github.suninvr.virtualadditions.registry;
 
-import net.minecraft.registry.Registries;
-import net.minecraft.registry.Registry;
-import net.minecraft.sound.SoundEvent;
-import net.minecraft.util.Identifier;
+import net.minecraft.core.Registry;
+import net.minecraft.core.registries.BuiltInRegistries;
+import net.minecraft.resources.ResourceLocation;
+import net.minecraft.sounds.SoundEvent;
 
 import static com.github.suninvr.virtualadditions.VirtualAdditions.idOf;
 
@@ -91,7 +91,7 @@ public class VASoundEvents {
     public static void init(){}
 
     private static SoundEvent register(String id) {
-        Identifier identifier = idOf(id);
-        return Registry.register(Registries.SOUND_EVENT, identifier, SoundEvent.of(identifier) );
+        ResourceLocation identifier = idOf(id);
+        return Registry.register(BuiltInRegistries.SOUND_EVENT, identifier, SoundEvent.createVariableRangeEvent(identifier) );
     }
 }

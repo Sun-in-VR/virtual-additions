@@ -3,76 +3,72 @@ package com.github.suninvr.virtualadditions.block;
 import com.github.suninvr.virtualadditions.registry.VABlocks;
 import com.github.suninvr.virtualadditions.registry.VAItems;
 import com.mojang.serialization.MapCodec;
-import net.minecraft.block.Block;
-import net.minecraft.block.BlockState;
-import net.minecraft.block.CropBlock;
-import net.minecraft.block.ShapeContext;
-import net.minecraft.item.ItemConvertible;
-import net.minecraft.item.ItemPlacementContext;
-import net.minecraft.server.world.ServerWorld;
-import net.minecraft.state.StateManager;
-import net.minecraft.state.property.EnumProperty;
-import net.minecraft.util.StringIdentifiable;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.math.Direction;
-import net.minecraft.util.math.Vec3d;
-import net.minecraft.util.math.random.Random;
-import net.minecraft.util.shape.VoxelShape;
-import net.minecraft.world.BlockView;
-import net.minecraft.world.World;
-import net.minecraft.world.WorldView;
-import net.minecraft.world.tick.ScheduledTickView;
+import net.minecraft.core.BlockPos;
+import net.minecraft.core.Direction;
+import net.minecraft.server.level.ServerLevel;
+import net.minecraft.util.RandomSource;
+import net.minecraft.util.StringRepresentable;
+import net.minecraft.world.item.context.BlockPlaceContext;
+import net.minecraft.world.level.*;
+import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.CropBlock;
+import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.block.state.StateDefinition;
+import net.minecraft.world.level.block.state.properties.EnumProperty;
+import net.minecraft.world.phys.Vec3;
+import net.minecraft.world.phys.shapes.CollisionContext;
+import net.minecraft.world.phys.shapes.VoxelShape;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.Locale;
 
 public class CornCropBlock extends CropBlock {
-    public static final MapCodec<CornCropBlock> CODEC = createCodec(CornCropBlock::new);
-    public static final EnumProperty<Segment> SEGMENT = EnumProperty.of("segment", Segment.class);
+    public static final MapCodec<CornCropBlock> CODEC = simpleCodec(CornCropBlock::new);
+    public static final EnumProperty<Segment> SEGMENT = EnumProperty.create("segment", Segment.class);
     private static final VoxelShape SHAPE_AGE_1;
     private static final VoxelShape SHAPE_AGE_2;
     private static final VoxelShape SHAPE_AGE_3;
 
-    public CornCropBlock(Settings settings) {
+    public CornCropBlock(Properties settings) {
         super(settings);
-        this.setDefaultState(getStateManager().getDefaultState().with(SEGMENT, Segment.BOTTOM));
+        this.registerDefaultState(getStateDefinition().any().setValue(SEGMENT, Segment.BOTTOM));
     }
 
     @Override
-    public MapCodec<? extends CropBlock> getCodec() {
+    public MapCodec<? extends CropBlock> codec() {
         return CODEC;
     }
 
     @Override
-    protected void appendProperties(StateManager.Builder<Block, BlockState> builder) {
+    protected void createBlockStateDefinition(StateDefinition.Builder<Block, BlockState> builder) {
         builder.add(SEGMENT);
-        super.appendProperties(builder);
+        super.createBlockStateDefinition(builder);
     }
 
     @Override
-    public VoxelShape getOutlineShape(BlockState state, BlockView world, BlockPos pos, ShapeContext context) {
-        Vec3d offset = state.getModelOffset(pos);
-        return state.get(SEGMENT).getShape(state.get(AGE)).offset(offset.x, offset.y, offset.z);
+    public VoxelShape getShape(BlockState state, BlockGetter world, BlockPos pos, CollisionContext context) {
+        Vec3 offset = state.getOffset(pos);
+        return state.getValue(SEGMENT).getShape(state.getValue(AGE)).move(offset.x, offset.y, offset.z);
     }
 
     @Override
-    protected void scheduledTick(BlockState state, ServerWorld world, BlockPos pos, Random random) {
-        if (!state.canPlaceAt(world, pos)) world.breakBlock(pos, true);
-        super.scheduledTick(state, world, pos, random);
+    protected void tick(BlockState state, ServerLevel world, BlockPos pos, RandomSource random) {
+        if (!state.canSurvive(world, pos)) world.destroyBlock(pos, true);
+        super.tick(state, world, pos, random);
     }
 
     @Override
-    protected BlockState getStateForNeighborUpdate(BlockState state, WorldView world, ScheduledTickView tickView, BlockPos pos, Direction direction, BlockPos neighborPos, BlockState neighborState, Random random) {
-        tickView.scheduleBlockTick(pos, this, 1);
+    protected BlockState updateShape(BlockState state, LevelReader world, ScheduledTickAccess tickView, BlockPos pos, Direction direction, BlockPos neighborPos, BlockState neighborState, RandomSource random) {
+        tickView.scheduleTick(pos, this, 1);
         return state;
     }
 
     @Override
-    public void randomTick(BlockState state, ServerWorld world, BlockPos pos, Random random) {
-        if (world.getBaseLightLevel(pos, 0) >= 9) {
+    public void randomTick(BlockState state, ServerLevel world, BlockPos pos, RandomSource random) {
+        if (world.getRawBrightness(pos, 0) >= 9) {
             int i = this.getAge(state);
             if (i < this.getMaxAge()) {
-                float f = getAvailableMoisture(this, world, pos);
+                float f = getGrowthSpeed(this, world, pos);
                 if (random.nextInt((int)(25.0F / f) + 1) == 0) {
                     grow(world, state, pos);
                 }
@@ -81,84 +77,84 @@ public class CornCropBlock extends CropBlock {
     }
 
     @Override
-    protected ItemConvertible getSeedsItem() {
+    protected ItemLike getBaseSeedId() {
         return VAItems.CORN_SEEDS;
     }
 
     @Override
-    public boolean isFertilizable(WorldView world, BlockPos pos, BlockState state) {
-        return isSpaceToGrow(world, state, pos) && super.isFertilizable(world, pos, state);
+    public boolean isValidBonemealTarget(LevelReader world, BlockPos pos, BlockState state) {
+        return isSpaceToGrow(world, state, pos) && super.isValidBonemealTarget(world, pos, state);
     }
 
-    public void applyGrowth(World world, BlockPos pos, BlockState state) {
-        int i = Math.min(this.getAge(state) + this.getGrowthAmount(world), this.getMaxAgeForSpace(world, pos, state));
+    public void growCrops(Level world, BlockPos pos, BlockState state) {
+        int i = Math.min(this.getAge(state) + this.getBonemealAgeIncrease(world), this.getMaxAgeForSpace(world, pos, state));
         setAge(world, state, pos, i);
     }
 
-    private int getMaxAgeForSpace(World world, BlockPos pos, BlockState state) {
-        if (!state.isOf(VABlocks.CORN_CROP)) return 0;
-        Segment segment = state.get(SEGMENT);
+    private int getMaxAgeForSpace(Level world, BlockPos pos, BlockState state) {
+        if (!state.is(VABlocks.CORN_CROP)) return 0;
+        Segment segment = state.getValue(SEGMENT);
         if (!(segment.equals(Segment.BOTTOM))) {
-            BlockPos offsetPos = pos.up(segment.getYOffset(Segment.BOTTOM));
+            BlockPos offsetPos = pos.above(segment.getYOffset(Segment.BOTTOM));
             return getMaxAgeForSpace(world, offsetPos, world.getBlockState(offsetPos));
         }
-        if (canReplaceBlockState(world, pos.up().up())) return 7;
-        if (canReplaceBlockState(world, pos.up())) return 5;
+        if (canReplaceBlockState(world, pos.above().above())) return 7;
+        if (canReplaceBlockState(world, pos.above())) return 5;
         return 2;
     }
 
-    private void grow(World world, BlockState state, BlockPos pos) {
-        if (!state.isOf(this)) return;
-        int age = state.get(AGE) + 1;
+    private void grow(Level world, BlockState state, BlockPos pos) {
+        if (!state.is(this)) return;
+        int age = state.getValue(AGE) + 1;
         setAge(world, state, pos, age);
     }
 
-    private boolean isSpaceToGrow(WorldView world, BlockState state, BlockPos pos) {
+    private boolean isSpaceToGrow(LevelReader world, BlockState state, BlockPos pos) {
         boolean bl = true;
-        int age = state.get(AGE);
-        Segment segment = state.get(SEGMENT);
+        int age = state.getValue(AGE);
+        Segment segment = state.getValue(SEGMENT);
         if (segment.equals(Segment.BOTTOM) && age >= 2) bl = checkForState(world, pos, state, Segment.MIDDLE, true);
         if (!segment.equals(Segment.TOP) && age >= 5) bl = bl && checkForState(world, pos, state, Segment.TOP, true);
         return bl;
     }
 
-    private void setAge(World world, BlockState state, BlockPos pos, int age) {
+    private void setAge(Level world, BlockState state, BlockPos pos, int age) {
         boolean growMiddle = age > 2;
         boolean growTop = age > 5;
-        switch (state.get(SEGMENT)) {
+        switch (state.getValue(SEGMENT)) {
             case BOTTOM -> {
                 boolean canGrow = true;
-                if (growMiddle) canGrow = canReplaceBlockState(world, pos.up());
-                if (growTop) canGrow = canGrow && canReplaceBlockState(world, pos.up(2));
+                if (growMiddle) canGrow = canReplaceBlockState(world, pos.above());
+                if (growTop) canGrow = canGrow && canReplaceBlockState(world, pos.above(2));
                 if (canGrow) {
-                    world.setBlockState(pos, this.bottomSegment(age), Block.NOTIFY_LISTENERS);
-                    if (growMiddle) world.setBlockState(pos.up(), this.middleSegment(age), Block.NOTIFY_LISTENERS);
-                    if (growTop) world.setBlockState(pos.up(2), this.topSegment(age), Block.NOTIFY_LISTENERS);
+                    world.setBlock(pos, this.bottomSegment(age), Block.UPDATE_CLIENTS);
+                    if (growMiddle) world.setBlock(pos.above(), this.middleSegment(age), Block.UPDATE_CLIENTS);
+                    if (growTop) world.setBlock(pos.above(2), this.topSegment(age), Block.UPDATE_CLIENTS);
                 }
             }
             case MIDDLE -> {
                 boolean canGrow = true;
-                if (growTop) canGrow = canReplaceBlockState(world, pos.up());
+                if (growTop) canGrow = canReplaceBlockState(world, pos.above());
                 if (canGrow) {
-                    world.setBlockState(pos.down(), this.bottomSegment(age), Block.NOTIFY_LISTENERS);
-                    world.setBlockState(pos, this.middleSegment(age), Block.NOTIFY_LISTENERS);
-                    if (growTop) world.setBlockState(pos.up(), this.topSegment(age), Block.NOTIFY_LISTENERS);
+                    world.setBlock(pos.below(), this.bottomSegment(age), Block.UPDATE_CLIENTS);
+                    world.setBlock(pos, this.middleSegment(age), Block.UPDATE_CLIENTS);
+                    if (growTop) world.setBlock(pos.above(), this.topSegment(age), Block.UPDATE_CLIENTS);
                 }
             }
             case TOP -> {
-                world.setBlockState(pos.down(2), this.bottomSegment(age), Block.NOTIFY_LISTENERS);
-                world.setBlockState(pos.down(), this.middleSegment(age), Block.NOTIFY_LISTENERS);
-                world.setBlockState(pos, this.topSegment(age), Block.NOTIFY_LISTENERS);
+                world.setBlock(pos.below(2), this.bottomSegment(age), Block.UPDATE_CLIENTS);
+                world.setBlock(pos.below(), this.middleSegment(age), Block.UPDATE_CLIENTS);
+                world.setBlock(pos, this.topSegment(age), Block.UPDATE_CLIENTS);
             }
         }
     }
 
-    private boolean checkForState(WorldView world, BlockPos pos, BlockState state, Segment checkSegment, boolean allowAir) {
-        Segment segment = state.get(SEGMENT);
+    private boolean checkForState(LevelReader world, BlockPos pos, BlockState state, Segment checkSegment, boolean allowAir) {
+        Segment segment = state.getValue(SEGMENT);
         int offset = segment.getYOffset(checkSegment);
-        BlockState checkState = world.getBlockState(pos.offset(Direction.UP, offset));
-        if (checkState.isOf(VABlocks.CORN_CROP)) return checkState.get(SEGMENT).equals(checkSegment) && checkState.get(AGE).equals(state.get(AGE));
-        return allowAir && world.getBlockState(pos.offset(Direction.UP, offset)).isAir();
+        BlockState checkState = world.getBlockState(pos.relative(Direction.UP, offset));
+        if (checkState.is(VABlocks.CORN_CROP)) return checkState.getValue(SEGMENT).equals(checkSegment) && checkState.getValue(AGE).equals(state.getValue(AGE));
+        return allowAir && world.getBlockState(pos.relative(Direction.UP, offset)).isAir();
     }
 
 
@@ -173,44 +169,44 @@ public class CornCropBlock extends CropBlock {
     }
 
     public BlockState stateOf(int age, Segment segment) {
-        return this.withAge(age).with(SEGMENT, segment);
+        return this.getStateForAge(age).setValue(SEGMENT, segment);
     }
     
-    private boolean canReplaceBlockState(World world, BlockPos pos) {
+    private boolean canReplaceBlockState(Level world, BlockPos pos) {
         BlockState state = world.getBlockState(pos);
-        return state.isAir() || state.isOf(VABlocks.SPOTLIGHT_LIGHT) || state.isOf(this);
+        return state.isAir() || state.is(VABlocks.SPOTLIGHT_LIGHT) || state.is(this);
     }
 
     @Override
-    public boolean canPlaceAt(BlockState state, WorldView world, BlockPos pos) {
-        return switch (state.get(SEGMENT)) {
+    public boolean canSurvive(BlockState state, LevelReader world, BlockPos pos) {
+        return switch (state.getValue(SEGMENT)) {
             case TOP -> checkSegment(world, pos, state, Direction.DOWN);
-            case MIDDLE -> checkSegment(world, pos, state, Direction.DOWN) && (state.get(AGE) <= 5 || checkSegment(world, pos, state, Direction.UP));
-            case BOTTOM -> ((world.getBaseLightLevel(pos, 0) >= 8 || world.isSkyVisible(pos)) && super.canPlaceAt(state, world, pos)) && (state.get(AGE) <= 2 || checkSegment(world, pos, state, Direction.UP));
+            case MIDDLE -> checkSegment(world, pos, state, Direction.DOWN) && (state.getValue(AGE) <= 5 || checkSegment(world, pos, state, Direction.UP));
+            case BOTTOM -> ((world.getRawBrightness(pos, 0) >= 8 || world.canSeeSky(pos)) && super.canSurvive(state, world, pos)) && (state.getValue(AGE) <= 2 || checkSegment(world, pos, state, Direction.UP));
         };
     }
 
     @Nullable
     @Override
-    public BlockState getPlacementState(ItemPlacementContext ctx) {
-        return this.getDefaultState().with(SEGMENT, Segment.BOTTOM);
+    public BlockState getStateForPlacement(BlockPlaceContext ctx) {
+        return this.defaultBlockState().setValue(SEGMENT, Segment.BOTTOM);
     }
 
-    private boolean checkSegment(WorldView world, BlockPos pos, BlockState state, Direction direction) {
-        Segment segment = state.get(SEGMENT);
+    private boolean checkSegment(LevelReader world, BlockPos pos, BlockState state, Direction direction) {
+        Segment segment = state.getValue(SEGMENT);
         Segment expectedSegment = direction.equals(Direction.UP) ? segment.aboveSegment() : segment.belowSegment();
         if (expectedSegment == null) return false;
-        BlockState offsetState = world.getBlockState(pos.offset(direction));
-        return offsetState.isOf(this) && offsetState.get(SEGMENT).equals(expectedSegment) && offsetState.get(AGE).equals(state.get(AGE));
+        BlockState offsetState = world.getBlockState(pos.relative(direction));
+        return offsetState.is(this) && offsetState.getValue(SEGMENT).equals(expectedSegment) && offsetState.getValue(AGE).equals(state.getValue(AGE));
     }
 
-    public enum Segment implements StringIdentifiable {
+    public enum Segment implements StringRepresentable {
         TOP,
         MIDDLE,
         BOTTOM;
 
         @Override
-        public String asString() {
+        public String getSerializedName() {
             return this.name().toLowerCase(Locale.ROOT);
         }
 
@@ -253,8 +249,8 @@ public class CornCropBlock extends CropBlock {
     }
 
     static {
-        SHAPE_AGE_1 = Block.createCuboidShape(3, 0, 3, 13, 4, 13);
-        SHAPE_AGE_2 = Block.createCuboidShape(3, 0, 3, 13, 8, 13);
-        SHAPE_AGE_3 = Block.createCuboidShape(3, 0, 3, 13, 16, 13);
+        SHAPE_AGE_1 = Block.box(3, 0, 3, 13, 4, 13);
+        SHAPE_AGE_2 = Block.box(3, 0, 3, 13, 8, 13);
+        SHAPE_AGE_3 = Block.box(3, 0, 3, 13, 16, 13);
     }
 }

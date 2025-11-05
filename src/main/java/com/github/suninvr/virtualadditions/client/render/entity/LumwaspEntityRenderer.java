@@ -2,32 +2,29 @@ package com.github.suninvr.virtualadditions.client.render.entity;
 
 import com.github.suninvr.virtualadditions.client.VARenderers;
 import com.github.suninvr.virtualadditions.entity.LumwaspEntity;
-import net.minecraft.client.render.entity.EntityRendererFactory;
-import net.minecraft.client.render.entity.LivingEntityRenderer;
-import net.minecraft.client.render.entity.MobEntityRenderer;
-import net.minecraft.client.render.entity.state.EntityRenderState;
-import net.minecraft.entity.Entity;
-import net.minecraft.util.Identifier;
+import net.minecraft.client.renderer.entity.EntityRendererProvider;
+import net.minecraft.client.renderer.entity.MobRenderer;
+import net.minecraft.resources.ResourceLocation;
 
 @SuppressWarnings({"unchecked", "rawtypes"})
-public class LumwaspEntityRenderer extends MobEntityRenderer<LumwaspEntity, LumwaspEntityRenderState, LumwaspEntityModel<LumwaspEntity>> {
-    private static final Identifier TEXTURE = Identifier.of("virtual_additions", "textures/entity/lumwasp/lumwasp.png");
+public class LumwaspEntityRenderer extends MobRenderer<LumwaspEntity, LumwaspEntityRenderState, LumwaspEntityModel<LumwaspEntity>> {
+    private static final ResourceLocation TEXTURE = ResourceLocation.fromNamespaceAndPath("virtual_additions", "textures/entity/lumwasp/lumwasp.png");
 
-    public LumwaspEntityRenderer(EntityRendererFactory.Context context) {
-        super(context, new LumwaspEntityModel<>(context.getPart(VARenderers.LUMWASP_LAYER)), 0.75F);
-        this.addFeature(new LumwaspGlowFeatureRenderer(this));
-        this.addFeature(new LumwaspBrightGlowFeatureRenderer(this));
+    public LumwaspEntityRenderer(EntityRendererProvider.Context context) {
+        super(context, new LumwaspEntityModel<>(context.bakeLayer(VARenderers.LUMWASP_LAYER)), 0.75F);
+        this.addLayer(new LumwaspGlowFeatureRenderer(this));
+        this.addLayer(new LumwaspBrightGlowFeatureRenderer(this));
     }
 
     @Override
-    public Identifier getTexture(LumwaspEntityRenderState state) {
+    public ResourceLocation getTextureLocation(LumwaspEntityRenderState state) {
         return TEXTURE;
     }
 
     @Override
-    public void updateRenderState(LumwaspEntity livingEntity, LumwaspEntityRenderState livingEntityRenderState, float f) {
-        super.updateRenderState(livingEntity, livingEntityRenderState, f);
-        livingEntityRenderState.inAir = livingEntity.isInAir();
+    public void extractRenderState(LumwaspEntity livingEntity, LumwaspEntityRenderState livingEntityRenderState, float f) {
+        super.extractRenderState(livingEntity, livingEntityRenderState, f);
+        livingEntityRenderState.inAir = livingEntity.isFlying();
     }
 
     @Override

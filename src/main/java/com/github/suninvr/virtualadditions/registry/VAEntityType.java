@@ -2,18 +2,20 @@ package com.github.suninvr.virtualadditions.registry;
 
 import com.github.suninvr.virtualadditions.VirtualAdditions;
 import com.github.suninvr.virtualadditions.entity.*;
-import net.minecraft.entity.*;
-import net.minecraft.entity.attribute.DefaultAttributeContainer;
-import net.minecraft.entity.mob.HostileEntity;
-import net.minecraft.entity.vehicle.BoatEntity;
-import net.minecraft.entity.vehicle.ChestBoatEntity;
-import net.minecraft.item.Item;
-import net.minecraft.item.Items;
-import net.minecraft.registry.Registries;
-import net.minecraft.registry.Registry;
-import net.minecraft.registry.RegistryKey;
-import net.minecraft.registry.RegistryKeys;
-import net.minecraft.world.Heightmap;
+import net.minecraft.core.Registry;
+import net.minecraft.core.registries.BuiltInRegistries;
+import net.minecraft.core.registries.Registries;
+import net.minecraft.resources.ResourceKey;
+import net.minecraft.world.entity.EntityType;
+import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.entity.MobCategory;
+import net.minecraft.world.entity.SpawnPlacements;
+import net.minecraft.world.entity.ai.attributes.AttributeSupplier;
+import net.minecraft.world.entity.monster.Monster;
+import net.minecraft.world.entity.vehicle.Boat;
+import net.minecraft.world.entity.vehicle.ChestBoat;
+import net.minecraft.world.item.Item;
+import net.minecraft.world.level.levelgen.Heightmap;
 
 import java.util.Map;
 import java.util.function.Supplier;
@@ -31,66 +33,66 @@ public class VAEntityType {
     public static final EntityType<SalineEntity> SALINE;
     public static final EntityType<SpectreEntity> SPECTRE;
     public static final EntityType<PlayerProjectionEntity> PLAYER_PROJECTION;
-    public static final EntityType<BoatEntity> SOULBLOOM_BOAT;
-    public static final EntityType<ChestBoatEntity> SOULBLOOM_CHEST_BOAT;
+    public static final EntityType<Boat> SOULBLOOM_BOAT;
+    public static final EntityType<ChestBoat> SOULBLOOM_CHEST_BOAT;
     public static final EntityType<LightningBottleEntity> LIGHTNING_BOTTLE;
 
-    public static final Map<EntityType<? extends LivingEntity>, DefaultAttributeContainer> ENTITY_ATTRIBUTES = new java.util.HashMap<>();
+    public static final Map<EntityType<? extends LivingEntity>, AttributeSupplier> ENTITY_ATTRIBUTES = new java.util.HashMap<>();
 
     static {
-        CLIMBING_ROPE = Registry.register(Registries.ENTITY_TYPE, VirtualAdditions.idOf("climbing_rope"), EntityType.Builder.<ClimbingRopeEntity>create(ClimbingRopeEntity::new, SpawnGroup.MISC)
-                .dimensions(0.25F, 0.25F)
-                .maxTrackingRange(4).trackingTickInterval(10)
-                .build(RegistryKey.of(RegistryKeys.ENTITY_TYPE, VirtualAdditions.idOf("climbing_rope"))));
+        CLIMBING_ROPE = Registry.register(BuiltInRegistries.ENTITY_TYPE, VirtualAdditions.idOf("climbing_rope"), EntityType.Builder.<ClimbingRopeEntity>of(ClimbingRopeEntity::new, MobCategory.MISC)
+                .sized(0.25F, 0.25F)
+                .clientTrackingRange(4).updateInterval(10)
+                .build(ResourceKey.create(Registries.ENTITY_TYPE, VirtualAdditions.idOf("climbing_rope"))));
 
-        STEEL_BOMB = Registry.register(Registries.ENTITY_TYPE, idOf("steel_bomb"), EntityType.Builder.<SteelBombEntity>create(SteelBombEntity::new, SpawnGroup.MISC)
-                .dimensions(0.25F, 0.25F)
-                .maxTrackingRange(4).trackingTickInterval(10)
-                .build(RegistryKey.of(RegistryKeys.ENTITY_TYPE, VirtualAdditions.idOf("steel_bomb"))));
+        STEEL_BOMB = Registry.register(BuiltInRegistries.ENTITY_TYPE, idOf("steel_bomb"), EntityType.Builder.<SteelBombEntity>of(SteelBombEntity::new, MobCategory.MISC)
+                .sized(0.25F, 0.25F)
+                .clientTrackingRange(4).updateInterval(10)
+                .build(ResourceKey.create(Registries.ENTITY_TYPE, VirtualAdditions.idOf("steel_bomb"))));
 
-        TOMATO = Registry.register(Registries.ENTITY_TYPE, idOf("tomato"), EntityType.Builder.<TomatoEntity>create(TomatoEntity::new, SpawnGroup.MISC)
-                .dimensions(0.25F, 0.25F)
-                .maxTrackingRange(4).trackingTickInterval(10)
-                .build(RegistryKey.of(RegistryKeys.ENTITY_TYPE, VirtualAdditions.idOf("tomato"))));
+        TOMATO = Registry.register(BuiltInRegistries.ENTITY_TYPE, idOf("tomato"), EntityType.Builder.<TomatoEntity>of(TomatoEntity::new, MobCategory.MISC)
+                .sized(0.25F, 0.25F)
+                .clientTrackingRange(4).updateInterval(10)
+                .build(ResourceKey.create(Registries.ENTITY_TYPE, VirtualAdditions.idOf("tomato"))));
 
-        ACID_SPIT = Registry.register(Registries.ENTITY_TYPE, idOf("acid_spit"), EntityType.Builder.<AcidSpitEntity>create(AcidSpitEntity::new, SpawnGroup.MISC)
-                .dimensions(0.25F, 0.25F)
-                .maxTrackingRange(4).trackingTickInterval(10)
-                .build(RegistryKey.of(RegistryKeys.ENTITY_TYPE, VirtualAdditions.idOf("acid_spit"))));
+        ACID_SPIT = Registry.register(BuiltInRegistries.ENTITY_TYPE, idOf("acid_spit"), EntityType.Builder.<AcidSpitEntity>of(AcidSpitEntity::new, MobCategory.MISC)
+                .sized(0.25F, 0.25F)
+                .clientTrackingRange(4).updateInterval(10)
+                .build(ResourceKey.create(Registries.ENTITY_TYPE, VirtualAdditions.idOf("acid_spit"))));
 
 
-        SPECTRAL_BOLT = Registry.register(Registries.ENTITY_TYPE, idOf("spectral_bolt"), EntityType.Builder.<SpectralBoltEntity>create(SpectralBoltEntity::new, SpawnGroup.MISC)
-                .dimensions(0.25F, 0.25F)
-                .maxTrackingRange(4).trackingTickInterval(10)
-                .build(RegistryKey.of(RegistryKeys.ENTITY_TYPE, VirtualAdditions.idOf("spectral_bolt"))));
+        SPECTRAL_BOLT = Registry.register(BuiltInRegistries.ENTITY_TYPE, idOf("spectral_bolt"), EntityType.Builder.<SpectralBoltEntity>of(SpectralBoltEntity::new, MobCategory.MISC)
+                .sized(0.25F, 0.25F)
+                .clientTrackingRange(4).updateInterval(10)
+                .build(ResourceKey.create(Registries.ENTITY_TYPE, VirtualAdditions.idOf("spectral_bolt"))));
 
-        LUMWASP = Registry.register(Registries.ENTITY_TYPE, idOf("lumwasp"), EntityType.Builder.create(LumwaspEntity::new, SpawnGroup.MONSTER)
-                .dimensions(1.5F, 0.75F)
-                .build(RegistryKey.of(RegistryKeys.ENTITY_TYPE, VirtualAdditions.idOf("lumwasp"))));
+        LUMWASP = Registry.register(BuiltInRegistries.ENTITY_TYPE, idOf("lumwasp"), EntityType.Builder.of(LumwaspEntity::new, MobCategory.MONSTER)
+                .sized(1.5F, 0.75F)
+                .build(ResourceKey.create(Registries.ENTITY_TYPE, VirtualAdditions.idOf("lumwasp"))));
 
-        SALINE = Registry.register(Registries.ENTITY_TYPE, idOf("saline"), EntityType.Builder.create(SalineEntity::new, SpawnGroup.MONSTER)
-                .dimensions(0.6F, 1.95F).maxTrackingRange(8)
-                .build(RegistryKey.of(RegistryKeys.ENTITY_TYPE, VirtualAdditions.idOf("saline"))));
+        SALINE = Registry.register(BuiltInRegistries.ENTITY_TYPE, idOf("saline"), EntityType.Builder.of(SalineEntity::new, MobCategory.MONSTER)
+                .sized(0.6F, 1.95F).clientTrackingRange(8)
+                .build(ResourceKey.create(Registries.ENTITY_TYPE, VirtualAdditions.idOf("saline"))));
 
-        SPECTRE = Registry.register(Registries.ENTITY_TYPE, idOf("spectre"), EntityType.Builder.create(SpectreEntity::new, SpawnGroup.MONSTER)
-                .dimensions(0.5F, 0.5F).eyeHeight(0.25F).makeFireImmune()
-                .build(RegistryKey.of(RegistryKeys.ENTITY_TYPE, VirtualAdditions.idOf("spectre"))));
+        SPECTRE = Registry.register(BuiltInRegistries.ENTITY_TYPE, idOf("spectre"), EntityType.Builder.of(SpectreEntity::new, MobCategory.MONSTER)
+                .sized(0.5F, 0.5F).eyeHeight(0.25F).fireImmune()
+                .build(ResourceKey.create(Registries.ENTITY_TYPE, VirtualAdditions.idOf("spectre"))));
 
-        PLAYER_PROJECTION = Registry.register(Registries.ENTITY_TYPE, idOf("player_projection"), EntityType.Builder.create(PlayerProjectionEntity::new, SpawnGroup.MISC)
-                .dimensions(0.5F, 0.5F).eyeHeight(0.25F).dropsNothing().disableSaving().disableSummon()
-                .build(RegistryKey.of(RegistryKeys.ENTITY_TYPE, VirtualAdditions.idOf("spectre"))));
+        PLAYER_PROJECTION = Registry.register(BuiltInRegistries.ENTITY_TYPE, idOf("player_projection"), EntityType.Builder.of(PlayerProjectionEntity::new, MobCategory.MISC)
+                .sized(0.5F, 0.5F).eyeHeight(0.25F).noLootTable().noSave().noSummon()
+                .build(ResourceKey.create(Registries.ENTITY_TYPE, VirtualAdditions.idOf("spectre"))));
 
-        LIGHTNING_BOTTLE = Registry.register(Registries.ENTITY_TYPE, idOf("lightning_bottle"), EntityType.Builder.<LightningBottleEntity>create(LightningBottleEntity::new, SpawnGroup.MISC)
-                .dropsNothing().dimensions(0.25F, 0.25F).maxTrackingRange(4).trackingTickInterval(10)
-                .build(RegistryKey.of(RegistryKeys.ENTITY_TYPE, idOf("lightning_bottle"))));
+        LIGHTNING_BOTTLE = Registry.register(BuiltInRegistries.ENTITY_TYPE, idOf("lightning_bottle"), EntityType.Builder.<LightningBottleEntity>of(LightningBottleEntity::new, MobCategory.MISC)
+                .noLootTable().sized(0.25F, 0.25F).clientTrackingRange(4).updateInterval(10)
+                .build(ResourceKey.create(Registries.ENTITY_TYPE, idOf("lightning_bottle"))));
 
-        SOULBLOOM_BOAT = Registry.register(Registries.ENTITY_TYPE, idOf("soulbloom_boat"), EntityType.Builder.create(getBoatFactory(() -> VAItems.SOULBLOOM_BOAT), SpawnGroup.MISC)
-                .dropsNothing().dimensions(1.375F, 0.5625F).eyeHeight(0.5625F).maxTrackingRange(10)
-                .build(RegistryKey.of(RegistryKeys.ENTITY_TYPE, idOf("soulbloom_boat"))));
+        SOULBLOOM_BOAT = Registry.register(BuiltInRegistries.ENTITY_TYPE, idOf("soulbloom_boat"), EntityType.Builder.of(getBoatFactory(() -> VAItems.SOULBLOOM_BOAT), MobCategory.MISC)
+                .noLootTable().sized(1.375F, 0.5625F).eyeHeight(0.5625F).clientTrackingRange(10)
+                .build(ResourceKey.create(Registries.ENTITY_TYPE, idOf("soulbloom_boat"))));
 
-        SOULBLOOM_CHEST_BOAT = Registry.register(Registries.ENTITY_TYPE, idOf("soulbloom_chest_boat"), EntityType.Builder.create(getChestBoatFactory(() -> VAItems.SOULBLOOM_CHEST_BOAT), SpawnGroup.MISC)
-                .dropsNothing().dimensions(1.375F, 0.5625F).eyeHeight(0.5625F).maxTrackingRange(10)
-                .build(RegistryKey.of(RegistryKeys.ENTITY_TYPE, idOf("soulbloom_chest_boat"))));
+        SOULBLOOM_CHEST_BOAT = Registry.register(BuiltInRegistries.ENTITY_TYPE, idOf("soulbloom_chest_boat"), EntityType.Builder.of(getChestBoatFactory(() -> VAItems.SOULBLOOM_CHEST_BOAT), MobCategory.MISC)
+                .noLootTable().sized(1.375F, 0.5625F).eyeHeight(0.5625F).clientTrackingRange(10)
+                .build(ResourceKey.create(Registries.ENTITY_TYPE, idOf("soulbloom_chest_boat"))));
 
         ENTITY_ATTRIBUTES.put(LUMWASP, LumwaspEntity.createLumwaspAttributes());
         ENTITY_ATTRIBUTES.put(SALINE, SalineEntity.createSalineAttributes());
@@ -99,17 +101,17 @@ public class VAEntityType {
     }
 
     public static void init(){
-        SpawnRestriction.register(SALINE, SpawnRestriction.getLocation(SALINE), Heightmap.Type.MOTION_BLOCKING, HostileEntity::canSpawnInDark);
-        SpawnRestriction.register(LUMWASP, SpawnRestriction.getLocation(LUMWASP), Heightmap.Type.MOTION_BLOCKING, LumwaspEntity::canSpawnLumwasp);
-        SpawnRestriction.register(SPECTRE, SpawnRestriction.getLocation(SPECTRE), Heightmap.Type.MOTION_BLOCKING, SpectreEntity::canSpawnSpectre);
+        SpawnPlacements.register(SALINE, SpawnPlacements.getPlacementType(SALINE), Heightmap.Types.MOTION_BLOCKING, Monster::checkMonsterSpawnRules);
+        SpawnPlacements.register(LUMWASP, SpawnPlacements.getPlacementType(LUMWASP), Heightmap.Types.MOTION_BLOCKING, LumwaspEntity::canSpawnLumwasp);
+        SpawnPlacements.register(SPECTRE, SpawnPlacements.getPlacementType(SPECTRE), Heightmap.Types.MOTION_BLOCKING, SpectreEntity::canSpawnSpectre);
     }
 
 
-    private static EntityType.EntityFactory<BoatEntity> getBoatFactory(Supplier<Item> itemSupplier) {
-        return (type, world) -> new BoatEntity(type, world, itemSupplier);
+    private static EntityType.EntityFactory<Boat> getBoatFactory(Supplier<Item> itemSupplier) {
+        return (type, world) -> new Boat(type, world, itemSupplier);
     }
 
-    private static EntityType.EntityFactory<ChestBoatEntity> getChestBoatFactory(Supplier<Item> itemSupplier) {
-        return (type, world) -> new ChestBoatEntity(type, world, itemSupplier);
+    private static EntityType.EntityFactory<ChestBoat> getChestBoatFactory(Supplier<Item> itemSupplier) {
+        return (type, world) -> new ChestBoat(type, world, itemSupplier);
     }
 }

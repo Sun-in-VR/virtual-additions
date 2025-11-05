@@ -1,43 +1,50 @@
 package com.github.suninvr.virtualadditions.registry;
 
-import com.github.suninvr.virtualadditions.worldgen.feature.*;
-import com.mojang.serialization.MapCodec;
+import com.github.suninvr.virtualadditions.worldgen.feature.BalloonBulbFeature;
+import com.github.suninvr.virtualadditions.worldgen.feature.LumwaspNestFeature;
+import com.github.suninvr.virtualadditions.worldgen.feature.SoulbloomTrunkPlacer;
+import com.github.suninvr.virtualadditions.worldgen.feature.WitheredTrunkPlacer;
 import net.fabricmc.fabric.api.biome.v1.BiomeModifications;
 import net.fabricmc.fabric.api.biome.v1.BiomeSelectors;
-import net.minecraft.registry.*;
-import net.minecraft.registry.tag.BiomeTags;
-import net.minecraft.util.Identifier;
-import net.minecraft.world.biome.BiomeKeys;
-import net.minecraft.world.gen.GenerationStep;
-import net.minecraft.world.gen.feature.*;
-import net.minecraft.world.gen.foliage.FoliagePlacerType;
-import net.minecraft.world.gen.trunk.TrunkPlacerType;
+import net.minecraft.core.Registry;
+import net.minecraft.core.registries.BuiltInRegistries;
+import net.minecraft.core.registries.Registries;
+import net.minecraft.resources.ResourceKey;
+import net.minecraft.resources.ResourceLocation;
+import net.minecraft.tags.BiomeTags;
+import net.minecraft.world.level.biome.Biomes;
+import net.minecraft.world.level.levelgen.GenerationStep;
+import net.minecraft.world.level.levelgen.feature.ConfiguredFeature;
+import net.minecraft.world.level.levelgen.feature.Feature;
+import net.minecraft.world.level.levelgen.feature.configurations.NoneFeatureConfiguration;
+import net.minecraft.world.level.levelgen.feature.trunkplacers.TrunkPlacerType;
+import net.minecraft.world.level.levelgen.placement.PlacedFeature;
 
 import static com.github.suninvr.virtualadditions.VirtualAdditions.idOf;
 
 @SuppressWarnings("SameParameterValue")
 public class VAFeatures {
-    public static Feature<DefaultFeatureConfig> LUMWASP_NEST_FEATURE;
-    public static Feature<DefaultFeatureConfig> BALLOON_BULB_FEATURE;
+    public static Feature<NoneFeatureConfiguration> LUMWASP_NEST_FEATURE;
+    public static Feature<NoneFeatureConfiguration> BALLOON_BULB_FEATURE;
 
     public static class Placed {
-        public static final RegistryKey<PlacedFeature> ORE_IOLITE;
-        public static final RegistryKey<PlacedFeature> ORE_PORPHYRY;
-        public static final RegistryKey<PlacedFeature> WASP_DEN_CEILING;
-        public static final RegistryKey<PlacedFeature> WASP_DEN_FLOOR;
-        public static final RegistryKey<PlacedFeature> GREENCAP_MUSHROOM;
-        public static final RegistryKey<PlacedFeature> LUMWASP_NEST;
-        public static final RegistryKey<PlacedFeature> ORE_ROCK_SALT;
-        public static final RegistryKey<PlacedFeature> ORE_ROCK_SALT_OCEANS;
-        public static final RegistryKey<PlacedFeature> ROCK_SALT_CEILING;
-        public static final RegistryKey<PlacedFeature> ROCK_SALT_FLOOR;
-        public static final RegistryKey<PlacedFeature> ORE_CALCITE;
-        public static final RegistryKey<PlacedFeature> ORE_HORNFELS;
-        public static final RegistryKey<PlacedFeature> ORE_BLUESCHIST;
-        public static final RegistryKey<PlacedFeature> ORE_SYENITE;
-        public static final RegistryKey<PlacedFeature> SOULBLOOM_TREES;
-        public static final RegistryKey<PlacedFeature> BONE_LITTER_SOUL_SAND_VALLEY;
-        public static final RegistryKey<PlacedFeature> SPRING_LOTUS_SWAMP;
+        public static final ResourceKey<PlacedFeature> ORE_IOLITE;
+        public static final ResourceKey<PlacedFeature> ORE_PORPHYRY;
+        public static final ResourceKey<PlacedFeature> WASP_DEN_CEILING;
+        public static final ResourceKey<PlacedFeature> WASP_DEN_FLOOR;
+        public static final ResourceKey<PlacedFeature> GREENCAP_MUSHROOM;
+        public static final ResourceKey<PlacedFeature> LUMWASP_NEST;
+        public static final ResourceKey<PlacedFeature> ORE_ROCK_SALT;
+        public static final ResourceKey<PlacedFeature> ORE_ROCK_SALT_OCEANS;
+        public static final ResourceKey<PlacedFeature> ROCK_SALT_CEILING;
+        public static final ResourceKey<PlacedFeature> ROCK_SALT_FLOOR;
+        public static final ResourceKey<PlacedFeature> ORE_CALCITE;
+        public static final ResourceKey<PlacedFeature> ORE_HORNFELS;
+        public static final ResourceKey<PlacedFeature> ORE_BLUESCHIST;
+        public static final ResourceKey<PlacedFeature> ORE_SYENITE;
+        public static final ResourceKey<PlacedFeature> SOULBLOOM_TREES;
+        public static final ResourceKey<PlacedFeature> BONE_LITTER_SOUL_SAND_VALLEY;
+        public static final ResourceKey<PlacedFeature> SPRING_LOTUS_SWAMP;
 
         static {
             ORE_IOLITE = registerPlaced(idOf("ore_iolite"));
@@ -61,9 +68,9 @@ public class VAFeatures {
     }
 
     public static class Configured {
-        public static final RegistryKey<ConfiguredFeature<?, ?>> SOULBLOOM_TREE;
-        public static final RegistryKey<ConfiguredFeature<?, ?>> WITHERED_TREE;
-        public static final RegistryKey<ConfiguredFeature<?, ?>> NECROTIC_ROOTS_BONEMEAL;
+        public static final ResourceKey<ConfiguredFeature<?, ?>> SOULBLOOM_TREE;
+        public static final ResourceKey<ConfiguredFeature<?, ?>> WITHERED_TREE;
+        public static final ResourceKey<ConfiguredFeature<?, ?>> NECROTIC_ROOTS_BONEMEAL;
 
         static {
             SOULBLOOM_TREE = registerConfigured(idOf("soulbloom_tree"));
@@ -74,66 +81,66 @@ public class VAFeatures {
 
     public static void init(){
         BiomeModifications.addFeature(
-                BiomeSelectors.foundInTheEnd().and( biomeSelectionContext -> !(biomeSelectionContext.getBiomeKey().equals(BiomeKeys.THE_END)) ),
-                GenerationStep.Feature.UNDERGROUND_ORES,
+                BiomeSelectors.foundInTheEnd().and( biomeSelectionContext -> !(biomeSelectionContext.getBiomeKey().equals(Biomes.THE_END)) ),
+                GenerationStep.Decoration.UNDERGROUND_ORES,
                 Placed.ORE_IOLITE
         );
         BiomeModifications.addFeature(
                 BiomeSelectors.foundInOverworld(),
-                GenerationStep.Feature.UNDERGROUND_ORES,
+                GenerationStep.Decoration.UNDERGROUND_ORES,
                 Placed.ORE_PORPHYRY
         );
         BiomeModifications.addFeature(
                 BiomeSelectors.foundInOverworld(),
-                GenerationStep.Feature.UNDERGROUND_ORES,
+                GenerationStep.Decoration.UNDERGROUND_ORES,
                 Placed.ORE_ROCK_SALT
         );
         BiomeModifications.addFeature(
                 BiomeSelectors.foundInOverworld(),
-                GenerationStep.Feature.UNDERGROUND_ORES,
+                GenerationStep.Decoration.UNDERGROUND_ORES,
                 Placed.ORE_HORNFELS
         );
         BiomeModifications.addFeature(
                 BiomeSelectors.foundInOverworld(),
-                GenerationStep.Feature.UNDERGROUND_ORES,
+                GenerationStep.Decoration.UNDERGROUND_ORES,
                 Placed.ORE_BLUESCHIST
         );
         BiomeModifications.addFeature(
                 BiomeSelectors.foundInOverworld(),
-                GenerationStep.Feature.UNDERGROUND_ORES,
+                GenerationStep.Decoration.UNDERGROUND_ORES,
                 Placed.ORE_SYENITE
         );
         BiomeModifications.addFeature(
                 BiomeSelectors.tag(BiomeTags.IS_OCEAN),
-                GenerationStep.Feature.UNDERGROUND_ORES,
+                GenerationStep.Decoration.UNDERGROUND_ORES,
                 Placed.ORE_ROCK_SALT_OCEANS
         );
         BiomeModifications.addFeature(
-                BiomeSelectors.includeByKey(BiomeKeys.SOUL_SAND_VALLEY),
-                GenerationStep.Feature.VEGETAL_DECORATION,
+                BiomeSelectors.includeByKey(Biomes.SOUL_SAND_VALLEY),
+                GenerationStep.Decoration.VEGETAL_DECORATION,
                 Placed.BONE_LITTER_SOUL_SAND_VALLEY
         );
         BiomeModifications.addFeature(
-                BiomeSelectors.includeByKey(BiomeKeys.SWAMP, BiomeKeys.MANGROVE_SWAMP),
-                GenerationStep.Feature.VEGETAL_DECORATION,
+                BiomeSelectors.includeByKey(Biomes.SWAMP, Biomes.MANGROVE_SWAMP),
+                GenerationStep.Decoration.VEGETAL_DECORATION,
                 Placed.SPRING_LOTUS_SWAMP
         );
         TrunkPlacerTypes.init();
-        BALLOON_BULB_FEATURE = Registry.register(Registries.FEATURE, idOf("balloon_bulb"), new BalloonBulbFeature(DefaultFeatureConfig.CODEC));
-        LUMWASP_NEST_FEATURE = Registry.register(Registries.FEATURE, idOf("lumwasp_nest"), new LumwaspNestFeature(DefaultFeatureConfig.CODEC));
+        BALLOON_BULB_FEATURE = Registry.register(BuiltInRegistries.FEATURE, idOf("balloon_bulb"), new BalloonBulbFeature(NoneFeatureConfiguration.CODEC));
+        LUMWASP_NEST_FEATURE = Registry.register(BuiltInRegistries.FEATURE, idOf("lumwasp_nest"), new LumwaspNestFeature(NoneFeatureConfiguration.CODEC));
     }
 
-    private static RegistryKey<PlacedFeature> registerPlaced(Identifier id) {
-        return RegistryKey.of(RegistryKeys.PLACED_FEATURE, id);
+    private static ResourceKey<PlacedFeature> registerPlaced(ResourceLocation id) {
+        return ResourceKey.create(Registries.PLACED_FEATURE, id);
     }
 
-    private static RegistryKey<ConfiguredFeature<?, ?>> registerConfigured(Identifier id) {
-        return RegistryKey.of(RegistryKeys.CONFIGURED_FEATURE, id);
+    private static ResourceKey<ConfiguredFeature<?, ?>> registerConfigured(ResourceLocation id) {
+        return ResourceKey.create(Registries.CONFIGURED_FEATURE, id);
     }
 
     public static class TrunkPlacerTypes {
-        public static final TrunkPlacerType<SoulbloomTrunkPlacer> SOULBLOOM_TRUNK_PLACER = Registry.register(Registries.TRUNK_PLACER_TYPE, idOf("soulbloom_trunk_placer"), new TrunkPlacerType<>(SoulbloomTrunkPlacer.CODEC));
-        public static final TrunkPlacerType<WitheredTrunkPlacer> WITHERED_TRUNK_PLACER = Registry.register(Registries.TRUNK_PLACER_TYPE, idOf("withered_trunk_placer"), new TrunkPlacerType<>(WitheredTrunkPlacer.CODEC));
+        public static final TrunkPlacerType<SoulbloomTrunkPlacer> SOULBLOOM_TRUNK_PLACER = Registry.register(BuiltInRegistries.TRUNK_PLACER_TYPE, idOf("soulbloom_trunk_placer"), new TrunkPlacerType<>(SoulbloomTrunkPlacer.CODEC));
+        public static final TrunkPlacerType<WitheredTrunkPlacer> WITHERED_TRUNK_PLACER = Registry.register(BuiltInRegistries.TRUNK_PLACER_TYPE, idOf("withered_trunk_placer"), new TrunkPlacerType<>(WitheredTrunkPlacer.CODEC));
         public static void init(){}
     }
 

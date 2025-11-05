@@ -1,58 +1,59 @@
 package com.github.suninvr.virtualadditions.block;
 
 import com.mojang.serialization.MapCodec;
-import net.minecraft.block.*;
-import net.minecraft.entity.LivingEntity;
-import net.minecraft.fluid.FluidState;
-import net.minecraft.fluid.Fluids;
-import net.minecraft.item.ItemPlacementContext;
-import net.minecraft.item.ItemStack;
-import net.minecraft.server.world.ServerWorld;
-import net.minecraft.state.StateManager;
-import net.minecraft.state.property.BooleanProperty;
-import net.minecraft.state.property.EnumProperty;
-import net.minecraft.state.property.IntProperty;
-import net.minecraft.state.property.Properties;
-import net.minecraft.util.BlockRotation;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.math.Direction;
-import net.minecraft.util.shape.VoxelShape;
-import net.minecraft.world.BlockView;
-import net.minecraft.world.World;
-import net.minecraft.world.WorldAccess;
-import net.minecraft.world.block.WireOrientation;
+import net.minecraft.core.BlockPos;
+import net.minecraft.core.Direction;
+import net.minecraft.server.level.ServerLevel;
+import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.context.BlockPlaceContext;
+import net.minecraft.world.level.BlockGetter;
+import net.minecraft.world.level.Level;
+import net.minecraft.world.level.LevelAccessor;
+import net.minecraft.world.level.block.*;
+import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.block.state.StateDefinition;
+import net.minecraft.world.level.block.state.properties.BlockStateProperties;
+import net.minecraft.world.level.block.state.properties.BooleanProperty;
+import net.minecraft.world.level.block.state.properties.EnumProperty;
+import net.minecraft.world.level.block.state.properties.IntegerProperty;
+import net.minecraft.world.level.material.FluidState;
+import net.minecraft.world.level.material.Fluids;
+import net.minecraft.world.level.redstone.Orientation;
+import net.minecraft.world.phys.shapes.CollisionContext;
+import net.minecraft.world.phys.shapes.VoxelShape;
 import org.jetbrains.annotations.Nullable;
 
 @SuppressWarnings("deprecation")
-public class RedstoneBridgeBlock extends Block implements Waterloggable {
-    public static final MapCodec<RedstoneBridgeBlock> CODEC = createCodec(RedstoneBridgeBlock::new);
-    public static final IntProperty POWER = Properties.POWER;
-    public static final EnumProperty<Direction> FACING = Properties.FACING;
-    public static final BooleanProperty WATERLOGGED = Properties.WATERLOGGED;
+public class RedstoneBridgeBlock extends Block implements SimpleWaterloggedBlock {
+    public static final MapCodec<RedstoneBridgeBlock> CODEC = simpleCodec(RedstoneBridgeBlock::new);
+    public static final IntegerProperty POWER = BlockStateProperties.POWER;
+    public static final EnumProperty<Direction> FACING = BlockStateProperties.FACING;
+    public static final BooleanProperty WATERLOGGED = BlockStateProperties.WATERLOGGED;
     private static final VoxelShape SHAPE_X;
     private static final VoxelShape SHAPE_Y;
     private static final VoxelShape SHAPE_Z;
     public boolean sendsRedstonePower = true;
     private boolean sendsLessStrongRedstonePower = false;
 
-    public RedstoneBridgeBlock(Settings settings) {
+    public RedstoneBridgeBlock(Properties settings) {
         super(settings);
-        this.setDefaultState(getStateManager().getDefaultState().with(FACING, Direction.DOWN).with(POWER, 0).with(WATERLOGGED, false));
+        this.registerDefaultState(getStateDefinition().any().setValue(FACING, Direction.DOWN).setValue(POWER, 0).setValue(WATERLOGGED, false));
     }
 
     @Override
-    protected MapCodec<? extends Block> getCodec() {
+    protected MapCodec<? extends Block> codec() {
         return CODEC;
     }
 
     @Override
-    protected void appendProperties(StateManager.Builder<Block, BlockState> builder) {
+    protected void createBlockStateDefinition(StateDefinition.Builder<Block, BlockState> builder) {
         builder.add(POWER, FACING, WATERLOGGED);
     }
 
     @Override
-    public VoxelShape getOutlineShape(BlockState state, BlockView world, BlockPos pos, ShapeContext context) {
-        return switch (state.get(FACING).getAxis()) {
+    public VoxelShape getShape(BlockState state, BlockGetter world, BlockPos pos, CollisionContext context) {
+        return switch (state.getValue(FACING).getAxis()) {
             case X -> SHAPE_X;
             case Y -> SHAPE_Y;
             case Z -> SHAPE_Z;
@@ -60,53 +61,53 @@ public class RedstoneBridgeBlock extends Block implements Waterloggable {
     }
 
     @Override
-    protected BlockState rotate(BlockState state, BlockRotation rotation) {
-        Direction dir = state.get(FACING);
+    protected BlockState rotate(BlockState state, Rotation rotation) {
+        Direction dir = state.getValue(FACING);
         if (dir.getAxis() != Direction.Axis.Y) {
             dir = switch (rotation) {
                 case NONE -> dir;
-                case CLOCKWISE_90 -> dir.rotateYClockwise();
+                case CLOCKWISE_90 -> dir.getClockWise();
                 case CLOCKWISE_180 -> dir.getOpposite();
-                case COUNTERCLOCKWISE_90 -> dir.rotateYCounterclockwise();
+                case COUNTERCLOCKWISE_90 -> dir.getCounterClockWise();
             };
         }
-        return state.with(FACING, dir);
+        return state.setValue(FACING, dir);
     }
 
     @Override
-    public void neighborUpdate(BlockState state, World world, BlockPos pos, Block sourceBlock, @Nullable WireOrientation wireOrientation, boolean notify) {
-        if (state.get(WATERLOGGED)) world.scheduleFluidTick(pos, Fluids.WATER, Fluids.WATER.getTickRate(world));
+    public void neighborChanged(BlockState state, Level world, BlockPos pos, Block sourceBlock, @Nullable Orientation wireOrientation, boolean notify) {
+        if (state.getValue(WATERLOGGED)) world.scheduleTick(pos, Fluids.WATER, Fluids.WATER.getTickDelay(world));
         int power = getPower(world, pos, state);
-        if (power == state.get(POWER)) return;
-        world.setBlockState(pos, state.with(POWER, power));
+        if (power == state.getValue(POWER)) return;
+        world.setBlockAndUpdate(pos, state.setValue(POWER, power));
         this.updateAffectedNeighbors(world, pos, state);
     }
 
     @Override
-    public int getWeakRedstonePower(BlockState state, BlockView world, BlockPos pos, Direction direction) {
-        return this.sendsRedstonePower && state.get(FACING).equals(direction.getOpposite()) ? state.get(POWER) : 0;
+    public int getSignal(BlockState state, BlockGetter world, BlockPos pos, Direction direction) {
+        return this.sendsRedstonePower && state.getValue(FACING).equals(direction.getOpposite()) ? state.getValue(POWER) : 0;
     }
 
     @Override
-    public int getStrongRedstonePower(BlockState state, BlockView world, BlockPos pos, Direction direction) {
-        return this.sendsLessStrongRedstonePower ? Math.max(0, getWeakRedstonePower(state, world, pos, direction) - 1) : getWeakRedstonePower(state, world, pos, direction);
+    public int getDirectSignal(BlockState state, BlockGetter world, BlockPos pos, Direction direction) {
+        return this.sendsLessStrongRedstonePower ? Math.max(0, getSignal(state, world, pos, direction) - 1) : getSignal(state, world, pos, direction);
     }
 
     @Override
-    public boolean emitsRedstonePower(BlockState state) {
+    public boolean isSignalSource(BlockState state) {
         return true;
     }
 
-    protected int getPower(WorldAccess world, BlockPos pos, BlockState state) {
-        Direction direction = state.get(FACING).getOpposite();
-        BlockPos blockPos = pos.offset(direction);
+    protected int getPower(LevelAccessor world, BlockPos pos, BlockState state) {
+        Direction direction = state.getValue(FACING).getOpposite();
+        BlockPos blockPos = pos.relative(direction);
 
         this.setWireFlags(false);
-        int i = world.getEmittedRedstonePower(blockPos, direction);
+        int i = world.getSignal(blockPos, direction);
         this.setWireFlags(true);
 
         this.sendsLessStrongRedstonePower = true;
-        int j = Math.max(0, world.getEmittedRedstonePower(blockPos, direction) - 1);
+        int j = Math.max(0, world.getSignal(blockPos, direction) - 1);
         this.sendsLessStrongRedstonePower = false;
 
         return Math.max(i, j);
@@ -114,44 +115,44 @@ public class RedstoneBridgeBlock extends Block implements Waterloggable {
 
     protected void setWireFlags(boolean bl) {
         this.sendsRedstonePower = bl;
-        ((RedstoneWireBlock) Blocks.REDSTONE_WIRE).wiresGivePower = bl;
+        ((RedStoneWireBlock) Blocks.REDSTONE_WIRE).shouldSignal = bl;
     }
 
     @Override
-    public void onPlaced(World world, BlockPos pos, BlockState state, @Nullable LivingEntity placer, ItemStack itemStack) {
+    public void setPlacedBy(Level world, BlockPos pos, BlockState state, @Nullable LivingEntity placer, ItemStack itemStack) {
         updateAffectedNeighbors(world, pos, state);
     }
 
     @Override
-    public void onBlockAdded(BlockState state, World world, BlockPos pos, BlockState oldState, boolean notify) {
+    public void onPlace(BlockState state, Level world, BlockPos pos, BlockState oldState, boolean notify) {
         if (oldState != state) updateAffectedNeighbors(world, pos, state);
     }
 
     @Override
-    protected void onStateReplaced(BlockState blockState, ServerWorld serverWorld, BlockPos blockPos, boolean bl) {
+    protected void affectNeighborsAfterRemoval(BlockState blockState, ServerLevel serverWorld, BlockPos blockPos, boolean bl) {
         updateAffectedNeighbors(serverWorld, blockPos, blockState);
     }
 
-    private void updateAffectedNeighbors(World world, BlockPos pos, BlockState state) {
-        world.updateNeighborsExcept(pos.offset(state.get(FACING)), this, state.get(FACING).getOpposite(), WireOrientation.fromOrdinal(0));
+    private void updateAffectedNeighbors(Level world, BlockPos pos, BlockState state) {
+        world.updateNeighborsAtExceptFromFacing(pos.relative(state.getValue(FACING)), this, state.getValue(FACING).getOpposite(), Orientation.fromIndex(0));
     }
 
     @Override
     public FluidState getFluidState(BlockState state) {
-        return state.get(WATERLOGGED) ? Fluids.WATER.getStill(false) : Fluids.EMPTY.getDefaultState();
+        return state.getValue(WATERLOGGED) ? Fluids.WATER.getSource(false) : Fluids.EMPTY.defaultFluidState();
     }
 
     @Nullable
     @Override
-    public BlockState getPlacementState(ItemPlacementContext ctx) {
-        boolean bl = ctx.getWorld().getFluidState(ctx.getBlockPos()).isOf(Fluids.WATER);
-        BlockState state = getDefaultState().with(FACING, ctx.getSide());
-        return state.with(POWER, getPower(ctx.getWorld(), ctx.getBlockPos(), state)).with(WATERLOGGED, bl);
+    public BlockState getStateForPlacement(BlockPlaceContext ctx) {
+        boolean bl = ctx.getLevel().getFluidState(ctx.getClickedPos()).is(Fluids.WATER);
+        BlockState state = defaultBlockState().setValue(FACING, ctx.getClickedFace());
+        return state.setValue(POWER, getPower(ctx.getLevel(), ctx.getClickedPos(), state)).setValue(WATERLOGGED, bl);
     }
 
     static {
-        SHAPE_X = Block.createCuboidShape(0, 4, 4, 16, 12, 12);
-        SHAPE_Y = Block.createCuboidShape(4, 0, 4, 12, 16, 12);
-        SHAPE_Z = Block.createCuboidShape(4, 4, 0, 12, 12, 16);
+        SHAPE_X = Block.box(0, 4, 4, 16, 12, 12);
+        SHAPE_Y = Block.box(4, 0, 4, 12, 16, 12);
+        SHAPE_Z = Block.box(4, 4, 0, 12, 12, 16);
     }
 }

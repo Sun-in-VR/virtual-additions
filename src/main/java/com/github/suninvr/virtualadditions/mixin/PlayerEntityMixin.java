@@ -3,24 +3,24 @@ package com.github.suninvr.virtualadditions.mixin;
 import com.github.suninvr.virtualadditions.entity.PlayerProjectionEntity;
 import com.github.suninvr.virtualadditions.interfaces.PlayerEntityInterface;
 import com.github.suninvr.virtualadditions.item.VAToolUtil;
-import com.github.suninvr.virtualadditions.registry.VAGildTypes;
 import com.github.suninvr.virtualadditions.registry.VADamageTypes;
 import com.github.suninvr.virtualadditions.registry.VAEntityAttributes;
+import com.github.suninvr.virtualadditions.registry.VAGildTypes;
 import com.github.suninvr.virtualadditions.registry.VAItems;
 import com.llamalad7.mixinextras.sugar.Local;
 import com.llamalad7.mixinextras.sugar.ref.LocalFloatRef;
-import net.minecraft.block.BlockState;
-import net.minecraft.entity.Entity;
-import net.minecraft.entity.EntityType;
-import net.minecraft.entity.LivingEntity;
-import net.minecraft.entity.attribute.DefaultAttributeContainer;
-import net.minecraft.entity.attribute.EntityAttributes;
-import net.minecraft.entity.damage.DamageSource;
-import net.minecraft.entity.player.ItemCooldownManager;
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.item.ItemStack;
-import net.minecraft.server.world.ServerWorld;
-import net.minecraft.world.World;
+import net.minecraft.server.level.ServerLevel;
+import net.minecraft.world.damagesource.DamageSource;
+import net.minecraft.world.entity.Entity;
+import net.minecraft.world.entity.EntityType;
+import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.entity.ai.attributes.AttributeSupplier;
+import net.minecraft.world.entity.ai.attributes.Attributes;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.item.ItemCooldowns;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.level.Level;
+import net.minecraft.world.level.block.state.BlockState;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.Unique;
@@ -30,17 +30,17 @@ import org.spongepowered.asm.mixin.injection.ModifyVariable;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
-@Mixin(PlayerEntity.class)
+@Mixin(Player.class)
 public abstract class PlayerEntityMixin extends LivingEntity implements PlayerEntityInterface {
     @Shadow public abstract boolean isSwimming();
 
-    @Shadow public abstract ItemCooldownManager getItemCooldownManager();
+    @Shadow public abstract ItemCooldowns getCooldowns();
 
     @Unique private PlayerProjectionEntity projection = null;
 
     @Unique long lastSwungHalberd;
 
-    protected PlayerEntityMixin(EntityType<? extends LivingEntity> entityType, World world) {
+    protected PlayerEntityMixin(EntityType<? extends LivingEntity> entityType, Level world) {
         super(entityType, world);
     }
 
@@ -61,7 +61,7 @@ public abstract class PlayerEntityMixin extends LivingEntity implements PlayerEn
 
     @Override
     public void virtualAdditions$onHalberdSwing() {
-        this.lastSwungHalberd = this.getEntityWorld().getTime();
+        this.lastSwungHalberd = this.level().getGameTime();
     }
 
     @Override
@@ -77,43 +77,43 @@ public abstract class PlayerEntityMixin extends LivingEntity implements PlayerEn
         } else return value;
     }
 
-    @Inject(method = "createPlayerAttributes", at = @At("RETURN"), cancellable = true)
-    private static void virtualAdditions$createPlayerAttributes(CallbackInfoReturnable<DefaultAttributeContainer.Builder> cir) {
+    @Inject(method = "createAttributes", at = @At("RETURN"), cancellable = true)
+    private static void virtualAdditions$createPlayerAttributes(CallbackInfoReturnable<AttributeSupplier.Builder> cir) {
         cir.setReturnValue(cir.getReturnValue().add(VAEntityAttributes.CRITICAL_HIT_FACTOR));
     }
 
-    @Inject(method = "getBlockBreakingSpeed", at = @At(value = "INVOKE", target = "Lnet/minecraft/entity/effect/StatusEffectUtil;hasHaste(Lnet/minecraft/entity/LivingEntity;)Z", shift = At.Shift.BEFORE))
+    @Inject(method = "getDestroySpeed", at = @At(value = "INVOKE", target = "Lnet/minecraft/world/effect/MobEffectUtil;hasDigSpeed(Lnet/minecraft/world/entity/LivingEntity;)Z", shift = At.Shift.BEFORE))
     void virtualAdditions$getBlockBreakingSpeedForSculkGildedTools(BlockState block, CallbackInfoReturnable<Float> cir, @Local LocalFloatRef f) {
         if (f.get() <= 1.0F) return;
-        PlayerEntity player = ((PlayerEntity)(Object)this);
-        ItemStack stack = player.getMainHandStack();
+        Player player = ((Player)(Object)this);
+        ItemStack stack = player.getMainHandItem();
         if (VAGildTypes.SCULK.equals(VAToolUtil.getGildType(stack))) {
-            f.set((float) (f.get() - player.getAttributeValue(EntityAttributes.MINING_EFFICIENCY)));
+            f.set((float) (f.get() - player.getAttributeValue(Attributes.MINING_EFFICIENCY)));
         }
     }
 
-    @Inject(method = "getBlockBreakingSpeed", at = @At("RETURN"), cancellable = true)
+    @Inject(method = "getDestroySpeed", at = @At("RETURN"), cancellable = true)
     public void virtualAdditions$getBlockBreakingSpeed(BlockState block, CallbackInfoReturnable<Float> cir) {
         float r = cir.getReturnValue();
-        PlayerEntity player = ((PlayerEntity)(Object)this);
+        Player player = ((Player)(Object)this);
 
         Entity entity = player.getRootVehicle();
-        boolean bl = entity.isOnGround() || (entity instanceof LivingEntity livingEntity && livingEntity.isClimbing());
-        if (bl && !player.isOnGround()) r *= 5.0F;
+        boolean bl = entity.onGround() || (entity instanceof LivingEntity livingEntity && livingEntity.onClimbable());
+        if (bl && !player.onGround()) r *= 5.0F;
 
         cir.setReturnValue(r);
     }
 
-    @Inject(method = "damageArmor", at = @At("HEAD"))
+    @Inject(method = "hurtArmor", at = @At("HEAD"))
     void virtualAdditions$damageArmorFromAcid(DamageSource source, float amount, CallbackInfo ci, @Local(argsOnly = true) LocalFloatRef amountRef) {
-        if (source.isIn(VADamageTypes.INCREASED_ARMOR_DAMAGE)) amountRef.set(amountRef.get() * 3.0F);
+        if (source.is(VADamageTypes.INCREASED_ARMOR_DAMAGE)) amountRef.set(amountRef.get() * 3.0F);
     }
 
-    @Inject(method = "damage", at = @At(value = "INVOKE", target = "Lnet/minecraft/entity/player/PlayerEntity;dropShoulderEntities()V", shift = At.Shift.AFTER))
-    void virtualAdditions$cancelSpectralSpyglassUsage(ServerWorld world, DamageSource source, float amount, CallbackInfoReturnable<Boolean> cir) {
-        if (this.isUsingItem() && this.getActiveItem().isOf(VAItems.SPECTRAL_SPYGLASS)) {
-            this.getItemCooldownManager().set(this.getActiveItem(), 100);
-            this.clearActiveItem();
+    @Inject(method = "hurtServer", at = @At(value = "INVOKE", target = "Lnet/minecraft/world/entity/player/Player;removeEntitiesOnShoulder()V", shift = At.Shift.AFTER))
+    void virtualAdditions$cancelSpectralSpyglassUsage(ServerLevel world, DamageSource source, float amount, CallbackInfoReturnable<Boolean> cir) {
+        if (this.isUsingItem() && this.getUseItem().is(VAItems.SPECTRAL_SPYGLASS)) {
+            this.getCooldowns().addCooldown(this.getUseItem(), 100);
+            this.stopUsingItem();
         }
     }
 }

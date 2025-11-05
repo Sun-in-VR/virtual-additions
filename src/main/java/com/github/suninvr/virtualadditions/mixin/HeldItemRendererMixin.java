@@ -6,58 +6,58 @@ import com.github.suninvr.virtualadditions.item.ProjectionSpyglassItem;
 import com.llamalad7.mixinextras.injector.wrapoperation.Operation;
 import com.llamalad7.mixinextras.injector.wrapoperation.WrapOperation;
 import com.llamalad7.mixinextras.sugar.Local;
-import net.minecraft.client.network.AbstractClientPlayerEntity;
-import net.minecraft.client.render.command.OrderedRenderCommandQueue;
-import net.minecraft.client.render.item.HeldItemRenderer;
-import net.minecraft.client.util.math.MatrixStack;
-import net.minecraft.item.Item;
-import net.minecraft.item.ItemStack;
-import net.minecraft.util.Arm;
-import net.minecraft.util.Hand;
-import net.minecraft.util.math.MathHelper;
-import net.minecraft.util.math.RotationAxis;
+import com.mojang.blaze3d.vertex.PoseStack;
+import com.mojang.math.Axis;
+import net.minecraft.client.player.AbstractClientPlayer;
+import net.minecraft.client.renderer.ItemInHandRenderer;
+import net.minecraft.client.renderer.SubmitNodeCollector;
+import net.minecraft.util.Mth;
+import net.minecraft.world.InteractionHand;
+import net.minecraft.world.entity.HumanoidArm;
+import net.minecraft.world.item.Item;
+import net.minecraft.world.item.ItemStack;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
-@Mixin(HeldItemRenderer.class)
+@Mixin(ItemInHandRenderer.class)
 public class HeldItemRendererMixin {
-    @WrapOperation(method = "renderFirstPersonItem", at = @At(value = "INVOKE", target = "Lnet/minecraft/client/network/AbstractClientPlayerEntity;isUsingSpyglass()Z"))
-    boolean virtualAdditions$isUsingSpectralSpyglass(AbstractClientPlayerEntity instance, Operation<Boolean> original) {
+    @WrapOperation(method = "renderArmWithItem", at = @At(value = "INVOKE", target = "Lnet/minecraft/client/player/AbstractClientPlayer;isScoping()Z"))
+    boolean virtualAdditions$isUsingSpectralSpyglass(AbstractClientPlayer instance, Operation<Boolean> original) {
         return original.call(instance) || ProjectionSpyglassItem.isInUseBy(instance);
     }
 
-    @WrapOperation(method = "getHandRenderType", at = @At(value = "INVOKE", target = "Lnet/minecraft/item/ItemStack;isOf(Lnet/minecraft/item/Item;)Z", ordinal = 0))
+    @WrapOperation(method = "evaluateWhichHandsToRender", at = @At(value = "INVOKE", target = "Lnet/minecraft/world/item/ItemStack;is(Lnet/minecraft/world/item/Item;)Z", ordinal = 0))
     private static boolean virtualAdditions$setHalberdRenderType(ItemStack instance, Item item, Operation<Boolean> original) {
         return instance.getItem() instanceof HalberdItem || original.call(instance, item);
     }
 
-    @WrapOperation(method = "getUsingItemHandRenderType", at = @At(value = "INVOKE", target = "Lnet/minecraft/item/ItemStack;isOf(Lnet/minecraft/item/Item;)Z", ordinal = 0))
+    @WrapOperation(method = "selectionUsingItemWhileHoldingBowLike", at = @At(value = "INVOKE", target = "Lnet/minecraft/world/item/ItemStack;is(Lnet/minecraft/world/item/Item;)Z", ordinal = 0))
     private static boolean virtualAdditions$setUsingHalberdRenderType(ItemStack instance, Item item, Operation<Boolean> original) {
         return instance.getItem() instanceof HalberdItem || original.call(instance, item);
     }
 
-    @Inject(method = "renderFirstPersonItem", at = @At(value = "INVOKE", target = "Lnet/minecraft/client/render/item/HeldItemRenderer;applyEquipOffset(Lnet/minecraft/client/util/math/MatrixStack;Lnet/minecraft/util/Arm;F)V", ordinal = 1))
-    void virtualAdditions$applyHalberdOffset(AbstractClientPlayerEntity player, float tickProgress, float pitch, Hand hand, float swingProgress, ItemStack item, float equipProgress, MatrixStack matrices, OrderedRenderCommandQueue orderedRenderCommandQueue, int light, CallbackInfo ci, @Local Arm arm) {
-        if (player.getActiveItem().getItem() instanceof HalberdItem) {
-            boolean bl = arm == Arm.RIGHT;
+    @Inject(method = "renderArmWithItem", at = @At(value = "INVOKE", target = "Lnet/minecraft/client/renderer/ItemInHandRenderer;applyItemArmTransform(Lcom/mojang/blaze3d/vertex/PoseStack;Lnet/minecraft/world/entity/HumanoidArm;F)V", ordinal = 1))
+    void virtualAdditions$applyHalberdOffset(AbstractClientPlayer player, float tickProgress, float pitch, InteractionHand hand, float swingProgress, ItemStack item, float equipProgress, PoseStack matrices, SubmitNodeCollector orderedRenderCommandQueue, int light, CallbackInfo ci, @Local HumanoidArm arm) {
+        if (player.getUseItem().getItem() instanceof HalberdItem) {
+            boolean bl = arm == HumanoidArm.RIGHT;
             int armMul = bl ? 1 : -1;
             matrices.translate(0, 0.2F, 0);
 
-            float fx = HalberdItem.getSwingReadiness(item, player, item.getMaxUseTime(player) - player.getItemUseTime(), tickProgress);
+            float fx = HalberdItem.getSwingReadiness(item, player, item.getUseDuration(player) - player.getTicksUsingItem(), tickProgress);
             if (fx > 1.0F) {
                 fx = 1.0F;
             }
             float efx = (float) Math.sin(Math.PI * (fx / 2))/2 + 0.5F;
-            matrices.multiply(RotationAxis.POSITIVE_Y.rotationDegrees(armMul * (60 + -40 * efx)));
-            matrices.multiply(RotationAxis.POSITIVE_X.rotationDegrees(armMul * (-5 * efx)));
-            matrices.multiply(RotationAxis.POSITIVE_Z.rotationDegrees(armMul * (-18.05F + -60*efx)));
+            matrices.mulPose(Axis.YP.rotationDegrees(armMul * (60 + -40 * efx)));
+            matrices.mulPose(Axis.XP.rotationDegrees(armMul * (-5 * efx)));
+            matrices.mulPose(Axis.ZP.rotationDegrees(armMul * (-18.05F + -60*efx)));
 
-            float m = (item.getMaxUseTime(player) - (player.getItemUseTimeLeft() - tickProgress + 1.0F)) * fx;
+            float m = (item.getUseDuration(player) - (player.getUseItemRemainingTicks() - tickProgress + 1.0F)) * fx;
 
             if (fx > 0.1F) {
-                float gx = MathHelper.sin((m - 0.1F) * 1.3F);
+                float gx = Mth.sin((m - 0.1F) * 1.3F);
                 float h = fx - 0.1F;
                 float j = gx * h;
                 matrices.translate(j * 0.0F, j * 0.004F, j * 0.0F);
@@ -67,11 +67,11 @@ public class HeldItemRendererMixin {
         }
     }
 
-    @Inject(method = "renderFirstPersonItem", at = @At(value = "INVOKE", target = "Lnet/minecraft/client/render/item/HeldItemRenderer;applyEquipOffset(Lnet/minecraft/client/util/math/MatrixStack;Lnet/minecraft/util/Arm;F)V", ordinal = 4))
-    void virtualAdditions$swingHalberd(AbstractClientPlayerEntity player, float tickProgress, float pitch, Hand hand, float swingProgress, ItemStack item, float equipProgress, MatrixStack matrices, OrderedRenderCommandQueue orderedRenderCommandQueue, int light, CallbackInfo ci, @Local Arm arm) {
+    @Inject(method = "renderArmWithItem", at = @At(value = "INVOKE", target = "Lnet/minecraft/client/renderer/ItemInHandRenderer;applyItemArmTransform(Lcom/mojang/blaze3d/vertex/PoseStack;Lnet/minecraft/world/entity/HumanoidArm;F)V"))
+    void virtualAdditions$swingHalberd(AbstractClientPlayer player, float tickProgress, float pitch, InteractionHand hand, float swingProgress, ItemStack item, float equipProgress, PoseStack matrices, SubmitNodeCollector orderedRenderCommandQueue, int light, CallbackInfo ci, @Local HumanoidArm arm) {
         long l;
-        if (player.getActiveHand() == hand && (l = (player.getEntityWorld().getTime() - ((PlayerEntityInterface)(player)).virtualAdditions$lastSwungHalberd())) < 30) {
-            boolean bl = arm == Arm.RIGHT;
+        if (player.getUsedItemHand() == hand && (l = (player.level().getGameTime() - ((PlayerEntityInterface)(player)).virtualAdditions$lastSwungHalberd())) < 30) {
+            boolean bl = arm == HumanoidArm.RIGHT;
             int armMul = bl ? 1 : -1;
 
             float f = Math.min((l + tickProgress) / 6.0F, 1.0F);
@@ -80,9 +80,9 @@ public class HeldItemRendererMixin {
             float efx = (float) Math.sin(Math.PI * (f / 2));
 
             matrices.translate(0, 0.2F*g, 0);
-            matrices.multiply(RotationAxis.POSITIVE_Y.rotationDegrees(g * armMul * (20 + 130 * efx)));
-            matrices.multiply(RotationAxis.POSITIVE_X.rotationDegrees(g * armMul * (-5 + -10 * efx)));
-            matrices.multiply(RotationAxis.POSITIVE_Z.rotationDegrees(g * armMul * (-78.05F + -5 * efx)));
+            matrices.mulPose(Axis.YP.rotationDegrees(g * armMul * (20 + 130 * efx)));
+            matrices.mulPose(Axis.XP.rotationDegrees(g * armMul * (-5 + -10 * efx)));
+            matrices.mulPose(Axis.ZP.rotationDegrees(g * armMul * (-78.05F + -5 * efx)));
             matrices.translate((-0.1F + 0.2*efx)*g, (0.5F + 0.3*efx)*g, (0.1F + 0.5F*efx)*g);
 
         }

@@ -1,46 +1,46 @@
 package com.github.suninvr.virtualadditions.registry;
 
-import net.minecraft.component.type.ConsumableComponent;
-import net.minecraft.component.type.FoodComponent;
-import net.minecraft.entity.effect.StatusEffectInstance;
-import net.minecraft.entity.effect.StatusEffects;
-import net.minecraft.item.consume.ApplyEffectsConsumeEffect;
+import net.minecraft.world.effect.MobEffectInstance;
+import net.minecraft.world.effect.MobEffects;
+import net.minecraft.world.food.FoodProperties;
+import net.minecraft.world.item.component.Consumable;
+import net.minecraft.world.item.consume_effects.ApplyStatusEffectsConsumeEffect;
 
 import java.util.List;
 
 public class VAFoodComponents {
-    public static final FoodComponent FRIED_EGG = (new FoodComponent.Builder().nutrition(4).saturationModifier(0.3F).build());
-    public static final FoodComponent CHEESE_WEDGE = (new FoodComponent.Builder().nutrition(5).saturationModifier(0.4F).build());
-    public static final FoodComponent TOMATO = (new FoodComponent.Builder()).nutrition(3).saturationModifier(0.4F).build();
-    public static final FoodComponent TOMATO_SOUP = (new FoodComponent.Builder()).nutrition(8).saturationModifier(0.6F).build();
-    public static final FoodComponent CABBAGE = (new FoodComponent.Builder()).nutrition(5).saturationModifier(0.6F).build();
-    public static final FoodComponent CORN = (new FoodComponent.Builder()).nutrition(1).saturationModifier(0.3F).build();
-    public static final FoodComponent ROASTED_CORN = (new FoodComponent.Builder()).nutrition(5).saturationModifier(0.6F).build();
-    public static final FoodComponent WISDOM_BERRY = (new FoodComponent.Builder()).nutrition(2).saturationModifier(0.1F).build();
-    public static final FoodComponent SALAD = (new FoodComponent.Builder()).nutrition(16).saturationModifier(1.5F).build();
-    public static final FoodComponent ICE_CREAM = new FoodComponent.Builder().nutrition(7).saturationModifier(0.1F).build();
-    public static final FoodComponent BALLOON_FRUIT = (new FoodComponent.Builder().nutrition(2).saturationModifier(0.1F).alwaysEdible().build());
-    public static final FoodComponent SWEET_BERRY_PIE = (new FoodComponent.Builder().nutrition(8).saturationModifier(0.3F).build());
-    public static final FoodComponent ROCK_SALT = (new FoodComponent.Builder().nutrition(1).saturationModifier(0.1F).build());
-    public static final FoodComponent BEEF_JERKY = (new FoodComponent.Builder().nutrition(4).saturationModifier(0.6F).build());
-    public static final FoodComponent PORK_JERKY = (new FoodComponent.Builder().nutrition(4).saturationModifier(0.6F).build());
-    public static final FoodComponent CHICKEN_JERKY = (new FoodComponent.Builder().nutrition(3).saturationModifier(0.45F).build());
-    public static final FoodComponent MUTTON_JERKY = (new FoodComponent.Builder().nutrition(3).saturationModifier(0.6F).build());
+    public static final FoodProperties FRIED_EGG = (new FoodProperties.Builder().nutrition(4).saturationModifier(0.3F).build());
+    public static final FoodProperties CHEESE_WEDGE = (new FoodProperties.Builder().nutrition(5).saturationModifier(0.4F).build());
+    public static final FoodProperties TOMATO = (new FoodProperties.Builder()).nutrition(3).saturationModifier(0.4F).build();
+    public static final FoodProperties TOMATO_SOUP = (new FoodProperties.Builder()).nutrition(8).saturationModifier(0.6F).build();
+    public static final FoodProperties CABBAGE = (new FoodProperties.Builder()).nutrition(5).saturationModifier(0.6F).build();
+    public static final FoodProperties CORN = (new FoodProperties.Builder()).nutrition(1).saturationModifier(0.3F).build();
+    public static final FoodProperties ROASTED_CORN = (new FoodProperties.Builder()).nutrition(5).saturationModifier(0.6F).build();
+    public static final FoodProperties WISDOM_BERRY = (new FoodProperties.Builder()).nutrition(2).saturationModifier(0.1F).build();
+    public static final FoodProperties SALAD = (new FoodProperties.Builder()).nutrition(16).saturationModifier(1.5F).build();
+    public static final FoodProperties ICE_CREAM = new FoodProperties.Builder().nutrition(7).saturationModifier(0.1F).build();
+    public static final FoodProperties BALLOON_FRUIT = (new FoodProperties.Builder().nutrition(2).saturationModifier(0.1F).alwaysEdible().build());
+    public static final FoodProperties SWEET_BERRY_PIE = (new FoodProperties.Builder().nutrition(8).saturationModifier(0.3F).build());
+    public static final FoodProperties ROCK_SALT = (new FoodProperties.Builder().nutrition(1).saturationModifier(0.1F).build());
+    public static final FoodProperties BEEF_JERKY = (new FoodProperties.Builder().nutrition(4).saturationModifier(0.6F).build());
+    public static final FoodProperties PORK_JERKY = (new FoodProperties.Builder().nutrition(4).saturationModifier(0.6F).build());
+    public static final FoodProperties CHICKEN_JERKY = (new FoodProperties.Builder().nutrition(3).saturationModifier(0.45F).build());
+    public static final FoodProperties MUTTON_JERKY = (new FoodProperties.Builder().nutrition(3).saturationModifier(0.6F).build());
 
-    public static final ConsumableComponent JERKY_CONSUMABLE = ConsumableComponent.builder().consumeSeconds(1.2F).build();
-    public static final ConsumableComponent BALLOON_FRUIT_CONSUMABLE = ConsumableComponent.builder().consumeEffect(
-            new ApplyEffectsConsumeEffect(
+    public static final Consumable JERKY_CONSUMABLE = Consumable.builder().consumeSeconds(1.2F).build();
+    public static final Consumable BALLOON_FRUIT_CONSUMABLE = Consumable.builder().onConsume(
+            new ApplyStatusEffectsConsumeEffect(
                     List.of(
-                            new StatusEffectInstance(StatusEffects.LEVITATION, 100)
+                            new MobEffectInstance(MobEffects.LEVITATION, 100)
                     )
             )
     ).build();
-    public static final ConsumableComponent ROCK_SALT_CONSUMABLE = ConsumableComponent.builder().consumeEffect(
-            new ApplyEffectsConsumeEffect(
+    public static final Consumable ROCK_SALT_CONSUMABLE = Consumable.builder().onConsume(
+            new ApplyStatusEffectsConsumeEffect(
                     List.of(
-                            new StatusEffectInstance(VAStatusEffects.FRAILTY, 600, 1),
-                            new StatusEffectInstance(StatusEffects.WEAKNESS, 600),
-                            new StatusEffectInstance(StatusEffects.NAUSEA, 200)
+                            new MobEffectInstance(VAStatusEffects.FRAILTY, 600, 1),
+                            new MobEffectInstance(MobEffects.WEAKNESS, 600),
+                            new MobEffectInstance(MobEffects.NAUSEA, 200)
                     )))
             .build();
 }

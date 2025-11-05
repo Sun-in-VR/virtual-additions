@@ -2,70 +2,69 @@ package com.github.suninvr.virtualadditions.block;
 
 import com.github.suninvr.virtualadditions.block.enums.HangingBlockShape;
 import com.mojang.serialization.MapCodec;
-import net.minecraft.block.Block;
-import net.minecraft.block.BlockState;
-import net.minecraft.block.ShapeContext;
-import net.minecraft.block.Waterloggable;
-import net.minecraft.fluid.FluidState;
-import net.minecraft.fluid.Fluids;
-import net.minecraft.item.ItemPlacementContext;
-import net.minecraft.server.world.ServerWorld;
-import net.minecraft.state.StateManager;
-import net.minecraft.state.property.BooleanProperty;
-import net.minecraft.state.property.EnumProperty;
-import net.minecraft.state.property.Properties;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.math.Direction;
-import net.minecraft.util.math.random.Random;
-import net.minecraft.util.shape.VoxelShape;
-import net.minecraft.world.BlockView;
-import net.minecraft.world.World;
-import net.minecraft.world.WorldAccess;
-import net.minecraft.world.WorldView;
-import net.minecraft.world.block.WireOrientation;
-import net.minecraft.world.tick.ScheduledTickView;
+import net.minecraft.core.BlockPos;
+import net.minecraft.core.Direction;
+import net.minecraft.server.level.ServerLevel;
+import net.minecraft.util.RandomSource;
+import net.minecraft.world.item.context.BlockPlaceContext;
+import net.minecraft.world.level.BlockGetter;
+import net.minecraft.world.level.Level;
+import net.minecraft.world.level.LevelReader;
+import net.minecraft.world.level.ScheduledTickAccess;
+import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.SimpleWaterloggedBlock;
+import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.block.state.StateDefinition;
+import net.minecraft.world.level.block.state.properties.BlockStateProperties;
+import net.minecraft.world.level.block.state.properties.BooleanProperty;
+import net.minecraft.world.level.block.state.properties.EnumProperty;
+import net.minecraft.world.level.material.FluidState;
+import net.minecraft.world.level.material.Fluids;
+import net.minecraft.world.level.redstone.Orientation;
+import net.minecraft.world.phys.shapes.CollisionContext;
+import net.minecraft.world.phys.shapes.VoxelShape;
 import org.jetbrains.annotations.Nullable;
 
 @SuppressWarnings("deprecation")
-public class HangingBlock extends Block implements Waterloggable {
-    public static final MapCodec<HangingBlock> CODEC = createCodec(HangingBlock::new);
+public class HangingBlock extends Block implements SimpleWaterloggedBlock {
+    public static final MapCodec<HangingBlock> CODEC = simpleCodec(HangingBlock::new);
     private static final BooleanProperty WATERLOGGED;
     public static final EnumProperty<HangingBlockShape> SHAPE;
     protected static final VoxelShape BOX;
 
-    public HangingBlock(Settings settings) {
+    public HangingBlock(Properties settings) {
         super(settings);
-        this.setDefaultState(getStateManager().getDefaultState()
-                .with(WATERLOGGED, false)
-                .with(SHAPE, HangingBlockShape.SINGLE)
+        this.registerDefaultState(getStateDefinition().any()
+                .setValue(WATERLOGGED, false)
+                .setValue(SHAPE, HangingBlockShape.SINGLE)
         );
     }
 
     @Override
-    protected MapCodec<? extends Block> getCodec() {
+    protected MapCodec<? extends Block> codec() {
         return CODEC;
     }
 
     @Override
-    protected void appendProperties(StateManager.Builder<Block, BlockState> builder) {
+    protected void createBlockStateDefinition(StateDefinition.Builder<Block, BlockState> builder) {
         builder.add(WATERLOGGED, SHAPE);
     }
 
     @Override
-    public VoxelShape getOutlineShape(BlockState state, BlockView world, BlockPos pos, ShapeContext context) {
+    public VoxelShape getShape(BlockState state, BlockGetter world, BlockPos pos, CollisionContext context) {
         return BOX;
     }
 
     @Override
-    public void scheduledTick(BlockState state, ServerWorld world, BlockPos pos, Random random) {
-        world.breakBlock(pos, true);
+    public void tick(BlockState state, ServerLevel world, BlockPos pos, RandomSource random) {
+        world.destroyBlock(pos, true);
     }
 
     @Override
-    protected BlockState getStateForNeighborUpdate(BlockState state, WorldView world, ScheduledTickView tickView, BlockPos pos, Direction direction, BlockPos neighborPos, BlockState neighborState, Random random) {
+    protected BlockState updateShape(BlockState state, LevelReader world, ScheduledTickAccess tickView, BlockPos pos, Direction direction, BlockPos neighborPos, BlockState neighborState, RandomSource random) {
         if (direction == Direction.UP){
-            if (!this.canPlaceAt(state, world, pos)) {
-                tickView.scheduleBlockTick(pos, this, 1);
+            if (!this.canSurvive(state, world, pos)) {
+                tickView.scheduleTick(pos, this, 1);
                 return state;
             }
         }
@@ -73,48 +72,48 @@ public class HangingBlock extends Block implements Waterloggable {
         return state;
     }
 
-    private BlockState updateState(BlockState state, WorldView world, BlockPos pos) {
-        BlockState downState = world.getBlockState(pos.down());
-        if (world.getBlockState(pos.up()).isOf(this)) {
-            if (downState.isOf(this)) state = state.with(SHAPE, HangingBlockShape.STRAIGHT);
-            else state = state.with(SHAPE, HangingBlockShape.END);
+    private BlockState updateState(BlockState state, LevelReader world, BlockPos pos) {
+        BlockState downState = world.getBlockState(pos.below());
+        if (world.getBlockState(pos.above()).is(this)) {
+            if (downState.is(this)) state = state.setValue(SHAPE, HangingBlockShape.STRAIGHT);
+            else state = state.setValue(SHAPE, HangingBlockShape.END);
         }  else {
-            if (downState.isOf(this)) state = state.with(SHAPE, HangingBlockShape.BASE);
-            else state = state.with(SHAPE, HangingBlockShape.SINGLE);}
+            if (downState.is(this)) state = state.setValue(SHAPE, HangingBlockShape.BASE);
+            else state = state.setValue(SHAPE, HangingBlockShape.SINGLE);}
         return state;
     }
 
     @Override
-    public void neighborUpdate(BlockState state, World world, BlockPos pos, Block sourceBlock, @Nullable WireOrientation wireOrientation, boolean notify) {
-        if (state.get(WATERLOGGED)) world.scheduleFluidTick(pos, Fluids.WATER, Fluids.WATER.getTickRate(world));
+    public void neighborChanged(BlockState state, Level world, BlockPos pos, Block sourceBlock, @Nullable Orientation wireOrientation, boolean notify) {
+        if (state.getValue(WATERLOGGED)) world.scheduleTick(pos, Fluids.WATER, Fluids.WATER.getTickDelay(world));
     }
 
     @Nullable
-    public BlockState getPlacementState(ItemPlacementContext ctx) {
-        BlockState blockState = super.getPlacementState(ctx);
+    public BlockState getStateForPlacement(BlockPlaceContext ctx) {
+        BlockState blockState = super.getStateForPlacement(ctx);
         if (blockState != null) {
-            FluidState fluidState = ctx.getWorld().getFluidState(ctx.getBlockPos());
-            return updateState(blockState.with(WATERLOGGED, fluidState.getFluid() == Fluids.WATER), ctx.getWorld(), ctx.getBlockPos());
+            FluidState fluidState = ctx.getLevel().getFluidState(ctx.getClickedPos());
+            return updateState(blockState.setValue(WATERLOGGED, fluidState.getType() == Fluids.WATER), ctx.getLevel(), ctx.getClickedPos());
         } else {
             return null;
         }
     }
 
     static {
-        WATERLOGGED = Properties.WATERLOGGED;
-        SHAPE = EnumProperty.of("shape", HangingBlockShape.class);
-        BOX = Block.createCuboidShape(2.0, 0.0, 2.0, 14.0, 16.0, 14.0);
+        WATERLOGGED = BlockStateProperties.WATERLOGGED;
+        SHAPE = EnumProperty.create("shape", HangingBlockShape.class);
+        BOX = Block.box(2.0, 0.0, 2.0, 14.0, 16.0, 14.0);
     }
 
     @Override
-    public boolean canPlaceAt(BlockState state, WorldView world, BlockPos pos) {
-        BlockPos up = pos.up();
+    public boolean canSurvive(BlockState state, LevelReader world, BlockPos pos) {
+        BlockPos up = pos.above();
         BlockState upState = world.getBlockState(up);
-        return upState.isOf(this) || upState.isSideSolidFullSquare(world, up, Direction.DOWN);
+        return upState.is(this) || upState.isFaceSturdy(world, up, Direction.DOWN);
     }
 
     @Override
     public FluidState getFluidState(BlockState state) {
-        return state.get(WATERLOGGED) ? Fluids.WATER.getStill(false) : Fluids.EMPTY.getDefaultState();
+        return state.getValue(WATERLOGGED) ? Fluids.WATER.getSource(false) : Fluids.EMPTY.defaultFluidState();
     }
 }

@@ -5,22 +5,22 @@ import com.github.suninvr.virtualadditions.particle.ColorfulPowerParticleEffect;
 import com.github.suninvr.virtualadditions.registry.VABlockEntityType;
 import com.github.suninvr.virtualadditions.registry.VABlocks;
 import com.github.suninvr.virtualadditions.registry.VAParticleTypes;
-import net.minecraft.block.BlockState;
-import net.minecraft.block.entity.BlockEntity;
-import net.minecraft.block.entity.BlockEntityType;
-import net.minecraft.nbt.NbtCompound;
-import net.minecraft.network.listener.ClientPlayPacketListener;
-import net.minecraft.network.packet.Packet;
-import net.minecraft.network.packet.s2c.play.BlockEntityUpdateS2CPacket;
-import net.minecraft.particle.ParticleEffect;
-import net.minecraft.registry.RegistryWrapper;
-import net.minecraft.server.world.ServerWorld;
-import net.minecraft.storage.ReadView;
-import net.minecraft.storage.WriteView;
-import net.minecraft.util.DyeColor;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.math.ColorHelper;
-import net.minecraft.world.World;
+import net.minecraft.core.BlockPos;
+import net.minecraft.core.HolderLookup;
+import net.minecraft.core.particles.ParticleOptions;
+import net.minecraft.nbt.CompoundTag;
+import net.minecraft.network.protocol.Packet;
+import net.minecraft.network.protocol.game.ClientGamePacketListener;
+import net.minecraft.network.protocol.game.ClientboundBlockEntityDataPacket;
+import net.minecraft.server.level.ServerLevel;
+import net.minecraft.util.ARGB;
+import net.minecraft.world.item.DyeColor;
+import net.minecraft.world.level.Level;
+import net.minecraft.world.level.block.entity.BlockEntity;
+import net.minecraft.world.level.block.entity.BlockEntityType;
+import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.storage.ValueInput;
+import net.minecraft.world.level.storage.ValueOutput;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.function.Consumer;
@@ -38,26 +38,26 @@ public class MiniPortalBlockEntity extends BlockEntity {
     }
 
     @Override
-    public void onBlockReplaced(BlockPos pos, BlockState oldState) {
-        super.onBlockReplaced(pos, oldState);
-        if (this.destination != null && this.world.getBlockState(this.destination).isOf(VABlocks.MINI_PORTAL)) this.world.breakBlock(this.destination, false);
+    public void preRemoveSideEffects(BlockPos pos, BlockState oldState) {
+        super.preRemoveSideEffects(pos, oldState);
+        if (this.destination != null && this.level.getBlockState(this.destination).is(VABlocks.MINI_PORTAL)) this.level.destroyBlock(this.destination, false);
     }
 
     @Override
-    public @Nullable Packet<ClientPlayPacketListener> toUpdatePacket() {
-        return BlockEntityUpdateS2CPacket.create(this);
+    public @Nullable Packet<ClientGamePacketListener> getUpdatePacket() {
+        return ClientboundBlockEntityDataPacket.create(this);
     }
 
     @Override
-    public NbtCompound toInitialChunkDataNbt(RegistryWrapper.WrapperLookup registries) {
-        return this.createNbt(registries);
+    public CompoundTag getUpdateTag(HolderLookup.Provider registries) {
+        return this.saveWithoutMetadata(registries);
     }
 
     public void ifOther(Consumer<MiniPortalBlockEntity> consumer) {
-        if (this.destination != null && this.world != null && this.world.getBlockEntity(this.destination) instanceof MiniPortalBlockEntity blockEntity) consumer.accept(blockEntity);
+        if (this.destination != null && this.level != null && this.level.getBlockEntity(this.destination) instanceof MiniPortalBlockEntity blockEntity) consumer.accept(blockEntity);
     }
 
-    public static void setDestination(World world, BlockPos pos, BlockPos destination) {
+    public static void setDestination(Level world, BlockPos pos, BlockPos destination) {
         if(world.getBlockEntity(pos) instanceof MiniPortalBlockEntity entity) {
             entity.setDestination(destination);
         }
@@ -65,37 +65,37 @@ public class MiniPortalBlockEntity extends BlockEntity {
 
     public void setDestination(BlockPos destination) {
         this.destination = destination;
-        this.markDirty();
+        this.setChanged();
     }
 
-    public ParticleEffect getParticleParameter() {
-        if (this.isDyed()) return new ColorfulPowerParticleEffect(ColorHelper.toVector(this.getDyeColor().getEntityColor()));
+    public ParticleOptions getParticleParameter() {
+        if (this.isDyed()) return new ColorfulPowerParticleEffect(ARGB.vector3fFromRGB24(this.getDyeColor().getTextureDiffuseColor()));
         else return VAParticleTypes.INTERFERENCE;
     }
 
     public boolean setDyeColor(DyeColor color) {
         if (color == this.dyeColor) return false;
         this.dyeColor = color;
-        this.markDirty();
-        if (this.world instanceof ServerWorld serverWorld) serverWorld.getChunkManager().markForUpdate(this.pos);
+        this.setChanged();
+        if (this.level instanceof ServerLevel serverWorld) serverWorld.getChunkSource().blockChanged(this.worldPosition);
         this.ifOther(blockEntity -> {
             blockEntity.setDyeColor(color);
-            blockEntity.markDirty();
-            if (this.world instanceof ServerWorld serverWorld) serverWorld.getChunkManager().markForUpdate(blockEntity.pos);
+            blockEntity.setChanged();
+            if (this.level instanceof ServerLevel serverWorld) serverWorld.getChunkSource().blockChanged(blockEntity.worldPosition);
         });
         return true;
     }
 
     @Override
-    protected void writeData(WriteView view) {
-        super.writeData(view);
-        if (this.destination != null) view.put("destination", BlockPos.CODEC, this.destination);
-        if (this.dyeColor != null) view.put("dye_color", DyeColor.CODEC, this.dyeColor);
+    protected void saveAdditional(ValueOutput view) {
+        super.saveAdditional(view);
+        if (this.destination != null) view.store("destination", BlockPos.CODEC, this.destination);
+        if (this.dyeColor != null) view.store("dye_color", DyeColor.CODEC, this.dyeColor);
     }
 
     @Override
-    protected void readData(ReadView view) {
-        super.readData(view);
+    protected void loadAdditional(ValueInput view) {
+        super.loadAdditional(view);
         view.read("destination", BlockPos.CODEC).ifPresent(blockPos -> this.destination = blockPos);
         view.read("dye_color", DyeColor.CODEC).ifPresent(dyeColor -> this.dyeColor = dyeColor);
     }
@@ -105,7 +105,7 @@ public class MiniPortalBlockEntity extends BlockEntity {
     }
 
     public boolean isBlocked() {
-        return this.getCachedState().isOf(VABlocks.MINI_PORTAL) && !this.getCachedState().get(MiniPortalBlock.STATE).canDepart;
+        return this.getBlockState().is(VABlocks.MINI_PORTAL) && !this.getBlockState().getValue(MiniPortalBlock.STATE).canDepart;
     }
 
     public boolean isDyed() {

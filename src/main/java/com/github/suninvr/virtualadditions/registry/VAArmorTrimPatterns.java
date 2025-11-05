@@ -1,8 +1,8 @@
 package com.github.suninvr.virtualadditions.registry;
 
-import net.minecraft.item.equipment.trim.ArmorTrimPattern;
-import net.minecraft.registry.RegistryKey;
-import net.minecraft.registry.RegistryKeys;
+import net.minecraft.core.registries.Registries;
+import net.minecraft.resources.ResourceKey;
+import net.minecraft.world.item.equipment.trim.TrimPattern;
 
 import static com.github.suninvr.virtualadditions.VirtualAdditions.idOf;
 
@@ -10,11 +10,11 @@ public class VAArmorTrimPatterns {
     //
     //IMPORTANT NOTE: Armor trim patterns are registered in ArmorTrimPatternsMixin at the moment
     //
-    public static final RegistryKey<ArmorTrimPattern> EXOSKELETON = of("exoskeleton");
-    public static final RegistryKey<ArmorTrimPattern> ROBE = of("robe");
+    public static final ResourceKey<TrimPattern> EXOSKELETON = of("exoskeleton");
+    public static final ResourceKey<TrimPattern> ROBE = of("robe");
 
-    private static RegistryKey<ArmorTrimPattern> of(String id) {
-        return RegistryKey.of(RegistryKeys.TRIM_PATTERN, idOf(id));
+    private static ResourceKey<TrimPattern> of(String id) {
+        return ResourceKey.create(Registries.TRIM_PATTERN, idOf(id));
     }
 
     public static void init() {

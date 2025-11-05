@@ -6,82 +6,75 @@ import com.github.suninvr.virtualadditions.network.PlayerProjectionMovementC2SPa
 import com.github.suninvr.virtualadditions.network.PlayerProjectionS2CPayload;
 import com.github.suninvr.virtualadditions.registry.VAEntityType;
 import com.github.suninvr.virtualadditions.registry.VAItems;
-import com.github.suninvr.virtualadditions.registry.VASoundEvents;
 import com.github.suninvr.virtualadditions.registry.VATrackedDataHandlerRegistry;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
 import net.fabricmc.fabric.api.client.networking.v1.ClientPlayNetworking;
 import net.fabricmc.fabric.api.networking.v1.ServerPlayNetworking;
-import net.minecraft.block.BlockState;
-import net.minecraft.client.MinecraftClient;
-import net.minecraft.client.network.ClientPlayerEntity;
-import net.minecraft.entity.*;
-import net.minecraft.entity.attribute.DefaultAttributeContainer;
-import net.minecraft.entity.attribute.EntityAttributes;
-import net.minecraft.entity.damage.DamageSource;
-import net.minecraft.entity.data.DataTracker;
-import net.minecraft.entity.data.TrackedData;
-import net.minecraft.entity.mob.MobEntity;
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.entity.player.PlayerModelPart;
-import net.minecraft.particle.ParticleEffect;
-import net.minecraft.particle.TrailParticleEffect;
-import net.minecraft.registry.tag.DamageTypeTags;
-import net.minecraft.server.network.ServerPlayerEntity;
-import net.minecraft.server.world.ServerWorld;
-import net.minecraft.sound.SoundCategory;
-import net.minecraft.util.Arm;
-import net.minecraft.util.math.Box;
-import net.minecraft.util.math.MathHelper;
-import net.minecraft.util.math.Vec2f;
-import net.minecraft.util.math.Vec3d;
-import net.minecraft.world.World;
+import net.minecraft.client.Minecraft;
+import net.minecraft.client.player.LocalPlayer;
+import net.minecraft.core.particles.ParticleOptions;
+import net.minecraft.core.particles.TrailParticleOption;
+import net.minecraft.network.syncher.EntityDataAccessor;
+import net.minecraft.network.syncher.SynchedEntityData;
+import net.minecraft.server.level.ServerLevel;
+import net.minecraft.server.level.ServerPlayer;
+import net.minecraft.tags.DamageTypeTags;
+import net.minecraft.world.damagesource.DamageSource;
+import net.minecraft.world.entity.*;
+import net.minecraft.world.entity.ai.attributes.AttributeSupplier;
+import net.minecraft.world.entity.ai.attributes.Attributes;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.entity.player.PlayerModelPart;
+import net.minecraft.world.level.Level;
+import net.minecraft.world.phys.Vec2;
+import net.minecraft.world.phys.Vec3;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.UUID;
 
-public class PlayerProjectionEntity extends PlayerLikeEntity {
-    private static final TrackedData<UUID> PLAYER_ID = DataTracker.registerData(PlayerProjectionEntity.class, VATrackedDataHandlerRegistry.UUID);
+public class PlayerProjectionEntity extends Avatar {
+    private static final EntityDataAccessor<UUID> PLAYER_ID = SynchedEntityData.defineId(PlayerProjectionEntity.class, VATrackedDataHandlerRegistry.UUID);
     private static final UUID EMPTY_ID = UUID.fromString("0-0-0-0-0");
-    private PlayerEntity player;
+    private Player player;
     private boolean isPhasingThroughWall;
     public boolean lookDirectionChanged = false;
     private long isPhasingThroughWallLastCheck = -1;
     boolean isMainPlayer;
 
-    public PlayerProjectionEntity(EntityType<? extends LivingEntity> entityType, World world) {
+    public PlayerProjectionEntity(EntityType<? extends LivingEntity> entityType, Level world) {
         super(entityType, world);
-        this.noClip = true;
+        this.noPhysics = true;
         this.setNoGravity(true);
     }
 
-    public static DefaultAttributeContainer createAttributes() {
-        return MobEntity.createMobAttributes()
-                .add(EntityAttributes.MAX_HEALTH, 16.0)
-                .add(EntityAttributes.FLYING_SPEED, 0.3)
-                .add(EntityAttributes.MOVEMENT_SPEED, 0.3)
-                .add(EntityAttributes.ATTACK_DAMAGE, 1.0)
-                .add(EntityAttributes.FOLLOW_RANGE, 16.0)
+    public static AttributeSupplier createAttributes() {
+        return Mob.createMobAttributes()
+                .add(Attributes.MAX_HEALTH, 16.0)
+                .add(Attributes.FLYING_SPEED, 0.3)
+                .add(Attributes.MOVEMENT_SPEED, 0.3)
+                .add(Attributes.ATTACK_DAMAGE, 1.0)
+                .add(Attributes.FOLLOW_RANGE, 16.0)
                 .build();
     }
 
     @Override
-    protected void initDataTracker(DataTracker.Builder builder) {
-        super.initDataTracker(builder);
-        builder.add(PLAYER_ID, EMPTY_ID);
+    protected void defineSynchedData(SynchedEntityData.Builder builder) {
+        super.defineSynchedData(builder);
+        builder.define(PLAYER_ID, EMPTY_ID);
     }
 
-    public static PlayerProjectionEntity createForPlayer(PlayerEntity player) {
-        PlayerProjectionEntity entity = VAEntityType.PLAYER_PROJECTION.create(player.getEntityWorld(), SpawnReason.MOB_SUMMONED);
+    public static PlayerProjectionEntity createForPlayer(Player player) {
+        PlayerProjectionEntity entity = VAEntityType.PLAYER_PROJECTION.create(player.level(), EntitySpawnReason.MOB_SUMMONED);
         if (entity == null) return null;
-        Vec3d vec3d = player.raycast(1.6F, 0, false).getPos().add(0, entity.getStandingEyeHeight() - entity.getHeight(), 0);
-        entity.setPos(vec3d.x, vec3d.y, vec3d.z);
-        entity.setRotation(player.getYaw(), player.getPitch());
-        entity.lastYaw = entity.bodyYaw = entity.headYaw = entity.getYaw();
+        Vec3 vec3d = player.pick(1.6F, 0, false).getLocation().add(0, entity.getEyeHeight() - entity.getBbHeight(), 0);
+        entity.setPosRaw(vec3d.x, vec3d.y, vec3d.z);
+        entity.setRot(player.getYRot(), player.getXRot());
+        entity.yRotO = entity.yBodyRot = entity.yHeadRot = entity.getYRot();
         entity.player = player;
-        entity.dataTracker.set(PLAYER_ID, player.getUuid());
-        player.getEntityWorld().spawnEntity(entity);
-        if (player instanceof ServerPlayerEntity serverPlayerEntity) ServerPlayNetworking.send(serverPlayerEntity, new PlayerProjectionS2CPayload(entity.uuid));
+        entity.entityData.set(PLAYER_ID, player.getUUID());
+        player.level().addFreshEntity(entity);
+        if (player instanceof ServerPlayer serverPlayerEntity) ServerPlayNetworking.send(serverPlayerEntity, new PlayerProjectionS2CPayload(entity.uuid));
         entity.setCustomName(player.getName());
         ((PlayerEntityInterface)(player)).virtualAdditions$setProjectionEntity(entity);
         return entity;
@@ -94,113 +87,113 @@ public class PlayerProjectionEntity extends PlayerLikeEntity {
     }
 
     @Override
-    public boolean damage(ServerWorld world, DamageSource source, float amount) {
-        if (this.isInvulnerable() && !source.isIn(DamageTypeTags.BYPASSES_INVULNERABILITY)) return false;
-        return super.damage(world, source, amount);
+    public boolean hurtServer(ServerLevel world, DamageSource source, float amount) {
+        if (this.isInvulnerable() && !source.is(DamageTypeTags.BYPASSES_INVULNERABILITY)) return false;
+        return super.hurtServer(world, source, amount);
     }
 
     @Override
     public void tick() {
         super.tick();
-        if (this.getPlayer() == null || this.getPlayer().isRemoved() || !this.getPlayer().isUsingItem() || !this.getPlayer().getActiveItem().isOf(VAItems.SPECTRAL_SPYGLASS) || this.distanceTo(this.getPlayer()) > 120) {
-            if (!this.getEntityWorld().isClient()) {
+        if (this.getPlayer() == null || this.getPlayer().isRemoved() || !this.getPlayer().isUsingItem() || !this.getPlayer().getUseItem().is(VAItems.SPECTRAL_SPYGLASS) || this.distanceTo(this.getPlayer()) > 120) {
+            if (!this.level().isClientSide()) {
                 this.remove(RemovalReason.DISCARDED);
             }
         } else {
-            this.isMainPlayer = this.getPlayer().isMainPlayer();
+            this.isMainPlayer = this.getPlayer().isLocalPlayer();
         }
     }
 
     @Override
-    protected void turnHead(float bodyRotation) {
-        super.turnHead(bodyRotation);
+    protected void tickHeadTurn(float bodyRotation) {
+        super.tickHeadTurn(bodyRotation);
     }
 
     @Override
-    public void updateTrackedHeadRotation(float yaw, int interpolationSteps) {
-        super.updateTrackedHeadRotation(yaw, interpolationSteps);
+    public void lerpHeadTo(float yaw, int interpolationSteps) {
+        super.lerpHeadTo(yaw, interpolationSteps);
     }
 
     @Override
-    protected void lerpPosAndRotation(int step, double x, double y, double z, double yaw, double pitch) {
-        super.lerpPosAndRotation(step, x, y, z, yaw, pitch);
+    protected void lerpPositionAndRotationStep(int step, double x, double y, double z, double yaw, double pitch) {
+        super.lerpPositionAndRotationStep(step, x, y, z, yaw, pitch);
     }
 
     @Override
-    public void tickMovement() {
-        super.tickMovement();
-        if (this.player == null && this.dataTracker.get(PLAYER_ID) instanceof UUID playerId && !playerId.equals(EMPTY_ID)) {
-            this.player = this.getEntityWorld().getPlayerByUuid(playerId);
+    public void aiStep() {
+        super.aiStep();
+        if (this.player == null && this.entityData.get(PLAYER_ID) instanceof UUID playerId && !playerId.equals(EMPTY_ID)) {
+            this.player = this.level().getPlayerByUUID(playerId);
         }
-        if (this.getEntityWorld().isClient() && this.player != null && this.age % 2 == 0) {
+        if (this.level().isClientSide() && this.player != null && this.tickCount % 2 == 0) {
             this.spawnTrailParticles();
         }
     }
 
     public boolean isPhasingThroughWall() {
-        if (this.isPhasingThroughWallLastCheck != this.getEntityWorld().getTime()) {
-            this.noClip = false;
-            this.isPhasingThroughWall = this.isInsideWall();
-            this.noClip = true;
-            this.isPhasingThroughWallLastCheck = this.getEntityWorld().getTime();
+        if (this.isPhasingThroughWallLastCheck != this.level().getGameTime()) {
+            this.noPhysics = false;
+            this.isPhasingThroughWall = this.isInWall();
+            this.noPhysics = true;
+            this.isPhasingThroughWallLastCheck = this.level().getGameTime();
         }
         return this.isPhasingThroughWall;
     }
 
     @Environment(EnvType.CLIENT)
     @Override
-    public void onRemoved() {
+    public void onClientRemoval() {
         if (this.getPlayer() != null) {
-            if (this.getPlayer().isMainPlayer()) MinecraftClient.getInstance().setCameraEntity(MinecraftClient.getInstance().player);
+            if (this.getPlayer().isLocalPlayer()) Minecraft.getInstance().setCameraEntity(Minecraft.getInstance().player);
         }
     }
 
     @Override
     public void remove(RemovalReason reason) {
         super.remove(reason);
-        if (this.getPlayer() instanceof ServerPlayerEntity serverPlayer) {
-            if (!serverPlayer.getItemCooldownManager().isCoolingDown(VAItems.SPECTRAL_SPYGLASS.getDefaultStack())) serverPlayer.getItemCooldownManager().set(VAItems.SPECTRAL_SPYGLASS.getDefaultStack(), 20);
-            serverPlayer.clearActiveItem();
+        if (this.getPlayer() instanceof ServerPlayer serverPlayer) {
+            if (!serverPlayer.getCooldowns().isOnCooldown(VAItems.SPECTRAL_SPYGLASS.getDefaultInstance())) serverPlayer.getCooldowns().addCooldown(VAItems.SPECTRAL_SPYGLASS.getDefaultInstance(), 20);
+            serverPlayer.stopUsingItem();
             ((PlayerEntityInterface)(player)).virtualAdditions$setProjectionEntity(null);
         }
     }
 
     @Environment(EnvType.CLIENT)
     @Override
-    protected void tickControlled(PlayerEntity controllingPlayer, Vec3d movementInput) {
-        super.tickControlled(controllingPlayer, movementInput);
-        if (controllingPlayer instanceof ClientPlayerEntity clientPlayerEntity) {
-            Vec2f vec2f1 = ClientPlayerEntity.applyDirectionalMovementSpeedFactors(clientPlayerEntity.input.getMovementInput());
-            double vertical = clientPlayerEntity.input.playerInput.jump() ? 0.16 : clientPlayerEntity.input.playerInput.sneak() ? -0.16 : 0.0;
-            Vec3d movement = new Vec3d(vec2f1.x * 0.2, vertical , vec2f1.y * 0.2);
-            float speed = (float) this.getAttributeValue(EntityAttributes.FLYING_SPEED);
+    protected void tickRidden(Player controllingPlayer, Vec3 movementInput) {
+        super.tickRidden(controllingPlayer, movementInput);
+        if (controllingPlayer instanceof LocalPlayer clientPlayerEntity) {
+            Vec2 vec2f1 = LocalPlayer.modifyInputSpeedForSquareMovement(clientPlayerEntity.input.getMoveVector());
+            double vertical = clientPlayerEntity.input.keyPresses.jump() ? 0.16 : clientPlayerEntity.input.keyPresses.shift() ? -0.16 : 0.0;
+            Vec3 movement = new Vec3(vec2f1.x * 0.2, vertical , vec2f1.y * 0.2);
+            float speed = (float) this.getAttributeValue(Attributes.FLYING_SPEED);
             double distance = this.distanceTo(controllingPlayer);
             if (distance > 64.0) {
-                Vec3d toPlayer = new Vec3d(controllingPlayer.getX() - this.getX(), controllingPlayer.getEyeY() - this.getEyeY(), controllingPlayer.getZ() - this.getZ());
-                toPlayer = toPlayer.normalize().multiply((distance - 64) * 0.05);
-                this.addVelocity(toPlayer);
+                Vec3 toPlayer = new Vec3(controllingPlayer.getX() - this.getX(), controllingPlayer.getEyeY() - this.getEyeY(), controllingPlayer.getZ() - this.getZ());
+                toPlayer = toPlayer.normalize().scale((distance - 64) * 0.05);
+                this.push(toPlayer);
             }
-            this.updateVelocity(speed, movement);
-            this.move(MovementType.SELF, this.getVelocity());
+            this.moveRelative(speed, movement);
+            this.move(MoverType.SELF, this.getDeltaMovement());
             float g = this.isPhasingThroughWall() ? 0.0F : 0.8F;
-            this.setVelocity(this.getVelocity().multiply(g));
+            this.setDeltaMovement(this.getDeltaMovement().scale(g));
         }
     }
 
     @Environment(EnvType.CLIENT)
     private void spawnTrailParticles() {
         if (this.getPlayer() == null) return;
-        Vec3d playerRelative = this.player.getEyePos().subtract(this.getEyePos());
-        Vec3d pos = new Vec3d(this.getParticleX(0.35), this.getRandomBodyY(), this.getParticleZ(0.35)).add(playerRelative.multiply(0.5 / Math.max(playerRelative.length(), 0.001)));
-        Vec3d playerPos = new Vec3d(this.player.getParticleX(0.6), this.player.getRandomBodyY(), this.player.getParticleZ(0.6));
-        ParticleEffect effect = new TrailParticleEffect(playerPos, 0xE0EFFF, this.getEntityWorld().random.nextInt(20) + 10);
-        this.getEntityWorld().addParticleClient(effect, true, true, pos.x, pos.y, pos.z, 0.0, 0.0, 0.0);
+        Vec3 playerRelative = this.player.getEyePosition().subtract(this.getEyePosition());
+        Vec3 pos = new Vec3(this.getRandomX(0.35), this.getRandomY(), this.getRandomZ(0.35)).add(playerRelative.scale(0.5 / Math.max(playerRelative.length(), 0.001)));
+        Vec3 playerPos = new Vec3(this.player.getRandomX(0.6), this.player.getRandomY(), this.player.getRandomZ(0.6));
+        ParticleOptions effect = new TrailParticleOption(playerPos, 0xE0EFFF, this.level().random.nextInt(20) + 10);
+        this.level().addParticle(effect, true, true, pos.x, pos.y, pos.z, 0.0, 0.0, 0.0);
     }
 
     @Environment(EnvType.CLIENT)
     public void sendMovementPackets() {
         boolean anglesChanged = this.lookDirectionChanged;
-        boolean posChanged = this.getEntityPos().x != this.lastX || this.getEntityPos().y != this.lastY || this.getEntityPos().z != this.lastZ;
+        boolean posChanged = this.position().x != this.xo || this.position().y != this.yo || this.position().z != this.zo;
         PlayerProjectionMovementC2SPayload payload = null;
         if (anglesChanged && posChanged) {
             payload = PlayerProjectionMovementC2SPayload.createFull(this);
@@ -214,15 +207,15 @@ public class PlayerProjectionEntity extends PlayerLikeEntity {
     }
 
     @Override
-    public void onDeath(DamageSource damageSource) {
-        if (this.getPlayer() != null && this.getEntityWorld() instanceof ServerWorld serverWorld) {
-            this.player.damage(serverWorld, ((DamageSourcesInterface)this.getDamageSources()).virtualAdditions$soulDestroyed(this, damageSource.getAttacker()), 1000);
+    public void die(DamageSource damageSource) {
+        if (this.getPlayer() != null && this.level() instanceof ServerLevel serverWorld) {
+            this.player.hurtServer(serverWorld, ((DamageSourcesInterface)this.damageSources()).virtualAdditions$soulDestroyed(this, damageSource.getEntity()), 1000);
         }
     }
 
     @Override
-    public float getYaw(float tickProgress) {
-        return this.isControlledByMainPlayer() ? this.headYaw : super.getYaw();
+    public float getViewYRot(float tickProgress) {
+        return this.isLocalClientAuthoritative() ? this.yHeadRot : super.getYRot();
     }
 
     @Nullable
@@ -232,36 +225,36 @@ public class PlayerProjectionEntity extends PlayerLikeEntity {
     }
 
     @Override
-    protected boolean isControlledByMainPlayer() {
+    protected boolean isLocalClientAuthoritative() {
         return this.isMainPlayer;
     }
 
     @Override
-    public boolean isControlledByPlayer() {
+    public boolean isClientAuthoritative() {
         return true;
     }
 
     @Override
-    public Arm getMainArm() {
+    public HumanoidArm getMainArm() {
         return this.getPlayer() != null ? this.getPlayer().getMainArm() : super.getMainArm();
     }
 
     @Override
-    public boolean isModelPartVisible(PlayerModelPart part) {
-        return (part.getName().equals("head") || part.getName().equals("hat")) && super.isModelPartVisible(part);
+    public boolean isModelPartShown(PlayerModelPart part) {
+        return (part.getId().equals("head") || part.getId().equals("hat")) && super.isModelPartShown(part);
     }
 
     @Override
-    public EntityDimensions getBaseDimensions(EntityPose pose) {
-        return this.getType().getDimensions().scaled(this.getScaleFactor());
+    public EntityDimensions getDefaultDimensions(Pose pose) {
+        return this.getType().getDimensions().scale(this.getAgeScale());
     }
 
-    public PlayerEntity getPlayer() {
+    public Player getPlayer() {
         return this.player;
     }
 
     @Environment(EnvType.CLIENT)
-    public void setClientPlayer(ClientPlayerEntity player) {
+    public void setClientPlayer(LocalPlayer player) {
         this.player = player;
     }
 }

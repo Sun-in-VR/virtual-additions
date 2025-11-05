@@ -4,23 +4,22 @@ import com.github.suninvr.virtualadditions.registry.VAEntityType;
 import com.github.suninvr.virtualadditions.registry.VAEntityTypeTags;
 import net.fabricmc.fabric.api.datagen.v1.FabricDataOutput;
 import net.fabricmc.fabric.api.datagen.v1.provider.FabricTagProvider;
-import net.minecraft.block.Block;
-import net.minecraft.entity.EntityType;
-import net.minecraft.registry.Registries;
-import net.minecraft.registry.RegistryWrapper;
-import net.minecraft.registry.tag.EntityTypeTags;
-import net.minecraft.registry.tag.TagBuilder;
-import net.minecraft.registry.tag.TagKey;
+import net.minecraft.core.HolderLookup;
+import net.minecraft.core.registries.BuiltInRegistries;
+import net.minecraft.tags.EntityTypeTags;
+import net.minecraft.tags.TagBuilder;
+import net.minecraft.tags.TagKey;
+import net.minecraft.world.entity.EntityType;
 
 import java.util.concurrent.CompletableFuture;
 
 public class VAEntityTypeTagProvider extends FabricTagProvider.EntityTypeTagProvider {
-    public VAEntityTypeTagProvider(FabricDataOutput output, CompletableFuture<RegistryWrapper.WrapperLookup> completableFuture) {
+    public VAEntityTypeTagProvider(FabricDataOutput output, CompletableFuture<HolderLookup.Provider> completableFuture) {
         super(output, completableFuture);
     }
 
     @Override
-    protected void configure(RegistryWrapper.WrapperLookup arg) {
+    protected void addTags(HolderLookup.Provider arg) {
         addTo(EntityTypeTags.IMPACT_PROJECTILES, VAEntityType.STEEL_BOMB, VAEntityType.CLIMBING_ROPE, VAEntityType.ACID_SPIT);
         addTo(EntityTypeTags.ARTHROPOD, VAEntityType.LUMWASP);
         addTo(EntityTypeTags.UNDEAD, VAEntityType.SALINE);
@@ -48,16 +47,16 @@ public class VAEntityTypeTagProvider extends FabricTagProvider.EntityTypeTagProv
                         EntityType.WITCH,
                         EntityType.WITHER_SKELETON,
                         EntityType.ZOMBIE
-                ).addOptionalTag(EntityTypeTags.ILLAGER.id());
+                ).addOptionalTag(EntityTypeTags.ILLAGER.location());
         addTo(VAEntityTypeTags.PASSES_THROUGH_WEBBED_SILK,
                 EntityType.ITEM, EntityType.EXPERIENCE_ORB)
-                .addOptionalTag(EntityTypeTags.IMPACT_PROJECTILES.id());
+                .addOptionalTag(EntityTypeTags.IMPACT_PROJECTILES.location());
     }
 
     protected TagBuilder addTo(TagKey<EntityType<?>> tag, EntityType<?>... types) {
-        TagBuilder builder = getTagBuilder(tag);
+        TagBuilder builder = getOrCreateRawBuilder(tag);
         for (EntityType<?> type : types) {
-            builder.add(Registries.ENTITY_TYPE.getId(type));
+            builder.addElement(BuiltInRegistries.ENTITY_TYPE.getKey(type));
         }
         return builder;
     }

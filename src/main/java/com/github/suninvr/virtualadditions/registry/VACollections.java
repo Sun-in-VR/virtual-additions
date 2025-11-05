@@ -3,15 +3,15 @@ package com.github.suninvr.virtualadditions.registry;
 import com.github.suninvr.virtualadditions.registry.collection.ColorfulBlockSet;
 import com.google.common.base.Suppliers;
 import com.google.common.collect.ImmutableBiMap;
-import net.minecraft.block.Block;
-import net.minecraft.data.family.BlockFamilies;
-import net.minecraft.data.family.BlockFamily;
-import net.minecraft.item.Items;
+import net.minecraft.data.BlockFamilies;
+import net.minecraft.data.BlockFamily;
+import net.minecraft.world.item.Items;
+import net.minecraft.world.level.block.Block;
 
 import java.util.function.Supplier;
 
 import static com.github.suninvr.virtualadditions.registry.VABlocks.*;
-import static net.minecraft.block.Blocks.*;
+import static net.minecraft.world.level.block.Blocks.*;
 
 public class VACollections {
 
@@ -70,29 +70,29 @@ public class VACollections {
     public static final Supplier<ImmutableBiMap<Block, Block>> WAXED_TO_UNWAXED_CLIMBING_ROPES;
 
     static {
-        CUT_STEEL = register(VABlocks.CUT_STEEL).stairs(VABlocks.CUT_STEEL_STAIRS).slab(VABlocks.CUT_STEEL_SLAB).customFence(VABlocks.STEEL_FENCE).chiseled(CHISELED_STEEL).build();
-        EXPOSED_CUT_STEEL = register(VABlocks.EXPOSED_CUT_STEEL).stairs(VABlocks.EXPOSED_CUT_STEEL_STAIRS).slab(VABlocks.EXPOSED_CUT_STEEL_SLAB).chiseled(EXPOSED_CHISELED_STEEL).customFence(VABlocks.EXPOSED_STEEL_FENCE).build();
-        WEATHERED_CUT_STEEL = register(VABlocks.WEATHERED_CUT_STEEL).stairs(VABlocks.WEATHERED_CUT_STEEL_STAIRS).slab(VABlocks.WEATHERED_CUT_STEEL_SLAB).chiseled(WEATHERED_CHISELED_STEEL).customFence(VABlocks.WEATHERED_STEEL_FENCE).build();
-        OXIDIZED_CUT_STEEL = register(VABlocks.OXIDIZED_CUT_STEEL).stairs(VABlocks.OXIDIZED_CUT_STEEL_STAIRS).slab(VABlocks.OXIDIZED_CUT_STEEL_SLAB).chiseled(OXIDIZED_CHISELED_STEEL).customFence(VABlocks.OXIDIZED_STEEL_FENCE).build();
-        WAXED_CUT_STEEL = register(VABlocks.WAXED_CUT_STEEL).stairs(VABlocks.WAXED_CUT_STEEL_STAIRS).slab(VABlocks.WAXED_CUT_STEEL_SLAB).chiseled(WAXED_CHISELED_STEEL).customFence(VABlocks.WAXED_STEEL_FENCE).build();
-        WAXED_EXPOSED_CUT_STEEL = register(VABlocks.WAXED_EXPOSED_CUT_STEEL).stairs(VABlocks.WAXED_EXPOSED_CUT_STEEL_STAIRS).slab(VABlocks.WAXED_EXPOSED_CUT_STEEL_SLAB).chiseled(WAXED_EXPOSED_CHISELED_STEEL).customFence(VABlocks.WAXED_EXPOSED_STEEL_FENCE).build();
-        WAXED_WEATHERED_CUT_STEEL = register(VABlocks.WAXED_WEATHERED_CUT_STEEL).stairs(VABlocks.WAXED_WEATHERED_CUT_STEEL_STAIRS).slab(VABlocks.WAXED_WEATHERED_CUT_STEEL_SLAB).chiseled(WAXED_WEATHERED_CHISELED_STEEL).customFence(VABlocks.WAXED_WEATHERED_STEEL_FENCE).build();
-        WAXED_OXIDIZED_CUT_STEEL = register(VABlocks.WAXED_OXIDIZED_CUT_STEEL).stairs(VABlocks.WAXED_OXIDIZED_CUT_STEEL_STAIRS).slab(VABlocks.WAXED_OXIDIZED_CUT_STEEL_SLAB).chiseled(WAXED_OXIDIZED_CHISELED_STEEL).customFence(VABlocks.WAXED_OXIDIZED_STEEL_FENCE).build();
-        COBBLED_HORNFELS = register(VABlocks.COBBLED_HORNFELS).stairs(VABlocks.COBBLED_HORNFELS_STAIRS).slab(VABlocks.COBBLED_HORNFELS_SLAB).wall(VABlocks.COBBLED_HORNFELS_WALL).build();
-        POLISHED_HORNFELS = register(VABlocks.POLISHED_HORNFELS).stairs(VABlocks.POLISHED_HORNFELS_STAIRS).slab(VABlocks.POLISHED_HORNFELS_SLAB).chiseled(CHISELED_HORNFELS).build();
-        HORNFELS_TILES = register(VABlocks.HORNFELS_TILES).stairs(VABlocks.HORNFELS_TILE_STAIRS).slab(VABlocks.HORNFELS_TILE_SLAB).cracked(VABlocks.CRACKED_HORNFELS_TILES).chiseled(CHISELED_HORNFELS_TILES).build();
-        COBBLED_BLUESCHIST = register(VABlocks.COBBLED_BLUESCHIST).stairs(VABlocks.COBBLED_BLUESCHIST_STAIRS).slab(VABlocks.COBBLED_BLUESCHIST_SLAB).wall(VABlocks.COBBLED_BLUESCHIST_WALL).build();
-        POLISHED_BLUESCHIST = register(VABlocks.POLISHED_BLUESCHIST).stairs(VABlocks.POLISHED_BLUESCHIST_STAIRS).slab(VABlocks.POLISHED_BLUESCHIST_SLAB).wall(POLISHED_BLUESCHIST_WALL).build();
-        BLUESCHIST_BRICKS = register(VABlocks.BLUESCHIST_BRICKS).stairs(VABlocks.BLUESCHIST_BRICK_STAIRS).slab(VABlocks.BLUESCHIST_BRICK_SLAB).wall(VABlocks.BLUESCHIST_BRICK_WALL).cracked(VABlocks.CRACKED_BLUESCHIST_BRICKS).chiseled(VABlocks.CHISELED_BLUESCHIST).build();
-        COBBLED_SYENITE = register(VABlocks.COBBLED_SYENITE).stairs(VABlocks.COBBLED_SYENITE_STAIRS).slab(VABlocks.COBBLED_SYENITE_SLAB).wall(VABlocks.COBBLED_SYENITE_WALL).build();
-        POLISHED_SYENITE = register(VABlocks.POLISHED_SYENITE).stairs(VABlocks.POLISHED_SYENITE_STAIRS).slab(VABlocks.POLISHED_SYENITE_SLAB).wall(POLISHED_SYENITE_WALL).build();
-        SYENITE_BRICKS = register(VABlocks.SYENITE_BRICKS).stairs(VABlocks.SYENITE_BRICK_STAIRS).slab(VABlocks.SYENITE_BRICK_SLAB).wall(VABlocks.SYENITE_BRICK_WALL).cracked(VABlocks.CRACKED_SYENITE_BRICKS).chiseled(VABlocks.CHISELED_SYENITE).build();
-        ROCK_SALT_BRICKS = register(VABlocks.ROCK_SALT_BRICKS).stairs(ROCK_SALT_BRICK_STAIRS).slab(ROCK_SALT_BRICK_SLAB).wall(ROCK_SALT_BRICK_WALL).build();
-        SOULBLOOM = register(VABlocks.SOULBLOOM_PLANKS).button(VABlocks.SOULBLOOM_BUTTON).fence(VABlocks.SOULBLOOM_FENCE).fenceGate(VABlocks.SOULBLOOM_FENCE_GATE).sign(VABlocks.SOULBLOOM_SIGN, VABlocks.SOULBLOOM_WALL_SIGN).pressurePlate(VABlocks.SOULBLOOM_PRESSURE_PLATE).slab(VABlocks.SOULBLOOM_SLAB).stairs(VABlocks.SOULBLOOM_STAIRS).door(VABlocks.SOULBLOOM_DOOR).trapdoor(VABlocks.SOULBLOOM_TRAPDOOR).group("wooden").unlockCriterionName("has_planks").build();
-        WITHERED = register(VABlocks.WITHERED_PLANKS).button(VABlocks.WITHERED_BUTTON).fence(VABlocks.WITHERED_FENCE).fenceGate(VABlocks.WITHERED_FENCE_GATE).sign(VABlocks.WITHERED_SIGN, VABlocks.WITHERED_WALL_SIGN).pressurePlate(VABlocks.WITHERED_PRESSURE_PLATE).slab(VABlocks.WITHERED_SLAB).stairs(VABlocks.WITHERED_STAIRS).door(VABlocks.WITHERED_DOOR).trapdoor(VABlocks.WITHERED_TRAPDOOR).group("wooden").unlockCriterionName("has_planks").build();
-        PORPHYRY = register(VABlocks.PORPHYRY).stairs(VABlocks.PORPHYRY_STAIRS).slab(VABlocks.PORPHYRY_SLAB).wall(VABlocks.PORPHYRY_WALL).build();
-        PORPHYRY_BRICKS = register(VABlocks.PORPHYRY_BRICKS).stairs(VABlocks.PORPHYRY_BRICK_STAIRS).slab(VABlocks.PORPHYRY_BRICK_SLAB).wall(VABlocks.PORPHYRY_BRICK_WALL).build();
-        POLISHED_PORPHYRY = register(VABlocks.POLISHED_PORPHYRY).stairs(VABlocks.POLISHED_PORPHYRY_STAIRS).slab(VABlocks.POLISHED_PORPHYRY_SLAB).wall(VABlocks.POLISHED_PORPHYRY_WALL).build();
+        CUT_STEEL = register(VABlocks.CUT_STEEL).stairs(VABlocks.CUT_STEEL_STAIRS).slab(VABlocks.CUT_STEEL_SLAB).customFence(VABlocks.STEEL_FENCE).chiseled(CHISELED_STEEL).getFamily();
+        EXPOSED_CUT_STEEL = register(VABlocks.EXPOSED_CUT_STEEL).stairs(VABlocks.EXPOSED_CUT_STEEL_STAIRS).slab(VABlocks.EXPOSED_CUT_STEEL_SLAB).chiseled(EXPOSED_CHISELED_STEEL).customFence(VABlocks.EXPOSED_STEEL_FENCE).getFamily();
+        WEATHERED_CUT_STEEL = register(VABlocks.WEATHERED_CUT_STEEL).stairs(VABlocks.WEATHERED_CUT_STEEL_STAIRS).slab(VABlocks.WEATHERED_CUT_STEEL_SLAB).chiseled(WEATHERED_CHISELED_STEEL).customFence(VABlocks.WEATHERED_STEEL_FENCE).getFamily();
+        OXIDIZED_CUT_STEEL = register(VABlocks.OXIDIZED_CUT_STEEL).stairs(VABlocks.OXIDIZED_CUT_STEEL_STAIRS).slab(VABlocks.OXIDIZED_CUT_STEEL_SLAB).chiseled(OXIDIZED_CHISELED_STEEL).customFence(VABlocks.OXIDIZED_STEEL_FENCE).getFamily();
+        WAXED_CUT_STEEL = register(VABlocks.WAXED_CUT_STEEL).stairs(VABlocks.WAXED_CUT_STEEL_STAIRS).slab(VABlocks.WAXED_CUT_STEEL_SLAB).chiseled(WAXED_CHISELED_STEEL).customFence(VABlocks.WAXED_STEEL_FENCE).getFamily();
+        WAXED_EXPOSED_CUT_STEEL = register(VABlocks.WAXED_EXPOSED_CUT_STEEL).stairs(VABlocks.WAXED_EXPOSED_CUT_STEEL_STAIRS).slab(VABlocks.WAXED_EXPOSED_CUT_STEEL_SLAB).chiseled(WAXED_EXPOSED_CHISELED_STEEL).customFence(VABlocks.WAXED_EXPOSED_STEEL_FENCE).getFamily();
+        WAXED_WEATHERED_CUT_STEEL = register(VABlocks.WAXED_WEATHERED_CUT_STEEL).stairs(VABlocks.WAXED_WEATHERED_CUT_STEEL_STAIRS).slab(VABlocks.WAXED_WEATHERED_CUT_STEEL_SLAB).chiseled(WAXED_WEATHERED_CHISELED_STEEL).customFence(VABlocks.WAXED_WEATHERED_STEEL_FENCE).getFamily();
+        WAXED_OXIDIZED_CUT_STEEL = register(VABlocks.WAXED_OXIDIZED_CUT_STEEL).stairs(VABlocks.WAXED_OXIDIZED_CUT_STEEL_STAIRS).slab(VABlocks.WAXED_OXIDIZED_CUT_STEEL_SLAB).chiseled(WAXED_OXIDIZED_CHISELED_STEEL).customFence(VABlocks.WAXED_OXIDIZED_STEEL_FENCE).getFamily();
+        COBBLED_HORNFELS = register(VABlocks.COBBLED_HORNFELS).stairs(VABlocks.COBBLED_HORNFELS_STAIRS).slab(VABlocks.COBBLED_HORNFELS_SLAB).wall(VABlocks.COBBLED_HORNFELS_WALL).getFamily();
+        POLISHED_HORNFELS = register(VABlocks.POLISHED_HORNFELS).stairs(VABlocks.POLISHED_HORNFELS_STAIRS).slab(VABlocks.POLISHED_HORNFELS_SLAB).chiseled(CHISELED_HORNFELS).getFamily();
+        HORNFELS_TILES = register(VABlocks.HORNFELS_TILES).stairs(VABlocks.HORNFELS_TILE_STAIRS).slab(VABlocks.HORNFELS_TILE_SLAB).cracked(VABlocks.CRACKED_HORNFELS_TILES).chiseled(CHISELED_HORNFELS_TILES).getFamily();
+        COBBLED_BLUESCHIST = register(VABlocks.COBBLED_BLUESCHIST).stairs(VABlocks.COBBLED_BLUESCHIST_STAIRS).slab(VABlocks.COBBLED_BLUESCHIST_SLAB).wall(VABlocks.COBBLED_BLUESCHIST_WALL).getFamily();
+        POLISHED_BLUESCHIST = register(VABlocks.POLISHED_BLUESCHIST).stairs(VABlocks.POLISHED_BLUESCHIST_STAIRS).slab(VABlocks.POLISHED_BLUESCHIST_SLAB).wall(POLISHED_BLUESCHIST_WALL).getFamily();
+        BLUESCHIST_BRICKS = register(VABlocks.BLUESCHIST_BRICKS).stairs(VABlocks.BLUESCHIST_BRICK_STAIRS).slab(VABlocks.BLUESCHIST_BRICK_SLAB).wall(VABlocks.BLUESCHIST_BRICK_WALL).cracked(VABlocks.CRACKED_BLUESCHIST_BRICKS).chiseled(VABlocks.CHISELED_BLUESCHIST).getFamily();
+        COBBLED_SYENITE = register(VABlocks.COBBLED_SYENITE).stairs(VABlocks.COBBLED_SYENITE_STAIRS).slab(VABlocks.COBBLED_SYENITE_SLAB).wall(VABlocks.COBBLED_SYENITE_WALL).getFamily();
+        POLISHED_SYENITE = register(VABlocks.POLISHED_SYENITE).stairs(VABlocks.POLISHED_SYENITE_STAIRS).slab(VABlocks.POLISHED_SYENITE_SLAB).wall(POLISHED_SYENITE_WALL).getFamily();
+        SYENITE_BRICKS = register(VABlocks.SYENITE_BRICKS).stairs(VABlocks.SYENITE_BRICK_STAIRS).slab(VABlocks.SYENITE_BRICK_SLAB).wall(VABlocks.SYENITE_BRICK_WALL).cracked(VABlocks.CRACKED_SYENITE_BRICKS).chiseled(VABlocks.CHISELED_SYENITE).getFamily();
+        ROCK_SALT_BRICKS = register(VABlocks.ROCK_SALT_BRICKS).stairs(ROCK_SALT_BRICK_STAIRS).slab(ROCK_SALT_BRICK_SLAB).wall(ROCK_SALT_BRICK_WALL).getFamily();
+        SOULBLOOM = register(VABlocks.SOULBLOOM_PLANKS).button(VABlocks.SOULBLOOM_BUTTON).fence(VABlocks.SOULBLOOM_FENCE).fenceGate(VABlocks.SOULBLOOM_FENCE_GATE).sign(VABlocks.SOULBLOOM_SIGN, VABlocks.SOULBLOOM_WALL_SIGN).pressurePlate(VABlocks.SOULBLOOM_PRESSURE_PLATE).slab(VABlocks.SOULBLOOM_SLAB).stairs(VABlocks.SOULBLOOM_STAIRS).door(VABlocks.SOULBLOOM_DOOR).trapdoor(VABlocks.SOULBLOOM_TRAPDOOR).recipeGroupPrefix("wooden").recipeUnlockedBy("has_planks").getFamily();
+        WITHERED = register(VABlocks.WITHERED_PLANKS).button(VABlocks.WITHERED_BUTTON).fence(VABlocks.WITHERED_FENCE).fenceGate(VABlocks.WITHERED_FENCE_GATE).sign(VABlocks.WITHERED_SIGN, VABlocks.WITHERED_WALL_SIGN).pressurePlate(VABlocks.WITHERED_PRESSURE_PLATE).slab(VABlocks.WITHERED_SLAB).stairs(VABlocks.WITHERED_STAIRS).door(VABlocks.WITHERED_DOOR).trapdoor(VABlocks.WITHERED_TRAPDOOR).recipeGroupPrefix("wooden").recipeUnlockedBy("has_planks").getFamily();
+        PORPHYRY = register(VABlocks.PORPHYRY).stairs(VABlocks.PORPHYRY_STAIRS).slab(VABlocks.PORPHYRY_SLAB).wall(VABlocks.PORPHYRY_WALL).getFamily();
+        PORPHYRY_BRICKS = register(VABlocks.PORPHYRY_BRICKS).stairs(VABlocks.PORPHYRY_BRICK_STAIRS).slab(VABlocks.PORPHYRY_BRICK_SLAB).wall(VABlocks.PORPHYRY_BRICK_WALL).getFamily();
+        POLISHED_PORPHYRY = register(VABlocks.POLISHED_PORPHYRY).stairs(VABlocks.POLISHED_PORPHYRY_STAIRS).slab(VABlocks.POLISHED_PORPHYRY_SLAB).wall(VABlocks.POLISHED_PORPHYRY_WALL).getFamily();
         
         WHITE = ColorfulBlockSet.Builder.create(Items.WHITE_DYE).wool(WHITE_WOOL).carpet(WHITE_CARPET).terracotta(WHITE_TERRACOTTA).concrete(WHITE_CONCRETE).concretePowder(WHITE_CONCRETE_POWDER).stainedGlass(WHITE_STAINED_GLASS).stainedGlassPane(WHITE_STAINED_GLASS_PANE).candle(WHITE_CANDLE).candleCake(WHITE_CANDLE_CAKE).silkbulb(WHITE_SILKBULB).bed(WHITE_BED).shulkerBox(WHITE_SHULKER_BOX).banner(WHITE_BANNER).wallBanner(WHITE_WALL_BANNER).glazedTerracotta(WHITE_GLAZED_TERRACOTTA).build();
         LIGHT_GRAY = ColorfulBlockSet.Builder.create(Items.LIGHT_GRAY_DYE).wool(LIGHT_GRAY_WOOL).carpet(LIGHT_GRAY_CARPET).terracotta(LIGHT_GRAY_TERRACOTTA).concrete(LIGHT_GRAY_CONCRETE).concretePowder(LIGHT_GRAY_CONCRETE_POWDER).stainedGlass(LIGHT_GRAY_STAINED_GLASS).stainedGlassPane(LIGHT_GRAY_STAINED_GLASS_PANE).candle(LIGHT_GRAY_CANDLE).candleCake(LIGHT_GRAY_CANDLE_CAKE).silkbulb(LIGHT_GRAY_SILKBULB).bed(LIGHT_GRAY_BED).shulkerBox(LIGHT_GRAY_SHULKER_BOX).banner(LIGHT_GRAY_BANNER).wallBanner(LIGHT_GRAY_WALL_BANNER).glazedTerracotta(LIGHT_GRAY_GLAZED_TERRACOTTA).build();
@@ -128,7 +128,7 @@ public class VACollections {
     }
 
     private static BlockFamily.Builder register(Block baseBlock) {
-        return BlockFamilies.register(baseBlock);
+        return BlockFamilies.familyBuilder(baseBlock);
     }
 
     public static void init(){}

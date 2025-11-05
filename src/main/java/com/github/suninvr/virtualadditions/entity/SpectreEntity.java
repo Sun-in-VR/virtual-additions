@@ -5,40 +5,39 @@ import com.github.suninvr.virtualadditions.entity.goal.SpectreBuffEntityGoal;
 import com.github.suninvr.virtualadditions.registry.*;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
-import net.minecraft.block.BlockState;
-import net.minecraft.entity.EntityType;
-import net.minecraft.entity.LivingEntity;
-import net.minecraft.entity.SpawnReason;
-import net.minecraft.entity.ai.RangedAttackMob;
-import net.minecraft.entity.ai.control.FlightMoveControl;
-import net.minecraft.entity.ai.goal.*;
-import net.minecraft.entity.ai.pathing.BirdNavigation;
-import net.minecraft.entity.ai.pathing.EntityNavigation;
-import net.minecraft.entity.attribute.DefaultAttributeContainer;
-import net.minecraft.entity.attribute.EntityAttributes;
-import net.minecraft.entity.damage.DamageSource;
-import net.minecraft.entity.data.DataTracker;
-import net.minecraft.entity.data.TrackedData;
-import net.minecraft.entity.data.TrackedDataHandlerRegistry;
-import net.minecraft.entity.effect.StatusEffectInstance;
-import net.minecraft.entity.effect.StatusEffects;
-import net.minecraft.entity.mob.HostileEntity;
-import net.minecraft.entity.mob.MobEntity;
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.nbt.NbtCompound;
-import net.minecraft.particle.ParticleEffect;
-import net.minecraft.particle.TrailParticleEffect;
-import net.minecraft.sound.SoundCategory;
-import net.minecraft.sound.SoundEvent;
-import net.minecraft.sound.SoundEvents;
-import net.minecraft.storage.ReadView;
-import net.minecraft.storage.WriteView;
-import net.minecraft.util.Uuids;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.math.Vec3d;
-import net.minecraft.util.math.random.Random;
-import net.minecraft.world.ServerWorldAccess;
-import net.minecraft.world.World;
+import net.minecraft.core.BlockPos;
+import net.minecraft.core.UUIDUtil;
+import net.minecraft.core.particles.ParticleOptions;
+import net.minecraft.core.particles.TrailParticleOption;
+import net.minecraft.network.syncher.EntityDataAccessor;
+import net.minecraft.network.syncher.EntityDataSerializers;
+import net.minecraft.network.syncher.SynchedEntityData;
+import net.minecraft.sounds.SoundEvent;
+import net.minecraft.sounds.SoundSource;
+import net.minecraft.util.RandomSource;
+import net.minecraft.world.damagesource.DamageSource;
+import net.minecraft.world.effect.MobEffectInstance;
+import net.minecraft.world.effect.MobEffects;
+import net.minecraft.world.entity.EntitySpawnReason;
+import net.minecraft.world.entity.EntityType;
+import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.entity.Mob;
+import net.minecraft.world.entity.ai.attributes.AttributeSupplier;
+import net.minecraft.world.entity.ai.attributes.Attributes;
+import net.minecraft.world.entity.ai.control.FlyingMoveControl;
+import net.minecraft.world.entity.ai.goal.LookAtPlayerGoal;
+import net.minecraft.world.entity.ai.goal.RandomLookAroundGoal;
+import net.minecraft.world.entity.ai.goal.WaterAvoidingRandomFlyingGoal;
+import net.minecraft.world.entity.ai.goal.target.NearestAttackableTargetGoal;
+import net.minecraft.world.entity.ai.navigation.FlyingPathNavigation;
+import net.minecraft.world.entity.ai.navigation.PathNavigation;
+import net.minecraft.world.entity.monster.Monster;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.level.ServerLevelAccessor;
+import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.storage.ValueInput;
+import net.minecraft.world.level.storage.ValueOutput;
+import net.minecraft.world.phys.Vec3;
 import org.apache.logging.log4j.Level;
 import org.jetbrains.annotations.Nullable;
 
@@ -47,9 +46,9 @@ import java.util.List;
 import java.util.Map;
 import java.util.UUID;
 
-public class SpectreEntity extends HostileEntity {
-    private static final TrackedData<Boolean> IS_BUFFING_TARGET = DataTracker.registerData(SpectreEntity.class, TrackedDataHandlerRegistry.BOOLEAN);
-    private static final TrackedData<UUID> BUFF_TARGET = DataTracker.registerData(SpectreEntity.class, VATrackedDataHandlerRegistry.UUID);
+public class SpectreEntity extends Monster {
+    private static final EntityDataAccessor<Boolean> IS_BUFFING_TARGET = SynchedEntityData.defineId(SpectreEntity.class, EntityDataSerializers.BOOLEAN);
+    private static final EntityDataAccessor<UUID> BUFF_TARGET = SynchedEntityData.defineId(SpectreEntity.class, VATrackedDataHandlerRegistry.UUID);
     private static final UUID EMPTY_ID = UUID.fromString("0-0-0-0-0");
     private static final Map<UUID, UUID> spectreToTarget = new HashMap<>();
     private static final Map<UUID, UUID> targetToSpectre = new HashMap<>();
@@ -57,65 +56,65 @@ public class SpectreEntity extends HostileEntity {
     private UUID buffTargetId = EMPTY_ID;
     private int buffTicks = 0;
 
-    public SpectreEntity(EntityType<? extends HostileEntity> entityType, World world) {
+    public SpectreEntity(EntityType<? extends Monster> entityType, net.minecraft.world.level.Level world) {
         super(entityType, world);
-        this.moveControl = new FlightMoveControl(this, 210, true);
+        this.moveControl = new FlyingMoveControl(this, 210, true);
     }
 
-    public static DefaultAttributeContainer createSpectreAttributes() {
-        return MobEntity.createMobAttributes()
-                .add(EntityAttributes.MAX_HEALTH, 10.0)
-                .add(EntityAttributes.FLYING_SPEED, 0.1)
-                .add(EntityAttributes.MOVEMENT_SPEED, 0.1)
-                .add(EntityAttributes.ATTACK_DAMAGE, 4.0)
-                .add(EntityAttributes.FOLLOW_RANGE, 16.0)
+    public static AttributeSupplier createSpectreAttributes() {
+        return Mob.createMobAttributes()
+                .add(Attributes.MAX_HEALTH, 10.0)
+                .add(Attributes.FLYING_SPEED, 0.1)
+                .add(Attributes.MOVEMENT_SPEED, 0.1)
+                .add(Attributes.ATTACK_DAMAGE, 4.0)
+                .add(Attributes.FOLLOW_RANGE, 16.0)
                 .build();
     }
 
     @Override
-    protected void initDataTracker(DataTracker.Builder builder) {
-        super.initDataTracker(builder);
-        builder.add(IS_BUFFING_TARGET, false);
-        builder.add(BUFF_TARGET, EMPTY_ID);
+    protected void defineSynchedData(SynchedEntityData.Builder builder) {
+        super.defineSynchedData(builder);
+        builder.define(IS_BUFFING_TARGET, false);
+        builder.define(BUFF_TARGET, EMPTY_ID);
     }
 
     @Override
-    protected void initGoals() {
-        super.initGoals();
-        this.goalSelector.add(1, new SpectreBuffEntityGoal(this, 1.5, 8.0F, 5.0F, 16.0F));
-        this.goalSelector.add(4, new FlyGoal(this, 1.0F));
-        this.goalSelector.add(4, new LookAtEntityGoal(this, MobEntity.class, 8.0F));
-        this.goalSelector.add(5, new LookAroundGoal(this));
-        this.targetSelector.add(1, new ActiveTargetGoal<>(this, PlayerEntity.class, true));
+    protected void registerGoals() {
+        super.registerGoals();
+        this.goalSelector.addGoal(1, new SpectreBuffEntityGoal(this, 1.5, 8.0F, 5.0F, 16.0F));
+        this.goalSelector.addGoal(4, new WaterAvoidingRandomFlyingGoal(this, 1.0F));
+        this.goalSelector.addGoal(4, new LookAtPlayerGoal(this, Mob.class, 8.0F));
+        this.goalSelector.addGoal(5, new RandomLookAroundGoal(this));
+        this.targetSelector.addGoal(1, new NearestAttackableTargetGoal<>(this, Player.class, true));
     }
 
     @Override
-    protected void fall(double heightDifference, boolean onGround, BlockState state, BlockPos landedPosition) {
+    protected void checkFallDamage(double heightDifference, boolean onGround, BlockState state, BlockPos landedPosition) {
     }
 
     @Override
-    public void travel(Vec3d movementInput) {
-        this.travelFlying(movementInput, this.getMovementSpeed());
+    public void travel(Vec3 movementInput) {
+        this.travelFlying(movementInput, this.getSpeed());
     }
 
     @Override
     public void tick() {
         super.tick();
         this.setNoGravity(true);
-        if (this.isDead()) return;
-        if (!this.getEntityWorld().isClient()) {
+        if (this.isDeadOrDying()) return;
+        if (!this.level().isClientSide()) {
             if (this.checkBuffTarget() && this.isBuffingTarget()) {
-                int difficulty = this.getEntityWorld().getDifficulty().getId();
-                if (this.age % 20 == 0) this.applyEffects(this.buffTarget, difficulty);
+                int difficulty = this.level().getDifficulty().getId();
+                if (this.tickCount % 20 == 0) this.applyEffects(this.buffTarget, difficulty);
             }
         }
     }
 
     @Override
-    public void tickMovement() {
-        super.tickMovement();
-        if (this.getEntityWorld().isClient()) {
-            if (this.age % 40 == 0) this.refreshTarget();
+    public void aiStep() {
+        super.aiStep();
+        if (this.level().isClientSide()) {
+            if (this.tickCount % 40 == 0) this.refreshTarget();
             this.spawnAmbientEffects();
             if (this.isBuffingTarget()) {
                 if (this.buffTarget instanceof LivingEntity livingEntity) {
@@ -128,67 +127,67 @@ public class SpectreEntity extends HostileEntity {
     }
 
     @Override
-    public void onDataTrackerUpdate(List<DataTracker.SerializedEntry<?>> entries) {
-        super.onDataTrackerUpdate(entries);
-        if (this.getEntityWorld().isClient()) this.refreshTarget();
+    public void onSyncedDataUpdated(List<SynchedEntityData.DataValue<?>> entries) {
+        super.onSyncedDataUpdated(entries);
+        if (this.level().isClientSide()) this.refreshTarget();
     }
 
     @Environment(EnvType.CLIENT)
     private void refreshTarget() {
-        this.buffTarget = (LivingEntity) this.getEntityWorld().getEntity(this.dataTracker.get(BUFF_TARGET));
+        this.buffTarget = (LivingEntity) this.level().getEntity(this.entityData.get(BUFF_TARGET));
     }
 
     private void spawnAmbientEffects() {
-        if (this.age % 3 == 0) {
-            this.getEntityWorld().addParticleClient(VAParticleTypes.SPECTRAL_FLAME, this.getParticleX(0.25), this.getBodyY(1), this.getParticleZ(0.25), 0.0, 0.0, 0.0);
+        if (this.tickCount % 3 == 0) {
+            this.level().addParticle(VAParticleTypes.SPECTRAL_FLAME, this.getRandomX(0.25), this.getY(1), this.getRandomZ(0.25), 0.0, 0.0, 0.0);
         }
     }
 
     private void spawnBuffEffects(LivingEntity buffTarget) {
-        if (buffTarget == null || this.isDead() || this.isRemoved()) return;
+        if (buffTarget == null || this.isDeadOrDying() || this.isRemoved()) return;
         for (int i = 0; i < 1; ++i) {
-            Vec3d pos = new Vec3d(buffTarget.getParticleX(0.6), buffTarget.getRandomBodyY(), buffTarget.getParticleZ(0.6));
-            ParticleEffect effect = new TrailParticleEffect(pos, 0xE0EFFF, this.getEntityWorld().random.nextInt(20) + 10);
-            this.getEntityWorld().addParticleClient(effect, true, true, this.getParticleX(0.35), this.getBodyY(0.5), this.getParticleZ(0.35), 0.0, 0.0, 0.0);
+            Vec3 pos = new Vec3(buffTarget.getRandomX(0.6), buffTarget.getRandomY(), buffTarget.getRandomZ(0.6));
+            ParticleOptions effect = new TrailParticleOption(pos, 0xE0EFFF, this.level().random.nextInt(20) + 10);
+            this.level().addParticle(effect, true, true, this.getRandomX(0.35), this.getY(0.5), this.getRandomZ(0.35), 0.0, 0.0, 0.0);
         }
-        if (this.buffTicks % 2 == 0) this.getEntityWorld().addParticleClient(VAParticleTypes.SPECTRAL_POWER, buffTarget.getParticleX(1), buffTarget.getBodyY(0.25), buffTarget.getParticleZ(1), 0.0, 0.0, 0.0);
-        if (this.buffTicks % 50 == 0 && !this.isSilent()) this.getEntityWorld().playSoundClient(this.getX(), this.getY(), this.getZ(), VASoundEvents.ENTITY_SPECTRE_EMPOWER_AMBIENT, SoundCategory.HOSTILE, 0.2F, 1.0F, true);
+        if (this.buffTicks % 2 == 0) this.level().addParticle(VAParticleTypes.SPECTRAL_POWER, buffTarget.getRandomX(1), buffTarget.getY(0.25), buffTarget.getRandomZ(1), 0.0, 0.0, 0.0);
+        if (this.buffTicks % 50 == 0 && !this.isSilent()) this.level().playLocalSound(this.getX(), this.getY(), this.getZ(), VASoundEvents.ENTITY_SPECTRE_EMPOWER_AMBIENT, SoundSource.HOSTILE, 0.2F, 1.0F, true);
     }
 
     private void applyEffects(LivingEntity buffTarget, int difficulty) {
         if (buffTarget == null) return;
-        buffTarget.addStatusEffect(new StatusEffectInstance(StatusEffects.STRENGTH, 30, 0, true, true));
-        buffTarget.addStatusEffect(new StatusEffectInstance(StatusEffects.SPEED, 30, 0, true, true));
-        buffTarget.addStatusEffect(new StatusEffectInstance(StatusEffects.RESISTANCE, 30, difficulty - 1, true, true));
-        this.addStatusEffect(new StatusEffectInstance(StatusEffects.RESISTANCE, 30, difficulty - 1, true, false));
+        buffTarget.addEffect(new MobEffectInstance(MobEffects.STRENGTH, 30, 0, true, true));
+        buffTarget.addEffect(new MobEffectInstance(MobEffects.SPEED, 30, 0, true, true));
+        buffTarget.addEffect(new MobEffectInstance(MobEffects.RESISTANCE, 30, difficulty - 1, true, true));
+        this.addEffect(new MobEffectInstance(MobEffects.RESISTANCE, 30, difficulty - 1, true, false));
     }
 
     public void setIsBuffing(boolean bl) {
         if (bl && this.isBuffingTarget()) return;
-        this.dataTracker.set(IS_BUFFING_TARGET, bl);
-        if (bl && !this.isSilent() && checkBuffTarget()) this.getEntityWorld().playSound(this, this.getX(), this.getY(), this.getZ(), VASoundEvents.ENTITY_SPECTRE_EMPOWER_START, SoundCategory.HOSTILE, 0.6F, 1.0F);
+        this.entityData.set(IS_BUFFING_TARGET, bl);
+        if (bl && !this.isSilent() && checkBuffTarget()) this.level().playSound(this, this.getX(), this.getY(), this.getZ(), VASoundEvents.ENTITY_SPECTRE_EMPOWER_START, SoundSource.HOSTILE, 0.6F, 1.0F);
     }
 
     public boolean isBuffingTarget() {
-        return this.dataTracker.get(IS_BUFFING_TARGET);
+        return this.entityData.get(IS_BUFFING_TARGET);
     }
 
-    public void setBuffTarget(MobEntity target) {
+    public void setBuffTarget(Mob target) {
         targetToSpectre.remove(spectreToTarget.get(this.uuid));
         spectreToTarget.remove(this.uuid);
         if (target == null) {
             this.buffTarget = null;
             this.buffTargetId = EMPTY_ID;
             this.setIsBuffing(false);
-        } else if (!(targetToSpectre.containsKey(target.getUuid()))) {
+        } else if (!(targetToSpectre.containsKey(target.getUUID()))) {
             this.buffTarget = target;
-            UUID targetId = this.buffTarget.getUuid();
-            UUID thisId = this.getUuid();
+            UUID targetId = this.buffTarget.getUUID();
+            UUID thisId = this.getUUID();
             targetToSpectre.put(targetId, thisId);
             spectreToTarget.put(thisId, targetId);
             this.buffTargetId = targetId;
         }
-        this.dataTracker.set(BUFF_TARGET, this.buffTargetId);
+        this.entityData.set(BUFF_TARGET, this.buffTargetId);
         if (VirtualAdditions.DEBUG) VirtualAdditions.LOGGER.log(Level.INFO, "Spectre Target Maps: T->S = " + targetToSpectre.size() + ", S->T = " + spectreToTarget.size());
     }
 
@@ -198,27 +197,27 @@ public class SpectreEntity extends HostileEntity {
     }
 
     public static UUID getBuffingSpectreId(LivingEntity entity) {
-        return targetToSpectre.get(entity.getUuid());
+        return targetToSpectre.get(entity.getUUID());
     }
 
     private boolean checkBuffTarget() {
-        if (this.buffTarget == null && buffTargetId != EMPTY_ID) this.setBuffTarget((MobEntity) this.getEntityWorld().getEntity(buffTargetId));
+        if (this.buffTarget == null && buffTargetId != EMPTY_ID) this.setBuffTarget((Mob) this.level().getEntity(buffTargetId));
         if (this.buffTarget == null) return false;
-        if (this.buffTarget.isDead() || this.buffTarget.isRemoved()) this.buffTarget = null;
+        if (this.buffTarget.isDeadOrDying() || this.buffTarget.isRemoved()) this.buffTarget = null;
         if (buffTarget == null) this.setIsBuffing(false);
         return this.buffTarget != null;
     }
 
     @Override
-    public void readData(ReadView view) {
-        super.readData(view);
-        this.buffTargetId = view.read("buff_target", Uuids.CODEC).orElse(EMPTY_ID);
+    public void load(ValueInput view) {
+        super.load(view);
+        this.buffTargetId = view.read("buff_target", UUIDUtil.AUTHLIB_CODEC).orElse(EMPTY_ID);
     }
 
     @Override
-    public void writeData(WriteView view) {
-        super.writeData(view);
-        view.put("buff_target", Uuids.CODEC, this.buffTargetId);
+    public void saveWithoutId(ValueOutput view) {
+        super.saveWithoutId(view);
+        view.store("buff_target", UUIDUtil.AUTHLIB_CODEC, this.buffTargetId);
     }
 
     @Nullable
@@ -238,26 +237,26 @@ public class SpectreEntity extends HostileEntity {
     }
 
     @Override
-    public boolean hurtByWater() {
+    public boolean isSensitiveToWater() {
         return true;
     }
 
-    public static boolean canSpawnSpectre(EntityType<? extends HostileEntity> type, ServerWorldAccess world, SpawnReason spawnReason, BlockPos pos, Random random) {
-        BlockState state = world.getBlockState(pos.down());
-        return (state.isIn(VABlockTags.SPECTRE_SPAWNABLE_ON) || !spawnReason.equals(SpawnReason.NATURAL)) && ((spawnReason.equals(SpawnReason.SPAWNER) && world.getBlockState(pos).isOf(VABlocks.SPECTRAL_FIRE)) || HostileEntity.canSpawnInDark(type, world, spawnReason, pos, random));
+    public static boolean canSpawnSpectre(EntityType<? extends Monster> type, ServerLevelAccessor world, EntitySpawnReason spawnReason, BlockPos pos, RandomSource random) {
+        BlockState state = world.getBlockState(pos.below());
+        return (state.is(VABlockTags.SPECTRE_SPAWNABLE_ON) || !spawnReason.equals(EntitySpawnReason.NATURAL)) && ((spawnReason.equals(EntitySpawnReason.SPAWNER) && world.getBlockState(pos).is(VABlocks.SPECTRAL_FIRE)) || Monster.checkMonsterSpawnRules(type, world, spawnReason, pos, random));
     }
 
     @Override
-    protected EntityNavigation createNavigation(World world) {
-        BirdNavigation birdNavigation = new BirdNavigation(this, world) {
+    protected PathNavigation createNavigation(net.minecraft.world.level.Level world) {
+        FlyingPathNavigation birdNavigation = new FlyingPathNavigation(this, world) {
             @Override
-            protected boolean canPathDirectlyThrough(Vec3d origin, Vec3d target) {
-                return super.canPathDirectlyThrough(origin, target);
+            protected boolean canMoveDirectly(Vec3 origin, Vec3 target) {
+                return super.canMoveDirectly(origin, target);
             }
         };
         birdNavigation.setCanOpenDoors(false);
-        birdNavigation.setCanSwim(true);
-        birdNavigation.setMaxFollowRange(48.0F);
+        birdNavigation.setCanFloat(true);
+        birdNavigation.setRequiredPathLength(48.0F);
         return birdNavigation;
     }
 }

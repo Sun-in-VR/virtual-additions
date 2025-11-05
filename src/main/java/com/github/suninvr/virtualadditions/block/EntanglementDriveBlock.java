@@ -4,129 +4,134 @@ import com.github.suninvr.virtualadditions.block.entity.EntanglementDriveBlockEn
 import com.github.suninvr.virtualadditions.registry.VABlockEntityType;
 import com.github.suninvr.virtualadditions.screen.EntanglementDriveScreenHandler;
 import com.mojang.serialization.MapCodec;
-import net.minecraft.block.*;
-import net.minecraft.block.entity.BlockEntity;
-import net.minecraft.block.entity.BlockEntityTicker;
-import net.minecraft.block.entity.BlockEntityType;
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.inventory.SidedInventory;
-import net.minecraft.item.ItemPlacementContext;
-import net.minecraft.screen.*;
-import net.minecraft.state.StateManager;
-import net.minecraft.state.property.BooleanProperty;
-import net.minecraft.state.property.Properties;
-import net.minecraft.text.Text;
-import net.minecraft.util.ActionResult;
-import net.minecraft.util.hit.BlockHitResult;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.math.Direction;
-import net.minecraft.util.shape.VoxelShape;
-import net.minecraft.util.shape.VoxelShapes;
-import net.minecraft.world.BlockView;
-import net.minecraft.world.World;
-import net.minecraft.world.WorldAccess;
-import net.minecraft.world.block.WireOrientation;
+import net.minecraft.core.BlockPos;
+import net.minecraft.core.Direction;
+import net.minecraft.network.chat.Component;
+import net.minecraft.world.*;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.inventory.AbstractContainerMenu;
+import net.minecraft.world.inventory.ContainerLevelAccess;
+import net.minecraft.world.inventory.SimpleContainerData;
+import net.minecraft.world.item.context.BlockPlaceContext;
+import net.minecraft.world.level.BlockGetter;
+import net.minecraft.world.level.Level;
+import net.minecraft.world.level.LevelAccessor;
+import net.minecraft.world.level.block.BaseEntityBlock;
+import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.RenderShape;
+import net.minecraft.world.level.block.entity.BlockEntity;
+import net.minecraft.world.level.block.entity.BlockEntityTicker;
+import net.minecraft.world.level.block.entity.BlockEntityType;
+import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.block.state.StateDefinition;
+import net.minecraft.world.level.block.state.properties.BlockStateProperties;
+import net.minecraft.world.level.block.state.properties.BooleanProperty;
+import net.minecraft.world.level.redstone.Orientation;
+import net.minecraft.world.phys.BlockHitResult;
+import net.minecraft.world.phys.shapes.CollisionContext;
+import net.minecraft.world.phys.shapes.Shapes;
+import net.minecraft.world.phys.shapes.VoxelShape;
 import org.jetbrains.annotations.Nullable;
 
 @SuppressWarnings("deprecation")
-public class EntanglementDriveBlock extends BlockWithEntity implements InventoryProvider {
-    public static final MapCodec<EntanglementDriveBlock> CODEC = createCodec(EntanglementDriveBlock::new);
-    public static final BooleanProperty POWERED = Properties.POWERED;
-    private static final Text TITLE;
+public class EntanglementDriveBlock extends BaseEntityBlock implements WorldlyContainerHolder {
+    public static final MapCodec<EntanglementDriveBlock> CODEC = simpleCodec(EntanglementDriveBlock::new);
+    public static final BooleanProperty POWERED = BlockStateProperties.POWERED;
+    private static final Component TITLE;
     private static final VoxelShape SHAPE;
 
-    public EntanglementDriveBlock(Settings settings) {
+    public EntanglementDriveBlock(Properties settings) {
         super(settings);
-        this.setDefaultState(getStateManager().getDefaultState()
-                .with(POWERED, false)
+        this.registerDefaultState(getStateDefinition().any()
+                .setValue(POWERED, false)
         );
     }
 
     @Override
-    protected MapCodec<? extends BlockWithEntity> getCodec() {
+    protected MapCodec<? extends BaseEntityBlock> codec() {
         return CODEC;
     }
 
     @Override
-    protected void appendProperties(StateManager.Builder<Block, BlockState> builder) {
+    protected void createBlockStateDefinition(StateDefinition.Builder<Block, BlockState> builder) {
         builder.add(POWERED);
     }
 
     @Override
-    public void neighborUpdate(BlockState state, World world, BlockPos pos, Block sourceBlock, @Nullable WireOrientation wireOrientation, boolean notify) {
-        if (!world.isClient()) {
-            if(world.isReceivingRedstonePower(pos)) world.setBlockState(pos, state.with(POWERED, true));
-            else world.setBlockState(pos, state.with(POWERED, false));
+    public void neighborChanged(BlockState state, Level world, BlockPos pos, Block sourceBlock, @Nullable Orientation wireOrientation, boolean notify) {
+        if (!world.isClientSide()) {
+            if(world.hasNeighborSignal(pos)) world.setBlockAndUpdate(pos, state.setValue(POWERED, true));
+            else world.setBlockAndUpdate(pos, state.setValue(POWERED, false));
         }
     }
 
     @Nullable
     @Override
-    public BlockState getPlacementState(ItemPlacementContext ctx) {
-        BlockState state = this.getDefaultState();
-        if (ctx.getWorld().isReceivingRedstonePower(ctx.getBlockPos())) state = state.with(POWERED, true);
+    public BlockState getStateForPlacement(BlockPlaceContext ctx) {
+        BlockState state = this.defaultBlockState();
+        if (ctx.getLevel().hasNeighborSignal(ctx.getClickedPos())) state = state.setValue(POWERED, true);
         return state;
     }
 
     @Nullable
     @Override
-    public BlockEntity createBlockEntity(BlockPos pos, BlockState state) {
+    public BlockEntity newBlockEntity(BlockPos pos, BlockState state) {
         return new EntanglementDriveBlockEntity(pos, state);
     }
 
     @Override
-    public BlockRenderType getRenderType(BlockState state) {
-        return BlockRenderType.MODEL;
+    public RenderShape getRenderShape(BlockState state) {
+        return RenderShape.MODEL;
     }
 
     @Override
-    public ActionResult onUse(BlockState state, World world, BlockPos pos, PlayerEntity player, BlockHitResult hit) {
-        if (!world.isClient()) {
+    public InteractionResult useWithoutItem(BlockState state, Level world, BlockPos pos, Player player, BlockHitResult hit) {
+        if (!world.isClientSide()) {
             EntanglementDriveBlockEntity entity = world.getBlockEntity(pos) instanceof EntanglementDriveBlockEntity entanglementDriveBlockEntity ? entanglementDriveBlockEntity : null;
-            if (entity == null) return ActionResult.SUCCESS;
-            player.openHandledScreen(entity);
+            if (entity == null) return InteractionResult.SUCCESS;
+            player.openMenu(entity);
         }
-        return ActionResult.SUCCESS;
+        return InteractionResult.SUCCESS;
     }
 
     @Override
-    public boolean hasComparatorOutput(BlockState state) {
+    public boolean hasAnalogOutputSignal(BlockState state) {
         return true;
     }
 
     @Override
-    protected int getComparatorOutput(BlockState state, World world, BlockPos pos, Direction direction) {
-        return ScreenHandler.calculateComparatorOutput( world.getBlockEntity(pos) );
+    protected int getAnalogOutputSignal(BlockState state, Level world, BlockPos pos, Direction direction) {
+        return AbstractContainerMenu.getRedstoneSignalFromBlockEntity( world.getBlockEntity(pos) );
     }
 
     @Override
-    public SidedInventory getInventory(BlockState state, WorldAccess world, BlockPos pos) {
+    public WorldlyContainer getContainer(BlockState state, LevelAccessor world, BlockPos pos) {
         BlockEntity blockEntity = world.getBlockEntity(pos);
         return blockEntity != null ? blockEntity instanceof EntanglementDriveBlockEntity entanglementDriveBlockEntity ? entanglementDriveBlockEntity.getInventory() : null : null;
     }
 
     @Nullable
     @Override
-    public <T extends BlockEntity> BlockEntityTicker<T> getTicker(World world, BlockState state, BlockEntityType<T> type) {
-        return validateTicker(type, VABlockEntityType.ENTANGLEMENT_DRIVE, (EntanglementDriveBlockEntity::tick));
+    public <T extends BlockEntity> BlockEntityTicker<T> getTicker(Level world, BlockState state, BlockEntityType<T> type) {
+        return createTickerHelper(type, VABlockEntityType.ENTANGLEMENT_DRIVE, (EntanglementDriveBlockEntity::tick));
     }
 
     @Nullable
     @Override
-    public NamedScreenHandlerFactory createScreenHandlerFactory(BlockState state, World world, BlockPos pos) {
-        return new SimpleNamedScreenHandlerFactory(((syncId, inv, player) -> new EntanglementDriveScreenHandler(syncId, inv, ScreenHandlerContext.create(world, pos), new ArrayPropertyDelegate(2))), TITLE);
+    public MenuProvider getMenuProvider(BlockState state, Level world, BlockPos pos) {
+        return new SimpleMenuProvider(((syncId, inv, player) -> new EntanglementDriveScreenHandler(syncId, inv, ContainerLevelAccess.create(world, pos), new SimpleContainerData(2))), TITLE);
     }
 
     @Override
-    public VoxelShape getOutlineShape(BlockState state, BlockView world, BlockPos pos, ShapeContext context) {
+    public VoxelShape getShape(BlockState state, BlockGetter world, BlockPos pos, CollisionContext context) {
         return SHAPE;
     }
 
     static {
-        TITLE = Text.translatable("container.virtual_additions.entanglement_drive");
-        SHAPE = VoxelShapes.union(
-                Block.createCuboidShape(2, 0,2, 14, 16, 14),
-                Block.createCuboidShape(1, 3,1, 15, 13, 15)
+        TITLE = Component.translatable("container.virtual_additions.entanglement_drive");
+        SHAPE = Shapes.or(
+                Block.box(2, 0,2, 14, 16, 14),
+                Block.box(1, 3,1, 15, 13, 15)
         );
     }
 

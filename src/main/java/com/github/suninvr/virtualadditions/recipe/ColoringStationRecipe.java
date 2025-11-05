@@ -1,12 +1,12 @@
 package com.github.suninvr.virtualadditions.recipe;
 
 import com.github.suninvr.virtualadditions.block.entity.DyeContents;
-import net.minecraft.item.ItemStack;
-import net.minecraft.recipe.Ingredient;
-import net.minecraft.recipe.Recipe;
-import net.minecraft.recipe.display.SlotDisplay;
-import net.minecraft.recipe.input.RecipeInput;
-import net.minecraft.registry.DynamicRegistryManager;
+import net.minecraft.core.RegistryAccess;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.crafting.Ingredient;
+import net.minecraft.world.item.crafting.Recipe;
+import net.minecraft.world.item.crafting.RecipeInput;
+import net.minecraft.world.item.crafting.display.SlotDisplay;
 
 import java.util.Optional;
 
@@ -15,9 +15,9 @@ public interface ColoringStationRecipe extends Recipe<RecipeInput> {
 
     Optional<Ingredient> getIngredient();
 
-    SlotDisplay.StackSlotDisplay getStackSlotDisplay();
+    SlotDisplay.ItemStackSlotDisplay getStackSlotDisplay();
 
-    ItemStack craftWithDye(RecipeInput input, DynamicRegistryManager registryManager, DyeContents dyeContents);
+    ItemStack craftWithDye(RecipeInput input, RegistryAccess registryManager, DyeContents dyeContents);
 
     DyeContents getDyeCost(boolean inverted);
 
@@ -25,7 +25,7 @@ public interface ColoringStationRecipe extends Recipe<RecipeInput> {
         return this.getDyeCost(false);
     }
 
-    ItemStack getResultStack(DynamicRegistryManager registryManager, ItemStack input);
+    ItemStack getResultStack(RegistryAccess registryManager, ItemStack input);
 
     ItemStack getResultStack(ItemStack input);
 }

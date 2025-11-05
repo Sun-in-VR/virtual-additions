@@ -6,33 +6,32 @@ import com.github.suninvr.virtualadditions.registry.VAItems;
 import com.github.suninvr.virtualadditions.registry.VARecipeType;
 import com.mojang.serialization.MapCodec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
-import net.minecraft.item.ItemStack;
-import net.minecraft.network.RegistryByteBuf;
-import net.minecraft.network.codec.PacketCodec;
-import net.minecraft.recipe.*;
-import net.minecraft.recipe.input.SmithingRecipeInput;
-import net.minecraft.registry.RegistryWrapper;
-import net.minecraft.registry.entry.RegistryEntry;
+import net.minecraft.core.Holder;
+import net.minecraft.core.HolderLookup;
+import net.minecraft.network.RegistryFriendlyByteBuf;
+import net.minecraft.network.codec.StreamCodec;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.crafting.*;
 
 import java.util.List;
 import java.util.Optional;
 
 public class SmithingGildRecipe implements SmithingRecipe {
-    private static final Ingredient TEMPLATE = Ingredient.ofItem(VAItems.TOOL_GILD_SMITHING_TEMPLATE);
-    private IngredientPlacement ingredientPlacement;
+    private static final Ingredient TEMPLATE = Ingredient.of(VAItems.TOOL_GILD_SMITHING_TEMPLATE);
+    private PlacementInfo ingredientPlacement;
     final Ingredient base;
     final Ingredient addition;
-    final RegistryEntry<GildType> type;
+    final Holder<GildType> type;
 
-    public SmithingGildRecipe(Ingredient base, Ingredient addition, RegistryEntry<GildType> type) {
+    public SmithingGildRecipe(Ingredient base, Ingredient addition, Holder<GildType> type) {
         this.base = base;
         this.addition = addition;
         this.type = type;
     }
 
     @Override
-    public ItemStack craft(SmithingRecipeInput input, RegistryWrapper.WrapperLookup registries) {
-        if (input.base().contains(VADataComponentTypes.GILD_TYPE)) return null;
+    public ItemStack assemble(SmithingRecipeInput input, HolderLookup.Provider registries) {
+        if (input.base().has(VADataComponentTypes.GILD_TYPE)) return null;
         ItemStack result = input.base().copyWithCount(1);
         result.set(VADataComponentTypes.GILD_TYPE, this.type.value());
         this.type.value().modifyStackOnCrafted(result);
@@ -45,26 +44,26 @@ public class SmithingGildRecipe implements SmithingRecipe {
     }
 
     @Override
-    public IngredientPlacement getIngredientPlacement() {
+    public PlacementInfo placementInfo() {
         if (this.ingredientPlacement == null) {
-            this.ingredientPlacement = IngredientPlacement.forShapeless(List.of(TEMPLATE, this.base, this.addition));
+            this.ingredientPlacement = PlacementInfo.create(List.of(TEMPLATE, this.base, this.addition));
         }
 
         return this.ingredientPlacement;
     }
 
     @Override
-    public Optional<Ingredient> template() {
+    public Optional<Ingredient> templateIngredient() {
         return Optional.of(TEMPLATE);
     }
 
     @Override
-    public Ingredient base() {
+    public Ingredient baseIngredient() {
         return this.base;
     }
 
     @Override
-    public Optional<Ingredient> addition() {
+    public Optional<Ingredient> additionIngredient() {
         return Optional.of(this.addition);
     }
 
@@ -77,10 +76,10 @@ public class SmithingGildRecipe implements SmithingRecipe {
                         )
                         .apply(instance, SmithingGildRecipe::new)
         );
-        public static final PacketCodec<RegistryByteBuf, SmithingGildRecipe> PACKET_CODEC = PacketCodec.tuple(
-                Ingredient.PACKET_CODEC,
+        public static final StreamCodec<RegistryFriendlyByteBuf, SmithingGildRecipe> PACKET_CODEC = StreamCodec.composite(
+                Ingredient.CONTENTS_STREAM_CODEC,
                 recipe -> recipe.base,
-                Ingredient.PACKET_CODEC,
+                Ingredient.CONTENTS_STREAM_CODEC,
                 recipe -> recipe.addition,
                 GildType.ENTRY_PACKET_CODEC,
                 recipe -> recipe.type,
@@ -93,7 +92,7 @@ public class SmithingGildRecipe implements SmithingRecipe {
         }
 
         @Override
-        public PacketCodec<RegistryByteBuf, SmithingGildRecipe> packetCodec() {
+        public StreamCodec<RegistryFriendlyByteBuf, SmithingGildRecipe> streamCodec() {
             return PACKET_CODEC;
         }
     }

@@ -1,8 +1,8 @@
 package com.github.suninvr.virtualadditions.registry;
 
-import net.minecraft.entity.EntityType;
-import net.minecraft.registry.Registries;
-import net.minecraft.registry.tag.TagKey;
+import net.minecraft.core.registries.BuiltInRegistries;
+import net.minecraft.tags.TagKey;
+import net.minecraft.world.entity.EntityType;
 
 import static com.github.suninvr.virtualadditions.VirtualAdditions.idOf;
 
@@ -15,7 +15,7 @@ public class VAEntityTypeTags {
     public static void init(){}
 
     private static TagKey<EntityType<?>> register(String id) {
-        return TagKey.of(Registries.ENTITY_TYPE.getKey(), idOf(id));
+        return TagKey.create(BuiltInRegistries.ENTITY_TYPE.key(), idOf(id));
     }
 
 }

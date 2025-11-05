@@ -2,104 +2,109 @@ package com.github.suninvr.virtualadditions.block;
 
 import com.github.suninvr.virtualadditions.registry.VABlocks;
 import com.mojang.serialization.MapCodec;
-import net.minecraft.block.*;
-import net.minecraft.entity.projectile.ProjectileEntity;
-import net.minecraft.registry.tag.EntityTypeTags;
-import net.minecraft.server.world.ServerWorld;
-import net.minecraft.state.StateManager;
-import net.minecraft.state.property.IntProperty;
-import net.minecraft.util.hit.BlockHitResult;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.math.Vec3d;
-import net.minecraft.util.math.random.Random;
-import net.minecraft.util.shape.VoxelShape;
-import net.minecraft.util.shape.VoxelShapes;
-import net.minecraft.world.BlockView;
-import net.minecraft.world.World;
-import net.minecraft.world.WorldView;
-import net.minecraft.world.block.WireOrientation;
+import net.minecraft.core.BlockPos;
+import net.minecraft.server.level.ServerLevel;
+import net.minecraft.tags.EntityTypeTags;
+import net.minecraft.util.RandomSource;
+import net.minecraft.world.entity.projectile.Projectile;
+import net.minecraft.world.level.BlockGetter;
+import net.minecraft.world.level.Level;
+import net.minecraft.world.level.LevelReader;
+import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.Blocks;
+import net.minecraft.world.level.block.BonemealableBlock;
+import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.block.state.StateDefinition;
+import net.minecraft.world.level.block.state.properties.IntegerProperty;
+import net.minecraft.world.level.redstone.Orientation;
+import net.minecraft.world.phys.BlockHitResult;
+import net.minecraft.world.phys.Vec3;
+import net.minecraft.world.phys.shapes.CollisionContext;
+import net.minecraft.world.phys.shapes.EntityCollisionContext;
+import net.minecraft.world.phys.shapes.Shapes;
+import net.minecraft.world.phys.shapes.VoxelShape;
 import org.jetbrains.annotations.Nullable;
 
-public class BalloonBulbBlock extends Block implements Fertilizable {
-    public static final MapCodec<BalloonBulbBlock> CODEC = createCodec(BalloonBulbBlock::new);
-    public static final IntProperty HEIGHT = IntProperty.of("height", 0, 25);
-    private static final VoxelShape SHAPE = Block.createCuboidShape(3.0F, 0.0F, 3.0F, 13.0F, 14.0F, 13.0F);
-    public BalloonBulbBlock(Settings settings) {
+public class BalloonBulbBlock extends Block implements BonemealableBlock {
+    public static final MapCodec<BalloonBulbBlock> CODEC = simpleCodec(BalloonBulbBlock::new);
+    public static final IntegerProperty HEIGHT = IntegerProperty.create("height", 0, 25);
+    private static final VoxelShape SHAPE = Block.box(3.0F, 0.0F, 3.0F, 13.0F, 14.0F, 13.0F);
+    public BalloonBulbBlock(Properties settings) {
         super(settings);
-        this.setDefaultState(getStateManager().getDefaultState().with(HEIGHT, 0));
+        this.registerDefaultState(getStateDefinition().any().setValue(HEIGHT, 0));
     }
 
     @Override
-    protected MapCodec<? extends Block> getCodec() {
+    protected MapCodec<? extends Block> codec() {
         return CODEC;
     }
 
     @Override
-    protected void appendProperties(StateManager.Builder<Block, BlockState> builder) {
+    protected void createBlockStateDefinition(StateDefinition.Builder<Block, BlockState> builder) {
         builder.add(HEIGHT);
     }
 
     @Override
-    public boolean hasRandomTicks(BlockState state) {
-        return state.get(HEIGHT) < 25;
+    public boolean isRandomlyTicking(BlockState state) {
+        return state.getValue(HEIGHT) < 25;
     }
 
     @Override
-    public void randomTick(BlockState state, ServerWorld world, BlockPos pos, Random random) {
-        if (random.nextInt(5) == 1) grow(world, random, pos, state);
+    public void randomTick(BlockState state, ServerLevel world, BlockPos pos, RandomSource random) {
+        if (random.nextInt(5) == 1) performBonemeal(world, random, pos, state);
     }
 
     @Override
-    protected void neighborUpdate(BlockState state, World world, BlockPos pos, Block sourceBlock, @Nullable WireOrientation wireOrientation, boolean notify) {
-        if (!canPlaceAt(state, world, pos)) world.breakBlock(pos, true);
+    protected void neighborChanged(BlockState state, Level world, BlockPos pos, Block sourceBlock, @Nullable Orientation wireOrientation, boolean notify) {
+        if (!canSurvive(state, world, pos)) world.destroyBlock(pos, true);
     }
 
     @Override
-    public boolean canPlaceAt(BlockState state, WorldView world, BlockPos pos) {
-        return world.getBlockState( pos.down()).isOf(VABlocks.BALLOON_BULB_PLANT);
+    public boolean canSurvive(BlockState state, LevelReader world, BlockPos pos) {
+        return world.getBlockState( pos.below()).is(VABlocks.BALLOON_BULB_PLANT);
     }
 
     @Override
-    public boolean isFertilizable(WorldView world, BlockPos pos, BlockState state) {
-        return state.get(HEIGHT) < 25;
+    public boolean isValidBonemealTarget(LevelReader world, BlockPos pos, BlockState state) {
+        return state.getValue(HEIGHT) < 25;
     }
 
     @Override
-    public boolean canGrow(World world, Random random, BlockPos pos, BlockState state) {
-        return world.getBlockState(pos.up()).isAir();
+    public boolean isBonemealSuccess(Level world, RandomSource random, BlockPos pos, BlockState state) {
+        return world.getBlockState(pos.above()).isAir();
     }
 
     @Override
-    public void grow(ServerWorld world, Random random, BlockPos pos, BlockState state) {
-        BlockPos abovePos = pos.up();
+    public void performBonemeal(ServerLevel world, RandomSource random, BlockPos pos, BlockState state) {
+        BlockPos abovePos = pos.above();
         BlockState aboveState = world.getBlockState(abovePos);
         if (aboveState.isAir()) {
-            BlockPos belowPos = pos.down();
+            BlockPos belowPos = pos.below();
             BlockState belowState = world.getBlockState(belowPos);
-            if (!belowState.isOf(VABlocks.BALLOON_BULB_PLANT)) return;
-            world.setBlockState(abovePos, state.with(HEIGHT, state.get(HEIGHT) + 1));
-            world.setBlockState(pos, belowState);
-            world.setBlockState(belowPos, Blocks.AIR.getDefaultState());
+            if (!belowState.is(VABlocks.BALLOON_BULB_PLANT)) return;
+            world.setBlockAndUpdate(abovePos, state.setValue(HEIGHT, state.getValue(HEIGHT) + 1));
+            world.setBlockAndUpdate(pos, belowState);
+            world.setBlockAndUpdate(belowPos, Blocks.AIR.defaultBlockState());
         }
 
     }
 
     @Override
-    public VoxelShape getCollisionShape(BlockState state, BlockView world, BlockPos pos, ShapeContext context) {
-        if (context instanceof EntityShapeContext entityShapeContext && entityShapeContext.getEntity() != null) {
-            if (entityShapeContext.getEntity().getType().isIn(EntityTypeTags.IMPACT_PROJECTILES)) return SHAPE;
+    public VoxelShape getCollisionShape(BlockState state, BlockGetter world, BlockPos pos, CollisionContext context) {
+        if (context instanceof EntityCollisionContext entityShapeContext && entityShapeContext.getEntity() != null) {
+            if (entityShapeContext.getEntity().getType().is(EntityTypeTags.IMPACT_PROJECTILES)) return SHAPE;
         }
-        return VoxelShapes.empty();
+        return Shapes.empty();
     }
 
     @Override
-    public VoxelShape getOutlineShape(BlockState state, BlockView world, BlockPos pos, ShapeContext context) {
-        Vec3d offset = state.getModelOffset(pos);
-        return SHAPE.offset(offset.x, 0, offset.z);
+    public VoxelShape getShape(BlockState state, BlockGetter world, BlockPos pos, CollisionContext context) {
+        Vec3 offset = state.getOffset(pos);
+        return SHAPE.move(offset.x, 0, offset.z);
     }
 
     @Override
-    public void onProjectileHit(World world, BlockState state, BlockHitResult hit, ProjectileEntity projectile) {
-        world.breakBlock(hit.getBlockPos(), true);
+    public void onProjectileHit(Level world, BlockState state, BlockHitResult hit, Projectile projectile) {
+        world.destroyBlock(hit.getBlockPos(), true);
     }
 }

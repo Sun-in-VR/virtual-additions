@@ -1,17 +1,17 @@
 package com.github.suninvr.virtualadditions.block.enums;
 
-import net.minecraft.util.StringIdentifiable;
+import net.minecraft.util.StringRepresentable;
 
 import java.util.Locale;
 
-public enum CrystalShape implements StringIdentifiable {
+public enum CrystalShape implements StringRepresentable {
     TIP,
     BODY;
 
     private final String name;
 
     @Override
-    public String asString() {
+    public String getSerializedName() {
         return this.name;
     }
 

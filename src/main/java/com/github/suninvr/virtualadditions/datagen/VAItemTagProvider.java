@@ -8,17 +8,17 @@ import com.github.suninvr.virtualadditions.registry.collection.ColorfulBlockSet;
 import net.fabricmc.fabric.api.datagen.v1.FabricDataGenerator;
 import net.fabricmc.fabric.api.datagen.v1.FabricDataOutput;
 import net.fabricmc.fabric.api.datagen.v1.provider.FabricTagProvider;
-import net.minecraft.data.family.BlockFamily;
-import net.minecraft.item.Item;
-import net.minecraft.item.ItemConvertible;
-import net.minecraft.item.Items;
-import net.minecraft.registry.Registries;
-import net.minecraft.registry.RegistryKeys;
-import net.minecraft.registry.RegistryWrapper;
-import net.minecraft.registry.tag.ItemTags;
-import net.minecraft.registry.tag.TagBuilder;
-import net.minecraft.registry.tag.TagKey;
-import net.minecraft.util.Identifier;
+import net.minecraft.core.HolderLookup;
+import net.minecraft.core.registries.BuiltInRegistries;
+import net.minecraft.core.registries.Registries;
+import net.minecraft.data.BlockFamily;
+import net.minecraft.resources.ResourceLocation;
+import net.minecraft.tags.ItemTags;
+import net.minecraft.tags.TagBuilder;
+import net.minecraft.tags.TagKey;
+import net.minecraft.world.item.Item;
+import net.minecraft.world.item.Items;
+import net.minecraft.world.level.ItemLike;
 
 import java.util.Arrays;
 import java.util.concurrent.CompletableFuture;
@@ -36,12 +36,12 @@ public final class VAItemTagProvider {
 
     private static class BaseProvider extends Provider {
 
-        public BaseProvider(FabricDataOutput output, CompletableFuture<RegistryWrapper.WrapperLookup> completableFuture) {
+        public BaseProvider(FabricDataOutput output, CompletableFuture<HolderLookup.Provider> completableFuture) {
             super(output, completableFuture);
         }
 
         @Override
-        protected void configure(RegistryWrapper.WrapperLookup arg) {
+        protected void addTags(HolderLookup.Provider arg) {
             addTo(ItemTags.BEACON_PAYMENT_ITEMS, VAItems.STEEL_INGOT, VAItems.IOLITE);
             addTo(ItemTags.STONE_CRAFTING_MATERIALS, VAItems.COBBLED_HORNFELS, VAItems.COBBLED_BLUESCHIST, VAItems.COBBLED_SYENITE);
             addTo(ItemTags.STONE_TOOL_MATERIALS, VAItems.COBBLED_HORNFELS, VAItems.COBBLED_BLUESCHIST, VAItems.COBBLED_SYENITE);
@@ -76,8 +76,8 @@ public final class VAItemTagProvider {
             addTo(IOLITE, VAItems.IOLITE);
             addTo(IOLITE_ORES, VAItems.IOLITE_ORE);
             addTo(VAItemTags.ROCK_SALT_ORES, VAItems.ROCK_SALT_ORE, VAItems.DEEPSLATE_ROCK_SALT_ORE);
-            addTo(GEMS).addOptionalTag(IOLITE.id());
-            addTo(ORES).addOptionalTag(IOLITE_ORES.id()).addOptionalTag(VAItemTags.ROCK_SALT_ORES.id());
+            addTo(GEMS).addOptionalTag(IOLITE.location());
+            addTo(ORES).addOptionalTag(IOLITE_ORES.location()).addOptionalTag(VAItemTags.ROCK_SALT_ORES.location());
             addTo(FOODS, VAItems.FRIED_EGG, VAItems.CORN, VAItems.ROASTED_CORN, VAItems.ICE_CREAM, VAItems.SWEET_BERRY_PIE);
             addTo(POTIONS, VAItems.APPLICABLE_POTION);
 
@@ -170,13 +170,13 @@ public final class VAItemTagProvider {
             );
 
             addTo(VAItemTags.ACCEPTS_APPLIED_EFFECTS, Items.TRIDENT, Items.MACE)
-                    .addOptionalTag(ItemTags.SWORDS.id())
-                    .addOptionalTag(ItemTags.SHOVELS.id())
-                    .addOptionalTag(ItemTags.PICKAXES.id())
-                    .addOptionalTag(ItemTags.AXES.id())
-                    .addOptionalTag(ItemTags.HOES.id())
-                    .addOptionalTag(ItemTags.SPEARS.id())
-                    .addOptionalTag(VAItemTags.HALBERDS.id());
+                    .addOptionalTag(ItemTags.SWORDS.location())
+                    .addOptionalTag(ItemTags.SHOVELS.location())
+                    .addOptionalTag(ItemTags.PICKAXES.location())
+                    .addOptionalTag(ItemTags.AXES.location())
+                    .addOptionalTag(ItemTags.HOES.location())
+                    .addOptionalTag(ItemTags.SPEARS.location())
+                    .addOptionalTag(VAItemTags.HALBERDS.location());
 
             addTo(VAItemTags.ACCEPTS_TOOL_GILDS,
                     Items.COPPER_SWORD, Items.COPPER_SHOVEL, Items.COPPER_PICKAXE, Items.COPPER_AXE, Items.COPPER_HOE, Items.COPPER_SPEAR, VAItems.COPPER_HALBERD,
@@ -291,16 +291,16 @@ public final class VAItemTagProvider {
             configureToolSet(VAItems.STEEL_TOOL_SET);
 
             addTo(VAItemTags.HALBERDS, VAItems.WOODEN_HALBERD, VAItems.STONE_HALBERD, VAItems.COPPER_HALBERD, VAItems.IRON_HALBERD, VAItems.GOLDEN_HALBERD, VAItems.STEEL_HALBERD, VAItems.DIAMOND_HALBERD, VAItems.NETHERITE_HALBERD);
-            getTagBuilder(VAItemTags.HALBERD_ENCHANTABLE).addOptionalTag(VAItemTags.HALBERDS.id());
-            getTagBuilder(VAItemTags.PUMMELING_ENCHANTABLE)
-                    .addOptionalTag(VAItemTags.HALBERDS.id())
-                    .addOptionalTag(ItemTags.AXES.id())
-                    .addOptionalTag(ItemTags.SWORDS.id());
-            getTagBuilder(ItemTags.SHARP_WEAPON_ENCHANTABLE).addOptionalTag(VAItemTags.HALBERDS.id());
-            getTagBuilder(ItemTags.MELEE_WEAPON_ENCHANTABLE).addOptionalTag(VAItemTags.HALBERDS.id());
-            getTagBuilder(ItemTags.DURABILITY_ENCHANTABLE).addOptionalTag(VAItemTags.HALBERDS.id());
-            getTagBuilder(ItemTags.VANISHING_ENCHANTABLE).addOptionalTag(VAItemTags.HALBERDS.id());
-            getTagBuilder(ItemTags.BREAKS_DECORATED_POTS).addOptionalTag(VAItemTags.HALBERDS.id());
+            getOrCreateRawBuilder(VAItemTags.HALBERD_ENCHANTABLE).addOptionalTag(VAItemTags.HALBERDS.location());
+            getOrCreateRawBuilder(VAItemTags.PUMMELING_ENCHANTABLE)
+                    .addOptionalTag(VAItemTags.HALBERDS.location())
+                    .addOptionalTag(ItemTags.AXES.location())
+                    .addOptionalTag(ItemTags.SWORDS.location());
+            getOrCreateRawBuilder(ItemTags.SHARP_WEAPON_ENCHANTABLE).addOptionalTag(VAItemTags.HALBERDS.location());
+            getOrCreateRawBuilder(ItemTags.MELEE_WEAPON_ENCHANTABLE).addOptionalTag(VAItemTags.HALBERDS.location());
+            getOrCreateRawBuilder(ItemTags.DURABILITY_ENCHANTABLE).addOptionalTag(VAItemTags.HALBERDS.location());
+            getOrCreateRawBuilder(ItemTags.VANISHING_ENCHANTABLE).addOptionalTag(VAItemTags.HALBERDS.location());
+            getOrCreateRawBuilder(ItemTags.BREAKS_DECORATED_POTS).addOptionalTag(VAItemTags.HALBERDS.location());
 
             addTo(ItemTags.STONE_CRAFTING_MATERIALS, VAItems.PORPHYRY);
             addTo(ItemTags.STONE_TOOL_MATERIALS, VAItems.PORPHYRY);
@@ -354,35 +354,35 @@ public final class VAItemTagProvider {
     }
 
     private static class PreviewProvider extends Provider {
-        public PreviewProvider(FabricDataOutput output, CompletableFuture<RegistryWrapper.WrapperLookup> completableFuture) {
+        public PreviewProvider(FabricDataOutput output, CompletableFuture<HolderLookup.Provider> completableFuture) {
             super(output, completableFuture);
         }
 
         @Override
-        protected void configure(RegistryWrapper.WrapperLookup arg) {
+        protected void addTags(HolderLookup.Provider arg) {
             addTo(FOODS,VAItems.BALLOON_FRUIT);
         }
     }
 
     private abstract static class Provider extends FabricTagProvider.ItemTagProvider {
-        protected static final TagKey<Item> INGOTS = TagKey.of(RegistryKeys.ITEM, Identifier.of("c:ingots"));
-        protected static final TagKey<Item> STEEL_INGOTS = TagKey.of(RegistryKeys.ITEM, Identifier.of("c:steel_ingots"));
-        protected static final TagKey<Item> RAW_ORES = TagKey.of(RegistryKeys.ITEM, Identifier.of("c:raw_materials"));
-        protected static final TagKey<Item> GEMS = TagKey.of(RegistryKeys.ITEM, Identifier.of("c:gems"));
-        protected static final TagKey<Item> FOODS = TagKey.of(RegistryKeys.ITEM, Identifier.of("c:foods"));
-        protected static final TagKey<Item> IOLITE = TagKey.of(RegistryKeys.ITEM, Identifier.of("c:iolite"));
-        protected static final TagKey<Item> IOLITE_ORES = TagKey.of(RegistryKeys.ITEM, Identifier.of("c:iolite_ores"));
-        protected static final TagKey<Item> ORES = TagKey.of(RegistryKeys.ITEM, Identifier.of("c:ores"));
-        protected static final TagKey<Item> POTIONS = TagKey.of(RegistryKeys.ITEM, Identifier.of("c:potions"));
+        protected static final TagKey<Item> INGOTS = TagKey.create(Registries.ITEM, ResourceLocation.parse("c:ingots"));
+        protected static final TagKey<Item> STEEL_INGOTS = TagKey.create(Registries.ITEM, ResourceLocation.parse("c:steel_ingots"));
+        protected static final TagKey<Item> RAW_ORES = TagKey.create(Registries.ITEM, ResourceLocation.parse("c:raw_materials"));
+        protected static final TagKey<Item> GEMS = TagKey.create(Registries.ITEM, ResourceLocation.parse("c:gems"));
+        protected static final TagKey<Item> FOODS = TagKey.create(Registries.ITEM, ResourceLocation.parse("c:foods"));
+        protected static final TagKey<Item> IOLITE = TagKey.create(Registries.ITEM, ResourceLocation.parse("c:iolite"));
+        protected static final TagKey<Item> IOLITE_ORES = TagKey.create(Registries.ITEM, ResourceLocation.parse("c:iolite_ores"));
+        protected static final TagKey<Item> ORES = TagKey.create(Registries.ITEM, ResourceLocation.parse("c:ores"));
+        protected static final TagKey<Item> POTIONS = TagKey.create(Registries.ITEM, ResourceLocation.parse("c:potions"));
 
-        public Provider(FabricDataOutput output, CompletableFuture<RegistryWrapper.WrapperLookup> completableFuture) {
+        public Provider(FabricDataOutput output, CompletableFuture<HolderLookup.Provider> completableFuture) {
             super(output, completableFuture);
         }
         
-        protected TagBuilder addTo(TagKey<Item> tag, ItemConvertible... items) {
-            TagBuilder builder = getTagBuilder(tag);
-            for (ItemConvertible item : items) {
-                builder.add(Registries.ITEM.getId(item.asItem()));
+        protected TagBuilder addTo(TagKey<Item> tag, ItemLike... items) {
+            TagBuilder builder = getOrCreateRawBuilder(tag);
+            for (ItemLike item : items) {
+                builder.addElement(BuiltInRegistries.ITEM.getKey(item.asItem()));
             }
             return builder;
         }
@@ -444,8 +444,8 @@ public final class VAItemTagProvider {
         }
 
         protected void configureToolSets(TagKey<Item> tag, RegistryHelper.ItemRegistryHelper.ToolSet... sets) {
-            TagBuilder builder = getTagBuilder(tag);
-            Arrays.stream(sets).iterator().forEachRemaining(set -> set.forEach(item -> builder.add(Registries.ITEM.getId(item))));
+            TagBuilder builder = getOrCreateRawBuilder(tag);
+            Arrays.stream(sets).iterator().forEachRemaining(set -> set.forEach(item -> builder.addElement(BuiltInRegistries.ITEM.getKey(item))));
         }
     }
 }

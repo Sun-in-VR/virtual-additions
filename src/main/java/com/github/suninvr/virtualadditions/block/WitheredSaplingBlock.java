@@ -1,20 +1,20 @@
 package com.github.suninvr.virtualadditions.block;
 
-import net.minecraft.block.BlockState;
-import net.minecraft.block.Blocks;
-import net.minecraft.block.SaplingBlock;
-import net.minecraft.block.SaplingGenerator;
-import net.minecraft.registry.tag.BlockTags;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.world.BlockView;
+import net.minecraft.core.BlockPos;
+import net.minecraft.tags.BlockTags;
+import net.minecraft.world.level.BlockGetter;
+import net.minecraft.world.level.block.Blocks;
+import net.minecraft.world.level.block.SaplingBlock;
+import net.minecraft.world.level.block.grower.TreeGrower;
+import net.minecraft.world.level.block.state.BlockState;
 
 public class WitheredSaplingBlock extends SaplingBlock {
-    public WitheredSaplingBlock(SaplingGenerator generator, Settings settings) {
+    public WitheredSaplingBlock(TreeGrower generator, Properties settings) {
         super(generator, settings);
     }
 
     @Override
-    protected boolean canPlantOnTop(BlockState floor, BlockView world, BlockPos pos) {
-        return floor.isIn(BlockTags.NYLIUM) || floor.isIn(BlockTags.SOUL_FIRE_BASE_BLOCKS) || floor.isOf(Blocks.NETHERRACK) || super.canPlantOnTop(floor, world, pos);
+    protected boolean mayPlaceOn(BlockState floor, BlockGetter world, BlockPos pos) {
+        return floor.is(BlockTags.NYLIUM) || floor.is(BlockTags.SOUL_FIRE_BASE_BLOCKS) || floor.is(Blocks.NETHERRACK) || super.mayPlaceOn(floor, world, pos);
     }
 }

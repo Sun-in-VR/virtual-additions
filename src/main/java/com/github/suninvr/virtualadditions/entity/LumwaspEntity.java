@@ -3,106 +3,110 @@ package com.github.suninvr.virtualadditions.entity;
 import com.github.suninvr.virtualadditions.interfaces.EntityInterface;
 import com.github.suninvr.virtualadditions.registry.VADamageTypes;
 import com.github.suninvr.virtualadditions.registry.VASoundEvents;
-import net.minecraft.block.BlockState;
-import net.minecraft.entity.*;
-import net.minecraft.entity.ai.RangedAttackMob;
-import net.minecraft.entity.ai.control.FlightMoveControl;
-import net.minecraft.entity.ai.goal.*;
-import net.minecraft.entity.ai.pathing.BirdNavigation;
-import net.minecraft.entity.ai.pathing.EntityNavigation;
-import net.minecraft.entity.ai.pathing.PathNode;
-import net.minecraft.entity.ai.pathing.PathNodeType;
-import net.minecraft.entity.attribute.DefaultAttributeContainer;
-import net.minecraft.entity.attribute.EntityAttributes;
-import net.minecraft.entity.damage.DamageSource;
-import net.minecraft.entity.effect.StatusEffectInstance;
-import net.minecraft.entity.effect.StatusEffects;
-import net.minecraft.entity.mob.BreezeEntity;
-import net.minecraft.entity.mob.HostileEntity;
-import net.minecraft.entity.mob.MobEntity;
-import net.minecraft.entity.mob.PathAwareEntity;
-import net.minecraft.entity.passive.BeeEntity;
-import net.minecraft.entity.passive.IronGolemEntity;
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.server.world.ServerWorld;
-import net.minecraft.sound.SoundEvent;
-import net.minecraft.sound.SoundEvents;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.math.Vec3d;
-import net.minecraft.util.math.random.Random;
-import net.minecraft.world.*;
-import net.minecraft.world.dimension.DimensionType;
-import org.jetbrains.annotations.Nullable;
+import net.minecraft.core.BlockPos;
+import net.minecraft.server.level.ServerLevel;
+import net.minecraft.sounds.SoundEvent;
+import net.minecraft.sounds.SoundEvents;
+import net.minecraft.util.RandomSource;
+import net.minecraft.world.Difficulty;
+import net.minecraft.world.damagesource.DamageSource;
+import net.minecraft.world.effect.MobEffectInstance;
+import net.minecraft.world.effect.MobEffects;
+import net.minecraft.world.entity.*;
+import net.minecraft.world.entity.ai.attributes.AttributeSupplier;
+import net.minecraft.world.entity.ai.attributes.Attributes;
+import net.minecraft.world.entity.ai.control.FlyingMoveControl;
+import net.minecraft.world.entity.ai.goal.*;
+import net.minecraft.world.entity.ai.goal.target.HurtByTargetGoal;
+import net.minecraft.world.entity.ai.goal.target.NearestAttackableTargetGoal;
+import net.minecraft.world.entity.ai.navigation.FlyingPathNavigation;
+import net.minecraft.world.entity.ai.navigation.PathNavigation;
+import net.minecraft.world.entity.animal.Bee;
+import net.minecraft.world.entity.animal.FlyingAnimal;
+import net.minecraft.world.entity.animal.IronGolem;
+import net.minecraft.world.entity.monster.Monster;
+import net.minecraft.world.entity.monster.RangedAttackMob;
+import net.minecraft.world.entity.monster.breeze.Breeze;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.level.Level;
+import net.minecraft.world.level.LevelReader;
+import net.minecraft.world.level.LightLayer;
+import net.minecraft.world.level.ServerLevelAccessor;
+import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.dimension.DimensionType;
+import net.minecraft.world.level.pathfinder.Node;
+import net.minecraft.world.level.pathfinder.PathType;
+import net.minecraft.world.phys.Vec3;
 
-public class LumwaspEntity extends HostileEntity implements RangedAttackMob, Flutterer {
-    public LumwaspEntity(EntityType<? extends HostileEntity> entityType, World world) {
+public class LumwaspEntity extends Monster implements RangedAttackMob, FlyingAnimal {
+    public LumwaspEntity(EntityType<? extends Monster> entityType, Level world) {
         super(entityType, world);
-        this.moveControl = new FlightMoveControl(this, 20, true);
-        this.setPathfindingPenalty(PathNodeType.DANGER_FIRE, -1.0F);
-        this.setPathfindingPenalty(PathNodeType.WATER, -1.0F);
-        this.setPathfindingPenalty(PathNodeType.WATER_BORDER, 16.0F);
-        this.setPathfindingPenalty(PathNodeType.COCOA, -1.0F);
-        this.setPathfindingPenalty(PathNodeType.FENCE, -1.0F);
+        this.moveControl = new FlyingMoveControl(this, 20, true);
+        this.setPathfindingMalus(PathType.DANGER_FIRE, -1.0F);
+        this.setPathfindingMalus(PathType.WATER, -1.0F);
+        this.setPathfindingMalus(PathType.WATER_BORDER, 16.0F);
+        this.setPathfindingMalus(PathType.COCOA, -1.0F);
+        this.setPathfindingMalus(PathType.FENCE, -1.0F);
     }
 
-    public static DefaultAttributeContainer createLumwaspAttributes() {
-        return MobEntity.createMobAttributes()
-                .add(EntityAttributes.MAX_HEALTH, 16.0)
-                .add(EntityAttributes.FLYING_SPEED, 0.135)
-                .add(EntityAttributes.MOVEMENT_SPEED, 0.1)
-                .add(EntityAttributes.ATTACK_DAMAGE, 4.0)
-                .add(EntityAttributes.FOLLOW_RANGE, 16.0)
+    public static AttributeSupplier createLumwaspAttributes() {
+        return Mob.createMobAttributes()
+                .add(Attributes.MAX_HEALTH, 16.0)
+                .add(Attributes.FLYING_SPEED, 0.135)
+                .add(Attributes.MOVEMENT_SPEED, 0.1)
+                .add(Attributes.ATTACK_DAMAGE, 4.0)
+                .add(Attributes.FOLLOW_RANGE, 16.0)
                 .build();
     }
 
     @Override
-    public void shootAt(LivingEntity target, float pullProgress) {
+    public void performRangedAttack(LivingEntity target, float pullProgress) {
         int i = 0;
-        this.playSound(SoundEvents.ENTITY_LLAMA_SPIT, 1.0F, 1.0F);
+        this.playSound(SoundEvents.LLAMA_SPIT, 1.0F, 1.0F);
         double d = target.getEyeY() - 1.100000023841858;
         double e = target.getX() - this.getX();
         double g = target.getZ() - this.getZ();
         double h = Math.sqrt(e * e + g * g) * 0.20000000298023224;
         while (i <= 2) {
-            AcidSpitEntity projectile = new AcidSpitEntity(this.getEntityWorld(), this);
+            AcidSpitEntity projectile = new AcidSpitEntity(this.level(), this);
             double f = d - projectile.getY();
-            projectile.setVelocity(e, f + h, g, 1.6F, 10.0F);
-            this.getEntityWorld().spawnEntity(projectile);
+            projectile.shoot(e, f + h, g, 1.6F, 10.0F);
+            this.level().addFreshEntity(projectile);
             i++;
         }
     }
 
     @Override
-    protected void initGoals() {
-        this.goalSelector.add(1, new AlwaysEscapeSunlightGoal(this, 1.2D));
-        this.goalSelector.add(2, new MeleeCloseRangeGoal(this, 1.2D, 4, true));
-        this.goalSelector.add(3, new ProjectileAttackGoal(this, 1.1D, 45, 8));
-        this.goalSelector.add(5, new FlyGoal(this, 1.0D));
-        this.goalSelector.add(6, new LookAtEntityGoal(this, PlayerEntity.class, 8.0F));
-        this.goalSelector.add(6, new LookAroundGoal(this));
-        this.targetSelector.add(1, new RevengeGoal(this, LumwaspEntity.class, BreezeEntity.class).setGroupRevenge());
-        this.targetSelector.add(2, new ActiveTargetGoal<>(this, PlayerEntity.class, true));
-        this.targetSelector.add(3, new ActiveTargetGoal<>(this, IronGolemEntity.class, true));
-        this.targetSelector.add(3, new ActiveTargetGoal<>(this, BeeEntity.class, true));
+    protected void registerGoals() {
+        this.goalSelector.addGoal(1, new AlwaysEscapeSunlightGoal(this, 1.2D));
+        this.goalSelector.addGoal(2, new MeleeCloseRangeGoal(this, 1.2D, 4, true));
+        this.goalSelector.addGoal(3, new RangedAttackGoal(this, 1.1D, 45, 8));
+        this.goalSelector.addGoal(5, new WaterAvoidingRandomFlyingGoal(this, 1.0D));
+        this.goalSelector.addGoal(6, new LookAtPlayerGoal(this, Player.class, 8.0F));
+        this.goalSelector.addGoal(6, new RandomLookAroundGoal(this));
+        this.targetSelector.addGoal(1, new HurtByTargetGoal(this, LumwaspEntity.class, Breeze.class).setAlertOthers());
+        this.targetSelector.addGoal(2, new NearestAttackableTargetGoal<>(this, Player.class, true));
+        this.targetSelector.addGoal(3, new NearestAttackableTargetGoal<>(this, IronGolem.class, true));
+        this.targetSelector.addGoal(3, new NearestAttackableTargetGoal<>(this, Bee.class, true));
     }
 
     @Override
-    protected EntityNavigation createNavigation(World world) {
-        BirdNavigation birdNavigation = new BirdNavigation(this, world) {
-            public boolean isValidPosition(BlockPos pos) {
-                return this.world.isSkyVisible(pos);
+    protected PathNavigation createNavigation(Level world) {
+        FlyingPathNavigation birdNavigation = new FlyingPathNavigation(this, world) {
+            public boolean isStableDestination(BlockPos pos) {
+                return this.level.canSeeSky(pos);
             }
 
-            protected void adjustPath() {
-                super.adjustPath();
-                if (this.world.isSkyVisible(BlockPos.ofFloored(this.entity.getX(), this.entity.getY() + 0.5, this.entity.getZ()))) {
+            protected void trimPath() {
+                super.trimPath();
+                if (this.level.canSeeSky(BlockPos.containing(this.mob.getX(), this.mob.getY() + 0.5, this.mob.getZ()))) {
                     return;
                 }
-                if (this.currentPath != null) {
-                    for (int i = 0; i < this.currentPath.getLength(); ++i) {
-                        PathNode pathNode = this.currentPath.getNode(i);
-                        if (this.world.isSkyVisible(new BlockPos(pathNode.x, pathNode.y, pathNode.z))) {
-                            this.currentPath.setLength(i);
+                if (this.path != null) {
+                    for (int i = 0; i < this.path.getNodeCount(); ++i) {
+                        Node pathNode = this.path.getNode(i);
+                        if (this.level.canSeeSky(new BlockPos(pathNode.x, pathNode.y, pathNode.z))) {
+                            this.path.truncateNodes(i);
                             return;
                         }
                     }
@@ -110,7 +114,7 @@ public class LumwaspEntity extends HostileEntity implements RangedAttackMob, Flu
             }
         };
         birdNavigation.setCanOpenDoors(false);
-        birdNavigation.setCanSwim(false);
+        birdNavigation.setCanFloat(false);
         return birdNavigation;
     }
 
@@ -126,72 +130,72 @@ public class LumwaspEntity extends HostileEntity implements RangedAttackMob, Flu
 
     @Override
     protected void playStepSound(BlockPos pos, BlockState state) {
-        this.playSound(SoundEvents.ENTITY_SPIDER_STEP, 0.15F, 1.0F);
+        this.playSound(SoundEvents.SPIDER_STEP, 0.15F, 1.0F);
     }
 
     @Override
-    public boolean handleFallDamage(double fallDistance, float damageMultiplier, DamageSource damageSource) {
+    public boolean causeFallDamage(double fallDistance, float damageMultiplier, DamageSource damageSource) {
         return false;
     }
 
     @Override
-    public boolean isInvulnerableTo(ServerWorld world, DamageSource source) {
-        return source.isIn(VADamageTypes.ACID_TAG) || super.isInvulnerableTo(world, source);
+    public boolean isInvulnerableTo(ServerLevel world, DamageSource source) {
+        return source.is(VADamageTypes.ACID_TAG) || super.isInvulnerableTo(world, source);
     }
 
-    protected void fall(double heightDifference, boolean onGround, BlockState state, BlockPos landedPosition) {
-    }
-
-    @Override
-    protected boolean isFlappingWings() {
-        return this.isInAir();
+    protected void checkFallDamage(double heightDifference, boolean onGround, BlockState state, BlockPos landedPosition) {
     }
 
     @Override
-    public boolean isInAir() {
-        return !this.isOnGround();
+    protected boolean isFlapping() {
+        return this.isFlying();
     }
 
     @Override
-    public boolean canSpawn(WorldView world) {
-        return super.canSpawn(world);
+    public boolean isFlying() {
+        return !this.onGround();
     }
 
-    public static boolean canSpawnLumwasp(EntityType<? extends HostileEntity> type, ServerWorldAccess world, SpawnReason spawnReason, BlockPos pos, Random random) {
-        return world.getDifficulty() != Difficulty.PEACEFUL && (SpawnReason.isTrialSpawner(spawnReason) || LumwaspEntity.isSpawnDark(world, pos, random)) && HostileEntity.canMobSpawn(type, world, spawnReason, pos, random);
+    @Override
+    public boolean checkSpawnObstruction(LevelReader world) {
+        return super.checkSpawnObstruction(world);
     }
 
-    public static boolean isSpawnDark(ServerWorldAccess world, BlockPos pos, Random random) {
-        if (world.getLightLevel(LightType.SKY, pos) > random.nextInt(32)) {
+    public static boolean canSpawnLumwasp(EntityType<? extends Monster> type, ServerLevelAccessor world, EntitySpawnReason spawnReason, BlockPos pos, RandomSource random) {
+        return world.getDifficulty() != Difficulty.PEACEFUL && (EntitySpawnReason.ignoresLightRequirements(spawnReason) || LumwaspEntity.isDarkEnoughToSpawn(world, pos, random)) && Monster.checkMobSpawnRules(type, world, spawnReason, pos, random);
+    }
+
+    public static boolean isDarkEnoughToSpawn(ServerLevelAccessor world, BlockPos pos, RandomSource random) {
+        if (world.getBrightness(LightLayer.SKY, pos) > random.nextInt(32)) {
             return false;
         }
-        if (world.getLightLevel(LightType.BLOCK, pos) > 7) {
+        if (world.getBrightness(LightLayer.BLOCK, pos) > 7) {
             return false;
         }
-        DimensionType dimensionType = world.getDimension();
-        int j = world.toServerWorld().isThundering() ? world.getLightLevel(pos, 10) : world.getLightLevel(pos);
-        return j <= dimensionType.monsterSpawnLightTest().get(random);
+        DimensionType dimensionType = world.dimensionType();
+        int j = world.getLevel().isThundering() ? world.getMaxLocalRawBrightness(pos, 10) : world.getMaxLocalRawBrightness(pos);
+        return j <= dimensionType.monsterSpawnLightTest().sample(random);
     }
 
     @Override
-    protected void mobTick(ServerWorld world) {
-        if (this.isSubmergedInWater() && !((EntityInterface)this).virtualAdditions$isInAcid() ) {
-            this.damage(world, this.getDamageSources().drown(), 1.0F);
+    protected void customServerAiStep(ServerLevel world) {
+        if (this.isUnderWater() && !((EntityInterface)this).virtualAdditions$isInAcid() ) {
+            this.hurtServer(world, this.damageSources().drown(), 1.0F);
         }
     }
 
     @Override
-    public boolean tryAttack(ServerWorld world, Entity target) {
-        boolean bl = super.tryAttack(world, target);
+    public boolean doHurtTarget(ServerLevel world, Entity target) {
+        boolean bl = super.doHurtTarget(world, target);
         if (bl && world.getDifficulty().compareTo(Difficulty.EASY) > 0 && target instanceof LivingEntity livingEntity) {
-            if (!this.getStatusEffects().isEmpty()) {
-                for (StatusEffectInstance statusEffect : this.getStatusEffects()) {
-                    livingEntity.addStatusEffect(statusEffect, this);
+            if (!this.getActiveEffects().isEmpty()) {
+                for (MobEffectInstance statusEffect : this.getActiveEffects()) {
+                    livingEntity.addEffect(statusEffect, this);
                 }
             } else {
                 int duration = 100;
-                duration += (this.getEntityWorld().getDifficulty().getId() - 1) * 50;
-                livingEntity.addStatusEffect(new StatusEffectInstance(StatusEffects.WEAKNESS, duration), this);
+                duration += (this.level().getDifficulty().getId() - 1) * 50;
+                livingEntity.addEffect(new MobEffectInstance(MobEffects.WEAKNESS, duration), this);
             }
 
         }
@@ -200,61 +204,61 @@ public class LumwaspEntity extends HostileEntity implements RangedAttackMob, Flu
 
 
     @Override
-    public void travel(Vec3d movementInput) {
-        if (this.isOnGround()) {
+    public void travel(Vec3 movementInput) {
+        if (this.onGround()) {
             super.travel(movementInput);
             return;
         }
-        this.travelFlying(movementInput, this.getMovementSpeed());
+        this.travelFlying(movementInput, this.getSpeed());
     }
 
     private static class MeleeCloseRangeGoal extends MeleeAttackGoal {
         private final int startRange;
         private final int continueRange;
-        public MeleeCloseRangeGoal(PathAwareEntity mob, double speed, int range, boolean pauseWhenMobIdle) {
+        public MeleeCloseRangeGoal(PathfinderMob mob, double speed, int range, boolean pauseWhenMobIdle) {
             super(mob, speed, pauseWhenMobIdle);
             this.startRange = range * range;
             this.continueRange = (2 + range) * (2 + range);
         }
 
         @Override
-        public boolean canStart() {
-            return checkDistance(this.startRange) && super.canStart();
+        public boolean canUse() {
+            return checkDistance(this.startRange) && super.canUse();
         }
 
         @Override
-        public boolean shouldContinue() {
-            return checkDistance(this.continueRange) && super.shouldContinue();
+        public boolean canContinueToUse() {
+            return checkDistance(this.continueRange) && super.canContinueToUse();
         }
 
         private boolean checkDistance(int range) {
             boolean bl = false;
             LivingEntity target = this.mob.getTarget();
             if (target != null) {
-                bl = (this.mob.squaredDistanceTo(target) <= range);
+                bl = (this.mob.distanceToSqr(target) <= range);
             }
             return bl;
         }
     }
-    private static class AlwaysEscapeSunlightGoal extends EscapeSunlightGoal {
+    private static class AlwaysEscapeSunlightGoal extends FleeSunGoal {
 
-        private final World world;
+        private final Level world;
 
-        public AlwaysEscapeSunlightGoal(PathAwareEntity mob, double speed) {
+        public AlwaysEscapeSunlightGoal(PathfinderMob mob, double speed) {
             super(mob, speed);
-            this.world = mob.getEntityWorld();
+            this.world = mob.level();
         }
 
         @Override
-        public boolean canStart() {
+        public boolean canUse() {
             if (this.mob.getTarget() != null) {
                 return false;
-            } else if (!this.world.isDay()) {
+            } else if (!this.world.isBrightOutside()) {
                 return false;
-            } else if (!this.world.isSkyVisible(this.mob.getBlockPos())) {
+            } else if (!this.world.canSeeSky(this.mob.blockPosition())) {
                 return false;
             } else {
-                return this.targetShadedPos();
+                return this.setWantedPos();
             }
         }
     }

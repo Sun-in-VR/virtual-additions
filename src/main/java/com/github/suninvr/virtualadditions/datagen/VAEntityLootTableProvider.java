@@ -5,23 +5,23 @@ import com.github.suninvr.virtualadditions.registry.VAItems;
 import net.fabricmc.fabric.api.datagen.v1.FabricDataGenerator;
 import net.fabricmc.fabric.api.datagen.v1.FabricDataOutput;
 import net.fabricmc.fabric.api.datagen.v1.provider.FabricEntityLootTableProvider;
-import net.minecraft.entity.EntityType;
-import net.minecraft.item.Item;
-import net.minecraft.item.Items;
-import net.minecraft.loot.LootPool;
-import net.minecraft.loot.LootTable;
-import net.minecraft.loot.condition.*;
-import net.minecraft.loot.context.LootContext;
-import net.minecraft.loot.entry.ItemEntry;
-import net.minecraft.loot.function.EnchantedCountIncreaseLootFunction;
-import net.minecraft.loot.function.SetCountLootFunction;
-import net.minecraft.loot.provider.number.UniformLootNumberProvider;
-import net.minecraft.predicate.entity.EntityEquipmentPredicate;
-import net.minecraft.predicate.entity.EntityPredicate;
-import net.minecraft.predicate.item.ItemPredicate;
-import net.minecraft.registry.RegistryEntryLookup;
-import net.minecraft.registry.RegistryKeys;
-import net.minecraft.registry.RegistryWrapper;
+import net.minecraft.advancements.critereon.EntityEquipmentPredicate;
+import net.minecraft.advancements.critereon.EntityPredicate;
+import net.minecraft.advancements.critereon.ItemPredicate;
+import net.minecraft.core.HolderGetter;
+import net.minecraft.core.HolderLookup;
+import net.minecraft.core.registries.Registries;
+import net.minecraft.world.entity.EntityType;
+import net.minecraft.world.item.Item;
+import net.minecraft.world.item.Items;
+import net.minecraft.world.level.storage.loot.LootContext;
+import net.minecraft.world.level.storage.loot.LootPool;
+import net.minecraft.world.level.storage.loot.LootTable;
+import net.minecraft.world.level.storage.loot.entries.LootItem;
+import net.minecraft.world.level.storage.loot.functions.EnchantedCountIncreaseFunction;
+import net.minecraft.world.level.storage.loot.functions.SetItemCountFunction;
+import net.minecraft.world.level.storage.loot.predicates.*;
+import net.minecraft.world.level.storage.loot.providers.number.UniformGenerator;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.concurrent.CompletableFuture;
@@ -40,56 +40,56 @@ public class VAEntityLootTableProvider {
 
     protected static class BaseProvider extends Provider {
 
-        protected BaseProvider(FabricDataOutput output, @NotNull CompletableFuture<RegistryWrapper.WrapperLookup> registryLookup) {
+        protected BaseProvider(FabricDataOutput output, @NotNull CompletableFuture<HolderLookup.Provider> registryLookup) {
             super(output, registryLookup);
         }
 
         @Override
         public void generate() {
-            LootTable.Builder lumwaspBuilder = LootTable.builder()
-                    .pool(LootPool.builder().with(ItemEntry.builder(VAItems.LUMWASP_MANDIBLE)
-                            .apply(SetCountLootFunction.builder(UniformLootNumberProvider.create(-1.0F, 1.0F)))
-                            .apply(EnchantedCountIncreaseLootFunction.builder(this.registries, UniformLootNumberProvider.create(0.0F, 1.0F)))
+            LootTable.Builder lumwaspBuilder = LootTable.lootTable()
+                    .withPool(LootPool.lootPool().add(LootItem.lootTableItem(VAItems.LUMWASP_MANDIBLE)
+                            .apply(SetItemCountFunction.setCount(UniformGenerator.between(-1.0F, 1.0F)))
+                            .apply(EnchantedCountIncreaseFunction.lootingMultiplier(this.registries, UniformGenerator.between(0.0F, 1.0F)))
                     ))
-                    .pool(LootPool.builder().with(ItemEntry.builder(VAItems.SILK_THREAD)
-                            .apply(SetCountLootFunction.builder(UniformLootNumberProvider.create(-1.0F, 2.0F)))
-                            .apply(EnchantedCountIncreaseLootFunction.builder(this.registries, UniformLootNumberProvider.create(0.0F, 1.0F)))
+                    .withPool(LootPool.lootPool().add(LootItem.lootTableItem(VAItems.SILK_THREAD)
+                            .apply(SetItemCountFunction.setCount(UniformGenerator.between(-1.0F, 2.0F)))
+                            .apply(EnchantedCountIncreaseFunction.lootingMultiplier(this.registries, UniformGenerator.between(0.0F, 1.0F)))
                     ))
-                    .pool(LootPool.builder().with(ItemEntry.builder(VAItems.EXOSKELETON_ARMOR_TRIM_SMITHING_TEMPLATE)
-                            .conditionally(RandomChanceWithEnchantedBonusLootCondition.builder(this.registries, 0.005F, 0.003F))
+                    .withPool(LootPool.lootPool().add(LootItem.lootTableItem(VAItems.EXOSKELETON_ARMOR_TRIM_SMITHING_TEMPLATE)
+                            .when(LootItemRandomChanceWithEnchantedBonusCondition.randomChanceAndLootingBoost(this.registries, 0.005F, 0.003F))
                     ));
-            this.register(VAEntityType.LUMWASP, lumwaspBuilder);
+            this.add(VAEntityType.LUMWASP, lumwaspBuilder);
 
-            LootTable.Builder salineBuilder = LootTable.builder()
-                    .pool(LootPool.builder()
-                            .with(ItemEntry.builder(Items.ROTTEN_FLESH)
-                                .apply(SetCountLootFunction.builder(UniformLootNumberProvider.create(0.0F, 2.0F)))
-                                .apply(EnchantedCountIncreaseLootFunction.builder(this.registries, UniformLootNumberProvider.create(0.0F, 1.0F))))
-                            .with(ItemEntry.builder(VAItems.ROCK_SALT)
-                                .apply(SetCountLootFunction.builder(UniformLootNumberProvider.create(0.0F, 2.0F)))
-                                .apply(EnchantedCountIncreaseLootFunction.builder(this.registries, UniformLootNumberProvider.create(0.0F, 1.0F))))
+            LootTable.Builder salineBuilder = LootTable.lootTable()
+                    .withPool(LootPool.lootPool()
+                            .add(LootItem.lootTableItem(Items.ROTTEN_FLESH)
+                                .apply(SetItemCountFunction.setCount(UniformGenerator.between(0.0F, 2.0F)))
+                                .apply(EnchantedCountIncreaseFunction.lootingMultiplier(this.registries, UniformGenerator.between(0.0F, 1.0F))))
+                            .add(LootItem.lootTableItem(VAItems.ROCK_SALT)
+                                .apply(SetItemCountFunction.setCount(UniformGenerator.between(0.0F, 2.0F)))
+                                .apply(EnchantedCountIncreaseFunction.lootingMultiplier(this.registries, UniformGenerator.between(0.0F, 1.0F))))
                     )
-                    .pool(LootPool.builder()
-                            .with(ItemEntry.builder(VAItems.STEEL_INGOT)
-                                .conditionally(KilledByPlayerLootCondition.builder())
-                                .conditionally(RandomChanceWithEnchantedBonusLootCondition.builder(this.registries, 0.025F, 0.01F))
+                    .withPool(LootPool.lootPool()
+                            .add(LootItem.lootTableItem(VAItems.STEEL_INGOT)
+                                .when(LootItemKilledByPlayerCondition.killedByPlayer())
+                                .when(LootItemRandomChanceWithEnchantedBonusCondition.randomChanceAndLootingBoost(this.registries, 0.025F, 0.01F))
                             )
                     );
-            this.register(VAEntityType.SALINE, salineBuilder);
+            this.add(VAEntityType.SALINE, salineBuilder);
 
-            LootTable.Builder spectreBuilder = LootTable.builder()
-                    .pool(LootPool.builder()
-                            .with(ItemEntry.builder(VAItems.SPECTRAL_POWDER)
-                                .apply(SetCountLootFunction.builder(UniformLootNumberProvider.create(-1.0F, 1.0F)))
-                                .apply(EnchantedCountIncreaseLootFunction.builder(this.registries, UniformLootNumberProvider.create(0.0F, 1.0F))))
+            LootTable.Builder spectreBuilder = LootTable.lootTable()
+                    .withPool(LootPool.lootPool()
+                            .add(LootItem.lootTableItem(VAItems.SPECTRAL_POWDER)
+                                .apply(SetItemCountFunction.setCount(UniformGenerator.between(-1.0F, 1.0F)))
+                                .apply(EnchantedCountIncreaseFunction.lootingMultiplier(this.registries, UniformGenerator.between(0.0F, 1.0F))))
                     );
-            this.register(VAEntityType.SPECTRE, spectreBuilder);
+            this.add(VAEntityType.SPECTRE, spectreBuilder);
         }
     }
 
     protected static class PreviewProvider extends Provider {
 
-        protected PreviewProvider(FabricDataOutput output, @NotNull CompletableFuture<RegistryWrapper.WrapperLookup> registryLookup) {
+        protected PreviewProvider(FabricDataOutput output, @NotNull CompletableFuture<HolderLookup.Provider> registryLookup) {
             super(output, registryLookup);
         }
 
@@ -101,45 +101,45 @@ public class VAEntityLootTableProvider {
 
     protected static class EnhancementsProvider extends Provider {
 
-        protected EnhancementsProvider(FabricDataOutput output, @NotNull CompletableFuture<RegistryWrapper.WrapperLookup> registryLookup) {
+        protected EnhancementsProvider(FabricDataOutput output, @NotNull CompletableFuture<HolderLookup.Provider> registryLookup) {
             super(output, registryLookup);
         }
 
         @Override
         public void generate() {
-            RegistryEntryLookup<Item> registryEntryLookup = registries.getOrThrow(RegistryKeys.ITEM);
+            HolderGetter<Item> registryEntryLookup = registries.lookupOrThrow(Registries.ITEM);
 
-            LootTable.Builder witherSkeletonBuilder = LootTable.builder()
-                    .pool(LootPool.builder().with(commonDrop(Items.COAL, -1, 1)))
-                    .pool(LootPool.builder().with(commonDrop(Items.BONE, 0, 1)))
-                    .pool(LootPool.builder().with(ItemEntry.builder(Items.WITHER_SKELETON_SKULL)
-                            .conditionally(KilledByPlayerLootCondition.builder())
-                            .conditionally(AnyOfLootCondition.builder(
-                                    RandomChanceWithEnchantedBonusLootCondition.builder(registries, 0.025F, 0.01F),
-                                    AllOfLootCondition.builder(
-                                            RandomChanceWithEnchantedBonusLootCondition.builder(registries, 0.4F, 0.2F),
-                                            EntityPropertiesLootCondition.builder(LootContext.EntityReference.THIS, EntityPredicate.Builder.create().equipment(EntityEquipmentPredicate.Builder.create().head(ItemPredicate.Builder.create().items(registryEntryLookup, Items.NETHERITE_HELMET))))
+            LootTable.Builder witherSkeletonBuilder = LootTable.lootTable()
+                    .withPool(LootPool.lootPool().add(commonDrop(Items.COAL, -1, 1)))
+                    .withPool(LootPool.lootPool().add(commonDrop(Items.BONE, 0, 1)))
+                    .withPool(LootPool.lootPool().add(LootItem.lootTableItem(Items.WITHER_SKELETON_SKULL)
+                            .when(LootItemKilledByPlayerCondition.killedByPlayer())
+                            .when(AnyOfCondition.anyOf(
+                                    LootItemRandomChanceWithEnchantedBonusCondition.randomChanceAndLootingBoost(registries, 0.025F, 0.01F),
+                                    AllOfCondition.allOf(
+                                            LootItemRandomChanceWithEnchantedBonusCondition.randomChanceAndLootingBoost(registries, 0.4F, 0.2F),
+                                            LootItemEntityPropertyCondition.hasProperties(LootContext.EntityTarget.THIS, EntityPredicate.Builder.entity().equipment(EntityEquipmentPredicate.Builder.equipment().head(ItemPredicate.Builder.item().of(registryEntryLookup, Items.NETHERITE_HELMET))))
                                     )
                             ))
 
                     ));
 
-            this.register(EntityType.WITHER_SKELETON, witherSkeletonBuilder);
+            this.add(EntityType.WITHER_SKELETON, witherSkeletonBuilder);
         }
     }
 
     protected static abstract class Provider extends FabricEntityLootTableProvider {
-        protected Provider(FabricDataOutput output, @NotNull CompletableFuture<RegistryWrapper.WrapperLookup> registryLookup) {
+        protected Provider(FabricDataOutput output, @NotNull CompletableFuture<HolderLookup.Provider> registryLookup) {
             super(output, registryLookup);
         }
 
-        protected ItemEntry.Builder commonDrop(Item item, int baseMin, int baseMax, int enchantedMin, int enchantedMax) {
-            return ItemEntry.builder(item)
-                    .apply(SetCountLootFunction.builder(UniformLootNumberProvider.create(baseMin, baseMax)))
-                    .apply(EnchantedCountIncreaseLootFunction.builder(registries, UniformLootNumberProvider.create(enchantedMin, enchantedMax)));
+        protected LootItem.Builder commonDrop(Item item, int baseMin, int baseMax, int enchantedMin, int enchantedMax) {
+            return LootItem.lootTableItem(item)
+                    .apply(SetItemCountFunction.setCount(UniformGenerator.between(baseMin, baseMax)))
+                    .apply(EnchantedCountIncreaseFunction.lootingMultiplier(registries, UniformGenerator.between(enchantedMin, enchantedMax)));
         }
 
-        protected ItemEntry.Builder commonDrop(Item item, int baseMin, int baseMax) {
+        protected LootItem.Builder commonDrop(Item item, int baseMin, int baseMax) {
             return commonDrop(item, baseMin, baseMax, 0, 1);
         }
     }

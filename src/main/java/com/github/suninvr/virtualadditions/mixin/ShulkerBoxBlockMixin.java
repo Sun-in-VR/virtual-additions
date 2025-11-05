@@ -3,10 +3,10 @@ package com.github.suninvr.virtualadditions.mixin;
 import com.github.suninvr.virtualadditions.VirtualAdditions;
 import com.github.suninvr.virtualadditions.registry.VABlocks;
 import com.github.suninvr.virtualadditions.registry.VADyeColors;
-import net.minecraft.block.Block;
-import net.minecraft.block.Blocks;
-import net.minecraft.block.ShulkerBoxBlock;
-import net.minecraft.util.DyeColor;
+import net.minecraft.world.item.DyeColor;
+import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.Blocks;
+import net.minecraft.world.level.block.ShulkerBoxBlock;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
@@ -14,7 +14,7 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
 @Mixin(ShulkerBoxBlock.class)
 public class ShulkerBoxBlockMixin {
-    @Inject(method = "get", at = @At(value = "HEAD"), cancellable = true)
+    @Inject(method = "getBlockByColor", at = @At(value = "HEAD"), cancellable = true)
     private static void virtualAdditions$getCustomShulkerBox(DyeColor dyeColor, CallbackInfoReturnable<Block> cir) {
         if (dyeColor != null) {
             boolean bl = VirtualAdditions.areBlocksInitialized();

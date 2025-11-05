@@ -2,34 +2,34 @@ package com.github.suninvr.virtualadditions.block;
 
 import com.github.suninvr.virtualadditions.registry.VAItems;
 import com.mojang.serialization.MapCodec;
-import net.minecraft.block.Block;
-import net.minecraft.block.BlockState;
-import net.minecraft.block.CropBlock;
-import net.minecraft.block.ShapeContext;
-import net.minecraft.item.ItemConvertible;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.shape.VoxelShape;
-import net.minecraft.world.BlockView;
+import net.minecraft.core.BlockPos;
+import net.minecraft.world.level.BlockGetter;
+import net.minecraft.world.level.ItemLike;
+import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.CropBlock;
+import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.phys.shapes.CollisionContext;
+import net.minecraft.world.phys.shapes.VoxelShape;
 
 public class CabbageCropBlock extends CropBlock {
-    public static final MapCodec<CabbageCropBlock> CODEC = createCodec(CabbageCropBlock::new);
-    private static final VoxelShape[] SHAPES_BY_AGE = Block.createShapeArray(7, (age) -> Block.createColumnShape(16.0, 0.0, 2 + age));
+    public static final MapCodec<CabbageCropBlock> CODEC = simpleCodec(CabbageCropBlock::new);
+    private static final VoxelShape[] SHAPES_BY_AGE = Block.boxes(7, (age) -> Block.column(16.0, 0.0, 2 + age));
 
-    public CabbageCropBlock(Settings settings) {
+    public CabbageCropBlock(Properties settings) {
         super(settings);
     }
 
     @Override
-    public MapCodec<? extends CropBlock> getCodec() {
+    public MapCodec<? extends CropBlock> codec() {
         return CODEC;
     }
 
     @Override
-    protected ItemConvertible getSeedsItem() {
+    protected ItemLike getBaseSeedId() {
         return VAItems.CABBAGE_SEEDS;
     }
 
-    protected VoxelShape getOutlineShape(BlockState state, BlockView world, BlockPos pos, ShapeContext context) {
+    protected VoxelShape getShape(BlockState state, BlockGetter world, BlockPos pos, CollisionContext context) {
         return SHAPES_BY_AGE[this.getAge(state)];
     }
 }

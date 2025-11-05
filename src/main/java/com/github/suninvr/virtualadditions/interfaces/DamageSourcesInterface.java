@@ -2,8 +2,8 @@ package com.github.suninvr.virtualadditions.interfaces;
 
 import com.github.suninvr.virtualadditions.entity.AcidSpitEntity;
 import com.github.suninvr.virtualadditions.entity.PlayerProjectionEntity;
-import net.minecraft.entity.Entity;
-import net.minecraft.entity.damage.DamageSource;
+import net.minecraft.world.damagesource.DamageSource;
+import net.minecraft.world.entity.Entity;
 import org.jetbrains.annotations.Nullable;
 
 public interface DamageSourcesInterface {

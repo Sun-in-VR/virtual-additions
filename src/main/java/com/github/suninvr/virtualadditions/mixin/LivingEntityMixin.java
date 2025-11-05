@@ -2,27 +2,27 @@ package com.github.suninvr.virtualadditions.mixin;
 
 import com.github.suninvr.virtualadditions.entity.SpectreEntity;
 import com.github.suninvr.virtualadditions.item.VAToolUtil;
-import com.github.suninvr.virtualadditions.registry.VAGildTypes;
 import com.github.suninvr.virtualadditions.registry.VABlockTags;
+import com.github.suninvr.virtualadditions.registry.VAGildTypes;
 import com.github.suninvr.virtualadditions.registry.VAStatusEffects;
-import net.minecraft.block.BlockState;
-import net.minecraft.entity.Entity;
-import net.minecraft.entity.EntityType;
-import net.minecraft.entity.LivingEntity;
-import net.minecraft.entity.damage.DamageSource;
-import net.minecraft.entity.effect.StatusEffect;
-import net.minecraft.entity.effect.StatusEffectInstance;
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.item.ItemStack;
-import net.minecraft.particle.VibrationParticleEffect;
-import net.minecraft.registry.entry.RegistryEntry;
-import net.minecraft.server.world.ServerWorld;
-import net.minecraft.sound.SoundEvents;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.math.Vec3d;
-import net.minecraft.util.shape.VoxelShapes;
-import net.minecraft.world.World;
-import net.minecraft.world.event.EntityPositionSource;
+import net.minecraft.core.BlockPos;
+import net.minecraft.core.Holder;
+import net.minecraft.core.particles.VibrationParticleOption;
+import net.minecraft.server.level.ServerLevel;
+import net.minecraft.sounds.SoundEvents;
+import net.minecraft.world.damagesource.DamageSource;
+import net.minecraft.world.effect.MobEffect;
+import net.minecraft.world.effect.MobEffectInstance;
+import net.minecraft.world.entity.Entity;
+import net.minecraft.world.entity.EntityType;
+import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.level.Level;
+import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.gameevent.EntityPositionSource;
+import net.minecraft.world.phys.Vec3;
+import net.minecraft.world.phys.shapes.Shapes;
 import org.jetbrains.annotations.Nullable;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
@@ -40,26 +40,26 @@ public abstract class LivingEntityMixin extends Entity {
 
     @Shadow protected boolean dead;
 
-    @Shadow @Nullable public abstract StatusEffectInstance getStatusEffect(RegistryEntry<StatusEffect> effect);
+    @Shadow public abstract boolean hasEffect(Holder<MobEffect> holder);
 
-    @Shadow public abstract boolean hasStatusEffect(RegistryEntry<StatusEffect> effect);
+    @Shadow @Nullable public abstract MobEffectInstance getEffect(Holder<MobEffect> holder);
 
-    @Shadow public abstract Collection<StatusEffectInstance> getStatusEffects();
+    @Shadow public abstract Collection<MobEffectInstance> getActiveEffects();
 
     @Unique private long lastHurtByFesteringWounds;
 
     @Unique private float experienceMultiplier = 1.0F;
 
-    public LivingEntityMixin(EntityType<?> type, World world) {
+    public LivingEntityMixin(EntityType<?> type, Level world) {
         super(type, world);
     }
 
-    @Inject(method = "onDeath", at = @At("HEAD"))
+    @Inject(method = "die", at = @At("HEAD"))
     void virtualAdditions$setExperienceMultiplier(DamageSource source, CallbackInfo ci) {
-        if (!this.isRemoved() && !this.dead && !((LivingEntity)(Object)(this) instanceof PlayerEntity)) {
-            Entity entity = source.getAttacker();
-            if (entity instanceof PlayerEntity playerEntity) {
-                ItemStack stack = playerEntity.getMainHandStack();
+        if (!this.isRemoved() && !this.dead && !((LivingEntity)(Object)(this) instanceof Player)) {
+            Entity entity = source.getEntity();
+            if (entity instanceof Player playerEntity) {
+                ItemStack stack = playerEntity.getMainHandItem();
                 if (VAGildTypes.EMERALD.equals(VAToolUtil.getGildType(stack))) {
                     this.experienceMultiplier = 1.6F;
                 }
@@ -67,56 +67,52 @@ public abstract class LivingEntityMixin extends Entity {
         }
     }
 
-    @Inject(method = "onRemove", at = @At("HEAD"))
+    @Inject(method = "remove", at = @At("HEAD"))
     void virtualAdditions$onRemoveSpectre(RemovalReason reason, CallbackInfo ci) {
         if ((Object)(this) instanceof SpectreEntity spectre) {
             spectre.setBuffTarget(null);
         }
     }
 
-    @Inject(method = "modifyAppliedDamage", at = @At("RETURN"), cancellable = true)
+    @Inject(method = "getDamageAfterMagicAbsorb", at = @At("RETURN"), cancellable = true)
     void virtualAdditions$modifyAppliedDamageForFrailty(DamageSource source, float amount, CallbackInfoReturnable<Float> cir) {
-        if (this.hasStatusEffect(VAStatusEffects.FRAILTY)) cir.setReturnValue(cir.getReturnValueF() * (1.0F + (0.2F * (this.getStatusEffect(VAStatusEffects.FRAILTY).getAmplifier() + 1))));
+        if (this.hasEffect(VAStatusEffects.FRAILTY)) cir.setReturnValue(cir.getReturnValueF() * (1.0F + (0.2F * (this.getEffect(VAStatusEffects.FRAILTY).getAmplifier() + 1))));
     }
 
-    @Inject(method = "applyDamage", at = @At("TAIL"))
-    void virtualAdditions$spreadDamageForFesteringWoundsEffect(ServerWorld world, DamageSource source, float amount, CallbackInfo ci) {
-        if (this.hasStatusEffect(VAStatusEffects.FESTERING_WOUNDS) && this.lastHurtByFesteringWounds != world.getTime()) {
-            this.lastHurtByFesteringWounds = world.getTime();
-            world.getNonSpectatingEntities(LivingEntity.class, this.getBoundingBox().expand(12, 12, 12)).stream().filter(entity -> entity != (Object)this).forEach(entity -> {
-                if (entity.hasStatusEffect(VAStatusEffects.FESTERING_WOUNDS)) {
-                    if (entity.damage(world, source, amount)) {
-                        this.getStatusEffects().forEach(statusEffectInstance -> {
-                            RegistryEntry<StatusEffect> effect = statusEffectInstance.getEffectType();
-                            if (!entity.hasStatusEffect(effect) || entity.getStatusEffect(effect).compareTo(statusEffectInstance) < 0) {
-                                entity.addStatusEffect(statusEffectInstance);
+    @Inject(method = "hurtServer", at = @At("TAIL"))
+    void virtualAdditions$spreadDamageForFesteringWoundsEffect(ServerLevel world, DamageSource damageSource, float f, CallbackInfoReturnable<Boolean> cir) {
+        if (this.hasEffect(VAStatusEffects.FESTERING_WOUNDS) && this.lastHurtByFesteringWounds != world.getGameTime()) {
+            this.lastHurtByFesteringWounds = world.getGameTime();
+            world.getEntitiesOfClass(LivingEntity.class, this.getBoundingBox().inflate(12, 12, 12)).stream().filter(entity -> entity != (Object)this).forEach(entity -> {
+                if (entity.hasEffect(VAStatusEffects.FESTERING_WOUNDS)) {
+                    if (entity.hurtServer(world, damageSource, f)) {
+                        this.getActiveEffects().forEach(statusEffectInstance -> {
+                            Holder<MobEffect> effect = statusEffectInstance.getEffect();
+                            if (!entity.hasEffect(effect) || entity.getEffect(effect).compareTo(statusEffectInstance) < 0) {
+                                entity.addEffect(statusEffectInstance);
                             }
                         });
-                        world.spawnParticles(new VibrationParticleEffect(new EntityPositionSource(entity, entity.getEyeHeight(entity.getPose())), 8), this.getX(), this.getEyeY(), this.getZ(), 1, 0, 0, 0, 0);
-                        world.playSound(entity, entity.getBlockPos(), SoundEvents.BLOCK_SCULK_CHARGE, entity.getSoundCategory(), 1.0F, 0.5F);
+                        world.sendParticles(new VibrationParticleOption(new EntityPositionSource(entity, entity.getEyeHeight(entity.getPose())), 8), this.getX(), this.getEyeY(), this.getZ(), 1, 0, 0, 0, 0);
+                        world.playSound(entity, entity.blockPosition(), SoundEvents.SCULK_BLOCK_CHARGE, entity.getSoundSource(), 1.0F, 0.5F);
                     }
                 };
             });
         }
     }
 
-    @Inject(method = "isClimbing", at = @At("HEAD"), cancellable = true)
+    @Inject(method = "onClimbable", at = @At("HEAD"), cancellable = true)
     void virtualAdditions$isClimbingRope(CallbackInfoReturnable<Boolean> cir) {
-        if (!this.isSpectator() && !(this.getEntityWorld() == null)) {
-            if (this.getEntityWorld().getBlockState(this.getBlockPos()).getCollisionShape(this.getEntityWorld(), this.getBlockPos()).equals(VoxelShapes.empty())) {
-                BlockPos blockPos = this.getBlockPos().down();
-                BlockState state = this.getEntityWorld().getBlockState(blockPos);
-                if (state.isIn(VABlockTags.CLIMBING_ROPES)) cir.setReturnValue(true);
+        if (!this.isSpectator() && !(this.level() == null)) {
+            if (this.level().getBlockState(this.blockPosition()).getCollisionShape(this.level(), this.blockPosition()).equals(Shapes.empty())) {
+                BlockPos blockPos = this.blockPosition().below();
+                BlockState state = this.level().getBlockState(blockPos);
+                if (state.is(VABlockTags.CLIMBING_ROPES)) cir.setReturnValue(true);
             }
         }
     }
 
-    @Inject(method = "getExperienceToDrop(Lnet/minecraft/server/world/ServerWorld;Lnet/minecraft/entity/Entity;)I", at = @At("RETURN"), cancellable = true)
-    void virtualAdditions$getModifiedXpToDrop(ServerWorld world, Entity attacker, CallbackInfoReturnable<Integer> cir) {
+    @Inject(method = "getBaseExperienceReward", at = @At("RETURN"), cancellable = true)
+    void virtualAdditions$getModifiedXpToDrop(ServerLevel serverLevel, CallbackInfoReturnable<Integer> cir) {
         cir.setReturnValue((int) (cir.getReturnValueI() * this.experienceMultiplier));
-    }
-
-    @Inject(method = "travelControlled", at = @At("HEAD"))
-    void virtualAdditions$travelConteolled(PlayerEntity controllingPlayer, Vec3d movementInput, CallbackInfo ci) {
     }
 }

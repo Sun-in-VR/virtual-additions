@@ -8,62 +8,60 @@ import com.github.suninvr.virtualadditions.recipe.ColoringRecipeDisplay;
 import com.github.suninvr.virtualadditions.recipe.ColoringStationRecipe;
 import com.github.suninvr.virtualadditions.registry.VAScreenHandler;
 import net.fabricmc.fabric.api.networking.v1.ServerPlayNetworking;
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.entity.player.PlayerInventory;
-import net.minecraft.inventory.CraftingResultInventory;
-import net.minecraft.inventory.Inventory;
-import net.minecraft.inventory.SimpleInventory;
-import net.minecraft.item.DyeItem;
-import net.minecraft.item.Item;
-import net.minecraft.item.ItemStack;
-import net.minecraft.network.RegistryByteBuf;
-import net.minecraft.network.codec.PacketCodec;
-import net.minecraft.network.codec.PacketCodecs;
-import net.minecraft.recipe.RecipeEntry;
-import net.minecraft.recipe.input.RecipeInput;
-import net.minecraft.registry.tag.ItemTags;
-import net.minecraft.screen.*;
-import net.minecraft.screen.slot.Slot;
-import net.minecraft.server.network.ServerPlayerEntity;
-import net.minecraft.sound.SoundCategory;
-import net.minecraft.sound.SoundEvents;
-import net.minecraft.world.World;
+import net.minecraft.network.RegistryFriendlyByteBuf;
+import net.minecraft.network.codec.ByteBufCodecs;
+import net.minecraft.network.codec.StreamCodec;
+import net.minecraft.server.level.ServerPlayer;
+import net.minecraft.sounds.SoundEvents;
+import net.minecraft.sounds.SoundSource;
+import net.minecraft.tags.ItemTags;
+import net.minecraft.world.Container;
+import net.minecraft.world.SimpleContainer;
+import net.minecraft.world.entity.player.Inventory;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.inventory.*;
+import net.minecraft.world.item.DyeItem;
+import net.minecraft.world.item.Item;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.crafting.RecipeHolder;
+import net.minecraft.world.item.crafting.RecipeInput;
+import net.minecraft.world.level.Level;
 
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
 import java.util.Optional;
 
-public class ColoringStationScreenHandler extends ScreenHandler {
+public class ColoringStationScreenHandler extends AbstractContainerMenu {
     private final DyeContents dyeContents;
     private DyeContents dyeContentsAdder;
-    private final World world;
-    private final PlayerInventory playerInventory;
+    private final Level world;
+    private final Inventory playerInventory;
     private ColoringRecipeDisplay.Grouping<ColoringStationRecipe> coloringRecipes = ColoringRecipeDisplay.Grouping.empty();
     private List<ColoringRecipeData> recipeData = new ArrayList<>();
     public static List<ColoringRecipeData> recipeDataOnLoad = new ArrayList<>();
-    private List<RecipeEntry<ColoringStationRecipe>> recipeEntries = new ArrayList<>();
+    private List<RecipeHolder<ColoringStationRecipe>> recipeEntries = new ArrayList<>();
     private ItemStack inputStack = ItemStack.EMPTY;
-    private final Property selectedRecipe = Property.create();
-    private final PropertyDelegate propertyDelegate;
-    private final ScreenHandlerContext context;
+    private final DataSlot selectedRecipe = DataSlot.standalone();
+    private final ContainerData propertyDelegate;
+    private final ContainerLevelAccess context;
     long lastTakeTime = 0;
     final Slot dyeSlot;
     final Slot inputSlot;
     final Slot outputSlot;
     Runnable contentsChangedListener = () -> {};
-    public final Inventory input = new SimpleInventory(2){
+    public final Container input = new SimpleContainer(2){
         @Override
-        public void markDirty() {
-            super.markDirty();
-            ColoringStationScreenHandler.this.onContentChanged(this);
+        public void setChanged() {
+            super.setChanged();
+            ColoringStationScreenHandler.this.slotsChanged(this);
             ColoringStationScreenHandler.this.contentsChangedListener.run();
         }
     };
     public final RecipeInput recipeInput = new RecipeInput() {
         @Override
-        public ItemStack getStackInSlot(int slot) {
-            return ColoringStationScreenHandler.this.input.getStack(1);
+        public ItemStack getItem(int slot) {
+            return ColoringStationScreenHandler.this.input.getItem(1);
         }
 
         @Override
@@ -73,19 +71,19 @@ public class ColoringStationScreenHandler extends ScreenHandler {
 
         @Override
         public boolean isEmpty() {
-            return this.getStackInSlot(0).isEmpty();
+            return this.getItem(0).isEmpty();
         }
     };
-    final CraftingResultInventory output = new CraftingResultInventory();
+    final ResultContainer output = new ResultContainer();
 
-    public ColoringStationScreenHandler(int syncId, PlayerInventory playerInventory) {
-        this(syncId, playerInventory, ScreenHandlerContext.EMPTY, new ArrayPropertyDelegate(6));
+    public ColoringStationScreenHandler(int syncId, Inventory playerInventory) {
+        this(syncId, playerInventory, ContainerLevelAccess.NULL, new SimpleContainerData(6));
     }
 
-    public ColoringStationScreenHandler(int syncId, PlayerInventory playerInventory, final ScreenHandlerContext context, PropertyDelegate propertyDelegate) {
+    public ColoringStationScreenHandler(int syncId, Inventory playerInventory, final ContainerLevelAccess context, ContainerData propertyDelegate) {
         super(VAScreenHandler.COLORING_STATION, syncId);
         this.propertyDelegate = propertyDelegate;
-        this.addProperties(propertyDelegate);
+        this.addDataSlots(propertyDelegate);
         this.dyeContents = new DyeContents(propertyDelegate){
             @Override
             public int getR() {
@@ -143,7 +141,7 @@ public class ColoringStationScreenHandler extends ScreenHandler {
             }
         };
         this.dyeContentsAdder = new DyeContents();
-        this.world = playerInventory.player.getEntityWorld();
+        this.world = playerInventory.player.level();
         this.playerInventory = playerInventory;
         this.context = context;
 
@@ -152,27 +150,27 @@ public class ColoringStationScreenHandler extends ScreenHandler {
         this.inputSlot = this.addSlot(new Slot(this.input, 1,28, 15));
         this.outputSlot = this.addSlot(new Slot(this.output, 2,143, 33){
             @Override
-            public boolean canInsert(ItemStack stack) {
+            public boolean mayPlace(ItemStack stack) {
                 return false;
             }
 
             @Override
-            public void onTakeItem(PlayerEntity player, ItemStack stack) {
-                stack.onCraftByPlayer(player, stack.getCount());
-                ColoringStationScreenHandler.this.output.unlockLastRecipe(player, List.of(ColoringStationScreenHandler.this.inputStack));
-                ColoringStationScreenHandler.this.inputSlot.takeStack(1);
+            public void onTake(Player player, ItemStack stack) {
+                stack.onCraftedBy(player, stack.getCount());
+                ColoringStationScreenHandler.this.output.awardUsedRecipes(player, List.of(ColoringStationScreenHandler.this.inputStack));
+                ColoringStationScreenHandler.this.inputSlot.remove(1);
                 ColoringStationScreenHandler.this.addDyeContents();
                 ColoringStationScreenHandler.this.updateDyeInput();
                 ColoringStationScreenHandler.this.populateResult();
-                ColoringStationScreenHandler.this.context.run((world, pos) -> {
-                    long l = world.getTime();
+                ColoringStationScreenHandler.this.context.execute((world, pos) -> {
+                    long l = world.getGameTime();
                     if (ColoringStationScreenHandler.this.lastTakeTime != l) {
-                        world.playSound(null, pos, SoundEvents.ITEM_DYE_USE, SoundCategory.BLOCKS, 1.0f, 1.0f);
+                        world.playSound(null, pos, SoundEvents.DYE_USE, SoundSource.BLOCKS, 1.0f, 1.0f);
                         ColoringStationScreenHandler.this.lastTakeTime = l;
                     }
                     ColoringStationScreenHandler.this.markBlockEntityDirty();
                 });
-                super.onTakeItem(player, stack);
+                super.onTake(player, stack);
             }
 
         });
@@ -195,9 +193,9 @@ public class ColoringStationScreenHandler extends ScreenHandler {
     }
 
     @Override
-    public void onClosed(PlayerEntity player) {
-        super.onClosed(player);
-        this.context.run((world, pos) -> this.dropInventory(player, this.input));
+    public void removed(Player player) {
+        super.removed(player);
+        this.context.execute((world, pos) -> this.clearContainer(player, this.input));
     }
 
     public int getSelectedRecipe() {
@@ -221,47 +219,47 @@ public class ColoringStationScreenHandler extends ScreenHandler {
     }
 
     @Override
-    public ItemStack quickMove(PlayerEntity player, int slot) {
+    public ItemStack quickMoveStack(Player player, int slot) {
         ItemStack itemStack = ItemStack.EMPTY;
         Slot clickedSlot = this.slots.get(slot);
-        if (clickedSlot.hasStack()) {
-            ItemStack itemStack2 = clickedSlot.getStack();
+        if (clickedSlot.hasItem()) {
+            ItemStack itemStack2 = clickedSlot.getItem();
             Item item = itemStack2.getItem();
             itemStack = itemStack2.copy();
             if (slot == 2) {
-                item.onCraftByPlayer(itemStack2, player);
-                if (!this.insertItem(itemStack2, 3, 39, true)) {
+                item.onCraftedBy(itemStack2, player);
+                if (!this.moveItemStackTo(itemStack2, 3, 39, true)) {
                     return ItemStack.EMPTY;
                 }
-                clickedSlot.onQuickTransfer(itemStack2, itemStack);
-            } else if (slot <= 1 ? !this.insertItem(itemStack2, 3, 39, false)
+                clickedSlot.onQuickCraft(itemStack2, itemStack);
+            } else if (slot <= 1 ? !this.moveItemStackTo(itemStack2, 3, 39, false)
                             : !(itemStack2.getItem() instanceof DyeItem)
-                                ? !this.insertItem(itemStack2, 1, 2, false)
-                                : itemStack2.getItem() instanceof DyeItem ? !this.insertItem(itemStack2, 0, 1, false) : (slot >= 3 && slot < 30
-                                    ? !this.insertItem(itemStack2, 30, 39, false)
-                                    : slot >= 30 && slot < 39 && !this.insertItem(itemStack2, 3, 30, false))) {
+                                ? !this.moveItemStackTo(itemStack2, 1, 2, false)
+                                : itemStack2.getItem() instanceof DyeItem ? !this.moveItemStackTo(itemStack2, 0, 1, false) : (slot >= 3 && slot < 30
+                                    ? !this.moveItemStackTo(itemStack2, 30, 39, false)
+                                    : slot >= 30 && slot < 39 && !this.moveItemStackTo(itemStack2, 3, 30, false))) {
                 return ItemStack.EMPTY;
             }
             if (itemStack2.isEmpty()) {
-                clickedSlot.setStack(ItemStack.EMPTY);
+                clickedSlot.setByPlayer(ItemStack.EMPTY);
             }
-            clickedSlot.markDirty();
+            clickedSlot.setChanged();
             if (itemStack2.getCount() == itemStack.getCount()) {
                 return ItemStack.EMPTY;
             }
-            clickedSlot.onTakeItem(player, itemStack2);
-            this.sendContentUpdates();
+            clickedSlot.onTake(player, itemStack2);
+            this.broadcastChanges();
         }
         return itemStack;
     }
 
     @Override
-    public boolean canUse(PlayerEntity player) {
+    public boolean stillValid(Player player) {
         return true;
     }
 
     @Override
-    public boolean onButtonClick(PlayerEntity player, int id) {
+    public boolean clickMenuButton(Player player, int id) {
         if (this.isInBounds(id)) {
             this.selectedRecipe.set(id);
             this.populateResult();
@@ -274,10 +272,10 @@ public class ColoringStationScreenHandler extends ScreenHandler {
     }
 
     @Override
-    public void onContentChanged(Inventory inventory) {
-        ItemStack itemStack = this.inputSlot.getStack();
+    public void slotsChanged(Container inventory) {
+        ItemStack itemStack = this.inputSlot.getItem();
         if (!itemStack.equals(this.inputStack)) {
-            if (!(itemStack.isOf(this.inputStack.getItem()))) {
+            if (!(itemStack.is(this.inputStack.getItem()))) {
                 this.updateInput(itemStack);
             }
             this.populateResult();
@@ -287,8 +285,8 @@ public class ColoringStationScreenHandler extends ScreenHandler {
     }
 
     private void updateDyeInput() {
-        ItemStack dyeStack = this.dyeSlot.getStack();
-        if (this.dyeSlot.hasStack()) {
+        ItemStack dyeStack = this.dyeSlot.getItem();
+        if (this.dyeSlot.hasItem()) {
             this.dyeContents.addDye(dyeStack);
             this.populateResult();
             ColoringStationScreenHandler.this.markBlockEntityDirty();
@@ -297,14 +295,14 @@ public class ColoringStationScreenHandler extends ScreenHandler {
 
     private void updateInput(ItemStack stack) {
         this.selectedRecipe.set(-1);
-        this.outputSlot.setStackNoCallbacks(ItemStack.EMPTY);
-        if (!this.world.isClient()) {
+        this.outputSlot.set(ItemStack.EMPTY);
+        if (!this.world.isClientSide()) {
             List<ColoringRecipeData> recipeDataList = new ArrayList<>();
-            List<RecipeEntry<ColoringStationRecipe>> recipeEntries = new ArrayList<>();
-            this.coloringRecipes = ((RecipeManagerInterface) this.world.getRecipeManager()).virtualAdditions$getColoringRecipes().filter(stack);
+            List<RecipeHolder<ColoringStationRecipe>> recipeEntries = new ArrayList<>();
+            this.coloringRecipes = ((RecipeManagerInterface) this.world.recipeAccess()).virtualAdditions$getColoringRecipes().filter(stack);
             this.coloringRecipes.entries().forEach(entry -> {
                 if (entry.recipe().recipeEntry().isPresent()) {
-                    RecipeEntry<ColoringStationRecipe> recipe = entry.recipe().recipeEntry().get();
+                    RecipeHolder<ColoringStationRecipe> recipe = entry.recipe().recipeEntry().get();
                     ItemStack resultStack;
                     if (!(resultStack = recipe.value().getResultStack(stack)).isEmpty()) {
                         recipeDataList.add(new ColoringRecipeData(recipe.value().getIndex(), resultStack, recipe.value().getDyeCost()));
@@ -315,7 +313,7 @@ public class ColoringStationScreenHandler extends ScreenHandler {
             this.setRecipeData(recipeDataList);
             this.setRecipeEntries(recipeEntries);
             ColoringStationS2CPayload payload = new ColoringStationS2CPayload(this.recipeData);
-            ServerPlayNetworking.send((ServerPlayerEntity)playerInventory.player, payload);
+            ServerPlayNetworking.send((ServerPlayer)playerInventory.player, payload);
         }
     }
 
@@ -325,15 +323,15 @@ public class ColoringStationScreenHandler extends ScreenHandler {
         this.recipeData.sort(Comparator.comparingInt(o -> o.index));
     }
 
-    private void setRecipeEntries(List<RecipeEntry<ColoringStationRecipe>> entries) {
+    private void setRecipeEntries(List<RecipeHolder<ColoringStationRecipe>> entries) {
         this.recipeEntries.clear();
         this.recipeEntries = new ArrayList<>(entries);
         this.recipeEntries.sort(Comparator.comparingInt(o -> o.value().getIndex()));
     }
 
     void populateResult() {
-        if (this.world.isClient()) return;
-        Optional<RecipeEntry<ColoringStationRecipe>> optional;
+        if (this.world.isClientSide()) return;
+        Optional<RecipeHolder<ColoringStationRecipe>> optional;
         int i = this.selectedRecipe.get();
         if (!(this.recipeEntries == null) && !this.recipeEntries.isEmpty() && this.isInBounds(i)) {
             optional = Optional.of(this.recipeEntries.get(i));
@@ -343,20 +341,20 @@ public class ColoringStationScreenHandler extends ScreenHandler {
 
         if (optional.isPresent()) {
             ColoringStationRecipe recipe = optional.get().value();
-            ItemStack itemStack = recipe.craftWithDye(this.recipeInput, this.world.getRegistryManager(), this.dyeContents);
+            ItemStack itemStack = recipe.craftWithDye(this.recipeInput, this.world.registryAccess(), this.dyeContents);
             this.dyeContentsAdder = recipe.getDyeCost();
-            if (itemStack.isItemEnabled(this.world.getEnabledFeatures())) {
-                this.output.setLastRecipe(optional.get());
-                this.outputSlot.setStackNoCallbacks(itemStack);
+            if (itemStack.isItemEnabled(this.world.enabledFeatures())) {
+                this.output.setRecipeUsed(optional.get());
+                this.outputSlot.set(itemStack);
             } else {
-                this.outputSlot.setStackNoCallbacks(ItemStack.EMPTY);
+                this.outputSlot.set(ItemStack.EMPTY);
             }
         }
     }
 
     private void markBlockEntityDirty() {
-        this.context.run((world1, pos) -> {
-            if (world1.getBlockEntity(pos) instanceof ColoringStationBlockEntity blockEntity) blockEntity.markDirty();
+        this.context.execute((world1, pos) -> {
+            if (world1.getBlockEntity(pos) instanceof ColoringStationBlockEntity blockEntity) blockEntity.setChanged();
         });
     }
 
@@ -365,15 +363,15 @@ public class ColoringStationScreenHandler extends ScreenHandler {
     }
 
     public record ColoringRecipeData(int index, ItemStack stack, DyeContents dyeCost) {
-        public static final PacketCodec<RegistryByteBuf, ColoringRecipeData> CODEC = PacketCodec.tuple(
-                PacketCodecs.INTEGER, ColoringRecipeData::index,
-                ItemStack.OPTIONAL_PACKET_CODEC, ColoringRecipeData::stack,
+        public static final StreamCodec<RegistryFriendlyByteBuf, ColoringRecipeData> CODEC = StreamCodec.composite(
+                ByteBufCodecs.INT, ColoringRecipeData::index,
+                ItemStack.OPTIONAL_STREAM_CODEC, ColoringRecipeData::stack,
                 DyeContents.PACKET_CODEC, ColoringRecipeData::dyeCost,
                 ColoringRecipeData::new
         );
 
         public boolean isInputValid(ItemStack stack) {
-            return !stack.isOf(this.stack().getItem()) || stack.isIn(ItemTags.DYEABLE);
+            return !stack.is(this.stack().getItem()) || stack.is(ItemTags.DYEABLE);
         }
 
         public boolean isDyeContentSufficient(DyeContents contents) {

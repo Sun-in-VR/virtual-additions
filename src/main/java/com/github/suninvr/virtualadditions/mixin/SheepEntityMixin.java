@@ -1,14 +1,14 @@
 package com.github.suninvr.virtualadditions.mixin;
 
-import net.minecraft.entity.EntityType;
-import net.minecraft.entity.data.TrackedData;
-import net.minecraft.entity.passive.AnimalEntity;
-import net.minecraft.entity.passive.PassiveEntity;
-import net.minecraft.entity.passive.SheepEntity;
-import net.minecraft.item.ItemStack;
-import net.minecraft.server.world.ServerWorld;
-import net.minecraft.util.DyeColor;
-import net.minecraft.world.World;
+import net.minecraft.network.syncher.EntityDataAccessor;
+import net.minecraft.server.level.ServerLevel;
+import net.minecraft.world.entity.AgeableMob;
+import net.minecraft.world.entity.EntityType;
+import net.minecraft.world.entity.animal.Animal;
+import net.minecraft.world.entity.animal.sheep.Sheep;
+import net.minecraft.world.item.DyeColor;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.level.Level;
 import org.jetbrains.annotations.Nullable;
 import org.spongepowered.asm.mixin.Final;
 import org.spongepowered.asm.mixin.Mixin;
@@ -18,52 +18,52 @@ import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
-@Mixin(SheepEntity.class)
-public class SheepEntityMixin extends AnimalEntity {
-    @Shadow @Final private static TrackedData<Byte> COLOR;
+@Mixin(Sheep.class)
+public class SheepEntityMixin extends Animal {
+    @Shadow @Final private static EntityDataAccessor<Byte> DATA_WOOL_ID;
 
-    protected SheepEntityMixin(EntityType<? extends AnimalEntity> entityType, World world) {
+    protected SheepEntityMixin(EntityType<? extends Animal> entityType, Level world) {
         super(entityType, world);
     }
 
     @Inject(method = "getColor", at = @At("RETURN"), cancellable = true)
     void virtualAdditions$getAnySheepColor(CallbackInfoReturnable<DyeColor> cir) {
-        cir.setReturnValue(DyeColor.byIndex(this.dataTracker.get(COLOR) & 31));
+        cir.setReturnValue(DyeColor.byId(this.entityData.get(DATA_WOOL_ID) & 31));
     }
 
     @Inject(method = "setColor", at = @At("HEAD"), cancellable = true)
     void virtualAdditions$setAnySheepColor(DyeColor color, CallbackInfo ci) {
-        if ((24 > color.getIndex() && color.getIndex() > 15) || (this.dataTracker.get(COLOR) > 15)) {
-            byte b = this.dataTracker.get(COLOR);
-            this.dataTracker.set(COLOR, (byte) (b & 224 | color.getIndex() & 31));
+        if ((24 > color.getId() && color.getId() > 15) || (this.entityData.get(DATA_WOOL_ID) > 15)) {
+            byte b = this.entityData.get(DATA_WOOL_ID);
+            this.entityData.set(DATA_WOOL_ID, (byte) (b & 224 | color.getId() & 31));
             ci.cancel();
         };
     }
 
     @Inject(method = "isSheared", at = @At("HEAD"), cancellable = true)
     void virtualAdditions$isSheared(CallbackInfoReturnable<Boolean> cir) {
-        cir.setReturnValue((this.dataTracker.get(COLOR) & 32) != 0);
+        cir.setReturnValue((this.entityData.get(DATA_WOOL_ID) & 32) != 0);
     }
 
     @Inject(method = "setSheared", at = @At("HEAD"), cancellable = true)
     void virtualAdditions$setSheared(boolean sheared, CallbackInfo ci) {
-        byte b = this.dataTracker.get(COLOR);
+        byte b = this.entityData.get(DATA_WOOL_ID);
         if (sheared) {
-            this.dataTracker.set(COLOR, (byte)(b | 32));
+            this.entityData.set(DATA_WOOL_ID, (byte)(b | 32));
         } else {
-            this.dataTracker.set(COLOR, (byte)(b & -33));
+            this.entityData.set(DATA_WOOL_ID, (byte)(b & -33));
         }
         ci.cancel();
     }
 
     @Override
-    public boolean isBreedingItem(ItemStack stack) {
+    public boolean isFood(ItemStack stack) {
         return false;
     }
 
     @Nullable
     @Override
-    public PassiveEntity createChild(ServerWorld world, PassiveEntity entity) {
+    public AgeableMob getBreedOffspring(ServerLevel world, AgeableMob entity) {
         return null;
     }
 }

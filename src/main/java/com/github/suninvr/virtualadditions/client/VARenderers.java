@@ -5,53 +5,55 @@ import com.github.suninvr.virtualadditions.block.RedstoneBridgeBlock;
 import com.github.suninvr.virtualadditions.client.render.block.MiniPortalBlockEntityRenderer;
 import com.github.suninvr.virtualadditions.client.render.entity.*;
 import com.github.suninvr.virtualadditions.client.render.fog.PlayerProjectionPhasingFogModifier;
-import com.github.suninvr.virtualadditions.registry.*;
+import com.github.suninvr.virtualadditions.registry.VABlockEntityType;
+import com.github.suninvr.virtualadditions.registry.VABlocks;
+import com.github.suninvr.virtualadditions.registry.VAEntityType;
+import com.github.suninvr.virtualadditions.registry.VAFluids;
 import net.fabricmc.fabric.api.client.render.fluid.v1.FluidRenderHandlerRegistry;
 import net.fabricmc.fabric.api.client.render.fluid.v1.SimpleFluidRenderHandler;
 import net.fabricmc.fabric.api.client.rendering.v1.*;
-import net.minecraft.block.RedstoneWireBlock;
-import net.minecraft.client.color.world.BiomeColors;
-import net.minecraft.client.render.BlockRenderLayer;
-import net.minecraft.client.render.TexturedRenderLayers;
-import net.minecraft.client.render.block.entity.*;
-import net.minecraft.client.render.entity.BoatEntityRenderer;
-import net.minecraft.client.render.entity.FlyingItemEntityRenderer;
-import net.minecraft.client.render.entity.model.BoatEntityModel;
-import net.minecraft.client.render.entity.model.EntityModelLayer;
-import net.minecraft.client.render.fog.FogRenderer;
-import net.minecraft.client.util.SpriteIdentifier;
-import net.minecraft.util.Arm;
-import net.minecraft.util.Hand;
-import net.minecraft.util.Identifier;
-import net.minecraft.world.biome.FoliageColors;
-import net.minecraft.world.biome.GrassColors;
+import net.minecraft.client.model.BoatModel;
+import net.minecraft.client.model.geom.ModelLayerLocation;
+import net.minecraft.client.renderer.BiomeColors;
+import net.minecraft.client.renderer.Sheets;
+import net.minecraft.client.renderer.blockentity.*;
+import net.minecraft.client.renderer.chunk.ChunkSectionLayer;
+import net.minecraft.client.renderer.entity.BoatRenderer;
+import net.minecraft.client.renderer.entity.ThrownItemRenderer;
+import net.minecraft.client.renderer.fog.FogRenderer;
+import net.minecraft.client.resources.model.Material;
+import net.minecraft.resources.ResourceLocation;
+import net.minecraft.world.entity.HumanoidArm;
+import net.minecraft.world.level.FoliageColor;
+import net.minecraft.world.level.GrassColor;
+import net.minecraft.world.level.block.RedStoneWireBlock;
 
 import static com.github.suninvr.virtualadditions.VirtualAdditions.idOf;
 
 public class VARenderers {
-    public static EntityModelLayer LUMWASP_LAYER = new EntityModelLayer(Identifier.of("virtual_additions", "lumwasp"), "main");
-    public static EntityModelLayer SPECTRE_LAYER = new EntityModelLayer(Identifier.of("virtual_additions", "spectre"), "main");
-    public static EntityModelLayer PLAYER_PROJECTION_LAYER = new EntityModelLayer(Identifier.of("virtual_additions", "player_projection"), "main");
-    public static EntityModelLayer SOULBLOOM_BOAT = new EntityModelLayer(Identifier.of("virtual_additions", "boat/soulbloom"), "main");
-    public static EntityModelLayer SOULBLOOM_CHEST_BOAT = new EntityModelLayer(Identifier.of("virtual_additions", "chest_boat/soulbloom"), "main");
-    public static final SpriteIdentifier CHARTREUSE_SHULKER_BOX = new SpriteIdentifier(TexturedRenderLayers.SHULKER_BOXES_ATLAS_TEXTURE, VirtualAdditions.idOf("entity/shulker/shulker_chartreuse"));
-    public static final SpriteIdentifier MAROON_SHULKER_BOX = new SpriteIdentifier(TexturedRenderLayers.SHULKER_BOXES_ATLAS_TEXTURE, VirtualAdditions.idOf("entity/shulker/shulker_maroon"));
-    public static final SpriteIdentifier INDIGO_SHULKER_BOX = new SpriteIdentifier(TexturedRenderLayers.SHULKER_BOXES_ATLAS_TEXTURE, VirtualAdditions.idOf("entity/shulker/shulker_indigo"));
-    public static final SpriteIdentifier PLUM_SHULKER_BOX = new SpriteIdentifier(TexturedRenderLayers.SHULKER_BOXES_ATLAS_TEXTURE, VirtualAdditions.idOf("entity/shulker/shulker_plum"));
-    public static final SpriteIdentifier VIRIDIAN_SHULKER_BOX = new SpriteIdentifier(TexturedRenderLayers.SHULKER_BOXES_ATLAS_TEXTURE, VirtualAdditions.idOf("entity/shulker/shulker_viridian"));
-    public static final SpriteIdentifier TAN_SHULKER_BOX = new SpriteIdentifier(TexturedRenderLayers.SHULKER_BOXES_ATLAS_TEXTURE, VirtualAdditions.idOf("entity/shulker/shulker_tan"));
-    public static final SpriteIdentifier SINOPIA_SHULKER_BOX = new SpriteIdentifier(TexturedRenderLayers.SHULKER_BOXES_ATLAS_TEXTURE, VirtualAdditions.idOf("entity/shulker/shulker_sinopia"));
-    public static final SpriteIdentifier LILAC_SHULKER_BOX = new SpriteIdentifier(TexturedRenderLayers.SHULKER_BOXES_ATLAS_TEXTURE, VirtualAdditions.idOf("entity/shulker/shulker_lilac"));
-    public static final SpriteIdentifier CHARTREUSE_BED_TEXTURE = new SpriteIdentifier(TexturedRenderLayers.BEDS_ATLAS_TEXTURE, VirtualAdditions.idOf("entity/bed/chartreuse"));
-    public static final SpriteIdentifier MAROON_BED_TEXTURE = new SpriteIdentifier(TexturedRenderLayers.BEDS_ATLAS_TEXTURE, VirtualAdditions.idOf("entity/bed/maroon"));
-    public static final SpriteIdentifier INDIGO_BED_TEXTURE = new SpriteIdentifier(TexturedRenderLayers.BEDS_ATLAS_TEXTURE, VirtualAdditions.idOf("entity/bed/indigo"));
-    public static final SpriteIdentifier PLUM_BED_TEXTURE = new SpriteIdentifier(TexturedRenderLayers.BEDS_ATLAS_TEXTURE, VirtualAdditions.idOf("entity/bed/plum"));
-    public static final SpriteIdentifier VIRIDIAN_BED_TEXTURE = new SpriteIdentifier(TexturedRenderLayers.BEDS_ATLAS_TEXTURE, VirtualAdditions.idOf("entity/bed/viridian"));
-    public static final SpriteIdentifier TAN_BED_TEXTURE = new SpriteIdentifier(TexturedRenderLayers.BEDS_ATLAS_TEXTURE, VirtualAdditions.idOf("entity/bed/tan"));
-    public static final SpriteIdentifier SINOPIA_BED_TEXTURE = new SpriteIdentifier(TexturedRenderLayers.BEDS_ATLAS_TEXTURE, VirtualAdditions.idOf("entity/bed/sinopia"));
-    public static final SpriteIdentifier LILAC_BED_TEXTURE = new SpriteIdentifier(TexturedRenderLayers.BEDS_ATLAS_TEXTURE, VirtualAdditions.idOf("entity/bed/lilac"));
+    public static ModelLayerLocation LUMWASP_LAYER = new ModelLayerLocation(ResourceLocation.fromNamespaceAndPath("virtual_additions", "lumwasp"), "main");
+    public static ModelLayerLocation SPECTRE_LAYER = new ModelLayerLocation(ResourceLocation.fromNamespaceAndPath("virtual_additions", "spectre"), "main");
+    public static ModelLayerLocation PLAYER_PROJECTION_LAYER = new ModelLayerLocation(ResourceLocation.fromNamespaceAndPath("virtual_additions", "player_projection"), "main");
+    public static ModelLayerLocation SOULBLOOM_BOAT = new ModelLayerLocation(ResourceLocation.fromNamespaceAndPath("virtual_additions", "boat/soulbloom"), "main");
+    public static ModelLayerLocation SOULBLOOM_CHEST_BOAT = new ModelLayerLocation(ResourceLocation.fromNamespaceAndPath("virtual_additions", "chest_boat/soulbloom"), "main");
+    public static final Material CHARTREUSE_SHULKER_BOX = new Material(Sheets.SHULKER_SHEET, VirtualAdditions.idOf("entity/shulker/shulker_chartreuse"));
+    public static final Material MAROON_SHULKER_BOX = new Material(Sheets.SHULKER_SHEET, VirtualAdditions.idOf("entity/shulker/shulker_maroon"));
+    public static final Material INDIGO_SHULKER_BOX = new Material(Sheets.SHULKER_SHEET, VirtualAdditions.idOf("entity/shulker/shulker_indigo"));
+    public static final Material PLUM_SHULKER_BOX = new Material(Sheets.SHULKER_SHEET, VirtualAdditions.idOf("entity/shulker/shulker_plum"));
+    public static final Material VIRIDIAN_SHULKER_BOX = new Material(Sheets.SHULKER_SHEET, VirtualAdditions.idOf("entity/shulker/shulker_viridian"));
+    public static final Material TAN_SHULKER_BOX = new Material(Sheets.SHULKER_SHEET, VirtualAdditions.idOf("entity/shulker/shulker_tan"));
+    public static final Material SINOPIA_SHULKER_BOX = new Material(Sheets.SHULKER_SHEET, VirtualAdditions.idOf("entity/shulker/shulker_sinopia"));
+    public static final Material LILAC_SHULKER_BOX = new Material(Sheets.SHULKER_SHEET, VirtualAdditions.idOf("entity/shulker/shulker_lilac"));
+    public static final Material CHARTREUSE_BED_TEXTURE = new Material(Sheets.BED_SHEET, VirtualAdditions.idOf("entity/bed/chartreuse"));
+    public static final Material MAROON_BED_TEXTURE = new Material(Sheets.BED_SHEET, VirtualAdditions.idOf("entity/bed/maroon"));
+    public static final Material INDIGO_BED_TEXTURE = new Material(Sheets.BED_SHEET, VirtualAdditions.idOf("entity/bed/indigo"));
+    public static final Material PLUM_BED_TEXTURE = new Material(Sheets.BED_SHEET, VirtualAdditions.idOf("entity/bed/plum"));
+    public static final Material VIRIDIAN_BED_TEXTURE = new Material(Sheets.BED_SHEET, VirtualAdditions.idOf("entity/bed/viridian"));
+    public static final Material TAN_BED_TEXTURE = new Material(Sheets.BED_SHEET, VirtualAdditions.idOf("entity/bed/tan"));
+    public static final Material SINOPIA_BED_TEXTURE = new Material(Sheets.BED_SHEET, VirtualAdditions.idOf("entity/bed/sinopia"));
+    public static final Material LILAC_BED_TEXTURE = new Material(Sheets.BED_SHEET, VirtualAdditions.idOf("entity/bed/lilac"));
     public static final RenderStateDataKey<Boolean> IS_HOLDING_HALBERD = RenderStateDataKey.create(() -> "virtual_additions:is_using_halberd");
-    public static final RenderStateDataKey<Arm> HOLDING_HALBERD_IN = RenderStateDataKey.create(() -> "virtual_additions:holding_halberd_in");
+    public static final RenderStateDataKey<HumanoidArm> HOLDING_HALBERD_IN = RenderStateDataKey.create(() -> "virtual_additions:holding_halberd_in");
     public static final RenderStateDataKey<Float> HALBERD_READINESS = RenderStateDataKey.create(() -> "virtual_additions:halberd_readiness");
     public static final RenderStateDataKey<Float> TICKS_SINCE_HALBERD_USED = RenderStateDataKey.create(() -> "virtual_additions:ticks_since_halberd_used");
     public static void init() {
@@ -64,12 +66,12 @@ public class VARenderers {
     }
 
     private static void initBlockRenderLayers() {
-        BlockRenderLayerMap.putFluids(BlockRenderLayer.TRANSLUCENT,
+        BlockRenderLayerMap.putFluids(ChunkSectionLayer.TRANSLUCENT,
                 VAFluids.ACID,
                 VAFluids.FLOWING_ACID
         );
 
-        BlockRenderLayerMap.putBlocks(BlockRenderLayer.TRANSLUCENT,
+        BlockRenderLayerMap.putBlocks(ChunkSectionLayer.TRANSLUCENT,
                 VABlocks.WEBBED_SILK,
                 VABlocks.ACID_BLOCK,
                 VABlocks.CHARTREUSE_STAINED_GLASS,
@@ -90,7 +92,7 @@ public class VARenderers {
                 VABlocks.LILAC_STAINED_GLASS_PANE
         );
 
-        BlockRenderLayerMap.putBlocks(BlockRenderLayer.CUTOUT,
+        BlockRenderLayerMap.putBlocks(ChunkSectionLayer.CUTOUT,
                 VABlocks.CLIMBING_ROPE_ANCHOR,
                 VABlocks.EXPOSED_CLIMBING_ROPE_ANCHOR,
                 VABlocks.WEATHERED_CLIMBING_ROPE_ANCHOR,
@@ -182,63 +184,63 @@ public class VARenderers {
         EntityModelLayerRegistry.registerModelLayer(LUMWASP_LAYER, LumwaspEntityModel::getTexturedModelData);
         EntityModelLayerRegistry.registerModelLayer(SPECTRE_LAYER, SpectreEntityModel::getTexturedModelData);
         EntityModelLayerRegistry.registerModelLayer(PLAYER_PROJECTION_LAYER, PlayerProjectionEntityModel::getTexturedModelData);
-        EntityModelLayerRegistry.registerModelLayer(SOULBLOOM_BOAT, BoatEntityModel::getTexturedModelData);
-        EntityModelLayerRegistry.registerModelLayer(SOULBLOOM_CHEST_BOAT, BoatEntityModel::getChestTexturedModelData);
+        EntityModelLayerRegistry.registerModelLayer(SOULBLOOM_BOAT, BoatModel::createBoatModel);
+        EntityModelLayerRegistry.registerModelLayer(SOULBLOOM_CHEST_BOAT, BoatModel::createChestBoatModel);
         EntityRendererRegistry.register(VAEntityType.CLIMBING_ROPE, ClimbingRopeEntityRenderer::new);
-        EntityRendererRegistry.register(VAEntityType.STEEL_BOMB, FlyingItemEntityRenderer::new);
-        EntityRendererRegistry.register(VAEntityType.TOMATO, FlyingItemEntityRenderer::new);
+        EntityRendererRegistry.register(VAEntityType.STEEL_BOMB, ThrownItemRenderer::new);
+        EntityRendererRegistry.register(VAEntityType.TOMATO, ThrownItemRenderer::new);
         EntityRendererRegistry.register(VAEntityType.ACID_SPIT, AcidSpitEntityRenderer::new);
         EntityRendererRegistry.register(VAEntityType.SPECTRAL_BOLT, SpectralBoltEntityRenderer::new);
         EntityRendererRegistry.register(VAEntityType.LUMWASP, LumwaspEntityRenderer::new);
         EntityRendererRegistry.register(VAEntityType.SPECTRE, SpectreEntityRenderer::new);
         EntityRendererRegistry.register(VAEntityType.SALINE, SalineEntityRenderer::new);
         EntityRendererRegistry.register(VAEntityType.PLAYER_PROJECTION, PlayerProjectionEntityRenderer::new);
-        EntityRendererRegistry.register(VAEntityType.LIGHTNING_BOTTLE, FlyingItemEntityRenderer::new);
-        EntityRendererRegistry.register(VAEntityType.SOULBLOOM_BOAT, context -> new BoatEntityRenderer(context, SOULBLOOM_BOAT));
-        EntityRendererRegistry.register(VAEntityType.SOULBLOOM_CHEST_BOAT, context -> new BoatEntityRenderer(context, SOULBLOOM_CHEST_BOAT));
+        EntityRendererRegistry.register(VAEntityType.LIGHTNING_BOTTLE, ThrownItemRenderer::new);
+        EntityRendererRegistry.register(VAEntityType.SOULBLOOM_BOAT, context -> new BoatRenderer(context, SOULBLOOM_BOAT));
+        EntityRendererRegistry.register(VAEntityType.SOULBLOOM_CHEST_BOAT, context -> new BoatRenderer(context, SOULBLOOM_CHEST_BOAT));
     }
 
     private static void initBlockEntityRenderers() {
 
-        BlockEntityRendererFactories.register( VABlockEntityType.MINI_PORTAL, MiniPortalBlockEntityRenderer::new );
+        BlockEntityRenderers.register( VABlockEntityType.MINI_PORTAL, MiniPortalBlockEntityRenderer::new );
 
-        BlockEntityRendererFactories.register( VABlockEntityType.CUSTOM_SIGN, SignBlockEntityRenderer::new );
-        BlockEntityRendererFactories.register( VABlockEntityType.CUSTOM_HANGING_SIGN, HangingSignBlockEntityRenderer::new );
-        BlockEntityRendererFactories.register( VABlockEntityType.CUSTOM_BED, BedBlockEntityRenderer::new );
-        BlockEntityRendererFactories.register( VABlockEntityType.CUSTOM_SHULKER_BOX, ShulkerBoxBlockEntityRenderer::new );
-        BlockEntityRendererFactories.register( VABlockEntityType.CUSTOM_BANNER, BannerBlockEntityRenderer::new );
+        BlockEntityRenderers.register( VABlockEntityType.CUSTOM_SIGN, SignRenderer::new );
+        BlockEntityRenderers.register( VABlockEntityType.CUSTOM_HANGING_SIGN, HangingSignRenderer::new );
+        BlockEntityRenderers.register( VABlockEntityType.CUSTOM_BED, BedRenderer::new );
+        BlockEntityRenderers.register( VABlockEntityType.CUSTOM_SHULKER_BOX, ShulkerBoxRenderer::new );
+        BlockEntityRenderers.register( VABlockEntityType.CUSTOM_BANNER, BannerRenderer::new );
 
-        TexturedRenderLayers.SIGN_TYPE_TEXTURES.put(VABlocks.SOULBLOOM_WOODTYPE, new SpriteIdentifier(TexturedRenderLayers.SIGNS_ATLAS_TEXTURE, idOf("entity/signs/soulbloom")));
-        TexturedRenderLayers.HANGING_SIGN_TYPE_TEXTURES.put(VABlocks.SOULBLOOM_WOODTYPE, new SpriteIdentifier(TexturedRenderLayers.SIGNS_ATLAS_TEXTURE, idOf("entity/signs/hanging/soulbloom")));
-        TexturedRenderLayers.SIGN_TYPE_TEXTURES.put(VABlocks.WITHERED_WOODTYPE, new SpriteIdentifier(TexturedRenderLayers.SIGNS_ATLAS_TEXTURE, idOf("entity/signs/withered")));
-        TexturedRenderLayers.HANGING_SIGN_TYPE_TEXTURES.put(VABlocks.WITHERED_WOODTYPE, new SpriteIdentifier(TexturedRenderLayers.SIGNS_ATLAS_TEXTURE, idOf("entity/signs/hanging/withered")));
+        Sheets.SIGN_MATERIALS.put(VABlocks.SOULBLOOM_WOODTYPE, new Material(Sheets.SIGN_SHEET, idOf("entity/signs/soulbloom")));
+        Sheets.HANGING_SIGN_MATERIALS.put(VABlocks.SOULBLOOM_WOODTYPE, new Material(Sheets.SIGN_SHEET, idOf("entity/signs/hanging/soulbloom")));
+        Sheets.SIGN_MATERIALS.put(VABlocks.WITHERED_WOODTYPE, new Material(Sheets.SIGN_SHEET, idOf("entity/signs/withered")));
+        Sheets.HANGING_SIGN_MATERIALS.put(VABlocks.WITHERED_WOODTYPE, new Material(Sheets.SIGN_SHEET, idOf("entity/signs/hanging/withered")));
 
     }
 
     private static void  initFluidRenderers() {
         FluidRenderHandlerRegistry.INSTANCE.register(VAFluids.ACID, VAFluids.FLOWING_ACID, new SimpleFluidRenderHandler(
-                Identifier.of("minecraft:block/water_still"),
-                Identifier.of("minecraft:block/water_flow"),
+                ResourceLocation.parse("minecraft:block/water_still"),
+                ResourceLocation.parse("minecraft:block/water_flow"),
                 0x00e076
         ));
     }
 
     private static void initColorProviders() {
-        ColorProviderRegistry.BLOCK.register( ((state, world, pos, tintIndex) -> world != null ? BiomeColors.getFoliageColor(world, pos) : FoliageColors.DEFAULT),
+        ColorProviderRegistry.BLOCK.register( ((state, world, pos, tintIndex) -> world != null ? BiomeColors.getAverageFoliageColor(world, pos) : FoliageColor.FOLIAGE_DEFAULT),
                 VABlocks.OAK_HEDGE,
                 VABlocks.JUNGLE_HEDGE,
                 VABlocks.ACACIA_HEDGE,
                 VABlocks.DARK_OAK_HEDGE,
                 VABlocks.MANGROVE_HEDGE
         );
-        ColorProviderRegistry.BLOCK.register( (state, world, pos, tintIndex) -> FoliageColors.SPRUCE, VABlocks.SPRUCE_HEDGE);
-        ColorProviderRegistry.BLOCK.register( (state, world, pos, tintIndex) -> FoliageColors.BIRCH, VABlocks.BIRCH_HEDGE);
+        ColorProviderRegistry.BLOCK.register( (state, world, pos, tintIndex) -> FoliageColor.FOLIAGE_EVERGREEN, VABlocks.SPRUCE_HEDGE);
+        ColorProviderRegistry.BLOCK.register( (state, world, pos, tintIndex) -> FoliageColor.FOLIAGE_BIRCH, VABlocks.BIRCH_HEDGE);
         ColorProviderRegistry.BLOCK.register( (state, world, pos, tintIndex) -> 0x00e076, VABlocks.ACID);
-        ColorProviderRegistry.BLOCK.register( (state, world, pos, tintIndex) -> tintIndex <= 0 ? -1 : RedstoneWireBlock.getWireColor(state.get(RedstoneBridgeBlock.POWER)), VABlocks.REDSTONE_BRIDGE);
+        ColorProviderRegistry.BLOCK.register( (state, world, pos, tintIndex) -> tintIndex <= 0 ? -1 : RedStoneWireBlock.getColorForPower(state.getValue(RedstoneBridgeBlock.POWER)), VABlocks.REDSTONE_BRIDGE);
 
         ColorProviderRegistry.BLOCK.register((state, world, pos, tintIndex) -> {
             if (tintIndex != 0) {
-                return world != null && pos != null ? BiomeColors.getGrassColor(world, pos) : GrassColors.getDefaultColor();
+                return world != null && pos != null ? BiomeColors.getAverageGrassColor(world, pos) : GrassColor.getDefaultColor();
             } else {
                 return -1;
             }
@@ -246,6 +248,6 @@ public class VARenderers {
     }
 
     private static void initFogModifiers() {
-        FogRenderer.FOG_MODIFIERS.addFirst(new PlayerProjectionPhasingFogModifier());
+        FogRenderer.FOG_ENVIRONMENTS.addFirst(new PlayerProjectionPhasingFogModifier());
     }
 }

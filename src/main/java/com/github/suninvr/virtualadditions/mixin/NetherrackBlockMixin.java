@@ -2,12 +2,12 @@ package com.github.suninvr.virtualadditions.mixin;
 
 import com.github.suninvr.virtualadditions.registry.VABlocks;
 import com.llamalad7.mixinextras.sugar.Local;
-import net.minecraft.block.BlockState;
-import net.minecraft.block.Blocks;
-import net.minecraft.block.NetherrackBlock;
-import net.minecraft.server.world.ServerWorld;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.math.random.Random;
+import net.minecraft.core.BlockPos;
+import net.minecraft.server.level.ServerLevel;
+import net.minecraft.util.RandomSource;
+import net.minecraft.world.level.block.Blocks;
+import net.minecraft.world.level.block.NetherrackBlock;
+import net.minecraft.world.level.block.state.BlockState;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
@@ -17,15 +17,15 @@ import java.util.Iterator;
 
 @Mixin(NetherrackBlock.class)
 public class NetherrackBlockMixin {
-    @Inject(method = "grow", at = @At("TAIL"))
-    void virtualAdditions$growNecroticNylium(ServerWorld world, Random random, BlockPos pos, BlockState state, CallbackInfo ci, @Local boolean bl, @Local boolean bl2) {
+    @Inject(method = "performBonemeal", at = @At("TAIL"))
+    void virtualAdditions$growNecroticNylium(ServerLevel world, RandomSource random, BlockPos pos, BlockState state, CallbackInfo ci, @Local boolean bl, @Local boolean bl2) {
         boolean bl3 = false;
 
-        Iterator var7 = BlockPos.iterate(pos.add(-1, -1, -1), pos.add(1, 1, 1)).iterator();
+        Iterator var7 = BlockPos.betweenClosed(pos.offset(-1, -1, -1), pos.offset(1, 1, 1)).iterator();
         while(var7.hasNext()) {
             BlockPos blockPos = (BlockPos)var7.next();
             BlockState blockState = world.getBlockState(blockPos);
-            if (blockState.isOf(VABlocks.NECROTIC_NYLIUM)) {
+            if (blockState.is(VABlocks.NECROTIC_NYLIUM)) {
                 bl3 = true;
                 break;
             }
@@ -36,19 +36,19 @@ public class NetherrackBlockMixin {
             if (bl2 && bl) {
                 int i = random.nextInt(3);
                 nyliumState = switch (i) {
-                    case 0 -> Blocks.WARPED_NYLIUM.getDefaultState();
-                    case 1 -> Blocks.CRIMSON_NYLIUM.getDefaultState();
-                    case 2 -> VABlocks.NECROTIC_NYLIUM.getDefaultState();
-                    default -> Blocks.AIR.getDefaultState();
+                    case 0 -> Blocks.WARPED_NYLIUM.defaultBlockState();
+                    case 1 -> Blocks.CRIMSON_NYLIUM.defaultBlockState();
+                    case 2 -> VABlocks.NECROTIC_NYLIUM.defaultBlockState();
+                    default -> Blocks.AIR.defaultBlockState();
                 };
             } else if (bl2) {
-                nyliumState = random.nextBoolean() ? VABlocks.NECROTIC_NYLIUM.getDefaultState() : Blocks.WARPED_NYLIUM.getDefaultState();
+                nyliumState = random.nextBoolean() ? VABlocks.NECROTIC_NYLIUM.defaultBlockState() : Blocks.WARPED_NYLIUM.defaultBlockState();
             } else if (bl) {
-                nyliumState = random.nextBoolean() ? VABlocks.NECROTIC_NYLIUM.getDefaultState() : Blocks.CRIMSON_NYLIUM.getDefaultState();
+                nyliumState = random.nextBoolean() ? VABlocks.NECROTIC_NYLIUM.defaultBlockState() : Blocks.CRIMSON_NYLIUM.defaultBlockState();
             } else {
-                nyliumState = VABlocks.NECROTIC_NYLIUM.getDefaultState();
+                nyliumState = VABlocks.NECROTIC_NYLIUM.defaultBlockState();
             }
-            world.setBlockState(pos, nyliumState, 3);
+            world.setBlock(pos, nyliumState, 3);
         }
     }
 }

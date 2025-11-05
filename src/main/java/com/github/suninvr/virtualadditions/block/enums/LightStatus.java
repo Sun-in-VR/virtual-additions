@@ -1,17 +1,17 @@
 package com.github.suninvr.virtualadditions.block.enums;
 
-import net.minecraft.util.StringIdentifiable;
+import net.minecraft.util.StringRepresentable;
 
 import java.util.Locale;
 
-public enum LightStatus implements StringIdentifiable {
+public enum LightStatus implements StringRepresentable {
     LIT,
     UNLIT,
     NONE
     ;
 
     @Override
-    public String asString() {
+    public String getSerializedName() {
         return this.name().toLowerCase(Locale.ROOT);
     }
 

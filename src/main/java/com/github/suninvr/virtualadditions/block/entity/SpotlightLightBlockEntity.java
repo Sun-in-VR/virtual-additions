@@ -3,19 +3,19 @@ package com.github.suninvr.virtualadditions.block.entity;
 import com.github.suninvr.virtualadditions.block.SpotlightLightBlock;
 import com.github.suninvr.virtualadditions.registry.VABlockEntityType;
 import com.github.suninvr.virtualadditions.registry.VAGameEventTags;
-import net.minecraft.block.BlockState;
-import net.minecraft.block.entity.BlockEntity;
-import net.minecraft.registry.entry.RegistryEntry;
-import net.minecraft.server.world.ServerWorld;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.math.Vec3d;
-import net.minecraft.world.event.BlockPositionSource;
-import net.minecraft.world.event.GameEvent;
-import net.minecraft.world.event.PositionSource;
-import net.minecraft.world.event.listener.GameEventListener;
+import net.minecraft.core.BlockPos;
+import net.minecraft.core.Holder;
+import net.minecraft.server.level.ServerLevel;
+import net.minecraft.world.level.block.entity.BlockEntity;
+import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.gameevent.BlockPositionSource;
+import net.minecraft.world.level.gameevent.GameEvent;
+import net.minecraft.world.level.gameevent.GameEventListener;
+import net.minecraft.world.level.gameevent.PositionSource;
+import net.minecraft.world.phys.Vec3;
 
 @SuppressWarnings("ClassEscapesDefinedScope")
-public class SpotlightLightBlockEntity extends BlockEntity implements GameEventListener.Holder<SpotlightLightBlockEntity.Listener> {
+public class SpotlightLightBlockEntity extends BlockEntity implements GameEventListener.Provider<SpotlightLightBlockEntity.Listener> {
     private final Listener listener;
     private long lastUpdated;
 
@@ -32,13 +32,13 @@ public class SpotlightLightBlockEntity extends BlockEntity implements GameEventL
     }
 
     @Override
-    public void onBlockReplaced(BlockPos pos, BlockState oldState) {
-        SpotlightLightBlock.updateSources(this.world, pos, oldState);
-        super.onBlockReplaced(pos, oldState);
+    public void preRemoveSideEffects(BlockPos pos, BlockState oldState) {
+        SpotlightLightBlock.updateSources(this.level, pos, oldState);
+        super.preRemoveSideEffects(pos, oldState);
     }
 
     @Override
-    public Listener getEventListener() {
+    public Listener getListener() {
         return this.listener;
     }
 
@@ -50,21 +50,21 @@ public class SpotlightLightBlockEntity extends BlockEntity implements GameEventL
         }
 
         @Override
-        public PositionSource getPositionSource() {
+        public PositionSource getListenerSource() {
             return this.source;
         }
 
         @Override
-        public int getRange() {
+        public int getListenerRadius() {
             return 16;
         }
 
         @Override
-        public boolean listen(ServerWorld world, RegistryEntry<GameEvent> event, GameEvent.Emitter emitter, Vec3d emitterPos) {
-            if (!event.isIn(VAGameEventTags.NOTIFIES_SPOTLIGHT)) return false;
-            if (!SpotlightLightBlockEntity.this.canUpdate(world.getTime())) return false;
-            Vec3d pos = this.getPositionSource().getPos(world).get();
-            BlockPos blockPos = BlockPos.ofFloored(pos);
+        public boolean handleGameEvent(ServerLevel world, Holder<GameEvent> event, GameEvent.Context emitter, Vec3 emitterPos) {
+            if (!event.is(VAGameEventTags.NOTIFIES_SPOTLIGHT)) return false;
+            if (!SpotlightLightBlockEntity.this.canUpdate(world.getGameTime())) return false;
+            Vec3 pos = this.getListenerSource().getPosition(world).get();
+            BlockPos blockPos = BlockPos.containing(pos);
             SpotlightLightBlock.updateSources(world, blockPos, world.getBlockState(blockPos));
             return true;
         }

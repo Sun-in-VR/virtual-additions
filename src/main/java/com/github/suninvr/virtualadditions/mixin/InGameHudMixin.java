@@ -3,15 +3,15 @@ package com.github.suninvr.virtualadditions.mixin;
 import com.github.suninvr.virtualadditions.VirtualAdditions;
 import com.github.suninvr.virtualadditions.entity.PlayerProjectionEntity;
 import com.github.suninvr.virtualadditions.item.ProjectionSpyglassItem;
-import net.minecraft.client.MinecraftClient;
-import net.minecraft.client.gl.RenderPipelines;
-import net.minecraft.client.gui.DrawContext;
-import net.minecraft.client.gui.hud.InGameHud;
-import net.minecraft.client.render.RenderTickCounter;
-import net.minecraft.entity.LivingEntity;
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.util.Identifier;
-import net.minecraft.util.math.MathHelper;
+import net.minecraft.client.DeltaTracker;
+import net.minecraft.client.Minecraft;
+import net.minecraft.client.gui.Gui;
+import net.minecraft.client.gui.GuiGraphics;
+import net.minecraft.client.renderer.RenderPipelines;
+import net.minecraft.resources.ResourceLocation;
+import net.minecraft.util.Mth;
+import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.entity.player.Player;
 import org.spongepowered.asm.mixin.Final;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
@@ -24,43 +24,42 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
 import static com.github.suninvr.virtualadditions.VirtualAdditions.idOf;
 
-@Mixin(InGameHud.class)
+@Mixin(Gui.class)
 public class InGameHudMixin {
-    @Shadow @Final private MinecraftClient client;
-
-    @Shadow private float spyglassScale;
+    @Shadow @Final private Minecraft minecraft;
+    @Shadow private float scopeScale;
     @Unique
-    private static final Identifier SPECTRAL_SPYGLASS_SCOPE = idOf("textures/misc/spectral_spyglass_scope.png");
-
-    @Unique
-    private static final Identifier SPECTRAL_FULL_HEART_TEXTURE = VirtualAdditions.idOf("hud/heart/heart/spectral_full");
+    private static final ResourceLocation SPECTRAL_SPYGLASS_SCOPE = idOf("textures/misc/spectral_spyglass_scope.png");
 
     @Unique
-    private static final Identifier SPECTRAL_HALF_HEART_TEXTURE = VirtualAdditions.idOf("hud/heart/heart/spectral_half");
+    private static final ResourceLocation SPECTRAL_FULL_HEART_TEXTURE = VirtualAdditions.idOf("hud/heart/heart/spectral_full");
+
+    @Unique
+    private static final ResourceLocation SPECTRAL_HALF_HEART_TEXTURE = VirtualAdditions.idOf("hud/heart/heart/spectral_half");
 
     @Unique
     private boolean isPlayerProjection;
 
     @Unique
-    private void virtualAdditions$renderSpectralSpyglassOverlay(DrawContext context, float scale) {
-        float f = (float)Math.min(context.getScaledWindowWidth(), context.getScaledWindowHeight());
-        float h = Math.min((float)context.getScaledWindowWidth() / f, (float)context.getScaledWindowHeight() / f) * scale;
-        int i = MathHelper.floor(f * h);
-        int j = MathHelper.floor(f * h);
-        int k = (context.getScaledWindowWidth() - i) / 2;
-        int l = (context.getScaledWindowHeight() - j) / 2;
+    private void virtualAdditions$renderSpectralSpyglassOverlay(GuiGraphics context, float scale) {
+        float f = (float)Math.min(context.guiWidth(), context.guiHeight());
+        float h = Math.min((float)context.guiWidth() / f, (float)context.guiHeight() / f) * scale;
+        int i = Mth.floor(f * h);
+        int j = Mth.floor(f * h);
+        int k = (context.guiWidth() - i) / 2;
+        int l = (context.guiHeight() - j) / 2;
         int m = k + i;
         int n = l + j;
-        context.drawTexture(RenderPipelines.GUI_TEXTURED, SPECTRAL_SPYGLASS_SCOPE, k, l, 0.0F, 0.0F, i, j, i, j);
-        context.fill(RenderPipelines.GUI, 0, n, context.getScaledWindowWidth(), context.getScaledWindowHeight(), -16777216);
-        context.fill(RenderPipelines.GUI, 0, 0, context.getScaledWindowWidth(), l, -16777216);
+        context.blit(RenderPipelines.GUI_TEXTURED, SPECTRAL_SPYGLASS_SCOPE, k, l, 0.0F, 0.0F, i, j, i, j);
+        context.fill(RenderPipelines.GUI, 0, n, context.guiWidth(), context.guiHeight(), -16777216);
+        context.fill(RenderPipelines.GUI, 0, 0, context.guiWidth(), l, -16777216);
         context.fill(RenderPipelines.GUI, 0, l, k, n, -16777216);
-        context.fill(RenderPipelines.GUI, m, l, context.getScaledWindowWidth(), n, -16777216);
+        context.fill(RenderPipelines.GUI, m, l, context.guiWidth(), n, -16777216);
     }
 
-    @Inject(method = "getRiddenEntity", at = @At(value = "INVOKE", target = "Lnet/minecraft/entity/player/PlayerEntity;getVehicle()Lnet/minecraft/entity/Entity;"), cancellable = true)
+    @Inject(method = "getPlayerVehicleWithHealth", at = @At(value = "INVOKE", target = "Lnet/minecraft/world/entity/player/Player;getVehicle()Lnet/minecraft/world/entity/Entity;"), cancellable = true)
     void virtualAdditions$getPlayerProjectionEntity(CallbackInfoReturnable<LivingEntity> cir) {
-        if (client.getCameraEntity() instanceof PlayerProjectionEntity playerProjectionEntity && !playerProjectionEntity.isInvulnerable()) {
+        if (minecraft.getCameraEntity() instanceof PlayerProjectionEntity playerProjectionEntity && !playerProjectionEntity.isInvulnerable()) {
             cir.setReturnValue(playerProjectionEntity);
             this.isPlayerProjection = true;
         } else {
@@ -68,34 +67,34 @@ public class InGameHudMixin {
         }
     }
 
-    @ModifyArg(method = "renderMountHealth", at = @At(value = "INVOKE", target = "Lnet/minecraft/client/gui/DrawContext;drawGuiTexture(Lcom/mojang/blaze3d/pipeline/RenderPipeline;Lnet/minecraft/util/Identifier;IIII)V", ordinal = 1), index = 1)
-    Identifier virtualAdditions$renderProjectionHeart(Identifier sprite) {
+    @ModifyArg(method = "renderVehicleHealth", at = @At(value = "INVOKE", target = "Lnet/minecraft/client/gui/GuiGraphics;blitSprite(Lcom/mojang/blaze3d/pipeline/RenderPipeline;Lnet/minecraft/resources/ResourceLocation;IIII)V", ordinal = 1), index = 1)
+    ResourceLocation virtualAdditions$renderProjectionHeart(ResourceLocation sprite) {
         if (this.isPlayerProjection) {
             return SPECTRAL_FULL_HEART_TEXTURE;
         }
         return sprite;
     }
 
-    @ModifyArg(method = "renderMountHealth", at = @At(value = "INVOKE", target = "Lnet/minecraft/client/gui/DrawContext;drawGuiTexture(Lcom/mojang/blaze3d/pipeline/RenderPipeline;Lnet/minecraft/util/Identifier;IIII)V", ordinal = 2), index = 1)
-    Identifier virtualAdditions$renderProjectionHalfHeart(Identifier sprite) {
+    @ModifyArg(method = "renderVehicleHealth", at = @At(value = "INVOKE", target = "Lnet/minecraft/client/gui/GuiGraphics;blitSprite(Lcom/mojang/blaze3d/pipeline/RenderPipeline;Lnet/minecraft/resources/ResourceLocation;IIII)V", ordinal = 2), index = 1)
+    ResourceLocation virtualAdditions$renderProjectionHalfHeart(ResourceLocation sprite) {
         if (this.isPlayerProjection) {
             return SPECTRAL_HALF_HEART_TEXTURE;
         }
         return sprite;
     }
 
-    @Inject(method = "renderMiscOverlays", at = @At("HEAD"), cancellable = true)
-    void virtualAdditions$renderSpectralSpyglassMiscOverlay(DrawContext context, RenderTickCounter tickCounter, CallbackInfo ci) {
-        if (this.client.options.getPerspective().isFirstPerson() && ProjectionSpyglassItem.isInUseBy(this.client.player)) {
-            float f = tickCounter.getDynamicDeltaTicks();
-            this.spyglassScale = MathHelper.lerp(0.5F * f, this.spyglassScale, 1.125F);
-            this.virtualAdditions$renderSpectralSpyglassOverlay(context, this.spyglassScale);
+    @Inject(method = "renderCameraOverlays", at = @At("HEAD"), cancellable = true)
+    void virtualAdditions$renderSpectralSpyglassMiscOverlay(GuiGraphics context, DeltaTracker tickCounter, CallbackInfo ci) {
+        if (this.minecraft.options.getCameraType().isFirstPerson() && ProjectionSpyglassItem.isInUseBy(this.minecraft.player)) {
+            float f = tickCounter.getGameTimeDeltaTicks();
+            this.scopeScale = Mth.lerp(0.5F * f, this.scopeScale, 1.125F);
+            this.virtualAdditions$renderSpectralSpyglassOverlay(context, this.scopeScale);
             ci.cancel();
         }
     }
 
     @Inject(method = "getCameraPlayer", at = @At("HEAD"), cancellable = true)
-    void virtualAdditions$getCameraPlayerFromProjection(CallbackInfoReturnable<PlayerEntity> cir) {
-        if (this.client.getCameraEntity() instanceof PlayerProjectionEntity playerProjectionEntity && ProjectionSpyglassItem.isInUseBy(this.client.player)) cir.setReturnValue(playerProjectionEntity.getPlayer());
+    void virtualAdditions$getCameraPlayerFromProjection(CallbackInfoReturnable<Player> cir) {
+        if (this.minecraft.getCameraEntity() instanceof PlayerProjectionEntity playerProjectionEntity && ProjectionSpyglassItem.isInUseBy(this.minecraft.player)) cir.setReturnValue(playerProjectionEntity.getPlayer());
     }
 }

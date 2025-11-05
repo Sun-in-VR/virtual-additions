@@ -7,16 +7,16 @@ import com.github.suninvr.virtualadditions.registry.collection.ColorfulBlockSet;
 import net.fabricmc.fabric.api.datagen.v1.FabricDataGenerator;
 import net.fabricmc.fabric.api.datagen.v1.FabricDataOutput;
 import net.fabricmc.fabric.api.datagen.v1.provider.FabricTagProvider;
-import net.minecraft.block.Block;
-import net.minecraft.block.Blocks;
-import net.minecraft.data.family.BlockFamily;
-import net.minecraft.registry.Registries;
-import net.minecraft.registry.RegistryKeys;
-import net.minecraft.registry.RegistryWrapper;
-import net.minecraft.registry.tag.BlockTags;
-import net.minecraft.registry.tag.TagBuilder;
-import net.minecraft.registry.tag.TagKey;
-import net.minecraft.util.Identifier;
+import net.minecraft.core.HolderLookup;
+import net.minecraft.core.registries.BuiltInRegistries;
+import net.minecraft.core.registries.Registries;
+import net.minecraft.data.BlockFamily;
+import net.minecraft.resources.ResourceLocation;
+import net.minecraft.tags.BlockTags;
+import net.minecraft.tags.TagBuilder;
+import net.minecraft.tags.TagKey;
+import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.Blocks;
 
 import java.util.concurrent.CompletableFuture;
 
@@ -35,15 +35,15 @@ public final class VABlockTagProvider {
 
     static class BaseProvider extends Provider {
 
-        public BaseProvider(FabricDataOutput output, CompletableFuture<RegistryWrapper.WrapperLookup> registriesFuture) {
+        public BaseProvider(FabricDataOutput output, CompletableFuture<HolderLookup.Provider> registriesFuture) {
             super(output, registriesFuture);
         }
 
         @Override
-        protected void configure(RegistryWrapper.WrapperLookup arg) {
+        protected void addTags(HolderLookup.Provider arg) {
 
 
-            addTo(BlockTags.SWORD_EFFICIENT).addOptionalTag(HEDGES.id());
+            addTo(BlockTags.SWORD_EFFICIENT).addOptionalTag(HEDGES.location());
             addTo(BlockTags.FLOWERS, VABlocks.CHERRY_HEDGE, VABlocks.FLOWERING_AZALEA_HEDGE, VABlocks.BLUE_PETALS, VABlocks.SPRING_LOTUS, VABlocks.SMALL_SPRING_LOTUS, VABlocks.SOUL_SPROUT);
             addTo(BlockTags.BEE_ATTRACTIVE, VABlocks.CHERRY_HEDGE, VABlocks.FLOWERING_AZALEA_HEDGE, VABlocks.BLUE_PETALS, VABlocks.SPRING_LOTUS, VABlocks.SMALL_SPRING_LOTUS, VABlocks.SOUL_SPROUT);
             addTo(BlockTags.FROG_PREFER_JUMP_TO, VABlocks.SPRING_LOTUS);
@@ -83,16 +83,16 @@ public final class VABlockTagProvider {
             addTo(VABlockTags.ROCK_SALT_ORES, VABlocks.ROCK_SALT_ORE, VABlocks.DEEPSLATE_ROCK_SALT_ORE);
             addTo(BlockTags.OVERWORLD_CARVER_REPLACEABLES, VABlocks.ROCK_SALT_ORE, VABlocks.DEEPSLATE_ROCK_SALT_ORE);
 
-            addTo(BlockTags.HOE_MINEABLE,
+            addTo(BlockTags.MINEABLE_WITH_HOE,
                             VABlocks.SILK_BLOCK,
                             VABlocks.WEBBED_SILK,
                             VABlocks.LUMWASP_NEST,
                             VABlocks.SPRING_LOTUS
                     )
-                    .addOptionalTag(SILKBULBS.id())
-                    .addOptionalTag(HEDGES.id());
+                    .addOptionalTag(SILKBULBS.location())
+                    .addOptionalTag(HEDGES.location());
 
-            addTo(BlockTags.PICKAXE_MINEABLE,
+            addTo(BlockTags.MINEABLE_WITH_PICKAXE,
                     VABlocks.CLIMBING_ROPE_ANCHOR,
                     VABlocks.EXPOSED_CLIMBING_ROPE_ANCHOR,
                     VABlocks.WEATHERED_CLIMBING_ROPE_ANCHOR,
@@ -111,7 +111,7 @@ public final class VABlockTagProvider {
                     VABlocks.SPECTRAL_LANTERN
             );
 
-            configureMinable(BlockTags.PICKAXE_MINEABLE, 1,
+            configureMinable(BlockTags.MINEABLE_WITH_PICKAXE, 1,
                     VABlocks.STEEL_BLOCK,
                     VABlocks.EXPOSED_STEEL_BLOCK,
                     VABlocks.WEATHERED_STEEL_BLOCK,
@@ -152,16 +152,16 @@ public final class VABlockTagProvider {
                     VABlocks.DEEPSLATE_ROCK_SALT_ORE
             );
 
-            configureMinable(BlockTags.PICKAXE_MINEABLE, 3,
+            configureMinable(BlockTags.MINEABLE_WITH_PICKAXE, 3,
                     VABlocks.IOLITE_ORE,
                     VABlocks.IOLITE_BLOCK
             );
 
-            configureMinable(BlockTags.AXE_MINEABLE, 0,
+            configureMinable(BlockTags.MINEABLE_WITH_AXE, 0,
                     VABlocks.COLORING_STATION
                     );
 
-            configureMinable(BlockTags.SHOVEL_MINEABLE, 0,
+            configureMinable(BlockTags.MINEABLE_WITH_SHOVEL, 0,
                     VABlocks.SPECTRAL_SAND
                     );
 
@@ -169,7 +169,7 @@ public final class VABlockTagProvider {
 
 
 
-            configureFamily(BlockTags.PICKAXE_MINEABLE, 1,
+            configureFamily(BlockTags.MINEABLE_WITH_PICKAXE, 1,
                     VACollections.CUT_STEEL,
                     VACollections.EXPOSED_CUT_STEEL,
                     VACollections.WEATHERED_CUT_STEEL,
@@ -223,7 +223,7 @@ public final class VABlockTagProvider {
                     VABlocks.WAXED_OXIDIZED_STEEL_TRAPDOOR
             );
             
-            configureFamily(BlockTags.PICKAXE_MINEABLE, 0,
+            configureFamily(BlockTags.MINEABLE_WITH_PICKAXE, 0,
                     VACollections.COBBLED_HORNFELS,
                     VACollections.COBBLED_BLUESCHIST,
                     VACollections.COBBLED_SYENITE,
@@ -236,7 +236,7 @@ public final class VABlockTagProvider {
                     VACollections.ROCK_SALT_BRICKS
             );
 
-            addTo(VABlockTags.INCORRECT_FOR_STEEL_TOOL).addOptionalTag(BlockTags.NEEDS_DIAMOND_TOOL.id());
+            addTo(VABlockTags.INCORRECT_FOR_STEEL_TOOL).addOptionalTag(BlockTags.NEEDS_DIAMOND_TOOL.location());
 
             addTo(VABlockTags.ACID_UNBREAKABLE, 
                             Blocks.BARRIER,
@@ -246,7 +246,7 @@ public final class VABlockTagProvider {
                             Blocks.END_PORTAL_FRAME,
                             Blocks.AIR,
                             Blocks.REINFORCED_DEEPSLATE)
-                    .addOptionalTag(BlockTags.NEEDS_DIAMOND_TOOL.id());
+                    .addOptionalTag(BlockTags.NEEDS_DIAMOND_TOOL.location());
 
             addTo(VABlockTags.CLIMBING_ROPES, 
                     VABlocks.CLIMBING_ROPE_ANCHOR,
@@ -284,7 +284,7 @@ public final class VABlockTagProvider {
                             VABlocks.SILK_BLOCK,
                             VABlocks.WEBBED_SILK,
                             VABlocks.ACID_BLOCK)
-                    .addOptionalTag(BlockTags.BASE_STONE_OVERWORLD.id());
+                    .addOptionalTag(BlockTags.BASE_STONE_OVERWORLD.location());
 
             addTo(VABlockTags.SILKBULBS, 
                     VABlocks.SILKBULB,
@@ -359,16 +359,16 @@ public final class VABlockTagProvider {
                             Blocks.PINK_STAINED_GLASS_PANE,
                             VABlocks.LILAC_STAINED_GLASS_PANE
                     )
-                    .addOptionalTag(BlockTags.LEAVES.id())
-                    .addOptionalTag(VABlockTags.HEDGES.id())
-                    .addOptionalTag(BlockTags.REPLACEABLE.id());
+                    .addOptionalTag(BlockTags.LEAVES.location())
+                    .addOptionalTag(VABlockTags.HEDGES.location())
+                    .addOptionalTag(BlockTags.REPLACEABLE.location());
 
             addTo(VABlockTags.SPECTRE_SPAWNABLE_ON, 
                     Blocks.GRASS_BLOCK,
                     Blocks.PODZOL,
                     Blocks.MYCELIUM,
                     VABlocks.SPECTRAL_SAND
-            ).addOptionalTag(BlockTags.NYLIUM.id());
+            ).addOptionalTag(BlockTags.NYLIUM.location());
 
             addTo(VABlockTags.HALBERD_SWING_BREAKABLES,
                     Blocks.SHORT_GRASS,
@@ -417,15 +417,15 @@ public final class VABlockTagProvider {
                     Blocks.BAMBOO,
                     Blocks.MANGROVE_ROOTS
                     )
-                    .addOptionalTag(BlockTags.SMALL_FLOWERS.id())
-                    .addOptionalTag(BlockTags.LEAVES.id());
+                    .addOptionalTag(BlockTags.SMALL_FLOWERS.location())
+                    .addOptionalTag(BlockTags.LEAVES.location());
 
-            addTo(BlockTags.HOE_MINEABLE, VABlocks.SOULBLOOM_LEAVES, VABlocks.WITHERED_LEAVES);
+            addTo(BlockTags.MINEABLE_WITH_HOE, VABlocks.SOULBLOOM_LEAVES, VABlocks.WITHERED_LEAVES);
 
             configureOverworldStone(VABlocks.PORPHYRY);
-            configureFamily(BlockTags.PICKAXE_MINEABLE, 0, VACollections.PORPHYRY, VACollections.POLISHED_PORPHYRY, VACollections.PORPHYRY_BRICKS);
-            configureWoodenFamily(BlockTags.AXE_MINEABLE, 0, VACollections.SOULBLOOM);
-            configureWoodenFamily(BlockTags.AXE_MINEABLE, 0, VACollections.WITHERED);
+            configureFamily(BlockTags.MINEABLE_WITH_PICKAXE, 0, VACollections.PORPHYRY, VACollections.POLISHED_PORPHYRY, VACollections.PORPHYRY_BRICKS);
+            configureWoodenFamily(BlockTags.MINEABLE_WITH_AXE, 0, VACollections.SOULBLOOM);
+            configureWoodenFamily(BlockTags.MINEABLE_WITH_AXE, 0, VACollections.WITHERED);
 
             addTo(BlockTags.WOODEN_FENCES, VABlocks.SOULBLOOM_FENCE);
             addTo(BlockTags.OVERWORLD_NATURAL_LOGS, VABlocks.SOULBLOOM_LOG);
@@ -447,47 +447,47 @@ public final class VABlockTagProvider {
     }
 
     static class PreviewProvider extends Provider {
-        public PreviewProvider(FabricDataOutput output, CompletableFuture<RegistryWrapper.WrapperLookup> registriesFuture) {
+        public PreviewProvider(FabricDataOutput output, CompletableFuture<HolderLookup.Provider> registriesFuture) {
             super(output, registriesFuture);
         }
 
         @Override
-        protected void configure(RegistryWrapper.WrapperLookup arg) {
+        protected void addTags(HolderLookup.Provider arg) {
         }
     }
 
     private abstract static class Provider extends FabricTagProvider.BlockTagProvider {
-        protected static final TagKey<Block> SILKBULBS = TagKey.of(RegistryKeys.BLOCK, idOf("silkbulbs"));
-        protected static final TagKey<Block> HEDGES = TagKey.of(RegistryKeys.BLOCK, idOf("hedges"));
-        protected static final TagKey<Block> ORES = TagKey.of(RegistryKeys.BLOCK, Identifier.of("c:ores"));
+        protected static final TagKey<Block> SILKBULBS = TagKey.create(Registries.BLOCK, idOf("silkbulbs"));
+        protected static final TagKey<Block> HEDGES = TagKey.create(Registries.BLOCK, idOf("hedges"));
+        protected static final TagKey<Block> ORES = TagKey.create(Registries.BLOCK, ResourceLocation.parse("c:ores"));
 
-        public Provider(FabricDataOutput output, CompletableFuture<RegistryWrapper.WrapperLookup> registriesFuture) {
+        public Provider(FabricDataOutput output, CompletableFuture<HolderLookup.Provider> registriesFuture) {
             super(output, registriesFuture);
         }
         
         protected TagBuilder addTo(TagKey<Block> tag, Block... blocks) {
-            TagBuilder builder = getTagBuilder(tag);
+            TagBuilder builder = getOrCreateRawBuilder(tag);
             for (Block block : blocks) {
-                builder.add(Registries.BLOCK.getId(block));
+                builder.addElement(BuiltInRegistries.BLOCK.getKey(block));
             }
             return builder;
         }
 
         protected void configureOverworldStone(Block... blocks) {
             for (Block block : blocks) {
-                getTagBuilder(BlockTags.PICKAXE_MINEABLE).add(Registries.BLOCK.getId(block));
-                getTagBuilder(BlockTags.BASE_STONE_OVERWORLD).add(Registries.BLOCK.getId(block));
-                getTagBuilder(BlockTags.OVERWORLD_CARVER_REPLACEABLES).add(Registries.BLOCK.getId(block));
+                getOrCreateRawBuilder(BlockTags.MINEABLE_WITH_PICKAXE).addElement(BuiltInRegistries.BLOCK.getKey(block));
+                getOrCreateRawBuilder(BlockTags.BASE_STONE_OVERWORLD).addElement(BuiltInRegistries.BLOCK.getKey(block));
+                getOrCreateRawBuilder(BlockTags.OVERWORLD_CARVER_REPLACEABLES).addElement(BuiltInRegistries.BLOCK.getKey(block));
             }
         }
 
         protected void configureMinable(TagKey<Block> minable, int level, Block... blocks) {
             for (Block block : blocks) {
-                getTagBuilder(minable).add(Registries.BLOCK.getId(block));
+                getOrCreateRawBuilder(minable).addElement(BuiltInRegistries.BLOCK.getKey(block));
                 switch (level) {
-                    case 1 -> getTagBuilder(BlockTags.NEEDS_STONE_TOOL).add(Registries.BLOCK.getId(block));
-                    case 2 -> getTagBuilder(BlockTags.NEEDS_IRON_TOOL).add(Registries.BLOCK.getId(block));
-                    case 3 -> getTagBuilder(BlockTags.NEEDS_DIAMOND_TOOL).add(Registries.BLOCK.getId(block));
+                    case 1 -> getOrCreateRawBuilder(BlockTags.NEEDS_STONE_TOOL).addElement(BuiltInRegistries.BLOCK.getKey(block));
+                    case 2 -> getOrCreateRawBuilder(BlockTags.NEEDS_IRON_TOOL).addElement(BuiltInRegistries.BLOCK.getKey(block));
+                    case 3 -> getOrCreateRawBuilder(BlockTags.NEEDS_DIAMOND_TOOL).addElement(BuiltInRegistries.BLOCK.getKey(block));
                 }
             }
         }
@@ -511,15 +511,15 @@ public final class VABlockTagProvider {
         protected void configureFamily(BlockFamily family) {
             family.getVariants().forEach((variant, block) -> {
                 switch (variant) {
-                    case STAIRS -> getTagBuilder(BlockTags.STAIRS).add(Registries.BLOCK.getId(block));
-                    case SLAB -> getTagBuilder(BlockTags.SLABS).add(Registries.BLOCK.getId(block));
-                    case WALL -> getTagBuilder(BlockTags.WALLS).add(Registries.BLOCK.getId(block));
-                    case FENCE, CUSTOM_FENCE -> getTagBuilder(BlockTags.FENCES).add(Registries.BLOCK.getId(block));
-                    case FENCE_GATE, CUSTOM_FENCE_GATE -> getTagBuilder(BlockTags.FENCE_GATES).add(Registries.BLOCK.getId(block));
-                    case DOOR -> getTagBuilder(BlockTags.DOORS).add(Registries.BLOCK.getId(block));
-                    case TRAPDOOR -> getTagBuilder(BlockTags.TRAPDOORS).add(Registries.BLOCK.getId(block));
-                    case BUTTON -> getTagBuilder(BlockTags.BUTTONS).add(Registries.BLOCK.getId(block));
-                    case PRESSURE_PLATE -> getTagBuilder(BlockTags.PRESSURE_PLATES).add(Registries.BLOCK.getId(block));
+                    case STAIRS -> getOrCreateRawBuilder(BlockTags.STAIRS).addElement(BuiltInRegistries.BLOCK.getKey(block));
+                    case SLAB -> getOrCreateRawBuilder(BlockTags.SLABS).addElement(BuiltInRegistries.BLOCK.getKey(block));
+                    case WALL -> getOrCreateRawBuilder(BlockTags.WALLS).addElement(BuiltInRegistries.BLOCK.getKey(block));
+                    case FENCE, CUSTOM_FENCE -> getOrCreateRawBuilder(BlockTags.FENCES).addElement(BuiltInRegistries.BLOCK.getKey(block));
+                    case FENCE_GATE, CUSTOM_FENCE_GATE -> getOrCreateRawBuilder(BlockTags.FENCE_GATES).addElement(BuiltInRegistries.BLOCK.getKey(block));
+                    case DOOR -> getOrCreateRawBuilder(BlockTags.DOORS).addElement(BuiltInRegistries.BLOCK.getKey(block));
+                    case TRAPDOOR -> getOrCreateRawBuilder(BlockTags.TRAPDOORS).addElement(BuiltInRegistries.BLOCK.getKey(block));
+                    case BUTTON -> getOrCreateRawBuilder(BlockTags.BUTTONS).addElement(BuiltInRegistries.BLOCK.getKey(block));
+                    case PRESSURE_PLATE -> getOrCreateRawBuilder(BlockTags.PRESSURE_PLATES).addElement(BuiltInRegistries.BLOCK.getKey(block));
                 }
             });
         }
@@ -527,51 +527,51 @@ public final class VABlockTagProvider {
         @SafeVarargs
         protected final void configureFamily(BlockFamily family, TagKey<Block>... blockTags) {
             for (TagKey<Block> tag : blockTags) {
-                TagBuilder builder = getTagBuilder(tag);
-                builder.add(Registries.BLOCK.getId(family.getBaseBlock()));
-                family.getVariants().forEach((variant, block) -> builder.add(Registries.BLOCK.getId(block)));
+                TagBuilder builder = getOrCreateRawBuilder(tag);
+                builder.addElement(BuiltInRegistries.BLOCK.getKey(family.getBaseBlock()));
+                family.getVariants().forEach((variant, block) -> builder.addElement(BuiltInRegistries.BLOCK.getKey(block)));
             }
         }
 
         protected void configureWoodenFamily(BlockFamily family) {
             family.getVariants().forEach((variant, block) -> {
                 switch (variant) {
-                    case STAIRS -> getTagBuilder(BlockTags.WOODEN_STAIRS).add(Registries.BLOCK.getId(block));
-                    case SLAB -> getTagBuilder(BlockTags.WOODEN_SLABS).add(Registries.BLOCK.getId(block));
-                    case WALL -> getTagBuilder(BlockTags.WALLS).add(Registries.BLOCK.getId(block));
-                    case FENCE -> getTagBuilder(BlockTags.WOODEN_FENCES).add(Registries.BLOCK.getId(block));
-                    case FENCE_GATE -> getTagBuilder(BlockTags.FENCE_GATES).add(Registries.BLOCK.getId(block));
-                    case DOOR -> getTagBuilder(BlockTags.WOODEN_DOORS).add(Registries.BLOCK.getId(block));
-                    case TRAPDOOR -> getTagBuilder(BlockTags.WOODEN_TRAPDOORS).add(Registries.BLOCK.getId(block));
-                    case BUTTON -> getTagBuilder(BlockTags.WOODEN_BUTTONS).add(Registries.BLOCK.getId(block));
-                    case PRESSURE_PLATE -> getTagBuilder(BlockTags.WOODEN_PRESSURE_PLATES).add(Registries.BLOCK.getId(block));
-                    case SIGN -> getTagBuilder(BlockTags.STANDING_SIGNS).add(Registries.BLOCK.getId(block));
-                    case WALL_SIGN -> getTagBuilder(BlockTags.WALL_SIGNS).add(Registries.BLOCK.getId(block));
+                    case STAIRS -> getOrCreateRawBuilder(BlockTags.WOODEN_STAIRS).addElement(BuiltInRegistries.BLOCK.getKey(block));
+                    case SLAB -> getOrCreateRawBuilder(BlockTags.WOODEN_SLABS).addElement(BuiltInRegistries.BLOCK.getKey(block));
+                    case WALL -> getOrCreateRawBuilder(BlockTags.WALLS).addElement(BuiltInRegistries.BLOCK.getKey(block));
+                    case FENCE -> getOrCreateRawBuilder(BlockTags.WOODEN_FENCES).addElement(BuiltInRegistries.BLOCK.getKey(block));
+                    case FENCE_GATE -> getOrCreateRawBuilder(BlockTags.FENCE_GATES).addElement(BuiltInRegistries.BLOCK.getKey(block));
+                    case DOOR -> getOrCreateRawBuilder(BlockTags.WOODEN_DOORS).addElement(BuiltInRegistries.BLOCK.getKey(block));
+                    case TRAPDOOR -> getOrCreateRawBuilder(BlockTags.WOODEN_TRAPDOORS).addElement(BuiltInRegistries.BLOCK.getKey(block));
+                    case BUTTON -> getOrCreateRawBuilder(BlockTags.WOODEN_BUTTONS).addElement(BuiltInRegistries.BLOCK.getKey(block));
+                    case PRESSURE_PLATE -> getOrCreateRawBuilder(BlockTags.WOODEN_PRESSURE_PLATES).addElement(BuiltInRegistries.BLOCK.getKey(block));
+                    case SIGN -> getOrCreateRawBuilder(BlockTags.STANDING_SIGNS).addElement(BuiltInRegistries.BLOCK.getKey(block));
+                    case WALL_SIGN -> getOrCreateRawBuilder(BlockTags.WALL_SIGNS).addElement(BuiltInRegistries.BLOCK.getKey(block));
                 }
             });
         }
 
         protected void configureColorfulBlockSet(ColorfulBlockSet s) {
-            s.ifWool(block -> getTagBuilder(BlockTags.WOOL).add(Registries.BLOCK.getId(block)));
-            s.ifCarpet(block -> getTagBuilder(BlockTags.WOOL_CARPETS).add(Registries.BLOCK.getId(block)));
+            s.ifWool(block -> getOrCreateRawBuilder(BlockTags.WOOL).addElement(BuiltInRegistries.BLOCK.getKey(block)));
+            s.ifCarpet(block -> getOrCreateRawBuilder(BlockTags.WOOL_CARPETS).addElement(BuiltInRegistries.BLOCK.getKey(block)));
             s.ifTerracotta(block -> {
-                getTagBuilder(BlockTags.TERRACOTTA).add(Registries.BLOCK.getId(block));
-                configureMinable(BlockTags.PICKAXE_MINEABLE, 0, block);
+                getOrCreateRawBuilder(BlockTags.TERRACOTTA).addElement(BuiltInRegistries.BLOCK.getKey(block));
+                configureMinable(BlockTags.MINEABLE_WITH_PICKAXE, 0, block);
             });
-            s.ifGlazedTerracotta(block -> configureMinable(BlockTags.PICKAXE_MINEABLE, 0, block));
-            s.ifConcrete(block -> configureMinable(BlockTags.PICKAXE_MINEABLE, 0, block));
+            s.ifGlazedTerracotta(block -> configureMinable(BlockTags.MINEABLE_WITH_PICKAXE, 0, block));
+            s.ifConcrete(block -> configureMinable(BlockTags.MINEABLE_WITH_PICKAXE, 0, block));
             s.ifConcretePowder(block -> {
-                getTagBuilder(BlockTags.CONCRETE_POWDER).add(Registries.BLOCK.getId(block));
-                configureMinable(BlockTags.SHOVEL_MINEABLE, 0, block);
+                getOrCreateRawBuilder(BlockTags.CONCRETE_POWDER).addElement(BuiltInRegistries.BLOCK.getKey(block));
+                configureMinable(BlockTags.MINEABLE_WITH_SHOVEL, 0, block);
             });
-            s.ifStainedGlass(block -> getTagBuilder(BlockTags.IMPERMEABLE).add(Registries.BLOCK.getId(block)));
-            s.ifCandle(block -> getTagBuilder(BlockTags.CANDLES).add(Registries.BLOCK.getId(block)));
-            s.ifCandleCake(block -> getTagBuilder(BlockTags.CANDLE_CAKES).add(Registries.BLOCK.getId(block)));
-            s.ifSilkbulb(block -> getTagBuilder(VABlockTags.SILKBULBS).add(Registries.BLOCK.getId(block)));
-            s.ifBed(block -> getTagBuilder(BlockTags.BEDS).add(Registries.BLOCK.getId(block)));
-            s.ifShulkerBox(block -> getTagBuilder(BlockTags.SHULKER_BOXES).add(Registries.BLOCK.getId(block)));
-            s.ifBanner(block -> getTagBuilder(BlockTags.BANNERS).add(Registries.BLOCK.getId(block)));
-            s.ifWallBanner(block -> getTagBuilder(BlockTags.BANNERS).add(Registries.BLOCK.getId(block)));
+            s.ifStainedGlass(block -> getOrCreateRawBuilder(BlockTags.IMPERMEABLE).addElement(BuiltInRegistries.BLOCK.getKey(block)));
+            s.ifCandle(block -> getOrCreateRawBuilder(BlockTags.CANDLES).addElement(BuiltInRegistries.BLOCK.getKey(block)));
+            s.ifCandleCake(block -> getOrCreateRawBuilder(BlockTags.CANDLE_CAKES).addElement(BuiltInRegistries.BLOCK.getKey(block)));
+            s.ifSilkbulb(block -> getOrCreateRawBuilder(VABlockTags.SILKBULBS).addElement(BuiltInRegistries.BLOCK.getKey(block)));
+            s.ifBed(block -> getOrCreateRawBuilder(BlockTags.BEDS).addElement(BuiltInRegistries.BLOCK.getKey(block)));
+            s.ifShulkerBox(block -> getOrCreateRawBuilder(BlockTags.SHULKER_BOXES).addElement(BuiltInRegistries.BLOCK.getKey(block)));
+            s.ifBanner(block -> getOrCreateRawBuilder(BlockTags.BANNERS).addElement(BuiltInRegistries.BLOCK.getKey(block)));
+            s.ifWallBanner(block -> getOrCreateRawBuilder(BlockTags.BANNERS).addElement(BuiltInRegistries.BLOCK.getKey(block)));
         }
     }
 }

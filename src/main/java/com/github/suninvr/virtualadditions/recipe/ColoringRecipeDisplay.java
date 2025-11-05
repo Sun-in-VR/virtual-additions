@@ -1,33 +1,33 @@
 package com.github.suninvr.virtualadditions.recipe;
 
 import com.github.suninvr.virtualadditions.block.entity.DyeContents;
-import net.minecraft.item.ItemStack;
-import net.minecraft.network.RegistryByteBuf;
-import net.minecraft.network.codec.PacketCodec;
-import net.minecraft.network.codec.PacketCodecs;
-import net.minecraft.recipe.Ingredient;
-import net.minecraft.recipe.RecipeEntry;
-import net.minecraft.recipe.display.SlotDisplay;
-import net.minecraft.registry.tag.ItemTags;
+import net.minecraft.network.RegistryFriendlyByteBuf;
+import net.minecraft.network.codec.ByteBufCodecs;
+import net.minecraft.network.codec.StreamCodec;
+import net.minecraft.tags.ItemTags;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.crafting.Ingredient;
+import net.minecraft.world.item.crafting.RecipeHolder;
+import net.minecraft.world.item.crafting.display.SlotDisplay;
 
 import java.util.List;
 import java.util.Optional;
 
-public record ColoringRecipeDisplay<T extends ColoringStationRecipe>(SlotDisplay optionDisplay, Optional<RecipeEntry<T>> recipeEntry) {
+public record ColoringRecipeDisplay<T extends ColoringStationRecipe>(SlotDisplay optionDisplay, Optional<RecipeHolder<T>> recipeEntry) {
 
-    public static <T extends ColoringStationRecipe> PacketCodec<RegistryByteBuf, ColoringRecipeDisplay<T>> codec() {
-        return PacketCodec.tuple(SlotDisplay.PACKET_CODEC, ColoringRecipeDisplay::optionDisplay, display -> new ColoringRecipeDisplay<>(display, Optional.empty()));
+    public static <T extends ColoringStationRecipe> StreamCodec<RegistryFriendlyByteBuf, ColoringRecipeDisplay<T>> codec() {
+        return StreamCodec.composite(SlotDisplay.STREAM_CODEC, ColoringRecipeDisplay::optionDisplay, display -> new ColoringRecipeDisplay<>(display, Optional.empty()));
     }
 
-    public Optional<RecipeEntry<T>> recipe() {return this.recipeEntry;}
+    public Optional<RecipeHolder<T>> recipe() {return this.recipeEntry;}
 
     public record Grouping<T extends ColoringStationRecipe>(List<ColoringRecipeDisplay.GroupEntry<T>> entries) {
         public static <T extends ColoringStationRecipe> ColoringRecipeDisplay.Grouping<T> empty() {
             return new ColoringRecipeDisplay.Grouping<T>(List.of());
         }
 
-        public static <T extends ColoringStationRecipe> PacketCodec<RegistryByteBuf, ColoringRecipeDisplay.Grouping<T>> codec() {
-            return PacketCodec.tuple(GroupEntry.<T>codec().collect(PacketCodecs.toList()), Grouping::entries, Grouping::new);
+        public static <T extends ColoringStationRecipe> StreamCodec<RegistryFriendlyByteBuf, ColoringRecipeDisplay.Grouping<T>> codec() {
+            return StreamCodec.composite(GroupEntry.<T>codec().apply(ByteBufCodecs.list()), Grouping::entries, Grouping::new);
         }
 
         public boolean contains(ItemStack stack) {
@@ -36,7 +36,7 @@ public record ColoringRecipeDisplay<T extends ColoringStationRecipe>(SlotDisplay
 
         public ColoringRecipeDisplay.Grouping<T> filter(ItemStack stack) {
             Grouping<T> grouping = new ColoringRecipeDisplay.Grouping<>(this.entries.stream().filter(tGroupEntry -> tGroupEntry.input.map(ingredient -> ingredient.test(stack)).orElseGet(stack::isEmpty)).toList());
-            if (grouping.isEmpty()) grouping = new ColoringRecipeDisplay.Grouping<>(this.entries.stream().filter(tGroupEntry -> tGroupEntry.recipe.recipeEntry.isPresent() && tGroupEntry.recipe.recipeEntry.get().value() instanceof ArmorColoringRecipe && stack.isIn(ItemTags.DYEABLE)).toList());
+            if (grouping.isEmpty()) grouping = new ColoringRecipeDisplay.Grouping<>(this.entries.stream().filter(tGroupEntry -> tGroupEntry.recipe.recipeEntry.isPresent() && tGroupEntry.recipe.recipeEntry.get().value() instanceof ArmorColoringRecipe && stack.is(ItemTags.DYEABLE)).toList());
             return grouping;
         }
 
@@ -50,8 +50,8 @@ public record ColoringRecipeDisplay<T extends ColoringStationRecipe>(SlotDisplay
     }
 
     public record GroupEntry<T extends ColoringStationRecipe>(Optional<Ingredient> input, ColoringRecipeDisplay<T> recipe) {
-        public static <T extends ColoringStationRecipe> PacketCodec<RegistryByteBuf, ColoringRecipeDisplay.GroupEntry<T>> codec() {
-            return PacketCodec.tuple(Ingredient.OPTIONAL_PACKET_CODEC, ColoringRecipeDisplay.GroupEntry::input, ColoringRecipeDisplay.codec(), ColoringRecipeDisplay.GroupEntry::recipe, ColoringRecipeDisplay.GroupEntry::new);
+        public static <T extends ColoringStationRecipe> StreamCodec<RegistryFriendlyByteBuf, ColoringRecipeDisplay.GroupEntry<T>> codec() {
+            return StreamCodec.composite(Ingredient.OPTIONAL_CONTENTS_STREAM_CODEC, ColoringRecipeDisplay.GroupEntry::input, ColoringRecipeDisplay.codec(), ColoringRecipeDisplay.GroupEntry::recipe, ColoringRecipeDisplay.GroupEntry::new);
         }
 
         public DyeContents getDyeContents() {

@@ -1,19 +1,19 @@
 package com.github.suninvr.virtualadditions.client.sound;
 
 import com.github.suninvr.virtualadditions.entity.LumwaspEntity;
-import net.minecraft.client.sound.MovingSoundInstance;
-import net.minecraft.client.sound.SoundInstance;
-import net.minecraft.sound.SoundCategory;
-import net.minecraft.sound.SoundEvents;
-import net.minecraft.util.math.MathHelper;
+import net.minecraft.client.resources.sounds.AbstractTickableSoundInstance;
+import net.minecraft.client.resources.sounds.SoundInstance;
+import net.minecraft.sounds.SoundEvents;
+import net.minecraft.sounds.SoundSource;
+import net.minecraft.util.Mth;
 
-public class FlyingLumwaspSoundInstance extends MovingSoundInstance {
+public class FlyingLumwaspSoundInstance extends AbstractTickableSoundInstance {
     private final LumwaspEntity lumwasp;
     public FlyingLumwaspSoundInstance(LumwaspEntity entity) {
-        super(SoundEvents.ENTITY_BEE_LOOP, SoundCategory.HOSTILE, SoundInstance.createRandom());
+        super(SoundEvents.BEE_LOOP, SoundSource.HOSTILE, SoundInstance.createUnseededRandom());
         this.lumwasp = entity;
-        this.repeat = true;
-        this.repeatDelay = 0;
+        this.looping = true;
+        this.delay = 0;
         this.volume = 0.0F;
         this.x = lumwasp.getX();
         this.y = lumwasp.getY();
@@ -21,34 +21,34 @@ public class FlyingLumwaspSoundInstance extends MovingSoundInstance {
 
     }
 
-    public boolean shouldAlwaysPlay() {
+    public boolean canStartSilent() {
         return true;
     }
 
     @Override
-    public boolean canPlay() {
+    public boolean canPlaySound() {
         return !this.lumwasp.isSilent();
     }
 
     @Override
     public void tick() {
 
-        if (!this.lumwasp.isRemoved() && !this.lumwasp.isDead()) {
-            if (this.lumwasp.isInAir()) {
+        if (!this.lumwasp.isRemoved() && !this.lumwasp.isDeadOrDying()) {
+            if (this.lumwasp.isFlying()) {
                 this.x = (float)this.lumwasp.getX();
                 this.y = (float)this.lumwasp.getY();
                 this.z = (float)this.lumwasp.getZ();
-                float f = (float)this.lumwasp.getVelocity().horizontalLength();
+                float f = (float)this.lumwasp.getDeltaMovement().horizontalDistance();
                 if (f >= 0.01F) {
-                    this.pitch = MathHelper.lerp(MathHelper.clamp(f, 0.6F, 1.0F), 0.6F, 1.0F);
-                    this.volume = MathHelper.lerp(MathHelper.clamp(f, 0.0F, 0.5F), 0F, 3.6F);
+                    this.pitch = Mth.lerp(Mth.clamp(f, 0.6F, 1.0F), 0.6F, 1.0F);
+                    this.volume = Mth.lerp(Mth.clamp(f, 0.0F, 0.5F), 0F, 3.6F);
                 }
             } else {
                 this.volume = 0.0F;
             }
 
         } else {
-            this.setDone();
+            this.stop();
         }
     }
 }

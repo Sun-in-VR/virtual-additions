@@ -1,14 +1,14 @@
 package com.github.suninvr.virtualadditions;
 
-import com.github.suninvr.virtualadditions.registry.VAGildTypes;
 import com.github.suninvr.virtualadditions.registry.*;
 import net.fabricmc.api.ModInitializer;
 import net.fabricmc.fabric.api.resource.ResourceManagerHelper;
 import net.fabricmc.fabric.api.resource.ResourcePackActivationType;
 import net.fabricmc.loader.api.FabricLoader;
-import net.minecraft.resource.featuretoggle.FeatureFlag;
-import net.minecraft.text.Text;
-import net.minecraft.util.Identifier;
+import net.minecraft.network.chat.Component;
+import net.minecraft.resources.ResourceLocation;
+import net.minecraft.world.entity.animal.sheep.SheepColorSpawnRules;
+import net.minecraft.world.flag.FeatureFlag;
 import org.apache.logging.log4j.Level;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -36,7 +36,7 @@ public class VirtualAdditions implements ModInitializer {
 		areBlocksInitialized = true;
 	}
 
-    public static boolean isFromMod(Identifier id) {
+    public static boolean isFromMod(ResourceLocation id) {
 		return id.getNamespace().equals(NAMESPACE);
     }
 
@@ -47,10 +47,10 @@ public class VirtualAdditions implements ModInitializer {
 
 		FabricLoader.getInstance().getModContainer(MODID).ifPresent(
 				modContainer -> {
-					ResourceManagerHelper.registerBuiltinResourcePack(idOf("preview"), modContainer, Text.translatable("datapack.virtual_additions.preview"), ResourcePackActivationType.NORMAL);
-					ResourceManagerHelper.registerBuiltinResourcePack(idOf("worldgen"), modContainer, Text.translatable("datapack.virtual_additions.worldgen"), ResourcePackActivationType.NORMAL);
-					ResourceManagerHelper.registerBuiltinResourcePack(idOf("enhancements_data"), modContainer, Text.translatable("datapack.virtual_additions.enhancements"), ResourcePackActivationType.DEFAULT_ENABLED);
-					ResourceManagerHelper.registerBuiltinResourcePack(idOf("enhancements_resources"), modContainer, Text.translatable("datapack.virtual_additions.enhancements"), ResourcePackActivationType.DEFAULT_ENABLED);
+					ResourceManagerHelper.registerBuiltinResourcePack(idOf("preview"), modContainer, Component.translatable("datapack.virtual_additions.preview"), ResourcePackActivationType.NORMAL);
+					ResourceManagerHelper.registerBuiltinResourcePack(idOf("worldgen"), modContainer, Component.translatable("datapack.virtual_additions.worldgen"), ResourcePackActivationType.NORMAL);
+					ResourceManagerHelper.registerBuiltinResourcePack(idOf("enhancements_data"), modContainer, Component.translatable("datapack.virtual_additions.enhancements"), ResourcePackActivationType.DEFAULT_ENABLED);
+					ResourceManagerHelper.registerBuiltinResourcePack(idOf("enhancements_resources"), modContainer, Component.translatable("datapack.virtual_additions.enhancements"), ResourcePackActivationType.DEFAULT_ENABLED);
 				}
 		);
 
@@ -98,7 +98,7 @@ public class VirtualAdditions implements ModInitializer {
 	 *
 	 * @param id The identifier's path.
 	 * **/
-	public static Identifier idOf(String id) {
-		return Identifier.of(NAMESPACE, id);
+	public static ResourceLocation idOf(String id) {
+		return ResourceLocation.fromNamespaceAndPath(NAMESPACE, id);
 	}
 }

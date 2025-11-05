@@ -1,8 +1,8 @@
 package com.github.suninvr.virtualadditions.registry.collection;
 
-import net.minecraft.block.Block;
-import net.minecraft.item.DyeItem;
-import net.minecraft.item.Item;
+import net.minecraft.world.item.DyeItem;
+import net.minecraft.world.item.Item;
+import net.minecraft.world.level.block.Block;
 
 import java.util.ArrayList;
 import java.util.Map;

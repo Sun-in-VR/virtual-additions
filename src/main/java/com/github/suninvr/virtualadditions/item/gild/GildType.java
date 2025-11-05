@@ -1,54 +1,46 @@
 package com.github.suninvr.virtualadditions.item.gild;
 
-import com.github.suninvr.virtualadditions.VirtualAdditions;
 import com.github.suninvr.virtualadditions.registry.VARegistries;
 import com.mojang.serialization.Codec;
-import net.minecraft.block.BlockState;
-import net.minecraft.component.ComponentsAccess;
-import net.minecraft.component.DataComponentTypes;
-import net.minecraft.component.type.AttributeModifierSlot;
-import net.minecraft.component.type.AttributeModifiersComponent;
-import net.minecraft.entity.LivingEntity;
-import net.minecraft.entity.attribute.EntityAttribute;
-import net.minecraft.entity.attribute.EntityAttributeModifier;
-import net.minecraft.entity.attribute.EntityAttributes;
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.item.*;
-import net.minecraft.item.tooltip.TooltipAppender;
-import net.minecraft.item.tooltip.TooltipType;
-import net.minecraft.network.RegistryByteBuf;
-import net.minecraft.network.codec.PacketCodec;
-import net.minecraft.network.codec.PacketCodecs;
-import net.minecraft.registry.entry.RegistryEntry;
-import net.minecraft.registry.entry.RegistryFixedCodec;
-import net.minecraft.registry.tag.TagKey;
-import net.minecraft.screen.ScreenTexts;
-import net.minecraft.text.Text;
-import net.minecraft.util.Formatting;
-import net.minecraft.util.Identifier;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.world.World;
-import org.jetbrains.annotations.Nullable;
+import net.minecraft.ChatFormatting;
+import net.minecraft.core.BlockPos;
+import net.minecraft.core.Holder;
+import net.minecraft.core.component.DataComponentGetter;
+import net.minecraft.network.RegistryFriendlyByteBuf;
+import net.minecraft.network.chat.CommonComponents;
+import net.minecraft.network.chat.Component;
+import net.minecraft.network.codec.ByteBufCodecs;
+import net.minecraft.network.codec.StreamCodec;
+import net.minecraft.resources.RegistryFixedCodec;
+import net.minecraft.resources.ResourceLocation;
+import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.item.Item;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.TooltipFlag;
+import net.minecraft.world.item.component.TooltipProvider;
+import net.minecraft.world.level.Level;
+import net.minecraft.world.level.block.state.BlockState;
 
-import java.util.*;
-import java.util.function.BiFunction;
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.function.Consumer;
 
-public class GildType implements TooltipAppender {
-    private static final Text descriptionHeader = Text.translatable("item.minecraft.smithing_template.upgrade").formatted(Formatting.GRAY);
-    private final Text descriptionText;
-    public static final Codec<RegistryEntry<GildType>> ENTRY_CODEC = RegistryFixedCodec.of(VARegistries.GILD_TYPE_REGISTRY_KEY);
-    public static final PacketCodec<RegistryByteBuf, RegistryEntry<GildType>> ENTRY_PACKET_CODEC = PacketCodecs.registryEntry(VARegistries.GILD_TYPE_REGISTRY_KEY);
-    public static final Codec<GildType> CODEC = RegistryFixedCodec.of(VARegistries.GILD_TYPE_REGISTRY_KEY).xmap(RegistryEntry::value, VARegistries.GILD_TYPE::getEntry);
-    public static final PacketCodec<RegistryByteBuf, GildType> PACKET_CODEC = PacketCodecs.registryEntry(VARegistries.GILD_TYPE_REGISTRY_KEY).xmap(RegistryEntry::value, VARegistries.GILD_TYPE::getEntry);
-    private Text translationKey;
+public class GildType implements TooltipProvider {
+    private static final Component descriptionHeader = Component.translatable("item.minecraft.smithing_template.upgrade").withStyle(ChatFormatting.GRAY);
+    private final Component descriptionText;
+    public static final Codec<Holder<GildType>> ENTRY_CODEC = RegistryFixedCodec.create(VARegistries.GILD_TYPE_REGISTRY_KEY);
+    public static final StreamCodec<RegistryFriendlyByteBuf, Holder<GildType>> ENTRY_PACKET_CODEC = ByteBufCodecs.holderRegistry(VARegistries.GILD_TYPE_REGISTRY_KEY);
+    public static final Codec<GildType> CODEC = RegistryFixedCodec.create(VARegistries.GILD_TYPE_REGISTRY_KEY).xmap(Holder::value, VARegistries.GILD_TYPE::wrapAsHolder);
+    public static final StreamCodec<RegistryFriendlyByteBuf, GildType> PACKET_CODEC = ByteBufCodecs.holderRegistry(VARegistries.GILD_TYPE_REGISTRY_KEY).map(Holder::value, VARegistries.GILD_TYPE::wrapAsHolder);
+    private Component translationKey;
     private final ArrayList<StackModifier<?>> modifiers = new ArrayList<>();
     private final int color;
 
-    public Text getTranslationKey() {
+    public Component getTranslationKey() {
         if (this.translationKey == null) {
-            Identifier id = VARegistries.GILD_TYPE.getId(this);
-            this.translationKey = Text.translatable("gild_type." + id.getNamespace() + "." + id.getPath());
+            ResourceLocation id = VARegistries.GILD_TYPE.getKey(this);
+            this.translationKey = Component.translatable("gild_type." + id.getNamespace() + "." + id.getPath());
         }
         return this.translationKey;
     }
@@ -60,7 +52,7 @@ public class GildType implements TooltipAppender {
     public GildType(int color, StackModifier<?>... modifiers) {
         this.color = color;
         this.modifiers.addAll(Arrays.asList(modifiers));
-        this.descriptionText = ScreenTexts.space().append(this.getTranslationKey()).withColor(color);
+        this.descriptionText = CommonComponents.space().append(this.getTranslationKey()).withColor(color);
     }
 
     /**
@@ -75,8 +67,8 @@ public class GildType implements TooltipAppender {
      * @param tool the tool used to break the block
      *
      * **/
-    public boolean isGildEffective(World world, PlayerEntity player, BlockPos pos, BlockState state, ItemStack tool) {
-        return tool.isSuitableFor(state);
+    public boolean isGildEffective(Level world, Player player, BlockPos pos, BlockState state, ItemStack tool) {
+        return tool.isCorrectToolForDrops(state);
     }
 
     /**
@@ -86,7 +78,7 @@ public class GildType implements TooltipAppender {
      * @param pos the position of the block that was broken
      * @param tool the tool used to break the block
      * **/
-    public void emitBlockBreakingEffects(World world, PlayerEntity player, BlockPos pos, ItemStack tool) {}
+    public void emitBlockBreakingEffects(Level world, Player player, BlockPos pos, ItemStack tool) {}
 
     /**
      * Affects the world after a tool with this gild type breaks a block.
@@ -102,7 +94,7 @@ public class GildType implements TooltipAppender {
      * @implNote Returning false will disable <b><i>all effects</i></b> of breaking a block, such damaging the tool and increasing the player's relevant stats.
      *
      * **/
-    public boolean onBlockBroken(World world, PlayerEntity player, BlockPos pos, BlockState state, ItemStack tool) {
+    public boolean onBlockBroken(Level world, Player player, BlockPos pos, BlockState state, ItemStack tool) {
         return true;
     }
 
@@ -110,7 +102,7 @@ public class GildType implements TooltipAppender {
         return false;
     }
 
-    public void applyEffectsOnHit(World world, LivingEntity target, LivingEntity attacker) {
+    public void applyEffectsOnHit(Level world, LivingEntity target, LivingEntity attacker) {
 
     }
 
@@ -124,7 +116,7 @@ public class GildType implements TooltipAppender {
     }
 
     @Override
-    public void appendTooltip(Item.TooltipContext context, Consumer<Text> textConsumer, TooltipType type, ComponentsAccess components) {
+    public void addToTooltip(Item.TooltipContext context, Consumer<Component> textConsumer, TooltipFlag type, DataComponentGetter components) {
         textConsumer.accept(descriptionHeader);
         textConsumer.accept(this.descriptionText);
     }

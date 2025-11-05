@@ -1,19 +1,19 @@
 package com.github.suninvr.virtualadditions.network;
 
 import com.github.suninvr.virtualadditions.registry.VAPackets;
-import net.minecraft.network.PacketByteBuf;
-import net.minecraft.network.codec.PacketCodec;
-import net.minecraft.network.packet.CustomPayload;
+import net.minecraft.network.FriendlyByteBuf;
+import net.minecraft.network.codec.StreamCodec;
+import net.minecraft.network.protocol.common.custom.CustomPacketPayload;
 
 import java.util.UUID;
 
-public class PlayerProjectionS2CPayload implements CustomPayload {
-    public static final PacketCodec<PacketByteBuf, PlayerProjectionS2CPayload> CODEC = PacketCodec.of(PlayerProjectionS2CPayload::write, PlayerProjectionS2CPayload::new);
+public class PlayerProjectionS2CPayload implements CustomPacketPayload {
+    public static final StreamCodec<FriendlyByteBuf, PlayerProjectionS2CPayload> CODEC = StreamCodec.ofMember(PlayerProjectionS2CPayload::write, PlayerProjectionS2CPayload::new);
     private final UUID entityId;
     private final boolean removed;
 
-    public PlayerProjectionS2CPayload(PacketByteBuf packetByteBuf) {
-        this.entityId = packetByteBuf.readUuid();
+    public PlayerProjectionS2CPayload(FriendlyByteBuf packetByteBuf) {
+        this.entityId = packetByteBuf.readUUID();
         this.removed = packetByteBuf.readBoolean();
     }
 
@@ -27,8 +27,8 @@ public class PlayerProjectionS2CPayload implements CustomPayload {
         this.removed = removed;
     }
 
-    private void write(PacketByteBuf buf) {
-        buf.writeUuid(this.entityId);
+    private void write(FriendlyByteBuf buf) {
+        buf.writeUUID(this.entityId);
         buf.writeBoolean(this.removed);
     }
 
@@ -41,7 +41,7 @@ public class PlayerProjectionS2CPayload implements CustomPayload {
     }
 
     @Override
-    public Id<? extends CustomPayload> getId() {
+    public Type<? extends CustomPacketPayload> type() {
         return VAPackets.PLAYER_PROJECTION_S2C_ID;
     }
 }

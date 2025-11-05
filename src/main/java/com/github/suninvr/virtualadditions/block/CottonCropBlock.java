@@ -2,22 +2,22 @@ package com.github.suninvr.virtualadditions.block;
 
 import com.github.suninvr.virtualadditions.registry.VAItems;
 import com.mojang.serialization.MapCodec;
-import net.minecraft.block.CropBlock;
-import net.minecraft.item.ItemConvertible;
+import net.minecraft.world.level.ItemLike;
+import net.minecraft.world.level.block.CropBlock;
 
 public class CottonCropBlock extends CropBlock {
-    public static final MapCodec<CottonCropBlock> CODEC = createCodec(CottonCropBlock::new);
-    public CottonCropBlock(Settings settings) {
+    public static final MapCodec<CottonCropBlock> CODEC = simpleCodec(CottonCropBlock::new);
+    public CottonCropBlock(Properties settings) {
         super(settings);
     }
 
     @Override
-    public MapCodec<? extends CropBlock> getCodec() {
+    public MapCodec<? extends CropBlock> codec() {
         return CODEC;
     }
 
     @Override
-    protected ItemConvertible getSeedsItem() {
+    protected ItemLike getBaseSeedId() {
         return VAItems.COTTON_SEEDS;
     }
 }

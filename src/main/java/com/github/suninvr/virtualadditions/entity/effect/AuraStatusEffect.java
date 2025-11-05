@@ -1,26 +1,26 @@
 package com.github.suninvr.virtualadditions.entity.effect;
 
 import com.github.suninvr.virtualadditions.registry.VAStatusEffects;
-import net.minecraft.entity.Entity;
-import net.minecraft.entity.LivingEntity;
-import net.minecraft.entity.effect.StatusEffect;
-import net.minecraft.entity.effect.StatusEffectCategory;
-import net.minecraft.server.world.ServerWorld;
+import net.minecraft.server.level.ServerLevel;
+import net.minecraft.world.effect.MobEffect;
+import net.minecraft.world.effect.MobEffectCategory;
+import net.minecraft.world.entity.Entity;
+import net.minecraft.world.entity.LivingEntity;
 
 import java.util.List;
 
-public class AuraStatusEffect extends StatusEffect {
-    public AuraStatusEffect(StatusEffectCategory category, int color) {
+public class AuraStatusEffect extends MobEffect {
+    public AuraStatusEffect(MobEffectCategory category, int color) {
         super(category, color);
     }
 
     @Override
-    public boolean applyUpdateEffect(ServerWorld world, LivingEntity entity, int amplifier) {
-        List<Entity> entities = world.getOtherEntities(entity, entity.getBoundingBox().expand(4.0 + (amplifier * 2)));
+    public boolean applyEffectTick(ServerLevel world, LivingEntity entity, int amplifier) {
+        List<Entity> entities = world.getEntities(entity, entity.getBoundingBox().inflate(4.0 + (amplifier * 2)));
         for (Entity otherEntity : entities) {
             if (otherEntity instanceof LivingEntity livingEntity) {
-                entity.getStatusEffects().forEach(statusEffectInstance -> {
-                    if (statusEffectInstance.getEffectType() != VAStatusEffects.AURA) livingEntity.addStatusEffect(statusEffectInstance.withScaledDuration(0.25F), entity);
+                entity.getActiveEffects().forEach(statusEffectInstance -> {
+                    if (statusEffectInstance.getEffect() != VAStatusEffects.AURA) livingEntity.addEffect(statusEffectInstance.withScaledDuration(0.25F), entity);
                 });
             }
         }
@@ -28,7 +28,7 @@ public class AuraStatusEffect extends StatusEffect {
     }
 
     @Override
-    public boolean canApplyUpdateEffect(int duration, int amplifier) {
+    public boolean shouldApplyEffectTickThisTick(int duration, int amplifier) {
         return duration % 20 == 0;
     }
 }

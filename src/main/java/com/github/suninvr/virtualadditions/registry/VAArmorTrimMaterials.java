@@ -1,18 +1,18 @@
 package com.github.suninvr.virtualadditions.registry;
 
-import net.minecraft.item.equipment.trim.ArmorTrimMaterial;
-import net.minecraft.registry.RegistryKey;
-import net.minecraft.registry.RegistryKeys;
+import net.minecraft.core.registries.Registries;
+import net.minecraft.resources.ResourceKey;
+import net.minecraft.world.item.equipment.trim.TrimMaterial;
 
 import static com.github.suninvr.virtualadditions.VirtualAdditions.idOf;
 
 public class VAArmorTrimMaterials {
-    public static final RegistryKey<ArmorTrimMaterial> STEEL = register("steel");
-    public static final RegistryKey<ArmorTrimMaterial> ROCK_SALT = register("rock_salt");
-    public static final RegistryKey<ArmorTrimMaterial> IOLITE = register("iolite");
+    public static final ResourceKey<TrimMaterial> STEEL = register("steel");
+    public static final ResourceKey<TrimMaterial> ROCK_SALT = register("rock_salt");
+    public static final ResourceKey<TrimMaterial> IOLITE = register("iolite");
 
-    private static RegistryKey<ArmorTrimMaterial> register(String id) {
-        return RegistryKey.of(RegistryKeys.TRIM_MATERIAL, idOf(id));
+    private static ResourceKey<TrimMaterial> register(String id) {
+        return ResourceKey.create(Registries.TRIM_MATERIAL, idOf(id));
     }
 
     public static void init() {

@@ -3,65 +3,70 @@ package com.github.suninvr.virtualadditions.block;
 import com.github.suninvr.virtualadditions.registry.VABlocks;
 import com.github.suninvr.virtualadditions.registry.VAParticleTypes;
 import com.mojang.serialization.MapCodec;
-import net.minecraft.block.*;
-import net.minecraft.block.enums.DoubleBlockHalf;
-import net.minecraft.server.world.ServerWorld;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.math.Vec3d;
-import net.minecraft.util.math.random.Random;
-import net.minecraft.util.shape.VoxelShape;
-import net.minecraft.world.BlockView;
-import net.minecraft.world.World;
-import net.minecraft.world.WorldView;
+import net.minecraft.core.BlockPos;
+import net.minecraft.server.level.ServerLevel;
+import net.minecraft.util.RandomSource;
+import net.minecraft.world.level.BlockGetter;
+import net.minecraft.world.level.Level;
+import net.minecraft.world.level.LevelReader;
+import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.BonemealableBlock;
+import net.minecraft.world.level.block.DoublePlantBlock;
+import net.minecraft.world.level.block.VegetationBlock;
+import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.block.state.properties.DoubleBlockHalf;
+import net.minecraft.world.phys.Vec3;
+import net.minecraft.world.phys.shapes.CollisionContext;
+import net.minecraft.world.phys.shapes.VoxelShape;
 
 @SuppressWarnings("deprecation")
-public class GreencapMushroomBlock extends PlantBlock implements Fertilizable {
-    public static final MapCodec<GreencapMushroomBlock> CODEC = createCodec(GreencapMushroomBlock::new);
-    protected static final VoxelShape SHAPE = Block.createCuboidShape(4.0, 0.0, 4.0, 12.0, 9.0, 12.0);
-    public GreencapMushroomBlock(Settings settings) {
+public class GreencapMushroomBlock extends VegetationBlock implements BonemealableBlock {
+    public static final MapCodec<GreencapMushroomBlock> CODEC = simpleCodec(GreencapMushroomBlock::new);
+    protected static final VoxelShape SHAPE = Block.box(4.0, 0.0, 4.0, 12.0, 9.0, 12.0);
+    public GreencapMushroomBlock(Properties settings) {
         super(settings);
     }
 
     @Override
-    protected MapCodec<? extends PlantBlock> getCodec() {
+    protected MapCodec<? extends VegetationBlock> codec() {
         return CODEC;
     }
 
-    public VoxelShape getOutlineShape(BlockState state, BlockView world, BlockPos pos, ShapeContext context) {
+    public VoxelShape getShape(BlockState state, BlockGetter world, BlockPos pos, CollisionContext context) {
         return SHAPE;
     }
 
     @Override
-    protected boolean canPlantOnTop(BlockState floor, BlockView world, BlockPos pos) {
-        return super.canPlantOnTop(floor, world, pos) || floor.isOf(VABlocks.SILK_BLOCK);
+    protected boolean mayPlaceOn(BlockState floor, BlockGetter world, BlockPos pos) {
+        return super.mayPlaceOn(floor, world, pos) || floor.is(VABlocks.SILK_BLOCK);
     }
 
 
     @Override
-    public void randomDisplayTick(BlockState state, World world, BlockPos pos, Random random) {
+    public void animateTick(BlockState state, Level world, BlockPos pos, RandomSource random) {
         if (random.nextInt(3) != 1) return;
-        Vec3d modelOffset = state.getModelOffset(pos);
+        Vec3 modelOffset = state.getOffset(pos);
         double x = pos.getX() + modelOffset.x;
         double y = pos.getY() + modelOffset.y;
         double z = pos.getZ() + modelOffset.z;
         for(int l = 0; l < 2; ++l) {
-            world.addParticleClient(VAParticleTypes.GREENCAP_SPORE, x + 0.25 + random.nextDouble() / 2, y + 0.25  + random.nextDouble() / 3, z + 0.25 + random.nextDouble() / 2, 0.0, 0.0, 0.0);
+            world.addParticle(VAParticleTypes.GREENCAP_SPORE, x + 0.25 + random.nextDouble() / 2, y + 0.25  + random.nextDouble() / 3, z + 0.25 + random.nextDouble() / 2, 0.0, 0.0, 0.0);
         }
     }
 
     @Override
-    public boolean isFertilizable(WorldView world, BlockPos pos, BlockState state) {
-        return world.getBlockState(pos.up()).isReplaceable();
+    public boolean isValidBonemealTarget(LevelReader world, BlockPos pos, BlockState state) {
+        return world.getBlockState(pos.above()).canBeReplaced();
     }
 
     @Override
-    public boolean canGrow(World world, Random random, BlockPos pos, BlockState state) {
-        return world.getBlockState(pos.up()).isReplaceable();
+    public boolean isBonemealSuccess(Level world, RandomSource random, BlockPos pos, BlockState state) {
+        return world.getBlockState(pos.above()).canBeReplaced();
     }
 
     @Override
-    public void grow(ServerWorld world, Random random, BlockPos pos, BlockState state) {
-        world.setBlockState(pos, VABlocks.TALL_GREENCAP_MUSHROOMS.getDefaultState());
-        world.setBlockState(pos.up(), VABlocks.TALL_GREENCAP_MUSHROOMS.getDefaultState().with(TallPlantBlock.HALF, DoubleBlockHalf.UPPER));
+    public void performBonemeal(ServerLevel world, RandomSource random, BlockPos pos, BlockState state) {
+        world.setBlockAndUpdate(pos, VABlocks.TALL_GREENCAP_MUSHROOMS.defaultBlockState());
+        world.setBlockAndUpdate(pos.above(), VABlocks.TALL_GREENCAP_MUSHROOMS.defaultBlockState().setValue(DoublePlantBlock.HALF, DoubleBlockHalf.UPPER));
     }
 }
