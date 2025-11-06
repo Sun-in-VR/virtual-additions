@@ -1,52 +1,5 @@
 accessWidener   v1  named
 
-#accessible class net/minecraft/block/entity/BlockEntityType$BlockEntityFactory
-#accessible method net/minecraft/sound/SoundEvent of (Lnet/minecraft/util/Identifier;)Lnet/minecraft/sound/SoundEvent;
-#accessible field net/minecraft/block/RedstoneWireBlock wiresGivePower Z
-#accessible method net/minecraft/block/WoodType register (Lnet/minecraft/block/WoodType;)Lnet/minecraft/block/WoodType;
-#accessible field net/minecraft/item/ItemGroups displayContext Lnet/minecraft/item/ItemGroup$DisplayContext;
-#accessible field net/minecraft/block/Blocks SHULKER_BOX_SUFFOCATES_PREDICATE Lnet/minecraft/block/AbstractBlock$ContextPredicate;
-#accessible method net/minecraft/block/AbstractBlock canPlaceAt (Lnet/minecraft/block/BlockState;Lnet/minecraft/world/WorldView;Lnet/minecraft/util/math/BlockPos;)Z
-#accessible method net/minecraft/block/ComposterBlock registerCompostableItem (FLnet/minecraft/item/ItemConvertible;)V
-#accessible method net/minecraft/item/ItemGroups addPotions (Lnet/minecraft/item/ItemGroup$Entries;Lnet/minecraft/registry/RegistryWrapper;Lnet/minecraft/item/Item;Lnet/minecraft/item/ItemGroup$StackVisibility;Lnet/minecraft/resource/featuretoggle/FeatureSet;)V
-#accessible method net/minecraft/enchantment/EnchantmentHelper forEachEnchantment (Lnet/minecraft/item/ItemStack;Lnet/minecraft/enchantment/EnchantmentHelper$Consumer;)V
-#accessible class net/minecraft/enchantment/EnchantmentHelper$Consumer
-#accessible class net/minecraft/enchantment/EnchantmentHelper$ContextAwareConsumer
-#accessible method net/minecraft/client/particle/GlowParticle <init> (Lnet/minecraft/client/world/ClientWorld;DDDDDDLnet/minecraft/client/particle/SpriteProvider;)V
-#accessible method net/minecraft/client/particle/TrialSpawnerDetectionParticle <init> (Lnet/minecraft/client/world/ClientWorld;DDDDDDFLnet/minecraft/client/particle/SpriteProvider;)V
-#accessible class net/minecraft/client/render/block/entity/ShulkerBoxBlockEntityRenderer$ShulkerBoxBlockModel
-#accessible method net/minecraft/block/cauldron/CauldronBehavior cleanShulkerBox (Lnet/minecraft/block/BlockState;Lnet/minecraft/world/World;Lnet/minecraft/util/math/BlockPos;Lnet/minecraft/entity/player/PlayerEntity;Lnet/minecraft/util/Hand;Lnet/minecraft/item/ItemStack;)Lnet/minecraft/util/ActionResult;
-#accessible method net/minecraft/block/cauldron/CauldronBehavior cleanBanner (Lnet/minecraft/block/BlockState;Lnet/minecraft/world/World;Lnet/minecraft/util/math/BlockPos;Lnet/minecraft/entity/player/PlayerEntity;Lnet/minecraft/util/Hand;Lnet/minecraft/item/ItemStack;)Lnet/minecraft/util/ActionResult;
-#accessible method net/minecraft/block/cauldron/CauldronBehavior cleanArmor (Lnet/minecraft/block/BlockState;Lnet/minecraft/world/World;Lnet/minecraft/util/math/BlockPos;Lnet/minecraft/entity/player/PlayerEntity;Lnet/minecraft/util/Hand;Lnet/minecraft/item/ItemStack;)Lnet/minecraft/util/ActionResult;
-#accessible field net/minecraft/client/data/ItemModelGenerator modelCollector Ljava/util/function/BiConsumer;
-#accessible class net/minecraft/client/data/BlockStateModelGenerator$CrossType
-#accessible method net/minecraft/item/equipment/EquipmentAssetKeys register (Ljava/lang/String;)Lnet/minecraft/registry/RegistryKey;
-#accessible field net/minecraft/client/data/ItemModelGenerator output Lnet/minecraft/client/data/ItemModelOutput;
-#accessible field net/minecraft/client/data/BlockStateModelGenerator itemModelOutput Lnet/minecraft/client/data/ItemModelOutput;
-#accessible class net/minecraft/client/data/ModelProvider$ItemAssets
-#accessible class net/minecraft/client/data/ItemModelGenerator$TrimMaterial
-#accessible method net/minecraft/client/data/ItemModelGenerator$TrimMaterial <init> (Ljava/lang/String;Lnet/minecraft/registry/RegistryKey;Ljava/util/Map;)V
-#accessible method net/minecraft/client/data/ItemModelGenerator$TrimMaterial <init> (Lnet/minecraft/item/equipment/trim/ArmorTrimAssets;Lnet/minecraft/registry/RegistryKey;)V
-#accessible field net/minecraft/client/data/ItemModelGenerator$TrimMaterial materialKey Lnet/minecraft/registry/RegistryKey;
-#accessible method net/minecraft/client/data/Models item (Ljava/lang/String;[Lnet/minecraft/client/data/TextureKey;)Lnet/minecraft/client/data/Model;
-#accessible field net/minecraft/block/ExperienceDroppingBlock experienceDropped Lnet/minecraft/util/math/intprovider/IntProvider;
-#accessible field net/minecraft/block/entity/SignBlockEntity frontText Lnet/minecraft/block/entity/SignText;
-#accessible field net/minecraft/block/entity/SignBlockEntity backText Lnet/minecraft/block/entity/SignText;
-#accessible method net/minecraft/loot/LootTables registerLootTable (Lnet/minecraft/registry/RegistryKey;)Lnet/minecraft/registry/RegistryKey;
-#accessible class net/minecraft/entity/passive/SheepColors$SpawnConfig
-#accessible method net/minecraft/entity/passive/SheepColors$SpawnConfig <init> (Lnet/minecraft/entity/passive/SheepColors$ColorSelector;)V
-#accessible class net/minecraft/entity/passive/SheepColors$ColorSelector
-#accessible method net/minecraft/client/network/ClientPlayerEntity applyDirectionalMovementSpeedFactors (Lnet/minecraft/util/math/Vec2f;)Lnet/minecraft/util/math/Vec2f;
-#accessible field net/minecraft/client/render/fog/FogRenderer FOG_MODIFIERS Ljava/util/List;
-#accessible class net/minecraft/recipe/BrewingRecipeRegistry$Recipe
-#accessible method net/minecraft/entity/LivingEntity getAttackKnockbackAgainst (Lnet/minecraft/entity/Entity;Lnet/minecraft/entity/damage/DamageSource;)F
-#accessible class net/minecraft/client/render/item/HeldItemRenderer$HandRenderType
-#accessible method net/minecraft/client/particle/SculkChargePopParticle <init> (Lnet/minecraft/client/world/ClientWorld;DDDDDDLnet/minecraft/client/particle/SpriteProvider;)V
-#accessible method net/minecraft/client/particle/BillboardParticle setAlpha (F)V
-#accessible method net/minecraft/registry/Registries create (Lnet/minecraft/registry/RegistryKey;Ljava/lang/String;Lnet/minecraft/registry/Registries$Initializer;)Lnet/minecraft/registry/DefaultedRegistry;
-#accessible class net/minecraft/registry/Registries$Initializer
-#accessible field net/minecraft/advancement/Advancement$Builder sendsTelemetryEvent Z
-
 accessible method net/minecraft/client/player/LocalPlayer modifyInputSpeedForSquareMovement (Lnet/minecraft/world/phys/Vec2;)Lnet/minecraft/world/phys/Vec2;
 accessible class net/minecraft/world/entity/animal/sheep/SheepColorSpawnRules$SheepColorProvider
 accessible class net/minecraft/world/entity/animal/sheep/SheepColorSpawnRules$SheepColorSpawnConfiguration
@@ -74,3 +27,4 @@ accessible method net/minecraft/client/particle/SculkChargePopParticle <init> (L
 accessible method net/minecraft/client/particle/SingleQuadParticle setAlpha (F)V
 accessible method net/minecraft/world/level/block/ComposterBlock add (FLnet/minecraft/world/level/ItemLike;)V
 accessible method net/minecraft/client/particle/GlowParticle <init> (Lnet/minecraft/client/multiplayer/ClientLevel;DDDDDDLnet/minecraft/client/particle/SpriteSet;)V
+accessible method net/minecraft/client/renderer/rendertype/RenderType create (Ljava/lang/String;Lnet/minecraft/client/renderer/rendertype/RenderSetup;)Lnet/minecraft/client/renderer/rendertype/RenderType;

@@ -4,7 +4,7 @@ import com.github.suninvr.virtualadditions.screen.ColoringStationScreenHandler;
 import com.github.suninvr.virtualadditions.screen.EntanglementDriveScreenHandler;
 import net.minecraft.core.Registry;
 import net.minecraft.core.registries.BuiltInRegistries;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.minecraft.world.flag.FeatureFlags;
 import net.minecraft.world.inventory.AbstractContainerMenu;
 import net.minecraft.world.inventory.MenuType;
@@ -23,7 +23,7 @@ public class VAScreenHandler {
         COLORING_STATION = register(idOf("coloring_station"), ColoringStationScreenHandler::new);
     }
 
-    private static <T extends AbstractContainerMenu> MenuType<T> register(ResourceLocation id, MenuType.MenuSupplier<T> factory) {
+    private static <T extends AbstractContainerMenu> MenuType<T> register(Identifier id, MenuType.MenuSupplier<T> factory) {
         return Registry.register(BuiltInRegistries.MENU, id, new MenuType<>(factory, FeatureFlags.VANILLA_SET));
     }
 

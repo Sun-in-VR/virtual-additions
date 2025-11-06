@@ -4,13 +4,13 @@ import com.github.suninvr.virtualadditions.VirtualAdditions;
 import com.github.suninvr.virtualadditions.entity.ClimbingRopeEntity;
 import net.minecraft.client.renderer.entity.ArrowRenderer;
 import net.minecraft.client.renderer.entity.EntityRendererProvider;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 
 public class ClimbingRopeEntityRenderer extends ArrowRenderer<ClimbingRopeEntity, ClimbingRopeEntityRenderState> {
-    public static final ResourceLocation UNAFFECTED_TEXTURE = ResourceLocation.fromNamespaceAndPath(VirtualAdditions.NAMESPACE, "textures/entity/projectiles/climbing_rope.png");
-    public static final ResourceLocation EXPOSED_TEXTURE = ResourceLocation.fromNamespaceAndPath(VirtualAdditions.NAMESPACE, "textures/entity/projectiles/exposed_climbing_rope.png");
-    public static final ResourceLocation WEATHERED_TEXTURE = ResourceLocation.fromNamespaceAndPath(VirtualAdditions.NAMESPACE, "textures/entity/projectiles/weathered_climbing_rope.png");
-    public static final ResourceLocation OXIDIZED_TEXTURE = ResourceLocation.fromNamespaceAndPath(VirtualAdditions.NAMESPACE, "textures/entity/projectiles/oxidized_climbing_rope.png");
+    public static final Identifier UNAFFECTED_TEXTURE = Identifier.fromNamespaceAndPath(VirtualAdditions.NAMESPACE, "textures/entity/projectiles/climbing_rope.png");
+    public static final Identifier EXPOSED_TEXTURE = Identifier.fromNamespaceAndPath(VirtualAdditions.NAMESPACE, "textures/entity/projectiles/exposed_climbing_rope.png");
+    public static final Identifier WEATHERED_TEXTURE = Identifier.fromNamespaceAndPath(VirtualAdditions.NAMESPACE, "textures/entity/projectiles/weathered_climbing_rope.png");
+    public static final Identifier OXIDIZED_TEXTURE = Identifier.fromNamespaceAndPath(VirtualAdditions.NAMESPACE, "textures/entity/projectiles/oxidized_climbing_rope.png");
 
     public ClimbingRopeEntityRenderer(EntityRendererProvider.Context context) {
         super(context);
@@ -22,7 +22,7 @@ public class ClimbingRopeEntityRenderer extends ArrowRenderer<ClimbingRopeEntity
     }
 
     @Override
-    public ResourceLocation getTextureLocation(ClimbingRopeEntityRenderState state) {
+    public Identifier getTextureLocation(ClimbingRopeEntityRenderState state) {
         return switch (state.oxidationLevel) {
             case UNAFFECTED -> UNAFFECTED_TEXTURE;
             case EXPOSED -> EXPOSED_TEXTURE;

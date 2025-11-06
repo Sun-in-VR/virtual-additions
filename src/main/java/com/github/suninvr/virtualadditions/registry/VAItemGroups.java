@@ -81,10 +81,10 @@ public class VAItemGroups {
 
     private static void populateLootTablesGroup() {
         ItemGroupEvents.modifyEntriesEvent(LOOT_TABLES_KEY).register(group -> {
-            BuiltInLootTables.all().stream().sorted(Comparator.comparing(registryKey -> registryKey.location().toString())).forEach(lootTableKey -> {
+            BuiltInLootTables.all().stream().sorted(Comparator.comparing(registryKey -> registryKey.identifier().toString())).forEach(lootTableKey -> {
                 ItemStack stack = Items.CHEST.getDefaultInstance();
                 stack.set(DataComponents.CONTAINER_LOOT, new SeededContainerLoot(lootTableKey, 0L));
-                stack.set(DataComponents.ITEM_NAME, Component.nullToEmpty(lootTableKey.location().toString()));
+                stack.set(DataComponents.ITEM_NAME, Component.nullToEmpty(lootTableKey.identifier().toString()));
                 group.accept(stack);
             });
         });

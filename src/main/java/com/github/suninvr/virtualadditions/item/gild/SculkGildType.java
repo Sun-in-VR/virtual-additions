@@ -46,7 +46,7 @@ public class SculkGildType extends GildType{
             double miningEfficiency = player.getAttributeValue(Attributes.MINING_EFFICIENCY);
             int potency = (int) (48 / state.getDestroySpeed(world, pos));
             potency += (int) (potency * (miningEfficiency / 13.0));
-            potency = Math.min(Math.min(tool.getMaxDamage() == 0 ? 10000 : (tool.getMaxDamage() - tool.getDamageValue()), potency) - 1, serverWorld.getGameRules().getInt(VAGameRules.SCULK_GILD_BLOCK_SELECTION_MAXIMUM));
+            potency = Math.min(Math.min(tool.getMaxDamage() == 0 ? 10000 : (tool.getMaxDamage() - tool.getDamageValue()), potency) - 1, serverWorld.getGameRules().get(VAGameRules.SCULK_GILD_BLOCK_SELECTION_MAXIMUM));
             if (potency <= 0) return true;
 
             List<BlockPos> posList = selectPositions(world, pos, state, potency);

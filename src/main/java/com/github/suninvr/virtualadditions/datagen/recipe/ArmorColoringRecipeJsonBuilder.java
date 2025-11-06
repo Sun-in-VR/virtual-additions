@@ -4,11 +4,11 @@ import com.github.suninvr.virtualadditions.recipe.ArmorColoringRecipe;
 import net.minecraft.advancements.Advancement;
 import net.minecraft.advancements.AdvancementRequirements;
 import net.minecraft.advancements.AdvancementRewards;
-import net.minecraft.advancements.critereon.RecipeUnlockedTrigger;
+import net.minecraft.advancements.criterion.RecipeUnlockedTrigger;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.data.recipes.RecipeOutput;
 import net.minecraft.resources.ResourceKey;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.minecraft.world.item.crafting.Ingredient;
 import net.minecraft.world.item.crafting.Recipe;
 import org.jetbrains.annotations.Nullable;
@@ -26,7 +26,7 @@ public class ArmorColoringRecipeJsonBuilder {
         return new ArmorColoringRecipeJsonBuilder(input, index);
     }
 
-    public void offerTo(RecipeOutput exporter, ResourceLocation recipeId) {
+    public void offerTo(RecipeOutput exporter, Identifier recipeId) {
         if (this.dye == null) return;
         ResourceKey<Recipe<?>> registryKey = ResourceKey.create(Registries.RECIPE, recipeId);
         ArmorColoringRecipe recipe = new ArmorColoringRecipe(this.dye, this.index);

@@ -1,5 +1,6 @@
 package com.github.suninvr.virtualadditions.component;
 
+import com.github.suninvr.virtualadditions.registry.VADataComponentTypes;
 import com.mojang.serialization.Codec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
 import net.minecraft.ChatFormatting;
@@ -13,7 +14,9 @@ import net.minecraft.network.codec.ByteBufCodecs;
 import net.minecraft.network.codec.StreamCodec;
 import net.minecraft.util.ExtraCodecs;
 import net.minecraft.world.effect.MobEffectInstance;
+import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.item.Item;
+import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.TooltipFlag;
 import net.minecraft.world.item.alchemy.Potion;
 import net.minecraft.world.item.alchemy.PotionContents;
@@ -101,5 +104,10 @@ public record EffectsOnHitComponent(Optional<PotionContents> potionContents, Opt
             textConsumer.accept(tooltipText);
             this.potionContents.get().addToTooltip(context, textConsumer, type, components);
         }
+    }
+
+    public void applyEffectsTo(ItemStack stack, LivingEntity livingEntity, LivingEntity livingEntity1) {
+        this.potionContents.get().applyToLivingEntity(livingEntity, 1.0F);
+        stack.set(VADataComponentTypes.EFFECTS_ON_HIT, this.decrementRemainingUses());
     }
 }

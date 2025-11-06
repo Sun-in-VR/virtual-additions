@@ -4,11 +4,11 @@ import com.github.suninvr.virtualadditions.client.VARenderers;
 import com.github.suninvr.virtualadditions.entity.LumwaspEntity;
 import net.minecraft.client.renderer.entity.EntityRendererProvider;
 import net.minecraft.client.renderer.entity.MobRenderer;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 
 @SuppressWarnings({"unchecked", "rawtypes"})
 public class LumwaspEntityRenderer extends MobRenderer<LumwaspEntity, LumwaspEntityRenderState, LumwaspEntityModel<LumwaspEntity>> {
-    private static final ResourceLocation TEXTURE = ResourceLocation.fromNamespaceAndPath("virtual_additions", "textures/entity/lumwasp/lumwasp.png");
+    private static final Identifier TEXTURE = Identifier.fromNamespaceAndPath("virtual_additions", "textures/entity/lumwasp/lumwasp.png");
 
     public LumwaspEntityRenderer(EntityRendererProvider.Context context) {
         super(context, new LumwaspEntityModel<>(context.bakeLayer(VARenderers.LUMWASP_LAYER)), 0.75F);
@@ -17,7 +17,7 @@ public class LumwaspEntityRenderer extends MobRenderer<LumwaspEntity, LumwaspEnt
     }
 
     @Override
-    public ResourceLocation getTextureLocation(LumwaspEntityRenderState state) {
+    public Identifier getTextureLocation(LumwaspEntityRenderState state) {
         return TEXTURE;
     }
 

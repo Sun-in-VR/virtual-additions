@@ -11,7 +11,7 @@ import net.minecraft.client.input.MouseButtonEvent;
 import net.minecraft.client.renderer.RenderPipelines;
 import net.minecraft.client.resources.sounds.SimpleSoundInstance;
 import net.minecraft.network.chat.Component;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.util.Mth;
 import net.minecraft.world.entity.player.Inventory;
@@ -23,14 +23,14 @@ import java.util.ArrayList;
 import static com.github.suninvr.virtualadditions.VirtualAdditions.idOf;
 
 public class ColoringStationScreen extends AbstractContainerScreen<ColoringStationScreenHandler> {
-    private static final ResourceLocation SCROLLER_TEXTURE = ResourceLocation.parse("container/stonecutter/scroller");
-    private static final ResourceLocation SCROLLER_DISABLED_TEXTURE = ResourceLocation.parse("container/stonecutter/scroller_disabled");
-    private static final ResourceLocation RECIPE_SELECTED_TEXTURE = ResourceLocation.parse("container/stonecutter/recipe_selected");
-    private static final ResourceLocation RECIPE_HIGHLIGHTED_TEXTURE = ResourceLocation.parse("container/stonecutter/recipe_highlighted");
-    private static final ResourceLocation RECIPE_UNCRAFTABLE_TEXTURE = idOf("container/coloring_station/recipe_uncraftable");
-    private static final ResourceLocation RECIPE_TEXTURE = ResourceLocation.parse("container/stonecutter/recipe");
-    private static final ResourceLocation DYE_SLOT_TEXTURE = ResourceLocation.parse("container/slot/dye");
-    private static final ResourceLocation TEXTURE = idOf("textures/gui/container/coloring_station.png");
+    private static final Identifier SCROLLER_TEXTURE = Identifier.parse("container/stonecutter/scroller");
+    private static final Identifier SCROLLER_DISABLED_TEXTURE = Identifier.parse("container/stonecutter/scroller_disabled");
+    private static final Identifier RECIPE_SELECTED_TEXTURE = Identifier.parse("container/stonecutter/recipe_selected");
+    private static final Identifier RECIPE_HIGHLIGHTED_TEXTURE = Identifier.parse("container/stonecutter/recipe_highlighted");
+    private static final Identifier RECIPE_UNCRAFTABLE_TEXTURE = idOf("container/coloring_station/recipe_uncraftable");
+    private static final Identifier RECIPE_TEXTURE = Identifier.parse("container/stonecutter/recipe");
+    private static final Identifier DYE_SLOT_TEXTURE = Identifier.parse("container/slot/dye");
+    private static final Identifier TEXTURE = idOf("textures/gui/container/coloring_station.png");
     private static final Component NOT_ENOUGH_DYE_WARNING = Component.translatable("container.virtual_additions.coloring_station.not_enough_dye_warning").withStyle(ChatFormatting.RED);
     private static final Component CANT_CRAFT_SAME_ITEM_WARNING = Component.translatable("container.virtual_additions.coloring_station.cant_craft_same_item_warning").withStyle(ChatFormatting.RED);
     private static final Component DYE_SLOT_HINT = Component.translatable("container.virtual_additions.coloring_station.dye_slot_hint");
@@ -114,7 +114,7 @@ public class ColoringStationScreen extends AbstractContainerScreen<ColoringStati
             context.blitSprite(RenderPipelines.GUI_TEXTURED, DYE_SLOT_TEXTURE, i + slot.x, j + slot.y, 16, 16);
         }
         int k = (int)(41.0f * this.scrollAmount);
-        ResourceLocation identifier = this.shouldScroll() ? SCROLLER_TEXTURE : SCROLLER_DISABLED_TEXTURE;
+        Identifier identifier = this.shouldScroll() ? SCROLLER_TEXTURE : SCROLLER_DISABLED_TEXTURE;
         context.blitSprite(RenderPipelines.GUI_TEXTURED, identifier, i + 119, j + 15 + k, 12, 15);
         int l = this.leftPos + 52;
         int m = this.topPos + 14;
@@ -217,7 +217,7 @@ public class ColoringStationScreen extends AbstractContainerScreen<ColoringStati
             int m = y + l * 18 + 2;
             ColoringStationScreenHandler.ColoringRecipeData data = this.menu.getRecipeData(i);
             ItemStack stack = this.menu.input.getItem(1);
-            ResourceLocation identifier = data.isDyeContentSufficient(this.dyeContents) && data.isInputValid(stack) ? (i == (this.menu).getSelectedRecipe() ? RECIPE_SELECTED_TEXTURE : mouseX >= k && mouseY >= m && mouseX < k + 16 && mouseY < m + 18 ? RECIPE_HIGHLIGHTED_TEXTURE : RECIPE_TEXTURE) : RECIPE_UNCRAFTABLE_TEXTURE;
+            Identifier identifier = data.isDyeContentSufficient(this.dyeContents) && data.isInputValid(stack) ? (i == (this.menu).getSelectedRecipe() ? RECIPE_SELECTED_TEXTURE : mouseX >= k && mouseY >= m && mouseX < k + 16 && mouseY < m + 18 ? RECIPE_HIGHLIGHTED_TEXTURE : RECIPE_TEXTURE) : RECIPE_UNCRAFTABLE_TEXTURE;
             context.blitSprite(RenderPipelines.GUI_TEXTURED, identifier, k, m - 1, 16, 18);
         }
     }

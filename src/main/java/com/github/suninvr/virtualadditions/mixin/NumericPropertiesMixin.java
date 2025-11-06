@@ -4,7 +4,7 @@ import com.github.suninvr.virtualadditions.client.render.item.CrossbowProjectile
 import com.mojang.serialization.MapCodec;
 import net.minecraft.client.renderer.item.properties.numeric.RangeSelectItemModelProperties;
 import net.minecraft.client.renderer.item.properties.numeric.RangeSelectItemModelProperty;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.minecraft.util.ExtraCodecs;
 import org.spongepowered.asm.mixin.Final;
 import org.spongepowered.asm.mixin.Mixin;
@@ -17,7 +17,7 @@ import static com.github.suninvr.virtualadditions.VirtualAdditions.idOf;
 
 @Mixin(RangeSelectItemModelProperties.class)
 public class NumericPropertiesMixin {
-    @Shadow @Final private static ExtraCodecs.LateBoundIdMapper<ResourceLocation, MapCodec<? extends RangeSelectItemModelProperty>> ID_MAPPER;
+    @Shadow @Final private static ExtraCodecs.LateBoundIdMapper<Identifier, MapCodec<? extends RangeSelectItemModelProperty>> ID_MAPPER;
 
     @Inject(method = "bootstrap", at = @At("TAIL"))
     private static void virtualAdditions$bootstrap(CallbackInfo ci) {

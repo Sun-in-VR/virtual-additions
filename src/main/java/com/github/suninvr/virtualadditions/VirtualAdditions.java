@@ -6,8 +6,7 @@ import net.fabricmc.fabric.api.resource.ResourceManagerHelper;
 import net.fabricmc.fabric.api.resource.ResourcePackActivationType;
 import net.fabricmc.loader.api.FabricLoader;
 import net.minecraft.network.chat.Component;
-import net.minecraft.resources.ResourceLocation;
-import net.minecraft.world.entity.animal.sheep.SheepColorSpawnRules;
+import net.minecraft.resources.Identifier;
 import net.minecraft.world.flag.FeatureFlag;
 import org.apache.logging.log4j.Level;
 import org.apache.logging.log4j.LogManager;
@@ -36,7 +35,7 @@ public class VirtualAdditions implements ModInitializer {
 		areBlocksInitialized = true;
 	}
 
-    public static boolean isFromMod(ResourceLocation id) {
+    public static boolean isFromMod(Identifier id) {
 		return id.getNamespace().equals(NAMESPACE);
     }
 
@@ -98,7 +97,7 @@ public class VirtualAdditions implements ModInitializer {
 	 *
 	 * @param id The identifier's path.
 	 * **/
-	public static ResourceLocation idOf(String id) {
-		return ResourceLocation.fromNamespaceAndPath(NAMESPACE, id);
+	public static Identifier idOf(String id) {
+		return Identifier.fromNamespaceAndPath(NAMESPACE, id);
 	}
 }

@@ -6,13 +6,13 @@ import net.minecraft.advancements.Advancement;
 import net.minecraft.advancements.AdvancementRequirements;
 import net.minecraft.advancements.AdvancementRewards;
 import net.minecraft.advancements.Criterion;
-import net.minecraft.advancements.critereon.RecipeUnlockedTrigger;
+import net.minecraft.advancements.criterion.RecipeUnlockedTrigger;
 import net.minecraft.core.Holder;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.data.recipes.RecipeCategory;
 import net.minecraft.data.recipes.RecipeOutput;
 import net.minecraft.resources.ResourceKey;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.minecraft.world.item.crafting.Ingredient;
 import net.minecraft.world.item.crafting.Recipe;
 
@@ -42,7 +42,7 @@ public class SmithingGildRecipeJsonBuilder {
         return this;
     }
 
-    public void offerTo(RecipeOutput exporter, ResourceLocation recipeKeyId) {
+    public void offerTo(RecipeOutput exporter, Identifier recipeKeyId) {
         this.offerTo(exporter, ResourceKey.create(Registries.RECIPE, recipeKeyId));
     }
 
@@ -53,6 +53,6 @@ public class SmithingGildRecipeJsonBuilder {
                 .requirements(AdvancementRequirements.Strategy.OR);
         this.criteria.forEach(builder::addCriterion);
         SmithingGildRecipe recipe = new SmithingGildRecipe(this.base, this.addition, this.gildType);
-        exporter.accept(recipeKey, recipe, builder.build(recipeKey.location().withPrefix("recipes/" + this.category.getFolderName() + "/")));
+        exporter.accept(recipeKey, recipe, builder.build(recipeKey.identifier().withPrefix("recipes/" + this.category.getFolderName() + "/")));
     }
 }

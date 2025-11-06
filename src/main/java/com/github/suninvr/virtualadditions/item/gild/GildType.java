@@ -12,7 +12,7 @@ import net.minecraft.network.chat.Component;
 import net.minecraft.network.codec.ByteBufCodecs;
 import net.minecraft.network.codec.StreamCodec;
 import net.minecraft.resources.RegistryFixedCodec;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.Item;
@@ -28,7 +28,7 @@ import java.util.function.Consumer;
 
 public class GildType implements TooltipProvider {
     private static final Component descriptionHeader = Component.translatable("item.minecraft.smithing_template.upgrade").withStyle(ChatFormatting.GRAY);
-    private final Component descriptionText;
+    private Component descriptionText;
     public static final Codec<Holder<GildType>> ENTRY_CODEC = RegistryFixedCodec.create(VARegistries.GILD_TYPE_REGISTRY_KEY);
     public static final StreamCodec<RegistryFriendlyByteBuf, Holder<GildType>> ENTRY_PACKET_CODEC = ByteBufCodecs.holderRegistry(VARegistries.GILD_TYPE_REGISTRY_KEY);
     public static final Codec<GildType> CODEC = RegistryFixedCodec.create(VARegistries.GILD_TYPE_REGISTRY_KEY).xmap(Holder::value, VARegistries.GILD_TYPE::wrapAsHolder);
@@ -39,7 +39,7 @@ public class GildType implements TooltipProvider {
 
     public Component getTranslationKey() {
         if (this.translationKey == null) {
-            ResourceLocation id = VARegistries.GILD_TYPE.getKey(this);
+            Identifier id = VARegistries.GILD_TYPE.getKey(this);
             this.translationKey = Component.translatable("gild_type." + id.getNamespace() + "." + id.getPath());
         }
         return this.translationKey;
@@ -52,7 +52,6 @@ public class GildType implements TooltipProvider {
     public GildType(int color, StackModifier<?>... modifiers) {
         this.color = color;
         this.modifiers.addAll(Arrays.asList(modifiers));
-        this.descriptionText = CommonComponents.space().append(this.getTranslationKey()).withColor(color);
     }
 
     /**
@@ -118,6 +117,9 @@ public class GildType implements TooltipProvider {
     @Override
     public void addToTooltip(Item.TooltipContext context, Consumer<Component> textConsumer, TooltipFlag type, DataComponentGetter components) {
         textConsumer.accept(descriptionHeader);
+        if (this.descriptionText == null) {
+            this.descriptionText = CommonComponents.space().append(this.getTranslationKey()).withColor(color);
+        }
         textConsumer.accept(this.descriptionText);
     }
 }

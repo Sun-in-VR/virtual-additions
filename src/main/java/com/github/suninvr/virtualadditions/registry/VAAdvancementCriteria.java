@@ -1,7 +1,7 @@
 package com.github.suninvr.virtualadditions.registry;
 
 import net.minecraft.advancements.CriteriaTriggers;
-import net.minecraft.advancements.critereon.PlayerTrigger;
+import net.minecraft.advancements.criterion.PlayerTrigger;
 
 import static com.github.suninvr.virtualadditions.VirtualAdditions.idOf;
 

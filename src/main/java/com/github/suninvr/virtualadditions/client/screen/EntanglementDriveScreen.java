@@ -14,7 +14,7 @@ import net.minecraft.client.input.InputWithModifiers;
 import net.minecraft.client.input.MouseButtonInfo;
 import net.minecraft.client.renderer.RenderPipelines;
 import net.minecraft.network.chat.Component;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.inventory.ClickType;
 import net.minecraft.world.inventory.Slot;
@@ -22,7 +22,7 @@ import net.minecraft.world.inventory.Slot;
 import java.util.UUID;
 
 public class EntanglementDriveScreen extends AbstractContainerScreen<EntanglementDriveScreenHandler> {
-    public static final ResourceLocation BACKGROUND_TEXTURE = VirtualAdditions.idOf("textures/gui/container/entanglement_drive.png");
+    public static final Identifier BACKGROUND_TEXTURE = VirtualAdditions.idOf("textures/gui/container/entanglement_drive.png");
     private static final Component SLOT_HINT = Component.translatable("container.virtual_additions.entanglement_drive.select_slot_hint");
     private static final Component PAYMENT_SLOT_HINT = Component.translatable("container.virtual_additions.entanglement_drive.payment_slot_hint");
     private float mouseX, mouseY;

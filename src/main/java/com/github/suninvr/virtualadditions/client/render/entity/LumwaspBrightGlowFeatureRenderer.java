@@ -4,15 +4,16 @@ import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.blaze3d.vertex.VertexConsumer;
 import net.minecraft.client.model.EntityModel;
 import net.minecraft.client.renderer.MultiBufferSource;
-import net.minecraft.client.renderer.RenderType;
+import net.minecraft.client.renderer.rendertype.RenderType;
 import net.minecraft.client.renderer.entity.RenderLayerParent;
 import net.minecraft.client.renderer.entity.layers.EyesLayer;
+import net.minecraft.client.renderer.rendertype.RenderTypes;
 import net.minecraft.client.renderer.texture.OverlayTexture;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 
 @SuppressWarnings("unchecked")
 public class LumwaspBrightGlowFeatureRenderer<T extends LumwaspEntityRenderState, M extends EntityModel<T>> extends EyesLayer<T, M> {
-    private static final RenderType SKIN = RenderType.eyes(ResourceLocation.fromNamespaceAndPath("virtual_additions","textures/entity/lumwasp/lumwasp_glow_bright.png"));
+    private static final RenderType SKIN = RenderTypes.eyes(Identifier.fromNamespaceAndPath("virtual_additions","textures/entity/lumwasp/lumwasp_glow_bright.png"));
     public LumwaspBrightGlowFeatureRenderer(RenderLayerParent featureRendererContext) {
         super(featureRendererContext);
     }

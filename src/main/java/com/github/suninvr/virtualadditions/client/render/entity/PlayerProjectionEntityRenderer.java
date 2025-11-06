@@ -8,21 +8,22 @@ import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.blaze3d.vertex.VertexConsumer;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.entity.ClientAvatarEntity;
-import net.minecraft.client.renderer.RenderType;
+import net.minecraft.client.renderer.rendertype.RenderType;
 import net.minecraft.client.renderer.SubmitNodeCollector;
 import net.minecraft.client.renderer.entity.EntityRendererProvider;
 import net.minecraft.client.renderer.entity.LivingEntityRenderer;
+import net.minecraft.client.renderer.rendertype.RenderTypes;
 import net.minecraft.client.renderer.state.CameraRenderState;
 import net.minecraft.client.renderer.texture.OverlayTexture;
 import net.minecraft.core.BlockPos;
 import net.minecraft.network.chat.Component;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.minecraft.world.entity.player.PlayerModelPart;
 import org.jetbrains.annotations.Nullable;
 
 @SuppressWarnings({"unchecked", "rawtypes"})
 public class PlayerProjectionEntityRenderer<T extends PlayerProjectionEntity> extends LivingEntityRenderer<PlayerProjectionEntity, PlayerProjectionEntityRenderState, PlayerProjectionEntityModel> {
-    private static final ResourceLocation GLOW_TEXTURE_ID = VirtualAdditions.idOf("textures/entity/player_projection/glow.png");
+    private static final Identifier GLOW_TEXTURE_ID = VirtualAdditions.idOf("textures/entity/player_projection/glow.png");
 
     public PlayerProjectionEntityRenderer(EntityRendererProvider.Context context) {
         super(context, new PlayerProjectionEntityModel(context.bakeLayer(VARenderers.PLAYER_PROJECTION_LAYER)), 0.25F);
@@ -70,14 +71,14 @@ public class PlayerProjectionEntityRenderer<T extends PlayerProjectionEntity> ex
     }
 
     @Override
-    public ResourceLocation getTextureLocation(PlayerProjectionEntityRenderState state) {
+    public Identifier getTextureLocation(PlayerProjectionEntityRenderState state) {
         return state.skinTextures.body().texturePath();
     }
 
     @Override
     protected @Nullable RenderType getRenderType(PlayerProjectionEntityRenderState state, boolean showBody, boolean translucent, boolean showOutline) {
-        ResourceLocation identifier = this.getTextureLocation(state);
-        return RenderType.entityTranslucent(identifier, true);
+        Identifier identifier = this.getTextureLocation(state);
+        return RenderTypes.entityTranslucent(identifier, true);
     }
 
     protected @Nullable RenderType getGlowRenderLayer() {

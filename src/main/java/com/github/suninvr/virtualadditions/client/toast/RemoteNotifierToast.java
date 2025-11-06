@@ -7,14 +7,14 @@ import net.minecraft.client.gui.components.toasts.Toast;
 import net.minecraft.client.gui.components.toasts.ToastManager;
 import net.minecraft.client.renderer.RenderPipelines;
 import net.minecraft.network.chat.Component;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.minecraft.util.FormattedCharSequence;
 import net.minecraft.world.item.ItemStack;
 
 import java.util.List;
 
 public class RemoteNotifierToast implements Toast {
-    private static final ResourceLocation TEXTURE = VirtualAdditions.idOf("toast/remote_notifier");
+    private static final Identifier TEXTURE = VirtualAdditions.idOf("toast/remote_notifier");
     public static final int DEFAULT_DURATION_MS = 5000;
     private final Component text;
     private final ItemStack stack;

@@ -8,7 +8,7 @@ import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.Gui;
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.renderer.RenderPipelines;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.minecraft.util.Mth;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
@@ -29,13 +29,13 @@ public class InGameHudMixin {
     @Shadow @Final private Minecraft minecraft;
     @Shadow private float scopeScale;
     @Unique
-    private static final ResourceLocation SPECTRAL_SPYGLASS_SCOPE = idOf("textures/misc/spectral_spyglass_scope.png");
+    private static final Identifier SPECTRAL_SPYGLASS_SCOPE = idOf("textures/misc/spectral_spyglass_scope.png");
 
     @Unique
-    private static final ResourceLocation SPECTRAL_FULL_HEART_TEXTURE = VirtualAdditions.idOf("hud/heart/heart/spectral_full");
+    private static final Identifier SPECTRAL_FULL_HEART_TEXTURE = VirtualAdditions.idOf("hud/heart/heart/spectral_full");
 
     @Unique
-    private static final ResourceLocation SPECTRAL_HALF_HEART_TEXTURE = VirtualAdditions.idOf("hud/heart/heart/spectral_half");
+    private static final Identifier SPECTRAL_HALF_HEART_TEXTURE = VirtualAdditions.idOf("hud/heart/heart/spectral_half");
 
     @Unique
     private boolean isPlayerProjection;
@@ -67,16 +67,16 @@ public class InGameHudMixin {
         }
     }
 
-    @ModifyArg(method = "renderVehicleHealth", at = @At(value = "INVOKE", target = "Lnet/minecraft/client/gui/GuiGraphics;blitSprite(Lcom/mojang/blaze3d/pipeline/RenderPipeline;Lnet/minecraft/resources/ResourceLocation;IIII)V", ordinal = 1), index = 1)
-    ResourceLocation virtualAdditions$renderProjectionHeart(ResourceLocation sprite) {
+    @ModifyArg(method = "renderVehicleHealth", at = @At(value = "INVOKE", target = "Lnet/minecraft/client/gui/GuiGraphics;blitSprite(Lcom/mojang/blaze3d/pipeline/RenderPipeline;Lnet/minecraft/resources/Identifier;IIII)V", ordinal = 1), index = 1)
+    Identifier virtualAdditions$renderProjectionHeart(Identifier sprite) {
         if (this.isPlayerProjection) {
             return SPECTRAL_FULL_HEART_TEXTURE;
         }
         return sprite;
     }
 
-    @ModifyArg(method = "renderVehicleHealth", at = @At(value = "INVOKE", target = "Lnet/minecraft/client/gui/GuiGraphics;blitSprite(Lcom/mojang/blaze3d/pipeline/RenderPipeline;Lnet/minecraft/resources/ResourceLocation;IIII)V", ordinal = 2), index = 1)
-    ResourceLocation virtualAdditions$renderProjectionHalfHeart(ResourceLocation sprite) {
+    @ModifyArg(method = "renderVehicleHealth", at = @At(value = "INVOKE", target = "Lnet/minecraft/client/gui/GuiGraphics;blitSprite(Lcom/mojang/blaze3d/pipeline/RenderPipeline;Lnet/minecraft/resources/Identifier;IIII)V", ordinal = 2), index = 1)
+    Identifier virtualAdditions$renderProjectionHalfHeart(Identifier sprite) {
         if (this.isPlayerProjection) {
             return SPECTRAL_HALF_HEART_TEXTURE;
         }

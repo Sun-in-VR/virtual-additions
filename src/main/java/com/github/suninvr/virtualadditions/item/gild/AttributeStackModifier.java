@@ -46,7 +46,7 @@ public class AttributeStackModifier extends StackModifier<ItemAttributeModifiers
             for (TagKey<Item> tag : appliesTo) if (stack.is(tag)) return true;
             return false;
         });
-        AttributeModifier modifier = new AttributeModifier(idOf(attribute.unwrapKey().map(key -> key.location().getPath()).orElse("") + "_from_gilded_tool"), f, operation);
+        AttributeModifier modifier = new AttributeModifier(idOf(attribute.unwrapKey().map(key -> key.identifier().getPath()).orElse("") + "_from_gilded_tool"), f, operation);
         this.attributeModifiers = List.of(
                 new ItemAttributeModifiers.Entry(attribute, modifier, EquipmentSlotGroup.MAINHAND, 
                         new ItemAttributeModifiers.Display.OverrideText(CommonComponents.space().append(
@@ -57,7 +57,7 @@ public class AttributeStackModifier extends StackModifier<ItemAttributeModifiers
 
     public AttributeStackModifier(Holder<Attribute> attribute, float f, AttributeModifier.Operation operation) {
         super(DataComponents.ATTRIBUTE_MODIFIERS, ALWAYS_TRUE);
-        AttributeModifier modifier = new AttributeModifier(idOf(attribute.unwrapKey().map(key -> key.location().getPath()).orElse("") + "_from_gilded_tool"), f, operation);
+        AttributeModifier modifier = new AttributeModifier(idOf(attribute.unwrapKey().map(key -> key.identifier().getPath()).orElse("") + "_from_gilded_tool"), f, operation);
         this.attributeModifiers = List.of(
                 new ItemAttributeModifiers.Entry(attribute, modifier, EquipmentSlotGroup.MAINHAND,
                         new ItemAttributeModifiers.Display.OverrideText(CommonComponents.space().append(

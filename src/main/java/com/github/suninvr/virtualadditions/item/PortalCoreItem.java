@@ -69,7 +69,7 @@ public class PortalCoreItem extends Item {
 
     private boolean placePortalPair(ServerLevel world, BlockPos pos1, BlockPos pos2, Player player) {
         if (pos1.equals(pos2)) return false;
-        int range = world.getGameRules().getInt(VAGameRules.MINI_PORTAL_MAX_CREATION_RANGE);
+        int range = world.getGameRules().get(VAGameRules.MINI_PORTAL_MAX_CREATION_RANGE);
         if (!player.isCreative() && Math.sqrt(pos1.getCenter().distanceToSqr(pos2.getCenter())) > range) return false;
         boolean bl1 = world.getBlockState(pos1).isAir() || world.getBlockState(pos1).is(Blocks.WATER);
         boolean bl2 = world.getBlockState(pos1).isAir() || world.getBlockState(pos1).is(Blocks.WATER);

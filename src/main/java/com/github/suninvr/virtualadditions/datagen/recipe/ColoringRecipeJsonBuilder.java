@@ -5,12 +5,12 @@ import com.github.suninvr.virtualadditions.recipe.ColoringRecipe;
 import net.minecraft.advancements.Advancement;
 import net.minecraft.advancements.AdvancementRequirements;
 import net.minecraft.advancements.AdvancementRewards;
-import net.minecraft.advancements.critereon.RecipeUnlockedTrigger;
+import net.minecraft.advancements.criterion.RecipeUnlockedTrigger;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.data.recipes.RecipeOutput;
 import net.minecraft.resources.ResourceKey;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.crafting.Ingredient;
@@ -41,7 +41,7 @@ public class ColoringRecipeJsonBuilder {
         offerTo(exporter, BuiltInRegistries.ITEM.getKey(this.output).withSuffix("_from_coloring"));
     }
     
-    public void offerTo(RecipeOutput exporter, ResourceLocation recipeId) {
+    public void offerTo(RecipeOutput exporter, Identifier recipeId) {
         ResourceKey<Recipe<?>> registryKey = ResourceKey.create(Registries.RECIPE, recipeId);
         ColoringRecipe coloringRecipe = new ColoringRecipe(Optional.ofNullable(this.input), new ItemStack(this.output), this.dyeCost, this.index);
         Advancement.Builder builder = exporter.advancement().addCriterion("has_the_recipe", RecipeUnlockedTrigger.unlocked(registryKey)).rewards(AdvancementRewards.Builder.recipe(registryKey)).requirements(AdvancementRequirements.Strategy.OR);

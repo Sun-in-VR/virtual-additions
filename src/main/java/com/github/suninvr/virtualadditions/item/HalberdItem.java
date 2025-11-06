@@ -95,6 +95,7 @@ public class HalberdItem extends Item {
                                 target.hurtMarked = true;
                             }
                             stack.postHurtEnemy(target, player);
+                            EnchantmentHelper.doPostAttackEffectsWithItemSource(serverWorld, target, source, stack);
                             entitiesHit.increment();
                             player.awardStat(Stats.DAMAGE_DEALT, Math.round((startingHealth - target.getHealth()) * 10.0F));
                         });

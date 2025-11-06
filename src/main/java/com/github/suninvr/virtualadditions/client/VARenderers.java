@@ -22,7 +22,8 @@ import net.minecraft.client.renderer.entity.BoatRenderer;
 import net.minecraft.client.renderer.entity.ThrownItemRenderer;
 import net.minecraft.client.renderer.fog.FogRenderer;
 import net.minecraft.client.resources.model.Material;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
+import net.minecraft.resources.Identifier;
 import net.minecraft.world.entity.HumanoidArm;
 import net.minecraft.world.level.FoliageColor;
 import net.minecraft.world.level.GrassColor;
@@ -31,11 +32,11 @@ import net.minecraft.world.level.block.RedStoneWireBlock;
 import static com.github.suninvr.virtualadditions.VirtualAdditions.idOf;
 
 public class VARenderers {
-    public static ModelLayerLocation LUMWASP_LAYER = new ModelLayerLocation(ResourceLocation.fromNamespaceAndPath("virtual_additions", "lumwasp"), "main");
-    public static ModelLayerLocation SPECTRE_LAYER = new ModelLayerLocation(ResourceLocation.fromNamespaceAndPath("virtual_additions", "spectre"), "main");
-    public static ModelLayerLocation PLAYER_PROJECTION_LAYER = new ModelLayerLocation(ResourceLocation.fromNamespaceAndPath("virtual_additions", "player_projection"), "main");
-    public static ModelLayerLocation SOULBLOOM_BOAT = new ModelLayerLocation(ResourceLocation.fromNamespaceAndPath("virtual_additions", "boat/soulbloom"), "main");
-    public static ModelLayerLocation SOULBLOOM_CHEST_BOAT = new ModelLayerLocation(ResourceLocation.fromNamespaceAndPath("virtual_additions", "chest_boat/soulbloom"), "main");
+    public static ModelLayerLocation LUMWASP_LAYER = new ModelLayerLocation(Identifier.fromNamespaceAndPath("virtual_additions", "lumwasp"), "main");
+    public static ModelLayerLocation SPECTRE_LAYER = new ModelLayerLocation(Identifier.fromNamespaceAndPath("virtual_additions", "spectre"), "main");
+    public static ModelLayerLocation PLAYER_PROJECTION_LAYER = new ModelLayerLocation(Identifier.fromNamespaceAndPath("virtual_additions", "player_projection"), "main");
+    public static ModelLayerLocation SOULBLOOM_BOAT = new ModelLayerLocation(Identifier.fromNamespaceAndPath("virtual_additions", "boat/soulbloom"), "main");
+    public static ModelLayerLocation SOULBLOOM_CHEST_BOAT = new ModelLayerLocation(Identifier.fromNamespaceAndPath("virtual_additions", "chest_boat/soulbloom"), "main");
     public static final Material CHARTREUSE_SHULKER_BOX = new Material(Sheets.SHULKER_SHEET, VirtualAdditions.idOf("entity/shulker/shulker_chartreuse"));
     public static final Material MAROON_SHULKER_BOX = new Material(Sheets.SHULKER_SHEET, VirtualAdditions.idOf("entity/shulker/shulker_maroon"));
     public static final Material INDIGO_SHULKER_BOX = new Material(Sheets.SHULKER_SHEET, VirtualAdditions.idOf("entity/shulker/shulker_indigo"));
@@ -219,8 +220,8 @@ public class VARenderers {
 
     private static void  initFluidRenderers() {
         FluidRenderHandlerRegistry.INSTANCE.register(VAFluids.ACID, VAFluids.FLOWING_ACID, new SimpleFluidRenderHandler(
-                ResourceLocation.parse("minecraft:block/water_still"),
-                ResourceLocation.parse("minecraft:block/water_flow"),
+                Identifier.parse("minecraft:block/water_still"),
+                Identifier.parse("minecraft:block/water_flow"),
                 0x00e076
         ));
     }

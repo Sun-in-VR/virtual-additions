@@ -30,7 +30,7 @@ import net.minecraft.client.renderer.item.properties.select.TrimMaterialProperty
 import net.minecraft.core.component.DataComponents;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.resources.ResourceKey;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.minecraft.world.item.CrossbowItem;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.Items;
@@ -513,16 +513,16 @@ public class VAModelProvider {
         }
 
         public static void uploadGildedToolModel(ItemModelGenerators generator, ModelTemplate layered, Item item, String suffix) {
-            ResourceLocation itemModelId = ModelLocationUtils.getModelLocation(item);
+            Identifier itemModelId = ModelLocationUtils.getModelLocation(item);
             List<SelectItemModel.SwitchCase<ResourceKey<GildType>>> list = new ArrayList<>(GILD_TYPES.size());
 
             ItemModel.Unbaked baseModel = ItemModelUtils.plainModel(itemModelId);
 
             ItemModel.Unbaked gilded;
             for (GildType type : GILD_TYPES) {
-                ResourceLocation gildType = VARegistries.GILD_TYPE.getKey(type);
-                ResourceLocation gildLayer = gildType.withSuffix(suffix).withPrefix("item/gilded_tools/");
-                ResourceLocation gildedItem = itemModelId.withSuffix("_with_" + gildType.getPath() + "_gild");
+                Identifier gildType = VARegistries.GILD_TYPE.getKey(type);
+                Identifier gildLayer = gildType.withSuffix(suffix).withPrefix("item/gilded_tools/");
+                Identifier gildedItem = itemModelId.withSuffix("_with_" + gildType.getPath() + "_gild");
                 gilded = ItemModelUtils.plainModel(gildedItem);
                 list.add(ItemModelUtils.when(VARegistries.GILD_TYPE.getResourceKey(type).get(), gilded));
                 layered.create(gildedItem, TextureMapping.layered(itemModelId, gildLayer), generator.modelOutput);
@@ -532,7 +532,7 @@ public class VAModelProvider {
         }
 
         public static void uploadGildedHalberdModel(ItemModelGenerators generator, Item item, String suffix) {
-            ResourceLocation itemModelId = ModelLocationUtils.getModelLocation(item);
+            Identifier itemModelId = ModelLocationUtils.getModelLocation(item);
             List<SelectItemModel.SwitchCase<ResourceKey<GildType>>> list = new ArrayList<>(GILD_TYPES.size());
 
             ItemModel.Unbaked baseModel = ItemModelUtils.plainModel(itemModelId);
@@ -540,9 +540,9 @@ public class VAModelProvider {
 
             ItemModel.Unbaked gilded;
             for (GildType type : GILD_TYPES) {
-                ResourceLocation gildType = VARegistries.GILD_TYPE.getKey(type);
-                ResourceLocation gildLayer = gildType.withSuffix(suffix).withPrefix("item/gilded_tools/");
-                ResourceLocation gildedItem = itemModelId.withSuffix("_with_" + gildType.getPath() + "_gild");
+                Identifier gildType = VARegistries.GILD_TYPE.getKey(type);
+                Identifier gildLayer = gildType.withSuffix(suffix).withPrefix("item/gilded_tools/");
+                Identifier gildedItem = itemModelId.withSuffix("_with_" + gildType.getPath() + "_gild");
                 gilded = createFlatModelDispatch(ItemModelUtils.plainModel(gildedItem), ItemModelUtils.plainModel(gildedItem.withSuffix("_in_hand")));
                 list.add(ItemModelUtils.when(VARegistries.GILD_TYPE.getResourceKey(type).get(), gilded));
                 VAModels.HANDHELD_TWO_LAYERS.create(gildedItem, TextureMapping.layered(itemModelId, gildLayer), generator.modelOutput);
@@ -553,7 +553,7 @@ public class VAModelProvider {
         }
 
         public static void uploadGildedSpearModel(ItemModelGenerators generator, Item item, String suffix) {
-            ResourceLocation itemModelId = ModelLocationUtils.getModelLocation(item);
+            Identifier itemModelId = ModelLocationUtils.getModelLocation(item);
             List<SelectItemModel.SwitchCase<ResourceKey<GildType>>> list = new ArrayList<>(GILD_TYPES.size());
 
             ItemModel.Unbaked baseModel = ItemModelUtils.plainModel(itemModelId);
@@ -561,9 +561,9 @@ public class VAModelProvider {
 
             ItemModel.Unbaked gilded;
             for (GildType type : GILD_TYPES) {
-                ResourceLocation gildType = VARegistries.GILD_TYPE.getKey(type);
-                ResourceLocation gildLayer = gildType.withSuffix(suffix).withPrefix("item/gilded_tools/");
-                ResourceLocation gildedItem = itemModelId.withSuffix("_with_" + gildType.getPath() + "_gild");
+                Identifier gildType = VARegistries.GILD_TYPE.getKey(type);
+                Identifier gildLayer = gildType.withSuffix(suffix).withPrefix("item/gilded_tools/");
+                Identifier gildedItem = itemModelId.withSuffix("_with_" + gildType.getPath() + "_gild");
                 gilded = createFlatModelDispatch(ItemModelUtils.plainModel(gildedItem), ItemModelUtils.plainModel(gildedItem.withSuffix("_in_hand")));
                 list.add(ItemModelUtils.when(VARegistries.GILD_TYPE.getResourceKey(type).get(), gilded));
                 ModelTemplates.TWO_LAYERED_ITEM.create(gildedItem, TextureMapping.layered(itemModelId, gildLayer), generator.modelOutput);
@@ -589,18 +589,18 @@ public class VAModelProvider {
         }
 
         public final void registerApplicablePotion(ItemModelGenerators generator, Item item) {
-            ResourceLocation identifier = generator.generateLayeredItem(item, idOf("item/applicable_potion_overlay"), ModelLocationUtils.getModelLocation(item));
+            Identifier identifier = generator.generateLayeredItem(item, idOf("item/applicable_potion_overlay"), ModelLocationUtils.getModelLocation(item));
             generator.addPotionTint(item, identifier);
         }
 
         public final void registerTintableWithDefaultTexture(ItemModelGenerators generator, Item item) {
-            ResourceLocation undyedItemIdentifier = generator.createFlatItemModel(item, ModelTemplates.FLAT_ITEM);
-            ResourceLocation itemIdentifier = BuiltInRegistries.ITEM.getKey(item).withPrefix("item/");
-            ResourceLocation dyedItemIdentifier = ModelTemplates.TWO_LAYERED_ITEM.create(ModelLocationUtils.getModelLocation(item, "_dyed"), TextureMapping.layered(itemIdentifier.withSuffix("_layer"), itemIdentifier.withSuffix("_base")), generator.modelOutput);
+            Identifier undyedItemIdentifier = generator.createFlatItemModel(item, ModelTemplates.FLAT_ITEM);
+            Identifier itemIdentifier = BuiltInRegistries.ITEM.getKey(item).withPrefix("item/");
+            Identifier dyedItemIdentifier = ModelTemplates.TWO_LAYERED_ITEM.create(ModelLocationUtils.getModelLocation(item, "_dyed"), TextureMapping.layered(itemIdentifier.withSuffix("_layer"), itemIdentifier.withSuffix("_base")), generator.modelOutput);
             generator.itemModelOutput.accept(item, ItemModelUtils.conditional(new HasComponent(DataComponents.DYED_COLOR, true), ItemModelUtils.tintedModel(dyedItemIdentifier, new Dye(0xFFFFFF)), ItemModelUtils.plainModel(undyedItemIdentifier)), ClientItem.Properties.DEFAULT);
         }
 
-        public static void registerParentedTintedItemModel(BlockModelGenerators generator, Block block, ResourceLocation parentModelId, ItemTintSource... sources) {
+        public static void registerParentedTintedItemModel(BlockModelGenerators generator, Block block, Identifier parentModelId, ItemTintSource... sources) {
             generator.itemModelOutput.accept(block.asItem(), ItemModelUtils.tintedModel(parentModelId, sources), ClientItem.Properties.DEFAULT);
         }
 
@@ -611,19 +611,19 @@ public class VAModelProvider {
             registerArmorWithExtendedTrimMaterials(generator, boots, equipmentKey, TRIM_PREFIX_BOOTS, dyeable);
         }
 
-        public static void registerArmorWithExtendedTrimMaterials(ItemModelGenerators generator, Item item, ResourceKey<EquipmentAsset> equipmentKey, ResourceLocation trimIdPrefix, boolean dyeable) {
-            ResourceLocation identifier = ModelLocationUtils.getModelLocation(item);
-            ResourceLocation identifier2 = TextureMapping.getItemTexture(item);
-            ResourceLocation identifier3 = TextureMapping.getItemTexture(item, "_overlay");
+        public static void registerArmorWithExtendedTrimMaterials(ItemModelGenerators generator, Item item, ResourceKey<EquipmentAsset> equipmentKey, Identifier trimIdPrefix, boolean dyeable) {
+            Identifier identifier = ModelLocationUtils.getModelLocation(item);
+            Identifier identifier2 = TextureMapping.getItemTexture(item);
+            Identifier identifier3 = TextureMapping.getItemTexture(item, "_overlay");
             List<SelectItemModel.SwitchCase<ResourceKey<TrimMaterial>>> list = new ArrayList<>(TRIM_MATERIALS_EXTENDED.size());
 
             ItemModelGenerators.TrimMaterialData trimMaterial;
             ItemModel.Unbaked unbaked;
             for(Iterator<ItemModelGenerators.TrimMaterialData> iterator = TRIM_MATERIALS_EXTENDED.iterator(); iterator.hasNext(); list.add(ItemModelUtils.when(trimMaterial.materialKey, unbaked))) {
                 trimMaterial = iterator.next();
-                ResourceLocation identifier4 = identifier.withSuffix("_" + trimMaterial.assets().base().suffix() + "_trim");
+                Identifier identifier4 = identifier.withSuffix("_" + trimMaterial.assets().base().suffix() + "_trim");
                 String var10001 = trimMaterial.assets().assetId(equipmentKey).suffix();
-                ResourceLocation identifier5 = trimIdPrefix.withSuffix("_" + var10001);
+                Identifier identifier5 = trimIdPrefix.withSuffix("_" + var10001);
                 if (dyeable) {
                     generator.generateLayeredItem(identifier4, identifier2, identifier3, identifier5);
                     unbaked = ItemModelUtils.tintedModel(identifier4, new Dye(-6265536));

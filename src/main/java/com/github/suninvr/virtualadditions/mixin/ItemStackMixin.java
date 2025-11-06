@@ -40,15 +40,15 @@ public abstract class ItemStackMixin {
 
     @Inject(method = "hurtEnemy", at = @At("TAIL"))
     void virtualAdditions$postDamageEntity(LivingEntity target, LivingEntity user, CallbackInfoReturnable<Boolean> cir) {
-        GildType gildType = ((ItemStack)(Object)(this)).get(VADataComponentTypes.GILD_TYPE);
-        if (gildType != null) {
-            gildType.applyEffectsOnHit(user.level(), target, user);
-        }
-        EffectsOnHitComponent effectsOnHit = ((ItemStack)(Object)(this)).get(VADataComponentTypes.EFFECTS_ON_HIT);
-        if (effectsOnHit != null && effectsOnHit.getRemainingUses() > 0) {
-            effectsOnHit.forEachEffect(target::addEffect);
-            ((ItemStack)(Object)(this)).set(VADataComponentTypes.EFFECTS_ON_HIT, effectsOnHit.decrementRemainingUses());
-        }
+        //GildType gildType = ((ItemStack)(Object)(this)).get(VADataComponentTypes.GILD_TYPE);
+        //if (gildType != null) {
+        //    gildType.applyEffectsOnHit(user.level(), target, user);
+        //}
+        //EffectsOnHitComponent effectsOnHit = ((ItemStack)(Object)(this)).get(VADataComponentTypes.EFFECTS_ON_HIT);
+        //if (effectsOnHit != null && effectsOnHit.getRemainingUses() > 0) {
+        //    effectsOnHit.forEachEffect(target::addEffect);
+        //    ((ItemStack)(Object)(this)).set(VADataComponentTypes.EFFECTS_ON_HIT, effectsOnHit.decrementRemainingUses());
+        //}
 
     }
 }

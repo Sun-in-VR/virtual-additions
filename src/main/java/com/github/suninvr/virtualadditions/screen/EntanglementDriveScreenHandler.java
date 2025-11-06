@@ -5,7 +5,7 @@ import com.github.suninvr.virtualadditions.block.entity.EntanglementDriveBlockEn
 import com.github.suninvr.virtualadditions.registry.VAItems;
 import com.github.suninvr.virtualadditions.registry.VAScreenHandler;
 import net.minecraft.core.UUIDUtil;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.minecraft.util.Mth;
 import net.minecraft.world.Container;
 import net.minecraft.world.SimpleContainer;
@@ -23,10 +23,10 @@ import java.util.UUID;
 @SuppressWarnings("unused")
 public class EntanglementDriveScreenHandler extends AbstractContainerMenu {
 
-    public static final ResourceLocation ENTANGLEMENT_DRIVE_ACTIVE_SLOT_SYNC_ID = VirtualAdditions.idOf("entanglement_drive_active_slot_sync");
-    public static final ResourceLocation ENTANGLEMENT_DRIVE_SELECTED_SLOT_SYNC_ID = VirtualAdditions.idOf("entanglement_drive_selected_slot_sync");
-    public static final ResourceLocation EMPTY_IOLITE_SLOT = VirtualAdditions.idOf("container/slot/iolite_dark");
-    static final ResourceLocation[] EMPTY_ARMOR_SLOT_TEXTURES;
+    public static final Identifier ENTANGLEMENT_DRIVE_ACTIVE_SLOT_SYNC_ID = VirtualAdditions.idOf("entanglement_drive_active_slot_sync");
+    public static final Identifier ENTANGLEMENT_DRIVE_SELECTED_SLOT_SYNC_ID = VirtualAdditions.idOf("entanglement_drive_selected_slot_sync");
+    public static final Identifier EMPTY_IOLITE_SLOT = VirtualAdditions.idOf("container/slot/iolite_dark");
+    static final Identifier[] EMPTY_ARMOR_SLOT_TEXTURES;
     private static final EquipmentSlot[] EQUIPMENT_SLOT_ORDER;
     private final Container inventory;
     private final Inventory playerInventory;
@@ -103,14 +103,14 @@ public class EntanglementDriveScreenHandler extends AbstractContainerMenu {
                     return (itemStack.isEmpty() || playerEntity.isCreative() || !EnchantmentHelper.has(itemStack, EnchantmentEffectComponents.PREVENT_ARMOR_CHANGE)) && super.mayPickup(playerEntity);
                 }
 
-                public ResourceLocation getNoItemIcon() {
+                public Identifier getNoItemIcon() {
                     return EMPTY_ARMOR_SLOT_TEXTURES[equipmentSlot.getIndex()];
                 }
             });
         } // Equipment slots ( 36 - 39 )
 
         this.addSlot(new Slot(inventory, 40, 77, 62) {
-            public ResourceLocation getNoItemIcon() {
+            public Identifier getNoItemIcon() {
                 return InventoryMenu.EMPTY_ARMOR_SLOT_SHIELD;
             }
         }); // Offhand Slot ( 40 )
@@ -121,7 +121,7 @@ public class EntanglementDriveScreenHandler extends AbstractContainerMenu {
                 return stack.is(VAItems.IOLITE);
             }
 
-            public ResourceLocation getNoItemIcon() {
+            public Identifier getNoItemIcon() {
                 return EMPTY_IOLITE_SLOT;
             }
         }); // Payment Slot ( 42 )
@@ -242,7 +242,7 @@ public class EntanglementDriveScreenHandler extends AbstractContainerMenu {
     }
 
     static {
-        EMPTY_ARMOR_SLOT_TEXTURES = new ResourceLocation[]{InventoryMenu.EMPTY_ARMOR_SLOT_BOOTS, InventoryMenu.EMPTY_ARMOR_SLOT_LEGGINGS, InventoryMenu.EMPTY_ARMOR_SLOT_CHESTPLATE, InventoryMenu.EMPTY_ARMOR_SLOT_HELMET};
+        EMPTY_ARMOR_SLOT_TEXTURES = new Identifier[]{InventoryMenu.EMPTY_ARMOR_SLOT_BOOTS, InventoryMenu.EMPTY_ARMOR_SLOT_LEGGINGS, InventoryMenu.EMPTY_ARMOR_SLOT_CHESTPLATE, InventoryMenu.EMPTY_ARMOR_SLOT_HELMET};
         EQUIPMENT_SLOT_ORDER = new EquipmentSlot[]{EquipmentSlot.HEAD, EquipmentSlot.CHEST, EquipmentSlot.LEGS, EquipmentSlot.FEET};
     }
 

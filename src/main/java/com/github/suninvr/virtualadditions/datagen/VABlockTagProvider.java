@@ -11,7 +11,7 @@ import net.minecraft.core.HolderLookup;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.data.BlockFamily;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.minecraft.tags.BlockTags;
 import net.minecraft.tags.TagBuilder;
 import net.minecraft.tags.TagKey;
@@ -459,7 +459,7 @@ public final class VABlockTagProvider {
     private abstract static class Provider extends FabricTagProvider.BlockTagProvider {
         protected static final TagKey<Block> SILKBULBS = TagKey.create(Registries.BLOCK, idOf("silkbulbs"));
         protected static final TagKey<Block> HEDGES = TagKey.create(Registries.BLOCK, idOf("hedges"));
-        protected static final TagKey<Block> ORES = TagKey.create(Registries.BLOCK, ResourceLocation.parse("c:ores"));
+        protected static final TagKey<Block> ORES = TagKey.create(Registries.BLOCK, Identifier.parse("c:ores"));
 
         public Provider(FabricDataOutput output, CompletableFuture<HolderLookup.Provider> registriesFuture) {
             super(output, registriesFuture);

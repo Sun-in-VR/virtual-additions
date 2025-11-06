@@ -18,6 +18,7 @@ import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.enchantment.EnchantmentHelper;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.gameevent.EntityPositionSource;
@@ -92,6 +93,7 @@ public abstract class LivingEntityMixin extends Entity {
                                 entity.addEffect(statusEffectInstance);
                             }
                         });
+                        EnchantmentHelper.doPostAttackEffectsWithItemSource(world, entity, damageSource, damageSource.getWeaponItem());
                         world.sendParticles(new VibrationParticleOption(new EntityPositionSource(entity, entity.getEyeHeight(entity.getPose())), 8), this.getX(), this.getEyeY(), this.getZ(), 1, 0, 0, 0, 0);
                         world.playSound(entity, entity.blockPosition(), SoundEvents.SCULK_BLOCK_CHARGE, entity.getSoundSource(), 1.0F, 0.5F);
                     }
@@ -111,8 +113,8 @@ public abstract class LivingEntityMixin extends Entity {
         }
     }
 
-    @Inject(method = "getBaseExperienceReward", at = @At("RETURN"), cancellable = true)
-    void virtualAdditions$getModifiedXpToDrop(ServerLevel serverLevel, CallbackInfoReturnable<Integer> cir) {
+    @Inject(method = "getExperienceReward", at = @At("RETURN"), cancellable = true)
+    void virtualAdditions$getModifiedXpToDrop(ServerLevel serverLevel, Entity entity, CallbackInfoReturnable<Integer> cir) {
         cir.setReturnValue((int) (cir.getReturnValueI() * this.experienceMultiplier));
     }
 }

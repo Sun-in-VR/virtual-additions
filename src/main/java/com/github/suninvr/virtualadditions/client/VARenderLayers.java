@@ -1,10 +1,11 @@
 package com.github.suninvr.virtualadditions.client;
 
-import net.minecraft.Util;
 import net.minecraft.client.renderer.RenderPipelines;
-import net.minecraft.client.renderer.RenderStateShard;
-import net.minecraft.client.renderer.RenderType;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.client.renderer.rendertype.LayeringTransform;
+import net.minecraft.client.renderer.rendertype.RenderSetup;
+import net.minecraft.client.renderer.rendertype.RenderType;
+import net.minecraft.resources.Identifier;
+import net.minecraft.util.Util;
 
 import java.util.function.Function;
 
@@ -13,28 +14,28 @@ public class VARenderLayers {
 
     }
 
-    private static final Function<ResourceLocation, RenderType> MINI_PORTAL = Util.memoize(
+    private static final Function<Identifier, RenderType> MINI_PORTAL = Util.memoize(
             texture -> {
-                RenderType.CompositeState multiPhaseParameters = RenderType.CompositeState.builder()
-                        .setTextureState(new RenderStateShard.TextureStateShard(texture))
-                        .setLightmapState(RenderStateShard.LIGHTMAP)
-                        .createCompositeState(true);
-                return RenderType.create("virtual_additions_mini_portal", 1536, false, false, RenderPipelines.OPAQUE_PARTICLE, multiPhaseParameters);
+                RenderSetup setup = RenderSetup.builder(RenderPipelines.OPAQUE_PARTICLE)
+                        .withTexture("Sampler0", texture)
+                        .setLayeringTransform(LayeringTransform.VIEW_OFFSET_Z_LAYERING_FORWARD)
+                        .createRenderSetup();
+                return RenderType.create("virtual_additions_mini_portal", setup);
             }
     );
 
-    private static final Function<ResourceLocation, RenderType> MINI_PORTAL_TRANSLUCENT = Util.memoize(
+    private static final Function<Identifier, RenderType> MINI_PORTAL_TRANSLUCENT = Util.memoize(
             texture -> {
-                RenderType.CompositeState multiPhaseParameters = RenderType.CompositeState.builder()
-                        .setTextureState(new RenderStateShard.TextureStateShard(texture))
-                        .setLightmapState(RenderStateShard.LIGHTMAP)
-                        .createCompositeState(true);
-                return RenderType.create("virtual_additions_mini_portal_translucent", 1536, false, true, RenderPipelines.TRANSLUCENT_PARTICLE, multiPhaseParameters);
+                RenderSetup setup = RenderSetup.builder(RenderPipelines.TRANSLUCENT_PARTICLE)
+                        .withTexture("Sampler0", texture)
+                        .setLayeringTransform(LayeringTransform.VIEW_OFFSET_Z_LAYERING_FORWARD)
+                        .createRenderSetup();
+                return RenderType.create("virtual_additions_mini_portal", setup);
             }
     );
 
 
-    public static RenderType getMiniPortal(ResourceLocation texture, boolean translucent) {
+    public static RenderType getMiniPortal(Identifier texture, boolean translucent) {
         return translucent ? MINI_PORTAL_TRANSLUCENT.apply(texture) : MINI_PORTAL.apply(texture);
     }
 }

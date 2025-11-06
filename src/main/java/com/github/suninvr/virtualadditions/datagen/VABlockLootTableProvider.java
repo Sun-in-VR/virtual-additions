@@ -9,9 +9,9 @@ import com.github.suninvr.virtualadditions.registry.collection.ColorfulBlockSet;
 import net.fabricmc.fabric.api.datagen.v1.FabricDataGenerator;
 import net.fabricmc.fabric.api.datagen.v1.FabricDataOutput;
 import net.fabricmc.fabric.api.datagen.v1.provider.FabricBlockLootTableProvider;
-import net.minecraft.advancements.critereon.BlockPredicate;
-import net.minecraft.advancements.critereon.LocationPredicate;
-import net.minecraft.advancements.critereon.StatePropertiesPredicate;
+import net.minecraft.advancements.criterion.BlockPredicate;
+import net.minecraft.advancements.criterion.LocationPredicate;
+import net.minecraft.advancements.criterion.StatePropertiesPredicate;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.HolderGetter;
 import net.minecraft.core.HolderLookup;
@@ -330,7 +330,7 @@ public final class VABlockLootTableProvider {
 
         @Override
         public void add(Block block, LootTable.Builder lootTable) {
-            this.map.put(block.getLootTable().get(), lootTable.setRandomSequence(block.getLootTable().get().location()));
+            this.map.put(block.getLootTable().get(), lootTable.setRandomSequence(block.getLootTable().get().identifier()));
         }
 
         public LootTable.Builder cropDrops(Block crop, Item product, Item seeds, int minYield, int maxYield, LootItemCondition.Builder condition) {
@@ -377,7 +377,7 @@ public final class VABlockLootTableProvider {
             return this.createSilkTouchDispatchTable(dropWithSilkTouch,
                             this.applyExplosionDecay(dropWithSilkTouch, LootItem.lootTableItem(drop)
                                     .apply(ApplyBonusCount.addOreBonusCount(this.registryLookup.getOrThrow(Enchantments.FORTUNE)))))
-                    .setRandomSequence(dropWithSilkTouch.getLootTable().get().location());
+                    .setRandomSequence(dropWithSilkTouch.getLootTable().get().identifier());
         }
 
 

@@ -186,7 +186,7 @@ public class MiniPortalBlock extends BaseEntityBlock implements SimpleWaterlogge
             world.gameEvent(entity, GameEvent.TELEPORT, destination);
             world.playSound(null, origin, VASoundEvents.BLOCK_MINI_PORTAL_DEPART, SoundSource.BLOCKS, 1.0F, 1.0F);
             world.playSound(null, destination, VASoundEvents.BLOCK_MINI_PORTAL_ARRIVE, SoundSource.BLOCKS, 1.0F, 1.0F);
-            if (serverWorld.getGameRules().getBoolean(VAGameRules.IOLITE_INTERFERENCE) && entity instanceof LivingEntity livingEntity && !livingEntity.hasInfiniteMaterials()) {
+            if (serverWorld.getGameRules().get(VAGameRules.IOLITE_INTERFERENCE) && entity instanceof LivingEntity livingEntity && !livingEntity.hasInfiniteMaterials()) {
                 int duration = 0;
                 MobEffectInstance effect = livingEntity.getEffect(VAStatusEffects.IOLITE_INTERFERENCE);
                 if (effect != null) duration = effect.getDuration();

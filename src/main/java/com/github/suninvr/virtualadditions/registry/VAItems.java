@@ -7,13 +7,13 @@ import com.github.suninvr.virtualadditions.item.materials.SteelToolMaterial;
 import com.github.suninvr.virtualadditions.registry.RegistryHelper.ItemRegistryHelper.*;
 import net.fabricmc.fabric.api.itemgroup.v1.ItemGroupEvents;
 import net.minecraft.ChatFormatting;
-import net.minecraft.Util;
+import net.minecraft.util.Util;
 import net.minecraft.core.Direction;
 import net.minecraft.core.component.DataComponents;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceKey;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.minecraft.world.item.*;
 import net.minecraft.world.item.alchemy.PotionContents;
 import net.minecraft.world.item.component.BundleContents;
@@ -476,16 +476,16 @@ public class VAItems {
     private static final Component TOOL_GILD_INGREDIENTS_TEXT;
     private static final Component TOOL_GILD_BASE_SLOT_DESCRIPTION_TEXT;
     private static final Component TOOL_GILD_ADDITIONS_SLOT_DESCRIPTION_TEXT;
-    private static final ResourceLocation EMPTY_SLOT_HOE_TEXTURE;
-    private static final ResourceLocation EMPTY_SLOT_AXE_TEXTURE;
-    private static final ResourceLocation EMPTY_SLOT_SWORD_TEXTURE;
-    private static final ResourceLocation EMPTY_SLOT_SHOVEL_TEXTURE;
-    private static final ResourceLocation EMPTY_SLOT_PICKAXE_TEXTURE;
-    private static final ResourceLocation EMPTY_SLOT_INGOT_TEXTURE;
-    private static final ResourceLocation EMPTY_SLOT_QUARTZ_TEXTURE;
-    private static final ResourceLocation EMPTY_SLOT_EMERALD_TEXTURE;
-    private static final ResourceLocation EMPTY_SLOT_AMETHYST_TEXTURE;
-    private static final ResourceLocation EMPTY_SLOT_ECHO_SHARD_TEXTURE;
+    private static final Identifier EMPTY_SLOT_HOE_TEXTURE;
+    private static final Identifier EMPTY_SLOT_AXE_TEXTURE;
+    private static final Identifier EMPTY_SLOT_SWORD_TEXTURE;
+    private static final Identifier EMPTY_SLOT_SHOVEL_TEXTURE;
+    private static final Identifier EMPTY_SLOT_PICKAXE_TEXTURE;
+    private static final Identifier EMPTY_SLOT_INGOT_TEXTURE;
+    private static final Identifier EMPTY_SLOT_QUARTZ_TEXTURE;
+    private static final Identifier EMPTY_SLOT_EMERALD_TEXTURE;
+    private static final Identifier EMPTY_SLOT_AMETHYST_TEXTURE;
+    private static final Identifier EMPTY_SLOT_ECHO_SHARD_TEXTURE;
 
     //endregion
 
@@ -497,15 +497,15 @@ public class VAItems {
         TOOL_GILD_BASE_SLOT_DESCRIPTION_TEXT = Component.translatable(Util.makeDescriptionId("item", idOf("smithing_template.tool_gild.base_slot_description")));
         TOOL_GILD_ADDITIONS_SLOT_DESCRIPTION_TEXT = Component.translatable(Util.makeDescriptionId("item", idOf("smithing_template.tool_gild.additions_slot_description")));
 
-        EMPTY_SLOT_HOE_TEXTURE = ResourceLocation.withDefaultNamespace("container/slot/hoe");
-        EMPTY_SLOT_AXE_TEXTURE = ResourceLocation.withDefaultNamespace("container/slot/axe");
-        EMPTY_SLOT_SWORD_TEXTURE = ResourceLocation.withDefaultNamespace("container/slot/sword");
-        EMPTY_SLOT_SHOVEL_TEXTURE = ResourceLocation.withDefaultNamespace("container/slot/shovel");
-        EMPTY_SLOT_PICKAXE_TEXTURE = ResourceLocation.withDefaultNamespace("container/slot/pickaxe");
-        EMPTY_SLOT_INGOT_TEXTURE = ResourceLocation.withDefaultNamespace("container/slot/ingot");
-        EMPTY_SLOT_QUARTZ_TEXTURE = ResourceLocation.withDefaultNamespace("container/slot/quartz");
-        EMPTY_SLOT_EMERALD_TEXTURE = ResourceLocation.withDefaultNamespace("container/slot/emerald");
-        EMPTY_SLOT_AMETHYST_TEXTURE = ResourceLocation.withDefaultNamespace("container/slot/amethyst_shard");
+        EMPTY_SLOT_HOE_TEXTURE = Identifier.withDefaultNamespace("container/slot/hoe");
+        EMPTY_SLOT_AXE_TEXTURE = Identifier.withDefaultNamespace("container/slot/axe");
+        EMPTY_SLOT_SWORD_TEXTURE = Identifier.withDefaultNamespace("container/slot/sword");
+        EMPTY_SLOT_SHOVEL_TEXTURE = Identifier.withDefaultNamespace("container/slot/shovel");
+        EMPTY_SLOT_PICKAXE_TEXTURE = Identifier.withDefaultNamespace("container/slot/pickaxe");
+        EMPTY_SLOT_INGOT_TEXTURE = Identifier.withDefaultNamespace("container/slot/ingot");
+        EMPTY_SLOT_QUARTZ_TEXTURE = Identifier.withDefaultNamespace("container/slot/quartz");
+        EMPTY_SLOT_EMERALD_TEXTURE = Identifier.withDefaultNamespace("container/slot/emerald");
+        EMPTY_SLOT_AMETHYST_TEXTURE = Identifier.withDefaultNamespace("container/slot/amethyst_shard");
         EMPTY_SLOT_ECHO_SHARD_TEXTURE = idOf("container/slot/echo_shard");
 
         //endregion
@@ -714,7 +714,7 @@ public class VAItems {
         STEEL_PICKAXE = register("steel_pickaxe", settings -> new Item(settings.pickaxe(SteelToolMaterial.INSTANCE, 1, -2.8F)), new Item.Properties(), CreativeModeTabs.TOOLS_AND_UTILITIES, prev);
         STEEL_AXE = register("steel_axe", settings -> new AxeItem(SteelToolMaterial.INSTANCE, 5.5F, -3.1F, settings), new Item.Properties(), at(CreativeModeTabs.TOOLS_AND_UTILITIES, prev), at(CreativeModeTabs.COMBAT, Items.GOLDEN_AXE));
         STEEL_HOE = register("steel_hoe", settings -> new HoeItem(SteelToolMaterial.INSTANCE, -2, -1.0F, settings), new Item.Properties(), CreativeModeTabs.TOOLS_AND_UTILITIES, prev);
-        STEEL_SPEAR = register("steel_spear", new Item.Properties().spear(SteelToolMaterial.INSTANCE, 1.05F, 1.075F, 0.5F, 3.0F, 7.5F, 4.0F, 5.1F, 10.0F, 4.6F), CreativeModeTabs.COMBAT, Items.GOLDEN_SPEAR);
+        STEEL_SPEAR = register("steel_spear", new Item.Properties().spear(SteelToolMaterial.INSTANCE, 1.00F, 1.00F, 0.55F, 2.75F, 7.75F, 4.25F, 5.1F, 10.625F, 4.6F), CreativeModeTabs.COMBAT, Items.GOLDEN_SPEAR);
         STEEL_HALBERD = register("steel_halberd", HalberdItem::new, VAToolUtil.halberdSettings(new Item.Properties(), SteelToolMaterial.INSTANCE, 9.5F, -3.35F), CreativeModeTabs.COMBAT, GOLDEN_HALBERD);
         STEEL_HELMET = register("steel_helmet", settings -> new Item(settings.humanoidArmor(VAArmorMaterial.STEEL, ArmorType.HELMET)), new Item.Properties().stacksTo(1).durability(ArmorType.HELMET.getDurability(24)), CreativeModeTabs.COMBAT, Items.GOLDEN_BOOTS);
         STEEL_CHESTPLATE = register("steel_chestplate", settings -> new Item(settings.humanoidArmor(VAArmorMaterial.STEEL, ArmorType.CHESTPLATE)), new Item.Properties().stacksTo(1).durability(ArmorType.CHESTPLATE.getDurability(24)), CreativeModeTabs.COMBAT, prev);

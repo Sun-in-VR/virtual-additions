@@ -12,7 +12,7 @@ import net.minecraft.core.HolderLookup;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.data.BlockFamily;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.minecraft.tags.ItemTags;
 import net.minecraft.tags.TagBuilder;
 import net.minecraft.tags.TagKey;
@@ -365,15 +365,15 @@ public final class VAItemTagProvider {
     }
 
     private abstract static class Provider extends FabricTagProvider.ItemTagProvider {
-        protected static final TagKey<Item> INGOTS = TagKey.create(Registries.ITEM, ResourceLocation.parse("c:ingots"));
-        protected static final TagKey<Item> STEEL_INGOTS = TagKey.create(Registries.ITEM, ResourceLocation.parse("c:steel_ingots"));
-        protected static final TagKey<Item> RAW_ORES = TagKey.create(Registries.ITEM, ResourceLocation.parse("c:raw_materials"));
-        protected static final TagKey<Item> GEMS = TagKey.create(Registries.ITEM, ResourceLocation.parse("c:gems"));
-        protected static final TagKey<Item> FOODS = TagKey.create(Registries.ITEM, ResourceLocation.parse("c:foods"));
-        protected static final TagKey<Item> IOLITE = TagKey.create(Registries.ITEM, ResourceLocation.parse("c:iolite"));
-        protected static final TagKey<Item> IOLITE_ORES = TagKey.create(Registries.ITEM, ResourceLocation.parse("c:iolite_ores"));
-        protected static final TagKey<Item> ORES = TagKey.create(Registries.ITEM, ResourceLocation.parse("c:ores"));
-        protected static final TagKey<Item> POTIONS = TagKey.create(Registries.ITEM, ResourceLocation.parse("c:potions"));
+        protected static final TagKey<Item> INGOTS = TagKey.create(Registries.ITEM, Identifier.parse("c:ingots"));
+        protected static final TagKey<Item> STEEL_INGOTS = TagKey.create(Registries.ITEM, Identifier.parse("c:steel_ingots"));
+        protected static final TagKey<Item> RAW_ORES = TagKey.create(Registries.ITEM, Identifier.parse("c:raw_materials"));
+        protected static final TagKey<Item> GEMS = TagKey.create(Registries.ITEM, Identifier.parse("c:gems"));
+        protected static final TagKey<Item> FOODS = TagKey.create(Registries.ITEM, Identifier.parse("c:foods"));
+        protected static final TagKey<Item> IOLITE = TagKey.create(Registries.ITEM, Identifier.parse("c:iolite"));
+        protected static final TagKey<Item> IOLITE_ORES = TagKey.create(Registries.ITEM, Identifier.parse("c:iolite_ores"));
+        protected static final TagKey<Item> ORES = TagKey.create(Registries.ITEM, Identifier.parse("c:ores"));
+        protected static final TagKey<Item> POTIONS = TagKey.create(Registries.ITEM, Identifier.parse("c:potions"));
 
         public Provider(FabricDataOutput output, CompletableFuture<HolderLookup.Provider> completableFuture) {
             super(output, completableFuture);

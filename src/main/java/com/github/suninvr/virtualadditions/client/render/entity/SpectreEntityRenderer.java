@@ -6,18 +6,18 @@ import net.minecraft.client.renderer.entity.EntityRendererProvider;
 import net.minecraft.client.renderer.entity.MobRenderer;
 import net.minecraft.client.renderer.entity.state.LivingEntityRenderState;
 import net.minecraft.core.BlockPos;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 
 @SuppressWarnings({"unchecked", "rawtypes"})
 public class SpectreEntityRenderer extends MobRenderer<SpectreEntity, LivingEntityRenderState, SpectreEntityModel<SpectreEntity>> {
-    private static final ResourceLocation TEXTURE = ResourceLocation.fromNamespaceAndPath("virtual_additions", "textures/entity/spectre/spectre.png");
+    private static final Identifier TEXTURE = Identifier.fromNamespaceAndPath("virtual_additions", "textures/entity/spectre/spectre.png");
 
     public SpectreEntityRenderer(EntityRendererProvider.Context context) {
         super(context, new SpectreEntityModel(context.bakeLayer(VARenderers.SPECTRE_LAYER)), 0.25F);
     }
 
     @Override
-    public ResourceLocation getTextureLocation(LivingEntityRenderState state) {
+    public Identifier getTextureLocation(LivingEntityRenderState state) {
         return TEXTURE;
     }
 
