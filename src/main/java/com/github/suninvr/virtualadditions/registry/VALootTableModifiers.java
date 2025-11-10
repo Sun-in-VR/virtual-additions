@@ -221,6 +221,30 @@ public class VALootTableModifiers {
                 });
             }
 
+            // Shipwreck Map Loot
+            if (BuiltInLootTables.SHIPWRECK_MAP.equals(key)) {
+                final int[] i = {0};
+                tableBuilder.modifyPools(builder -> {
+                    if (i[0] == 3) {
+                        builder.add(LootItem.lootTableItem(STEEL_NAUTILUS_ARMOR)
+                                .setWeight(3));
+                    }
+                    i[0]++;
+                });
+            }
+
+            // Shipwreck Treasure Loot
+            if (BuiltInLootTables.SHIPWRECK_TREASURE.equals(key)) {
+                final int[] i = {0};
+                tableBuilder.modifyPools(builder -> {
+                    if (i[0] == 3) {
+                        builder.add(LootItem.lootTableItem(STEEL_NAUTILUS_ARMOR)
+                                .setWeight(3));
+                    }
+                    i[0]++;
+                });
+            }
+
             // Shipwreck Supply Loot
             if (BuiltInLootTables.SHIPWRECK_SUPPLY.equals(key)) {
                 final int[] i = {0};
@@ -233,14 +257,50 @@ public class VALootTableModifiers {
                                 .setWeight(5)
                                 .apply(SetItemCountFunction.setCount(UniformGenerator.between(3, 12))));
                     }
+                    if (i[0] == 2) {
+                        builder.add(LootItem.lootTableItem(STEEL_NAUTILUS_ARMOR)
+                                .setWeight(3));
+                    }
                     i[0]++;
                 });
             }
 
-            // Zombie Loot
-            //if (lootTableKeyMatches(key, EntityType.ZOMBIE, EntityType.HUSK)) {
-            //
-            //}
+            // Buried Treasure
+            if (BuiltInLootTables.BURIED_TREASURE.equals(key)) {
+                final int[] i = {0};
+                tableBuilder.modifyPools(builder -> {
+                    if (i[0] == 6) {
+                        builder.add(LootItem.lootTableItem(STEEL_NAUTILUS_ARMOR)
+                                .setWeight(3));
+                    }
+                    i[0]++;
+                });
+            }
+
+            // Small Underwater Ruin
+            if (BuiltInLootTables.UNDERWATER_RUIN_SMALL.equals(key)) {
+                final int[] i = {0};
+                tableBuilder.modifyPools(builder -> {
+                    if (i[0] == 2) {
+                        builder.add(LootItem.lootTableItem(STEEL_NAUTILUS_ARMOR)
+                                .setWeight(3));
+                    }
+                    i[0]++;
+                });
+            }
+
+            // Large Underwater Ruin
+            if (BuiltInLootTables.UNDERWATER_RUIN_BIG.equals(key)) {
+                final int[] i = {0};
+                tableBuilder.modifyPools(builder -> {
+                    if (i[0] == 2) {
+                        builder.add(LootItem.lootTableItem(STEEL_NAUTILUS_ARMOR)
+                                .setWeight(3));
+                    }
+                    i[0]++;
+                });
+            }
+
         } ));
     }
 

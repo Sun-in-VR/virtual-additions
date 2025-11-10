@@ -94,10 +94,12 @@ public class HalberdItem extends Item {
                                 target.knockback(knockback + (lungePower.floatValue() + (velocity * velocity) - 1), player.getX() - target.getX(), player.getZ() - target.getZ());
                                 target.hurtMarked = true;
                             }
-                            stack.postHurtEnemy(target, player);
-                            EnchantmentHelper.doPostAttackEffectsWithItemSource(serverWorld, target, source, stack);
+
+                            player.attackVisualEffects(target, false, true, false, 0.0F);
+                            player.setLastHurtMob(target);
+                            player.itemAttackInteraction(target, stack, source, true);
+                            player.damageStatsAndHearts(target, startingHealth);
                             entitiesHit.increment();
-                            player.awardStat(Stats.DAMAGE_DEALT, Math.round((startingHealth - target.getHealth()) * 10.0F));
                         });
 
                 // Destroying blocks in a smaller hitbox

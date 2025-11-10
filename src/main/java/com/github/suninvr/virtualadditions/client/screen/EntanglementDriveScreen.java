@@ -22,7 +22,7 @@ import net.minecraft.world.inventory.Slot;
 import java.util.UUID;
 
 public class EntanglementDriveScreen extends AbstractContainerScreen<EntanglementDriveScreenHandler> {
-    public static final Identifier BACKGROUND_TEXTURE = VirtualAdditions.idOf("textures/gui/container/entanglement_drive.png");
+    public static final Identifier INVENTORY_LOCATION = VirtualAdditions.idOf("textures/gui/container/entanglement_drive.png");
     private static final Component SLOT_HINT = Component.translatable("container.virtual_additions.entanglement_drive.select_slot_hint");
     private static final Component PAYMENT_SLOT_HINT = Component.translatable("container.virtual_additions.entanglement_drive.payment_slot_hint");
     private float mouseX, mouseY;
