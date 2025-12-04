@@ -1,0 +1,37 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "group": "virtual_additions:incense",
+  "category": "misc",
+  "pattern": [
+    "C",
+    "#",
+    "/"
+  ],
+  "key": {
+    "C": [
+      "minecraft:red_tulip",
+      "minecraft:orange_tulip",
+      "minecraft:pink_tulip",
+      "minecraft:white_tulip"
+    ],
+    "#": "#minecraft:coals",
+    "/": "minecraft:stick"
+  },
+  "result": {
+    "id": "virtual_additions:incense",
+    "components": {
+      "virtual_additions:incense_effects": {
+        "burn_ticks": 3600,
+        "potion": {
+          "custom_effects": [
+            {
+              "id": "minecraft:weakness",
+              "duration": 60,
+              "ambient": true
+            }
+          ]
+        }
+      }
+    }
+  }
+}

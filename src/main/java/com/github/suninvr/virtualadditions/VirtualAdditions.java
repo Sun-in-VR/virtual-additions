@@ -85,7 +85,7 @@ public class VirtualAdditions implements ModInitializer {
 		VAPotions.init();
 		VARecipeType.init();
 		VARegistryAliases.init();
-		VAScreenHandler.init();
+		VAMenus.init();
 		VASoundEvents.init();
 		VAStatusEffects.init();
 		VATrackedDataHandlerRegistry.init();

@@ -1,0 +1,24 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "group": "virtual_additions:incense",
+  "category": "misc",
+  "pattern": [
+    "C",
+    "#",
+    "/"
+  ],
+  "key": {
+    "C": [
+      "minecraft:short_grass",
+      "minecraft:short_dry_grass",
+      "minecraft:tall_dry_grass",
+      "minecraft:seagrass",
+      "minecraft:leaf_litter"
+    ],
+    "#": "#minecraft:coals",
+    "/": "minecraft:stick"
+  },
+  "result": {
+    "id": "virtual_additions:incense"
+  }
+}

@@ -1,12 +1,15 @@
 package com.github.suninvr.virtualadditions.registry;
 
 import com.github.suninvr.virtualadditions.VirtualAdditions;
+import com.github.suninvr.virtualadditions.block.entity.IncenseBlockEntity;
 import com.github.suninvr.virtualadditions.component.ExplosiveContentComponent;
+import com.github.suninvr.virtualadditions.component.IncenseEffectsComponent;
 import com.github.suninvr.virtualadditions.item.*;
 import com.github.suninvr.virtualadditions.item.materials.SteelToolMaterial;
 import com.github.suninvr.virtualadditions.registry.RegistryHelper.ItemRegistryHelper.*;
 import net.fabricmc.fabric.api.itemgroup.v1.ItemGroupEvents;
 import net.minecraft.ChatFormatting;
+import net.minecraft.core.BlockPos;
 import net.minecraft.util.Util;
 import net.minecraft.core.Direction;
 import net.minecraft.core.component.DataComponents;
@@ -14,16 +17,23 @@ import net.minecraft.core.registries.Registries;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.resources.Identifier;
+import net.minecraft.world.effect.MobEffectInstance;
+import net.minecraft.world.effect.MobEffects;
 import net.minecraft.world.item.*;
 import net.minecraft.world.item.alchemy.PotionContents;
 import net.minecraft.world.item.component.BundleContents;
 import net.minecraft.world.item.component.ItemContainerContents;
+import net.minecraft.world.item.component.TypedEntityData;
 import net.minecraft.world.item.equipment.ArmorType;
 import net.minecraft.world.item.equipment.Equippable;
 import net.minecraft.world.level.block.Blocks;
+import net.minecraft.world.level.block.SuspiciousEffectHolder;
 import net.minecraft.world.level.block.entity.BannerPatternLayers;
+import net.minecraft.world.level.block.entity.BlockEntity;
+import net.minecraft.world.level.block.entity.BlockEntityType;
+import org.apache.commons.lang3.tuple.Pair;
 
-import java.util.List;
+import java.util.*;
 
 import static com.github.suninvr.virtualadditions.VirtualAdditions.idOf;
 import static com.github.suninvr.virtualadditions.registry.RegistryHelper.ItemRegistryHelper.*;
@@ -273,12 +283,14 @@ public class VAItems {
     public static final Item CORN_SEEDS;
     public static final Item CORN;
     public static final Item ROASTED_CORN;
+    public static final Item TORTILLA;
     public static final Item TOMATO_SEEDS;
     public static final Item TOMATO;
     public static final Item TOMATO_SOUP;
     public static final Item CABBAGE_SEEDS;
     public static final Item CABBAGE;
     public static final Item SALAD;
+    public static final Item TACO;
     public static final Item COTTON_SEEDS;
     public static final Item COTTON;
     public static final Item WISDOM_BERRY_SEEDS;
@@ -451,6 +463,7 @@ public class VAItems {
     public static final Item LILAC_BUNDLE;
     public static final Item LILAC_HARNESS;
     public static final Item COLORING_STATION;
+    public static final Item INCENSE;
     public static final Item TOOL_GILD_SMITHING_TEMPLATE;
     public static final Item EXOSKELETON_ARMOR_TRIM_SMITHING_TEMPLATE;
     public static final Item ROBE_ARMOR_TRIM_SMITHING_TEMPLATE;
@@ -1112,16 +1125,19 @@ public class VAItems {
         CORN_SEEDS = register("corn_seeds", settings -> new BlockItem(VABlocks.CORN_CROP, settings),new Item.Properties().useItemDescriptionPrefix(), CreativeModeTabs.NATURAL_BLOCKS, Items.BEETROOT_SEEDS);
         CORN = register("corn", new Item.Properties().food(VAFoodComponents.CORN), CreativeModeTabs.FOOD_AND_DRINKS, Items.BEETROOT);
         ROASTED_CORN = register("roasted_corn", new Item.Properties().food(VAFoodComponents.ROASTED_CORN), CreativeModeTabs.FOOD_AND_DRINKS, prev);
+        TORTILLA = register("tortilla", new Item.Properties().food(VAFoodComponents.TORTILLA), CreativeModeTabs.FOOD_AND_DRINKS, Items.BREAD);
         TOMATO_SEEDS = register("tomato_seeds", settings -> new BlockItem(VABlocks.TOMATO, settings),new Item.Properties().useItemDescriptionPrefix(), CreativeModeTabs.NATURAL_BLOCKS, CORN_SEEDS);
         TOMATO = register("tomato", TomatoItem::new, new Item.Properties().food(VAFoodComponents.TOMATO), CreativeModeTabs.FOOD_AND_DRINKS, Items.BEETROOT);
         TOMATO_SOUP = register("tomato_soup", new Item.Properties().food(VAFoodComponents.TOMATO_SOUP).stacksTo(1).usingConvertsTo(Items.BOWL), CreativeModeTabs.FOOD_AND_DRINKS, Items.BEETROOT_SOUP);
         CABBAGE_SEEDS = register("cabbage_seeds", settings -> new BlockItem(VABlocks.CABBAGE, settings),new Item.Properties().useItemDescriptionPrefix(), CreativeModeTabs.NATURAL_BLOCKS, CORN_SEEDS);
         CABBAGE = register("cabbage", new Item.Properties().food(VAFoodComponents.CABBAGE),CreativeModeTabs.FOOD_AND_DRINKS, Items.BEETROOT);
-        SALAD = register("salad", new Item.Properties().food(VAFoodComponents.SALAD).stacksTo(1).usingConvertsTo(Items.BOWL), CreativeModeTabs.FOOD_AND_DRINKS, Items.BEETROOT_SOUP);
-        COTTON_SEEDS = register("cotton_seeds", settings -> new BlockItem(VABlocks.COTTON, settings),new Item.Properties().useItemDescriptionPrefix(), CreativeModeTabs.NATURAL_BLOCKS, Items.BEETROOT_SEEDS);
-        COTTON = register("cotton", CreativeModeTabs.INGREDIENTS, Items.WHEAT);
         WISDOM_BERRY_SEEDS = register("wisdom_berry_seeds", settings -> new BlockItem(VABlocks.WISDOM_BERRY, settings),new Item.Properties().useItemDescriptionPrefix(), CreativeModeTabs.NATURAL_BLOCKS, Items.PITCHER_POD);
         WISDOM_BERRY = register("wisdom_berry", new Item.Properties().food(VAFoodComponents.WISDOM_BERRY), CreativeModeTabs.FOOD_AND_DRINKS, CABBAGE);
+        COTTON_SEEDS = register("cotton_seeds", settings -> new BlockItem(VABlocks.COTTON, settings),new Item.Properties().useItemDescriptionPrefix(), CreativeModeTabs.NATURAL_BLOCKS, Items.BEETROOT_SEEDS);
+        COTTON = register("cotton", CreativeModeTabs.INGREDIENTS, Items.WHEAT);
+
+        SALAD = register("salad", new Item.Properties().food(VAFoodComponents.SALAD).stacksTo(1).usingConvertsTo(Items.BOWL), CreativeModeTabs.FOOD_AND_DRINKS, Items.BEETROOT_SOUP);
+        TACO = register("taco", new Item.Properties().food(VAFoodComponents.TACO), CreativeModeTabs.FOOD_AND_DRINKS, prev);
 
         FRIED_EGG = register("fried_egg", new Item.Properties().food(VAFoodComponents.FRIED_EGG), CreativeModeTabs.FOOD_AND_DRINKS, Items.COOKED_CHICKEN);
         ICE_CREAM = register("ice_cream", new Item.Properties().food(VAFoodComponents.ICE_CREAM).stacksTo(1).usingConvertsTo(Items.BOWL), CreativeModeTabs.FOOD_AND_DRINKS, Items.COOKIE);
@@ -1137,6 +1153,8 @@ public class VAItems {
 
         ENGRAVING_CHISEL = register("engraving_chisel", new Item.Properties().stacksTo(1).durability(64), CreativeModeTabs.TOOLS_AND_UTILITIES, Items.NAME_TAG);
         LIGHTNING_BOTTLE = register("lightning_bottle", LightningBottleItem::new, new Item.Properties().component(DataComponents.ENCHANTMENT_GLINT_OVERRIDE, true).rarity(Rarity.RARE).stacksTo(16), CreativeModeTabs.INGREDIENTS, Items.EXPERIENCE_BOTTLE);
+
+        INCENSE = registerBlockItem("incense", VABlocks.INCENSE, CreativeModeTabs.FUNCTIONAL_BLOCKS, Items.BELL);
 
         PURPLE_EGG = register("purple_egg", EggItem::new, new Item.Properties().stacksTo(16).component(DataComponents.CHICKEN_VARIANT, new EitherHolder<>(ResourceKey.create(Registries.CHICKEN_VARIANT, idOf("enchanted")))), at(CreativeModeTabs.COMBAT, Items.BLUE_EGG), at(CreativeModeTabs.INGREDIENTS, Items.BLUE_EGG));
 
@@ -1161,6 +1179,33 @@ public class VAItems {
             if (CreativeModeTabs.CACHED_PARAMETERS == null) return;
             CreativeModeTabs.CACHED_PARAMETERS.holders().lookup(Registries.POTION).ifPresent((wrapper) -> CreativeModeTabs.generatePotionEffectTypes(content, wrapper, VAItems.APPLICABLE_POTION, CreativeModeTab.TabVisibility.PARENT_AND_SEARCH_TABS, CreativeModeTabs.CACHED_PARAMETERS.enabledFeatures()));
         } );
+
+        ItemGroupEvents.modifyEntriesEvent(CreativeModeTabs.FUNCTIONAL_BLOCKS).register(content -> {
+            if (CreativeModeTabs.CACHED_PARAMETERS == null) return;
+            List<Pair<MobEffectInstance, Integer>> componentData = new ArrayList<>();
+            componentData.add(Pair.of(new MobEffectInstance(MobEffects.HASTE, 60, 0, true, true), 3600));
+            componentData.add(Pair.of(new MobEffectInstance(MobEffects.BLINDNESS, 60, 0, true, true), 0));
+            componentData.add(Pair.of(new MobEffectInstance(MobEffects.NAUSEA, 60, 0, true, true), 3600));
+            componentData.add(Pair.of(new MobEffectInstance(MobEffects.NIGHT_VISION, 250, 0, true, true), 3600));
+            componentData.add(Pair.of(new MobEffectInstance(MobEffects.FIRE_RESISTANCE, 60, 0, true, true), 3600));
+            componentData.add(Pair.of(new MobEffectInstance(MobEffects.WEAKNESS, 60, 0, true, true), 3600));
+            componentData.add(Pair.of(new MobEffectInstance(MobEffects.REGENERATION, 60, 0, true, true), 3600));
+            componentData.add(Pair.of(new MobEffectInstance(MobEffects.JUMP_BOOST, 60, 0, true, true), 3600));
+            componentData.add(Pair.of(new MobEffectInstance(MobEffects.POISON, 60, 0, true, true), 3600));
+            componentData.add(Pair.of(new MobEffectInstance(MobEffects.WITHER, 60, 0, true, true), 3600));
+            componentData.add(Pair.of(new MobEffectInstance(VAStatusEffects.AURA, 60, 0, true, true), 3600));
+            componentData.add(Pair.of(new MobEffectInstance(VAStatusEffects.FRAILTY, 60, 0, true, true), 3600));
+
+            componentData.forEach(pair -> {
+                ItemStack stack = INCENSE.getDefaultInstance();
+                stack.set(VADataComponentTypes.INCENSE_EFFECTS, new IncenseEffectsComponent(
+                        Optional.of(new PotionContents(Optional.empty(), Optional.empty(), List.of(pair.getLeft()), Optional.empty())),
+                        Optional.of(pair.getRight())
+                ));
+                content.addBefore(Items.BEACON, stack);
+
+            });
+        });
     }
 
     //region Initializers

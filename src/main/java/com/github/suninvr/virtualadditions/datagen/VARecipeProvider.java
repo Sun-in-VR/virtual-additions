@@ -184,12 +184,22 @@ public final class VARecipeProvider {
 
             this.offerCookingRecipes(VAItems.FRIED_EGG, List.of(Items.EGG, Items.BROWN_EGG, Items.BLUE_EGG, VAItems.PURPLE_EGG), 0.35F, "fried_egg");
             this.offerCookingRecipes(VAItems.ROASTED_CORN, VAItems.CORN, 0.35F, "corn");
+            this.offerShapelessRecipe(RecipeCategory.FOOD, VAItems.TORTILLA, 2, Pair.of(VAItems.CORN, 3));
 
             ShapelessRecipeBuilder.shapeless(this.registryLookup, RecipeCategory.FOOD, VAItems.TOMATO_SOUP)
                             .requires(VAItems.TOMATO, 3).requires(Items.BOWL).unlockedBy("has_tomato", has(VAItems.TOMATO)).save(this.output);
 
             ShapelessRecipeBuilder.shapeless(this.registryLookup, RecipeCategory.FOOD, VAItems.SALAD)
                             .requires(VAItems.CABBAGE, 1).requires(VAItems.TOMATO, 1).requires(VAItems.ROASTED_CORN, 1).requires(Items.BOWL).unlockedBy("has_food", has(VAItems.TOMATO)).save(this.output);
+
+            ShapelessRecipeBuilder.shapeless(this.registryLookup, RecipeCategory.FOOD, VAItems.TACO)
+                    .requires(VAItems.CABBAGE, 1)
+                    .requires(VAItems.TOMATO, 1)
+                    .requires(VAItems.TORTILLA, 1)
+                    .requires(VAItems.CHEESE_WEDGE)
+                    .requires(Ingredient.of(Items.COOKED_BEEF, Items.COOKED_CHICKEN, Items.COOKED_MUTTON, Items.COOKED_PORKCHOP, Items.COOKED_RABBIT))
+                    .unlockedBy("has_food", has(VAItems.TORTILLA))
+                    .save(this.output);
 
             this.offerJerkyFoodRecipe(Items.COOKED_BEEF, VAItems.BEEF_JERKY);
             this.offerJerkyFoodRecipe(Items.COOKED_PORKCHOP, VAItems.PORK_JERKY);
@@ -571,6 +581,7 @@ public final class VARecipeProvider {
                     .unlockedBy("has_soul_sprout", has(VAItems.SOUL_SPROUT))
                     .save(this.output, "virtual_additions:orange_dye_from_soul_sprout");
 
+            this.offerIncenseRecipes(output);
             this.offerWaxingRecipes(output);
         }
     }
@@ -910,6 +921,19 @@ public final class VARecipeProvider {
                     .pattern(" / ")
                     .define('#', material).define('/', Items.STICK).unlockedBy("has_material", has(material)).save(this.output);
         }
+
+        protected void offerIncenseRecipes(RecipeOutput output) {
+
+        };
+
+        protected void offerIncenseRecipe(Ingredient ingredient) {
+            ShapedRecipeBuilder.shaped(this.registryLookup, RecipeCategory.COMBAT, VAItems.INCENSE)
+                    .pattern("C")
+                    .pattern("#")
+                    .pattern("/")
+                    .define('C', ingredient).define('/', Items.STICK).define('#', ItemTags.COALS)
+                    .save(this.output);
+        };
     }
 
 

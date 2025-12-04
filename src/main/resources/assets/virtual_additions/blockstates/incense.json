@@ -1,0 +1,50 @@
+{
+  "variants": {
+    "facing=north,lit=false": [
+      {
+        "model": "virtual_additions:block/incense"
+      }
+    ],
+    "facing=east,lit=false": [
+      {
+        "model": "virtual_additions:block/incense",
+        "y": 90
+      }
+    ],
+    "facing=south,lit=false": [
+      {
+        "model": "virtual_additions:block/incense",
+        "y": 180
+      }
+    ],
+    "facing=west,lit=false": [
+      {
+        "model": "virtual_additions:block/incense",
+        "y": 270
+      }
+    ],
+    "facing=north,lit=true": [
+      {
+        "model": "virtual_additions:block/incense_lit"
+      }
+    ],
+    "facing=east,lit=true": [
+      {
+        "model": "virtual_additions:block/incense_lit",
+        "y": 90
+      }
+    ],
+    "facing=south,lit=true": [
+      {
+        "model": "virtual_additions:block/incense_lit",
+        "y": 180
+      }
+    ],
+    "facing=west,lit=true": [
+      {
+        "model": "virtual_additions:block/incense_lit",
+        "y": 270
+      }
+    ]
+  }
+}

@@ -1,8 +1,8 @@
 package com.github.suninvr.virtualadditions.client.screen;
 
 import com.github.suninvr.virtualadditions.VirtualAdditions;
-import com.github.suninvr.virtualadditions.network.EntanglementDriveC2SPayload;
-import com.github.suninvr.virtualadditions.screen.EntanglementDriveScreenHandler;
+import com.github.suninvr.virtualadditions.network.SetEntangledSlotPayload;
+import com.github.suninvr.virtualadditions.screen.EntanglementDriveMenu;
 import net.fabricmc.fabric.api.client.networking.v1.ClientPlayNetworking;
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.gui.components.AbstractButton;
@@ -21,14 +21,14 @@ import net.minecraft.world.inventory.Slot;
 
 import java.util.UUID;
 
-public class EntanglementDriveScreen extends AbstractContainerScreen<EntanglementDriveScreenHandler> {
+public class EntanglementDriveScreen extends AbstractContainerScreen<EntanglementDriveMenu> {
     public static final Identifier INVENTORY_LOCATION = VirtualAdditions.idOf("textures/gui/container/entanglement_drive.png");
     private static final Component SLOT_HINT = Component.translatable("container.virtual_additions.entanglement_drive.select_slot_hint");
     private static final Component PAYMENT_SLOT_HINT = Component.translatable("container.virtual_additions.entanglement_drive.payment_slot_hint");
     private float mouseX, mouseY;
     private final UUID playerId;
 
-    public EntanglementDriveScreen(EntanglementDriveScreenHandler handler, Inventory inventory, Component title) {
+    public EntanglementDriveScreen(EntanglementDriveMenu handler, Inventory inventory, Component title) {
         super(handler, inventory, title);
         this.playerId = inventory.player.getUUID();
     }
@@ -42,21 +42,20 @@ public class EntanglementDriveScreen extends AbstractContainerScreen<Entanglemen
     }
 
     @Override
-    protected void renderBg(GuiGraphics context, float delta, int mouseX, int mouseY) {
-        //RenderSystem.setShaderTexture(0, BACKGROUND_TEXTURE);
+    protected void renderBg(GuiGraphics guiGraphics, float delta, int mouseX, int mouseY) {
         int i = this.leftPos;
         int j = this.topPos;
-        context.blit(RenderPipelines.GUI_TEXTURED, INVENTORY_LOCATION, i, j, 0, 0, this.imageWidth, this.imageHeight, 256, 256);
+        guiGraphics.blit(RenderPipelines.GUI_TEXTURED, INVENTORY_LOCATION, i, j, 0, 0, this.imageWidth, this.imageHeight, 256, 256);
         if (this.menu.isSelectingSlot() && this.menu.isSlotSelected()) {
             Slot slot = this.menu.getSelectedSlot();
-            context.blit(RenderPipelines.GUI_TEXTURED, INVENTORY_LOCATION, i + slot.x - 1, j + slot.y - 1, 196, 0, 18, 18, 256, 256);
+            guiGraphics.blit(RenderPipelines.GUI_TEXTURED, INVENTORY_LOCATION, i + slot.x - 1, j + slot.y - 1, 196, 0, 18, 18, 256, 256);
         }
         if (this.menu.isActive() && this.menu.isSamePlayer()) {
             Slot slot = this.menu.getActiveSlot();
-            context.blit(RenderPipelines.GUI_TEXTURED, INVENTORY_LOCATION, i + slot.x - 1, j + slot.y - 1, 178, 0, 18, 18, 256, 256);
+            guiGraphics.blit(RenderPipelines.GUI_TEXTURED, INVENTORY_LOCATION, i + slot.x - 1, j + slot.y - 1, 178, 0, 18, 18, 256, 256);
         }
         if (this.minecraft != null && this.minecraft.player != null) {
-            InventoryScreen.renderEntityInInventoryFollowsMouse(context, i + 26, j + 8, i + 75, j + 78, 30, 0.0625F, this.mouseX, this.mouseY, this.minecraft.player);
+            InventoryScreen.renderEntityInInventoryFollowsMouse(guiGraphics, i + 26, j + 8, i + 75, j + 78, 30, 0.0625F, this.mouseX, this.mouseY, this.minecraft.player);
         }
     }
 
@@ -103,7 +102,7 @@ public class EntanglementDriveScreen extends AbstractContainerScreen<Entanglemen
 
         @Override
         public void onPress(InputWithModifiers input) {
-            ClientPlayNetworking.send(new EntanglementDriveC2SPayload(EntanglementDriveScreen.this.menu.getSelectedSlotIndex(), EntanglementDriveScreen.this.playerId));
+            ClientPlayNetworking.send(new SetEntangledSlotPayload(EntanglementDriveScreen.this.menu.getSelectedSlotIndex(), EntanglementDriveScreen.this.playerId));
             EntanglementDriveScreen.this.menu.decrementPaymentSlot();
         }
 

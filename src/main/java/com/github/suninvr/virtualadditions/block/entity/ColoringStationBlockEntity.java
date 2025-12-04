@@ -1,7 +1,7 @@
 package com.github.suninvr.virtualadditions.block.entity;
 
 import com.github.suninvr.virtualadditions.registry.VABlockEntityType;
-import com.github.suninvr.virtualadditions.screen.ColoringStationScreenHandler;
+import com.github.suninvr.virtualadditions.screen.ColoringStationMenu;
 import net.minecraft.core.BlockPos;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.MenuProvider;
@@ -85,7 +85,7 @@ public class ColoringStationBlockEntity extends BlockEntity implements MenuProvi
     @Nullable
     @Override
     public AbstractContainerMenu createMenu(int syncId, Inventory playerInventory, Player player) {
-        return new ColoringStationScreenHandler(syncId, playerInventory, ContainerLevelAccess.create(this.level, this.worldPosition), this.propertyDelegate);
+        return new ColoringStationMenu(syncId, playerInventory, ContainerLevelAccess.create(this.level, this.worldPosition), this.propertyDelegate);
     }
 
 }

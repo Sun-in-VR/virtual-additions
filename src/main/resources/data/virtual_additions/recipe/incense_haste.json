@@ -1,0 +1,35 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "group": "virtual_additions:incense",
+  "category": "misc",
+  "pattern": [
+    "C",
+    "#",
+    "/"
+  ],
+  "key": {
+    "C": [
+      "minecraft:blue_orchid",
+      "minecraft:dandelion"
+    ],
+    "#": "#minecraft:coals",
+    "/": "minecraft:stick"
+  },
+  "result": {
+    "id": "virtual_additions:incense",
+    "components": {
+      "virtual_additions:incense_effects": {
+        "burn_ticks": 3600,
+        "potion": {
+          "custom_effects": [
+            {
+              "id": "minecraft:haste",
+              "duration": 60,
+              "ambient": true
+            }
+          ]
+        }
+      }
+    }
+  }
+}

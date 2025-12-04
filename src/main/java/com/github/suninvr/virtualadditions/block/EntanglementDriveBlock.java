@@ -2,7 +2,7 @@ package com.github.suninvr.virtualadditions.block;
 
 import com.github.suninvr.virtualadditions.block.entity.EntanglementDriveBlockEntity;
 import com.github.suninvr.virtualadditions.registry.VABlockEntityType;
-import com.github.suninvr.virtualadditions.screen.EntanglementDriveScreenHandler;
+import com.github.suninvr.virtualadditions.screen.EntanglementDriveMenu;
 import com.mojang.serialization.MapCodec;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
@@ -119,7 +119,7 @@ public class EntanglementDriveBlock extends BaseEntityBlock implements WorldlyCo
     @Nullable
     @Override
     public MenuProvider getMenuProvider(BlockState state, Level world, BlockPos pos) {
-        return new SimpleMenuProvider(((syncId, inv, player) -> new EntanglementDriveScreenHandler(syncId, inv, ContainerLevelAccess.create(world, pos), new SimpleContainerData(2))), TITLE);
+        return new SimpleMenuProvider(((syncId, inv, player) -> new EntanglementDriveMenu(syncId, inv, ContainerLevelAccess.create(world, pos), new SimpleContainerData(2))), TITLE);
     }
 
     @Override

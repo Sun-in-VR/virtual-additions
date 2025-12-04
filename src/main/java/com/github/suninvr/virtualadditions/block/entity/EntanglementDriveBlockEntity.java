@@ -4,7 +4,7 @@ import com.github.suninvr.virtualadditions.block.EntanglementDriveBlock;
 import com.github.suninvr.virtualadditions.registry.VABlockEntityType;
 import com.github.suninvr.virtualadditions.registry.VABlocks;
 import com.github.suninvr.virtualadditions.registry.VAStatusEffects;
-import com.github.suninvr.virtualadditions.screen.EntanglementDriveScreenHandler;
+import com.github.suninvr.virtualadditions.screen.EntanglementDriveMenu;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.core.UUIDUtil;
@@ -97,6 +97,7 @@ public class EntanglementDriveBlockEntity extends BlockEntity implements MenuPro
 
     @NotNull
     public Optional<Player> getPlayer() {
+        if (this.getLevel().getServer() == null) return Optional.empty();
         return Optional.ofNullable(this.getLevel().getServer().getPlayerList().getPlayer(this.playerId));
     }
 
@@ -138,7 +139,7 @@ public class EntanglementDriveBlockEntity extends BlockEntity implements MenuPro
     @Nullable
     @Override
     public AbstractContainerMenu createMenu(int syncId, Inventory inv, Player player) {
-        return new EntanglementDriveScreenHandler(syncId, inv, ContainerLevelAccess.create(this.level, this.worldPosition), this.properties);
+        return new EntanglementDriveMenu(syncId, inv, ContainerLevelAccess.create(this.level, this.worldPosition), this.properties);
     }
 
     @Override

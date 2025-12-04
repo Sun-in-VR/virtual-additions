@@ -51,7 +51,7 @@ public class RemoteNotifierToast implements Toast {
             }
             int offset = 0;
             for (FormattedCharSequence line : lines) {
-                context.drawString(textRenderer, line, textX, lines.size() > 1 ? 6 + offset : 12, 0xFFFF33, true);
+                context.drawString(textRenderer, line, textX, lines.size() > 1 ? 6 + offset : 12, 0xFFFFFF33, true);
                 offset += 12;
             }
         }

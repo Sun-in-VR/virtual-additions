@@ -407,6 +407,7 @@ public class VABlocks {
     public static final Block LILAC_WALL_BANNER;
     public static final Block LILAC_GLAZED_TERRACOTTA;
     public static final Block COLORING_STATION;
+    public static final Block INCENSE;
     public static final Block ACID;
     public static final Block ACID_BLOCK;
     public static final Block IOLITE_ORE;
@@ -840,6 +841,8 @@ public class VABlocks {
 
         COLORING_STATION = register("coloring_station", ColoringStationBlock::new, Properties.ofFullCopy(Blocks.SMITHING_TABLE));
 
+        INCENSE = register("incense", IncenseBlock::new, Properties.ofFullCopy(Blocks.TORCH).lightLevel(state -> state.getValue(IncenseBlock.LIT) ? 1 : 0));
+
         ACID = register("acid", (settings) -> new AcidFluidBlock(VAFluids.ACID, settings), Properties.of().mapColor(MapColor.COLOR_LIGHT_GREEN).lightLevel(((state) -> 6)).sound(SoundType.EMPTY).replaceable().noCollision().strength(100.0F).noLootTable().isValidSpawn(((state, world, pos, type) -> type == VAEntityType.LUMWASP)).pushReaction(PushReaction.DESTROY));
         ACID_BLOCK = register("acid_block", AcidBlock::new, Properties.of().mapColor(MapColor.COLOR_LIGHT_GREEN).instabreak().sound(SoundType.HONEY_BLOCK).noOcclusion().isRedstoneConductor((state, world, pos) -> false));
 
@@ -847,7 +850,7 @@ public class VABlocks {
         IOLITE_BLOCK = register("iolite_block", Block::new, Properties.of().mapColor(MapColor.COLOR_MAGENTA).sound(SoundType.METAL).requiresCorrectToolForDrops().destroyTime(5.0F).explosionResistance(300.0F));
         MINI_PORTAL = register("mini_portal", MiniPortalBlock::new, Properties.ofFullCopy(Blocks.GLASS).lightLevel(state -> 11));
         ENTANGLEMENT_DRIVE = register("entanglement_drive", EntanglementDriveBlock::new, Properties.of().noOcclusion().sound(SoundType.NETHERITE_BLOCK).lightLevel(state -> 3).destroyTime(22.5F).requiresCorrectToolForDrops().explosionResistance(600.0F));
-        REMOTE_NOTIFIER = register("remote_notifier", RemoteNotifierBlock::new, Properties.of().noOcclusion().sound(SoundType.NETHERITE_BLOCK).destroyTime(22.5F).requiresCorrectToolForDrops().explosionResistance(600.0F).requiredFeatures(VirtualAdditions.PREVIEW));
+        REMOTE_NOTIFIER = register("remote_notifier", RemoteNotifierBlock::new, Properties.of().noOcclusion().sound(SoundType.NETHERITE_BLOCK).destroyTime(22.5F).requiresCorrectToolForDrops().explosionResistance(600.0F));
 
         DESTRUCTIVE_SCULK = register("destructive_sculk", DestructiveSculkBlock::new, Properties.ofFullCopy(Blocks.SCULK));
 

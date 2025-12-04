@@ -3,7 +3,7 @@ package com.github.suninvr.virtualadditions.screen;
 import com.github.suninvr.virtualadditions.VirtualAdditions;
 import com.github.suninvr.virtualadditions.block.entity.EntanglementDriveBlockEntity;
 import com.github.suninvr.virtualadditions.registry.VAItems;
-import com.github.suninvr.virtualadditions.registry.VAScreenHandler;
+import com.github.suninvr.virtualadditions.registry.VAMenus;
 import net.minecraft.core.UUIDUtil;
 import net.minecraft.resources.Identifier;
 import net.minecraft.util.Mth;
@@ -21,7 +21,7 @@ import java.util.Optional;
 import java.util.UUID;
 
 @SuppressWarnings("unused")
-public class EntanglementDriveScreenHandler extends AbstractContainerMenu {
+public class EntanglementDriveMenu extends AbstractContainerMenu {
 
     public static final Identifier ENTANGLEMENT_DRIVE_ACTIVE_SLOT_SYNC_ID = VirtualAdditions.idOf("entanglement_drive_active_slot_sync");
     public static final Identifier ENTANGLEMENT_DRIVE_SELECTED_SLOT_SYNC_ID = VirtualAdditions.idOf("entanglement_drive_selected_slot_sync");
@@ -38,11 +38,11 @@ public class EntanglementDriveScreenHandler extends AbstractContainerMenu {
     private final UUID playerId;
     private static final UUID nullId = UUID.fromString("0-0-0-0-0");
 
-    public EntanglementDriveScreenHandler(int syncId, Inventory playerInventory) {
+    public EntanglementDriveMenu(int syncId, Inventory playerInventory) {
         this(syncId, playerInventory, ContainerLevelAccess.NULL, new SimpleContainerData(5));
     }
-    public EntanglementDriveScreenHandler(int syncid, Inventory inventory, ContainerLevelAccess context, ContainerData delegate) {
-        super(VAScreenHandler.ENTANGLEMENT_DRIVE, syncid);
+    public EntanglementDriveMenu(int syncid, Inventory inventory, ContainerLevelAccess context, ContainerData delegate) {
+        super(VAMenus.ENTANGLEMENT_DRIVE, syncid);
         this.context = context;
         this.selectedSlotIndex = -1;
         this.propertyDelegate = delegate;
@@ -59,7 +59,7 @@ public class EntanglementDriveScreenHandler extends AbstractContainerMenu {
         this.inventory = new SimpleContainer(1) {
             @Override
             public void setChanged() {
-                EntanglementDriveScreenHandler.this.slotsChanged(this);
+                EntanglementDriveMenu.this.slotsChanged(this);
                 super.setChanged();
             }
             @Override
@@ -95,7 +95,7 @@ public class EntanglementDriveScreenHandler extends AbstractContainerMenu {
                 }
 
                 public boolean mayPlace(ItemStack stack) {
-                    return equipmentSlot == EntanglementDriveScreenHandler.this.playerInventory.player.getEquipmentSlotForItem(stack);
+                    return equipmentSlot == EntanglementDriveMenu.this.playerInventory.player.getEquipmentSlotForItem(stack);
                 }
 
                 public boolean mayPickup(Player playerEntity) {

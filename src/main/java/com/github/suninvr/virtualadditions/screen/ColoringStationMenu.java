@@ -3,10 +3,10 @@ package com.github.suninvr.virtualadditions.screen;
 import com.github.suninvr.virtualadditions.block.entity.ColoringStationBlockEntity;
 import com.github.suninvr.virtualadditions.block.entity.DyeContents;
 import com.github.suninvr.virtualadditions.interfaces.RecipeManagerInterface;
-import com.github.suninvr.virtualadditions.network.ColoringStationS2CPayload;
+import com.github.suninvr.virtualadditions.network.ColoringRecipesPayload;
 import com.github.suninvr.virtualadditions.recipe.ColoringRecipeDisplay;
 import com.github.suninvr.virtualadditions.recipe.ColoringStationRecipe;
-import com.github.suninvr.virtualadditions.registry.VAScreenHandler;
+import com.github.suninvr.virtualadditions.registry.VAMenus;
 import net.fabricmc.fabric.api.networking.v1.ServerPlayNetworking;
 import net.minecraft.network.RegistryFriendlyByteBuf;
 import net.minecraft.network.codec.ByteBufCodecs;
@@ -32,7 +32,7 @@ import java.util.Comparator;
 import java.util.List;
 import java.util.Optional;
 
-public class ColoringStationScreenHandler extends AbstractContainerMenu {
+public class ColoringStationMenu extends AbstractContainerMenu {
     private final DyeContents dyeContents;
     private DyeContents dyeContentsAdder;
     private final Level world;
@@ -54,14 +54,14 @@ public class ColoringStationScreenHandler extends AbstractContainerMenu {
         @Override
         public void setChanged() {
             super.setChanged();
-            ColoringStationScreenHandler.this.slotsChanged(this);
-            ColoringStationScreenHandler.this.contentsChangedListener.run();
+            ColoringStationMenu.this.slotsChanged(this);
+            ColoringStationMenu.this.contentsChangedListener.run();
         }
     };
     public final RecipeInput recipeInput = new RecipeInput() {
         @Override
         public ItemStack getItem(int slot) {
-            return ColoringStationScreenHandler.this.input.getItem(1);
+            return ColoringStationMenu.this.input.getItem(1);
         }
 
         @Override
@@ -76,68 +76,68 @@ public class ColoringStationScreenHandler extends AbstractContainerMenu {
     };
     final ResultContainer output = new ResultContainer();
 
-    public ColoringStationScreenHandler(int syncId, Inventory playerInventory) {
+    public ColoringStationMenu(int syncId, Inventory playerInventory) {
         this(syncId, playerInventory, ContainerLevelAccess.NULL, new SimpleContainerData(6));
     }
 
-    public ColoringStationScreenHandler(int syncId, Inventory playerInventory, final ContainerLevelAccess context, ContainerData propertyDelegate) {
-        super(VAScreenHandler.COLORING_STATION, syncId);
+    public ColoringStationMenu(int syncId, Inventory playerInventory, final ContainerLevelAccess context, ContainerData propertyDelegate) {
+        super(VAMenus.COLORING_STATION, syncId);
         this.propertyDelegate = propertyDelegate;
         this.addDataSlots(propertyDelegate);
         this.dyeContents = new DyeContents(propertyDelegate){
             @Override
             public int getR() {
-                return ColoringStationScreenHandler.this.propertyDelegate.get(0);
+                return ColoringStationMenu.this.propertyDelegate.get(0);
             }
             @Override
             public int getG() {
-                return ColoringStationScreenHandler.this.propertyDelegate.get(1);
+                return ColoringStationMenu.this.propertyDelegate.get(1);
             }
             @Override
             public int getB() {
-                return ColoringStationScreenHandler.this.propertyDelegate.get(2);
+                return ColoringStationMenu.this.propertyDelegate.get(2);
             }
             @Override
             public int getY() {
-                return ColoringStationScreenHandler.this.propertyDelegate.get(3);
+                return ColoringStationMenu.this.propertyDelegate.get(3);
             }
             @Override
             public int getK() {
-                return ColoringStationScreenHandler.this.propertyDelegate.get(4);
+                return ColoringStationMenu.this.propertyDelegate.get(4);
             }
             @Override
             public int getW() {
-                return ColoringStationScreenHandler.this.propertyDelegate.get(5);
+                return ColoringStationMenu.this.propertyDelegate.get(5);
             }
 
             @Override
             public void setR(int r) {
-                ColoringStationScreenHandler.this.propertyDelegate.set(0, r);
+                ColoringStationMenu.this.propertyDelegate.set(0, r);
             }
 
             @Override
             public void setG(int r) {
-                ColoringStationScreenHandler.this.propertyDelegate.set(1, r);
+                ColoringStationMenu.this.propertyDelegate.set(1, r);
             }
 
             @Override
             public void setB(int r) {
-                ColoringStationScreenHandler.this.propertyDelegate.set(2, r);
+                ColoringStationMenu.this.propertyDelegate.set(2, r);
             }
 
             @Override
             public void setY(int r) {
-                ColoringStationScreenHandler.this.propertyDelegate.set(3, r);
+                ColoringStationMenu.this.propertyDelegate.set(3, r);
             }
 
             @Override
             public void setK(int r) {
-                ColoringStationScreenHandler.this.propertyDelegate.set(4, r);
+                ColoringStationMenu.this.propertyDelegate.set(4, r);
             }
 
             @Override
             public void setW(int r) {
-                ColoringStationScreenHandler.this.propertyDelegate.set(5, r);
+                ColoringStationMenu.this.propertyDelegate.set(5, r);
             }
         };
         this.dyeContentsAdder = new DyeContents();
@@ -157,18 +157,18 @@ public class ColoringStationScreenHandler extends AbstractContainerMenu {
             @Override
             public void onTake(Player player, ItemStack stack) {
                 stack.onCraftedBy(player, stack.getCount());
-                ColoringStationScreenHandler.this.output.awardUsedRecipes(player, List.of(ColoringStationScreenHandler.this.inputStack));
-                ColoringStationScreenHandler.this.inputSlot.remove(1);
-                ColoringStationScreenHandler.this.addDyeContents();
-                ColoringStationScreenHandler.this.updateDyeInput();
-                ColoringStationScreenHandler.this.populateResult();
-                ColoringStationScreenHandler.this.context.execute((world, pos) -> {
+                ColoringStationMenu.this.output.awardUsedRecipes(player, List.of(ColoringStationMenu.this.inputStack));
+                ColoringStationMenu.this.inputSlot.remove(1);
+                ColoringStationMenu.this.addDyeContents();
+                ColoringStationMenu.this.updateDyeInput();
+                ColoringStationMenu.this.populateResult();
+                ColoringStationMenu.this.context.execute((world, pos) -> {
                     long l = world.getGameTime();
-                    if (ColoringStationScreenHandler.this.lastTakeTime != l) {
+                    if (ColoringStationMenu.this.lastTakeTime != l) {
                         world.playSound(null, pos, SoundEvents.DYE_USE, SoundSource.BLOCKS, 1.0f, 1.0f);
-                        ColoringStationScreenHandler.this.lastTakeTime = l;
+                        ColoringStationMenu.this.lastTakeTime = l;
                     }
-                    ColoringStationScreenHandler.this.markBlockEntityDirty();
+                    ColoringStationMenu.this.markBlockEntityDirty();
                 });
                 super.onTake(player, stack);
             }
@@ -189,7 +189,7 @@ public class ColoringStationScreenHandler extends AbstractContainerMenu {
 
     private void addDyeContents() {
         this.dyeContents.add(this.dyeContentsAdder);
-        ColoringStationScreenHandler.this.markBlockEntityDirty();
+        ColoringStationMenu.this.markBlockEntityDirty();
     }
 
     @Override
@@ -289,7 +289,7 @@ public class ColoringStationScreenHandler extends AbstractContainerMenu {
         if (this.dyeSlot.hasItem()) {
             this.dyeContents.addDye(dyeStack);
             this.populateResult();
-            ColoringStationScreenHandler.this.markBlockEntityDirty();
+            ColoringStationMenu.this.markBlockEntityDirty();
         }
     }
 
@@ -312,7 +312,7 @@ public class ColoringStationScreenHandler extends AbstractContainerMenu {
             });
             this.setRecipeData(recipeDataList);
             this.setRecipeEntries(recipeEntries);
-            ColoringStationS2CPayload payload = new ColoringStationS2CPayload(this.recipeData);
+            ColoringRecipesPayload payload = new ColoringRecipesPayload(this.recipeData);
             ServerPlayNetworking.send((ServerPlayer)playerInventory.player, payload);
         }
     }

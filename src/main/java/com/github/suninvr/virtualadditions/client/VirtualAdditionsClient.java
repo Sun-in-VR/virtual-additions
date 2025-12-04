@@ -3,12 +3,13 @@ package com.github.suninvr.virtualadditions.client;
 import com.github.suninvr.virtualadditions.client.particle.*;
 import com.github.suninvr.virtualadditions.client.screen.ColoringStationScreen;
 import com.github.suninvr.virtualadditions.client.screen.EntanglementDriveScreen;
+import com.github.suninvr.virtualadditions.client.screen.RemoteNotifierScreen;
 import com.github.suninvr.virtualadditions.client.toast.RemoteNotifierToast;
 import com.github.suninvr.virtualadditions.entity.PlayerProjectionEntity;
 import com.github.suninvr.virtualadditions.registry.VAPackets;
 import com.github.suninvr.virtualadditions.registry.VAParticleTypes;
-import com.github.suninvr.virtualadditions.registry.VAScreenHandler;
-import com.github.suninvr.virtualadditions.screen.ColoringStationScreenHandler;
+import com.github.suninvr.virtualadditions.registry.VAMenus;
+import com.github.suninvr.virtualadditions.screen.ColoringStationMenu;
 import net.fabricmc.api.ClientModInitializer;
 import net.fabricmc.fabric.api.client.networking.v1.ClientPlayNetworking;
 import net.fabricmc.fabric.api.client.particle.v1.ParticleFactoryRegistry;
@@ -42,19 +43,24 @@ public class VirtualAdditionsClient implements ClientModInitializer {
         ParticleFactoryRegistry.getInstance().register(VAParticleTypes.SOUL_FIREFLY, FireflyParticle.FireflyProvider::new);
         ParticleFactoryRegistry.getInstance().register(VAParticleTypes.STATIC_SCULK_CHARGE_POP, StaticSculkChargePopParticleFactory::new);
 
-        MenuScreens.register(VAScreenHandler.ENTANGLEMENT_DRIVE, EntanglementDriveScreen::new);
-        MenuScreens.register(VAScreenHandler.COLORING_STATION, ColoringStationScreen::new);
+        MenuScreens.register(VAMenus.ENTANGLEMENT_DRIVE, EntanglementDriveScreen::new);
+        MenuScreens.register(VAMenus.COLORING_STATION, ColoringStationScreen::new);
+        MenuScreens.register(VAMenus.REMOTE_NOTIFIER, RemoteNotifierScreen::new);
 
         ClientPlayNetworking.registerGlobalReceiver(VAPackets.REMOTE_NOTIFIER_S2C_ID, ((payload, context) -> {
             if (context != null) context.client().getToastManager().addToast(new RemoteNotifierToast(payload.STACK(), Component.nullToEmpty(payload.TEXT())));
         }));
+
+        ClientPlayNetworking.registerGlobalReceiver(VAPackets.SET_REMOTE_NOTIFIER_MESSAGE_ID, (payload, context) -> {
+           RemoteNotifierScreen.initializerText = payload.TEXT();
+        });
 
         ClientPlayNetworking.registerGlobalReceiver(VAPackets.COLORING_STATION_S2C_ID, (payload, context) -> {
             if (context != null) {
                 if (context.client().screen instanceof ColoringStationScreen coloringStationScreen) {
                     coloringStationScreen.getMenu().setRecipeData(payload.list());
                 } else {
-                    ColoringStationScreenHandler.recipeDataOnLoad = payload.list();
+                    ColoringStationMenu.recipeDataOnLoad = payload.list();
                 }
             }
         });

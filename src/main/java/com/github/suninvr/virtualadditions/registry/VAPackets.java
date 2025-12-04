@@ -2,7 +2,8 @@ package com.github.suninvr.virtualadditions.registry;
 
 import com.github.suninvr.virtualadditions.entity.PlayerProjectionEntity;
 import com.github.suninvr.virtualadditions.network.*;
-import com.github.suninvr.virtualadditions.screen.EntanglementDriveScreenHandler;
+import com.github.suninvr.virtualadditions.screen.EntanglementDriveMenu;
+import com.github.suninvr.virtualadditions.screen.RemoteNotifierMenu;
 import net.fabricmc.fabric.api.networking.v1.PayloadTypeRegistry;
 import net.fabricmc.fabric.api.networking.v1.ServerPlayNetworking;
 import net.minecraft.network.protocol.common.custom.CustomPacketPayload;
@@ -14,16 +15,17 @@ import static com.github.suninvr.virtualadditions.VirtualAdditions.idOf;
 
 public class VAPackets {
 
-    public static CustomPacketPayload.Type<EntanglementDriveC2SPayload> ENTANGLEMENT_DRIVE_C2S_ID = new CustomPacketPayload.Type<>(idOf("entanglement_drive_c2s"));
-    public static CustomPacketPayload.Type<RemoteNotifierS2CPayload> REMOTE_NOTIFIER_S2C_ID = new CustomPacketPayload.Type<>(idOf("remote_notifier_s2c"));
-    public static CustomPacketPayload.Type<ColoringStationS2CPayload> COLORING_STATION_S2C_ID = new CustomPacketPayload.Type<>(idOf("coloring_station_s2c"));
-    public static CustomPacketPayload.Type<PlayerProjectionS2CPayload> PLAYER_PROJECTION_S2C_ID = new CustomPacketPayload.Type<>(idOf("player_projection_s2c"));
-    public static CustomPacketPayload.Type<PlayerProjectionMovementC2SPayload> PLAYER_PROJECTION_MOVEMENT_C2S_ID = new CustomPacketPayload.Type<>(idOf("player_projection_movement_c2s"));
+    public static CustomPacketPayload.Type<SetEntangledSlotPayload> ENTANGLEMENT_DRIVE_C2S_ID = new CustomPacketPayload.Type<>(idOf("entanglement_drive_c2s"));
+    public static CustomPacketPayload.Type<RemoteNotifierBroadcastPayload> REMOTE_NOTIFIER_S2C_ID = new CustomPacketPayload.Type<>(idOf("remote_notifier_s2c"));
+    public static CustomPacketPayload.Type<SetRemoteNotifierMessagePayload> SET_REMOTE_NOTIFIER_MESSAGE_ID = new CustomPacketPayload.Type<>(idOf("set_remote_notifier_message"));
+    public static CustomPacketPayload.Type<ColoringRecipesPayload> COLORING_STATION_S2C_ID = new CustomPacketPayload.Type<>(idOf("coloring_station_s2c"));
+    public static CustomPacketPayload.Type<CreatePlayerProjectionPayload> PLAYER_PROJECTION_S2C_ID = new CustomPacketPayload.Type<>(idOf("player_projection_s2c"));
+    public static CustomPacketPayload.Type<PlayerProjectionMovementPayload> PLAYER_PROJECTION_MOVEMENT_C2S_ID = new CustomPacketPayload.Type<>(idOf("player_projection_movement_c2s"));
 
     static {
-        PayloadTypeRegistry.playC2S().register(ENTANGLEMENT_DRIVE_C2S_ID, EntanglementDriveC2SPayload.CODEC);
+        PayloadTypeRegistry.playC2S().register(ENTANGLEMENT_DRIVE_C2S_ID, SetEntangledSlotPayload.CODEC);
         ServerPlayNetworking.registerGlobalReceiver(ENTANGLEMENT_DRIVE_C2S_ID, (payload, context) -> {
-            if (context.player().containerMenu instanceof EntanglementDriveScreenHandler screenHandler) {
+            if (context.player().containerMenu instanceof EntanglementDriveMenu screenHandler) {
                 screenHandler.setActiveSlotIndex(payload.getSlotIndex());
                 screenHandler.setActivePlayerId(payload.getPlayerId());
                 screenHandler.decrementPaymentSlot();
@@ -32,7 +34,7 @@ public class VAPackets {
             }
         });
 
-        PayloadTypeRegistry.playC2S().register(PLAYER_PROJECTION_MOVEMENT_C2S_ID, PlayerProjectionMovementC2SPayload.CODEC);
+        PayloadTypeRegistry.playC2S().register(PLAYER_PROJECTION_MOVEMENT_C2S_ID, PlayerProjectionMovementPayload.CODEC);
         ServerPlayNetworking.registerGlobalReceiver(PLAYER_PROJECTION_MOVEMENT_C2S_ID, (payload, context) -> {
             if (context.player().level() != null && context.player().level().getEntity(payload.entityId()) instanceof PlayerProjectionEntity entity) {
                 payload.pos().ifPresent(pos -> {
@@ -48,9 +50,17 @@ public class VAPackets {
             }
         });
 
-        PayloadTypeRegistry.playS2C().register(REMOTE_NOTIFIER_S2C_ID, RemoteNotifierS2CPayload.CODEC);
-        PayloadTypeRegistry.playS2C().register(COLORING_STATION_S2C_ID, ColoringStationS2CPayload.CODEC);
-        PayloadTypeRegistry.playS2C().register(PLAYER_PROJECTION_S2C_ID, PlayerProjectionS2CPayload.CODEC);
+        PayloadTypeRegistry.playC2S().register(SET_REMOTE_NOTIFIER_MESSAGE_ID, SetRemoteNotifierMessagePayload.CODEC);
+        ServerPlayNetworking.registerGlobalReceiver(SET_REMOTE_NOTIFIER_MESSAGE_ID, ((payload, context) -> {
+            if (context.player().containerMenu instanceof RemoteNotifierMenu menu) {
+                menu.setText(payload.TEXT());
+            }
+        }));
+
+        PayloadTypeRegistry.playS2C().register(REMOTE_NOTIFIER_S2C_ID, RemoteNotifierBroadcastPayload.CODEC);
+        PayloadTypeRegistry.playS2C().register(COLORING_STATION_S2C_ID, ColoringRecipesPayload.CODEC);
+        PayloadTypeRegistry.playS2C().register(PLAYER_PROJECTION_S2C_ID, CreatePlayerProjectionPayload.CODEC);
+        PayloadTypeRegistry.playS2C().register(SET_REMOTE_NOTIFIER_MESSAGE_ID, SetRemoteNotifierMessagePayload.CODEC);
 
     }
 

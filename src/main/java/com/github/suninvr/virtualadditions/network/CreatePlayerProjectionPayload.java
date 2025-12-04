@@ -7,22 +7,22 @@ import net.minecraft.network.protocol.common.custom.CustomPacketPayload;
 
 import java.util.UUID;
 
-public class PlayerProjectionS2CPayload implements CustomPacketPayload {
-    public static final StreamCodec<FriendlyByteBuf, PlayerProjectionS2CPayload> CODEC = StreamCodec.ofMember(PlayerProjectionS2CPayload::write, PlayerProjectionS2CPayload::new);
+public class CreatePlayerProjectionPayload implements CustomPacketPayload {
+    public static final StreamCodec<FriendlyByteBuf, CreatePlayerProjectionPayload> CODEC = StreamCodec.ofMember(CreatePlayerProjectionPayload::write, CreatePlayerProjectionPayload::new);
     private final UUID entityId;
     private final boolean removed;
 
-    public PlayerProjectionS2CPayload(FriendlyByteBuf packetByteBuf) {
+    public CreatePlayerProjectionPayload(FriendlyByteBuf packetByteBuf) {
         this.entityId = packetByteBuf.readUUID();
         this.removed = packetByteBuf.readBoolean();
     }
 
-    public PlayerProjectionS2CPayload(UUID entityId) {
+    public CreatePlayerProjectionPayload(UUID entityId) {
         this.entityId = entityId;
         this.removed = false;
     }
 
-    public PlayerProjectionS2CPayload(UUID entityId, boolean removed) {
+    public CreatePlayerProjectionPayload(UUID entityId, boolean removed) {
         this.entityId = entityId;
         this.removed = removed;
     }

@@ -2,8 +2,8 @@ package com.github.suninvr.virtualadditions.entity;
 
 import com.github.suninvr.virtualadditions.interfaces.DamageSourcesInterface;
 import com.github.suninvr.virtualadditions.interfaces.PlayerEntityInterface;
-import com.github.suninvr.virtualadditions.network.PlayerProjectionMovementC2SPayload;
-import com.github.suninvr.virtualadditions.network.PlayerProjectionS2CPayload;
+import com.github.suninvr.virtualadditions.network.CreatePlayerProjectionPayload;
+import com.github.suninvr.virtualadditions.network.PlayerProjectionMovementPayload;
 import com.github.suninvr.virtualadditions.registry.VAEntityType;
 import com.github.suninvr.virtualadditions.registry.VAItems;
 import com.github.suninvr.virtualadditions.registry.VATrackedDataHandlerRegistry;
@@ -74,7 +74,7 @@ public class PlayerProjectionEntity extends Avatar {
         entity.player = player;
         entity.entityData.set(PLAYER_ID, player.getUUID());
         player.level().addFreshEntity(entity);
-        if (player instanceof ServerPlayer serverPlayerEntity) ServerPlayNetworking.send(serverPlayerEntity, new PlayerProjectionS2CPayload(entity.uuid));
+        if (player instanceof ServerPlayer serverPlayerEntity) ServerPlayNetworking.send(serverPlayerEntity, new CreatePlayerProjectionPayload(entity.uuid));
         entity.setCustomName(player.getName());
         ((PlayerEntityInterface)(player)).virtualAdditions$setProjectionEntity(entity);
         return entity;
@@ -194,13 +194,13 @@ public class PlayerProjectionEntity extends Avatar {
     public void sendMovementPackets() {
         boolean anglesChanged = this.lookDirectionChanged;
         boolean posChanged = this.position().x != this.xo || this.position().y != this.yo || this.position().z != this.zo;
-        PlayerProjectionMovementC2SPayload payload = null;
+        PlayerProjectionMovementPayload payload = null;
         if (anglesChanged && posChanged) {
-            payload = PlayerProjectionMovementC2SPayload.createFull(this);
+            payload = PlayerProjectionMovementPayload.createFull(this);
         } else if (posChanged) {
-            payload = PlayerProjectionMovementC2SPayload.createPosOnly(this);
+            payload = PlayerProjectionMovementPayload.createPosOnly(this);
         } else if (anglesChanged) {
-            payload = PlayerProjectionMovementC2SPayload.createAnglesOnly(this);
+            payload = PlayerProjectionMovementPayload.createAnglesOnly(this);
         }
         this.lookDirectionChanged = false;
         if (payload != null) ClientPlayNetworking.send(payload);

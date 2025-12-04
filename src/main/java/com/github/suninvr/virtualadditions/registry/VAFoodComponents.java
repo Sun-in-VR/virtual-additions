@@ -16,8 +16,10 @@ public class VAFoodComponents {
     public static final FoodProperties CABBAGE = (new FoodProperties.Builder()).nutrition(5).saturationModifier(0.6F).build();
     public static final FoodProperties CORN = (new FoodProperties.Builder()).nutrition(1).saturationModifier(0.3F).build();
     public static final FoodProperties ROASTED_CORN = (new FoodProperties.Builder()).nutrition(5).saturationModifier(0.6F).build();
+    public static final FoodProperties TORTILLA = (new FoodProperties.Builder()).nutrition(3).saturationModifier(0.4F).build();
     public static final FoodProperties WISDOM_BERRY = (new FoodProperties.Builder()).nutrition(2).saturationModifier(0.1F).build();
     public static final FoodProperties SALAD = (new FoodProperties.Builder()).nutrition(16).saturationModifier(1.5F).build();
+    public static final FoodProperties TACO = (new FoodProperties.Builder()).nutrition(8).saturationModifier(1.8F).build();
     public static final FoodProperties ICE_CREAM = new FoodProperties.Builder().nutrition(7).saturationModifier(0.1F).build();
     public static final FoodProperties BALLOON_FRUIT = (new FoodProperties.Builder().nutrition(2).saturationModifier(0.1F).alwaysEdible().build());
     public static final FoodProperties SWEET_BERRY_PIE = (new FoodProperties.Builder().nutrition(8).saturationModifier(0.3F).build());

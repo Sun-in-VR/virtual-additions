@@ -8,6 +8,7 @@ public class VACompostables {
         ComposterBlock.add(0.3F, VAItems.COTTON);
         ComposterBlock.add(0.65F, VAItems.CORN);
         ComposterBlock.add(0.85F, VAItems.ROASTED_CORN);
+        ComposterBlock.add(0.85F, VAItems.TORTILLA);
         ComposterBlock.add(0.3F, VAItems.CORN_SEEDS);
         ComposterBlock.add(0.65F, VAItems.TOMATO);
         ComposterBlock.add(0.3F, VAItems.TOMATO_SEEDS);

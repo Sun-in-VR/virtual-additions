@@ -291,6 +291,8 @@ public class VAModelProvider {
                     VAItems.CABBAGE,
                     VAItems.CORN,
                     VAItems.ROASTED_CORN,
+                    VAItems.TORTILLA,
+                    VAItems.TACO,
                     VAItems.SALAD,
                     VAItems.WISDOM_BERRY,
                     VAItems.COTTON,
@@ -322,6 +324,7 @@ public class VAModelProvider {
                     VAItems.SINOPIA_HARNESS,
                     VAItems.LILAC_HARNESS,
                     VAItems.PURPLE_EGG,
+                    VAItems.INCENSE,
                     VAItems.EXOSKELETON_ARMOR_TRIM_SMITHING_TEMPLATE,
                     VAItems.ROBE_ARMOR_TRIM_SMITHING_TEMPLATE
             );

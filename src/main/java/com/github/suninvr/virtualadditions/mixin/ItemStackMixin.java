@@ -34,6 +34,7 @@ public abstract class ItemStackMixin {
                     ordinal = 19,
                     shift = At.Shift.AFTER))
     void virtualAdditions$appendTooltip(Item.TooltipContext context, TooltipDisplay displayComponent, Player player, TooltipFlag type, Consumer<Component> textConsumer, CallbackInfo ci) {
+        this.addToTooltip(VADataComponentTypes.INCENSE_EFFECTS, context, displayComponent, textConsumer, type);
         this.addToTooltip(VADataComponentTypes.EFFECTS_ON_HIT, context, displayComponent, textConsumer, type);
         this.addToTooltip(VADataComponentTypes.GILD_TYPE, context, displayComponent, textConsumer, type);
     }

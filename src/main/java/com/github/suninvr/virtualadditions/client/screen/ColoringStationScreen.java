@@ -1,7 +1,7 @@
 package com.github.suninvr.virtualadditions.client.screen;
 
 import com.github.suninvr.virtualadditions.block.entity.DyeContents;
-import com.github.suninvr.virtualadditions.screen.ColoringStationScreenHandler;
+import com.github.suninvr.virtualadditions.screen.ColoringStationMenu;
 import net.minecraft.ChatFormatting;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiGraphics;
@@ -22,7 +22,7 @@ import java.util.ArrayList;
 
 import static com.github.suninvr.virtualadditions.VirtualAdditions.idOf;
 
-public class ColoringStationScreen extends AbstractContainerScreen<ColoringStationScreenHandler> {
+public class ColoringStationScreen extends AbstractContainerScreen<ColoringStationMenu> {
     private static final Identifier SCROLLER_TEXTURE = Identifier.parse("container/stonecutter/scroller");
     private static final Identifier SCROLLER_DISABLED_TEXTURE = Identifier.parse("container/stonecutter/scroller_disabled");
     private static final Identifier RECIPE_SELECTED_TEXTURE = Identifier.parse("container/stonecutter/recipe_selected");
@@ -68,7 +68,7 @@ public class ColoringStationScreen extends AbstractContainerScreen<ColoringStati
             new ColorCache(0)
     };
 
-    public ColoringStationScreen(ColoringStationScreenHandler handler, Inventory inventory, Component title) {
+    public ColoringStationScreen(ColoringStationMenu handler, Inventory inventory, Component title) {
         super(handler, inventory, title);
         handler.setContentsChangedListener(this::onInventoryChange);
         this.dyeContents = handler.getDyeContents();
@@ -141,7 +141,7 @@ public class ColoringStationScreen extends AbstractContainerScreen<ColoringStati
             int k = this.scrollOffset + 12;
             for (int l = this.scrollOffset; l < k && l < this.menu.getAvailableRecipeCount(); ++l) {
                 if (this.menu.getRecipeData(l) == null) continue;
-                ColoringStationScreenHandler.ColoringRecipeData data = this.menu.getRecipeData(l);
+                ColoringStationMenu.ColoringRecipeData data = this.menu.getRecipeData(l);
                 int m = l - this.scrollOffset;
                 int n = i + m % 4 * 16;
                 int o = j + m / 4 * 18 + 2;
@@ -215,7 +215,7 @@ public class ColoringStationScreen extends AbstractContainerScreen<ColoringStati
             int k = x + j % 4 * 16;
             int l = j / 4;
             int m = y + l * 18 + 2;
-            ColoringStationScreenHandler.ColoringRecipeData data = this.menu.getRecipeData(i);
+            ColoringStationMenu.ColoringRecipeData data = this.menu.getRecipeData(i);
             ItemStack stack = this.menu.input.getItem(1);
             Identifier identifier = data.isDyeContentSufficient(this.dyeContents) && data.isInputValid(stack) ? (i == (this.menu).getSelectedRecipe() ? RECIPE_SELECTED_TEXTURE : mouseX >= k && mouseY >= m && mouseX < k + 16 && mouseY < m + 18 ? RECIPE_HIGHLIGHTED_TEXTURE : RECIPE_TEXTURE) : RECIPE_UNCRAFTABLE_TEXTURE;
             context.blitSprite(RenderPipelines.GUI_TEXTURED, identifier, k, m - 1, 16, 18);
@@ -229,7 +229,7 @@ public class ColoringStationScreen extends AbstractContainerScreen<ColoringStati
             int k = x + j % 4 * 16;
             int l = j / 4;
             int m = y + l * 18 + 2;
-            ColoringStationScreenHandler.ColoringRecipeData data = this.menu.getRecipeData(i);
+            ColoringStationMenu.ColoringRecipeData data = this.menu.getRecipeData(i);
             context.renderItem(data.stack(), k, m);
         }
     }

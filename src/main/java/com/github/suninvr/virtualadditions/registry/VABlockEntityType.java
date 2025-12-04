@@ -12,6 +12,7 @@ public class VABlockEntityType {
     public static final BlockEntityType<SpotlightBlockEntity> SPOTLIGHT;
     public static final BlockEntityType<SpotlightLightBlockEntity> SPOTLIGHT_LIGHT;
     public static final BlockEntityType<EntanglementDriveBlockEntity> ENTANGLEMENT_DRIVE;
+    public static final BlockEntityType<RemoteNotifierBlockEntity> REMOTE_NOTIFIER;
     public static final BlockEntityType<DestructiveSculkBlockEntity> DESTRUCTIVE_SCULK;
     public static final BlockEntityType<ColoringStationBlockEntity> COLORING_STATION;
     public static final BlockEntityType<SignBlockEntity> CUSTOM_SIGN;
@@ -20,14 +21,17 @@ public class VABlockEntityType {
     public static final BlockEntityType<ShulkerBoxBlockEntity> CUSTOM_SHULKER_BOX;
     public static final BlockEntityType<BannerBlockEntity> CUSTOM_BANNER;
     public static final BlockEntityType<MiniPortalBlockEntity> MINI_PORTAL;
+    public static final BlockEntityType<IncenseBlockEntity> INCENSE;
 
     static {
         SPOTLIGHT = register("spotlight", SpotlightBlockEntity::new, VABlocks.SPOTLIGHT);
         SPOTLIGHT_LIGHT = register("spotlight_light", SpotlightLightBlockEntity::new, VABlocks.SPOTLIGHT_LIGHT);
         ENTANGLEMENT_DRIVE = register("entanglement_drive", EntanglementDriveBlockEntity::new, VABlocks.ENTANGLEMENT_DRIVE);
+        REMOTE_NOTIFIER = register("remote_notifier", RemoteNotifierBlockEntity::new, VABlocks.REMOTE_NOTIFIER);
         DESTRUCTIVE_SCULK = register("destructive_sculk", DestructiveSculkBlockEntity::new, VABlocks.DESTRUCTIVE_SCULK);
         COLORING_STATION = register("coloring_station", ColoringStationBlockEntity::new, VABlocks.COLORING_STATION);
         MINI_PORTAL = register("mini_portal", MiniPortalBlockEntity::new, VABlocks.MINI_PORTAL);
+        INCENSE = register("incense", IncenseBlockEntity::new, VABlocks.INCENSE);
         CUSTOM_SIGN = register("custom_sign", CustomSignBlockEntity::new, VABlocks.SOULBLOOM_SIGN, VABlocks.SOULBLOOM_WALL_SIGN, VABlocks.WITHERED_SIGN, VABlocks.WITHERED_WALL_SIGN);
         CUSTOM_HANGING_SIGN = register("custom_hanging_sign", CustomHangingSignBlockEntity::new, VABlocks.SOULBLOOM_HANGING_SIGN, VABlocks.SOULBLOOM_WALL_HANGING_SIGN, VABlocks.WITHERED_HANGING_SIGN, VABlocks.WITHERED_WALL_HANGING_SIGN);
         CUSTOM_BED = register("custom_bed", CustomBedBlockEntity::new, VABlocks.CHARTREUSE_BED, VABlocks.MAROON_BED, VABlocks.INDIGO_BED, VABlocks.PLUM_BED, VABlocks.VIRIDIAN_BED, VABlocks.TAN_BED, VABlocks.SINOPIA_BED, VABlocks.LILAC_BED);

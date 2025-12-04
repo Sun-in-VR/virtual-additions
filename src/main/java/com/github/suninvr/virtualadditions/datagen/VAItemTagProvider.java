@@ -78,7 +78,7 @@ public final class VAItemTagProvider {
             addTo(VAItemTags.ROCK_SALT_ORES, VAItems.ROCK_SALT_ORE, VAItems.DEEPSLATE_ROCK_SALT_ORE);
             addTo(GEMS).addOptionalTag(IOLITE.location());
             addTo(ORES).addOptionalTag(IOLITE_ORES.location()).addOptionalTag(VAItemTags.ROCK_SALT_ORES.location());
-            addTo(FOODS, VAItems.FRIED_EGG, VAItems.CORN, VAItems.ROASTED_CORN, VAItems.ICE_CREAM, VAItems.SWEET_BERRY_PIE);
+            addTo(FOODS, VAItems.FRIED_EGG, VAItems.CORN, VAItems.ROASTED_CORN, VAItems.TORTILLA, VAItems.ICE_CREAM, VAItems.SWEET_BERRY_PIE);
             addTo(POTIONS, VAItems.APPLICABLE_POTION);
 
             configureColorfulBlockSet(

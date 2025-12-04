@@ -7,12 +7,12 @@ import net.minecraft.network.protocol.common.custom.CustomPacketPayload;
 
 import java.util.UUID;
 
-public class EntanglementDriveC2SPayload implements CustomPacketPayload {
-    public static final StreamCodec<FriendlyByteBuf, EntanglementDriveC2SPayload> CODEC = StreamCodec.ofMember(EntanglementDriveC2SPayload::write, EntanglementDriveC2SPayload::new);
+public class SetEntangledSlotPayload implements CustomPacketPayload {
+    public static final StreamCodec<FriendlyByteBuf, SetEntangledSlotPayload> CODEC = StreamCodec.ofMember(SetEntangledSlotPayload::write, SetEntangledSlotPayload::new);
     private final int slotIndex;
     private final UUID playerId;
 
-    private EntanglementDriveC2SPayload(FriendlyByteBuf buf) {
+    private SetEntangledSlotPayload(FriendlyByteBuf buf) {
         this.slotIndex = buf.readInt();
         this.playerId = buf.readUUID();
     }
@@ -22,7 +22,7 @@ public class EntanglementDriveC2SPayload implements CustomPacketPayload {
         buf.writeUUID(this.playerId);
     }
 
-    public EntanglementDriveC2SPayload(int slotIndex, UUID playerId) {
+    public SetEntangledSlotPayload(int slotIndex, UUID playerId) {
         this.slotIndex = slotIndex;
         this.playerId = playerId;
     }

@@ -201,6 +201,8 @@ public final class VABlockLootTableProvider {
 
             this.dropOther(VABlocks.MINI_PORTAL, VAItems.DRAINED_PORTAL_CORE);
 
+            this.dropOther(VABlocks.INCENSE, Items.CHARCOAL);
+
             LootItemCondition.Builder tomatoBuilder = LootItemBlockStatePropertyCondition.hasBlockStateProperties(VABlocks.TOMATO)
                     .setProperties(StatePropertiesPredicate.Builder.properties().hasProperty(CropBlock.AGE, 7));
             this.add(VABlocks.TOMATO, this.cropDrops(VABlocks.TOMATO, VAItems.TOMATO, VAItems.TOMATO_SEEDS, 1, 3, tomatoBuilder));
