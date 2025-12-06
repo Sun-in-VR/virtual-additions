@@ -171,6 +171,7 @@ public class VABlocks {
     public static final Block ROCK_SALT_ORE;
     public static final Block DEEPSLATE_ROCK_SALT_ORE;
     public static final Block COTTON;
+    public static final Block SOY_CROP;
     public static final Block CORN_CROP;
     public static final Block TOMATO;
     public static final Block CABBAGE;
@@ -248,6 +249,27 @@ public class VABlocks {
     public static final Block SPECTRAL_WALL_TORCH;
     public static final Block SPECTRAL_LANTERN;
     public static final Block SPECTRAL_SAND;
+    public static final Block ZEBRANO_LOG;
+    public static final Block ZEBRANO_WOOD;
+    public static final Block STRIPPED_ZEBRANO_LOG;
+    public static final Block STRIPPED_ZEBRANO_WOOD;
+    public static final Block ZEBRANO_PLANKS;
+    public static final Block ZEBRANO_STAIRS;
+    public static final Block ZEBRANO_SLAB;
+    public static final Block ZEBRANO_FENCE;
+    public static final Block ZEBRANO_FENCE_GATE;
+    public static final Block ZEBRANO_DOOR;
+    public static final Block ZEBRANO_TRAPDOOR;
+    public static final Block ZEBRANO_PRESSURE_PLATE;
+    public static final Block ZEBRANO_BUTTON;
+    public static final Block ZEBRANO_SIGN;
+    public static final Block ZEBRANO_WALL_SIGN;
+    public static final Block ZEBRANO_HANGING_SIGN;
+    public static final Block ZEBRANO_WALL_HANGING_SIGN;
+    public static final Block ZEBRANO_SHELF;
+    public static final Block ZEBRANO_LEAVES;
+    public static final Block ZEBRANO_SAPLING;
+    public static final Block POTTED_ZEBRANO_SAPLING;
     public static final Block OAK_HEDGE;
     public static final Block SPRUCE_HEDGE;
     public static final Block BIRCH_HEDGE;
@@ -256,6 +278,7 @@ public class VABlocks {
     public static final Block DARK_OAK_HEDGE;
     public static final Block PALE_OAK_HEDGE;
     public static final Block MANGROVE_HEDGE;
+    public static final Block ZEBRANO_HEDGE;
     public static final Block CHERRY_HEDGE;
     public static final Block SOULBLOOM_HEDGE;
     public static final Block WITHERED_HEDGE;
@@ -421,6 +444,8 @@ public class VABlocks {
     public static final WoodType SOULBLOOM_WOODTYPE = WoodType.register(WoodTypeBuilder.copyOf(WoodType.CHERRY).build(idOf("soulbloom"), SOULBLOOM));
     public static final BlockSetType WITHERED = BlockSetTypeBuilder.copyOf(BlockSetType.WARPED).build(idOf("withered"));
     public static final WoodType WITHERED_WOODTYPE = WoodType.register(WoodTypeBuilder.copyOf(WoodType.WARPED).build(idOf("withered"), WITHERED));
+    public static final BlockSetType ZEBRANO = BlockSetTypeBuilder.copyOf(BlockSetType.OAK).build(idOf("zebrano"));
+    public static final WoodType ZEBRANO_WOODTYPE = WoodType.register(WoodTypeBuilder.copyOf(WoodType.OAK).build(idOf("zebrano"), WITHERED));
 
     public static final BlockSetType STEEL_BLOCK_SET_TYPE;
 
@@ -584,6 +609,7 @@ public class VABlocks {
         SPOTLIGHT_LIGHT = register("spotlight_light", SpotlightLightBlock::new, Properties.of().sound(SoundType.EMPTY).replaceable().noCollision().noLootTable().lightLevel((state) -> state.getValue(SpotlightLightBlock.LIT) ? 15 : 0).pushReaction(PushReaction.DESTROY));
 
         COTTON = register("cotton", CottonCropBlock::new, Properties.of().noCollision().randomTicks().instabreak().sound(SoundType.CROP));
+        SOY_CROP = register("soy_crop", SoyCropBlock::new, Properties.of().noCollision().randomTicks().instabreak().sound(SoundType.CROP));
         CORN_CROP = register("corn_crop", CornCropBlock::new, Properties.of().noCollision().randomTicks().instabreak().sound(SoundType.CROP).offsetType(BlockBehaviour.OffsetType.XZ));
         TOMATO = register("tomato", TomatoCropBlock::new, Properties.of().noCollision().randomTicks().instabreak().sound(SoundType.CROP));
         CABBAGE = register("cabbage", CabbageCropBlock::new, Properties.of().noCollision().randomTicks().instabreak().sound(SoundType.CROP));
@@ -671,6 +697,28 @@ public class VABlocks {
         SPECTRAL_LANTERN = register("spectral_lantern", LanternBlock::new, Properties.ofFullCopy(Blocks.SOUL_LANTERN).lightLevel((state) -> 11));
         SPECTRAL_SAND = register("spectral_sand", settings -> new ColoredFallingBlock(new ColorRGBA(0xB3C1D0), settings), Properties.ofFullCopy(Blocks.SAND).isValidSpawn((state, world, pos, type) -> type.equals(VAEntityType.SPECTRE)).mapColor(MapColor.SNOW));
 
+        ZEBRANO_LOG = register("zebrano_log", RotatedPillarBlock::new, Properties.ofFullCopy(Blocks.OAK_LOG));
+        ZEBRANO_WOOD = register("zebrano_wood", RotatedPillarBlock::new, Properties.ofFullCopy(Blocks.OAK_WOOD));
+        STRIPPED_ZEBRANO_LOG = register("stripped_zebrano_log", RotatedPillarBlock::new, Properties.ofFullCopy(Blocks.STRIPPED_OAK_LOG));
+        STRIPPED_ZEBRANO_WOOD = register("stripped_zebrano_wood", RotatedPillarBlock::new, Properties.ofFullCopy(Blocks.STRIPPED_OAK_WOOD));
+        ZEBRANO_PLANKS = register("zebrano_planks", Block::new, Properties.ofFullCopy(Blocks.OAK_PLANKS));
+        ZEBRANO_STAIRS = register("zebrano_stairs", (settings) -> new StairBlock(ZEBRANO_PLANKS.defaultBlockState(), settings), Properties.ofFullCopy(Blocks.OAK_STAIRS));
+        ZEBRANO_SLAB = register("zebrano_slab", SlabBlock::new, Properties.ofFullCopy(Blocks.OAK_SLAB));
+        ZEBRANO_FENCE = register("zebrano_fence", FenceBlock::new, Properties.ofFullCopy(Blocks.OAK_FENCE));
+        ZEBRANO_FENCE_GATE = register("zebrano_fence_gate", (settings) -> new FenceGateBlock(ZEBRANO_WOODTYPE, settings), Properties.ofFullCopy(Blocks.OAK_FENCE_GATE));
+        ZEBRANO_DOOR = register("zebrano_door", (settings) -> new DoorBlock( ZEBRANO, settings), Properties.ofFullCopy(Blocks.OAK_DOOR));
+        ZEBRANO_TRAPDOOR = register("zebrano_trapdoor", (settings) -> new TrapDoorBlock( ZEBRANO, settings), Properties.ofFullCopy(Blocks.OAK_DOOR));
+        ZEBRANO_PRESSURE_PLATE = register("zebrano_pressure_plate", (settings) -> new PressurePlateBlock(ZEBRANO, settings), Properties.ofFullCopy(Blocks.OAK_PRESSURE_PLATE).strength(2.5F));
+        ZEBRANO_BUTTON = register("zebrano_button", (settings) -> new ButtonBlock(ZEBRANO, 30, settings), Properties.ofFullCopy(Blocks.OAK_BUTTON).strength(2.5F));
+        ZEBRANO_SIGN = register("zebrano_sign", (settings) -> new CustomSignBlocks.CustomSignBlock(settings, ZEBRANO_WOODTYPE), Properties.ofFullCopy(Blocks.OAK_SIGN));
+        ZEBRANO_WALL_SIGN = register("zebrano_wall_sign", (settings) -> new CustomSignBlocks.CustomWallSignBlock(settings, ZEBRANO_WOODTYPE), Properties.ofFullCopy(Blocks.OAK_SIGN).overrideLootTable(ZEBRANO_SIGN.getLootTable()));
+        ZEBRANO_HANGING_SIGN = register("zebrano_hanging_sign", (settings) -> new CustomSignBlocks.CustomHangingSignBlock(settings, ZEBRANO_WOODTYPE), Properties.ofFullCopy(Blocks.OAK_HANGING_SIGN));
+        ZEBRANO_WALL_HANGING_SIGN = register("zebrano_wall_hanging_sign", (settings) -> new CustomSignBlocks.CustomWallHangingSignBlock(settings, ZEBRANO_WOODTYPE), Properties.ofFullCopy(Blocks.OAK_HANGING_SIGN).overrideLootTable(ZEBRANO_HANGING_SIGN.getLootTable()));
+        ZEBRANO_SHELF = register("zebrano_shelf", ShelfBlock::new, Properties.ofFullCopy(Blocks.MANGROVE_SHELF));
+        ZEBRANO_LEAVES = register("zebrano_leaves", (settings) -> new UntintedParticleLeavesBlock(0.01F, ColorParticleOption.create(ParticleTypes.TINTED_LEAVES, 0x708a20), settings), Properties.ofFullCopy(Blocks.OAK_LEAVES));
+        ZEBRANO_SAPLING = register("zebrano_sapling", (settings) -> new SaplingBlock(CustomSaplingGenerator.ZEBRANO, settings), Properties.ofFullCopy(Blocks.OAK_SAPLING).mapColor(MapColor.COLOR_BLACK));
+        POTTED_ZEBRANO_SAPLING = register("potted_zebrano_sapling", (settings) -> new FlowerPotBlock(ZEBRANO_SAPLING, settings), Properties.ofFullCopy(Blocks.FLOWER_POT));
+
         OAK_HEDGE = register("oak_hedge", HedgeBlock::new, Properties.ofFullCopy(Blocks.OAK_LEAVES));
         SPRUCE_HEDGE = register("spruce_hedge", HedgeBlock::new, Properties.ofFullCopy(Blocks.SPRUCE_LEAVES));
         BIRCH_HEDGE = register("birch_hedge", HedgeBlock::new, Properties.ofFullCopy(Blocks.BIRCH_LEAVES));
@@ -679,6 +727,7 @@ public class VABlocks {
         DARK_OAK_HEDGE = register("dark_oak_hedge", HedgeBlock::new, Properties.ofFullCopy(Blocks.DARK_OAK_LEAVES));
         PALE_OAK_HEDGE = register("pale_oak_hedge", HedgeBlock::new, Properties.ofFullCopy(Blocks.PALE_OAK_LEAVES));
         MANGROVE_HEDGE = register("mangrove_hedge", HedgeBlock::new, Properties.ofFullCopy(Blocks.MANGROVE_LEAVES));
+        ZEBRANO_HEDGE = register("zebrano_hedge", HedgeBlock::new, Properties.ofFullCopy(VABlocks.ZEBRANO_LEAVES));
         CHERRY_HEDGE = register("cherry_hedge", HedgeBlock::new, Properties.ofFullCopy(Blocks.CHERRY_LEAVES));
         SOULBLOOM_HEDGE = register("soulbloom_hedge", HedgeBlock::new, Properties.ofFullCopy(VABlocks.SOULBLOOM_LEAVES));
         WITHERED_HEDGE = register("withered_hedge", HedgeBlock::new, Properties.ofFullCopy(VABlocks.WITHERED_LEAVES));
@@ -874,6 +923,16 @@ public class VABlocks {
         fire.setFlammable(SOULBLOOM_FENCE, 5, 20);
         fire.setFlammable(SOULBLOOM_LEAVES, 30, 60);
         fire.setFlammable(SOULBLOOM_HEDGE, 30, 60);
+        fire.setFlammable(ZEBRANO_LOG, 5, 20);
+        fire.setFlammable(ZEBRANO_WOOD, 5, 20);
+        fire.setFlammable(STRIPPED_ZEBRANO_LOG, 5, 20);
+        fire.setFlammable(STRIPPED_ZEBRANO_WOOD, 5, 20);
+        fire.setFlammable(ZEBRANO_PLANKS, 5, 20);
+        fire.setFlammable(ZEBRANO_STAIRS, 5, 20);
+        fire.setFlammable(ZEBRANO_SLAB, 5, 20);
+        fire.setFlammable(ZEBRANO_FENCE, 5, 20);
+        fire.setFlammable(ZEBRANO_LEAVES, 30, 60);
+        fire.setFlammable(ZEBRANO_HEDGE, 30, 60);
         fire.setFlammable(OAK_HEDGE, 30, 60);
         fire.setFlammable(SPRUCE_HEDGE, 30, 60);
         fire.setFlammable(BIRCH_HEDGE, 30, 60);
@@ -935,6 +994,8 @@ public class VABlocks {
         StrippableBlockRegistry.register(SOULBLOOM_WOOD, STRIPPED_SOULBLOOM_WOOD);
         StrippableBlockRegistry.register(WITHERED_LOG, STRIPPED_WITHERED_LOG);
         StrippableBlockRegistry.register(WITHERED_WOOD, STRIPPED_WITHERED_WOOD);
+        StrippableBlockRegistry.register(ZEBRANO_LOG, STRIPPED_ZEBRANO_LOG);
+        StrippableBlockRegistry.register(ZEBRANO_WOOD, STRIPPED_ZEBRANO_WOOD);
         //FlattenableBlockRegistry.register(Blocks.DIRT_PATH, Blocks.DIRT.getDefaultState());
         FlattenableBlockRegistry.register(Blocks.FARMLAND, Blocks.DIRT_PATH.defaultBlockState());
         //TillableBlockRegistry.register(Blocks.FARMLAND, context -> true, Blocks.DIRT.getDefaultState());

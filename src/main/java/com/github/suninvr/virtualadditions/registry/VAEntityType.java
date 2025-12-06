@@ -33,8 +33,8 @@ public class VAEntityType {
     public static final EntityType<SalineEntity> SALINE;
     public static final EntityType<SpectreEntity> SPECTRE;
     public static final EntityType<PlayerProjectionEntity> PLAYER_PROJECTION;
-    public static final EntityType<Boat> SOULBLOOM_BOAT;
-    public static final EntityType<ChestBoat> SOULBLOOM_CHEST_BOAT;
+    public static final EntityType<Boat> SOULBLOOM_BOAT, ZEBRANO_BOAT;
+    public static final EntityType<ChestBoat> SOULBLOOM_CHEST_BOAT, ZEBRANO_CHEST_BOAT;
     public static final EntityType<LightningBottleEntity> LIGHTNING_BOTTLE;
 
     public static final Map<EntityType<? extends LivingEntity>, AttributeSupplier> ENTITY_ATTRIBUTES = new java.util.HashMap<>();
@@ -93,6 +93,14 @@ public class VAEntityType {
         SOULBLOOM_CHEST_BOAT = Registry.register(BuiltInRegistries.ENTITY_TYPE, idOf("soulbloom_chest_boat"), EntityType.Builder.of(getChestBoatFactory(() -> VAItems.SOULBLOOM_CHEST_BOAT), MobCategory.MISC)
                 .noLootTable().sized(1.375F, 0.5625F).eyeHeight(0.5625F).clientTrackingRange(10)
                 .build(ResourceKey.create(Registries.ENTITY_TYPE, idOf("soulbloom_chest_boat"))));
+
+        ZEBRANO_BOAT = Registry.register(BuiltInRegistries.ENTITY_TYPE, idOf("zebrano_boat"), EntityType.Builder.of(getBoatFactory(() -> VAItems.ZEBRANO_BOAT), MobCategory.MISC)
+                .noLootTable().sized(1.375F, 0.5625F).eyeHeight(0.5625F).clientTrackingRange(10)
+                .build(ResourceKey.create(Registries.ENTITY_TYPE, idOf("zebrano_boat"))));
+
+        ZEBRANO_CHEST_BOAT = Registry.register(BuiltInRegistries.ENTITY_TYPE, idOf("zebrano_chest_boat"), EntityType.Builder.of(getChestBoatFactory(() -> VAItems.ZEBRANO_CHEST_BOAT), MobCategory.MISC)
+                .noLootTable().sized(1.375F, 0.5625F).eyeHeight(0.5625F).clientTrackingRange(10)
+                .build(ResourceKey.create(Registries.ENTITY_TYPE, idOf("zebrano_chest_boat"))));
 
         ENTITY_ATTRIBUTES.put(LUMWASP, LumwaspEntity.createLumwaspAttributes());
         ENTITY_ATTRIBUTES.put(SALINE, SalineEntity.createSalineAttributes());

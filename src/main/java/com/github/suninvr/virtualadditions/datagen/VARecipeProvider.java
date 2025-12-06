@@ -109,6 +109,7 @@ public final class VARecipeProvider {
             this.offerHedgeRecipe(VABlocks.DARK_OAK_HEDGE, Blocks.DARK_OAK_LEAVES);
             this.offerHedgeRecipe(VABlocks.PALE_OAK_HEDGE, Blocks.PALE_OAK_LEAVES);
             this.offerHedgeRecipe(VABlocks.MANGROVE_HEDGE, Blocks.MANGROVE_LEAVES);
+            this.offerHedgeRecipe(VABlocks.ZEBRANO_HEDGE, VABlocks.ZEBRANO_LEAVES);
             this.offerHedgeRecipe(VABlocks.CHERRY_HEDGE, Blocks.CHERRY_LEAVES);
             this.offerHedgeRecipe(VABlocks.AZALEA_HEDGE, Blocks.AZALEA_LEAVES);
             this.offerHedgeRecipe(VABlocks.FLOWERING_AZALEA_HEDGE, Blocks.FLOWERING_AZALEA_LEAVES);
@@ -352,6 +353,14 @@ public final class VARecipeProvider {
             this.offerHedgeRecipe(VABlocks.WITHERED_HEDGE, VABlocks.WITHERED_LEAVES);
             this.shelf(VAItems.WITHERED_SHELF, VAItems.STRIPPED_WITHERED_LOG);
 
+            this.generateRecipes(VACollections.ZEBRANO, FeatureFlags.VANILLA_SET);
+            this.woodFromLogs(VAItems.ZEBRANO_WOOD, VAItems.ZEBRANO_LOG);
+            this.woodFromLogs(VAItems.STRIPPED_ZEBRANO_WOOD, VAItems.STRIPPED_ZEBRANO_LOG);
+            this.planksFromLog(VAItems.ZEBRANO_PLANKS, VAItemTags.ZEBRANO_LOGS, 4);
+            this.hangingSign(VAItems.ZEBRANO_HANGING_SIGN, VAItems.STRIPPED_ZEBRANO_LOG);
+            this.woodenBoat(VAItems.ZEBRANO_BOAT, VABlocks.ZEBRANO_PLANKS);
+            this.chestBoat(VAItems.ZEBRANO_CHEST_BOAT, VAItems.ZEBRANO_BOAT);
+            this.shelf(VAItems.ZEBRANO_SHELF, VAItems.STRIPPED_ZEBRANO_LOG);
 
             ShapedRecipeBuilder.shaped(this.registryLookup, RecipeCategory.DECORATIONS, VAItems.BONE_PILE, 4)
                     .pattern("bBb")
@@ -565,6 +574,14 @@ public final class VARecipeProvider {
                     .define('c', ItemTags.STONE_CRAFTING_MATERIALS)
                     .define('s', VAItems.STEEL_INGOT)
                     .unlockedBy("has_steel_ingot", has(VAItems.STEEL_INGOT)).save(this.output);
+
+            ShapedRecipeBuilder.shaped(this.registryLookup, RecipeCategory.MISC, VAItems.SOY_OIL_BUCKET, 1)
+                    .pattern("sss")
+                    .pattern("sus")
+                    .pattern("sss")
+                    .define('s', VAItems.SOY_BEANS)
+                    .define('u', Items.BUCKET)
+                    .unlockedBy("has_soy_beans", has(VAItems.SOY_BEANS)).save(this.output);
 
             ShapelessRecipeBuilder.shapeless(this.registryLookup, RecipeCategory.DECORATIONS, Items.LIGHT_BLUE_DYE)
                     .requires(VAItems.BLUE_PETALS)

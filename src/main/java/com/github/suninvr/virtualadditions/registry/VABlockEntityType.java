@@ -32,8 +32,8 @@ public class VABlockEntityType {
         COLORING_STATION = register("coloring_station", ColoringStationBlockEntity::new, VABlocks.COLORING_STATION);
         MINI_PORTAL = register("mini_portal", MiniPortalBlockEntity::new, VABlocks.MINI_PORTAL);
         INCENSE = register("incense", IncenseBlockEntity::new, VABlocks.INCENSE);
-        CUSTOM_SIGN = register("custom_sign", CustomSignBlockEntity::new, VABlocks.SOULBLOOM_SIGN, VABlocks.SOULBLOOM_WALL_SIGN, VABlocks.WITHERED_SIGN, VABlocks.WITHERED_WALL_SIGN);
-        CUSTOM_HANGING_SIGN = register("custom_hanging_sign", CustomHangingSignBlockEntity::new, VABlocks.SOULBLOOM_HANGING_SIGN, VABlocks.SOULBLOOM_WALL_HANGING_SIGN, VABlocks.WITHERED_HANGING_SIGN, VABlocks.WITHERED_WALL_HANGING_SIGN);
+        CUSTOM_SIGN = register("custom_sign", CustomSignBlockEntity::new, VABlocks.SOULBLOOM_SIGN, VABlocks.SOULBLOOM_WALL_SIGN, VABlocks.WITHERED_SIGN, VABlocks.WITHERED_WALL_SIGN, VABlocks.ZEBRANO_SIGN, VABlocks.ZEBRANO_WALL_SIGN);
+        CUSTOM_HANGING_SIGN = register("custom_hanging_sign", CustomHangingSignBlockEntity::new, VABlocks.SOULBLOOM_HANGING_SIGN, VABlocks.SOULBLOOM_WALL_HANGING_SIGN, VABlocks.WITHERED_HANGING_SIGN, VABlocks.WITHERED_WALL_HANGING_SIGN, VABlocks.ZEBRANO_HANGING_SIGN, VABlocks.ZEBRANO_WALL_HANGING_SIGN);
         CUSTOM_BED = register("custom_bed", CustomBedBlockEntity::new, VABlocks.CHARTREUSE_BED, VABlocks.MAROON_BED, VABlocks.INDIGO_BED, VABlocks.PLUM_BED, VABlocks.VIRIDIAN_BED, VABlocks.TAN_BED, VABlocks.SINOPIA_BED, VABlocks.LILAC_BED);
         CUSTOM_SHULKER_BOX = register("shulker_box", CustomShulkerBoxBlockEntity::new, VABlocks.CHARTREUSE_SHULKER_BOX, VABlocks.MAROON_SHULKER_BOX, VABlocks.INDIGO_SHULKER_BOX, VABlocks.PLUM_SHULKER_BOX, VABlocks.VIRIDIAN_SHULKER_BOX, VABlocks.TAN_SHULKER_BOX, VABlocks.SINOPIA_SHULKER_BOX, VABlocks.LILAC_SHULKER_BOX);
         CUSTOM_BANNER = register("banner", CustomBannerBlockEntity::new, VABlocks.CHARTREUSE_BANNER, VABlocks.CHARTREUSE_WALL_BANNER, VABlocks.MAROON_BANNER, VABlocks.MAROON_WALL_BANNER, VABlocks.INDIGO_BANNER, VABlocks.INDIGO_WALL_BANNER, VABlocks.PLUM_BANNER, VABlocks.PLUM_WALL_BANNER, VABlocks.VIRIDIAN_BANNER, VABlocks.VIRIDIAN_WALL_BANNER, VABlocks.TAN_BANNER, VABlocks.TAN_WALL_BANNER, VABlocks.SINOPIA_BANNER, VABlocks.SINOPIA_WALL_BANNER, VABlocks.LILAC_BANNER, VABlocks.LILAC_WALL_BANNER);
@@ -79,6 +79,11 @@ public class VABlockEntityType {
         BlockEntityType.HANGING_SIGN.addSupportedBlock(VABlocks.WITHERED_HANGING_SIGN);
         BlockEntityType.HANGING_SIGN.addSupportedBlock(VABlocks.WITHERED_WALL_HANGING_SIGN);
         BlockEntityType.SHELF.addSupportedBlock(VABlocks.WITHERED_SHELF);
+        BlockEntityType.SIGN.addSupportedBlock(VABlocks.ZEBRANO_SIGN);
+        BlockEntityType.SIGN.addSupportedBlock(VABlocks.ZEBRANO_WALL_SIGN);
+        BlockEntityType.HANGING_SIGN.addSupportedBlock(VABlocks.ZEBRANO_HANGING_SIGN);
+        BlockEntityType.HANGING_SIGN.addSupportedBlock(VABlocks.ZEBRANO_WALL_HANGING_SIGN);
+        BlockEntityType.SHELF.addSupportedBlock(VABlocks.ZEBRANO_SHELF);
     }
 
     public static void init(){}

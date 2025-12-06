@@ -16,6 +16,7 @@ public class VACompostables {
         ComposterBlock.add(0.3F, VAItems.CABBAGE_SEEDS);
         ComposterBlock.add(0.65F, VAItems.WISDOM_BERRY);
         ComposterBlock.add(0.3F, VAItems.WISDOM_BERRY_SEEDS);
+        ComposterBlock.add(0.3F, VAItems.SOY_BEANS);
         ComposterBlock.add(0.65F, VAItems.GREENCAP_MUSHROOM);
         ComposterBlock.add(0.85F, VAItems.TALL_GREENCAP_MUSHROOMS);
         ComposterBlock.add(0.65F, VAItems.SILKBULB);
@@ -52,6 +53,8 @@ public class VACompostables {
         ComposterBlock.add(0.3F, VAItems.WITHERED_LEAVES);
         ComposterBlock.add(0.65F, VAItems.SMALL_SPRING_LOTUS);
         ComposterBlock.add(0.85F, VAItems.SPRING_LOTUS);
+        ComposterBlock.add(0.3F, VAItems.ZEBRANO_SAPLING);
+        ComposterBlock.add(0.3F, VAItems.ZEBRANO_LEAVES);
         ComposterBlock.add(0.3F, VAItems.OAK_HEDGE);
         ComposterBlock.add(0.3F, VAItems.SPRUCE_HEDGE);
         ComposterBlock.add(0.3F, VAItems.BIRCH_HEDGE);
@@ -60,6 +63,7 @@ public class VACompostables {
         ComposterBlock.add(0.3F, VAItems.DARK_OAK_HEDGE);
         ComposterBlock.add(0.3F, VAItems.PALE_OAK_HEDGE);
         ComposterBlock.add(0.3F, VAItems.MANGROVE_HEDGE);
+        ComposterBlock.add(0.3F, VAItems.ZEBRANO_HEDGE);
         ComposterBlock.add(0.3F, VAItems.CHERRY_HEDGE);
         ComposterBlock.add(0.3F, VAItems.AZALEA_HEDGE);
         ComposterBlock.add(0.3F, VAItems.FLOWERING_AZALEA_HEDGE);

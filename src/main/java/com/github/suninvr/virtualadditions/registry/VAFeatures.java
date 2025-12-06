@@ -1,9 +1,6 @@
 package com.github.suninvr.virtualadditions.registry;
 
-import com.github.suninvr.virtualadditions.worldgen.feature.BalloonBulbFeature;
-import com.github.suninvr.virtualadditions.worldgen.feature.LumwaspNestFeature;
-import com.github.suninvr.virtualadditions.worldgen.feature.SoulbloomTrunkPlacer;
-import com.github.suninvr.virtualadditions.worldgen.feature.WitheredTrunkPlacer;
+import com.github.suninvr.virtualadditions.worldgen.feature.*;
 import net.fabricmc.fabric.api.biome.v1.BiomeModifications;
 import net.fabricmc.fabric.api.biome.v1.BiomeSelectors;
 import net.minecraft.core.Registry;
@@ -45,6 +42,7 @@ public class VAFeatures {
         public static final ResourceKey<PlacedFeature> SOULBLOOM_TREES;
         public static final ResourceKey<PlacedFeature> BONE_LITTER_SOUL_SAND_VALLEY;
         public static final ResourceKey<PlacedFeature> SPRING_LOTUS_SWAMP;
+        public static final ResourceKey<PlacedFeature> ZEBRANO_TREE;
 
         static {
             ORE_IOLITE = registerPlaced(idOf("ore_iolite"));
@@ -64,17 +62,20 @@ public class VAFeatures {
             SOULBLOOM_TREES = registerPlaced(idOf("soulbloom_trees"));
             BONE_LITTER_SOUL_SAND_VALLEY = registerPlaced(idOf("bone_litter_soul_sand_valley"));
             SPRING_LOTUS_SWAMP = registerPlaced(idOf("spring_lotus_swamp"));
+            ZEBRANO_TREE = registerPlaced(idOf("zebrano_tree"));
         }
     }
 
     public static class Configured {
         public static final ResourceKey<ConfiguredFeature<?, ?>> SOULBLOOM_TREE;
         public static final ResourceKey<ConfiguredFeature<?, ?>> WITHERED_TREE;
+        public static final ResourceKey<ConfiguredFeature<?, ?>> ZEBRANO_TREE;
         public static final ResourceKey<ConfiguredFeature<?, ?>> NECROTIC_ROOTS_BONEMEAL;
 
         static {
             SOULBLOOM_TREE = registerConfigured(idOf("soulbloom_tree"));
             WITHERED_TREE = registerConfigured(idOf("withered_tree"));
+            ZEBRANO_TREE = registerConfigured(idOf("zebrano_tree"));
             NECROTIC_ROOTS_BONEMEAL = registerConfigured(idOf("necrotic_roots_bonemeal"));
         }
     }
@@ -125,6 +126,11 @@ public class VAFeatures {
                 GenerationStep.Decoration.VEGETAL_DECORATION,
                 Placed.SPRING_LOTUS_SWAMP
         );
+        BiomeModifications.addFeature(
+                BiomeSelectors.tag(BiomeTags.IS_SAVANNA),
+                GenerationStep.Decoration.VEGETAL_DECORATION,
+                Placed.ZEBRANO_TREE
+        );
         TrunkPlacerTypes.init();
         BALLOON_BULB_FEATURE = Registry.register(BuiltInRegistries.FEATURE, idOf("balloon_bulb"), new BalloonBulbFeature(NoneFeatureConfiguration.CODEC));
         LUMWASP_NEST_FEATURE = Registry.register(BuiltInRegistries.FEATURE, idOf("lumwasp_nest"), new LumwaspNestFeature(NoneFeatureConfiguration.CODEC));
@@ -141,11 +147,11 @@ public class VAFeatures {
     public static class TrunkPlacerTypes {
         public static final TrunkPlacerType<SoulbloomTrunkPlacer> SOULBLOOM_TRUNK_PLACER = Registry.register(BuiltInRegistries.TRUNK_PLACER_TYPE, idOf("soulbloom_trunk_placer"), new TrunkPlacerType<>(SoulbloomTrunkPlacer.CODEC));
         public static final TrunkPlacerType<WitheredTrunkPlacer> WITHERED_TRUNK_PLACER = Registry.register(BuiltInRegistries.TRUNK_PLACER_TYPE, idOf("withered_trunk_placer"), new TrunkPlacerType<>(WitheredTrunkPlacer.CODEC));
+        public static final TrunkPlacerType<DivergingTrunkPlacer> DIVERGING_TRUNK_PLACER = Registry.register(BuiltInRegistries.TRUNK_PLACER_TYPE, idOf("diverging_trunk_placer"), new TrunkPlacerType<>(DivergingTrunkPlacer.CODEC));
         public static void init(){}
     }
 
     public static class FoliagePlacerTypes {
-        //public static final FoliagePlacerType<WitheredFoliagePlacer> WITHERED_TRUNK_PLACER = Registry.register(Registries.FOLIAGE_PLACER_TYPE, idOf("withered_foliage_placer"), new FoliagePlacerType<>(WitheredFoliagePlacer.CODEC));
         public static void init(){}
     }
 }

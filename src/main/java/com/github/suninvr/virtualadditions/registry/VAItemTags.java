@@ -14,6 +14,7 @@ public class VAItemTags {
     public static final TagKey<Item> GILDED_TOOLS = TagKey.create(Registries.ITEM, idOf("gilded_tools"));
     public static final TagKey<Item> SOULBLOOM_LOGS = TagKey.create(Registries.ITEM, idOf("soulbloom_logs"));
     public static final TagKey<Item> WITHERED_LOGS = TagKey.create(Registries.ITEM, idOf("withered_logs"));
+    public static final TagKey<Item> ZEBRANO_LOGS = TagKey.create(Registries.ITEM, idOf("zebrano_logs"));
     public static final TagKey<Item> SILKBULBS = TagKey.create(Registries.ITEM, idOf("silkbulbs"));
     public static final TagKey<Item> BASE_DYE = TagKey.create(Registries.ITEM, idOf("base_dye"));
     public static final TagKey<Item> COLORABLE_GLASS = TagKey.create(Registries.ITEM, idOf("colorable_glass"));

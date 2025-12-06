@@ -8,4 +8,5 @@ import java.util.Optional;
 public class CustomSaplingGenerator {
     public static final TreeGrower SOULBLOOM = new TreeGrower("soulbloom", Optional.empty(), Optional.of(VAFeatures.Configured.SOULBLOOM_TREE), Optional.empty());
     public static final TreeGrower WITHERED = new TreeGrower("withered", Optional.empty(), Optional.of(VAFeatures.Configured.WITHERED_TREE), Optional.empty());
+    public static final TreeGrower ZEBRANO = new TreeGrower("zebrano", Optional.empty(), Optional.of(VAFeatures.Configured.ZEBRANO_TREE), Optional.empty());
 }

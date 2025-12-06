@@ -1,0 +1,28 @@
+{
+  "variants": {
+    "age=0": {
+      "model": "virtual_additions:block/soy_crop_stage0"
+    },
+    "age=1": {
+      "model": "virtual_additions:block/soy_crop_stage0"
+    },
+    "age=2": {
+      "model": "virtual_additions:block/soy_crop_stage1"
+    },
+    "age=3": {
+      "model": "virtual_additions:block/soy_crop_stage1"
+    },
+    "age=4": {
+      "model": "virtual_additions:block/soy_crop_stage2"
+    },
+    "age=5": {
+      "model": "virtual_additions:block/soy_crop_stage2"
+    },
+    "age=6": {
+      "model": "virtual_additions:block/soy_crop_stage2"
+    },
+    "age=7": {
+      "model": "virtual_additions:block/soy_crop_stage3"
+    }
+  }
+}

@@ -35,6 +35,7 @@ public class VACollections {
     public static final BlockFamily ROCK_SALT_BRICKS;
     public static final BlockFamily SOULBLOOM;
     public static final BlockFamily WITHERED;
+    public static final BlockFamily ZEBRANO;
     public static final BlockFamily PORPHYRY;
     public static final BlockFamily PORPHYRY_BRICKS;
     public static final BlockFamily POLISHED_PORPHYRY;
@@ -90,6 +91,7 @@ public class VACollections {
         ROCK_SALT_BRICKS = register(VABlocks.ROCK_SALT_BRICKS).stairs(ROCK_SALT_BRICK_STAIRS).slab(ROCK_SALT_BRICK_SLAB).wall(ROCK_SALT_BRICK_WALL).getFamily();
         SOULBLOOM = register(VABlocks.SOULBLOOM_PLANKS).button(VABlocks.SOULBLOOM_BUTTON).fence(VABlocks.SOULBLOOM_FENCE).fenceGate(VABlocks.SOULBLOOM_FENCE_GATE).sign(VABlocks.SOULBLOOM_SIGN, VABlocks.SOULBLOOM_WALL_SIGN).pressurePlate(VABlocks.SOULBLOOM_PRESSURE_PLATE).slab(VABlocks.SOULBLOOM_SLAB).stairs(VABlocks.SOULBLOOM_STAIRS).door(VABlocks.SOULBLOOM_DOOR).trapdoor(VABlocks.SOULBLOOM_TRAPDOOR).recipeGroupPrefix("wooden").recipeUnlockedBy("has_planks").getFamily();
         WITHERED = register(VABlocks.WITHERED_PLANKS).button(VABlocks.WITHERED_BUTTON).fence(VABlocks.WITHERED_FENCE).fenceGate(VABlocks.WITHERED_FENCE_GATE).sign(VABlocks.WITHERED_SIGN, VABlocks.WITHERED_WALL_SIGN).pressurePlate(VABlocks.WITHERED_PRESSURE_PLATE).slab(VABlocks.WITHERED_SLAB).stairs(VABlocks.WITHERED_STAIRS).door(VABlocks.WITHERED_DOOR).trapdoor(VABlocks.WITHERED_TRAPDOOR).recipeGroupPrefix("wooden").recipeUnlockedBy("has_planks").getFamily();
+        ZEBRANO = register(VABlocks.ZEBRANO_PLANKS).button(VABlocks.ZEBRANO_BUTTON).fence(VABlocks.ZEBRANO_FENCE).fenceGate(VABlocks.ZEBRANO_FENCE_GATE).sign(VABlocks.ZEBRANO_SIGN, VABlocks.ZEBRANO_WALL_SIGN).pressurePlate(VABlocks.ZEBRANO_PRESSURE_PLATE).slab(VABlocks.ZEBRANO_SLAB).stairs(VABlocks.ZEBRANO_STAIRS).door(VABlocks.ZEBRANO_DOOR).trapdoor(VABlocks.ZEBRANO_TRAPDOOR).recipeGroupPrefix("wooden").recipeUnlockedBy("has_planks").getFamily();
         PORPHYRY = register(VABlocks.PORPHYRY).stairs(VABlocks.PORPHYRY_STAIRS).slab(VABlocks.PORPHYRY_SLAB).wall(VABlocks.PORPHYRY_WALL).getFamily();
         PORPHYRY_BRICKS = register(VABlocks.PORPHYRY_BRICKS).stairs(VABlocks.PORPHYRY_BRICK_STAIRS).slab(VABlocks.PORPHYRY_BRICK_SLAB).wall(VABlocks.PORPHYRY_BRICK_WALL).getFamily();
         POLISHED_PORPHYRY = register(VABlocks.POLISHED_PORPHYRY).stairs(VABlocks.POLISHED_PORPHYRY_STAIRS).slab(VABlocks.POLISHED_PORPHYRY_SLAB).wall(VABlocks.POLISHED_PORPHYRY_WALL).getFamily();

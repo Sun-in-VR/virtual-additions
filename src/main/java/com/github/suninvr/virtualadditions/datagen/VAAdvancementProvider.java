@@ -43,8 +43,25 @@ public class VAAdvancementProvider {
 
         @Override
         public void generateAdvancement(HolderLookup.Provider wrapperLookup, Consumer<AdvancementHolder> consumer) {
-            ItemStack stack = Items.DIAMOND_PICKAXE.getDefaultInstance();
+            ItemStack stack = VAItems.STEEL_PICKAXE.getDefaultInstance();
+            stack.set(VADataComponentTypes.GILD_TYPE, VAGildTypes.AMETHYST);
+
+            Advancement.Builder gildToolBuilder = Advancement.Builder.recipeAdvancement()
+                    .parent(Advancement.Builder.advancement().build(idOf("story/smelt_steel")))
+                    .display(
+                            stack,
+                            Component.translatable("advancements.virtual_additions.story.gild_tool.title"),
+                            Component.translatable("advancements.virtual_additions.story.gild_tool.description"),
+                            null,
+                            AdvancementType.TASK,
+                            true,
+                            true,
+                            false
+                    );
+
+            stack = Items.DIAMOND_PICKAXE.getDefaultInstance();
             stack.set(VADataComponentTypes.GILD_TYPE, VAGildTypes.SCULK);
+
             Advancement.Builder gildAllToolsBuilder = Advancement.Builder.recipeAdvancement()
                     .parent(Advancement.Builder.advancement().build(idOf("story/gild_tool")))
                     .display(
@@ -57,9 +74,21 @@ public class VAAdvancementProvider {
                             true,
                             false
                     );
+            gildToolBuilder.requirements(AdvancementRequirements.Strategy.OR);
             gildAllToolsBuilder.requirements(AdvancementRequirements.Strategy.AND);
             HolderGetter<Item> lookup = wrapperLookup.lookupOrThrow(Registries.ITEM);
             VARegistries.GILD_TYPE.stream().forEach(type -> {
+                gildToolBuilder.addCriterion(
+                        VARegistries.GILD_TYPE.getKey(type).getPath(),
+                        InventoryChangeTrigger.TriggerInstance.hasItems(ItemPredicate.Builder.item()
+                                .withComponents(
+                                        DataComponentMatchers.Builder.components().exact(
+                                                DataComponentExactPredicate.expect(VADataComponentTypes.GILD_TYPE, type)
+                                        ).build()
+                                )
+                        )
+                );
+
                 Consumer<Item> itemWithGildTypeConsumer = item -> gildAllToolsBuilder.addCriterion(
                         BuiltInRegistries.ITEM.getKey(item).withPrefix(VARegistries.GILD_TYPE.getKey(type).getPath() + "_").getPath(),
                         InventoryChangeTrigger.TriggerInstance.hasItems(ItemPredicate.Builder.item()
@@ -78,7 +107,8 @@ public class VAAdvancementProvider {
                 VAItems.DIAMOND_TOOL_SET.forEach(itemWithGildTypeConsumer);
                 VAItems.NETHERITE_TOOL_SET.forEach(itemWithGildTypeConsumer);
             });
-            gildAllToolsBuilder.save(consumer, idOf("gild_all_tools").toString());
+            gildToolBuilder.save(consumer, idOf("story/gild_tool").toString());
+            gildAllToolsBuilder.save(consumer, idOf("story/gild_all_tools").toString());
         }
     }
 

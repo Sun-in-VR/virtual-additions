@@ -1,15 +1,13 @@
 package com.github.suninvr.virtualadditions.registry;
 
 import com.github.suninvr.virtualadditions.VirtualAdditions;
-import com.github.suninvr.virtualadditions.block.entity.IncenseBlockEntity;
 import com.github.suninvr.virtualadditions.component.ExplosiveContentComponent;
 import com.github.suninvr.virtualadditions.component.IncenseEffectsComponent;
 import com.github.suninvr.virtualadditions.item.*;
 import com.github.suninvr.virtualadditions.item.materials.SteelToolMaterial;
-import com.github.suninvr.virtualadditions.registry.RegistryHelper.ItemRegistryHelper.*;
 import net.fabricmc.fabric.api.itemgroup.v1.ItemGroupEvents;
+import net.fabricmc.fabric.api.registry.FuelRegistryEvents;
 import net.minecraft.ChatFormatting;
-import net.minecraft.core.BlockPos;
 import net.minecraft.util.Util;
 import net.minecraft.core.Direction;
 import net.minecraft.core.component.DataComponents;
@@ -23,14 +21,11 @@ import net.minecraft.world.item.*;
 import net.minecraft.world.item.alchemy.PotionContents;
 import net.minecraft.world.item.component.BundleContents;
 import net.minecraft.world.item.component.ItemContainerContents;
-import net.minecraft.world.item.component.TypedEntityData;
 import net.minecraft.world.item.equipment.ArmorType;
 import net.minecraft.world.item.equipment.Equippable;
 import net.minecraft.world.level.block.Blocks;
-import net.minecraft.world.level.block.SuspiciousEffectHolder;
 import net.minecraft.world.level.block.entity.BannerPatternLayers;
-import net.minecraft.world.level.block.entity.BlockEntity;
-import net.minecraft.world.level.block.entity.BlockEntityType;
+import net.minecraft.world.level.block.entity.FuelValues;
 import org.apache.commons.lang3.tuple.Pair;
 
 import java.util.*;
@@ -166,6 +161,27 @@ public class VAItems {
     public static final Item SPECTRAL_POWDER;
     public static final Item SPECTRAL_SAND;
     public static final Item SPECTRAL_SPYGLASS;
+    public static final Item ZEBRANO_LOG;
+    public static final Item ZEBRANO_WOOD;
+    public static final Item STRIPPED_ZEBRANO_LOG;
+    public static final Item STRIPPED_ZEBRANO_WOOD;
+    public static final Item ZEBRANO_PLANKS;
+    public static final Item ZEBRANO_STAIRS;
+    public static final Item ZEBRANO_SLAB;
+    public static final Item ZEBRANO_FENCE;
+    public static final Item ZEBRANO_FENCE_GATE;
+    public static final Item ZEBRANO_DOOR;
+    public static final Item ZEBRANO_TRAPDOOR;
+    public static final Item ZEBRANO_PRESSURE_PLATE;
+    public static final Item ZEBRANO_BUTTON;
+    public static final Item ZEBRANO_SIGN;
+    public static final Item ZEBRANO_HANGING_SIGN;
+    public static final Item ZEBRANO_SHELF;
+    public static final Item ZEBRANO_LEAVES;
+    public static final Item ZEBRANO_HEDGE;
+    public static final Item ZEBRANO_SAPLING;
+    public static final Item ZEBRANO_BOAT;
+    public static final Item ZEBRANO_CHEST_BOAT;
     public static final Item OAK_HEDGE;
     public static final Item SPRUCE_HEDGE;
     public static final Item BIRCH_HEDGE;
@@ -293,6 +309,7 @@ public class VAItems {
     public static final Item TACO;
     public static final Item COTTON_SEEDS;
     public static final Item COTTON;
+    public static final Item SOY_BEANS;
     public static final Item WISDOM_BERRY_SEEDS;
     public static final Item WISDOM_BERRY;
     public static final Item FRIED_EGG;
@@ -331,6 +348,7 @@ public class VAItems {
     public static final Item PINK_SILKBULB;
     public static final Item ACID_BUCKET;
     public static final Item ACID_BLOCK;
+    public static final Item SOY_OIL_BUCKET;
     public static final Item APPLICABLE_POTION;
     public static final Item LIGHTNING_BOTTLE;
     public static final Item PURPLE_EGG;
@@ -676,6 +694,27 @@ public class VAItems {
 
         //endregion
 
+        ZEBRANO_LOG = registerBlockItem("zebrano_log", VABlocks.ZEBRANO_LOG, at(CreativeModeTabs.BUILDING_BLOCKS, Items.MANGROVE_BUTTON), at(CreativeModeTabs.NATURAL_BLOCKS, Items.WARPED_STEM));
+        ZEBRANO_WOOD = registerBlockItem("zebrano_wood", VABlocks.ZEBRANO_WOOD, CreativeModeTabs.BUILDING_BLOCKS, prev);
+        STRIPPED_ZEBRANO_LOG = registerBlockItem("stripped_zebrano_log", VABlocks.STRIPPED_ZEBRANO_LOG, CreativeModeTabs.BUILDING_BLOCKS, prev);
+        STRIPPED_ZEBRANO_WOOD = registerBlockItem("stripped_zebrano_wood", VABlocks.STRIPPED_ZEBRANO_WOOD, CreativeModeTabs.BUILDING_BLOCKS, prev);
+        ZEBRANO_PLANKS = registerBlockItem("zebrano_planks", VABlocks.ZEBRANO_PLANKS, CreativeModeTabs.BUILDING_BLOCKS, prev);
+        ZEBRANO_STAIRS = registerBlockItem("zebrano_stairs", VABlocks.ZEBRANO_STAIRS, CreativeModeTabs.BUILDING_BLOCKS, prev);
+        ZEBRANO_SLAB = registerBlockItem("zebrano_slab", VABlocks.ZEBRANO_SLAB, CreativeModeTabs.BUILDING_BLOCKS, prev);
+        ZEBRANO_FENCE = registerBlockItem("zebrano_fence", VABlocks.ZEBRANO_FENCE, CreativeModeTabs.BUILDING_BLOCKS, prev);
+        ZEBRANO_FENCE_GATE = registerBlockItem("zebrano_fence_gate", VABlocks.ZEBRANO_FENCE_GATE, CreativeModeTabs.BUILDING_BLOCKS, prev);
+        ZEBRANO_DOOR = registerBlockItem("zebrano_door", VABlocks.ZEBRANO_DOOR, CreativeModeTabs.BUILDING_BLOCKS, prev);
+        ZEBRANO_TRAPDOOR = registerBlockItem("zebrano_trapdoor", VABlocks.ZEBRANO_TRAPDOOR, CreativeModeTabs.BUILDING_BLOCKS, prev);
+        ZEBRANO_PRESSURE_PLATE = registerBlockItem("zebrano_pressure_plate", VABlocks.ZEBRANO_PRESSURE_PLATE, CreativeModeTabs.BUILDING_BLOCKS, prev);
+        ZEBRANO_BUTTON = registerBlockItem("zebrano_button", VABlocks.ZEBRANO_BUTTON, CreativeModeTabs.BUILDING_BLOCKS, prev);
+        ZEBRANO_SIGN = register("zebrano_sign", settings ->  new SignItem(VABlocks.ZEBRANO_SIGN, VABlocks.ZEBRANO_WALL_SIGN, settings), new Item.Properties().overrideDescription(VABlocks.ZEBRANO_SIGN.getDescriptionId()).stacksTo(16), CreativeModeTabs.FUNCTIONAL_BLOCKS, Items.MANGROVE_HANGING_SIGN);
+        ZEBRANO_HANGING_SIGN = register("zebrano_hanging_sign", settings ->  new HangingSignItem(VABlocks.ZEBRANO_HANGING_SIGN, VABlocks.ZEBRANO_WALL_HANGING_SIGN, settings), new Item.Properties().overrideDescription(VABlocks.ZEBRANO_HANGING_SIGN.getDescriptionId()).stacksTo(16), CreativeModeTabs.FUNCTIONAL_BLOCKS, prev);
+        ZEBRANO_SHELF = registerBlockItem("zebrano_shelf", VABlocks.ZEBRANO_SHELF, at(CreativeModeTabs.FUNCTIONAL_BLOCKS, Items.WARPED_SHELF));
+        ZEBRANO_LEAVES = registerBlockItem("zebrano_leaves", VABlocks.ZEBRANO_LEAVES, CreativeModeTabs.NATURAL_BLOCKS, Items.MANGROVE_LEAVES);
+        ZEBRANO_SAPLING = registerBlockItem("zebrano_sapling", VABlocks.ZEBRANO_SAPLING, CreativeModeTabs.NATURAL_BLOCKS, Items.MANGROVE_PROPAGULE);
+        ZEBRANO_BOAT = register("zebrano_boat", settings -> new BoatItem(VAEntityType.ZEBRANO_BOAT, settings), new Item.Properties().stacksTo(1), CreativeModeTabs.TOOLS_AND_UTILITIES, Items.MANGROVE_CHEST_BOAT);
+        ZEBRANO_CHEST_BOAT = register("zebrano_chest_boat", settings -> new BoatItem(VAEntityType.ZEBRANO_CHEST_BOAT, settings), new Item.Properties().stacksTo(1), CreativeModeTabs.TOOLS_AND_UTILITIES, prev);
+
         //region Salty Caves
 
         ROCK_SALT_BLOCK = registerBlockItem("rock_salt_block", VABlocks.ROCK_SALT_BLOCK, at(CreativeModeTabs.NATURAL_BLOCKS, Items.AMETHYST_CLUSTER), at(CreativeModeTabs.BUILDING_BLOCKS, Items.MUD_BRICK_WALL));
@@ -872,6 +911,7 @@ public class VAItems {
         //endregion
 
         ACID_BUCKET = register("acid_bucket", AcidBucketItem::new, new Item.Properties().craftRemainder(Items.BUCKET).stacksTo(1), CreativeModeTabs.TOOLS_AND_UTILITIES, Items.LAVA_BUCKET);
+        SOY_OIL_BUCKET = register("soy_oil_bucket", new Item.Properties().craftRemainder(Items.BUCKET).stacksTo(1), CreativeModeTabs.TOOLS_AND_UTILITIES, Items.MILK_BUCKET);
 
         APPLICABLE_POTION = register("applicable_potion", ApplicablePotionItem::new, new Item.Properties().stacksTo(16).component(DataComponents.POTION_CONTENTS, PotionContents.EMPTY));
 
@@ -1099,6 +1139,7 @@ public class VAItems {
         DARK_OAK_HEDGE = registerBlockItem("dark_oak_hedge", VABlocks.DARK_OAK_HEDGE, CreativeModeTabs.NATURAL_BLOCKS, Items.DARK_OAK_LEAVES);
         PALE_OAK_HEDGE = registerBlockItem("pale_oak_hedge", VABlocks.PALE_OAK_HEDGE, CreativeModeTabs.NATURAL_BLOCKS, Items.PALE_OAK_LEAVES);
         MANGROVE_HEDGE = registerBlockItem("mangrove_hedge", VABlocks.MANGROVE_HEDGE, CreativeModeTabs.NATURAL_BLOCKS, Items.MANGROVE_LEAVES);
+        ZEBRANO_HEDGE = registerBlockItem("zebrano_hedge", VABlocks.ZEBRANO_HEDGE, CreativeModeTabs.NATURAL_BLOCKS, VAItems.ZEBRANO_LEAVES);
         AZALEA_HEDGE = registerBlockItem("azalea_hedge", VABlocks.AZALEA_HEDGE, CreativeModeTabs.NATURAL_BLOCKS, Items.AZALEA_LEAVES);
         FLOWERING_AZALEA_HEDGE = registerBlockItem("flowering_azalea_hedge", VABlocks.FLOWERING_AZALEA_HEDGE, CreativeModeTabs.NATURAL_BLOCKS, Items.FLOWERING_AZALEA_LEAVES);
         CHERRY_HEDGE = registerBlockItem("cherry_hedge", VABlocks.CHERRY_HEDGE, CreativeModeTabs.NATURAL_BLOCKS, Items.CHERRY_LEAVES);
@@ -1135,6 +1176,7 @@ public class VAItems {
         WISDOM_BERRY = register("wisdom_berry", new Item.Properties().food(VAFoodComponents.WISDOM_BERRY), CreativeModeTabs.FOOD_AND_DRINKS, CABBAGE);
         COTTON_SEEDS = register("cotton_seeds", settings -> new BlockItem(VABlocks.COTTON, settings),new Item.Properties().useItemDescriptionPrefix(), CreativeModeTabs.NATURAL_BLOCKS, Items.BEETROOT_SEEDS);
         COTTON = register("cotton", CreativeModeTabs.INGREDIENTS, Items.WHEAT);
+        SOY_BEANS = register("soy_beans", settings -> new BlockItem(VABlocks.SOY_CROP, settings),new Item.Properties().useItemDescriptionPrefix(), CreativeModeTabs.NATURAL_BLOCKS, COTTON_SEEDS);
 
         SALAD = register("salad", new Item.Properties().food(VAFoodComponents.SALAD).stacksTo(1).usingConvertsTo(Items.BOWL), CreativeModeTabs.FOOD_AND_DRINKS, Items.BEETROOT_SOUP);
         TACO = register("taco", new Item.Properties().food(VAFoodComponents.TACO), CreativeModeTabs.FOOD_AND_DRINKS, prev);
@@ -1174,6 +1216,10 @@ public class VAItems {
         VACompostables.init();
         VACauldronBehaviors.init();
         VALootTableModifiers.init();
+
+        FuelRegistryEvents.BUILD.register((builder, context) -> {
+            builder.add(VAItems.SOY_OIL_BUCKET, 6400);
+        });
 
         ItemGroupEvents.modifyEntriesEvent(CreativeModeTabs.FOOD_AND_DRINKS).register( (content) -> {
             if (CreativeModeTabs.CACHED_PARAMETERS == null) return;

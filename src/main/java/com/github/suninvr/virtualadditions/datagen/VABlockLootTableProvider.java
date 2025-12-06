@@ -80,6 +80,7 @@ public final class VABlockLootTableProvider {
                     VACollections.ROCK_SALT_BRICKS,
                     VACollections.SOULBLOOM,
                     VACollections.WITHERED,
+                    VACollections.ZEBRANO,
                     VACollections.PORPHYRY,
                     VACollections.POLISHED_PORPHYRY,
                     VACollections.PORPHYRY_BRICKS
@@ -129,6 +130,7 @@ public final class VABlockLootTableProvider {
                     VABlocks.ACACIA_HEDGE,
                     VABlocks.DARK_OAK_HEDGE,
                     VABlocks.MANGROVE_HEDGE,
+                    VABlocks.ZEBRANO_HEDGE,
                     VABlocks.CHERRY_HEDGE,
                     VABlocks.AZALEA_HEDGE,
                     VABlocks.FLOWERING_AZALEA_HEDGE,
@@ -176,6 +178,14 @@ public final class VABlockLootTableProvider {
                     VABlocks.SPECTRAL_TORCH,
                     VABlocks.SPECTRAL_LANTERN,
                     VABlocks.SPECTRAL_SAND,
+                    VABlocks.ZEBRANO_LOG,
+                    VABlocks.ZEBRANO_WOOD,
+                    VABlocks.STRIPPED_ZEBRANO_LOG,
+                    VABlocks.STRIPPED_ZEBRANO_WOOD,
+                    VABlocks.ZEBRANO_HANGING_SIGN,
+                    VABlocks.ZEBRANO_SHELF,
+                    VABlocks.ZEBRANO_SAPLING,
+                    VABlocks.ZEBRANO_HEDGE,
                     VABlocks.COLORING_STATION,
                     VABlocks.IOLITE_BLOCK,
                     VABlocks.ENTANGLEMENT_DRIVE,
@@ -188,6 +198,7 @@ public final class VABlockLootTableProvider {
             this.add(VABlocks.POTTED_GREENCAP_MUSHROOM, this.createPotFlowerItemTable(VABlocks.GREENCAP_MUSHROOM));
             this.add(VABlocks.POTTED_SOULBLOOM_SAPLING, this.createPotFlowerItemTable(VABlocks.SOULBLOOM_SAPLING));
             this.add(VABlocks.POTTED_WITHERED_SAPLING, this.createPotFlowerItemTable(VABlocks.WITHERED_SAPLING));
+            this.add(VABlocks.POTTED_ZEBRANO_SAPLING, this.createPotFlowerItemTable(VABlocks.ZEBRANO_SAPLING));
             this.add(VABlocks.POTTED_NECROTIC_ROOTS, this.createPotFlowerItemTable(VABlocks.NECROTIC_ROOTS));
             this.add(VABlocks.POTTED_SMALL_SPRING_LOTUS, this.createPotFlowerItemTable(VABlocks.SMALL_SPRING_LOTUS));
             this.add(VABlocks.POTTED_SOUL_SPROUT, this.createPotFlowerItemTable(VABlocks.SOUL_SPROUT));
@@ -215,9 +226,13 @@ public final class VABlockLootTableProvider {
                     .setProperties(StatePropertiesPredicate.Builder.properties().hasProperty(CropBlock.AGE, 7));
             this.add(VABlocks.COTTON, this.cropDrops(VABlocks.COTTON, VAItems.COTTON, VAItems.COTTON_SEEDS, 1, 2, cottonBuilder));
 
-            LootItemCondition.Builder wisdom_berryCropBuilder = LootItemBlockStatePropertyCondition.hasBlockStateProperties(VABlocks.WISDOM_BERRY)
+            LootItemCondition.Builder wisdomBerryCropBuilder = LootItemBlockStatePropertyCondition.hasBlockStateProperties(VABlocks.WISDOM_BERRY)
                     .setProperties(StatePropertiesPredicate.Builder.properties().hasProperty(CropBlock.AGE, 7));
-            this.add(VABlocks.WISDOM_BERRY, this.plantCropDrops(VABlocks.WISDOM_BERRY, VAItems.WISDOM_BERRY, VAItems.WISDOM_BERRY_SEEDS, wisdom_berryCropBuilder));
+            this.add(VABlocks.WISDOM_BERRY, this.plantCropDrops(VABlocks.WISDOM_BERRY, VAItems.WISDOM_BERRY, VAItems.WISDOM_BERRY_SEEDS, wisdomBerryCropBuilder));
+
+            LootItemCondition.Builder soyBeansBuilder = LootItemBlockStatePropertyCondition.hasBlockStateProperties(VABlocks.SOY_CROP)
+                    .setProperties(StatePropertiesPredicate.Builder.properties().hasProperty(CropBlock.AGE, 7));
+            this.add(VABlocks.SOY_CROP, this.cropDrops(VABlocks.SOY_CROP, VAItems.SOY_BEANS, VAItems.SOY_BEANS, 2, 4, soyBeansBuilder));
 
             this.add(VABlocks.CORN_CROP, this.cornDrops());
 
@@ -255,6 +270,7 @@ public final class VABlockLootTableProvider {
 
             this.add(VABlocks.SOULBLOOM_LEAVES, block ->  createLeavesDrops(VABlocks.SOULBLOOM_LEAVES, VABlocks.SOULBLOOM_SAPLING, NORMAL_LEAVES_SAPLING_CHANCES));
             this.add(VABlocks.WITHERED_LEAVES, block ->  createLeavesDrops(VABlocks.WITHERED_LEAVES, VABlocks.WITHERED_SAPLING, NORMAL_LEAVES_SAPLING_CHANCES));
+            this.add(VABlocks.ZEBRANO_LEAVES, block ->  createLeavesDrops(VABlocks.ZEBRANO_LEAVES, VABlocks.ZEBRANO_SAPLING, NORMAL_LEAVES_SAPLING_CHANCES));
 
         }
     }

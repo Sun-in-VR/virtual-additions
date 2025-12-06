@@ -72,6 +72,7 @@ public class VAModelProvider {
             generator.family(VABlocks.PORPHYRY).generateFor(VACollections.PORPHYRY);
             generator.family(VABlocks.SOULBLOOM_PLANKS).generateFor(VACollections.SOULBLOOM);
             generator.family(VABlocks.WITHERED_PLANKS).generateFor(VACollections.WITHERED);
+            generator.family(VABlocks.ZEBRANO_PLANKS).generateFor(VACollections.ZEBRANO);
             generator.family(VABlocks.POLISHED_PORPHYRY).generateFor(VACollections.POLISHED_PORPHYRY);
             generator.family(VABlocks.PORPHYRY_BRICKS).generateFor(VACollections.PORPHYRY_BRICKS);
             generator.family(VABlocks.CUT_STEEL).generateFor(VACollections.CUT_STEEL).donateModelTo(VABlocks.CUT_STEEL, VABlocks.WAXED_CUT_STEEL).donateModelTo(VABlocks.CHISELED_STEEL, VABlocks.WAXED_CHISELED_STEEL).generateFor(VACollections.WAXED_CUT_STEEL);
@@ -103,7 +104,7 @@ public class VAModelProvider {
                     VABlocks.ACID_BLOCK,
                     VABlocks.ENTANGLEMENT_DRIVE
                     );
-            
+
             registerSimpleCubeAll(generator,
                     VABlocks.CHISELED_HORNFELS,
                     VABlocks.BLUESCHIST,
@@ -133,6 +134,7 @@ public class VAModelProvider {
                     VABlocks.DEEPSLATE_ROCK_SALT_ORE,
                     VABlocks.SOULBLOOM_LEAVES,
                     VABlocks.WITHERED_LEAVES,
+                    VABlocks.ZEBRANO_LEAVES,
                     VABlocks.SPECTRAL_SAND,
                     VABlocks.STEEL_BLOCK,
                     VABlocks.EXPOSED_STEEL_BLOCK,
@@ -154,6 +156,11 @@ public class VAModelProvider {
             generator.woodProvider(VABlocks.STRIPPED_WITHERED_LOG).logWithHorizontal(VABlocks.STRIPPED_WITHERED_LOG).wood(VABlocks.STRIPPED_WITHERED_WOOD);
             generator.createHangingSign(VABlocks.STRIPPED_WITHERED_LOG, VABlocks.WITHERED_HANGING_SIGN, VABlocks.WITHERED_WALL_HANGING_SIGN);
             generator.createShelf(VABlocks.WITHERED_SHELF, VABlocks.STRIPPED_WITHERED_LOG);
+            
+            generator.woodProvider(VABlocks.ZEBRANO_LOG).logWithHorizontal(VABlocks.ZEBRANO_LOG).wood(VABlocks.ZEBRANO_WOOD);
+            generator.woodProvider(VABlocks.STRIPPED_ZEBRANO_LOG).logWithHorizontal(VABlocks.STRIPPED_ZEBRANO_LOG).wood(VABlocks.STRIPPED_ZEBRANO_WOOD);
+            generator.createHangingSign(VABlocks.STRIPPED_ZEBRANO_LOG, VABlocks.ZEBRANO_HANGING_SIGN, VABlocks.ZEBRANO_WALL_HANGING_SIGN);
+            generator.createShelf(VABlocks.ZEBRANO_SHELF, VABlocks.STRIPPED_ZEBRANO_LOG);
 
             registerSpectralFire(generator);
             generator.createNormalTorch(VABlocks.SPECTRAL_TORCH, VABlocks.SPECTRAL_WALL_TORCH);
@@ -164,6 +171,7 @@ public class VAModelProvider {
             generator.registerSimpleFlatItemModel(VAItems.CABBAGE_SEEDS);
             generator.registerSimpleFlatItemModel(VAItems.CORN_SEEDS);
             generator.registerSimpleFlatItemModel(VAItems.COTTON_SEEDS);
+            generator.registerSimpleFlatItemModel(VAItems.SOY_BEANS);
             generator.registerSimpleFlatItemModel(VAItems.BALLOON_FRUIT);
 
             generator.registerSimpleFlatItemModel(VAItems.CLIMBING_ROPE);
@@ -205,6 +213,7 @@ public class VAModelProvider {
 
             generator.registerSimpleItemModel(VAItems.SOULBLOOM_SAPLING, BlockModelGenerators.PlantType.NOT_TINTED.createItemModel(generator, VABlocks.SOULBLOOM_SAPLING));
             generator.registerSimpleItemModel(VAItems.WITHERED_SAPLING, BlockModelGenerators.PlantType.NOT_TINTED.createItemModel(generator, VABlocks.WITHERED_SAPLING));
+            generator.registerSimpleItemModel(VAItems.ZEBRANO_SAPLING, BlockModelGenerators.PlantType.NOT_TINTED.createItemModel(generator, VABlocks.ZEBRANO_SAPLING));
 
             generator.registerSimpleItemModel(VAItems.NECROTIC_ROOTS, BlockModelGenerators.PlantType.NOT_TINTED.createItemModel(generator, VABlocks.NECROTIC_ROOTS));
 
@@ -237,6 +246,7 @@ public class VAModelProvider {
             registerInventoryBlockItem(generator, VABlocks.DARK_OAK_HEDGE, new Constant(FoliageColor.FOLIAGE_DEFAULT));
             registerInventoryBlockItem(generator, VABlocks.PALE_OAK_HEDGE);
             registerInventoryBlockItem(generator, VABlocks.MANGROVE_HEDGE, new Constant(FoliageColor.FOLIAGE_MANGROVE));
+            registerInventoryBlockItem(generator, VABlocks.ZEBRANO_HEDGE);
             registerInventoryBlockItem(generator, VABlocks.CHERRY_HEDGE);
             registerInventoryBlockItem(generator, VABlocks.SOULBLOOM_HEDGE);
             registerInventoryBlockItem(generator, VABlocks.WITHERED_HEDGE);
@@ -248,6 +258,7 @@ public class VAModelProvider {
 
             generator.createPlant(VABlocks.SOULBLOOM_SAPLING, VABlocks.POTTED_SOULBLOOM_SAPLING, BlockModelGenerators.PlantType.NOT_TINTED);
             generator.createPlant(VABlocks.WITHERED_SAPLING, VABlocks.POTTED_WITHERED_SAPLING, BlockModelGenerators.PlantType.NOT_TINTED);
+            generator.createPlant(VABlocks.ZEBRANO_SAPLING, VABlocks.POTTED_ZEBRANO_SAPLING, BlockModelGenerators.PlantType.NOT_TINTED);
             generator.createPlant(VABlocks.GREENCAP_MUSHROOM, VABlocks.POTTED_GREENCAP_MUSHROOM, BlockModelGenerators.PlantType.NOT_TINTED);
             generator.createPlant(VABlocks.NECROTIC_ROOTS, VABlocks.POTTED_NECROTIC_ROOTS, BlockModelGenerators.PlantType.NOT_TINTED);
             generator.createPlant(VABlocks.SMALL_SPRING_LOTUS, VABlocks.POTTED_SMALL_SPRING_LOTUS, BlockModelGenerators.PlantType.NOT_TINTED);
@@ -304,6 +315,7 @@ public class VAModelProvider {
                     VAItems.MUTTON_JERKY,
                     VAItems.SWEET_BERRY_PIE,
                     VAItems.ACID_BUCKET,
+                    VAItems.SOY_OIL_BUCKET,
                     VAItems.SILK_THREAD,
                     VAItems.LUMWASP_MANDIBLE,
                     VAItems.LIGHTNING_BOTTLE,
@@ -314,6 +326,8 @@ public class VAModelProvider {
                     VAItems.STEEL_NAUTILUS_ARMOR,
                     VAItems.SOULBLOOM_BOAT,
                     VAItems.SOULBLOOM_CHEST_BOAT,
+                    VAItems.ZEBRANO_BOAT,
+                    VAItems.ZEBRANO_CHEST_BOAT,
                     VAItems.SPECTRAL_POWDER,
                     VAItems.CHARTREUSE_HARNESS,
                     VAItems.MAROON_HARNESS,

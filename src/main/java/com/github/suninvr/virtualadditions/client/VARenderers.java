@@ -37,6 +37,8 @@ public class VARenderers {
     public static ModelLayerLocation PLAYER_PROJECTION_LAYER = new ModelLayerLocation(Identifier.fromNamespaceAndPath("virtual_additions", "player_projection"), "main");
     public static ModelLayerLocation SOULBLOOM_BOAT = new ModelLayerLocation(Identifier.fromNamespaceAndPath("virtual_additions", "boat/soulbloom"), "main");
     public static ModelLayerLocation SOULBLOOM_CHEST_BOAT = new ModelLayerLocation(Identifier.fromNamespaceAndPath("virtual_additions", "chest_boat/soulbloom"), "main");
+    public static ModelLayerLocation ZEBRANO_BOAT = new ModelLayerLocation(Identifier.fromNamespaceAndPath("virtual_additions", "boat/zebrano"), "main");
+    public static ModelLayerLocation ZEBRANO_CHEST_BOAT = new ModelLayerLocation(Identifier.fromNamespaceAndPath("virtual_additions", "chest_boat/zebrano"), "main");
     public static final Material CHARTREUSE_SHULKER_BOX = new Material(Sheets.SHULKER_SHEET, VirtualAdditions.idOf("entity/shulker/shulker_chartreuse"));
     public static final Material MAROON_SHULKER_BOX = new Material(Sheets.SHULKER_SHEET, VirtualAdditions.idOf("entity/shulker/shulker_maroon"));
     public static final Material INDIGO_SHULKER_BOX = new Material(Sheets.SHULKER_SHEET, VirtualAdditions.idOf("entity/shulker/shulker_indigo"));
@@ -121,8 +123,15 @@ public class VARenderers {
                 VABlocks.BALLOON_BULB,
                 VABlocks.BALLOON_BULB_PLANT,
                 VABlocks.BALLOON_BULB_BUD,
+                VABlocks.ZEBRANO_DOOR,
+                VABlocks.ZEBRANO_TRAPDOOR,
+                VABlocks.ZEBRANO_LEAVES,
+                VABlocks.ZEBRANO_HEDGE,
+                VABlocks.ZEBRANO_SAPLING,
+                VABlocks.POTTED_ZEBRANO_SAPLING,
                 VABlocks.ROCK_SALT_CRYSTAL,
                 VABlocks.COTTON,
+                VABlocks.SOY_CROP,
                 VABlocks.CORN_CROP,
                 VABlocks.TOMATO,
                 VABlocks.CABBAGE,
@@ -149,6 +158,7 @@ public class VARenderers {
                 VABlocks.DARK_OAK_HEDGE,
                 VABlocks.PALE_OAK_HEDGE,
                 VABlocks.MANGROVE_HEDGE,
+                VABlocks.ZEBRANO_HEDGE,
                 VABlocks.CHERRY_HEDGE,
                 VABlocks.AZALEA_HEDGE,
                 VABlocks.FLOWERING_AZALEA_HEDGE,
@@ -187,6 +197,8 @@ public class VARenderers {
         EntityModelLayerRegistry.registerModelLayer(PLAYER_PROJECTION_LAYER, PlayerProjectionEntityModel::getTexturedModelData);
         EntityModelLayerRegistry.registerModelLayer(SOULBLOOM_BOAT, BoatModel::createBoatModel);
         EntityModelLayerRegistry.registerModelLayer(SOULBLOOM_CHEST_BOAT, BoatModel::createChestBoatModel);
+        EntityModelLayerRegistry.registerModelLayer(ZEBRANO_BOAT, BoatModel::createBoatModel);
+        EntityModelLayerRegistry.registerModelLayer(ZEBRANO_CHEST_BOAT, BoatModel::createChestBoatModel);
         EntityRendererRegistry.register(VAEntityType.CLIMBING_ROPE, ClimbingRopeEntityRenderer::new);
         EntityRendererRegistry.register(VAEntityType.STEEL_BOMB, ThrownItemRenderer::new);
         EntityRendererRegistry.register(VAEntityType.TOMATO, ThrownItemRenderer::new);
@@ -199,6 +211,8 @@ public class VARenderers {
         EntityRendererRegistry.register(VAEntityType.LIGHTNING_BOTTLE, ThrownItemRenderer::new);
         EntityRendererRegistry.register(VAEntityType.SOULBLOOM_BOAT, context -> new BoatRenderer(context, SOULBLOOM_BOAT));
         EntityRendererRegistry.register(VAEntityType.SOULBLOOM_CHEST_BOAT, context -> new BoatRenderer(context, SOULBLOOM_CHEST_BOAT));
+        EntityRendererRegistry.register(VAEntityType.ZEBRANO_BOAT, context -> new BoatRenderer(context, ZEBRANO_BOAT));
+        EntityRendererRegistry.register(VAEntityType.ZEBRANO_CHEST_BOAT, context -> new BoatRenderer(context, ZEBRANO_CHEST_BOAT));
     }
 
     private static void initBlockEntityRenderers() {

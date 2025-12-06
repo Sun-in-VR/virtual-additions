@@ -63,9 +63,9 @@ public final class VAItemTagProvider {
             addTo(ItemTags.DURABILITY_ENCHANTABLE, VAItems.ENGRAVING_CHISEL);
             addTo(ItemTags.PIG_FOOD, VAItems.TOMATO, VAItems.CORN, VAItems.CABBAGE);
             addTo(ItemTags.VILLAGER_PICKS_UP, VAItems.TOMATO, VAItems.CORN, VAItems.CABBAGE, VAItems.WISDOM_BERRY, VAItems.CORN_SEEDS, VAItems.TOMATO_SEEDS, VAItems.CABBAGE_SEEDS, VAItems.WISDOM_BERRY_SEEDS);
-            addTo(ItemTags.CHICKEN_FOOD, VAItems.CORN_SEEDS, VAItems.TOMATO_SEEDS, VAItems.CABBAGE_SEEDS, VAItems.COTTON_SEEDS, VAItems.WISDOM_BERRY_SEEDS);
-            addTo(ItemTags.BOATS, VAItems.SOULBLOOM_BOAT);
-            addTo(ItemTags.CHEST_BOATS, VAItems.SOULBLOOM_CHEST_BOAT);
+            addTo(ItemTags.CHICKEN_FOOD, VAItems.CORN_SEEDS, VAItems.TOMATO_SEEDS, VAItems.CABBAGE_SEEDS, VAItems.COTTON_SEEDS, VAItems.WISDOM_BERRY_SEEDS, VAItems.SOY_BEANS);
+            addTo(ItemTags.BOATS, VAItems.SOULBLOOM_BOAT, VAItems.ZEBRANO_BOAT);
+            addTo(ItemTags.CHEST_BOATS, VAItems.SOULBLOOM_CHEST_BOAT, VAItems.ZEBRANO_CHEST_BOAT);
             addTo(ItemTags.FLOWERS, VAItems.BLUE_PETALS, VAItems.SPRING_LOTUS, VAItems.SMALL_SPRING_LOTUS, VAItems.SOUL_SPROUT);
             addTo(ItemTags.SMALL_FLOWERS, VAItems.SMALL_SPRING_LOTUS, VAItems.SOUL_SPROUT);
             addTo(ItemTags.BEE_FOOD, VAItems.BLUE_PETALS, VAItems.SPRING_LOTUS, VAItems.SMALL_SPRING_LOTUS, VAItems.SOUL_SPROUT);
@@ -315,7 +315,7 @@ public final class VAItemTagProvider {
             addTo(ItemTags.LEAVES, VAItems.SOULBLOOM_LEAVES);
             addTo(ItemTags.SAPLINGS, VAItems.SOULBLOOM_SAPLING);
             
-            addTo(ItemTags.LOGS, VAItems.WITHERED_LOG, VAItems.WITHERED_WOOD);//, VAItems.STRIPPED_WITHERED_LOG, VAItems.STRIPPED_WITHERED_WOOD);
+            addTo(ItemTags.LOGS, VAItems.WITHERED_LOG, VAItems.WITHERED_WOOD, VAItems.STRIPPED_WITHERED_LOG, VAItems.STRIPPED_WITHERED_WOOD);
             addTo(ItemTags.PLANKS, VAItems.WITHERED_PLANKS);
             addTo(ItemTags.SIGNS, VAItems.WITHERED_SIGN);
             addTo(ItemTags.HANGING_SIGNS, VAItems.WITHERED_HANGING_SIGN);
@@ -325,6 +325,17 @@ public final class VAItemTagProvider {
             addTo(ItemTags.WOODEN_SHELVES, VAItems.WITHERED_SHELF);
             addTo(ItemTags.LEAVES, VAItems.WITHERED_LEAVES);
             addTo(ItemTags.SAPLINGS, VAItems.WITHERED_SAPLING);
+
+            addTo(ItemTags.LOGS, VAItems.ZEBRANO_LOG, VAItems.ZEBRANO_WOOD, VAItems.STRIPPED_ZEBRANO_LOG, VAItems.STRIPPED_ZEBRANO_WOOD);
+            addTo(ItemTags.PLANKS, VAItems.ZEBRANO_PLANKS);
+            addTo(ItemTags.SIGNS, VAItems.ZEBRANO_SIGN);
+            addTo(ItemTags.HANGING_SIGNS, VAItems.ZEBRANO_HANGING_SIGN);
+            addTo(ItemTags.FENCES, VAItems.ZEBRANO_FENCE);
+            addTo(ItemTags.DOORS, VAItems.ZEBRANO_DOOR);
+            addTo(ItemTags.TRAPDOORS, VAItems.ZEBRANO_TRAPDOOR);
+            addTo(ItemTags.WOODEN_SHELVES, VAItems.ZEBRANO_SHELF);
+            addTo(ItemTags.LEAVES, VAItems.ZEBRANO_LEAVES);
+            addTo(ItemTags.SAPLINGS, VAItems.ZEBRANO_SAPLING);
 
             addTo(VAItemTags.LUMWASP_LARVAE_FOOD, 
                     VAItems.PORPHYRY
@@ -341,9 +352,16 @@ public final class VAItemTagProvider {
                     VAItems.STRIPPED_WITHERED_LOG,
                     VAItems.STRIPPED_WITHERED_WOOD
             );
+            addTo(VAItemTags.ZEBRANO_LOGS, 
+                    VAItems.ZEBRANO_LOG,
+                    VAItems.ZEBRANO_WOOD,
+                    VAItems.STRIPPED_ZEBRANO_LOG,
+                    VAItems.STRIPPED_ZEBRANO_WOOD
+            );
             configureWoodenBlockFamilies(
                     VACollections.SOULBLOOM,
-                    VACollections.WITHERED
+                    VACollections.WITHERED,
+                    VACollections.ZEBRANO
             );
             configureBlockFamilies(
                     VACollections.PORPHYRY,

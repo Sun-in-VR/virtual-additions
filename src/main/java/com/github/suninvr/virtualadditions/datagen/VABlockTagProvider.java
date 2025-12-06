@@ -62,7 +62,7 @@ public final class VABlockTagProvider {
             addTo(BlockTags.REPLACEABLE_BY_MUSHROOMS, VABlocks.NECROTIC_ROOTS);
             addTo(BlockTags.SCULK_REPLACEABLE, VABlocks.SILK_BLOCK, VABlocks.WEBBED_SILK, VABlocks.ROCK_SALT_BLOCK);
             addTo(BlockTags.REPLACEABLE, VABlocks.SPOTLIGHT_LIGHT);
-            addTo(BlockTags.FLOWER_POTS, VABlocks.POTTED_SOULBLOOM_SAPLING, VABlocks.POTTED_WITHERED_SAPLING, VABlocks.POTTED_GREENCAP_MUSHROOM);
+            addTo(BlockTags.FLOWER_POTS, VABlocks.POTTED_SOULBLOOM_SAPLING, VABlocks.POTTED_WITHERED_SAPLING, VABlocks.POTTED_GREENCAP_MUSHROOM, VABlocks.POTTED_ZEBRANO_SAPLING);
             addTo(BlockTags.NYLIUM, VABlocks.NECROTIC_NYLIUM);
             addTo(BlockTags.MUSHROOM_GROW_BLOCK, VABlocks.NECROTIC_NYLIUM);
             addTo(BlockTags.ENDERMAN_HOLDABLE, VABlocks.NECROTIC_NYLIUM, VABlocks.NECROTIC_ROOTS);
@@ -273,6 +273,7 @@ public final class VABlockTagProvider {
                     VABlocks.DARK_OAK_HEDGE,
                     VABlocks.PALE_OAK_HEDGE,
                     VABlocks.MANGROVE_HEDGE,
+                    VABlocks.ZEBRANO_HEDGE,
                     VABlocks.CHERRY_HEDGE,
                     VABlocks.AZALEA_HEDGE,
                     VABlocks.FLOWERING_AZALEA_HEDGE,
@@ -420,12 +421,13 @@ public final class VABlockTagProvider {
                     .addOptionalTag(BlockTags.SMALL_FLOWERS.location())
                     .addOptionalTag(BlockTags.LEAVES.location());
 
-            addTo(BlockTags.MINEABLE_WITH_HOE, VABlocks.SOULBLOOM_LEAVES, VABlocks.WITHERED_LEAVES);
+            addTo(BlockTags.MINEABLE_WITH_HOE, VABlocks.SOULBLOOM_LEAVES, VABlocks.WITHERED_LEAVES, VABlocks.ZEBRANO_LEAVES);
 
             configureOverworldStone(VABlocks.PORPHYRY);
             configureFamily(BlockTags.MINEABLE_WITH_PICKAXE, 0, VACollections.PORPHYRY, VACollections.POLISHED_PORPHYRY, VACollections.PORPHYRY_BRICKS);
             configureWoodenFamily(BlockTags.MINEABLE_WITH_AXE, 0, VACollections.SOULBLOOM);
             configureWoodenFamily(BlockTags.MINEABLE_WITH_AXE, 0, VACollections.WITHERED);
+            configureWoodenFamily(BlockTags.MINEABLE_WITH_AXE, 0, VACollections.ZEBRANO);
 
             addTo(BlockTags.WOODEN_FENCES, VABlocks.SOULBLOOM_FENCE);
             addTo(BlockTags.OVERWORLD_NATURAL_LOGS, VABlocks.SOULBLOOM_LOG);
@@ -443,6 +445,15 @@ public final class VABlockTagProvider {
             addTo(BlockTags.WOODEN_SHELVES, VABlocks.WITHERED_SHELF);
             addTo(BlockTags.LEAVES, VABlocks.WITHERED_LEAVES);
             addTo(BlockTags.SAPLINGS, VABlocks.WITHERED_SAPLING);
+
+            addTo(BlockTags.WOODEN_FENCES, VABlocks.ZEBRANO_FENCE);
+            addTo(BlockTags.OVERWORLD_NATURAL_LOGS, VABlocks.ZEBRANO_LOG);
+            addTo(BlockTags.LOGS_THAT_BURN, VABlocks.ZEBRANO_LOG, VABlocks.ZEBRANO_WOOD, VABlocks.STRIPPED_ZEBRANO_LOG, VABlocks.STRIPPED_ZEBRANO_WOOD);
+            addTo(BlockTags.CEILING_HANGING_SIGNS, VABlocks.ZEBRANO_HANGING_SIGN);
+            addTo(BlockTags.WALL_HANGING_SIGNS, VABlocks.ZEBRANO_WALL_HANGING_SIGN);
+            addTo(BlockTags.WOODEN_SHELVES, VABlocks.ZEBRANO_SHELF);
+            addTo(BlockTags.LEAVES, VABlocks.ZEBRANO_LEAVES);
+            addTo(BlockTags.SAPLINGS, VABlocks.ZEBRANO_SAPLING);
         }
     }
 

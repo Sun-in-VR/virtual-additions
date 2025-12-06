@@ -15,6 +15,8 @@ public abstract class TradeOffersMixin {
 
     @Unique private static final VillagerTrades.ItemListing SOULBLOOM_SAPLING_TRADE_OFFER = new VillagerTrades.ItemsForEmeralds(VAItems.SOULBLOOM_SAPLING, 5, 1, 8, 1);
     @Unique private static final VillagerTrades.ItemListing SOULBLOOM_LOG_TRADE_OFFER = new VillagerTrades.ItemsForEmeralds(VAItems.SOULBLOOM_LOG, 1, 8, 4, 1);
+    @Unique private static final VillagerTrades.ItemListing ZEBRANO_SAPLING_TRADE_OFFER = new VillagerTrades.ItemsForEmeralds(VAItems.ZEBRANO_SAPLING, 5, 1, 8, 1);
+    @Unique private static final VillagerTrades.ItemListing ZEBRANO_LOG_TRADE_OFFER = new VillagerTrades.ItemsForEmeralds(VAItems.ZEBRANO_LOG, 1, 8, 4, 1);
     @Unique private static final VillagerTrades.ItemListing CHARTREUSE_DYE_TRADE_OFFER = new VillagerTrades.ItemsForEmeralds(VAItems.CHARTREUSE_DYE, 1, 3, 12, 1);
     @Unique private static final VillagerTrades.ItemListing MAROON_DYE_TRADE_OFFER = new VillagerTrades.ItemsForEmeralds(VAItems.MAROON_DYE, 1, 3, 12, 1);
     @Unique private static final VillagerTrades.ItemListing INDIGO_DYE_TRADE_OFFER = new VillagerTrades.ItemsForEmeralds(VAItems.INDIGO_DYE, 1, 3, 12, 1);
@@ -33,8 +35,10 @@ public abstract class TradeOffersMixin {
         ArrayList<VillagerTrades.ItemListing> SELL_ITEM_TRADES_2 = new ArrayList<>(List.of(WANDERING_TRADER_TRADES.get(2).getLeft()));
 
         SELL_ITEM_TRADES.add(SOULBLOOM_LOG_TRADE_OFFER);
+        SELL_ITEM_TRADES.add(ZEBRANO_LOG_TRADE_OFFER);
 
         SELL_ITEM_TRADES_2.add(SOULBLOOM_SAPLING_TRADE_OFFER);
+        SELL_ITEM_TRADES_2.add(ZEBRANO_SAPLING_TRADE_OFFER);
         SELL_ITEM_TRADES_2.add(CHARTREUSE_DYE_TRADE_OFFER);
         SELL_ITEM_TRADES_2.add(MAROON_DYE_TRADE_OFFER);
         SELL_ITEM_TRADES_2.add(INDIGO_DYE_TRADE_OFFER);

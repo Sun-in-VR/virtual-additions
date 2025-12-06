@@ -58,6 +58,8 @@ public class VADispenserBehavior {
 
         DispenserBlock.registerBehavior(VAItems.SOULBLOOM_BOAT, new BoatDispenseItemBehavior(VAEntityType.SOULBLOOM_BOAT));
         DispenserBlock.registerBehavior(VAItems.SOULBLOOM_CHEST_BOAT, new BoatDispenseItemBehavior(VAEntityType.SOULBLOOM_CHEST_BOAT));
+        DispenserBlock.registerBehavior(VAItems.ZEBRANO_BOAT, new BoatDispenseItemBehavior(VAEntityType.ZEBRANO_BOAT));
+        DispenserBlock.registerBehavior(VAItems.ZEBRANO_CHEST_BOAT, new BoatDispenseItemBehavior(VAEntityType.ZEBRANO_CHEST_BOAT));
 
         DispenserBlock.registerBehavior(VAItems.ACID_BUCKET, new DefaultDispenseItemBehavior() {
             private final DefaultDispenseItemBehavior fallbackBehavior = new DefaultDispenseItemBehavior();
