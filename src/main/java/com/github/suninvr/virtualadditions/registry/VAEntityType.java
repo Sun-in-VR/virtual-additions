@@ -29,6 +29,7 @@ public class VAEntityType {
     public static final EntityType<TomatoEntity> TOMATO;
     public static final EntityType<AcidSpitEntity> ACID_SPIT;
     public static final EntityType<SpectralBoltEntity> SPECTRAL_BOLT;
+    public static final EntityType<SlungItemProjectile> SLUNG_ITEM;
     public static final EntityType<LumwaspEntity> LUMWASP;
     public static final EntityType<SalineEntity> SALINE;
     public static final EntityType<SpectreEntity> SPECTRE;
@@ -60,6 +61,10 @@ public class VAEntityType {
                 .clientTrackingRange(4).updateInterval(10)
                 .build(ResourceKey.create(Registries.ENTITY_TYPE, VirtualAdditions.idOf("acid_spit"))));
 
+        SLUNG_ITEM = Registry.register(BuiltInRegistries.ENTITY_TYPE, idOf("slung_item"), EntityType.Builder.<SlungItemProjectile>of(SlungItemProjectile::new, MobCategory.MISC)
+                .sized(0.25F, 0.25F)
+                .clientTrackingRange(4).updateInterval(10)
+                .build(ResourceKey.create(Registries.ENTITY_TYPE, VirtualAdditions.idOf("slung_item"))));
 
         SPECTRAL_BOLT = Registry.register(BuiltInRegistries.ENTITY_TYPE, idOf("spectral_bolt"), EntityType.Builder.<SpectralBoltEntity>of(SpectralBoltEntity::new, MobCategory.MISC)
                 .sized(0.25F, 0.25F)

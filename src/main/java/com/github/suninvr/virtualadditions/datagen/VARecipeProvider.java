@@ -583,6 +583,13 @@ public final class VARecipeProvider {
                     .define('u', Items.BUCKET)
                     .unlockedBy("has_soy_beans", has(VAItems.SOY_BEANS)).save(this.output);
 
+            ShapedRecipeBuilder.shaped(this.registryLookup, RecipeCategory.MISC, VAItems.SLINGSHOT, 1)
+                    .pattern("L")
+                    .pattern("/")
+                    .define('L', Items.LEATHER)
+                    .define('/', Items.STICK)
+                    .unlockedBy("has_leather", has(Items.LEATHER)).save(this.output);
+
             ShapelessRecipeBuilder.shapeless(this.registryLookup, RecipeCategory.DECORATIONS, Items.LIGHT_BLUE_DYE)
                     .requires(VAItems.BLUE_PETALS)
                     .unlockedBy("has_blue_petals", has(VAItems.BLUE_PETALS))

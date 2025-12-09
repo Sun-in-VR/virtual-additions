@@ -302,6 +302,8 @@ public final class VAItemTagProvider {
             getOrCreateRawBuilder(ItemTags.VANISHING_ENCHANTABLE).addOptionalTag(VAItemTags.HALBERDS.location());
             getOrCreateRawBuilder(ItemTags.BREAKS_DECORATED_POTS).addOptionalTag(VAItemTags.HALBERDS.location());
 
+            addTo(ItemTags.DURABILITY_ENCHANTABLE, VAItems.SLINGSHOT);
+
             addTo(ItemTags.STONE_CRAFTING_MATERIALS, VAItems.PORPHYRY);
             addTo(ItemTags.STONE_TOOL_MATERIALS, VAItems.PORPHYRY);
             addTo(ItemTags.LOGS_THAT_BURN, VAItems.SOULBLOOM_LOG, VAItems.SOULBLOOM_WOOD, VAItems.STRIPPED_SOULBLOOM_LOG, VAItems.STRIPPED_SOULBLOOM_WOOD);

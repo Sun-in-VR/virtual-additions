@@ -8,6 +8,7 @@ import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.sounds.SoundEvent;
 import net.minecraft.sounds.SoundSource;
+import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EquipmentSlot;
@@ -15,6 +16,7 @@ import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.context.UseOnContext;
+import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.state.properties.BlockStateProperties;
 import net.minecraft.world.level.material.Fluids;
@@ -39,6 +41,17 @@ public class PortalCoreItem extends Item {
     }
 
     @Override
+    public InteractionResult use(Level level, Player player, InteractionHand interactionHand) {
+        if (player.isCrouching()) {
+            ItemStack stack = player.getItemInHand(interactionHand);
+            level.playSound(null, player.blockPosition(), VASoundEvents.ITEM_PORTAL_CORE_USE, SoundSource.PLAYERS, 1.0F, 0.2F);
+            stack.remove(VADataComponentTypes.PORTAL_CORE_LOCATION);
+            return InteractionResult.SUCCESS;
+        }
+        return super.use(level, player, interactionHand);
+    }
+
+    @Override
     public InteractionResult useOn(UseOnContext context) {
         BlockPos pos = context.getClickedPos().relative(context.getClickedFace());
         SoundEvent sound = VASoundEvents.ITEM_PORTAL_CORE_USE;
@@ -52,11 +65,11 @@ public class PortalCoreItem extends Item {
                 destPos[0] = pos1;
                 bl[0] = placePortalPair((ServerLevel) context.getLevel(), pos, pos1, context.getPlayer());
             });
-            if (bl[0] || pos.equals(destPos[0])) stack.remove(VADataComponentTypes.PORTAL_CORE_LOCATION);
+            if (bl[0] || pos.equals(destPos[0]) || (context.getPlayer() != null && context.getPlayer().getUseItem().is(VAItems.SLINGSHOT))) stack.remove(VADataComponentTypes.PORTAL_CORE_LOCATION);
             if (bl[0]) {
                 sound = VASoundEvents.BLOCK_MINI_PORTAL_OPEN;
                 pitch = 1.1F;
-                stack.shrink(1);
+                stack.consume(1, context.getPlayer());
             } else {
                 pitch = 0.2F;
             }
@@ -72,7 +85,7 @@ public class PortalCoreItem extends Item {
         int range = world.getGameRules().get(VAGameRules.MINI_PORTAL_MAX_CREATION_RANGE);
         if (!player.isCreative() && Math.sqrt(pos1.getCenter().distanceToSqr(pos2.getCenter())) > range) return false;
         boolean bl1 = world.getBlockState(pos1).isAir() || world.getBlockState(pos1).is(Blocks.WATER);
-        boolean bl2 = world.getBlockState(pos1).isAir() || world.getBlockState(pos1).is(Blocks.WATER);
+        boolean bl2 = world.getBlockState(pos2).isAir() || world.getBlockState(pos2).is(Blocks.WATER);
         if (!bl1 || !bl2) return false;
         world.setBlockAndUpdate(pos1, VABlocks.MINI_PORTAL.defaultBlockState().setValue(BlockStateProperties.WATERLOGGED, world.getFluidState(pos1).is(Fluids.WATER)));
         world.setBlockAndUpdate(pos2, VABlocks.MINI_PORTAL.defaultBlockState().setValue(BlockStateProperties.WATERLOGGED, world.getFluidState(pos2).is(Fluids.WATER)));

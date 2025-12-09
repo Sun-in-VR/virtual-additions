@@ -42,7 +42,7 @@ public class DivergingTrunkPlacer extends TrunkPlacer {
         for (int i = 0; i < height; ++i) {
             BlockPos pos = startPos.above(i);
             this.placeLog(levelReader, replacer, random, pos, config);
-            if (i == height / 3) {
+            if (i == height / 2) {
                 nodes.addAll(this.diverge(levelReader, replacer, random, pos, direction, config));
             } else if (i == (height / 3) * 2 && random.nextIntBetweenInclusive(10, 30) < height) {
                 nodes.addAll(this.diverge(levelReader, replacer, random, pos, direction.getClockWise(), config));

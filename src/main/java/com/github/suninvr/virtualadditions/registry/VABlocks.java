@@ -715,7 +715,7 @@ public class VABlocks {
         ZEBRANO_HANGING_SIGN = register("zebrano_hanging_sign", (settings) -> new CustomSignBlocks.CustomHangingSignBlock(settings, ZEBRANO_WOODTYPE), Properties.ofFullCopy(Blocks.OAK_HANGING_SIGN));
         ZEBRANO_WALL_HANGING_SIGN = register("zebrano_wall_hanging_sign", (settings) -> new CustomSignBlocks.CustomWallHangingSignBlock(settings, ZEBRANO_WOODTYPE), Properties.ofFullCopy(Blocks.OAK_HANGING_SIGN).overrideLootTable(ZEBRANO_HANGING_SIGN.getLootTable()));
         ZEBRANO_SHELF = register("zebrano_shelf", ShelfBlock::new, Properties.ofFullCopy(Blocks.MANGROVE_SHELF));
-        ZEBRANO_LEAVES = register("zebrano_leaves", (settings) -> new UntintedParticleLeavesBlock(0.01F, ColorParticleOption.create(ParticleTypes.TINTED_LEAVES, 0x708a20), settings), Properties.ofFullCopy(Blocks.OAK_LEAVES));
+        ZEBRANO_LEAVES = register("zebrano_leaves", (settings) -> new UntintedParticleLeavesBlock(0.01F, ColorParticleOption.create(ParticleTypes.TINTED_LEAVES, 0x7f7e0c), settings), Properties.ofFullCopy(Blocks.OAK_LEAVES));
         ZEBRANO_SAPLING = register("zebrano_sapling", (settings) -> new SaplingBlock(CustomSaplingGenerator.ZEBRANO, settings), Properties.ofFullCopy(Blocks.OAK_SAPLING).mapColor(MapColor.COLOR_BLACK));
         POTTED_ZEBRANO_SAPLING = register("potted_zebrano_sapling", (settings) -> new FlowerPotBlock(ZEBRANO_SAPLING, settings), Properties.ofFullCopy(Blocks.FLOWER_POT));
 

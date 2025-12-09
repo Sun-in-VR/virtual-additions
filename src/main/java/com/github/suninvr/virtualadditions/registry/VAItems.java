@@ -499,6 +499,7 @@ public class VAItems {
     public static final Item GOLDEN_HALBERD;
     public static final Item DIAMOND_HALBERD;
     public static final Item NETHERITE_HALBERD;
+    public static final Item SLINGSHOT;
     public static final Item SALINE_SPAWN_EGG;
     public static final Item LUMWASP_SPAWN_EGG;
     public static final Item SPECTRE_SPAWN_EGG;
@@ -911,9 +912,8 @@ public class VAItems {
         //endregion
 
         ACID_BUCKET = register("acid_bucket", AcidBucketItem::new, new Item.Properties().craftRemainder(Items.BUCKET).stacksTo(1), CreativeModeTabs.TOOLS_AND_UTILITIES, Items.LAVA_BUCKET);
-        SOY_OIL_BUCKET = register("soy_oil_bucket", new Item.Properties().craftRemainder(Items.BUCKET).stacksTo(1), CreativeModeTabs.TOOLS_AND_UTILITIES, Items.MILK_BUCKET);
-
         APPLICABLE_POTION = register("applicable_potion", ApplicablePotionItem::new, new Item.Properties().stacksTo(16).component(DataComponents.POTION_CONTENTS, PotionContents.EMPTY));
+
 
         //endregion
 
@@ -1096,8 +1096,8 @@ public class VAItems {
         IOLITE = register("iolite", new Item.Properties().trimMaterial(VAArmorTrimMaterials.IOLITE), CreativeModeTabs.INGREDIENTS, Items.ANCIENT_DEBRIS);
         IOLITE_ORE = registerBlockItem("iolite_ore", VABlocks.IOLITE_ORE, CreativeModeTabs.NATURAL_BLOCKS, Items.ANCIENT_DEBRIS);
         IOLITE_BLOCK = registerBlockItem("iolite_block", VABlocks.IOLITE_BLOCK, CreativeModeTabs.BUILDING_BLOCKS, Items.NETHERITE_BLOCK);
-        PORTAL_CORE = register("portal_core", PortalCoreItem::new, new Item.Properties().stacksTo(1), CreativeModeTabs.TOOLS_AND_UTILITIES, Items.TNT_MINECART);
-        DRAINED_PORTAL_CORE = register("drained_portal_core", new Item.Properties().stacksTo(1), CreativeModeTabs.TOOLS_AND_UTILITIES, prev);
+        PORTAL_CORE = register("portal_core", PortalCoreItem::new, new Item.Properties().stacksTo(16), CreativeModeTabs.TOOLS_AND_UTILITIES, Items.TNT_MINECART);
+        DRAINED_PORTAL_CORE = register("drained_portal_core", new Item.Properties().stacksTo(16), CreativeModeTabs.TOOLS_AND_UTILITIES, prev);
         ENTANGLEMENT_DRIVE = register("entanglement_drive", settings ->  new BlockItem(VABlocks.ENTANGLEMENT_DRIVE, settings), new Item.Properties().rarity(Rarity.RARE).overrideDescription(VABlocks.ENTANGLEMENT_DRIVE.getDescriptionId()), CreativeModeTabs.REDSTONE_BLOCKS, Items.DECORATED_POT);
         REMOTE_NOTIFIER = register("remote_notifier", settings ->  new BlockItem(VABlocks.REMOTE_NOTIFIER, settings), new Item.Properties().overrideDescription(VABlocks.REMOTE_NOTIFIER.getDescriptionId()).requiredFeatures(VirtualAdditions.PREVIEW), CreativeModeTabs.REDSTONE_BLOCKS, prev);
 
@@ -1177,6 +1177,7 @@ public class VAItems {
         COTTON_SEEDS = register("cotton_seeds", settings -> new BlockItem(VABlocks.COTTON, settings),new Item.Properties().useItemDescriptionPrefix(), CreativeModeTabs.NATURAL_BLOCKS, Items.BEETROOT_SEEDS);
         COTTON = register("cotton", CreativeModeTabs.INGREDIENTS, Items.WHEAT);
         SOY_BEANS = register("soy_beans", settings -> new BlockItem(VABlocks.SOY_CROP, settings),new Item.Properties().useItemDescriptionPrefix(), CreativeModeTabs.NATURAL_BLOCKS, COTTON_SEEDS);
+        SOY_OIL_BUCKET = register("soy_oil_bucket", new Item.Properties().craftRemainder(Items.BUCKET).stacksTo(1), CreativeModeTabs.TOOLS_AND_UTILITIES, Items.MILK_BUCKET);
 
         SALAD = register("salad", new Item.Properties().food(VAFoodComponents.SALAD).stacksTo(1).usingConvertsTo(Items.BOWL), CreativeModeTabs.FOOD_AND_DRINKS, Items.BEETROOT_SOUP);
         TACO = register("taco", new Item.Properties().food(VAFoodComponents.TACO), CreativeModeTabs.FOOD_AND_DRINKS, prev);
@@ -1198,6 +1199,8 @@ public class VAItems {
 
         INCENSE = registerBlockItem("incense", VABlocks.INCENSE, CreativeModeTabs.FUNCTIONAL_BLOCKS, Items.BELL);
 
+        SLINGSHOT = register("slingshot", SlingshotItem::new, new Item.Properties().stacksTo(1).durability(250), CreativeModeTabs.COMBAT, Items.WIND_CHARGE);
+
         PURPLE_EGG = register("purple_egg", EggItem::new, new Item.Properties().stacksTo(16).component(DataComponents.CHICKEN_VARIANT, new EitherHolder<>(ResourceKey.create(Registries.CHICKEN_VARIANT, idOf("enchanted")))), at(CreativeModeTabs.COMBAT, Items.BLUE_EGG), at(CreativeModeTabs.INGREDIENTS, Items.BLUE_EGG));
 
         //endregion
@@ -1216,6 +1219,7 @@ public class VAItems {
         VACompostables.init();
         VACauldronBehaviors.init();
         VALootTableModifiers.init();
+        SlingshotBehaviors.initDefaultBehaviors();
 
         FuelRegistryEvents.BUILD.register((builder, context) -> {
             builder.add(VAItems.SOY_OIL_BUCKET, 6400);

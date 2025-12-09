@@ -25,6 +25,7 @@ import net.minecraft.client.renderer.item.ItemModel;
 import net.minecraft.client.renderer.item.SelectItemModel;
 import net.minecraft.client.renderer.item.properties.conditional.HasComponent;
 import net.minecraft.client.renderer.item.properties.numeric.CrossbowPull;
+import net.minecraft.client.renderer.item.properties.numeric.UseDuration;
 import net.minecraft.client.renderer.item.properties.select.Charge;
 import net.minecraft.client.renderer.item.properties.select.TrimMaterialProperty;
 import net.minecraft.core.component.DataComponents;
@@ -352,6 +353,8 @@ public class VAModelProvider {
             );
 
             generator.generateSpear(VAItems.STEEL_SPEAR);
+
+            generateSlingshot(generator, VAItems.SLINGSHOT);
 
             registerHalberd(generator, VAItems.WOODEN_HALBERD);
             registerHalberd(generator, VAItems.STONE_HALBERD);
@@ -750,6 +753,22 @@ public class VAModelProvider {
             for (Item item : items) {
                 generator.generateFlatItem(item, model);
             }
+        }
+
+        public final void generateSlingshot(ItemModelGenerators generator, Item item) {
+            ItemModel.Unbaked unbaked = ItemModelUtils.plainModel(generator.createFlatItemModel(item, ModelTemplates.FLAT_HANDHELD_ITEM));
+            ItemModel.Unbaked unbaked2 = ItemModelUtils.plainModel(generator.createFlatItemModel(item, "_pulling_0", ModelTemplates.FLAT_HANDHELD_ITEM));
+            ItemModel.Unbaked unbaked3 = ItemModelUtils.plainModel(generator.createFlatItemModel(item, "_pulling_1", ModelTemplates.FLAT_HANDHELD_ITEM));
+            ItemModel.Unbaked unbaked4 = ItemModelUtils.plainModel(generator.createFlatItemModel(item, "_pulling_2", ModelTemplates.FLAT_HANDHELD_ITEM));
+            generator.itemModelOutput
+                    .accept(
+                            item,
+                            ItemModelUtils.conditional(
+                                    ItemModelUtils.isUsingItem(),
+                                    ItemModelUtils.rangeSelect(new UseDuration(false), 0.05F, unbaked2, ItemModelUtils.override(unbaked3, 0.65F), ItemModelUtils.override(unbaked4, 0.9F)),
+                                    unbaked
+                            )
+                    );
         }
     }
 
