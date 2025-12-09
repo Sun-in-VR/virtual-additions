@@ -114,6 +114,22 @@ public final class VARecipeProvider {
             this.offerHedgeRecipe(VABlocks.AZALEA_HEDGE, Blocks.AZALEA_LEAVES);
             this.offerHedgeRecipe(VABlocks.FLOWERING_AZALEA_HEDGE, Blocks.FLOWERING_AZALEA_LEAVES);
 
+            this.createPlanterRecipe(Blocks.OAK_SLAB, VABlocks.OAK_PLANTER);
+            this.createPlanterRecipe(Blocks.SPRUCE_SLAB, VABlocks.SPRUCE_PLANTER);
+            this.createPlanterRecipe(Blocks.BIRCH_SLAB, VABlocks.BIRCH_PLANTER);
+            this.createPlanterRecipe(Blocks.JUNGLE_SLAB, VABlocks.JUNGLE_PLANTER);
+            this.createPlanterRecipe(Blocks.ACACIA_SLAB, VABlocks.ACACIA_PLANTER);
+            this.createPlanterRecipe(Blocks.DARK_OAK_SLAB, VABlocks.DARK_OAK_PLANTER);
+            this.createPlanterRecipe(Blocks.PALE_OAK_SLAB, VABlocks.PALE_OAK_PLANTER);
+            this.createPlanterRecipe(Blocks.MANGROVE_SLAB, VABlocks.MANGROVE_PLANTER);
+            this.createPlanterRecipe(VABlocks.ZEBRANO_SLAB, VABlocks.ZEBRANO_PLANTER);
+            this.createPlanterRecipe(Blocks.CHERRY_SLAB, VABlocks.CHERRY_PLANTER);
+            this.createPlanterRecipe(Blocks.BAMBOO_SLAB, VABlocks.BAMBOO_PLANTER);
+            this.createPlanterRecipe(VABlocks.SOULBLOOM_SLAB, VABlocks.SOULBLOOM_PLANTER);
+            this.createPlanterRecipe(Blocks.CRIMSON_SLAB, VABlocks.CRIMSON_PLANTER);
+            this.createPlanterRecipe(Blocks.WARPED_SLAB, VABlocks.WARPED_PLANTER);
+            this.createPlanterRecipe(VABlocks.WITHERED_SLAB, VABlocks.WITHERED_PLANTER);
+
             this.threeByThreePacker(RecipeCategory.MISC, VABlocks.STEEL_BLOCK, VAItems.STEEL_INGOT, "steel_ingot");
             this.oneToOneConversionRecipe(VAItems.STEEL_INGOT, VABlocks.STEEL_BLOCK, "steel", 9);
             this.oneToOneConversionRecipe(VAItems.STEEL_INGOT, VABlocks.WAXED_STEEL_BLOCK, "steel_ingot", 9);
@@ -928,6 +944,13 @@ public final class VARecipeProvider {
             }
             
 
+        }
+
+        protected void createPlanterRecipe(ItemLike woodenSlab, ItemLike output) {
+            ShapedRecipeBuilder.shaped(this.registryLookup, RecipeCategory.DECORATIONS, output, 4)
+                    .pattern("#D#")
+                    .pattern("###")
+                    .define('#', woodenSlab).define('D', Items.DIRT).unlockedBy("has_material", has(woodenSlab)).save(this.output);
         }
         
         protected void createHalberdRecipe(ItemLike material, Item output) {

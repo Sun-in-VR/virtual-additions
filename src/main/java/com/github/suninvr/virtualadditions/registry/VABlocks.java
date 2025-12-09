@@ -284,6 +284,21 @@ public class VABlocks {
     public static final Block WITHERED_HEDGE;
     public static final Block AZALEA_HEDGE;
     public static final Block FLOWERING_AZALEA_HEDGE;
+    public static final Block OAK_PLANTER;
+    public static final Block SPRUCE_PLANTER;
+    public static final Block BIRCH_PLANTER;
+    public static final Block JUNGLE_PLANTER;
+    public static final Block ACACIA_PLANTER;
+    public static final Block DARK_OAK_PLANTER;
+    public static final Block PALE_OAK_PLANTER;
+    public static final Block MANGROVE_PLANTER;
+    public static final Block ZEBRANO_PLANTER;
+    public static final Block SOULBLOOM_PLANTER;
+    public static final Block CHERRY_PLANTER;
+    public static final Block BAMBOO_PLANTER;
+    public static final Block CRIMSON_PLANTER;
+    public static final Block WARPED_PLANTER;
+    public static final Block WITHERED_PLANTER;
     public static final Block GLOWING_SILK;
     public static final Block FRAYED_SILK;
     public static final Block LUMWASP_NEST;
@@ -733,6 +748,22 @@ public class VABlocks {
         WITHERED_HEDGE = register("withered_hedge", HedgeBlock::new, Properties.ofFullCopy(VABlocks.WITHERED_LEAVES));
         AZALEA_HEDGE = register("azalea_hedge", HedgeBlock::new, Properties.ofFullCopy(Blocks.AZALEA_LEAVES));
         FLOWERING_AZALEA_HEDGE = register("flowering_azalea_hedge", HedgeBlock::new, Properties.ofFullCopy(Blocks.FLOWERING_AZALEA_LEAVES));
+
+        OAK_PLANTER = register("oak_planter", Properties.ofFullCopy(Blocks.OAK_PLANKS));
+        SPRUCE_PLANTER = register("spruce_planter", Properties.ofFullCopy(Blocks.SPRUCE_PLANKS));
+        BIRCH_PLANTER = register("birch_planter", Properties.ofFullCopy(Blocks.BIRCH_PLANKS));
+        JUNGLE_PLANTER = register("jungle_planter", Properties.ofFullCopy(Blocks.JUNGLE_PLANKS));
+        ACACIA_PLANTER = register("acacia_planter", Properties.ofFullCopy(Blocks.ACACIA_PLANKS));
+        DARK_OAK_PLANTER = register("dark_oak_planter", Properties.ofFullCopy(Blocks.DARK_OAK_PLANKS));
+        PALE_OAK_PLANTER = register("pale_oak_planter", Properties.ofFullCopy(Blocks.PALE_OAK_PLANKS));
+        MANGROVE_PLANTER = register("mangrove_planter", Properties.ofFullCopy(Blocks.MANGROVE_PLANKS));
+        ZEBRANO_PLANTER = register("zebrano_planter", Properties.ofFullCopy(VABlocks.ZEBRANO_PLANKS));
+        CHERRY_PLANTER = register("cherry_planter", Properties.ofFullCopy(Blocks.CHERRY_PLANKS));
+        BAMBOO_PLANTER = register("bamboo_planter", Properties.ofFullCopy(Blocks.BAMBOO_PLANKS));
+        SOULBLOOM_PLANTER = register("soulbloom_planter", Properties.ofFullCopy(VABlocks.SOULBLOOM_PLANKS));
+        CRIMSON_PLANTER = register("crimson_planter", Properties.ofFullCopy(Blocks.CRIMSON_PLANKS));
+        WARPED_PLANTER = register("warped_planter", Properties.ofFullCopy(Blocks.WARPED_PLANKS));
+        WITHERED_PLANTER = register("withered_planter", Properties.ofFullCopy(VABlocks.WITHERED_PLANKS));
 
         GLOWING_SILK = register("glowing_silk", HangingBlock::new, Properties.of().mapColor(MapColor.COLOR_LIGHT_BLUE).sound(SoundType.WART_BLOCK).lightLevel((state) -> 6).noCollision().noOcclusion().instabreak().offsetType(BlockBehaviour.OffsetType.XZ).ignitedByLava().pushReaction(PushReaction.DESTROY));
         FRAYED_SILK = register("frayed_silk", FrayedSilkBlock::new, Properties.of().mapColor(MapColor.WARPED_STEM).sound(SoundType.WART_BLOCK).noCollision().noOcclusion().instabreak().replaceable().offsetType(BlockBehaviour.OffsetType.XZ).ignitedByLava().pushReaction(PushReaction.DESTROY));

@@ -49,6 +49,7 @@
     "TradeOffersMixin",
     "VanillaBiomeParametersMixin",
     "VanillaSurfaceRulesMixin",
+    "VegetationBlockMixin",
     "VillagerEntityMixin",
     "WallBlockMixin",
     "WaterFluidMixin",

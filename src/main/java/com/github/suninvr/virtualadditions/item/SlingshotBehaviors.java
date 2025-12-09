@@ -123,6 +123,7 @@ public class SlingshotBehaviors {
                     InteractionHand oppositeHand = player.getUsedItemHand().equals(InteractionHand.MAIN_HAND) ? InteractionHand.OFF_HAND : InteractionHand.MAIN_HAND;
                     portalCore.useOn(new UseOnContext(player, oppositeHand, blockHitResult));
                     level.playSound(null, vec3.x, vec3.y, vec3.z, SoundEvents.ENDER_EYE_LAUNCH, SoundSource.PLAYERS, 1.0F, 1.6F);
+                    return true;
                 }
             }
             return false;

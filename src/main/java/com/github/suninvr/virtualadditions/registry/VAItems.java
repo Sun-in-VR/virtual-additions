@@ -193,6 +193,21 @@ public class VAItems {
     public static final Item CHERRY_HEDGE;
     public static final Item AZALEA_HEDGE;
     public static final Item FLOWERING_AZALEA_HEDGE;
+    public static final Item OAK_PLANTER;
+    public static final Item SPRUCE_PLANTER;
+    public static final Item BIRCH_PLANTER;
+    public static final Item JUNGLE_PLANTER;
+    public static final Item ACACIA_PLANTER;
+    public static final Item DARK_OAK_PLANTER;
+    public static final Item PALE_OAK_PLANTER;
+    public static final Item MANGROVE_PLANTER;
+    public static final Item ZEBRANO_PLANTER;
+    public static final Item SOULBLOOM_PLANTER;
+    public static final Item CHERRY_PLANTER;
+    public static final Item BAMBOO_PLANTER;
+    public static final Item CRIMSON_PLANTER;
+    public static final Item WARPED_PLANTER;
+    public static final Item WITHERED_PLANTER;
     public static final Item ROCK_SALT_BLOCK;
     public static final Item ROCK_SALT_BRICKS;
     public static final Item ROCK_SALT_BRICK_STAIRS;
@@ -1147,6 +1162,22 @@ public class VAItems {
         WITHERED_HEDGE = registerBlockItem("withered_hedge", VABlocks.WITHERED_HEDGE, CreativeModeTabs.NATURAL_BLOCKS, VAItems.WITHERED_LEAVES);
 
         //endregion
+
+        OAK_PLANTER = registerBlockItem("oak_planter", VABlocks.OAK_PLANTER, CreativeModeTabs.BUILDING_BLOCKS, Items.OAK_BUTTON);
+        SPRUCE_PLANTER = registerBlockItem("spruce_planter", VABlocks.SPRUCE_PLANTER, CreativeModeTabs.BUILDING_BLOCKS, Items.SPRUCE_BUTTON);
+        BIRCH_PLANTER = registerBlockItem("birch_planter", VABlocks.BIRCH_PLANTER, CreativeModeTabs.BUILDING_BLOCKS, Items.BIRCH_BUTTON);
+        JUNGLE_PLANTER = registerBlockItem("jungle_planter", VABlocks.JUNGLE_PLANTER, CreativeModeTabs.BUILDING_BLOCKS, Items.JUNGLE_BUTTON);
+        ACACIA_PLANTER = registerBlockItem("acacia_planter", VABlocks.ACACIA_PLANTER, CreativeModeTabs.BUILDING_BLOCKS, Items.ACACIA_BUTTON);
+        DARK_OAK_PLANTER = registerBlockItem("dark_oak_planter", VABlocks.DARK_OAK_PLANTER, CreativeModeTabs.BUILDING_BLOCKS, Items.DARK_OAK_BUTTON);
+        PALE_OAK_PLANTER = registerBlockItem("pale_oak_planter", VABlocks.PALE_OAK_PLANTER, CreativeModeTabs.BUILDING_BLOCKS, Items.PALE_OAK_BUTTON);
+        MANGROVE_PLANTER = registerBlockItem("mangrove_planter", VABlocks.MANGROVE_PLANTER, CreativeModeTabs.BUILDING_BLOCKS, Items.MANGROVE_BUTTON);
+        ZEBRANO_PLANTER = registerBlockItem("zebrano_planter", VABlocks.ZEBRANO_PLANTER, CreativeModeTabs.BUILDING_BLOCKS, VAItems.ZEBRANO_BUTTON);
+        SOULBLOOM_PLANTER = registerBlockItem("soulbloom_planter", VABlocks.SOULBLOOM_PLANTER, CreativeModeTabs.BUILDING_BLOCKS, VAItems.SOULBLOOM_BUTTON);
+        CHERRY_PLANTER = registerBlockItem("cherry_planter", VABlocks.CHERRY_PLANTER, CreativeModeTabs.BUILDING_BLOCKS, Items.CHERRY_BUTTON);
+        BAMBOO_PLANTER = registerBlockItem("bamboo_planter", VABlocks.BAMBOO_PLANTER, CreativeModeTabs.BUILDING_BLOCKS, Items.BAMBOO_BUTTON);
+        CRIMSON_PLANTER = registerBlockItem("crimson_planter", VABlocks.CRIMSON_PLANTER, CreativeModeTabs.BUILDING_BLOCKS, Items.CRIMSON_BUTTON);
+        WARPED_PLANTER = registerBlockItem("warped_planter", VABlocks.WARPED_PLANTER, CreativeModeTabs.BUILDING_BLOCKS, Items.WARPED_BUTTON);
+        WITHERED_PLANTER = registerBlockItem("withered_planter", VABlocks.WITHERED_PLANTER, CreativeModeTabs.BUILDING_BLOCKS, VAItems.WITHERED_BUTTON);
 
         //region Smithing Templates
 

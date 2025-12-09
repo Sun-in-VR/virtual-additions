@@ -29,6 +29,10 @@ public class RegistryHelper {
             return (Block)Registry.register(BuiltInRegistries.BLOCK, key, block);
         }
 
+        public static <T extends Block> Block register(String id, BlockBehaviour.Properties settings) {
+            return register(id, Block::new, settings);
+        }
+
     }
 
     public static class ItemRegistryHelper {

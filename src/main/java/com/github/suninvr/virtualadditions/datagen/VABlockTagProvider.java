@@ -69,7 +69,11 @@ public final class VABlockTagProvider {
             addTo(BlockTags.FIRE, VABlocks.SPECTRAL_FIRE);
             addTo(BlockTags.WALL_POST_OVERRIDE, VABlocks.SPECTRAL_TORCH);
             addTo(BlockTags.CAMEL_SAND_STEP_SOUND_BLOCKS, VABlocks.SPECTRAL_SAND);
-
+            addTo(VABlockTags.PLANTERS, VABlocks.OAK_PLANTER, VABlocks.SPRUCE_PLANTER, VABlocks.BIRCH_PLANTER, VABlocks.JUNGLE_PLANTER, VABlocks.ACACIA_PLANTER, VABlocks.DARK_OAK_PLANTER, VABlocks.PALE_OAK_PLANTER, VABlocks.MANGROVE_PLANTER, VABlocks.ZEBRANO_PLANTER, VABlocks.CHERRY_PLANTER, VABlocks.BAMBOO_PLANTER, VABlocks.SOULBLOOM_PLANTER, VABlocks.CRIMSON_PLANTER, VABlocks.WARPED_PLANTER, VABlocks.WITHERED_PLANTER);
+            addTo(BlockTags.DRY_VEGETATION_MAY_PLACE_ON).addOptionalTag(VABlockTags.PLANTERS.location());
+            addTo(BlockTags.BAMBOO_PLANTABLE_ON).addOptionalTag(VABlockTags.PLANTERS.location());
+            addTo(BlockTags.BIG_DRIPLEAF_PLACEABLE).addOptionalTag(VABlockTags.PLANTERS.location());
+            addTo(BlockTags.SMALL_DRIPLEAF_PLACEABLE).addOptionalTag(VABlockTags.PLANTERS.location());
             configureColorfulBlockSet(VACollections.CHARTREUSE);
             configureColorfulBlockSet(VACollections.MAROON);
             configureColorfulBlockSet(VACollections.INDIGO);

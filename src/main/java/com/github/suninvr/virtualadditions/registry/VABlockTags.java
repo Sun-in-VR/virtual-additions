@@ -20,6 +20,7 @@ public class VABlockTags {
     public static final TagKey<Block> SPECTRE_SPAWNABLE_ON = register("spectre_spawnable_on");
     public static final TagKey<Block> ROCK_SALT_ORES = register("rock_salt_ores");
     public static final TagKey<Block> HALBERD_SWING_BREAKABLES = register("halberd_swing_breakables");
+    public static final TagKey<Block> PLANTERS = register("planters");
 
     private static TagKey<Block> register(String id) {
         return TagKey.create(BuiltInRegistries.BLOCK.key(), idOf(id));

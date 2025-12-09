@@ -32,7 +32,7 @@ public class TallGreencapMushroomBlock extends DoublePlantBlock implements Bonem
 
     @Override
     protected boolean mayPlaceOn(BlockState floor, BlockGetter world, BlockPos pos) {
-        return floor.is(BlockTags.DIRT) || floor.is(Blocks.FARMLAND) || floor.is(VABlocks.SILK_BLOCK);
+        return super.mayPlaceOn(floor, world, pos) || floor.is(VABlocks.SILK_BLOCK);
     }
 
     @Override

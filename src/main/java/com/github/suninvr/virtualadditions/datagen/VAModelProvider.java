@@ -147,6 +147,22 @@ public class VAModelProvider {
                     VABlocks.OXIDIZED_STEEL_GRATE
                     );
 
+            generator.createTrivialBlock(VABlocks.OAK_PLANTER, TexturedModel.CUBE_TOP_BOTTOM);
+            generator.createTrivialBlock(VABlocks.SPRUCE_PLANTER, TexturedModel.CUBE_TOP_BOTTOM);
+            generator.createTrivialBlock(VABlocks.BIRCH_PLANTER, TexturedModel.CUBE_TOP_BOTTOM);
+            generator.createTrivialBlock(VABlocks.JUNGLE_PLANTER, TexturedModel.CUBE_TOP_BOTTOM);
+            generator.createTrivialBlock(VABlocks.ACACIA_PLANTER, TexturedModel.CUBE_TOP_BOTTOM);
+            generator.createTrivialBlock(VABlocks.DARK_OAK_PLANTER, TexturedModel.CUBE_TOP_BOTTOM);
+            generator.createTrivialBlock(VABlocks.PALE_OAK_PLANTER, TexturedModel.CUBE_TOP_BOTTOM);
+            generator.createTrivialBlock(VABlocks.MANGROVE_PLANTER, TexturedModel.CUBE_TOP_BOTTOM);
+            generator.createTrivialBlock(VABlocks.ZEBRANO_PLANTER, TexturedModel.CUBE_TOP_BOTTOM);
+            generator.createTrivialBlock(VABlocks.CHERRY_PLANTER, TexturedModel.CUBE_TOP_BOTTOM);
+            generator.createTrivialBlock(VABlocks.BAMBOO_PLANTER, TexturedModel.CUBE_TOP_BOTTOM);
+            generator.createTrivialBlock(VABlocks.SOULBLOOM_PLANTER, TexturedModel.CUBE_TOP_BOTTOM);
+            generator.createTrivialBlock(VABlocks.CRIMSON_PLANTER, TexturedModel.CUBE_TOP_BOTTOM);
+            generator.createTrivialBlock(VABlocks.WARPED_PLANTER, TexturedModel.CUBE_TOP_BOTTOM);
+            generator.createTrivialBlock(VABlocks.WITHERED_PLANTER, TexturedModel.CUBE_TOP_BOTTOM);
+
             generator.woodProvider(VABlocks.SOULBLOOM_LOG).logWithHorizontal(VABlocks.SOULBLOOM_LOG).wood(VABlocks.SOULBLOOM_WOOD);
             generator.woodProvider(VABlocks.STRIPPED_SOULBLOOM_LOG).logWithHorizontal(VABlocks.STRIPPED_SOULBLOOM_LOG).wood(VABlocks.STRIPPED_SOULBLOOM_WOOD);
             generator.createHangingSign(VABlocks.STRIPPED_SOULBLOOM_LOG, VABlocks.SOULBLOOM_HANGING_SIGN, VABlocks.SOULBLOOM_WALL_HANGING_SIGN);
