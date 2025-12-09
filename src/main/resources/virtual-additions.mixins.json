@@ -45,6 +45,7 @@
     "ShovelItemMixin",
     "ShulkerBoxBlockMixin",
     "SmithingTemplateItemMixin",
+    "SugarCaneBlockMixin",
     "TickManagerMixin",
     "TradeOffersMixin",
     "VanillaBiomeParametersMixin",

@@ -950,7 +950,7 @@ public final class VARecipeProvider {
             ShapedRecipeBuilder.shaped(this.registryLookup, RecipeCategory.DECORATIONS, output, 4)
                     .pattern("#D#")
                     .pattern("###")
-                    .define('#', woodenSlab).define('D', Items.DIRT).unlockedBy("has_material", has(woodenSlab)).save(this.output);
+                    .define('#', woodenSlab).define('D', Items.DIRT).unlockedBy("has_material", has(woodenSlab)).group("virtual_additions:planters").save(this.output);
         }
         
         protected void createHalberdRecipe(ItemLike material, Item output) {

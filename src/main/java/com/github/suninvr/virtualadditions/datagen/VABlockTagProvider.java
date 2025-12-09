@@ -162,7 +162,22 @@ public final class VABlockTagProvider {
             );
 
             configureMinable(BlockTags.MINEABLE_WITH_AXE, 0,
-                    VABlocks.COLORING_STATION
+                    VABlocks.COLORING_STATION,
+                    VABlocks.OAK_PLANTER,
+                    VABlocks.SPRUCE_PLANTER,
+                    VABlocks.BIRCH_PLANTER,
+                    VABlocks.JUNGLE_PLANTER,
+                    VABlocks.ACACIA_PLANTER,
+                    VABlocks.DARK_OAK_PLANTER,
+                    VABlocks.PALE_OAK_PLANTER,
+                    VABlocks.MANGROVE_PLANTER,
+                    VABlocks.ZEBRANO_PLANTER,
+                    VABlocks.SOULBLOOM_PLANTER,
+                    VABlocks.CHERRY_PLANTER,
+                    VABlocks.BAMBOO_PLANTER,
+                    VABlocks.CRIMSON_PLANTER,
+                    VABlocks.WARPED_PLANTER,
+                    VABlocks.WITHERED_PLANTER
                     );
 
             configureMinable(BlockTags.MINEABLE_WITH_SHOVEL, 0,
