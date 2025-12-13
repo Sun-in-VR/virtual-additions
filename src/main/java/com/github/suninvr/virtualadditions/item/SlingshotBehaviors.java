@@ -1,6 +1,7 @@
 package com.github.suninvr.virtualadditions.item;
 
 import com.github.suninvr.virtualadditions.component.PortalCoreLocationComponent;
+import com.github.suninvr.virtualadditions.entity.PebbleEntity;
 import com.github.suninvr.virtualadditions.entity.SlungItemProjectile;
 import com.github.suninvr.virtualadditions.registry.VAItems;
 import com.github.suninvr.virtualadditions.registry.VAParticleTypes;
@@ -15,6 +16,7 @@ import net.minecraft.world.entity.item.ItemEntity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.entity.projectile.hurtingprojectile.SmallFireball;
 import net.minecraft.world.item.BlockItem;
+import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.item.context.UseOnContext;
@@ -48,16 +50,17 @@ public class SlingshotBehaviors {
     public static void initDefaultBehaviors() {
         addBehavior(Items.FIRE_CHARGE, THROW_FIRE_CHARGE);
         addBehavior(Items.FLINT, throwDamaging(5.0F, new Vec3(4.0, 4.0, 4.0)));
-        addBehavior(Items.COPPER_NUGGET, throwDamaging(2.0F, new Vec3(20.0, 4.0, 20.0), 8));
-        addBehavior(Items.GOLD_NUGGET, throwDamaging(3.0F, new Vec3(20.0, 4.0, 20.0), 8));
-        addBehavior(Items.IRON_NUGGET, throwDamaging(4.0F, new Vec3(20.0, 4.0, 20.0), 8));
-        addBehavior(VAItems.STEEL_NUGGET, throwDamaging(5.0F, new Vec3(20.0, 4.0, 20.0), 8));
+        addBehavior(Items.COPPER_NUGGET, throwDamaging(3.0F, new Vec3(4.0, 4.0, 4.0)));
+        addBehavior(Items.GOLD_NUGGET, throwDamaging(4.0F, new Vec3(4.0, 4.0, 4.0)));
+        addBehavior(Items.IRON_NUGGET, throwDamaging(5.0F, new Vec3(4.0, 4.0, 4.0)));
+        addBehavior(VAItems.STEEL_NUGGET, throwDamaging(6.0F, new Vec3(4.0, 4.0, 4.0)));
+        addBehavior(Items.GRAVEL, throwGravel());
         addBehavior(VAItems.PORTAL_CORE, PORTAL_CORE);
     }
 
     public static Function6<Level, LivingEntity, ItemStack, Vec3, Vec3, Double, Boolean> throwDamaging(float damage, Vec3 spread) {
         return (level, livingEntity, stack, firePos, initVel, power) -> {
-            Vec3 vel = initVel.add(level.random.triangle(0.0, 0.0172275 * spread.x), level.random.triangle(0.0, 0.0172275 * spread.y), level.random.triangle(0.0, 0.0172275 * spread.z)).scale(1.25 * power + 0.25);
+            Vec3 vel = initVel.add(level.random.triangle(0.0, 0.0172275 * spread.x), level.random.triangle(0.0, 0.0172275 * spread.y), level.random.triangle(0.0, 0.0172275 * spread.z)).scale(1.5 * power + 0.25);
             SlungItemProjectile itemEntity = new SlungItemProjectile(firePos.x, firePos.y, firePos.z, level, stack.copyWithCount(1));
             itemEntity.setOwner(livingEntity);
             itemEntity.setDamage(damage);
@@ -68,19 +71,25 @@ public class SlingshotBehaviors {
         };
     }
 
-    public static Function6<Level, LivingEntity, ItemStack, Vec3, Vec3, Double, Boolean> throwDamaging(float damage, Vec3 spread, int count) {
+    public static Function6<Level, LivingEntity, ItemStack, Vec3, Vec3, Double, Boolean> throwGravel() {
         return (level, livingEntity, stack, firePos, initVel, power) -> {
+            Vec3 pebbleSpread = new Vec3(20.0, 12.0, 20.0);
+            Vec3 flintSpread = new Vec3(5.0, 4.0, 5.0);
             int i;
-            for (i = 0; i < count; i++) {
-                Vec3 vel = initVel.add(level.random.triangle(0.0, 0.0172275 * spread.x), level.random.triangle(0.0, 0.0172275 * spread.y), level.random.triangle(0.0, 0.0172275 * spread.z)).scale(1.25 * power + 0.25);
-                SlungItemProjectile itemEntity = new SlungItemProjectile(firePos.x, firePos.y, firePos.z, level, stack.copyWithCount(1));
+            for (i = 0; i < 15; i++) {
+                Vec3 vel = initVel.add(level.random.triangle(0.0, 0.0172275 * pebbleSpread.x), level.random.triangle(0.0, 0.0172275 * pebbleSpread.y), level.random.triangle(0.0, 0.0172275 * pebbleSpread.z)).scale(1.00 * power + 0.25);
+                PebbleEntity itemEntity = new PebbleEntity(firePos.x, firePos.y, firePos.z, level);
                 itemEntity.setOwner(livingEntity);
-                itemEntity.setDamage(damage);
                 itemEntity.setDeltaMovement(vel);
                 level.addFreshEntity(itemEntity);
-                stack.consume(1, livingEntity);
-                if (stack.isEmpty()) break;
             }
+            Vec3 vel = initVel.add(level.random.triangle(0.0, 0.0172275 * flintSpread.x), level.random.triangle(0.0, 0.0172275 * flintSpread.y), level.random.triangle(0.0, 0.0172275 * flintSpread.z)).scale(1.5 * power + 0.25);
+            SlungItemProjectile itemEntity = new SlungItemProjectile(firePos.x, firePos.y, firePos.z, level, Items.FLINT.getDefaultInstance());
+            itemEntity.setOwner(livingEntity);
+            itemEntity.setDamage(5.0F);
+            itemEntity.setDeltaMovement(vel);
+            level.addFreshEntity(itemEntity);
+            stack.consume(1, livingEntity);
             return true;
         };
     }

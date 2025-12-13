@@ -28,6 +28,7 @@ public class VAEntityType {
     public static final EntityType<SteelBombEntity> STEEL_BOMB;
     public static final EntityType<TomatoEntity> TOMATO;
     public static final EntityType<AcidSpitEntity> ACID_SPIT;
+    public static final EntityType<PebbleEntity> PEBBLE;
     public static final EntityType<SpectralBoltEntity> SPECTRAL_BOLT;
     public static final EntityType<SlungItemProjectile> SLUNG_ITEM;
     public static final EntityType<LumwaspEntity> LUMWASP;
@@ -60,6 +61,11 @@ public class VAEntityType {
                 .sized(0.25F, 0.25F)
                 .clientTrackingRange(4).updateInterval(10)
                 .build(ResourceKey.create(Registries.ENTITY_TYPE, VirtualAdditions.idOf("acid_spit"))));
+        
+        PEBBLE = Registry.register(BuiltInRegistries.ENTITY_TYPE, idOf("pebble"), EntityType.Builder.<PebbleEntity>of(PebbleEntity::new, MobCategory.MISC)
+                .sized(0.25F, 0.25F)
+                .clientTrackingRange(4).updateInterval(10)
+                .build(ResourceKey.create(Registries.ENTITY_TYPE, VirtualAdditions.idOf("pebble"))));
 
         SLUNG_ITEM = Registry.register(BuiltInRegistries.ENTITY_TYPE, idOf("slung_item"), EntityType.Builder.<SlungItemProjectile>of(SlungItemProjectile::new, MobCategory.MISC)
                 .sized(0.25F, 0.25F)

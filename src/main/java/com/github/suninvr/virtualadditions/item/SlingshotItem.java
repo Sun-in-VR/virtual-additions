@@ -25,9 +25,10 @@ public class SlingshotItem extends Item {
     @Override
     public boolean releaseUsing(ItemStack itemStack, Level level, LivingEntity livingEntity, int i) {
         if (level.isClientSide()) return false;
-        InteractionHand oppositeHand = livingEntity.getUsedItemHand().equals(InteractionHand.MAIN_HAND) ? InteractionHand.OFF_HAND : InteractionHand.MAIN_HAND;
         int useTicks = 72000 - i;
         double power = Math.min(useTicks / 20.0, 1);
+        if (power < 0.2) return false;
+        InteractionHand oppositeHand = livingEntity.getUsedItemHand().equals(InteractionHand.MAIN_HAND) ? InteractionHand.OFF_HAND : InteractionHand.MAIN_HAND;
         boolean bl = shootProjectile(level, livingEntity, livingEntity.getItemInHand(oppositeHand), power);
         if (bl) {
             itemStack.hurtAndBreak(1, livingEntity, livingEntity.getUsedItemHand().asEquipmentSlot());
@@ -60,7 +61,7 @@ public class SlingshotItem extends Item {
         Vec3 shooterMovement = shooter.getDeltaMovement();
         Vec3 vel = shooter.getLookAngle().add(shooterMovement.x, shooter.onGround() ? 0.0 : shooterMovement.y, shooterMovement.z).normalize();
         Vec3 playSoundPos = firePos.add(shooter.getLookAngle().normalize().scale(3.0));
-        level.playSound(null, playSoundPos.x, playSoundPos.y, playSoundPos.z, SoundEvents.ARROW_SHOOT, SoundSource.PLAYERS);
+        level.playSound(null, playSoundPos.x, playSoundPos.y, playSoundPos.z, SoundEvents.ARROW_SHOOT, SoundSource.PLAYERS, 1.0F, 0.7F + (float) (power * 0.5) + (level.random.nextFloat() * 0.2F));
         return SlingshotBehaviors.runOnItem(stack, level, shooter, firePos, vel, power);
     }
 }

@@ -2,6 +2,8 @@ package com.github.suninvr.virtualadditions.entity;
 
 import com.github.suninvr.virtualadditions.registry.VAEntityType;
 import com.github.suninvr.virtualadditions.registry.VASoundEvents;
+import net.minecraft.core.particles.BlockParticleOption;
+import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
@@ -14,10 +16,13 @@ import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.level.Level;
+import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.storage.ValueInput;
 import net.minecraft.world.level.storage.ValueOutput;
+import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.EntityHitResult;
 import net.minecraft.world.phys.HitResult;
+import org.jetbrains.annotations.Nullable;
 
 public class SlungItemProjectile extends ThrowableItemProjectile {
     private float damage = 1.0F;
@@ -41,12 +46,20 @@ public class SlungItemProjectile extends ThrowableItemProjectile {
     protected void onHit(HitResult hitResult) {
         super.onHit(hitResult);
         if (!this.level().isClientSide()) {
-            this.level().playSound(this, this.getX(), this.getY(), this.getZ(), SoundEvents.SPEAR_HIT.value(), this.getSoundSource(), 0.25F, 1.6F);
             this.level().broadcastEntityEvent(this, EntityEvent.DEATH);
             ItemEntity entity = new ItemEntity(this.level(), this.getX(), this.getY(), this.getZ(), this.getItem());
             entity.setPickUpDelay(10);
             this.level().addFreshEntity(entity);
+            this.land(hitResult instanceof BlockHitResult blockHitResult ? this.level().getBlockState(blockHitResult.getBlockPos()) : null);
         }
+        this.discard();
+    }
+
+    protected void land(@Nullable BlockState state) {
+        if (this.level() == null || this.level().isClientSide()) return;
+        if (state != null) ((ServerLevel) this.level()).sendParticles(new BlockParticleOption(ParticleTypes.BLOCK, state), true, false, this.getX(), this.getY(), this.getZ(), (int) Math.round(3 * this.getDeltaMovement().length()), 0, 0, 0, 10 * this.getDeltaMovement().length());
+        else ((ServerLevel) this.level()).sendParticles(ParticleTypes.CRIT, true, false, this.getX(), this.getY(), this.getZ(), 2, 0, 0, 0, 0.25);
+        this.level().playSound(this, this.getX(), this.getY(), this.getZ(), SoundEvents.SPEAR_HIT.value(), this.getSoundSource(), 0.25F, 1.6F);
         this.discard();
     }
 
