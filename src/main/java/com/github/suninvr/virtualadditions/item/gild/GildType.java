@@ -1,11 +1,13 @@
 package com.github.suninvr.virtualadditions.item.gild;
 
+import com.github.suninvr.virtualadditions.item.gild.modifier.StackModifier;
 import com.github.suninvr.virtualadditions.registry.VARegistries;
 import com.mojang.serialization.Codec;
 import net.minecraft.ChatFormatting;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Holder;
 import net.minecraft.core.component.DataComponentGetter;
+import net.minecraft.core.component.DataComponentMap;
 import net.minecraft.network.RegistryFriendlyByteBuf;
 import net.minecraft.network.chat.CommonComponents;
 import net.minecraft.network.chat.Component;
@@ -21,10 +23,12 @@ import net.minecraft.world.item.TooltipFlag;
 import net.minecraft.world.item.component.TooltipProvider;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.state.BlockState;
+import org.apache.commons.lang3.tuple.Pair;
+import org.jetbrains.annotations.Nullable;
 
-import java.util.ArrayList;
-import java.util.Arrays;
+import java.util.*;
 import java.util.function.Consumer;
+import java.util.function.Predicate;
 
 public class GildType implements TooltipProvider {
     private static final Component descriptionHeader = Component.translatable("item.minecraft.smithing_template.upgrade").withStyle(ChatFormatting.GRAY);
@@ -35,7 +39,23 @@ public class GildType implements TooltipProvider {
     public static final StreamCodec<RegistryFriendlyByteBuf, GildType> PACKET_CODEC = ByteBufCodecs.holderRegistry(VARegistries.GILD_TYPE_REGISTRY_KEY).map(Holder::value, VARegistries.GILD_TYPE::wrapAsHolder);
     private Component translationKey;
     private final ArrayList<StackModifier<?>> modifiers = new ArrayList<>();
+    private final List<Pair<Predicate<ItemStack>, GildType>> alternatives = new ArrayList<>();
+    private GildType base = null;
     private final int color;
+
+    public GildType(int color, StackModifier<?>... modifiers) {
+        this.color = color;
+        this.modifiers.addAll(Arrays.asList(modifiers));
+    }
+
+    public GildType(GildType baseType, Predicate<ItemStack> predicate, StackModifier<?>... modifiers) {
+        this.color = baseType.getColor();
+        this.translationKey = baseType.getTranslationKey();
+        this.modifiers.addAll(baseType.modifiers);
+        this.modifiers.addAll(Arrays.asList(modifiers));
+        baseType.addAlternate(predicate, this);
+        this.base = baseType;
+    }
 
     public Component getTranslationKey() {
         if (this.translationKey == null) {
@@ -45,13 +65,45 @@ public class GildType implements TooltipProvider {
         return this.translationKey;
     }
 
-    public void modifyStackOnCrafted(ItemStack result) {
-        this.modifiers.forEach(stackModifier -> stackModifier.modify(result));
+    public void addAlternate(Predicate<ItemStack> stackPredicate, GildType type) {
+        this.alternatives.add(Pair.of(stackPredicate, type));
     }
 
-    public GildType(int color, StackModifier<?>... modifiers) {
-        this.color = color;
-        this.modifiers.addAll(Arrays.asList(modifiers));
+    public boolean isAlternate() {
+        return this.base != null;
+    }
+
+    public boolean hasAlternates() {
+        return !this.alternatives.isEmpty();
+    }
+
+    public GildType getBaseOrThis() {
+        return this.base == null ? this : this.base;
+    }
+
+    public GildType getOrAlternate() {
+        return this.getOrAlternate(null);
+    }
+
+    public GildType getOrAlternate(@Nullable ItemStack stack) {
+        GildType type = this;
+        if (stack != null) for (Pair<Predicate<ItemStack>, GildType> alternate : this.alternatives) {
+            if (alternate.getKey().test(stack)) {
+                type = alternate.getValue();
+                break;
+            }
+        }
+        return type;
+    }
+
+    public void addAlternates(List<GildType> types) {
+        this.alternatives.forEach(alternate -> {
+            types.add(alternate.getValue());
+        });
+    }
+
+    public void modifyDataComponents(DataComponentMap.Builder map) {
+        this.modifiers.forEach(stackModifier -> stackModifier.modify(map));
     }
 
     /**

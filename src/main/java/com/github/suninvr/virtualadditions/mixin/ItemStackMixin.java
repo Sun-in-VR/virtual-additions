@@ -1,9 +1,10 @@
 package com.github.suninvr.virtualadditions.mixin;
 
-import com.github.suninvr.virtualadditions.component.EffectsOnHitComponent;
-import com.github.suninvr.virtualadditions.item.gild.GildType;
+import com.github.suninvr.virtualadditions.item.gild.GildedItemComponentHandler;
 import com.github.suninvr.virtualadditions.registry.VADataComponentTypes;
+import net.minecraft.core.component.DataComponentMap;
 import net.minecraft.core.component.DataComponentType;
+import net.minecraft.core.component.PatchedDataComponentMap;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
@@ -12,6 +13,7 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.TooltipFlag;
 import net.minecraft.world.item.component.TooltipDisplay;
 import net.minecraft.world.item.component.TooltipProvider;
+import org.spongepowered.asm.mixin.Final;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.injection.At;
@@ -26,6 +28,10 @@ public abstract class ItemStackMixin {
 
     @Shadow public abstract <T extends TooltipProvider> void addToTooltip(DataComponentType<T> dataComponentType, Item.TooltipContext tooltipContext, TooltipDisplay tooltipDisplay, Consumer<Component> consumer, TooltipFlag tooltipFlag);
 
+    @Shadow @Final private PatchedDataComponentMap components;
+
+    @Shadow public abstract Item getItem();
+
     @Inject(
             method = "addDetailsToTooltip",
             at = @At(
@@ -37,6 +43,11 @@ public abstract class ItemStackMixin {
         this.addToTooltip(VADataComponentTypes.INCENSE_EFFECTS, context, displayComponent, textConsumer, type);
         this.addToTooltip(VADataComponentTypes.EFFECTS_ON_HIT, context, displayComponent, textConsumer, type);
         this.addToTooltip(VADataComponentTypes.GILD_TYPE, context, displayComponent, textConsumer, type);
+    }
+
+    @Inject(method = "getPrototype", at = @At("HEAD"), cancellable = true)
+    void virtualAdditions$getGildedPrototype(CallbackInfoReturnable<DataComponentMap> cir) {
+        if (this.components.has(VADataComponentTypes.GILD_TYPE)) cir.setReturnValue(GildedItemComponentHandler.getOrCompute(this.getItem(), this.components.get(VADataComponentTypes.GILD_TYPE)));
     }
 
     @Inject(method = "hurtEnemy", at = @At("TAIL"))

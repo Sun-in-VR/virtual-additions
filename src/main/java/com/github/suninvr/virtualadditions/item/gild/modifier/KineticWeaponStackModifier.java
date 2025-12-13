@@ -1,14 +1,17 @@
-package com.github.suninvr.virtualadditions.item.gild;
+package com.github.suninvr.virtualadditions.item.gild.modifier;
 
 import net.minecraft.core.component.DataComponents;
 import net.minecraft.world.item.component.KineticWeapon;
 
-public class KineticWeaponStackModifier extends StackModifier<KineticWeapon>{
+import java.util.Optional;
+
+public class KineticWeaponStackModifier extends StackModifier<KineticWeapon> {
+    private static final KineticWeapon weapon = new KineticWeapon(0, 0, Optional.empty(), Optional.empty(), Optional.empty(), 0, 0, Optional.empty(), Optional.empty());
     float damageMulAdder = 0.0F;
     float speedMultiplier = 1.0F;
 
     public KineticWeaponStackModifier(float damageMulAdder, float speedMultiplier) {
-        super(DataComponents.KINETIC_WEAPON);
+        super(DataComponents.KINETIC_WEAPON, weapon);
         this.damageMulAdder = damageMulAdder;
         this.speedMultiplier = speedMultiplier;
     }

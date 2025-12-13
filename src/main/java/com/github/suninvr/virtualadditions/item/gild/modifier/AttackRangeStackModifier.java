@@ -1,17 +1,14 @@
-package com.github.suninvr.virtualadditions.item.gild;
+package com.github.suninvr.virtualadditions.item.gild.modifier;
 
-import net.minecraft.core.component.DataComponentType;
 import net.minecraft.core.component.DataComponents;
-import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.component.AttackRange;
 
-import java.util.function.Predicate;
-
 public class AttackRangeStackModifier extends StackModifier<AttackRange> {
+    private static final AttackRange defaultAttackRange = new AttackRange(0, 0, 0, 0, 0, 0);
     float add;
 
     public AttackRangeStackModifier(float add) {
-        super(DataComponents.ATTACK_RANGE);
+        super(DataComponents.ATTACK_RANGE, defaultAttackRange);
         this.add = add;
     }
 

@@ -33,9 +33,8 @@ public class SmithingGildRecipe implements SmithingRecipe {
     public ItemStack assemble(SmithingRecipeInput input, HolderLookup.Provider registries) {
         if (input.base().has(VADataComponentTypes.GILD_TYPE)) return null;
         ItemStack result = input.base().copyWithCount(1);
-        result.set(VADataComponentTypes.GILD_TYPE, this.type.value());
-        this.type.value().modifyStackOnCrafted(result);
-        return result;
+        result.set(VADataComponentTypes.GILD_TYPE, this.type.value().getOrAlternate(result));
+        return result.transmuteCopy(result.getItem());
     }
 
     @Override

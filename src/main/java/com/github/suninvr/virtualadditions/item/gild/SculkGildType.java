@@ -1,6 +1,7 @@
 package com.github.suninvr.virtualadditions.item.gild;
 
 import com.github.suninvr.virtualadditions.block.DestructiveSculkBlock;
+import com.github.suninvr.virtualadditions.item.gild.modifier.StackModifier;
 import com.github.suninvr.virtualadditions.registry.VABlocks;
 import com.github.suninvr.virtualadditions.registry.VAGameRules;
 import com.github.suninvr.virtualadditions.registry.VAStatusEffects;
@@ -21,10 +22,15 @@ import net.minecraft.world.level.block.state.BlockState;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.function.Predicate;
 
 public class SculkGildType extends GildType{
     public SculkGildType(StackModifier<?>... modifiers) {
         super(0x009295, modifiers);
+    }
+
+    public SculkGildType(GildType baseType, Predicate<ItemStack> predicate, StackModifier<?>... modifiers) {
+        super(baseType, predicate, modifiers);
     }
 
     @Override

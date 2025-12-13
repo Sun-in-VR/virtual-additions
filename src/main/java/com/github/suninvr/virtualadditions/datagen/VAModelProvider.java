@@ -48,6 +48,7 @@ import net.minecraft.world.level.block.state.properties.BlockStateProperties;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Optional;
 
 import static com.github.suninvr.virtualadditions.VirtualAdditions.idOf;
 import static net.minecraft.client.data.models.ItemModelGenerators.*;
@@ -556,11 +557,19 @@ public class VAModelProvider {
 
             ItemModel.Unbaked gilded;
             for (GildType type : GILD_TYPES) {
+                if (type.isAlternate()) continue;
                 Identifier gildType = VARegistries.GILD_TYPE.getKey(type);
                 Identifier gildLayer = gildType.withSuffix(suffix).withPrefix("item/gilded_tools/");
                 Identifier gildedItem = itemModelId.withSuffix("_with_" + gildType.getPath() + "_gild");
                 gilded = ItemModelUtils.plainModel(gildedItem);
-                list.add(ItemModelUtils.when(VARegistries.GILD_TYPE.getResourceKey(type).get(), gilded));
+                if (type.hasAlternates()) {
+                    ArrayList<GildType> allAlternatives = new ArrayList<>();
+                    allAlternatives.add(type);
+                    type.addAlternates(allAlternatives);
+                    ArrayList<ResourceKey<GildType>> alternativeResourceKeys = new ArrayList<>();
+                    allAlternatives.forEach(type1 -> alternativeResourceKeys.add(VARegistries.GILD_TYPE.getResourceKey(type1).get()));
+                    list.add(ItemModelUtils.when(alternativeResourceKeys, gilded));
+                } else list.add(ItemModelUtils.when(VARegistries.GILD_TYPE.getResourceKey(type).get(), gilded));
                 layered.create(gildedItem, TextureMapping.layered(itemModelId, gildLayer), generator.modelOutput);
             }
 
@@ -576,11 +585,19 @@ public class VAModelProvider {
 
             ItemModel.Unbaked gilded;
             for (GildType type : GILD_TYPES) {
+                if (type.isAlternate()) continue;
                 Identifier gildType = VARegistries.GILD_TYPE.getKey(type);
                 Identifier gildLayer = gildType.withSuffix(suffix).withPrefix("item/gilded_tools/");
                 Identifier gildedItem = itemModelId.withSuffix("_with_" + gildType.getPath() + "_gild");
                 gilded = createFlatModelDispatch(ItemModelUtils.plainModel(gildedItem), ItemModelUtils.plainModel(gildedItem.withSuffix("_in_hand")));
-                list.add(ItemModelUtils.when(VARegistries.GILD_TYPE.getResourceKey(type).get(), gilded));
+                if (type.hasAlternates()) {
+                    ArrayList<GildType> allAlternatives = new ArrayList<>();
+                    allAlternatives.add(type);
+                    type.addAlternates(allAlternatives);
+                    ArrayList<ResourceKey<GildType>> alternativeResourceKeys = new ArrayList<>();
+                    allAlternatives.forEach(type1 -> alternativeResourceKeys.add(VARegistries.GILD_TYPE.getResourceKey(type1).get()));
+                    list.add(ItemModelUtils.when(alternativeResourceKeys, gilded));
+                } else list.add(ItemModelUtils.when(VARegistries.GILD_TYPE.getResourceKey(type).get(), gilded));
                 VAModels.HANDHELD_TWO_LAYERS.create(gildedItem, TextureMapping.layered(itemModelId, gildLayer), generator.modelOutput);
                 VAModels.HALBERD_IN_HAND_TWO_LAYERS.create(gildedItem.withSuffix("_in_hand"), TextureMapping.layered(itemModelId.withSuffix("_in_hand"), gildLayer.withSuffix("_in_hand")), generator.modelOutput);
             }
@@ -597,11 +614,19 @@ public class VAModelProvider {
 
             ItemModel.Unbaked gilded;
             for (GildType type : GILD_TYPES) {
+                if (type.isAlternate()) continue;
                 Identifier gildType = VARegistries.GILD_TYPE.getKey(type);
                 Identifier gildLayer = gildType.withSuffix(suffix).withPrefix("item/gilded_tools/");
                 Identifier gildedItem = itemModelId.withSuffix("_with_" + gildType.getPath() + "_gild");
                 gilded = createFlatModelDispatch(ItemModelUtils.plainModel(gildedItem), ItemModelUtils.plainModel(gildedItem.withSuffix("_in_hand")));
-                list.add(ItemModelUtils.when(VARegistries.GILD_TYPE.getResourceKey(type).get(), gilded));
+                if (type.hasAlternates()) {
+                    ArrayList<GildType> allAlternatives = new ArrayList<>();
+                    allAlternatives.add(type);
+                    type.addAlternates(allAlternatives);
+                    ArrayList<ResourceKey<GildType>> alternativeResourceKeys = new ArrayList<>();
+                    allAlternatives.forEach(type1 -> alternativeResourceKeys.add(VARegistries.GILD_TYPE.getResourceKey(type1).get()));
+                    list.add(ItemModelUtils.when(alternativeResourceKeys, gilded));
+                } else list.add(ItemModelUtils.when(VARegistries.GILD_TYPE.getResourceKey(type).get(), gilded));
                 ModelTemplates.TWO_LAYERED_ITEM.create(gildedItem, TextureMapping.layered(itemModelId, gildLayer), generator.modelOutput);
                 VAModels.SPEAR_IN_HAND_TWO_LAYERS.create(gildedItem.withSuffix("_in_hand"), TextureMapping.layered(itemModelId.withSuffix("_in_hand"), gildLayer.withSuffix("_in_hand")), generator.modelOutput);
             }

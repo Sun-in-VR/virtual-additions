@@ -69,11 +69,10 @@ public class VAItemGroups {
 
     private static void addGildedTools(RegistryHelper.ItemRegistryHelper.ToolSet set, FabricItemGroupEntries group) {
         VARegistries.GILD_TYPE.stream().forEach(type -> {
-            set.forEach(item -> {
+            if (!type.isAlternate()) set.forEach(item -> {
                 ItemStack stack = new ItemStack(item);
-                stack.set(VADataComponentTypes.GILD_TYPE, type);
-                type.modifyStackOnCrafted(stack);
-                group.accept(stack);
+                stack.set(VADataComponentTypes.GILD_TYPE, type.getOrAlternate(stack));
+                group.accept(stack.transmuteCopy(stack.getItem()));
             });
         });
 

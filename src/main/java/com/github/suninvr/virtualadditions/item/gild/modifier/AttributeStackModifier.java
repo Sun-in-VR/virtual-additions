@@ -1,4 +1,4 @@
-package com.github.suninvr.virtualadditions.item.gild;
+package com.github.suninvr.virtualadditions.item.gild.modifier;
 
 import net.minecraft.ChatFormatting;
 import net.minecraft.core.Holder;
@@ -17,46 +17,17 @@ import java.util.List;
 
 import static com.github.suninvr.virtualadditions.VirtualAdditions.idOf;
 
-public class AttributeStackModifier extends StackModifier<ItemAttributeModifiers>{
+public class AttributeStackModifier extends StackModifier<ItemAttributeModifiers> {
     private final List<ItemAttributeModifiers.Entry> attributeModifiers;
+    private static final ItemAttributeModifiers defaultModifiers = ItemAttributeModifiers.EMPTY;
     
     public AttributeStackModifier(ItemAttributeModifiers.Entry... attributeModifiers) {
-        super(DataComponents.ATTRIBUTE_MODIFIERS);
+        super(DataComponents.ATTRIBUTE_MODIFIERS, defaultModifiers);
         this.attributeModifiers = List.of(attributeModifiers);
-    }
-    
-    public AttributeStackModifier(TagKey<Item> appliesTo, ItemAttributeModifiers.Entry... attributeModifiers) {
-        super(DataComponents.ATTRIBUTE_MODIFIERS, appliesTo);
-        this.attributeModifiers = List.of(attributeModifiers);
-    }
-    
-    public AttributeStackModifier(TagKey<Item> appliesTo, Holder<Attribute> attribute, EquipmentSlotGroup slot, AttributeModifier modifier) {
-        super(DataComponents.ATTRIBUTE_MODIFIERS, appliesTo);
-        this.attributeModifiers = List.of(
-                new ItemAttributeModifiers.Entry(attribute, modifier, slot, 
-                        new ItemAttributeModifiers.Display.OverrideText(CommonComponents.space().append(
-                                Component.translatable("attribute.modifier.equals." + modifier.operation().id(),
-                                ItemAttributeModifiers.ATTRIBUTE_MODIFIER_FORMAT.format(modifier.amount()),
-                                Component.translatable(attribute.value().getDescriptionId())).withStyle(ChatFormatting.DARK_GREEN)))));
-    }
-    
-    @SafeVarargs
-    public AttributeStackModifier(Holder<Attribute> attribute, float f, AttributeModifier.Operation operation, TagKey<Item>... appliesTo) {
-        super(DataComponents.ATTRIBUTE_MODIFIERS, stack -> {
-            for (TagKey<Item> tag : appliesTo) if (stack.is(tag)) return true;
-            return false;
-        });
-        AttributeModifier modifier = new AttributeModifier(idOf(attribute.unwrapKey().map(key -> key.identifier().getPath()).orElse("") + "_from_gilded_tool"), f, operation);
-        this.attributeModifiers = List.of(
-                new ItemAttributeModifiers.Entry(attribute, modifier, EquipmentSlotGroup.MAINHAND, 
-                        new ItemAttributeModifiers.Display.OverrideText(CommonComponents.space().append(
-                                Component.translatable("attribute.modifier.equals." + modifier.operation().id(),
-                                ItemAttributeModifiers.ATTRIBUTE_MODIFIER_FORMAT.format(modifier.amount()),
-                                Component.translatable(attribute.value().getDescriptionId())).withStyle(ChatFormatting.DARK_GREEN)))));
     }
 
     public AttributeStackModifier(Holder<Attribute> attribute, float f, AttributeModifier.Operation operation) {
-        super(DataComponents.ATTRIBUTE_MODIFIERS, ALWAYS_TRUE);
+        super(DataComponents.ATTRIBUTE_MODIFIERS, defaultModifiers);
         AttributeModifier modifier = new AttributeModifier(idOf(attribute.unwrapKey().map(key -> key.identifier().getPath()).orElse("") + "_from_gilded_tool"), f, operation);
         this.attributeModifiers = List.of(
                 new ItemAttributeModifiers.Entry(attribute, modifier, EquipmentSlotGroup.MAINHAND,

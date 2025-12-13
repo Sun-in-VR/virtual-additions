@@ -14,6 +14,7 @@ import net.minecraft.commands.arguments.EntityArgument;
 import net.minecraft.commands.arguments.ResourceArgument;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.entity.Entity;
+import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.item.ItemStack;
 
@@ -58,8 +59,8 @@ public class GildCommand {
         if (stack.has(VADataComponentTypes.GILD_TYPE) || Objects.isNull(type) || (!stack.is(VAItemTags.ACCEPTS_TOOL_GILDS)) && !force) {
             throw FAILED_INCOMPATIBLE_EXCEPTION.create(stack.getHoverName());
         }
-        stack.set(VADataComponentTypes.GILD_TYPE, type);
-        type.modifyStackOnCrafted(stack);
+        stack.set(VADataComponentTypes.GILD_TYPE, force ? type : type.getOrAlternate(stack));
+        ((LivingEntity) entity).setItemSlot(EquipmentSlot.MAINHAND, stack.transmuteCopy(stack.getItem()));
         context.getSource().sendSuccess(() -> Component.translatable("commands.virtual_additions.gild.success", type.getTranslationKey().getString(), entity.getName()), false);
         return 1;
     }
