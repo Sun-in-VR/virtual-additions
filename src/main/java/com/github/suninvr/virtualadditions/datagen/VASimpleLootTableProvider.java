@@ -18,7 +18,7 @@ import net.minecraft.data.DataProvider;
 import net.minecraft.data.loot.EntityLootSubProvider;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.util.context.ContextKeySet;
-import net.minecraft.world.entity.animal.ChickenVariants;
+import net.minecraft.world.entity.animal.chicken.ChickenVariants;
 import net.minecraft.world.item.DyeColor;
 import net.minecraft.world.item.EitherHolder;
 import net.minecraft.world.item.Item;

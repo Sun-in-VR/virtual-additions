@@ -17,6 +17,7 @@
     "BrewingRecipyRegistryMixin$BuilderMixin",
     "BuiltinBiomesMixin",
     "BundleContentsComponentMixin",
+    "CropBlockMixin",
     "CrossbowItemMixin",
     "DamageSourcesMixin",
     "DeathProtectionComponentMixin",

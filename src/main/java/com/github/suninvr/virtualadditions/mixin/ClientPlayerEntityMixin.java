@@ -5,6 +5,7 @@ import com.github.suninvr.virtualadditions.item.ProjectionSpyglassItem;
 import com.mojang.authlib.GameProfile;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.multiplayer.ClientLevel;
+import net.minecraft.client.multiplayer.ClientPacketListener;
 import net.minecraft.client.player.AbstractClientPlayer;
 import net.minecraft.client.player.ClientInput;
 import net.minecraft.client.player.LocalPlayer;
@@ -43,6 +44,8 @@ public abstract class ClientPlayerEntityMixin extends AbstractClientPlayer {
 
     @Shadow @Final private List<AmbientSoundHandler> ambientSoundHandlers;
 
+    @Shadow @Final public ClientPacketListener connection;
+
     @Inject(method = "applyInput", at = @At("HEAD"), cancellable = true)
     void virtualAdditions$tickMovementInput(CallbackInfo ci) {
         if (Minecraft.getInstance().getCameraEntity() instanceof PlayerProjectionEntity) {
@@ -53,10 +56,9 @@ public abstract class ClientPlayerEntityMixin extends AbstractClientPlayer {
         }
     }
 
-    @Inject(method = "tick", at = @At(value = "INVOKE", target = "Lnet/minecraft/client/player/LocalPlayer;tickClientLoadTimeout()V", shift = At.Shift.AFTER), cancellable = true)
+    @Inject(method = "tick", at = @At(value = "INVOKE", target = "Lnet/minecraft/client/multiplayer/ClientPacketListener;hasClientLoaded()Z", shift = At.Shift.AFTER), cancellable = true)
     void virtualAdditions$overrideMovementPackets(CallbackInfo ci) {
-        if (this.hasClientLoaded() && ProjectionSpyglassItem.isInUseBy(this) && Minecraft.getInstance().getCameraEntity() instanceof PlayerProjectionEntity playerProjectionEntity) {
-            this.tickClientLoadTimeout();
+        if (this.connection.hasClientLoaded() && ProjectionSpyglassItem.isInUseBy(this) && Minecraft.getInstance().getCameraEntity() instanceof PlayerProjectionEntity playerProjectionEntity) {
             this.dropSpamThrottler.tick();
             super.tick();
             this.sendPosition();

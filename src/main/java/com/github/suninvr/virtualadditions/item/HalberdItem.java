@@ -94,8 +94,7 @@ public class HalberdItem extends Item {
                                 target.knockback(knockback + (lungePower.floatValue() + (velocity * velocity) - 1), player.getX() - target.getX(), player.getZ() - target.getZ());
                                 target.hurtMarked = true;
                             }
-
-                            player.attackVisualEffects(target, false, true, false, 0.0F);
+                            player.attackVisualEffects(target, false, true, false, false, 0.0F);
                             player.setLastHurtMob(target);
                             player.itemAttackInteraction(target, stack, source, true);
                             player.damageStatsAndHearts(target, startingHealth);

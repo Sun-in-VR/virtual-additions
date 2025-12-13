@@ -2,7 +2,7 @@ package com.github.suninvr.virtualadditions.mixin;
 
 import com.github.suninvr.virtualadditions.registry.VAItems;
 import com.google.common.collect.ImmutableMap;
-import net.minecraft.world.entity.npc.Villager;
+import net.minecraft.world.entity.npc.villager.Villager;
 import net.minecraft.world.item.Item;
 import org.spongepowered.asm.mixin.*;
 
