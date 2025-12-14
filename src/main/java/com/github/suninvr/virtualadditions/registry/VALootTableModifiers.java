@@ -322,7 +322,7 @@ public class VALootTableModifiers {
                                         LootItem.lootTableItem(TOMATO_SEEDS)
                                 )
                                 .when(InvertedLootItemCondition.invert(MatchTool.toolMatches(ItemPredicate.Builder.item().of(itemRegistryEntryLookup, Items.SHEARS))))
-                                .when(LootItemRandomChanceCondition.randomChance(0.125F))
+                                .when(LootItemRandomChanceCondition.randomChance(0.0125F))
                 )
                 .apply(ApplyBonusCount.addUniformBonusCount(enchantmentLookup.getOrThrow(Enchantments.FORTUNE), 2))
                 .apply(ApplyExplosionDecay.explosionDecay());
@@ -333,7 +333,12 @@ public class VALootTableModifiers {
                 .add(LootItem.lootTableItem(COTTON_SEEDS)
                         .apply(ApplyBonusCount.addUniformBonusCount(enchantmentLookup.getOrThrow(Enchantments.FORTUNE), 2))
                         .apply(ApplyExplosionDecay.explosionDecay())
-                        .when(LootItemRandomChanceCondition.randomChance(0.125F))
+                        .when(LootItemRandomChanceCondition.randomChance(0.0125F))
+                        .when(InvertedLootItemCondition.invert(MatchTool.toolMatches(ItemPredicate.Builder.item().of(itemRegistryEntryLookup, Items.SHEARS))))
+                ).add(LootItem.lootTableItem(SOY_BEANS)
+                        .apply(ApplyBonusCount.addUniformBonusCount(enchantmentLookup.getOrThrow(Enchantments.FORTUNE), 2))
+                        .apply(ApplyExplosionDecay.explosionDecay())
+                        .when(LootItemRandomChanceCondition.randomChance(0.0125F))
                         .when(InvertedLootItemCondition.invert(MatchTool.toolMatches(ItemPredicate.Builder.item().of(itemRegistryEntryLookup, Items.SHEARS))))
                 );
     }
